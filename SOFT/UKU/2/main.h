@@ -714,7 +714,8 @@ typedef enum {
 	iAvt,iLan_set,
 	iInv,iInv_v2,
 	iNpn_set,
-	iByps,iInv_tabl,iSet_bat_sel}i_enum;
+	iByps,iInv_tabl,iSet_bat_sel,
+	iBps_list}i_enum;
 typedef struct  
 {
 

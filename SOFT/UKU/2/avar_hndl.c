@@ -149,7 +149,8 @@ lc640_write_long_ptr(lc640_adr+8,data);
 data[0]=LPC_RTC->HOUR;
 data[1]=LPC_RTC->MIN;
 data[2]=LPC_RTC->SEC;
-data[3]=0;
+data[3]=LPC_SC->RSID;
+
 lc640_write_long_ptr(lc640_adr+12,data);
 	
 data[0]='A';
