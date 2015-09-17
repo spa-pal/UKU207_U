@@ -9726,19 +9726,19 @@ else if(ind==iBps_list)
 	if(sub_ind1==NUMIST-2)int2lcd(bps[8]._cnt,'@',0);
 	else int2lcd(bps[sub_ind1+2]._cnt,'@',0);		
 		
-	int2lcd(bps[sub_ind1]._Uii,'^',0);
-	int2lcd(bps[sub_ind1+1]._Uii,'^',0);
-	if(sub_ind1<NUMIST-2) int2lcd(bps[sub_ind1+2]._Uii,'^',0);
+	int2lcd(bps[sub_ind1]._Uii/10,'^',0);
+	int2lcd(bps[sub_ind1+1]._Uii/10,'^',0);
+	if(sub_ind1<NUMIST-2) int2lcd(bps[sub_ind1+2]._Uii/10,'^',0);
 	else sub_bgnd(" ",'^',0);
 
      int2lcd(bps[sub_ind1]._Ii,'$',1); 
 	int2lcd(bps[sub_ind1+1]._Ii,'$',1); 
 	if(sub_ind1<NUMIST-2) int2lcd(bps[sub_ind1+2]._Ii,'$',1); 
-	else int2lcd_mmm(Ib_ips_termokompensat,'$',1);
+	else int2lcd_mmm(Ib_ips_termokompensat,'$',2);
 
-	int2lcd(bps[sub_ind1]._Uin,'%',0);
-	int2lcd(bps[sub_ind1+1]._Uin,'%',0);
-	if(sub_ind1<NUMIST-2) int2lcd(bps[sub_ind1+2]._Uin,'%',0);
+	int2lcd(bps[sub_ind1]._Uin/10,'%',0);
+	int2lcd(bps[sub_ind1+1]._Uin/10,'%',0);
+	if(sub_ind1<NUMIST-2) int2lcd(bps[sub_ind1+2]._Uin/10,'%',0);
 	else sub_bgnd(" ",'%',0);
 
 	int2lcd(bps[sub_ind1]._Ti,'#',0);
@@ -16111,7 +16111,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 
   	else if(sub_ind==30)
 		{
-		if(but==butE)
+		if((but==butE) && /*(NUMSK ||*/ NUMDT/*)*/)
 		     {
 		     tree_up(iLan_set,0,0,0);
 		     ret(1000);
