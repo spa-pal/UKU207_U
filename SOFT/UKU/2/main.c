@@ -1,3 +1,6 @@
+//Ветка для CAN на MCP2515
+
+
 #include "lcd_AGM1232_uku207_3.h"
 #include "rtl.h"
 #include "type.h"
