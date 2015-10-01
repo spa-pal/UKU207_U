@@ -556,6 +556,11 @@
               <FileType>1</FileType>
               <FilePath>.\bat_driver.c</FilePath>
             </File>
+            <File>
+              <FileName>mcp2515.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\mcp2515.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1127,6 +1132,11 @@
               <FileName>bat_driver.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\bat_driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcp2515.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\mcp2515.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1700,6 +1710,11 @@
               <FileType>1</FileType>
               <FilePath>.\bat_driver.c</FilePath>
             </File>
+            <File>
+              <FileName>mcp2515.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\mcp2515.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2271,6 +2286,11 @@
               <FileName>bat_driver.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\bat_driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcp2515.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\mcp2515.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2844,6 +2864,11 @@
               <FileType>1</FileType>
               <FilePath>.\bat_driver.c</FilePath>
             </File>
+            <File>
+              <FileName>mcp2515.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\mcp2515.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3415,6 +3440,11 @@
               <FileName>bat_driver.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\bat_driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcp2515.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\mcp2515.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3988,6 +4018,11 @@
               <FileType>1</FileType>
               <FilePath>.\bat_driver.c</FilePath>
             </File>
+            <File>
+              <FileName>mcp2515.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\mcp2515.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4559,6 +4594,11 @@
               <FileName>bat_driver.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\bat_driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcp2515.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\mcp2515.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5228,6 +5268,11 @@
               <FileType>1</FileType>
               <FilePath>.\bat_driver.c</FilePath>
             </File>
+            <File>
+              <FileName>mcp2515.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\mcp2515.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5857,6 +5902,11 @@
               <FileType>1</FileType>
               <FilePath>.\bat_driver.c</FilePath>
             </File>
+            <File>
+              <FileName>mcp2515.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\mcp2515.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6429,6 +6479,11 @@
               <FileType>1</FileType>
               <FilePath>.\bat_driver.c</FilePath>
             </File>
+            <File>
+              <FileName>mcp2515.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\mcp2515.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -7000,6 +7055,11 @@
               <FileName>bat_driver.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\bat_driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcp2515.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\mcp2515.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7669,6 +7729,11 @@
               <FileType>1</FileType>
               <FilePath>.\bat_driver.c</FilePath>
             </File>
+            <File>
+              <FileName>mcp2515.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\mcp2515.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -8240,6 +8305,11 @@
               <FileName>bat_driver.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\bat_driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcp2515.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\mcp2515.c</FilePath>
             </File>
           </Files>
         </Group>
