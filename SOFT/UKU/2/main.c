@@ -31,6 +31,7 @@
 #include "uart0.h"
 #include <rtl.h>
 #include "modbus.h"
+#include "mcp2515.h"
 
 extern U8 own_hw_adr[];
 extern U8  snmp_Community[];
@@ -559,6 +560,7 @@ char bat_drv_rx_buff[512];
 char bat_drv_rx_in;
 
 short plazma_bat_drv0,plazma_bat_drv1,bat_drv_cnt_cnt;
+short can_plazma;
 
 //-----------------------------------------------
 void rtc_init (void) 
@@ -963,7 +965,184 @@ else if((cnt_net_drv==MINIM_INV_ADRESS+2)&&(NUMINV))
 
 }
 
+//-----------------------------------------------
+void net_drv_mcp2515(void)
+{ 
+//char temp_;    
 
+
+
+max_net_slot=MINIM_INV_ADRESS+NUMINV+8;
+//if(NUMINV) max_net_slot=MINIM_INV_ADRESS+NUMINV;
+//gran_char(&max_net_slot,0,MAX_NET_ADRESS);
+
+if(++cnt_net_drv>max_net_slot) 
+	{
+	cnt_net_drv=0;
+	//LPC_GPIO2->FIODIR|=(1UL<<7);
+	//LPC_GPIO2->FIOPIN^=(1UL<<7);
+	if(bCAN_INV)bCAN_INV=0;
+	else bCAN_INV=1;
+
+	} 
+
+
+#ifndef UKU_KONTUR
+if(cnt_net_drv<=11) // с 1 по 12 посылки адресные
+#endif
+#ifdef UKU_KONTUR
+if(cnt_net_drv<=7) // с 1 по 12 посылки адресные
+#endif
+	{ 
+	if(mess_find_unvol(MESS2NET_DRV))
+		{
+		if(mess_data[0]==PARAM_BPS_NET_OFF)
+			{
+			//mess_data[1]=1;
+			if(sub_ind1==cnt_net_drv)
+				{
+				return;
+				}
+			}
+		}
+			   
+	if(!bCAN_OFF)mcp2515_transmit(cnt_net_drv,cnt_net_drv,GETTM,bps[cnt_net_drv]._flags_tu,*((char*)(&bps[cnt_net_drv]._vol_u)),*((char*)((&bps[cnt_net_drv]._vol_u))+1),*((char*)(&bps[cnt_net_drv]._vol_i)),*((char*)((&bps[cnt_net_drv]._vol_i))+1));
+     
+	if(cnt_net_drv<=11)
+	     {
+	     if(bps[cnt_net_drv]._cnt<CNT_SRC_MAX)
+   	 		{    
+   	 		bps[cnt_net_drv]._cnt++;
+   	 		if( (bps[cnt_net_drv]._cnt>=CNT_SRC_MAX) && (!net_av) && (!(bps[cnt_net_drv]._av&0x08)) && (cnt_net_drv<NUMIST) ) 
+   	 			{
+   	 			avar_bps_hndl(cnt_net_drv,3,1);
+   	 			}
+   	 		}
+		else bps[cnt_net_drv]._cnt=CNT_SRC_MAX;
+						
+		if((bps[cnt_net_drv]._cnt>=3)&&(bps[cnt_net_drv]._cnt_old<3))bps[cnt_net_drv]._cnt_more2++;
+		bps[cnt_net_drv]._cnt_old=bps[cnt_net_drv]._cnt;
+	     }
+	}
+
+#ifdef UKU_KONTUR
+else if(cnt_net_drv==8)
+	{
+     if(!bCAN_OFF)can1_out(cnt_net_drv,cnt_net_drv,*((char*)(&Uvv[0])),*((char*)((&Uvv[0]))+1),*((char*)(&Uvv[1])),*((char*)((&Uvv[1]))+1),0,bRESET_EXT);
+     }
+
+else if(cnt_net_drv==9)
+	{
+     if(!bCAN_OFF)can1_out(cnt_net_drv,cnt_net_drv,(char)main_vent_pos,*((char*)(&POWER_CNT_ADRESS)),*((char*)((&POWER_CNT_ADRESS))+1),0,0,0);
+     }
+
+else if(cnt_net_drv==10)
+	{
+     if(!bCAN_OFF)can1_out(cnt_net_drv,cnt_net_drv,0,0,0,0,0,0);
+     }
+#endif
+else if(cnt_net_drv==12)
+	{
+     if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,MEM_KF,*((char*)(&UMAX)),*((char*)((&UMAX))+1),*((char*)(&DU)),*((char*)((&DU))+1),0);
+     } 
+     
+else if(cnt_net_drv==13)
+	{
+     if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,MEM_KF1,*((char*)(&TMAX)),*((char*)((&TMAX))+1),*((char*)(&TSIGN)),*((char*)((&TSIGN))+1),(char)TZAS);
+     byps._cnt++;
+	} 
+else if(cnt_net_drv==14)
+	{                 
+	static char makb_cnt;
+	makb_cnt++;
+	if(makb_cnt>=4)makb_cnt=0;
+     if(!bCAN_OFF)mcp2515_transmit(14,14,GET_MAKB,makb_cnt,makb_cnt,0,0,0);
+	makb[makb_cnt]._cnt++;
+	if(makb[makb_cnt]._cnt>20)makb[makb_cnt]._cnt=20;
+	}
+	
+	
+else if(cnt_net_drv==15)
+	{
+     if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,MEM_KF1,*((char*)(&TMAX)),*((char*)((&TMAX))+1),*((char*)(&TSIGN)),*((char*)((&TSIGN))+1),(char)TZAS);
+     }
+
+/*
+else if((cnt_net_drv>=MINIM_INV_ADRESS)&&(cnt_net_drv<(MINIM_INV_ADRESS+NUMINV))&&(NUMINV))
+	{
+    if(!bCAN_OFF) can1_out(cnt_net_drv,cnt_net_drv,GETTM,bps[cnt_net_drv]._flags_tu,*((char*)(&bps[cnt_net_drv]._vol_u)),*((char*)((&bps[cnt_net_drv]._vol_u))+1),*((char*)(&bps[cnt_net_drv]._vol_i)),*((char*)((&bps[cnt_net_drv]._vol_i))+1));
+
+	if(bps[cnt_net_drv]._cnt<CNT_SRC_MAX)
+   	 		{    
+   	 		bps[cnt_net_drv]._cnt++;
+   	 		if( (bps[cnt_net_drv]._cnt>=CNT_SRC_MAX) && (!net_av) && (!(bps[cnt_net_drv]._av&0x08)) && (cnt_net_drv<NUMIST) ) 
+   	 			{
+   	 			avar_bps_hndl(cnt_net_drv,3,1);
+   	 			}
+   	 		}
+		else bps[cnt_net_drv]._cnt=CNT_SRC_MAX;
+						
+		if((bps[cnt_net_drv]._cnt>=3)&&(bps[cnt_net_drv]._cnt_old<3))bps[cnt_net_drv]._cnt_more2++;
+		bps[cnt_net_drv]._cnt_old=bps[cnt_net_drv]._cnt;
+	} 
+*/	
+	
+
+else if(cnt_net_drv==19)
+	{
+     if(!bCAN_OFF)
+		{
+		mcp2515_transmit(cnt_net_drv,cnt_net_drv,GETTM,0,0,0,0,0);
+		lakb[0]._cnt++;
+		if(lakb[0]._cnt>20)lakb[0]._cnt=20;
+		lakb[1]._cnt++;
+		if(lakb[1]._cnt>20)lakb[1]._cnt=20;
+		}
+     }
+	
+	
+else if((cnt_net_drv>=MINIM_INV_ADRESS)&&(cnt_net_drv<MINIM_INV_ADRESS+15))
+	{
+	if(!bCAN_OFF)
+		{
+		if(bCAN_INV)
+			{
+			
+			mcp2515_transmit(cnt_net_drv,cnt_net_drv,GETTM,bps[cnt_net_drv]._flags_tu,*((char*)(&bps[cnt_net_drv]._vol_u)),*((char*)((&bps[cnt_net_drv]._vol_u))+1),*((char*)(&bps[cnt_net_drv]._vol_i)),*((char*)((&bps[cnt_net_drv]._vol_i))+1));
+     		}
+		else
+			{
+			
+			mcp2515_transmit(cnt_net_drv,cnt_net_drv,GETTM_INV,bps[cnt_net_drv]._flags_tu,*((char*)(&bps[cnt_net_drv]._vol_u)),*((char*)((&bps[cnt_net_drv]._vol_u))+1),*((char*)(&bps[cnt_net_drv]._vol_i)),*((char*)((&bps[cnt_net_drv]._vol_i))+1));
+     		} 
+		}
+	//if(cnt_net_drv<=11)
+	     {
+	     if(bps[cnt_net_drv]._cnt<CNT_SRC_MAX)
+   	 		{    
+   	 		bps[cnt_net_drv]._cnt++;
+   	 	/*	if( (bps[cnt_net_drv]._cnt>=CNT_SRC_MAX) && (!net_av) && (!(bps[cnt_net_drv]._av&0x08)) && (cnt_net_drv<NUMIST) ) 
+   	 			{
+   	 			avar_bps_hndl(cnt_net_drv,3,1);
+   	 			}*/
+   	 		}
+		else bps[cnt_net_drv]._cnt=CNT_SRC_MAX;
+						
+		if((bps[cnt_net_drv]._cnt>=3)&&(bps[cnt_net_drv]._cnt_old<3))bps[cnt_net_drv]._cnt_more2++;
+		bps[cnt_net_drv]._cnt_old=bps[cnt_net_drv]._cnt;
+	     }
+	}
+
+
+/*
+
+else if((cnt_net_drv==MINIM_INV_ADRESS+2)&&(NUMINV))
+	{
+    if(!bCAN_OFF) can1_out(cnt_net_drv,cnt_net_drv,0,0,0,0,0,0);
+	}*/
+
+
+}
 
 //-----------------------------------------------
 void parol_init(void)
@@ -985,6 +1164,8 @@ for(ii=0;ii<488;ii++)
 	{
 	lcd_bitmap[ii]=0x00;
 	}
+
+mnemo_cnt=10;
 
 if((!mnemo_cnt)&&((NUMBAT==0)||((NUMBAT==1)&&(BAT_IS_ON[0]==bisON))))
 	{
@@ -2483,8 +2664,11 @@ else if(ind==iMn_6U)
 	//int2lcdyx(lc640_read_int(ADR_EE_BAT_IS_ON[0]),0,4,0);
 	//int2lcdyx(lc640_read_int(ADR_EE_BAT_IS_ON[1]),0,9,0);
 	//int2lcdyx(BAT_IS_ON[0],0,14,0);
-	//int2lcdyx(u_necc,0,4,0);
-	//int2lcdyx(cntrl_stat,0,9,0);
+	int2lcdyx(mcp2515_can_st,0,9,0);
+	int2lcdyx(mcp2515_buff_wr_ptr,0,3,0);
+	int2lcdyx(mcp2515_buff_rd_ptr,0,6,0);
+
+	int2lcdyx(can_plazma,0,13,0);
 	}
 
 else if((ind==iMn_220)||(ind==iMn_220_IPS_TERMOKOMPENSAT))
@@ -24787,6 +24971,7 @@ SET_REG(LPC_GPIO3->FIODIR,1,SHIFT_REL_AV_NET,1);
 SET_REG(LPC_GPIO3->FIOSET,1,SHIFT_REL_AV_NET,1);  // реле аварии сети под ток
 
 
+/* 2515
 ad7705_reset();
 delay_ms(20);
 
@@ -24794,7 +24979,7 @@ ad7705_write(0x21);
 ad7705_write(BIN8(1101)); 
 ad7705_write(0x11);
 ad7705_write(0x44);
-
+*/
 
 ad7705_buff[0][1]=0x7fff;
 ad7705_buff[0][2]=0x7fff;
@@ -24920,17 +25105,17 @@ adc_init();
 LPC_GPIO0->FIODIR|=(1<<11);
 LPC_GPIO0->FIOSET|=(1<<11);
 
-
+/* 2515
 lc640_write_int(100,134);
 
 can1_init(BITRATE62_5K25MHZ); 
 can2_init(BITRATE125K25MHZ);
 FullCAN_SetFilter(1,0x0e9);
-FullCAN_SetFilter(0,0x18e);
+FullCAN_SetFilter(0,0x18e);*/
 
 
 
-memo_read();
+//2515 memo_read();
 
 #ifndef UKU_220 
 UARTInit(0, (uint32_t)MODBUS_BAUDRATE*10UL);	/* baud rate setting */
@@ -25004,7 +25189,7 @@ else if(__ee_spc_stat==spcKE)
 	bat[spc_bat]._zar_cnt_ke=0;
 	spc_phase=__ee_spc_phase;
 	}
-watchdog_enable();
+//watchdog_enable();
 if((AUSW_MAIN==2400)||(AUSW_MAIN==4800)||(AUSW_MAIN==6000)||(BAT_TYPE==1))
 	{
 	cntrl_stat=350;
@@ -25013,27 +25198,29 @@ if((AUSW_MAIN==2400)||(AUSW_MAIN==4800)||(AUSW_MAIN==6000)||(BAT_TYPE==1))
 kb_init();
 //ind=iDeb;
 //sub_ind=6;
+
+can_mcp2515_init();
 		
 while (1)  
 	{
 	bTPS=0; 
      //timer_poll ();
-     main_TcpNet ();
+//2515     main_TcpNet ();
 
 	//watchdog_reset();
 
-	if(bMODBUS_TIMEOUT)
+/* 2515	if(bMODBUS_TIMEOUT)
 		{
 		bMODBUS_TIMEOUT=0;
 		//modbus_plazma++;;
 		modbus_in();
-		}
+		} */
 
 	if(bRXIN0) 
 		{
 		bRXIN0=0;
 	
-		uart_in0();
+//2515		uart_in0();
 		} 
 	/*
 	if(bRXIN1) 
@@ -25055,15 +25242,16 @@ while (1)
 		if(adc_window_cnt<200)adc_window_cnt++;
 
 		b2000Hz=0; 
-		adc_drv7();
+	//2515	adc_drv7();
 		
 		}
 
 	if(b1000Hz)
 		{
 		b1000Hz=0;
-
-
+		
+		can_mcp2515_hndl();
+		//mcp2515_read_status();
 		}
 	
 	if(b100Hz)
@@ -25080,8 +25268,9 @@ while (1)
 	if(b50Hz)
 		{
 		b50Hz=0;
-
-		net_drv();
+		//net_drv_mcp2515();
+		//mcp2515_transmit(2,2,GETTM,bps[cnt_net_drv]._flags_tu,*((char*)(&bps[cnt_net_drv]._vol_u)),*((char*)((&bps[cnt_net_drv]._vol_u))+1),*((char*)(&bps[cnt_net_drv]._vol_i)),*((char*)((&bps[cnt_net_drv]._vol_i))+1));
+     	mcp2515_transmit(1,2,3,0,0,0,0,0);
 		}
 
 	if(b10Hz)
@@ -25149,19 +25338,19 @@ while (1)
 
 		if(!bRESET)
 			{
-			ad7705_drv();
+			//ad7705_drv();
 			}
 		if(!bRESET)
 			{
-			memo_read();
+			//memo_read();
 			}
 		LPC_GPIO1->FIODIR|=(1UL<<26);
 		matemat();
 		
 		rele_hndl();
-		if(!bRESET)avar_hndl();
+//2515		if(!bRESET)avar_hndl();
 		zar_superviser_drv();
-		snmp_data();
+///		snmp_data();
 		//LPC_GPIO1->FIODIR|=(1UL<<31);
 		//LPC_GPIO1->FIOPIN^=(1UL<<31);
 
@@ -25178,8 +25367,11 @@ while (1)
 
 	if(b1Hz)
 		{
+		//can_plazma++;
+		//mcp2515_transmit(0,0,0,0,0,0,0,0);
+
 		b1Hz=0;
-		if(!bRESET)
+/* 2515		if(!bRESET)
 			{
 			watchdog_reset();
 			}
@@ -25196,9 +25388,9 @@ while (1)
 		avz_drv();
 		ke_drv();
 		mnemo_hndl();
-		vent_hndl();
+		vent_hndl(); */
 
-		plazma_plazma_plazma++;
+/*2515		plazma_plazma_plazma++;
 
 		if(++ind_reset_cnt>=60)
 			{
@@ -25206,9 +25398,9 @@ while (1)
 			lcd_init();
 			lcd_on();
 			lcd_clear();
-			}
+			}*/
                
-          vent_hndl();
+/*  2515        vent_hndl();
 		klimat_hndl();
 		
 		if(t_ext_can_nd<10) t_ext_can_nd++;
@@ -25217,7 +25409,7 @@ while (1)
 
 
 		can_reset_hndl();
-		npn_hndl();
+		npn_hndl(); */
 /*		#ifdef UKU_220_IPS_TERMOKOMPENSAT
 		if((AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043))rs232_data_out_tki();
 		else if(AUSW_MAIN==22010)rs232_data_out_1();
@@ -25237,7 +25429,7 @@ while (1)
 		{
 		b1min=0;
 
-		if((tloaddisable_cmnd)&&(tloaddisable_cmnd<=10))
+/* 2515		if((tloaddisable_cmnd)&&(tloaddisable_cmnd<=10))
 			{
 			tloaddisable_cmnd--;
 			if(!tloaddisable_cmnd)tloaddisable_cmnd=20;
@@ -25245,7 +25437,7 @@ while (1)
 		if((tbatdisable_cmnd)&&(tbatdisable_cmnd<=10))
 			{
 			if(!tbatdisable_cmnd)tbatdisable_cmnd=20;
-			}
+			} */
 
 		
 		}

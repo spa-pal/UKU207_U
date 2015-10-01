@@ -384,6 +384,7 @@
 
 
 #define delay_ms(x) {long xx; xx=(unsigned long)x * 12000UL; while(xx)xx--;}
+#define delay_us(x) {long xx; xx=(unsigned long)x * 12UL; while(xx)xx--;}
 
 //*************************************************
 //сообщения
@@ -1299,6 +1300,8 @@ extern short plazma_bat_drv0,plazma_bat_drv1,bat_drv_cnt_cnt;
 extern unsigned short bat_drv_rx_cnt;
 extern char bat_drv_rx_buff[512];
 extern char bat_drv_rx_in;
+
+extern short can_plazma;
 
 #ifndef FALSE
 #define FALSE   (0)
