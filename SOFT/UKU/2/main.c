@@ -25268,9 +25268,9 @@ while (1)
 	if(b50Hz)
 		{
 		b50Hz=0;
-		//net_drv_mcp2515();
+		net_drv_mcp2515();
 		//mcp2515_transmit(2,2,GETTM,bps[cnt_net_drv]._flags_tu,*((char*)(&bps[cnt_net_drv]._vol_u)),*((char*)((&bps[cnt_net_drv]._vol_u))+1),*((char*)(&bps[cnt_net_drv]._vol_i)),*((char*)((&bps[cnt_net_drv]._vol_i))+1));
-     	mcp2515_transmit(1,2,3,0,0,0,0,0);
+     	//mcp2515_transmit(1,2,3,0,0,0,0,0);
 		}
 
 	if(b10Hz)

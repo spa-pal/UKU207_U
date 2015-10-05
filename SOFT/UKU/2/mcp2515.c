@@ -101,9 +101,9 @@ if((spi_temp&0xe0)!=0x80)
 	mcp2515_bit_modify(CANCTRL,0xe0,0x80);
 	}
 delay_us(10);		
-mcp2515_write(CNF1,CNF1_init);
-mcp2515_write(CNF2,CNF2_init);
-mcp2515_write(CNF3,CNF3_init);
+mcp2515_write(CNF1,1/*CNF1_init*/);
+mcp2515_write(CNF2,1/*CNF2_init*/);
+mcp2515_write(CNF3,1/*CNF3_init*/);
 
 mcp2515_write(RXB0CTRL,0x20/*0b00100000*/);
 mcp2515_write(RXB1CTRL,0x20/*0b00100000*/);
