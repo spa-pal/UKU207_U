@@ -509,7 +509,7 @@
 // <e>UDP Sockets
 // ==============
 // <i> Enable or disable UDP Sockets
-#define UDP_ENABLE     1
+#define UDP_ENABLE     0
 
 //   <o>Number of UDP Sockets <1-20>
 //   <i> Number of available UDP sockets
@@ -520,7 +520,7 @@
 // <e>TCP Sockets
 // ==============
 // <i> Enable or disable TCP Sockets
-#define TCP_ENABLE     1
+#define TCP_ENABLE     0
 
 //   <o>Number of TCP Sockets <1-20>
 //   <i> Number of available TCP sockets
@@ -555,7 +555,7 @@
 // <e>HTTP Server
 // ==============
 // <i> Enable or disable HTTP Server
-#define HTTP_ENABLE    1
+#define HTTP_ENABLE    0
 
 //   <o>Number of HTTP Sessions <1-10>
 //   <i> Number of simultaneously active HTTP Sessions.
@@ -711,7 +711,7 @@
 // <e>SNMP Agent
 // =============
 // <i> Enable or disable SNMP Agent
-#define SNMP_ENABLE    1
+#define SNMP_ENABLE    0
 
 //   <s.15>Community Name
 //   <i> Defines where an SNMP message is destined for.

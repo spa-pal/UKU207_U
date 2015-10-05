@@ -59,8 +59,8 @@ const char Table95[]={
 0x1A, 0x30, 0x4E, 0x64, 0xB2, 0x98, 0xE6, 0xCC, 0x60, 0x4A, 0x34, 0x1E, 0xC8, 0xE2, 0x9C, 0xB6, 
 0xEE, 0xC4, 0xBA, 0x90, 0x46, 0x6C, 0x12, 0x38, 0x94, 0xBE, 0xC0, 0xEA, 0x3C, 0x16, 0x68, 0x42}; 
 */
-extern const char Table87[];
-extern const char Table95[];
+//extern const char Table87[];
+//extern const char Table95[];
 
 volatile uint32_t UART0Status;
 volatile uint8_t UART0TxEmpty = 1;
@@ -77,12 +77,6 @@ char crc_87(char* ptr,char num)
 char r,j;
 r=*ptr;
 
-for(j=1;j<num;j++)
-	{
-     ptr++;
-	r=((*ptr)^Table87[r]);
-	}
-
 return r;	
 } 
 
@@ -92,11 +86,7 @@ char crc_95(char* ptr,char num)
 char r,j;
 r=*ptr;
 
-for(j=1;j<num;j++)
-	{
-     ptr++;
-	r=((*ptr)^Table95[r]);
-	}
+
 
 return r;	
 }

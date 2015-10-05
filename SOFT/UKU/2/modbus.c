@@ -7,7 +7,7 @@
 
 #include "eeprom_map.h"
 
-extern int  mem_copy (void *dp, void *sp, int len);
+
 
 unsigned char modbus_buf[20];
 short modbus_crc16;
@@ -66,10 +66,6 @@ unsigned char modbus_func;			//встроенный в посылку код функции
 
 modbus_plazma++;
 
-mem_copy(modbus_an_buffer,modbus_rx_buffer,modbus_rx_buffer_ptr);
-modbus_rx_counter=modbus_rx_buffer_ptr;
-modbus_rx_buffer_ptr=0;
-bMODBUS_TIMEOUT=0;
 	
 crc16_calculated  = CRC16_2(modbus_an_buffer, modbus_rx_counter-2);
 crc16_incapsulated = *((short*)&modbus_an_buffer[modbus_rx_counter-2]);
@@ -405,7 +401,7 @@ modbus_registers[4]=0x14;
 modbus_registers[5]=0x15;
 */
 
-mem_copy((char*)&modbus_tx_buff[4],(char*)&modbus_registers[(reg_adr-1)*2],2);
+
 
 crc_temp=CRC16_2(modbus_tx_buff,6);
 
@@ -546,7 +542,6 @@ modbus_registers[4]=0x14;
 modbus_registers[5]=0x15;
 */
 
-mem_copy((char*)&modbus_tx_buff[3],(char*)&modbus_registers[(reg_adr-1)*2],reg_quantity*2);
 
 crc_temp=CRC16_2(modbus_tx_buff,(reg_quantity*2)+3);
 
@@ -631,7 +626,7 @@ modbus_tx_buff[1]=func;
 modbus_tx_buff[2]=(char)(reg_adr/256);
 modbus_tx_buff[3]=(char)(reg_adr%256);
 
-mem_copy((char*)&modbus_tx_buff[4],(char*)&modbus_registers[(reg_adr-1)*2],2);
+
 
 crc_temp=CRC16_2(modbus_tx_buff,6);
 
@@ -728,7 +723,7 @@ modbus_registers[5]=0x15;
 
 //if((reg_adr<17)&&(reg_quantity<10))
 	{
-	mem_copy((char*)&modbus_tx_buff[3],(char*)&modbus_registers[(reg_adr-1)*2],reg_quantity*2);
+	//mem_copy((char*)&modbus_tx_buff[3],(char*)&modbus_registers[(reg_adr-1)*2],reg_quantity*2);
 	}
 crc_temp=CRC16_2(modbus_tx_buff,(reg_quantity*2)+3);
 
@@ -889,7 +884,7 @@ modbus_registers[5]=0x15;
 
 //if((reg_adr<17)&&(reg_quantity<10))
 	{
-	mem_copy((char*)&modbus_tx_buff[3],(char*)&modbus_registers[(reg_adr-1)*2],reg_quantity*2);
+	//mem_copy((char*)&modbus_tx_buff[3],(char*)&modbus_registers[(reg_adr-1)*2],reg_quantity*2);
 	}
 crc_temp=CRC16_2(modbus_tx_buff,(reg_quantity*2)+3);
 
