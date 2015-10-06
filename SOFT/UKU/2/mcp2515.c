@@ -13,7 +13,7 @@ char mcp2515_buff_rd_ptr;
 //-----------------------------------------------
 void mcp2515_reset(void)
 {
-spi1_config();
+spi1_config_mcp2515();
 MCP2515_CS_ON
 spi1(0xc0);
 MCP2515_CS_OFF
@@ -24,7 +24,7 @@ MCP2515_CS_OFF
 char mcp2515_write(char addr,char in)
 {           
 char temp;
-spi1_config();       
+spi1_config_mcp2515();       
 MCP2515_CS_ON
 spi1(0x02);
 spi1(addr);
@@ -38,7 +38,7 @@ char mcp2515_read(char addr)
 {           
 char temp;
 
-spi1_config();       
+spi1_config_mcp2515();       
 MCP2515_CS_ON
 delay_us(10);
 spi1(0x03);
@@ -51,7 +51,7 @@ return temp;
 //-----------------------------------------------
 void mcp2515_bit_modify(char addr,char mask,char data)
 {           
-spi1_config();       
+spi1_config_mcp2515();       
 MCP2515_CS_ON
 spi1(0x05);
 spi1(addr);
@@ -79,7 +79,7 @@ return temp;
 void mcp2515_rts(char in)
 {
 //#asm("cli")
-spi1_config();       
+spi1_config_mcp2515();       
 MCP2515_CS_ON
 if(in==0) in=0x81;
 else if(in==1) in=0x82;

@@ -52,8 +52,8 @@ SET_REG( LPC_PINCON->PINSEL1, 3, (18-16)*2, 2);
 S1SPCCR=100;
 S1SPCR=0x3f; */
 
-LPC_SPI->SPCCR=16;
-LPC_SPI->SPCR=0x20;
+LPC_SPI->SPCCR=32;
+LPC_SPI->SPCR=0x38;
 }
 
 //----------------------------------------------- 

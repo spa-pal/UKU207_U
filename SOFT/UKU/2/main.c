@@ -780,7 +780,8 @@ if(cnt_net_drv<=11) // с 1 по 12 посылки адресные
 #ifdef UKU_KONTUR
 if(cnt_net_drv<=7) // с 1 по 12 посылки адресные
 #endif
-	{ 
+	{
+	//cnt_net_drv=2; 
 	if(mess_find_unvol(MESS2NET_DRV))
 		{
 		if(mess_data[0]==PARAM_BPS_NET_OFF)
