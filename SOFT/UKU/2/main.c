@@ -24971,7 +24971,7 @@ SET_REG(LPC_GPIO3->FIODIR,1,SHIFT_REL_AV_NET,1);
 SET_REG(LPC_GPIO3->FIOSET,1,SHIFT_REL_AV_NET,1);  // реле аварии сети под ток
 
 
-/* 2515
+
 ad7705_reset();
 delay_ms(20);
 
@@ -24979,7 +24979,7 @@ ad7705_write(0x21);
 ad7705_write(BIN8(1101)); 
 ad7705_write(0x11);
 ad7705_write(0x44);
-*/
+
 
 ad7705_buff[0][1]=0x7fff;
 ad7705_buff[0][2]=0x7fff;
@@ -25105,9 +25105,9 @@ adc_init();
 LPC_GPIO0->FIODIR|=(1<<11);
 LPC_GPIO0->FIOSET|=(1<<11);
 
-/* 2515
-lc640_write_int(100,134);
 
+lc640_write_int(100,134);
+/* 2515
 can1_init(BITRATE62_5K25MHZ); 
 can2_init(BITRATE125K25MHZ);
 FullCAN_SetFilter(1,0x0e9);
@@ -25115,7 +25115,7 @@ FullCAN_SetFilter(0,0x18e);*/
 
 
 
-//2515 memo_read();
+memo_read();
 
 #ifndef UKU_220 
 UARTInit(0, (uint32_t)MODBUS_BAUDRATE*10UL);	/* baud rate setting */
@@ -25205,22 +25205,28 @@ while (1)
 	{
 	bTPS=0; 
      //timer_poll ();
-//2515     main_TcpNet ();
+     main_TcpNet ();
 
 	//watchdog_reset();
 
-/* 2515	if(bMODBUS_TIMEOUT)
+	if(bMCP2515_IN)
+		{
+		bMCP2515_IN=0;
+		can_in_an1();
+		}
+
+	if(bMODBUS_TIMEOUT)
 		{
 		bMODBUS_TIMEOUT=0;
 		//modbus_plazma++;;
 		modbus_in();
-		} */
+		} 
 
 	if(bRXIN0) 
 		{
 		bRXIN0=0;
 	
-//2515		uart_in0();
+		uart_in0();
 		} 
 	/*
 	if(bRXIN1) 
@@ -25242,7 +25248,7 @@ while (1)
 		if(adc_window_cnt<200)adc_window_cnt++;
 
 		b2000Hz=0; 
-	//2515	adc_drv7();
+		adc_drv7();
 		
 		}
 
@@ -25338,19 +25344,19 @@ while (1)
 
 		if(!bRESET)
 			{
-			//ad7705_drv();
+			ad7705_drv();
 			}
 		if(!bRESET)
 			{
-			//memo_read();
+			memo_read();
 			}
 		LPC_GPIO1->FIODIR|=(1UL<<26);
 		matemat();
 		
 		rele_hndl();
-//2515		if(!bRESET)avar_hndl();
+		if(!bRESET)avar_hndl();
 		zar_superviser_drv();
-///		snmp_data();
+		snmp_data();
 		//LPC_GPIO1->FIODIR|=(1UL<<31);
 		//LPC_GPIO1->FIOPIN^=(1UL<<31);
 
@@ -25371,7 +25377,7 @@ while (1)
 		//mcp2515_transmit(0,0,0,0,0,0,0,0);
 
 		b1Hz=0;
-/* 2515		if(!bRESET)
+		if(!bRESET)
 			{
 			watchdog_reset();
 			}
@@ -25388,9 +25394,9 @@ while (1)
 		avz_drv();
 		ke_drv();
 		mnemo_hndl();
-		vent_hndl(); */
+		vent_hndl(); 
 
-/*2515		plazma_plazma_plazma++;
+		plazma_plazma_plazma++;
 
 		if(++ind_reset_cnt>=60)
 			{
@@ -25398,9 +25404,9 @@ while (1)
 			lcd_init();
 			lcd_on();
 			lcd_clear();
-			}*/
+			}
                
-/*  2515        vent_hndl();
+        vent_hndl();
 		klimat_hndl();
 		
 		if(t_ext_can_nd<10) t_ext_can_nd++;
@@ -25409,7 +25415,7 @@ while (1)
 
 
 		can_reset_hndl();
-		npn_hndl(); */
+		npn_hndl(); 
 /*		#ifdef UKU_220_IPS_TERMOKOMPENSAT
 		if((AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043))rs232_data_out_tki();
 		else if(AUSW_MAIN==22010)rs232_data_out_1();
@@ -25429,7 +25435,7 @@ while (1)
 		{
 		b1min=0;
 
-/* 2515		if((tloaddisable_cmnd)&&(tloaddisable_cmnd<=10))
+		if((tloaddisable_cmnd)&&(tloaddisable_cmnd<=10))
 			{
 			tloaddisable_cmnd--;
 			if(!tloaddisable_cmnd)tloaddisable_cmnd=20;
@@ -25437,7 +25443,7 @@ while (1)
 		if((tbatdisable_cmnd)&&(tbatdisable_cmnd<=10))
 			{
 			if(!tbatdisable_cmnd)tbatdisable_cmnd=20;
-			} */
+			} 
 
 		
 		}

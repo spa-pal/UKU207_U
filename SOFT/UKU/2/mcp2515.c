@@ -2,6 +2,7 @@
 #include "mcp2515.h"
 #include "LPC17xx.H"
 #include "main.h"
+#include "full_can.h"
 
 char mcp2515_can_st,mcp2515_can_st_old;
 char MCP2515_RXBUFF[40];
@@ -184,7 +185,7 @@ if(mcp2515_can_st&0x02/*0b00000010*/)
 	
 	for(j=0;j<8;j++)
 		{
-		MCP2515_RXBUFF[j]=mcp2515_read(RXB1D0+j);
+		/*MCP2515_*/RXBUFF[j]=mcp2515_read(RXB1D0+j);
 		}
 	
 	mcp2515_bit_modify(CANINTF,0x02 /*0b00000010*/ ,0x00);
