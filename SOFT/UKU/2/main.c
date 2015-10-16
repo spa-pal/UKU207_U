@@ -475,6 +475,8 @@ char plazma_plazma_plazma;
 char bRESET=0;
 char bRESET_EXT=0;
 char ext_can_cnt;
+char bRESET_INT_WDT=0;
+char bRESET_EXT_WDT=0;
 //-----------------------------------------------
 //Состояние вводов
 signed short vvod_pos;
@@ -767,12 +769,12 @@ if((lc640_read_int(EE_CAN_RESET_CNT)<0)||(lc640_read_int(EE_CAN_RESET_CNT)>2))	l
 
 can_reset_cnt++;
 
-if((can_reset_cnt>=10)&&(!(avar_stat&0x0001))&&(!bRESET))
+if((can_reset_cnt>=10)&&(!(avar_stat&0x0001))&&(!bRESET_INT_WDT)&&(!bRESET_EXT_WDT))
 	{
 	if(lc640_read_int(EE_CAN_RESET_CNT)<2)
 		{
 		lc640_write_int(EE_CAN_RESET_CNT,lc640_read_int(EE_CAN_RESET_CNT)+1);
-		bRESET=1;
+		bRESET_INT_WDT=1;
 		}
 	}
 
@@ -781,8 +783,8 @@ if((main_1Hz_cnt>=3600UL)&&(lc640_read_int(EE_CAN_RESET_CNT)!=0))
 	lc640_write_int(EE_CAN_RESET_CNT,0);
 	}
 
-if(((LPC_CAN1->GSR)>>24)==127)bRESET=1;
-if((((LPC_CAN1->GSR)>>16)&0x00ff)==127)bRESET=1;
+if(((LPC_CAN1->GSR)>>24)==127)bRESET_INT_WDT=1;
+if((((LPC_CAN1->GSR)>>16)&0x00ff)==127)bRESET_INT_WDT=1;
 
 }
 
@@ -9561,13 +9563,13 @@ else if(ind==iTst_220_IPS_TERMOKOMPENSAT)
      ptrs[11]=						" БПС N6             ";
 	ptrs[12]=						" БПС N7             ";
      ptrs[13]=						" БПС N8             ";
-     ptrs[14]=						" БПС N9            ";               
+     ptrs[14]=						" БПС N9             ";               
 	ptrs[15]=						" БПС N10            ";
      ptrs[16]=						" БПС N11            ";
      ptrs[17]=						" БПС N12            ";               
 	ptrs[6+NUMIST]=				" Выход              ";
-	ptrs[7+NUMIST]=				" Сброс              ";
-	ptrs[8+NUMIST]=				"                    ";
+	ptrs[7+NUMIST]=				" Проверка WDT(внутр)";
+	ptrs[8+NUMIST]=				" Проверка WDT(внешн)";
 
 	if((sub_ind-index_set)>2)index_set=sub_ind-2;
 	else if(sub_ind<index_set)index_set=sub_ind;
@@ -10967,7 +10969,7 @@ else if(ind==iMn_6U)
 	else if(but==butE_)
 		{
 		can1_init(BITRATE62_5K25MHZ);
-		FullCAN_SetFilter(0,0x18e);
+		//FullCAN_SetFilter(0,0x18e);
 		}
 	else if(but==butDR_)
 		{
@@ -11535,7 +11537,7 @@ else if(ind==iBps)
 		
 	else if((but==butE)&&(sub_ind==4))
 		{
-		can1_out(sub_ind1,sub_ind1,CMND,ALRM_RES,0,0,0,0);
+		mcp2515_transmit(sub_ind1,sub_ind1,CMND,ALRM_RES,0,0,0,0);
 		}
 				
 	else if(((but==butE)&&(sub_ind==5))||(but))
@@ -11596,7 +11598,7 @@ else if(ind==iInv)
 		
 	else if((but==butE)&&(sub_ind==4))
 		{
-		can1_out(sub_ind1,sub_ind1,CMND,ALRM_RES,0,0,0,0);
+		mcp2515_transmit(sub_ind1,sub_ind1,CMND,ALRM_RES,0,0,0,0);
 		}
 				
 	else if(((but==butE)&&(sub_ind==5))||(but))
@@ -20940,14 +20942,14 @@ else if(ind==iK_bps_sel)
 		sub_ind++;
 		gran_char(&sub_ind,0,NUMIST);
 		phase=0;
-		can1_out(sub_ind,sub_ind,CMND,ALRM_RES,0,0,0,0);
+		mcp2515_transmit(sub_ind,sub_ind,CMND,ALRM_RES,0,0,0,0);
 		}
 	else if(but==butU)
 		{
 		sub_ind--;
 		gran_char(&sub_ind,0,NUMIST);
 		phase=0;
-		can1_out(sub_ind,sub_ind,CMND,ALRM_RES,0,0,0,0);
+		mcp2515_transmit(sub_ind,sub_ind,CMND,ALRM_RES,0,0,0,0);
 		}
 	else if(but==butD_)
 		{
@@ -22661,7 +22663,7 @@ else if(ind==iTst_RSTKM)
 		{
 		if(but==butE)
 			{
-			bRESET=1;
+			bRESET_INT_WDT=1;
 			}
 	
 		}
@@ -23162,7 +23164,7 @@ else if(ind==iTst_KONTUR)
 		{
 		if(but==butE)
 			{
-			bRESET=1;
+			bRESET_INT_WDT=1;
 			}
 	
 		}
@@ -23403,7 +23405,7 @@ else if(ind==iTst_3U)
 		{
 		if(but==butE)
 			{
-			bRESET=1;
+			bRESET_INT_WDT=1;
 			}
 		}
 			
@@ -23636,7 +23638,7 @@ else if(ind==iTst_GLONASS)
 		{
 		if(but==butE)
 			{
-			bRESET=1;
+			bRESET_INT_WDT=1;
 			}
 		}
 			
@@ -23864,7 +23866,7 @@ else if(ind==iTst_6U)
 		{
 		if(but==butE)
 			{
-			bRESET=1;
+			bRESET_INT_WDT=1;
 			}
 		}
 
@@ -24073,7 +24075,7 @@ else if((ind==iTst_220)||(ind==iTst_220_380))
 		{
 		if(but==butE)
 			{
-			bRESET=1;
+			bRESET_INT_WDT=1;
 			}
 		}			
 	}
@@ -24084,7 +24086,7 @@ else if(ind==iTst_220_IPS_TERMOKOMPENSAT)
 	if(but==butD)
 		{
 		sub_ind++;
-		gran_char(&sub_ind,0,7+NUMIST);
+		gran_char(&sub_ind,0,8+NUMIST);
 		phase=0;
 		tst_state[0]=tstOFF;
 		tst_state[1]=tstOFF;
@@ -24125,7 +24127,7 @@ else if(ind==iTst_220_IPS_TERMOKOMPENSAT)
 	else if(but==butU)
 		{
 		sub_ind--;
-		gran_char(&sub_ind,0,7+NUMIST);
+		gran_char(&sub_ind,0,8+NUMIST);
 		phase=0;
 		tst_state[0]=tstOFF;
 		tst_state[1]=tstOFF;
@@ -24273,9 +24275,17 @@ else if(ind==iTst_220_IPS_TERMOKOMPENSAT)
 		{
 		if(but==butE)
 			{
-			bRESET=1;
+			bRESET_INT_WDT=1;
 			}
-		}			
+		}
+		
+	else if(sub_ind==(8+NUMIST))
+		{
+		if(but==butE)
+			{
+			bRESET_EXT_WDT=1;
+			}
+		}						
 	}
 
 else if(ind==iTst_bps)
@@ -25189,7 +25199,7 @@ else if(__ee_spc_stat==spcKE)
 	bat[spc_bat]._zar_cnt_ke=0;
 	spc_phase=__ee_spc_phase;
 	}
-//watchdog_enable();
+watchdog_enable();
 if((AUSW_MAIN==2400)||(AUSW_MAIN==4800)||(AUSW_MAIN==6000)||(BAT_TYPE==1))
 	{
 	cntrl_stat=350;
@@ -25267,7 +25277,7 @@ while (1)
 		//LPC_GPIO2->FIODIR|=(1<<7);
 		//LPC_GPIO2->FIOPIN^=(1<<7);		
 
-		if(!bRESET)but_drv();
+		if((!bRESET_INT_WDT)&&(!bRESET_EXT_WDT))but_drv();
 		but_an();
 		}
 		 
@@ -25320,7 +25330,7 @@ while (1)
 		ind_hndl(); 
 		#ifndef SIMULATOR
 		bitmap_hndl();
-		if(!bRESET)
+		if(!bRESET_EXT_WDT)
 			{
 			lcd_out(lcd_bitmap);
 			}
@@ -25342,11 +25352,11 @@ while (1)
 		{
 		b5Hz=0;
 
-		if(!bRESET)
+		if(!bRESET_EXT_WDT)
 			{
 			ad7705_drv();
 			}
-		if(!bRESET)
+		if(!bRESET_EXT_WDT)
 			{
 			memo_read();
 			}
@@ -25354,7 +25364,7 @@ while (1)
 		matemat();
 		
 		rele_hndl();
-		if(!bRESET)avar_hndl();
+		if(!bRESET_EXT_WDT)avar_hndl();
 		zar_superviser_drv();
 		snmp_data();
 		//LPC_GPIO1->FIODIR|=(1UL<<31);
@@ -25377,7 +25387,7 @@ while (1)
 		//mcp2515_transmit(0,0,0,0,0,0,0,0);
 
 		b1Hz=0;
-		if(!bRESET)
+		if(!bRESET_INT_WDT)
 			{
 			watchdog_reset();
 			}

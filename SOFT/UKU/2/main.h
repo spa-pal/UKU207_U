@@ -1227,6 +1227,8 @@ extern signed short power_current;
 
 extern char bRESET;
 extern char bRESET_EXT;
+extern char bRESET_INT_WDT;
+extern char bRESET_EXT_WDT;
 
 //-----------------------------------------------
 //Климатконтроль и вентиляторы
