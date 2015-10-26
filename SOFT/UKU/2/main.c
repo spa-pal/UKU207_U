@@ -20049,7 +20049,7 @@ else if(ind==iK_net)
 			//lc640_write_int(EE_KUNET,temp_SS);
 			}				
 		speed=1;
-		gran(&temp_SS,10,800);
+		gran(&temp_SS,10,2000);
 		lc640_write_int(EE_KUNET,temp_SS);
 					
 		}
