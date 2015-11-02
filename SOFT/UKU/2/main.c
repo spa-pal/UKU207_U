@@ -20049,7 +20049,7 @@ else if(ind==iK_net)
 			//lc640_write_int(EE_KUNET,temp_SS);
 			}				
 		speed=1;
-		gran(&temp_SS,10,2000);
+		gran(&temp_SS,10,12000);
 		lc640_write_int(EE_KUNET,temp_SS);
 					
 		}
@@ -24935,7 +24935,7 @@ FullCAN_SetFilter(0,0x18e);
 memo_read();
 
 #ifndef UKU_220 
-UARTInit(0, (uint32_t)MODBUS_BAUDRATE*10UL);	/* baud rate setting */
+UARTInit(0, /*(uint32_t)MODBUS_BAUDRATE*10UL*/9600UL);	/* baud rate setting */
 #endif
 
 #ifdef UKU_220 
