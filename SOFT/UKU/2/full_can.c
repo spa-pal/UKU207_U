@@ -1423,6 +1423,14 @@ if((RXBUFF[1]==PUTTM_NET1)&&((RXBUFF[0]&0x1f)>=0)&&((RXBUFF[0]&0x1f)<12))
 	can_reset_cnt=0;
    	}
 
+if( (RXBUFF[0]==MEM_KF)&&(RXBUFF[1]==1)&&(RXBUFF[2]==1))
+     {
+     power_current=*((signed short*)&RXBUFF[3]);
+     power_summary=*((signed long*)&RXBUFF[5]);
+	//ext_can_cnt++;
+	can_reset_cnt=0;
+     }
+
 
 if( ((RXBUFF[0]&0x1f)==8)&&((RXBUFF[1])==PUTTM) )
      {
