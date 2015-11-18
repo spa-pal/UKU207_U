@@ -32,6 +32,7 @@
 #include <rtl.h>
 #include "modbus.h"
 #include "mcp2515.h"
+#include "sc16is7xx.h"
 
 extern U8 own_hw_adr[];
 extern U8  snmp_Community[];
@@ -24980,6 +24981,8 @@ SET_REG(LPC_GPIO2->FIODIR, 1, 8, 1);
 SET_REG(LPC_GPIO3->FIODIR,1,SHIFT_REL_AV_NET,1);
 SET_REG(LPC_GPIO3->FIOSET,1,SHIFT_REL_AV_NET,1);  // реле аварии сети под ток
 
+LPC_GPIO2->FIODIR  |= 1<<7;
+LPC_GPIO2->FIOSET  |= 1<<7;
 
 
 ad7705_reset();
@@ -25440,6 +25443,7 @@ while (1)
 		putchar2(0x59);
 		putchar2(0x5a);*/
 
+		sc16is700_init();
 		}
 	if(b1min)
 		{
