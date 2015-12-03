@@ -197,6 +197,7 @@ const char sk_buff_GLONASS[4]={11,13,15,14};
 const char sk_buff_3U[4]={11,13,15,14};
 const char sk_buff_6U[4]={11,13,15,14};
 const char sk_buff_220[4]={11,13,15,14};
+const char sk_buff_TELECORE2015[4]={11,13,15,14};
 
 char	plazma_inv[4];
 char plazma_bat;
@@ -1005,6 +1006,14 @@ else
 if(bps[11]._device!=dNET_METR) net_F3=net_F;
 #endif
 
+#ifdef UKU_TELECORE2015
+//напряжение сети
+temp_SL=(signed long)net_buff_;
+temp_SL*=Kunet;
+temp_SL/=110000L;
+net_U=(signed short)temp_SL;
+#endif
+
 //Напряжения батарей
 temp_SL=(signed long)adc_buff_[0];
 temp_SL*=Kubat[0];
@@ -1068,6 +1077,14 @@ temp_SL*=Kubatm[1];
 temp_SL/=2000L;
 bat[1]._Ubm=(signed short)temp_SL;
 #endif
+
+#ifdef UKU_TELECORE2015
+temp_SL=(signed long)adc_buff_[2];
+temp_SL*=Kubat[0];
+temp_SL/=2000L;
+bat[0]._Ub=(signed short)temp_SL;
+#endif
+
 /*
 //Токи батарей
 if(!mess_find_unvol(MESS2MATEMAT))
@@ -1098,6 +1115,10 @@ if(!mess_find_unvol(MESS2MATEMAT))
 	if((AUSW_MAIN==24120)||(AUSW_MAIN==24210))temp_SL/=300L;
 	else if((AUSW_MAIN==22010)||(AUSW_MAIN==22035)||(AUSW_MAIN==22033))temp_SL/=2000L;
 	else temp_SL/=1000L;
+	#ifdef UKU_TELECORE2015
+	temp_SL/=2L;
+	temp_SL=-temp_SL;
+	#endif
 	bat[0]._Ib=(signed short)temp_SL;
 
 	temp_SL=(signed long)ad7705_buff_[1];
@@ -1383,6 +1404,20 @@ bat[0]._Ib=Ib_ips_termokompensat;
 
 #endif
 #endif
+
+
+#ifdef UKU_TELECORE2015
+//Внешний датчик температуры №1(температура отсека MSAN)
+if((adc_buff_[7]>800)&&(adc_buff_[7]<3800))ND_EXT[0]=0;
+else ND_EXT[0]=1;
+temp_SL=(signed long)adc_buff_[7];
+temp_SL*=Ktext[0];
+temp_SL/=20000L;
+temp_SL-=273L;
+t_ext[0]=(signed short)temp_SL;
+
+#endif
+
 //напряжение ввода
 temp_SL=(signed long)adc_buff_ext_[0];
 temp_SL*=Kunet_ext[0];
@@ -1824,6 +1859,8 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE[0]==1)&&(BAT_LINK==0))
 
 
 	}*/
+
+
 
 }
 
@@ -3051,65 +3088,150 @@ else
 		if(!(avar_ind_stat&0x000007f8)) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_BPS,1);
      	else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_AV_BPS,1);
 		} 
-/*
-if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_VENT))
+	}
+#endif
+
+#ifdef UKU_KONTUR
+
+//Реле общей аварии
+if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_COMM))
 	{
-	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VENT,1);
-	else SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VENT,1);
+	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_COMM,1);
+	else if(mess_data[1]==1) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_AV_COMM,1);
 	}
 else 
 	{
-	if((RELE_VENT_LOGIC==0)||(RELE_VENT_LOGIC==1))
+     if(  (!(avar_ind_stat&0x00007fff)) &&
+          ((!SK_REL_EN[0]) || (sk_av_stat[0]!=sasON))  &&
+          ((!SK_REL_EN[1]) || (sk_av_stat[1]!=sasON))  &&
+          ((!SK_REL_EN[2]) || (sk_av_stat[2]!=sasON))  /*&&
+          ((!SK_REL_EN[3]) || (sk_av_stat[3]!=sasON))*/  )SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_COMM,1);
+     else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_AV_COMM,1);
+	}
+
+	
+//rel_warm_plazma=0;
+//Реле освещения   
+/*
+if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_WARM))
+	{
+	if(mess_data[1]==0)
 		{
-		if(vent_stat) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VENT,1);
-		else SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VENT,1);
+		SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_WARM,1);
+		rel_warm_plazma=1;
 		}
-	else 
+	else if(mess_data[1]==1) 
 		{
-		if((avar_ind_stat&0x00000004)) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VENT,1);
-     	else SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VENT,1);
+		SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_WARM,1);
+		rel_warm_plazma=2;
+		}
+     }
+else 
+	{
+	if(warm_stat_k==wsOFF) 
+		{
+		SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_WARM,1);
+		rel_warm_plazma=3;
+		}
+     else 
+		{
+		SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_WARM,1);
+		rel_warm_plazma=4;
 		}
 	}
 */
+//Реле освещения
+if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_LIGHT))
+	{
+	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_LIGHT,1);
+	else if(mess_data[1]==1) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_LIGHT,1);
+     }
+else 
+	{
+	if(sk_av_stat[0]!=sasON) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_LIGHT,1);
+     else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_LIGHT,1);
+	}
+
+
+
+//Реле выключения нагрузки
+if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_LOAD_OFF))
+	{
+	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_LOAD_OFF,1);
+	else if(mess_data[1]==1) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_LOAD_OFF,1);
+     }
+else if(tloaddisable_cmnd==0)
+	{
+	SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_LOAD_OFF,1);
+	}
+else if((tloaddisable_cmnd)&&(tloaddisable_cmnd<=11))
+	{
+	SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_LOAD_OFF,1);
+	}
+
+else 
+	{
+	if(!(tloaddisable_stat==tldsON)) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_LOAD_OFF,1);
+     else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_LOAD_OFF,1);
+	} 
+
+//Реле осевого вентилятора или отопителя
+if(RELE_LOG)
+	{
+	if((mess_find_unvol(MESS2RELE_HNDL))&&(mess_data[0]==PARAM_RELE_VENT_WARM))
+		{
+		if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VENT_WARM,1);
+		else if(mess_data[1]==1) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VENT_WARM,1);
+		}
+	else 
+		{
+		if(warm_stat_k==wsOFF) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VENT_WARM,1);
+	     else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VENT_WARM,1);
+		} 
+
+	}
+else 
+	{
+	if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_VENT_WARM))
+		{
+		if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VENT_WARM,1);
+		else if(mess_data[1]==1) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VENT_WARM,1);
+		}
+	else 
+		{
+		if(vent_stat_k==vsOFF) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VENT_WARM,1);
+	     else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VENT_WARM,1);
+		} 
 	}
 #endif
-/*
-#ifdef UKU_220_380
-//Реле аварий батарей
-if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_BAT))
+
+
+#ifdef UKU_TELECORE2015
+//Реле аварии сети
+if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_NET))
 	{
-	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_BAT,1);
-	else if(mess_data[1]==1) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_AV_BAT,1);
+	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_NET,1);
+	else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_AV_NET,1);
+	}
+else	if(!(avar_ind_stat&0x00000001)) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_NET,1);
+else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_AV_NET,1);
+
+
+//Реле освещения
+if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_LIGHT))
+	{
+	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_LIGHT,1);
+	else if(mess_data[1]==1) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_LIGHT,1);
      }
 else 
 	{
-	if(!(avar_ind_stat&0x00000002)) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_BAT,1);
-     else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_AV_BAT,1);
-	} 
-
-if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_BPS))
-	{
-	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_BPS,1);
-	else if(mess_data[1]==1) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_AV_BPS,1);
-     }
-else 
-	{
-	if(!(avar_ind_stat&0x000007f8)) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_BPS,1);
-     else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_AV_BPS,1);
-	} 
-
-if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_VENT))
-	{
-	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VENT,1);
-	else SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VENT,1);
-	}
-else 
-	{
-	if(!vent_stat) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VENT,1);
-	else SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VENT,1);
+	if(sk_av_stat[0]!=sasON) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_LIGHT,1);
+     else SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_LIGHT,1);
 	}
 
-#endif */
+
+#endif
+
 }
 
 //-----------------------------------------------
@@ -5048,7 +5170,9 @@ for(i=0;i<NUMSK;i++)
 	#ifdef UKU_220_IPS_TERMOKOMPENSAT
 	if(adc_buff_[sk_buff_220[i]]<2000)
 	#endif
-
+	#ifdef UKU_TELECORE2015
+	if(adc_buff_[sk_buff_TELECORE2015[i]]<2000)	 //TODO
+	#endif
 
 		{
 		if(sk_cnt[i]<10)

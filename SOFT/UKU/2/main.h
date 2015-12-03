@@ -624,6 +624,15 @@
 #define SHIFT_REL_VENT		9
 #endif
 
+#ifdef UKU_TELECORE2015
+#define SHIFT_REL_AV_NET		5
+#define SHIFT_REL_AV_BAT	4
+#define SHIFT_REL_AV_BPS	     7
+#define SHIFT_REL_BAT1	     8
+#define SHIFT_REL_BAT2	     6
+#define SHIFT_REL_LIGHT		9
+#endif
+
 //***********************************************
 //Таймер
 extern char b1000Hz,b100Hz,b50Hz,b10Hz,b5Hz,b2Hz,b1Hz;
@@ -660,7 +669,10 @@ typedef enum {
 	#endif
 	#ifdef UKU_220_V2
 	iMn_220_V2,
-	#endif 
+	#endif
+	#ifdef UKU_TELECORE2015
+	iMn_TELECORE2015, 
+	#endif
 	iMn,iMn_3U,iMn_RSTKM,
 	#ifndef UKU_220_IPS_TERMOKOMPENSAT
 	iMn_220_IPS_TERMOKOMPENSAT,
@@ -680,7 +692,10 @@ typedef enum {
 	#ifndef UKU_220_V2
 	iMn_220_V2,
 	#endif 
-	iSrv_sl,iNet,iNet3,
+	#ifndef UKU_TELECORE2015
+	iMn_TELECORE2015,
+	#endif 
+	iSrv_sl,iNet,iNet3,iNetEM,
 	iSet,iSet_3U,iSet_RSTKM,iSet_GLONASS,iSet_KONTUR,iSet_6U,iSet_220,iSet_220_IPS_TERMOKOMPENSAT,iSet_220_V2,iInv_set_sel,
 	iBat,iBat_simple,iBat_li,iInv_set,
 	iMakb,
@@ -693,6 +708,7 @@ typedef enum {
 	iK_bps,iK_bps_sel,iK_bat,iK_bat_simple,iK_bat_ips_termokompensat_ib,iK_bat_sel,iK_load,iK_net,iK_net3,
 	iK_makb_sel,iK_makb,
 	iTst,iTst_3U,iTst_RSTKM,iTst_GLONASS,iTst_KONTUR,iTst_6U,iTst_220,iTst_220_380,iTst_220_IPS_TERMOKOMPENSAT,
+	iTst_TELECORE2015,
 	iTst_klbr,iTst_BPS1,iTst_BPS2,iTst_BPS12,iDebug,
 	iDef,iDef_3U,iDef_RSTKM,iDef_GLONASS,iDef_KONTUR,iDef_6U,iDef_220,iDef_220_IPS_TERMOKOMPENSAT,iDef_220_V2,
 	iSet_st_prl,iK_pdp,iSet_T,
@@ -709,6 +725,7 @@ typedef enum {
 	iExt_sk,iExt_sk_3U,iExt_sk_GLONASS,
 	iExt_ddv,iExt_ddi,iExt_dud,iExt_dp,iSM,iLog,iLog_,iBatLog,iKlimat,iKlimat_kontur,
 	iEnerg3,iEnerg,
+	iExtern_TELECORE2015,
 	iVent,
 	iK_power_net3,
 	iAvt,iLan_set,

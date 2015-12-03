@@ -111,6 +111,7 @@ extern char plazma_bat;
 extern signed int i_avg_max,i_avg_min,i_avg_summ,i_avg; 
 extern signed int avg;
 extern char bAVG;
+extern const char sk_buff_TELECORE2015[4];
 
 
 void zar_superviser_drv(void);
