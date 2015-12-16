@@ -319,7 +319,7 @@ if(BAT_C_REAL[0]==0x5555)snmp_bat_capacity[0]=BAT_C_NOM[0];
 else snmp_bat_capacity[0]=BAT_C_REAL[0];
 snmp_bat_charge[0]=bat[0]._zar;
 snmp_bat_status[0]=bat[0]._av;
-
+if(BAT_IS_ON[0]!=bisON)snmp_bat_status[0]=0xff;
 
 snmp_bat_number[1]=2;
 snmp_bat_voltage[1]=bat[1]._Ub;
@@ -330,13 +330,16 @@ if(BAT_C_REAL[1]==0x5555)snmp_bat_capacity[1]=BAT_C_NOM[1];
 else snmp_bat_capacity[1]=BAT_C_REAL[1];
 snmp_bat_charge[1]=bat[1]._zar;
 snmp_bat_status[1]=bat[1]._av;
+if(BAT_IS_ON[1]!=bisON)snmp_bat_status[1]=0xff;
+
 
 
 snmp_bps_number[0]=1;
 snmp_bps_voltage[0]=bps[0]._Uii;
 snmp_bps_current[0]=bps[0]._Ii;
 snmp_bps_temperature[0]=bps[0]._Ti;
-snmp_bps_stat[0]=bps[0]._av;												//Байт состояния БПСа.
+snmp_bps_stat[0]=bps[0]._av;
+if(!(NUMIST>0))snmp_bps_stat[0]=0xff;												//Байт состояния БПСа.
 
 /*if(St_[0]&(1<<2))snmp_bps_stat[0]=(1<<3); 							//авария по Umin
 else if(St_[0]&(1<<3))snmp_bps_stat[0]=(1<<2); 						//авария по Umax
@@ -350,7 +353,7 @@ snmp_bps_voltage[1]=bps[1]._Uii;
 snmp_bps_current[1]=bps[1]._Ii;
 snmp_bps_temperature[1]=bps[1]._Ti;
 snmp_bps_stat[1]=bps[1]._av;
-												//Байт состояния БПСа.
+if(!(NUMIST>1))snmp_bps_stat[1]=0xff;												//Байт состояния БПСа.
 /*if(St_[1]&(1<<2))snmp_bps_stat[1]=(1<<3); 							//авария по Umin
 else if(St_[1]&(1<<3))snmp_bps_stat[1]=(1<<2); 						//авария по Umax
 else if(St_[1]&(1<<4))snmp_bps_stat[1]=(1<<1); 						//авария по Tmax
@@ -363,36 +366,42 @@ snmp_bps_voltage[2]=bps[2]._Uii;
 snmp_bps_current[2]=bps[2]._Ii;
 snmp_bps_temperature[2]=bps[2]._Ti;
 snmp_bps_stat[2]=bps[2]._av;
+if(!(NUMIST>2))snmp_bps_stat[2]=0xff;
 
 snmp_bps_number[3]=4;
 snmp_bps_voltage[3]=bps[3]._Uii;
 snmp_bps_current[3]=bps[3]._Ii;
 snmp_bps_temperature[3]=bps[3]._Ti;
 snmp_bps_stat[3]=bps[3]._av;
+if(!(NUMIST>3))snmp_bps_stat[3]=0xff;
 
 snmp_bps_number[4]=5;
 snmp_bps_voltage[4]=bps[4]._Uii;
 snmp_bps_current[4]=bps[4]._Ii;
 snmp_bps_temperature[4]=bps[4]._Ti;
 snmp_bps_stat[4]=bps[4]._av;
+if(!(NUMIST>4))snmp_bps_stat[4]=0xff;
 
 snmp_bps_number[5]=6;
 snmp_bps_voltage[5]=bps[5]._Uii;
 snmp_bps_current[5]=bps[5]._Ii;
 snmp_bps_temperature[5]=bps[5]._Ti;
 snmp_bps_stat[5]=bps[5]._av;
+if(!(NUMIST>5))snmp_bps_stat[5]=0xff;
 
 snmp_bps_number[6]=7;
 snmp_bps_voltage[6]=bps[6]._Uii;
 snmp_bps_current[6]=bps[6]._Ii;
 snmp_bps_temperature[6]=bps[6]._Ti;
 snmp_bps_stat[6]=bps[6]._av;
+if(!(NUMIST>6))snmp_bps_stat[6]=0xff;
 
 snmp_bps_number[7]=8;
 snmp_bps_voltage[7]=bps[7]._Uii;
 snmp_bps_current[7]=bps[7]._Ii;
 snmp_bps_temperature[7]=bps[7]._Ti;
 snmp_bps_stat[7]=bps[7]._av;
+if(!(NUMIST>7))snmp_bps_stat[7]=0xff;
 
 
 
@@ -601,9 +610,22 @@ for(i=0;i<12;i++)
 	else snmp_avt_stat[i]=1;
 	}
 
+snmp_dt_number[0]=1;
+snmp_dt_number[1]=2;
+snmp_dt_number[2]=3;
+snmp_dt_number[3]=4;
 snmp_dt_temper[0]=t_ext[0];
 snmp_dt_temper[1]=t_ext[1];
 snmp_dt_temper[2]=t_ext[2];
+snmp_dt_temper[3]=t_ext[3];
+snmp_dt_error[0]=ND_EXT[0];
+if(NUMDT<1)snmp_dt_error[0]=0xff;
+snmp_dt_error[1]=ND_EXT[1];
+if(NUMDT<2)snmp_dt_error[0]=0xff;
+snmp_dt_error[2]=ND_EXT[2];
+if(NUMDT<3)snmp_dt_error[0]=0xff;
+snmp_dt_error[3]=ND_EXT[3];
+if(NUMDT<4)snmp_dt_error[0]=0xff;
 
 
 //Литиевые батареи

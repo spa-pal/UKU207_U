@@ -3229,6 +3229,29 @@ else
      else SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_LIGHT,1);
 	}
 
+//Реле отопителя
+if((mess_find_unvol(MESS2RELE_HNDL))&&(mess_data[0]==PARAM_RELE_WARM))
+	{
+	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_WARM,1);
+	else if(mess_data[1]==1) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_WARM,1);
+	}
+else 
+	{
+	if(warm_stat_k==wsOFF) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_WARM,1);
+     else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_WARM,1);
+	} 
+//Реле вентилятора
+if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_VENT))
+	{
+	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VENT,1);
+	else if(mess_data[1]==1) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VENT,1);
+	}
+else 
+	{
+	if(vent_stat_k==vsOFF) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VENT,1);
+     else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VENT,1);
+	} 
+
 
 #endif
 
@@ -3973,6 +3996,147 @@ else
 		}
 	} */
 }
+
+#ifdef UKU_TELECORE2015
+//-----------------------------------------------
+void klimat_hndl_telecore2015(void)
+{
+
+if(t_box>TBOXMAX)
+	{
+	av_tbox_cnt++;
+	} 
+else if(t_box<TBOXMAX)
+	{
+	av_tbox_cnt--;
+	}
+gran(&av_tbox_cnt,0,6);
+
+if(av_tbox_cnt>5)
+	{
+	av_tbox_stat=atsON;
+	}
+if(av_tbox_cnt<1)
+	{
+	av_tbox_stat=atsOFF;
+	}
+
+if(t_box<(TBOXREG-2))
+	{
+	if(t_box_cnt<30)
+		{
+		t_box_cnt++;
+		if(t_box_cnt>=30)
+			{
+			main_vent_pos--;
+			t_box_cnt=0;
+			}
+		}
+	}
+else if(t_box>(TBOXREG))
+	{
+	if(t_box_cnt<30)
+		{
+		t_box_cnt++;
+		if(t_box_cnt>=30)
+			{
+			main_vent_pos++;
+			t_box_cnt=0;
+			}
+		}
+	}
+else
+	{
+	t_box_cnt=0;
+	}
+
+#ifndef UKU_KONTUR
+if(t_box>TBOXVENTMAX)gran(&main_vent_pos,0,20); 
+else gran(&main_vent_pos,0,pos_vent+9);
+
+if((mess_find_unvol(MESS2VENT_HNDL))&&(mess_data[0]==PARAM_VENT_CB))
+	{
+	main_vent_pos=mess_data[1];
+	}
+
+
+if(main_vent_pos<=1)mixer_vent_stat=mvsON;
+else mixer_vent_stat=mvsOFF;
+#endif
+
+#ifdef UKU_KONTUR
+
+if(t_box>TBOXVENTON) t_box_vent_on_cnt++;
+else if(t_box<TBOXVENTOFF) t_box_vent_on_cnt--;
+gran(&t_box_vent_on_cnt,0,10);
+
+if(t_box_vent_on_cnt>9) vent_stat_k=vsON;
+else if(t_box_vent_on_cnt<1) vent_stat_k=vsOFF;
+
+if(t_box<TBOXWARMON) t_box_warm_on_cnt++;
+else if(t_box>TBOXWARMOFF) t_box_warm_on_cnt--;
+gran(&t_box_warm_on_cnt,0,10);
+
+if(t_box_warm_on_cnt>9) warm_stat_k=wsON;
+else if(t_box_warm_on_cnt<1) warm_stat_k=wsOFF;
+
+#endif
+
+if((TBATDISABLE>=50) && (TBATDISABLE<=90))
+	{
+	if(t_box>TBATDISABLE)
+		{
+		tbatdisable_cnt++;
+		}
+	if(t_box<TBATENABLE)
+		{
+		tbatdisable_cnt--;
+		}
+	gran(&tbatdisable_cnt,0,6);
+
+	if(tbatdisable_cnt>5)
+		{
+		tbatdisable_stat=tbdsOFF;
+		}
+	if(tbatdisable_cnt<1)
+		{
+		tbatdisable_stat=tbdsON;
+		}
+	}
+else 
+	{
+	tbatdisable_stat=tbdsON;
+	}
+
+if((TLOADDISABLE>=50) && (TLOADDISABLE<=80))
+	{
+	if(t_box>TLOADDISABLE)
+		{
+		tloaddisable_cnt++;
+		}
+	if(t_box<TLOADENABLE)
+		{
+		tloaddisable_cnt--;
+		}
+	gran(&tloaddisable_cnt,0,6);
+
+	if(tloaddisable_cnt>5)
+		{
+		tloaddisable_stat=tldsOFF;
+		}
+	if(tloaddisable_cnt<1)
+		{
+		tloaddisable_stat=tldsON;
+		}
+	}
+else 
+	{
+	tloaddisable_stat=tldsON;
+	}
+
+}
+#endif
+
 
 #ifndef UKU_KONTUR
 //-----------------------------------------------

@@ -462,6 +462,7 @@
 #define		PARAM_RELE_AV_BAT1					108
 #define		PARAM_RELE_AV_BAT2					109
 #define		PARAM_RELE_NPN						110
+#define		PARAM_RELE_WARM				     111
 
 #define	MESS2IND_HNDL						215
 #define		PARAM_SAMOKALIBR					216
@@ -631,6 +632,8 @@
 #define SHIFT_REL_BAT1	     8
 #define SHIFT_REL_BAT2	     6
 #define SHIFT_REL_LIGHT		9
+#define SHIFT_REL_WARM		4
+#define SHIFT_REL_VENT	     7
 #endif
 
 //***********************************************
@@ -697,7 +700,7 @@ typedef enum {
 	#endif 
 	iSrv_sl,iNet,iNet3,iNetEM,
 	iSet,iSet_3U,iSet_RSTKM,iSet_GLONASS,iSet_KONTUR,iSet_6U,iSet_220,iSet_220_IPS_TERMOKOMPENSAT,iSet_220_V2,iInv_set_sel,
-	iBat,iBat_simple,iBat_li,iInv_set,
+	iBat,iBat_simple,iBat_li,iInv_set,iSet_TELECORE2015,
 	iMakb,
 	iBps,iS2,iSet_prl,iK_prl,iDnd,
 	iK,iK_3U,iK_RSTKM,iK_GLONASS,iK_KONTUR,iK_6U,iK_220,iK_220_380,iK_220_IPS_TERMOKOMPENSAT,iK_220_IPS_TERMOKOMPENSAT_IB,
@@ -723,7 +726,7 @@ typedef enum {
 	iExt_set,iExt_set_3U,iExt_set_GLONASS,
 	iExt_dt,
 	iExt_sk,iExt_sk_3U,iExt_sk_GLONASS,
-	iExt_ddv,iExt_ddi,iExt_dud,iExt_dp,iSM,iLog,iLog_,iBatLog,iKlimat,iKlimat_kontur,
+	iExt_ddv,iExt_ddi,iExt_dud,iExt_dp,iSM,iLog,iLog_,iBatLog,iKlimat,iKlimat_kontur,iKlimat_TELECORE2015,
 	iEnerg3,iEnerg,
 	iExtern_TELECORE2015,
 	iVent,
@@ -1280,6 +1283,17 @@ typedef enum {wsOFF,wsON} enum_warm_stat;
 extern enum_warm_stat warm_stat_k;
 #endif
 
+#ifdef UKU_TELECORE2015
+extern short t_box_vent_on_cnt;
+extern short t_box_warm_on_cnt;
+typedef enum {vsOFF,vsON} enum_vent_stat;
+extern enum_vent_stat vent_stat_k;
+typedef enum {wsOFF,wsON} enum_warm_stat;
+extern enum_warm_stat warm_stat_k;
+#endif
+
+
+
 extern char ext_can_cnt;
 
 
@@ -1316,6 +1330,20 @@ extern short plazma_bat_drv0,plazma_bat_drv1,bat_drv_cnt_cnt;
 extern unsigned short bat_drv_rx_cnt;
 extern char bat_drv_rx_buff[512];
 extern char bat_drv_rx_in;
+
+
+//-----------------------------------------------
+//Климатконтроль TELECORE2015	
+#ifdef UKU_TELECORE2015
+extern signed short TELECORE2015_KLIMAT_SIGNAL;
+extern signed short TELECORE2015_KLIMAT_WARM_ON;
+extern signed short TELECORE2015_KLIMAT_WARM_OFF;
+extern signed short TELECORE2015_KLIMAT_CAP;
+extern signed short TELECORE2015_KLIMAT_VENT_ON;
+extern signed short TELECORE2015_KLIMAT_VENT_OFF;
+#endif
+
+
 
 #ifndef FALSE
 #define FALSE   (0)
