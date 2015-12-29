@@ -1473,7 +1473,7 @@ ibt._T[1]=t_ext[2]+273;
 ibt._nd[0]=ND_EXT[1];
 ibt._nd[1]=ND_EXT[2];
 
-
+#ifndef UKU_TELECORE2015
 if((ibt._nd[0]==0) &&  (ibt._nd[1]==0))
 	{
 	t_box=((ibt._T[0]+ibt._T[1])/2)-273;
@@ -1491,7 +1491,7 @@ else if((ibt._nd[0]==1) &&  (ibt._nd[1]==1))
 	if(t_ext_can_nd<5)t_box= t_ext_can;
 	else t_box=20;
 	}
-
+#endif
 /*
 //Вычисление температуры шкафа
 
@@ -3243,15 +3243,26 @@ else
 //Реле вентилятора
 if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_VENT))
 	{
-	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VENT,1);
-	else if(mess_data[1]==1) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VENT,1);
+	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VENT,1);
+	else if(mess_data[1]==1) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VENT,1);
 	}
 else 
 	{
-	if(vent_stat_k==vsOFF) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VENT,1);
-     else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VENT,1);
+	if(vent_stat_k==vsOFF) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VENT,1);
+     else SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VENT,1);
 	} 
 
+//Реле внутреннего вентилятора
+if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_VVENT))
+	{
+	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VVENT,1);
+	else if(mess_data[1]==1) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VVENT,1);
+	}
+else 
+	{
+	if(vvent_stat_k==vsOFF) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VVENT,1);
+     else SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VVENT,1);
+	} 
 
 #endif
 
@@ -4001,138 +4012,54 @@ else
 //-----------------------------------------------
 void klimat_hndl_telecore2015(void)
 {
+char i;
+char t_bps=20;
+//t_box=25; 
 
-if(t_box>TBOXMAX)
+if(TELECORE2015_KLIMAT_SIGNAL==0)
 	{
-	av_tbox_cnt++;
-	} 
-else if(t_box<TBOXMAX)
-	{
-	av_tbox_cnt--;
+	t_box=bat[0]._Tb;
+	if(bat[0]._nd)t_box=20;
 	}
-gran(&av_tbox_cnt,0,6);
-
-if(av_tbox_cnt>5)
+else if(TELECORE2015_KLIMAT_SIGNAL==1) 
 	{
-	av_tbox_stat=atsON;
+	t_box=t_ext[0];
+	if(ND_EXT[0])t_box=20;
 	}
-if(av_tbox_cnt<1)
-	{
-	av_tbox_stat=atsOFF;
-	}
-
-if(t_box<(TBOXREG-2))
-	{
-	if(t_box_cnt<30)
-		{
-		t_box_cnt++;
-		if(t_box_cnt>=30)
-			{
-			main_vent_pos--;
-			t_box_cnt=0;
-			}
-		}
-	}
-else if(t_box>(TBOXREG))
-	{
-	if(t_box_cnt<30)
-		{
-		t_box_cnt++;
-		if(t_box_cnt>=30)
-			{
-			main_vent_pos++;
-			t_box_cnt=0;
-			}
-		}
-	}
-else
-	{
-	t_box_cnt=0;
-	}
-
-#ifndef UKU_KONTUR
-if(t_box>TBOXVENTMAX)gran(&main_vent_pos,0,20); 
-else gran(&main_vent_pos,0,pos_vent+9);
-
-if((mess_find_unvol(MESS2VENT_HNDL))&&(mess_data[0]==PARAM_VENT_CB))
-	{
-	main_vent_pos=mess_data[1];
-	}
+else t_box=20;
 
 
-if(main_vent_pos<=1)mixer_vent_stat=mvsON;
-else mixer_vent_stat=mvsOFF;
-#endif
+TELECORE2015_KLIMAT_WARM_ON_temp=TELECORE2015_KLIMAT_WARM_ON;
+if(bat[0]._zar<TELECORE2015_KLIMAT_CAP)TELECORE2015_KLIMAT_WARM_ON_temp=10;
 
-#ifdef UKU_KONTUR
 
-if(t_box>TBOXVENTON) t_box_vent_on_cnt++;
-else if(t_box<TBOXVENTOFF) t_box_vent_on_cnt--;
-gran(&t_box_vent_on_cnt,0,10);
 
-if(t_box_vent_on_cnt>9) vent_stat_k=vsON;
-else if(t_box_vent_on_cnt<1) vent_stat_k=vsOFF;
-
-if(t_box<TBOXWARMON) t_box_warm_on_cnt++;
-else if(t_box>TBOXWARMOFF) t_box_warm_on_cnt--;
+if(t_box<TELECORE2015_KLIMAT_WARM_ON_temp) t_box_warm_on_cnt++;
+else if(t_box>TELECORE2015_KLIMAT_WARM_OFF) t_box_warm_on_cnt--;
 gran(&t_box_warm_on_cnt,0,10);
 
 if(t_box_warm_on_cnt>9) warm_stat_k=wsON;
 else if(t_box_warm_on_cnt<1) warm_stat_k=wsOFF;
 
-#endif
 
-if((TBATDISABLE>=50) && (TBATDISABLE<=90))
-	{
-	if(t_box>TBATDISABLE)
-		{
-		tbatdisable_cnt++;
-		}
-	if(t_box<TBATENABLE)
-		{
-		tbatdisable_cnt--;
-		}
-	gran(&tbatdisable_cnt,0,6);
+if(t_box>TELECORE2015_KLIMAT_VENT_ON) t_box_vent_on_cnt++;
+else if(t_box<TELECORE2015_KLIMAT_VENT_OFF) t_box_vent_on_cnt--;
+gran(&t_box_vent_on_cnt,0,10);
 
-	if(tbatdisable_cnt>5)
-		{
-		tbatdisable_stat=tbdsOFF;
-		}
-	if(tbatdisable_cnt<1)
-		{
-		tbatdisable_stat=tbdsON;
-		}
-	}
-else 
+if(t_box_vent_on_cnt>9) vent_stat_k=vsON;
+else if(t_box_vent_on_cnt<1) vent_stat_k=vsOFF;
+
+for(i=0;i<NUMIST;i++)
 	{
-	tbatdisable_stat=tbdsON;
+	if((bps[i]._Ti>t_bps)&&(bps[i]._cnt<10))t_bps=bps[i]._Ti;
 	}
 
-if((TLOADDISABLE>=50) && (TLOADDISABLE<=80))
-	{
-	if(t_box>TLOADDISABLE)
-		{
-		tloaddisable_cnt++;
-		}
-	if(t_box<TLOADENABLE)
-		{
-		tloaddisable_cnt--;
-		}
-	gran(&tloaddisable_cnt,0,6);
+if(t_bps>TELECORE2015_KLIMAT_VVENT_ON) t_box_vvent_on_cnt++;
+else if(t_bps<TELECORE2015_KLIMAT_VVENT_OFF) t_box_vvent_on_cnt--;
+gran(&t_box_vvent_on_cnt,0,10);
 
-	if(tloaddisable_cnt>5)
-		{
-		tloaddisable_stat=tldsOFF;
-		}
-	if(tloaddisable_cnt<1)
-		{
-		tloaddisable_stat=tldsON;
-		}
-	}
-else 
-	{
-	tloaddisable_stat=tldsON;
-	}
+if(t_box_vvent_on_cnt>9) vvent_stat_k=vsON;
+else if(t_box_vvent_on_cnt<1) vvent_stat_k=vsOFF;
 
 }
 #endif

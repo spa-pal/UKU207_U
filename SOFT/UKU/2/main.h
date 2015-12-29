@@ -463,6 +463,7 @@
 #define		PARAM_RELE_AV_BAT2					109
 #define		PARAM_RELE_NPN						110
 #define		PARAM_RELE_WARM				     111
+#define 		PARAM_RELE_VVENT					112
 
 #define	MESS2IND_HNDL						215
 #define		PARAM_SAMOKALIBR					216
@@ -634,6 +635,7 @@
 #define SHIFT_REL_LIGHT		9
 #define SHIFT_REL_WARM		4
 #define SHIFT_REL_VENT	     7
+#define SHIFT_REL_VVENT	     6
 #endif
 
 //***********************************************
@@ -1286,10 +1288,12 @@ extern enum_warm_stat warm_stat_k;
 #ifdef UKU_TELECORE2015
 extern short t_box_vent_on_cnt;
 extern short t_box_warm_on_cnt;
+extern short t_box_vvent_on_cnt;
 typedef enum {vsOFF,vsON} enum_vent_stat;
-extern enum_vent_stat vent_stat_k;
+extern enum_vent_stat vent_stat_k,vvent_stat_k;
 typedef enum {wsOFF,wsON} enum_warm_stat;
 extern enum_warm_stat warm_stat_k;
+extern signed short TELECORE2015_KLIMAT_WARM_ON_temp;
 #endif
 
 
@@ -1341,6 +1345,8 @@ extern signed short TELECORE2015_KLIMAT_WARM_OFF;
 extern signed short TELECORE2015_KLIMAT_CAP;
 extern signed short TELECORE2015_KLIMAT_VENT_ON;
 extern signed short TELECORE2015_KLIMAT_VENT_OFF;
+extern signed short TELECORE2015_KLIMAT_VVENT_ON;
+extern signed short TELECORE2015_KLIMAT_VVENT_OFF;
 #endif
 
 
