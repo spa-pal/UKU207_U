@@ -7,6 +7,7 @@
 #include "25lc640.h"
 #include "avar_hndl.h"
 #include "modbus.h"
+#include "sacred_sun.h"
 
 char bRXIN0;
 char UIB0[100]={0,0,0,0,0,0,0,0,0,0};
@@ -554,6 +555,12 @@ else if ( IIRValue == IIR_RDA )	/* Receive Data Available */
 	//if(bat_drv_rx_cnt<50)
 	bat_drv_rx_buff[bat_drv_rx_cnt++]=data;
 	//if(bat_drv_rx_cnt==50) bat_drv_rx_in=1; 
+
+	if(data==0x0d)
+		{
+		if(sacredSunRequestPhase==0)	mem_copy (sacredSunBatteryInBuff, bat_drv_rx_buff,  bat_drv_rx_cnt);
+		else if(sacredSunRequestPhase==1)	mem_copy (&sacredSunBatteryInBuff[150], bat_drv_rx_buff,  bat_drv_rx_cnt);
+		}
 
 	}
   	}

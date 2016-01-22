@@ -31,6 +31,7 @@
 #include "uart0.h"
 #include <rtl.h>
 #include "modbus.h"
+#include "sacred_sun.h"
 
 extern U8 own_hw_adr[];
 extern U8  snmp_Community[];
@@ -316,7 +317,7 @@ BOOL ND_EXT[3];
 signed char sk_cnt_dumm[4],sk_cnt[4],sk_av_cnt[4];
 enum_sk_stat sk_stat[4]={ssOFF,ssOFF,ssOFF,ssOFF};
 enum_sk_av_stat sk_av_stat[4]={sasOFF,sasOFF,sasOFF,sasOFF},sk_av_stat_old[4];
-signed short t_box;
+signed short t_box,t_box_warm,t_box_vent;
 
 //***********************************************
 //Звуки
@@ -552,7 +553,8 @@ short bIBAT_SMKLBR;
 //-----------------------------------------------
 //Климатконтроль TELECORE2015	
 #ifdef UKU_TELECORE2015
-signed short TELECORE2015_KLIMAT_SIGNAL;
+signed short TELECORE2015_KLIMAT_WARM_SIGNAL;
+signed short TELECORE2015_KLIMAT_VENT_SIGNAL;
 signed short TELECORE2015_KLIMAT_WARM_ON;
 signed short TELECORE2015_KLIMAT_WARM_OFF;
 signed short TELECORE2015_KLIMAT_CAP;
@@ -3017,9 +3019,10 @@ else if(ind==iMn_TELECORE2015)
 	int2lcd(vz_cnt_s_/60,'x',0);
 	int2lcd(vz_cnt_h_,'X',0); 
 
-	//int2lcdyx(plazma_bat_drv0,0,4,0);
-	//int2lcdyx(plazma_bat_drv1,0,10,0);
-	//int2lcdyx(bat[0]._min_cell_volt,0,15,0); 
+	//int2lcdyx(plazma_bat_drv0,0,2,0);
+//	int2lcdyx(plazma_bat_drv1,0,6,0);
+//	int2lcdyx(lakb[0]._s_o_c_abs,0,19,0);
+//	int2lcdyx(lakb[0]._ch_curr,0,12,0); 
 	//int2lcdyx(bat_drv_rx_cnt,0,19,0);
 //	int2lcdyx(bps[i+20]._buff[14],0,19,0);
 /*	int2lcdyx(makb[2]._cnt,0,10,0);*/
@@ -3143,7 +3146,7 @@ else if (ind==iBat_simple)
 else if (ind==iBat_li)
 	{
 
-	if(bat[sub_ind1]._av&1)
+/*	if(bat[sub_ind1]._av&1)
 		{
 		if(bFL2)bgnd_par("       АВАРИЯ!        ",
 		                 "     Батарея №#       ",
@@ -3159,7 +3162,7 @@ else if (ind==iBat_li)
 		else bgnd_par(sm_,sm_,sm_,sm_);
 		int2lcd(sub_ind1+1,'#',0);
 		}               
-	else
+	else*/
 		{
 		if(bat[sub_ind1]._Ib/*lakb[sub_ind1]._ch_curr*/>0)
 		     {
@@ -10206,15 +10209,17 @@ else if(ind==iKlimat_kontur)
 else if(ind==iKlimat_TELECORE2015)
 	{
 	ptrs[0]=				" Сигнал температуры ";
-	ptrs[1]=				"                  ! ";
-	ptrs[2]=				" tвкл.отопит.   $°C ";
-	ptrs[3]=				" tоткл.отопит.  <°C ";
-	ptrs[4]=				" Qперкл.        *%  ";
-	ptrs[5]=				" tвкл.вент.     ^°C ";
-	ptrs[6]=				" tоткл.вент.    &°C ";
-	ptrs[7]=				" tвкл.вн.вент.  [°C ";
-	ptrs[8]=				" tоткл.вн.вент. ]°C ";
-	ptrs[9]=				" Выход              ";
+	ptrs[1]=				" обогрева         ! ";
+	ptrs[2]=				" Сигнал температуры ";
+	ptrs[3]=				" вентилятора      @ ";
+	ptrs[4]=				" tвкл.отопит.   $°C ";
+	ptrs[5]=				" tоткл.отопит.  <°C ";
+	ptrs[6]=				" Qперкл.        *%  ";
+	ptrs[7]=				" tвкл.вент.     ^°C ";
+	ptrs[8]=				" tоткл.вент.    &°C ";
+	ptrs[9]=				" tвкл.вн.вент.  [°C ";
+	ptrs[10]=				" tоткл.вн.вент. ]°C ";
+	ptrs[11]=				" Выход              ";
 
 
 
@@ -10226,9 +10231,12 @@ else if(ind==iKlimat_TELECORE2015)
 						ptrs[index_set+2]);
 	pointer_set(1);
 
-	if(TELECORE2015_KLIMAT_SIGNAL==0) sub_bgnd("ДТ АКБ",'!',-5);
-	else if(TELECORE2015_KLIMAT_SIGNAL==1) sub_bgnd("ДТ 1",'!',-3);
+	if(TELECORE2015_KLIMAT_WARM_SIGNAL==0) sub_bgnd("ДТ АКБ",'!',-5);
+	else if(TELECORE2015_KLIMAT_WARM_SIGNAL==1) sub_bgnd("ДТ 1",'!',-3);
 	else sub_bgnd("ДТ BMS",'!',-5);
+	if(TELECORE2015_KLIMAT_VENT_SIGNAL==0) sub_bgnd("ДТ АКБ",'@',-5);
+	else if(TELECORE2015_KLIMAT_VENT_SIGNAL==1) sub_bgnd("ДТ 1",'@',-3);
+	else sub_bgnd("ДТ BMS",'@',-5);
 	int2lcd_mmm(TELECORE2015_KLIMAT_WARM_ON,'$',0); 
 	int2lcd_mmm(TELECORE2015_KLIMAT_WARM_OFF,'<',0);
 	int2lcd_mmm(TELECORE2015_KLIMAT_CAP,'*',0);	
@@ -25894,29 +25902,41 @@ else if(ind==iKlimat_kontur)
 		{
 		sub_ind++;
 		if(sub_ind==1)sub_ind++;
-		gran_char(&sub_ind,0,9);
-	
+		gran_char(&sub_ind,0,11);
+		if(sub_ind==3)sub_ind++;
+		gran_char(&sub_ind,0,11);	
 		}
 
 	else if(but==butU)
 		{
 		sub_ind--;
 		if(sub_ind==1)sub_ind--;
-		gran_char(&sub_ind,0,9);
+		gran_char(&sub_ind,0,11);
+		if(sub_ind==3)sub_ind--;
+		gran_char(&sub_ind,0,11);
 		
 		}
 	else if(sub_ind==0)
 	     {
-	     if(but==butR)TELECORE2015_KLIMAT_SIGNAL++;
-	     else if(but==butR_)TELECORE2015_KLIMAT_SIGNAL++;
-	     else if(but==butL)TELECORE2015_KLIMAT_SIGNAL--;
-	     else if(but==butL_)TELECORE2015_KLIMAT_SIGNAL--;
-	     gran_ring(&TELECORE2015_KLIMAT_SIGNAL,0,2);
-	     lc640_write_int(EE_TELECORE2015_KLIMAT_SIGNAL,TELECORE2015_KLIMAT_SIGNAL);
+	     if(but==butR)TELECORE2015_KLIMAT_WARM_SIGNAL++;
+	     else if(but==butR_)TELECORE2015_KLIMAT_WARM_SIGNAL++;
+	     else if(but==butL)TELECORE2015_KLIMAT_WARM_SIGNAL--;
+	     else if(but==butL_)TELECORE2015_KLIMAT_WARM_SIGNAL--;
+	     gran_ring(&TELECORE2015_KLIMAT_WARM_SIGNAL,0,2);
+	     lc640_write_int(EE_TELECORE2015_KLIMAT_WARM_SIGNAL,TELECORE2015_KLIMAT_WARM_SIGNAL);
 	     speed=1;
 	     }
-
 	else if(sub_ind==2)
+	     {
+	     if(but==butR)TELECORE2015_KLIMAT_VENT_SIGNAL++;
+	     else if(but==butR_)TELECORE2015_KLIMAT_VENT_SIGNAL++;
+	     else if(but==butL)TELECORE2015_KLIMAT_VENT_SIGNAL--;
+	     else if(but==butL_)TELECORE2015_KLIMAT_VENT_SIGNAL--;
+	     gran_ring(&TELECORE2015_KLIMAT_VENT_SIGNAL,0,2);
+	     lc640_write_int(EE_TELECORE2015_KLIMAT_VENT_SIGNAL,TELECORE2015_KLIMAT_VENT_SIGNAL);
+	     speed=1;
+	     }
+	else if(sub_ind==4)
 	     {
 	     if(but==butR)TELECORE2015_KLIMAT_WARM_ON++;
 	     else if(but==butR_)TELECORE2015_KLIMAT_WARM_ON+=2;
@@ -25927,7 +25947,7 @@ else if(ind==iKlimat_kontur)
 	     speed=1;
 	     }
 
-	else if(sub_ind==3)
+	else if(sub_ind==5)
 	     {
 	     if(but==butR)TELECORE2015_KLIMAT_WARM_OFF++;
 	     else if(but==butR_)TELECORE2015_KLIMAT_WARM_OFF+=2;
@@ -25939,7 +25959,7 @@ else if(ind==iKlimat_kontur)
 	     }
 
 
-	else if(sub_ind==4)
+	else if(sub_ind==6)
 	     {
 	     if(but==butR)TELECORE2015_KLIMAT_CAP++;
 	     else if(but==butR_)TELECORE2015_KLIMAT_CAP+=2;
@@ -25951,7 +25971,7 @@ else if(ind==iKlimat_kontur)
 	     speed=1;
 	     }
 
-	else if(sub_ind==5)
+	else if(sub_ind==7)
 	     {
 	     if(but==butR)TELECORE2015_KLIMAT_VENT_ON++;
 	     else if(but==butR_)TELECORE2015_KLIMAT_VENT_ON+=2;
@@ -25963,7 +25983,7 @@ else if(ind==iKlimat_kontur)
 	     speed=1;
 	     }
 
-	else if(sub_ind==6)
+	else if(sub_ind==8)
 	     {
 	     if(but==butR)TELECORE2015_KLIMAT_VENT_OFF++;
 	     else if(but==butR_)TELECORE2015_KLIMAT_VENT_OFF+=2;
@@ -25974,7 +25994,7 @@ else if(ind==iKlimat_kontur)
 	     lc640_write_int(EE_TELECORE2015_KLIMAT_VENT_OFF,TELECORE2015_KLIMAT_VENT_OFF);
 	     speed=1;
 	     }
-	else if(sub_ind==7)
+	else if(sub_ind==9)
 	     {
 	     if(but==butR)TELECORE2015_KLIMAT_VVENT_ON++;
 	     else if(but==butR_)TELECORE2015_KLIMAT_VVENT_ON+=2;
@@ -25986,7 +26006,7 @@ else if(ind==iKlimat_kontur)
 	     speed=1;
 	     }
 
-	else if(sub_ind==8)
+	else if(sub_ind==10)
 	     {
 	     if(but==butR)TELECORE2015_KLIMAT_VVENT_OFF++;
 	     else if(but==butR_)TELECORE2015_KLIMAT_VVENT_OFF+=2;
@@ -25999,7 +26019,7 @@ else if(ind==iKlimat_kontur)
 	     }
 
 
-	else if(sub_ind==9)
+	else if(sub_ind==11)
 		{
 		if(but==butE)
 			{
@@ -26818,6 +26838,12 @@ while (1)
 		if(t_ext_can_nd<10) t_ext_can_nd++;
 		
 		//if(main_1Hz_cnt<200)main_1Hz_cnt++;
+
+		#ifdef UKU_TELECORE2015
+
+		sacred_san_bat_hndl();
+
+		#endif
 
 
 		can_reset_hndl();

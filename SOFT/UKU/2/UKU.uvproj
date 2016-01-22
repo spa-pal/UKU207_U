@@ -561,6 +561,11 @@
               <FileType>1</FileType>
               <FilePath>.\mcp2515.c</FilePath>
             </File>
+            <File>
+              <FileName>sacred_sun.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sacred_sun.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1137,6 +1142,11 @@
               <FileName>mcp2515.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\mcp2515.c</FilePath>
+            </File>
+            <File>
+              <FileName>sacred_sun.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sacred_sun.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1715,6 +1725,11 @@
               <FileType>1</FileType>
               <FilePath>.\mcp2515.c</FilePath>
             </File>
+            <File>
+              <FileName>sacred_sun.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sacred_sun.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2291,6 +2306,11 @@
               <FileName>mcp2515.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\mcp2515.c</FilePath>
+            </File>
+            <File>
+              <FileName>sacred_sun.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sacred_sun.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2869,6 +2889,11 @@
               <FileType>1</FileType>
               <FilePath>.\mcp2515.c</FilePath>
             </File>
+            <File>
+              <FileName>sacred_sun.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sacred_sun.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3445,6 +3470,11 @@
               <FileName>mcp2515.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\mcp2515.c</FilePath>
+            </File>
+            <File>
+              <FileName>sacred_sun.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sacred_sun.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4023,6 +4053,11 @@
               <FileType>1</FileType>
               <FilePath>.\mcp2515.c</FilePath>
             </File>
+            <File>
+              <FileName>sacred_sun.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sacred_sun.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4599,6 +4634,11 @@
               <FileName>mcp2515.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\mcp2515.c</FilePath>
+            </File>
+            <File>
+              <FileName>sacred_sun.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sacred_sun.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5312,6 +5352,11 @@
                 </FileArmAds>
               </FileOption>
             </File>
+            <File>
+              <FileName>sacred_sun.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sacred_sun.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5946,6 +5991,11 @@
               <FileType>1</FileType>
               <FilePath>.\mcp2515.c</FilePath>
             </File>
+            <File>
+              <FileName>sacred_sun.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sacred_sun.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6523,6 +6573,11 @@
               <FileType>1</FileType>
               <FilePath>.\mcp2515.c</FilePath>
             </File>
+            <File>
+              <FileName>sacred_sun.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sacred_sun.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -7099,6 +7154,11 @@
               <FileName>mcp2515.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\mcp2515.c</FilePath>
+            </File>
+            <File>
+              <FileName>sacred_sun.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sacred_sun.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7773,6 +7833,11 @@
               <FileType>1</FileType>
               <FilePath>.\mcp2515.c</FilePath>
             </File>
+            <File>
+              <FileName>sacred_sun.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sacred_sun.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -8349,6 +8414,11 @@
               <FileName>mcp2515.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\mcp2515.c</FilePath>
+            </File>
+            <File>
+              <FileName>sacred_sun.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sacred_sun.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9218,6 +9288,11 @@
               <FileType>1</FileType>
               <FilePath>.\mcp2515.c</FilePath>
             </File>
+            <File>
+              <FileName>sacred_sun.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sacred_sun.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -9986,6 +10061,11 @@
                   </Cads>
                 </FileArmAds>
               </FileOption>
+            </File>
+            <File>
+              <FileName>sacred_sun.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sacred_sun.c</FilePath>
             </File>
           </Files>
         </Group>

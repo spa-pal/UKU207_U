@@ -183,6 +183,11 @@
 #define DISPLAY_LAKB_RBT					1,13
 #define DISPLAY_LAKB_FLAGS1				1,14
 #define DISPLAY_LAKB_FLAGS2				1,15
+#define DISPLAY_LAKB_DAMP1				1,16
+#define DISPLAY_LAKB_DAMP2				1,17
+#define DISPLAY_LAKB_DAMP3				1,18
+#define DISPLAY_LAKB_DAMP4				1,19
+#define DISPLAY_LAKB_DAMP5				1,20
 
 
 
@@ -1038,7 +1043,7 @@ typedef struct
 	signed short	_min_cell_volt;
 	signed short	_max_cell_temp;
 	signed short	_min_cell_temp;
-	signed short	_tot_bat_volt;
+	unsigned short	_tot_bat_volt;
 	signed short	_ch_curr;
 	signed short	_dsch_curr;
 	signed short	_rat_cap;
@@ -1053,6 +1058,7 @@ typedef struct
 	signed short	_rs485_cnt;
 	signed short 	_cnt;
 	signed short 	_battCommState;	//0 - норма, 1 - отсутствует связь промежуточной платы и батареи(RS485), 2 - отсутствует связь с промежуточной платой (KAN) 	
+	signed short	_s_o_c_abs;		//остаточный заряд в абсолютном выражении
 	} LAKB_STAT; 
 extern LAKB_STAT lakb[2];
 
@@ -1205,7 +1211,7 @@ typedef enum  {ssOFF,ssON} enum_sk_stat;
 extern enum_sk_stat sk_stat[4];
 typedef enum  {sasOFF,sasON} enum_sk_av_stat;
 extern enum_sk_av_stat sk_av_stat[4],sk_av_stat_old[4];
-extern signed short t_box;
+extern signed short t_box,t_box_warm,t_box_vent;
 
 //***********************************************
 //Звуки
@@ -1339,7 +1345,8 @@ extern char bat_drv_rx_in;
 //-----------------------------------------------
 //Климатконтроль TELECORE2015	
 #ifdef UKU_TELECORE2015
-extern signed short TELECORE2015_KLIMAT_SIGNAL;
+extern signed short TELECORE2015_KLIMAT_WARM_SIGNAL;
+extern signed short TELECORE2015_KLIMAT_VENT_SIGNAL;
 extern signed short TELECORE2015_KLIMAT_WARM_ON;
 extern signed short TELECORE2015_KLIMAT_WARM_OFF;
 extern signed short TELECORE2015_KLIMAT_CAP;

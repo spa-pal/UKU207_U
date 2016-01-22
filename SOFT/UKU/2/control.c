@@ -8,6 +8,7 @@
 #include "main.h"
 #include "beep.h"
 #include "snmp_data_file.h" 
+#include "sacred_sun.h"
 #include <LPC17xx.h>
 
 #define KOEFPOT  105L
@@ -758,6 +759,7 @@ void matemat(void)
 //signed short temp_SS;
 signed long temp_SL/*,temp_SL_*/;
 char /*temp,*/i;
+signed short temp_SS;
 
 #ifdef UKU_MGTS
 //напряжение сети
@@ -1806,6 +1808,7 @@ inv[1]._Uil=bps[21]._buff[10]+(bps[21]._buff[11]*256);
 inv[1]._cnt=0;    
 #endif
 
+/*
 if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 	{
 	lakb[0]._battCommState=0;
@@ -1820,7 +1823,85 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 		bat[0]._Tb=(signed short)lakb[0]._max_cell_temp;
 		}
 	}
+*/
 
+#ifdef UKU_TELECORE2015
+
+	lakb[0]._ch_curr/*temp_SS*/=((ascii2halFhex(sacredSunBatteryInBuff[113]))<<12)+
+						((ascii2halFhex(sacredSunBatteryInBuff[114]))<<8)+
+						((ascii2halFhex(sacredSunBatteryInBuff[115]))<<4)+
+						((ascii2halFhex(sacredSunBatteryInBuff[116])));
+	
+	/*if(temp_SS&0x8000)		lakb[0]._ch_curr=~temp_SS;
+	else 				lakb[0]._ch_curr=temp_SS;*/
+
+	lakb[0]._tot_bat_volt=	(unsigned short)(((ascii2halFhex(sacredSunBatteryInBuff[117]))<<12)+
+						((ascii2halFhex(sacredSunBatteryInBuff[118]))<<8)+
+						((ascii2halFhex(sacredSunBatteryInBuff[119]))<<4)+
+						((ascii2halFhex(sacredSunBatteryInBuff[120]))))/100;
+
+	lakb[0]._max_cell_temp= 	(((ascii2halFhex(sacredSunBatteryInBuff[93]))<<12)+
+						((ascii2halFhex(sacredSunBatteryInBuff[94]))<<8)+
+						((ascii2halFhex(sacredSunBatteryInBuff[95]))<<4)+
+						((ascii2halFhex(sacredSunBatteryInBuff[96]))))/10-273;
+
+	lakb[0]._s_o_c_abs=		(unsigned short)((ascii2halFhex(sacredSunBatteryInBuff[121]))<<12)+
+						((ascii2halFhex(sacredSunBatteryInBuff[122]))<<8)+
+						((ascii2halFhex(sacredSunBatteryInBuff[123]))<<4)+
+						((ascii2halFhex(sacredSunBatteryInBuff[124])));
+
+	lakb[0]._rat_cap=		(unsigned short)((ascii2halFhex(sacredSunBatteryInBuff[127]))<<12)+
+						((ascii2halFhex(sacredSunBatteryInBuff[128]))<<8)+
+						((ascii2halFhex(sacredSunBatteryInBuff[129]))<<4)+
+						((ascii2halFhex(sacredSunBatteryInBuff[130])));
+
+	lakb[0]._s_o_c=		lakb[0]._s_o_c_abs/(lakb[0]._rat_cap/100);
+
+
+/*	lakb[0]._rat_cap= (lakb_damp[i][13]*256)+ lakb_damp[i][14];
+	lakb[0]._max_cell_volt= (lakb_damp[i][0]*256)+ lakb_damp[i][1];
+	lakb[0]._min_cell_volt= (lakb_damp[i][2]*256)+ lakb_damp[i][3];
+	lakb[0]._max_cell_temp= lakb_damp[i][4];
+	lakb[0]._min_cell_temp= lakb_damp[i][5];
+	lakb[0]._tot_bat_volt= (lakb_damp[i][6]*256)+ lakb_damp[i][7];
+	lakb[0]._ch_curr= (lakb_damp[i][8]*256)+ lakb_damp[i][8];
+	lakb[0]._dsch_curr= (lakb_damp[i][10]*256)+ lakb_damp[i][11];
+	lakb[0]._s_o_c= lakb_damp[i][12];
+	lakb[0]._r_b_t= lakb_damp[i][15];
+	lakb[0]._c_c_l_v= (lakb_damp[i][16]*256)+ lakb_damp[i][17];
+	lakb[0]._s_o_h= lakb_damp[i][18];
+
+	if(lakb[i]._rat_cap==0)
+		{
+		if(lakb[i]._isOnCnt)
+			{
+			lakb[i]._isOnCnt--;
+			if(lakb[i]._isOnCnt==0)
+				{
+				if(lakb[i]._battIsOn!=0) bLAKB_KONF_CH=1;
+				}
+			}
+		}
+	else 
+		{
+		if(lakb[i]._isOnCnt<50)
+			{
+			lakb[i]._isOnCnt++;
+			if(lakb[i]._isOnCnt==50)
+				{
+				if(lakb[i]._battIsOn!=1) bLAKB_KONF_CH=1;
+				}
+			}
+		}
+	gran(&lakb[i]._isOnCnt,0,50);*/
+
+	
+
+    bat[0]._Ub=lakb[0]._tot_bat_volt;
+    bat[0]._Tb=lakb[0]._max_cell_temp;
+    bat[0]._Ib=lakb[0]._ch_curr/100;
+
+#endif
 
 
 
@@ -4016,17 +4097,35 @@ char i;
 char t_bps=20;
 //t_box=25; 
 
-if(TELECORE2015_KLIMAT_SIGNAL==0)
+if(TELECORE2015_KLIMAT_WARM_SIGNAL==0)
 	{
-	t_box=bat[0]._Tb;
-	if(bat[0]._nd)t_box=20;
+	t_box_warm=bat[0]._Tb;
+	if(bat[0]._nd)t_box_warm=20;
 	}
-else if(TELECORE2015_KLIMAT_SIGNAL==1) 
+else if(TELECORE2015_KLIMAT_WARM_SIGNAL==1) 
 	{
-	t_box=t_ext[0];
-	if(ND_EXT[0])t_box=20;
+	t_box_warm=t_ext[0];
+	if(ND_EXT[0])t_box_warm=20;
 	}
-else t_box=20;
+else 
+	{
+	t_box_warm=lakb[0]._max_cell_temp;
+	}
+
+if(TELECORE2015_KLIMAT_VENT_SIGNAL==0)
+	{
+	t_box_vent=bat[0]._Tb;
+	if(bat[0]._nd)t_box_vent=20;
+	}
+else if(TELECORE2015_KLIMAT_VENT_SIGNAL==1) 
+	{
+	t_box_vent=t_ext[0];
+	if(ND_EXT[0])t_box_vent=20;
+	}
+else 
+	{
+	t_box_vent=lakb[0]._max_cell_temp;
+	}
 
 
 TELECORE2015_KLIMAT_WARM_ON_temp=TELECORE2015_KLIMAT_WARM_ON;
@@ -4034,16 +4133,16 @@ if(bat[0]._zar<TELECORE2015_KLIMAT_CAP)TELECORE2015_KLIMAT_WARM_ON_temp=10;
 
 
 
-if(t_box<TELECORE2015_KLIMAT_WARM_ON_temp) t_box_warm_on_cnt++;
-else if(t_box>TELECORE2015_KLIMAT_WARM_OFF) t_box_warm_on_cnt--;
+if(t_box_warm<TELECORE2015_KLIMAT_WARM_ON_temp) t_box_warm_on_cnt++;
+else if(t_box_warm>TELECORE2015_KLIMAT_WARM_OFF) t_box_warm_on_cnt--;
 gran(&t_box_warm_on_cnt,0,10);
 
 if(t_box_warm_on_cnt>9) warm_stat_k=wsON;
 else if(t_box_warm_on_cnt<1) warm_stat_k=wsOFF;
 
 
-if(t_box>TELECORE2015_KLIMAT_VENT_ON) t_box_vent_on_cnt++;
-else if(t_box<TELECORE2015_KLIMAT_VENT_OFF) t_box_vent_on_cnt--;
+if(t_box_vent>TELECORE2015_KLIMAT_VENT_ON) t_box_vent_on_cnt++;
+else if(t_box_vent<TELECORE2015_KLIMAT_VENT_OFF) t_box_vent_on_cnt--;
 gran(&t_box_vent_on_cnt,0,10);
 
 if(t_box_vent_on_cnt>9) vent_stat_k=vsON;
