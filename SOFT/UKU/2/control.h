@@ -117,5 +117,7 @@ extern const char sk_buff_TELECORE2015[4];
 void zar_superviser_drv(void);
 void zar_superviser_start(void);
 void vent_hndl(void);
+void speedChargeHndl(void);
+void speedChargeStartStop(void);
 
 

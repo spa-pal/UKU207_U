@@ -4909,6 +4909,11 @@ else
 
 //u_necc=2355;
 
+if(speedChIsOn)
+	{
+	u_necc=speedChrgVolt;
+	}
+
 if(mess_find_unvol(MESS2UNECC_HNDL))
 	{		
 	if(mess_data[0]==PARAM_UNECC_SET)
@@ -5071,6 +5076,8 @@ void cntrl_hndl(void)
 {
 
 IZMAX_=IZMAX;
+
+if(speedChIsOn)IZMAX_=speedChrgCurr;
 
 if(cntrl_stat_blok_cnt)cntrl_stat_blok_cnt--;
 if(cntrl_stat_blok_cnt_)cntrl_stat_blok_cnt_--;
@@ -5609,6 +5616,53 @@ if(npn_stat==npnsOFF) mess_send(MESS2RELE_HNDL,PARAM_RELE_NPN,1,15);
 
 
 }
+
+//-----------------------------------------------
+void speedChargeHndl(void)
+{
+if(speedChIsOn)
+	{
+	speedChTimeCnt++;
+	if(speedChTimeCnt>=((signed long)speedChrgTimeInHour*3600L))
+		{
+		speedChIsOn=0;
+		}
+	}
+
+
+
+if(speedChrgAvtEn)
+	{
+	if(!speedChIsOn)
+		{
+		if((load_U<u_necc)&&((u_necc-load_U)>speedChrgDU)&&(abs(Ib_ips_termokompensat/10-IZMAX)<5))
+			{
+			speedChIsOn=1;
+			}
+		}
+	}
+
+
+
+
+}
+
+//-----------------------------------------------
+void speedChargeStartStop(void)
+{
+if(speedChIsOn)
+	{
+	speedChIsOn=0;
+	}
+
+else
+	{
+	speedChIsOn=1;
+	speedChTimeCnt=0;
+	} 
+
+}
+
 
 //-----------------------------------------------
 void vent_hndl(void)

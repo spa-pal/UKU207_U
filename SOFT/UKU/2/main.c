@@ -552,7 +552,7 @@ short bIBAT_SMKLBR;
 
 //-----------------------------------------------
 //Климатконтроль TELECORE2015	
-#ifdef UKU_TELECORE2015
+//#ifdef UKU_TELECORE2015
 signed short TELECORE2015_KLIMAT_WARM_SIGNAL;
 signed short TELECORE2015_KLIMAT_VENT_SIGNAL;
 signed short TELECORE2015_KLIMAT_WARM_ON;
@@ -562,7 +562,7 @@ signed short TELECORE2015_KLIMAT_VENT_ON;
 signed short TELECORE2015_KLIMAT_VENT_OFF;
 signed short TELECORE2015_KLIMAT_VVENT_ON;
 signed short TELECORE2015_KLIMAT_VVENT_OFF;
-#endif  
+//#endif  
 //-----------------------------------------------
 //Управление низкоприоритетной нагрузкой
 signed short npn_tz_cnt;
@@ -583,6 +583,18 @@ char bat_drv_rx_buff[512];
 char bat_drv_rx_in;
 
 short plazma_bat_drv0,plazma_bat_drv1,bat_drv_cnt_cnt;
+
+//-----------------------------------------------
+//Ускоренный заряд
+signed short speedChrgCurr;			//максимальный ток ускоренного заряда, отображение из ЕЕПРОМ
+signed short speedChrgVolt;			//максимальное напряжение ускоренного заряда, отображение из ЕЕПРОМ
+signed short speedChrgTimeInHour; 		//максимальное время ускоренного заряда в часах, отображение из ЕЕПРОМ
+signed short speedChrgAvtEn;	    		//Автоматическое включение Ускоренного заряда включено/выключено
+signed short speedChrgDU;	    		//Просадка напряжения необходимая для включения ускоренного заряда
+signed short speedChIsOn;			//Текущее состояние ускоренного заряда вкл/выкл
+signed long  speedChTimeCnt;			//Счетчик времени прямой ускоренного заряда
+signed short speedChrgBlckSrc;		//Источник сигнала блокировки, 0-выкл., 1-СК1, 2-СК2
+signed short speedChrgBlckLog;		//Логика сигнала блокировки, 1 - блокировка по замкнутому СК, 0 - по разомкнутому
 
 //-----------------------------------------------
 void rtc_init (void) 
@@ -1422,6 +1434,14 @@ if((sk_av_stat[3]==sasON)&&(NUMSK>3)&&(!SK_LCD_EN[3]))
 	sub_ptrs[i++]=	"   Авария СК №4     ";
 	sub_cnt_max++;	
 	} */
+
+#ifdef UKU_220_IPS_TERMOKOMPENSAT
+if(speedChIsOn)
+	{
+	sub_ptrs[i++]=	" Ускоренный заряд!! ";
+	sub_cnt_max++;	
+	}
+#endif
 cnt_of_slave=NUMIST+NUMINV;
 
 
@@ -2595,15 +2615,16 @@ else if((ind==iMn_220)||(ind==iMn_220_IPS_TERMOKOMPENSAT))
 
      ptrs[4+NUMIST+NUMBAT+NUMINV]= 					" Сеть               "; 
      ptrs[5+NUMIST+NUMBAT+NUMINV]= 					" Нагрузка           "; 
-     ptrs[6+NUMIST+NUMBAT+NUMINV]= 					" Внешние датчики    "; 
- 	ptrs[6+NUMIST+NUMBAT+NUMINV+(NUMEXT!=0)]= 			" Спецфункции    	 ";
-     ptrs[7+NUMIST+NUMBAT+NUMINV+(NUMEXT!=0)]= 			" Установки          "; 
-     ptrs[8+NUMIST+NUMBAT+NUMINV+(NUMEXT!=0)]= 			" Журнал событий     "; 
-     ptrs[9+NUMIST+NUMBAT+NUMINV+(NUMEXT!=0)]= 			" Выход              "; 
-     ptrs[10+NUMIST+NUMBAT+NUMINV+(NUMEXT!=0)]= 			" Журнал батареи N1  "; 
-     ptrs[11+NUMIST+NUMBAT+NUMINV+(NUMEXT!=0)]= 			" Журнал батареи N2  "; 
-	ptrs[12+NUMIST+NUMBAT+NUMINV+(NUMEXT!=0)]=			" Тест               ";
-	ptrs[13+NUMIST+NUMBAT+NUMINV+(NUMEXT!=0)]=			" Таблица источников ";
+     ptrs[6+NUMIST+NUMBAT+NUMINV]= 					" Внешние датчики    ";
+	ptrs[6+NUMIST+NUMBAT+NUMINV+(NUMEXT!=0)]= 			" Ускоренный заряд   "; 
+ 	ptrs[7+NUMIST+NUMBAT+NUMINV+(NUMEXT!=0)]= 			" Спецфункции    	 ";
+     ptrs[8+NUMIST+NUMBAT+NUMINV+(NUMEXT!=0)]= 			" Установки          "; 
+     ptrs[9+NUMIST+NUMBAT+NUMINV+(NUMEXT!=0)]= 			" Журнал событий     "; 
+     ptrs[10+NUMIST+NUMBAT+NUMINV+(NUMEXT!=0)]= 			" Выход              "; 
+     ptrs[11+NUMIST+NUMBAT+NUMINV+(NUMEXT!=0)]= 			" Журнал батареи N1  "; 
+     ptrs[12+NUMIST+NUMBAT+NUMINV+(NUMEXT!=0)]= 			" Журнал батареи N2  "; 
+	ptrs[13+NUMIST+NUMBAT+NUMINV+(NUMEXT!=0)]=			" Тест               ";
+	ptrs[14+NUMIST+NUMBAT+NUMINV+(NUMEXT!=0)]=			" Таблица источников ";
 
      if(sub_ind==0)index_set=0;
 	else if((index_set-sub_ind)>2)index_set=sub_ind+2;
@@ -2693,9 +2714,10 @@ else if((ind==iMn_220)||(ind==iMn_220_IPS_TERMOKOMPENSAT))
 	int2lcdyx(modbus_rx_arg2,0,14,0);
 	int2lcdyx(modbus_rx_counter,0,19,0);*/
 	//int2lcdyx((((LPC_CAN1->GSR)&(0xff000000))>>24),0,19,0);
-	//int2lcdyx(modbus_rx_buffer_ptr,0,15,0);
-	//int2lcdyx(plazma_uart0,0,19,0);
-	//int2lcdyx(LPC_SC->RSID,0,3,0);		 
+	/*int2lcdyx(IZMAX,0,15,0);
+	int2lcdyx(Ib_ips_termokompensat/10,0,19,0);
+	int2lcdyx(load_U,0,3,0);	
+	int2lcdyx(u_necc,0,8,0);*/	 
 	}
 
 else if(ind==iMn_220_V2)
@@ -5774,9 +5796,10 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	ptrs[35]=		" MODBUS ADRESS     <";
 	ptrs[36]=		" MODBUS BAUDRATE    ";
 	ptrs[37]=		"                  >0";
-     ptrs[38]=		" Выход              ";
-     ptrs[39]=		" Калибровки         "; 
-     ptrs[40]=		"                    ";        
+	ptrs[38]=		" Ускоренный заряд   ";
+     ptrs[39]=		" Выход              ";
+     ptrs[40]=		" Калибровки         "; 
+     ptrs[41]=		"                    ";        
 	
 	if((sub_ind-index_set)>2)index_set=sub_ind-2;
 	else if(sub_ind<index_set)index_set=sub_ind;
@@ -6379,6 +6402,48 @@ else if (ind==iLan_set)
 	//int2lcdyx(snmp_community[11],0,9,0);
 	//int2lcdyx(snmp_community[2],0,14,0);
 	//int2lcdyx(snmp_community[sub_ind1],0,19,0);	
+	}
+
+else if (ind==iSpch_set)
+	{
+	char sss[10]="abcdef";
+	char i/*,i_flag*/;
+	 
+	ptrs[0]=	" Iуск.зар.        !А";
+	ptrs[1]=	" Uуск.зар.        @В";
+	ptrs[2]=	" Tуск.зар.        #ч";
+	ptrs[3]=	" Автоматический     ";
+	ptrs[4]=	" ускор.заряд.      $";
+	ptrs[5]=	" dUуск.зар.       %В";
+	ptrs[6]=	" Блокирование      ^";
+	ptrs[7]=	" Сигнал блокирования";
+	ptrs[8]=	"                   &";
+	ptrs[9]=	" Выход              ";
+
+	
+	if(sub_ind<index_set) index_set=sub_ind;
+	else if((sub_ind-index_set)>2) index_set=sub_ind-2;
+
+     bgnd_par(	"  УСКОРЕННЫЙ ЗАРЯД  ",
+			ptrs[index_set],
+			ptrs[index_set+1],
+			ptrs[index_set+2]);
+	
+	pointer_set(1);
+
+	int2lcd(speedChrgCurr,'!',1);
+	int2lcd(speedChrgVolt,'@',1);
+	int2lcd(speedChrgTimeInHour,'#',0);
+	if(speedChrgAvtEn)sub_bgnd("ВКЛ.",'$',-3);   
+     else sub_bgnd("ВЫКЛ.",'$',-4); 
+	int2lcd(speedChrgDU,'%',0);
+	if(speedChrgBlckSrc==1)sub_bgnd("СК1",'^',-2);
+	else if(speedChrgBlckSrc==2)sub_bgnd("СК2",'^',-2);   
+     else sub_bgnd("ВЫКЛ.",'^',-4); 
+	if(speedChrgBlckLog==0)sub_bgnd("РАЗОМКН.",'&',-7);   
+     else sub_bgnd("ЗАМКН.",'&',-5); 	  
+
+	
 	}
 
 else if (ind==iApv)
@@ -11542,13 +11607,13 @@ else if((ind==iMn_220)||(ind==iMn_220_IPS_TERMOKOMPENSAT))
 	if(but==butD)
 		{
 		sub_ind++;
-		gran_char(&sub_ind,0,10+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0));
+		gran_char(&sub_ind,0,11+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0));
 		}
 		
 	else if(but==butU)
 		{
 		sub_ind--;
-		gran_char(&sub_ind,0,10+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0));
+		gran_char(&sub_ind,0,11+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0));
 		}	
 
 	else if(but==butL)
@@ -11657,36 +11722,41 @@ else if((ind==iMn_220)||(ind==iMn_220_IPS_TERMOKOMPENSAT))
 
 		else if(sub_ind==(3+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0)))
 			{
+			speedChargeStartStop();
+			}
+
+		else if(sub_ind==(4+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0)))
+			{
 			tree_up(iSpc,0,0,0);
 		     ret(1000);
 			}
 
-		else if(sub_ind==(4+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0)))
+		else if(sub_ind==(5+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0)))
 			{
 			tree_up(iSet_prl,0,0,0);
 		     ret(50);
 		     parol_init();
 			}
-		else if(sub_ind==(5+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0)))
+		else if(sub_ind==(6+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0)))
 			{
 			tree_up(iLog,0,0,0);
 		     ret(1000);
 			}
-		else if(sub_ind==(6+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0)))
+		else if(sub_ind==(7+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0)))
 			{
 			sub_ind=0;
 			}
-		else if(sub_ind==(7+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0)))
+		else if(sub_ind==(8+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0)))
 			{
 			tree_up(iBatLog,0,0,0);
 		     ret(1000);
 			}
-		else if(sub_ind==(8+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0)))
+		else if(sub_ind==(9+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0)))
 			{
 			tree_up(iBatLog,0,0,1);
 		     ret(1000);
 			}
-		else if(sub_ind==(9+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0)))
+		else if(sub_ind==(10+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0)))
 			{
 			if(but==butE)
 		     	{
@@ -11694,7 +11764,7 @@ else if((ind==iMn_220)||(ind==iMn_220_IPS_TERMOKOMPENSAT))
 		     	parol_init();
 		     	}
 			}
-		else if(sub_ind==(10+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0)))
+		else if(sub_ind==(11+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0)))
 			{
 			if(but==butE)
 		     	{
@@ -17016,7 +17086,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
                sub_ind=38;
                
                }		
-		gran_char(&sub_ind,0,39);
+		gran_char(&sub_ind,0,40);
 		}
 	else if(but==butU)
 		{
@@ -17034,7 +17104,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 			index_set=35;
                
                }
-		gran_char(&sub_ind,0,39);
+		gran_char(&sub_ind,0,40);
 		}
 	else if(but==butD_)
 		{
@@ -17437,8 +17507,17 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	     	lc640_write_int(EE_MODBUS_BAUDRATE,MODBUS_BAUDRATE);
 	     	}
           }
- 
-     else if((sub_ind==38) || (sub_ind==3))
+
+  	else if(sub_ind==38)
+		{
+		if(but==butE) 
+		     {
+		     tree_up(iSpch_set,0,0,0);
+		     ret(1000);
+		     }
+		} 
+
+     else if((sub_ind==39) || (sub_ind==3))
 		{
 		if(but==butE)
 		     {
@@ -17447,7 +17526,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 		     }
 		}
 				
-	else if(sub_ind==39)
+	else if(sub_ind==40)
 		{
 		if(but==butE)
 		     {		
@@ -19839,6 +19918,161 @@ else if (ind==iLan_set)
           }	          	
 	}
 
+else if (ind==iSpch_set)
+	{
+     ret(1000);
+	if(but==butD)
+		{
+		sub_ind++;
+		if(sub_ind==3)index_set=2;
+		if(sub_ind==4)sub_ind=5;
+		if(sub_ind==8)sub_ind=9;
+		gran_char(&sub_ind,0,9);
+		}
+	else if(but==butU)
+		{
+		sub_ind--;
+		if(sub_ind==4)sub_ind=3;
+		//if(sub_ind==3)index_set=2;
+		if(sub_ind==8)sub_ind=7;
+		
+		gran_char(&sub_ind,0,9);
+		}
+	else if(but==butD_)
+		{
+		sub_ind=6;
+		}			
+/*	else if(but==butE)
+	     {
+	     if(sub_ind==9)
+	          {
+	          //a=b[--ptr_ind];
+	          tree_down(0,0);
+	          }
+          }*/
+     
+	else if(sub_ind==0)
+		{
+		if((but==butR)||(but==butR_))
+			{
+			speedChrgCurr++;
+			gran(&speedChrgCurr,0,100);
+			lc640_write_int(EE_SPEED_CHRG_CURR,speedChrgCurr);
+			}
+		else if((but==butL)||(but==butL_))
+			{
+			speedChrgCurr--;
+			gran(&speedChrgCurr,0,100);
+			lc640_write_int(EE_SPEED_CHRG_CURR,speedChrgCurr);
+			}
+		speed=1;
+		}
+	else if(sub_ind==1)
+		{
+		if((but==butR)||(but==butR_))
+			{
+			speedChrgVolt++;
+			gran(&speedChrgVolt,0,UMAX);
+			lc640_write_int(EE_SPEED_CHRG_VOLT,speedChrgVolt);
+			}
+		else if((but==butL)||(but==butL_))
+			{
+			speedChrgVolt--;
+			gran(&speedChrgVolt,0,UMAX);
+			lc640_write_int(EE_SPEED_CHRG_VOLT,speedChrgVolt);
+			}
+		speed=1;
+		}
+	else if(sub_ind==2)
+		{
+		if((but==butR)||(but==butR_))
+			{
+			speedChrgTimeInHour++;
+			gran(&speedChrgTimeInHour,1,24);
+			lc640_write_int(EE_SPEED_CHRG_TIME,speedChrgTimeInHour);
+			}
+		else if((but==butL)||(but==butL_))
+			{
+			speedChrgTimeInHour--;
+			gran(&speedChrgTimeInHour,1,24);
+			lc640_write_int(EE_SPEED_CHRG_TIME,speedChrgTimeInHour);
+			}
+		speed=1;
+		}		
+	else if(sub_ind==3)
+		{
+		if((but==butR)||(but==butR_))
+			{
+			speedChrgAvtEn=1;
+			lc640_write_int(EE_SPEED_CHRG_AVT_EN,speedChrgAvtEn);
+			}
+		else if((but==butL)||(but==butL_))
+			{
+			speedChrgAvtEn=0;
+			lc640_write_int(EE_SPEED_CHRG_AVT_EN,speedChrgAvtEn);
+			}
+		speed=1;
+		}
+
+	else if(sub_ind==5)
+		{
+		if((but==butR)||(but==butR_))
+			{
+			speedChrgDU++;
+			gran(&speedChrgDU,1,100);
+			lc640_write_int(EE_SPEED_CHRG_D_U,speedChrgDU);
+			}
+		else if((but==butL)||(but==butL_))
+			{
+			speedChrgDU--;
+			gran(&speedChrgDU,1,100);
+			lc640_write_int(EE_SPEED_CHRG_D_U,speedChrgDU);
+			}
+		speed=1;
+		}
+
+	else if(sub_ind==6)
+		{
+		if((but==butR)||(but==butR_))
+			{
+			speedChrgBlckSrc++;
+			gran(&speedChrgBlckSrc,0,2);
+			lc640_write_int(EE_SPEED_CHRG_BLOCK_SRC,speedChrgBlckSrc);
+			}
+		else if((but==butL)||(but==butL_))
+			{
+			speedChrgBlckSrc--;
+			gran(&speedChrgBlckSrc,0,2);
+			lc640_write_int(EE_SPEED_CHRG_BLOCK_SRC,speedChrgBlckSrc);
+			}
+		speed=1;
+		}
+
+	else if(sub_ind==7)
+		{
+		if((but==butR)||(but==butR_))
+			{
+			speedChrgBlckLog=1;
+			lc640_write_int(EE_SPEED_CHRG_BLOCK_LOG,speedChrgBlckLog);
+			}
+		else if((but==butL)||(but==butL_))
+			{
+			speedChrgBlckLog=0;
+			lc640_write_int(EE_SPEED_CHRG_BLOCK_LOG,speedChrgBlckLog);
+			}
+		speed=1;
+		}
+
+
+
+
+
+	else if((sub_ind==9)&&(but==butE))
+		{
+	     tree_down(0,0);
+	     ret(0);
+		} 												
+	}
 
 else if (ind==iApv)
 	{
@@ -26845,6 +27079,11 @@ while (1)
 
 		#endif
 
+		#ifdef UKU_220_IPS_TERMOKOMPENSAT
+
+		speedChargeHndl();
+
+		#endif
 
 		can_reset_hndl();
 		npn_hndl();

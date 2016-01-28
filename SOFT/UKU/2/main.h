@@ -742,7 +742,8 @@ typedef enum {
 	iInv,iInv_v2,
 	iNpn_set,
 	iByps,iInv_tabl,iSet_bat_sel,
-	iBps_list}i_enum;
+	iBps_list,
+	iSpch_set}i_enum;
 typedef struct  
 {
 
@@ -1344,7 +1345,7 @@ extern char bat_drv_rx_in;
 
 //-----------------------------------------------
 //Климатконтроль TELECORE2015	
-#ifdef UKU_TELECORE2015
+//#ifdef UKU_TELECORE2015
 extern signed short TELECORE2015_KLIMAT_WARM_SIGNAL;
 extern signed short TELECORE2015_KLIMAT_VENT_SIGNAL;
 extern signed short TELECORE2015_KLIMAT_WARM_ON;
@@ -1354,7 +1355,7 @@ extern signed short TELECORE2015_KLIMAT_VENT_ON;
 extern signed short TELECORE2015_KLIMAT_VENT_OFF;
 extern signed short TELECORE2015_KLIMAT_VVENT_ON;
 extern signed short TELECORE2015_KLIMAT_VVENT_OFF;
-#endif
+//#endif
 
 
 
@@ -1365,6 +1366,18 @@ extern signed short TELECORE2015_KLIMAT_VVENT_OFF;
 #ifndef TRUE
 #define TRUE    (1)
 #endif
+
+//-----------------------------------------------
+//Ускоренный заряд
+extern signed short speedChrgCurr;			//максимальный ток ускоренного заряда, отображение из ЕЕПРОМ
+extern signed short speedChrgVolt;			//максимальное напряжение ускоренного заряда, отображение из ЕЕПРОМ
+extern signed short speedChrgTimeInHour; 	//максимальное время ускоренного заряда в часах, отображение из ЕЕПРОМ
+extern signed short speedChrgAvtEn;	 	//Автоматическое включение Ускоренного заряда включено/выключено
+extern signed short speedChrgDU;	    		//Просадка напряжения необходимая для включения ускоренного заряда
+extern signed short speedChIsOn;			//Текущее состояние ускоренного заряда вкл/выкл
+extern signed long  speedChTimeCnt;		//Счетчик времени прямой ускоренного заряда
+extern signed short speedChrgBlckSrc;		//Источник сигнала блокировки, 0-выкл., 1-СК1, 2-СК2
+extern signed short speedChrgBlckLog;		//Логика сигнала блокировки, 1 - блокировка по замкнутому СК, 0 - по разомкнутому
 
 /*----------------------------------------------------------------------------
  * end of file
