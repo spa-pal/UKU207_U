@@ -1899,7 +1899,7 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 
     bat[0]._Ub=lakb[0]._tot_bat_volt;
     bat[0]._Tb=lakb[0]._max_cell_temp;
-    bat[0]._Ib=lakb[0]._ch_curr/100;
+    bat[0]._Ib=lakb[0]._ch_curr/10;
 
 #endif
 
@@ -5003,7 +5003,7 @@ else if(b1Hz_unh)
 			{
 			u_necc=U0B;
 					
-			u_necc=bat[0]._Ub+5;
+			u_necc=bat[0]._Ub+10;
 
 			
 			if(spc_stat==spcVZ)

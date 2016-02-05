@@ -3054,8 +3054,8 @@ else if(ind==iMn_TELECORE2015)
 	//int2lcdyx(lc640_read_int(ADR_EE_BAT_IS_ON[0]),0,4,0);
 	//int2lcdyx(lc640_read_int(ADR_EE_BAT_IS_ON[1]),0,9,0);
 	//int2lcdyx(BAT_IS_ON[0],0,14,0);
-	//int2lcdyx(power_summary,0,4,0);
-	//int2lcdyx(123,0,2,0);
+	int2lcdyx(cntrl_stat,0,19,0);
+	int2lcdyx(u_necc,0,4,0);
 	}
 
 #ifndef _DEBUG_
