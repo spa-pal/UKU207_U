@@ -8138,13 +8138,13 @@ if(ind==iDeb)
 
 
      	
-     	int2lcdyx(vz_cnt_s_,0,6,0);
+     /*	int2lcdyx(vz_cnt_s_,0,6,0);
 		int2lcdyx(vz_cnt_s,1,6,0);
 		int2lcdyx(vz_cnt_h,2,6,0);
 		int2lcdyx(vz_cnt_h_,3,6,0);
 
-     	int2lcdyx(__ee_vz_cnt,3,12,0);
-		int2lcdyx(lc640_read_int(EE_VZ_CNT),1,10,0);
+     	int2lcdyx(__ee_vz_cnt,3,12,0); 
+		int2lcdyx(lc640_read_int(EE_VZ_CNT),1,10,0);	  */
 	/*		int2lcdyx(eb2_data[10],2,10,0);
 /*		int2lcdyx(eb2_data[11],3,10,0);
 
@@ -8166,15 +8166,15 @@ if(ind==iDeb)
 		int2lcdyx(eb2_data_short[4],1,19,0);
 		int2lcdyx(eb2_data_short[5],2,19,0);  */
 
-     	/*int2lcdyx(eb2_data[20],0,10,0);
-		int2lcdyx(eb2_data[21],1,10,0);
-		int2lcdyx(eb2_data[22],2,10,0);
-		int2lcdyx(eb2_data[23],3,10,0);*/
+     	/*int2lcdyx(ad7705_buff_[0],0,10,0);
+		int2lcdyx(eb2_data[21],1,10,0);*/
+		int2lcdyx(ad7705_buff_[0],0,10,0);
+		int2lcdyx(ad7705_buff_[1],1,10,0);
 
     		}
     else if(sub_ind==6)
      	{
-     	bgnd_par("                    ",
+     	bgnd_par("!                   ",
      		    "                    ",
      		    "                    ",
      		    "                    ");
@@ -8196,7 +8196,7 @@ if(ind==iDeb)
      	int2lcdyx(ad7705_buff[0][14],3,14,0);
      	int2lcdyx(ad7705_buff[0][15],3,19,0);*/
 
-	/*	int2lcdyx(adc_buff_[0],0,4,0);
+		int2lcdyx(adc_buff_[0],0,4,0);
     		int2lcdyx(adc_buff_[1],0,9,0);
      	int2lcdyx(adc_buff_[2],0,14,0);
      	int2lcdyx(adc_buff_[3],0,19,0); 
@@ -8211,9 +8211,9 @@ if(ind==iDeb)
      	int2lcdyx(adc_buff_[12],3,4,0);
      	int2lcdyx(adc_buff_[13],3,9,0);
      	int2lcdyx(adc_buff_[14],3,14,0);
-     	int2lcdyx(adc_buff_[15],3,19,0);*/
+     	int2lcdyx(adc_buff_[15],3,19,0);
 
-		char2lcdhyx(bat_drv_rx_buff[0],0,2);
+		/*char2lcdhyx(bat_drv_rx_buff[0],0,2);
     		char2lcdhyx(bat_drv_rx_buff[1],0,5);
      	char2lcdhyx(bat_drv_rx_buff[2],0,8);
      	char2lcdhyx(bat_drv_rx_buff[3],0,11); 
@@ -8235,10 +8235,10 @@ if(ind==iDeb)
      	int2lcdhyx(bat_drv_rx_buff[13],3,9);
      	int2lcdhyx(bat_drv_rx_buff[14],3,14);*/
      	
-		int2lcdyx(bat_drv_rx_cnt,3,15,0);
+	/*	int2lcdyx(bat_drv_rx_cnt,3,15,0);
 		int2lcdyx(plazma_bat_drv0,3,4,0);
 		int2lcdyx(plazma_bat_drv1,3,10,0);
-		int2lcdyx(bat_drv_cnt_cnt,3,19,0);
+		int2lcdyx(bat_drv_cnt_cnt,3,19,0);*/
 
     	}  		  		
 
