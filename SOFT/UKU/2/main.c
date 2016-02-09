@@ -595,6 +595,8 @@ signed short speedChIsOn;			//Текущее состояние ускоренного заряда вкл/выкл
 signed long  speedChTimeCnt;			//Счетчик времени прямой ускоренного заряда
 signed short speedChrgBlckSrc;		//Источник сигнала блокировки, 0-выкл., 1-СК1, 2-СК2
 signed short speedChrgBlckLog;		//Логика сигнала блокировки, 1 - блокировка по замкнутому СК, 0 - по разомкнутому
+signed short speedChrgBlckStat;		//Сигнал блокировки для выравнивающего и ускоренного заряда.
+char  	   speedChrgShowCnt;		//Счетчик показа информационного сообщения
 
 //-----------------------------------------------
 void rtc_init (void) 
@@ -2714,10 +2716,13 @@ else if((ind==iMn_220)||(ind==iMn_220_IPS_TERMOKOMPENSAT))
 	int2lcdyx(modbus_rx_arg2,0,14,0);
 	int2lcdyx(modbus_rx_counter,0,19,0);*/
 	//int2lcdyx((((LPC_CAN1->GSR)&(0xff000000))>>24),0,19,0);
-	/*int2lcdyx(IZMAX,0,15,0);
-	int2lcdyx(Ib_ips_termokompensat/10,0,19,0);
-	int2lcdyx(load_U,0,3,0);	
-	int2lcdyx(u_necc,0,8,0);*/	 
+	/**/
+	/*int2lcdyx(speedChrgBlckLog,0,13,0);
+	int2lcdyx(speedChrgBlckSrc,0,19,0);
+	int2lcdyx(sk_stat[0],0,17,0);
+	int2lcdyx(sk_stat[1],0,15,0);
+	int2lcdyx(speedChrgShowCnt,0,3,0);	
+	int2lcdyx(speedChrgBlckStat,0,8,0);*/	 
 	}
 
 else if(ind==iMn_220_V2)
