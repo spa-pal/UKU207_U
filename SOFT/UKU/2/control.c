@@ -4925,6 +4925,8 @@ if(mess_find_unvol(MESS2UNECC_HNDL))
 
 
 #ifndef UKU_220_IPS_TERMOKOMPENSAT
+
+#ifndef UKU_TELECORE2015
 if(unh_cnt0<10)
 	{
 	unh_cnt0++;
@@ -5015,6 +5017,56 @@ else if(b1Hz_unh)
 			}
 		}  
 	}
+#endif
+#ifdef UKU_TELECORE2015
+
+if(unh_cnt0<10)
+	{
+	unh_cnt0++;
+	if(unh_cnt0>=10)
+		{
+		unh_cnt0=0;
+		b1Hz_unh=1;
+		}
+	}
+
+if(unh_cnt1<5)
+	{
+	unh_cnt1++;
+	if(unh_cnt1==5)
+		{
+		unh_cnt1=0;
+//		b2Hz_unh=1;
+		}
+	} 
+
+
+
+if(mess_find_unvol(MESS2UNECC_HNDL))
+	{		
+	if(mess_data[0]==PARAM_UNECC_SET)
+		{
+		u_necc=mess_data[1];
+		}		
+	}
+
+
+else if(b1Hz_unh)
+	{
+
+	u_necc=U0B;
+		
+	if(spc_stat==spcVZ)
+		{
+		u_necc=UVZ;
+		}
+	
+	u_necc=UB0;
+	
+		 
+	}
+
+#endif 
 
 //u_necc=2356;
 #endif//gran(&u_necc,400,UMAX);
@@ -5627,7 +5679,7 @@ if(speedChIsOn)
 		{
 		speedChIsOn=0;
 		}
-	if(speedChrgBlckSrc)
+	if(speedChrgBlckStat)
 		{
 		speedChIsOn=0;
 		speedChTimeCnt=0;
@@ -5640,7 +5692,7 @@ if(speedChrgAvtEn)
 	{
 	if(!speedChIsOn)
 		{
-		if((load_U<u_necc)&&((u_necc-load_U)>speedChrgDU)&&(abs(Ib_ips_termokompensat/10-IZMAX)<5)&&(!speedChrgBlckSrc))
+		if((load_U<u_necc)&&((u_necc-load_U)>speedChrgDU)&&(abs(Ib_ips_termokompensat/10-IZMAX)<5)&&(!speedChrgBlckStat))
 			{
 			speedChIsOn=1;
 			}
@@ -5667,6 +5719,8 @@ else
 if(speedChrgBlckStat==1)
 	{
 
+	//speedChargeStartStop();
+
 	speedChrgShowCnt++;
 	if(speedChrgShowCnt>=30)	
 		{
@@ -5691,7 +5745,7 @@ if(speedChIsOn)
 	speedChIsOn=0;
 	}
 
-else
+else	if(speedChrgBlckStat==0)
 	{
 	speedChIsOn=1;
 	speedChTimeCnt=0;

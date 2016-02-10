@@ -1444,6 +1444,7 @@ if(speedChIsOn)
 	sub_cnt_max++;	
 	}
 #endif
+
 cnt_of_slave=NUMIST+NUMINV;
 
 
@@ -2717,12 +2718,31 @@ else if((ind==iMn_220)||(ind==iMn_220_IPS_TERMOKOMPENSAT))
 	int2lcdyx(modbus_rx_counter,0,19,0);*/
 	//int2lcdyx((((LPC_CAN1->GSR)&(0xff000000))>>24),0,19,0);
 	/**/
-	/*int2lcdyx(speedChrgBlckLog,0,13,0);
-	int2lcdyx(speedChrgBlckSrc,0,19,0);
-	int2lcdyx(sk_stat[0],0,17,0);
-	int2lcdyx(sk_stat[1],0,15,0);
-	int2lcdyx(speedChrgShowCnt,0,3,0);	
-	int2lcdyx(speedChrgBlckStat,0,8,0);*/	 
+	/*int2lcdyx(speedChrgBlckLog,0,13,0);*/	
+/*	int2lcdyx(speedChrgBlckSrc,0,1,0);
+	int2lcdyx(speedChrgBlckLog,0,4,0);	
+	int2lcdyx(adc_buff_[11],0,7,0);
+	int2lcdyx(adc_buff_[13],0,10,0);
+	int2lcdyx(load_U,0,8,0);
+	
+	int2lcdyx(speedChrgBlckStat,0,19,0); */
+
+/*	
+	if((speedChrgBlckSrc!=1)&&(speedChrgBlckSrc!=2)) speedChrgBlckStat=0;
+else
+	{
+	speedChrgBlckStat=0;
+	if(speedChrgBlckSrc==1)
+		{
+		if(((speedChrgBlckLog==0)&&(adc_buff_[11]>2000)) || ((speedChrgBlckLog==1)&&(adc_buff_[11]<2000))) speedChrgBlckStat=1;
+		}
+	else if(speedChrgBlckSrc==2)
+		{
+		if(((speedChrgBlckLog==0)&&(adc_buff_[13]>2000)) || ((speedChrgBlckLog==1)&&(adc_buff_[13]<2000))) speedChrgBlckStat=1;
+		}
+	}*/
+	
+		 
 	}
 
 else if(ind==iMn_220_V2)
@@ -6044,15 +6064,11 @@ else if (ind==iDef_220_V2)
 
 else if (ind==iDef_220_IPS_TERMOKOMPENSAT)
 	{ 
-	ptrs[0]=" ÈÏÑ380/220-30ÀÒÊ17 ";
-	ptrs[1]=" ÈÏÑ380/220-60ÀÒÊÈ17";
-	ptrs[2]=" ÈÏÑ220/220-10ÀÒÊ17 ";
-	ptrs[3]=" ÈÏÑ380/220-20ÀÒÊÈ17";
-	ptrs[4]=" ÈÏÑ380/220-45ÀÒÊÈ17";
-	ptrs[5]=" ÈÏÑ220/220-10ÀÒÊÈ17";
-	ptrs[6]=sm_exit;
-	ptrs[7]="                    ";
-	ptrs[8]="                    ";
+	ptrs[0]=" ÈÏÑ380/220-45ÀÒÊÈ17";
+	ptrs[1]=" ÈÏÑ220/220-10ÀÒÊÈ17";
+	ptrs[2]=sm_exit;
+	ptrs[3]="                    ";
+	ptrs[4]="                    ";
 	if(bFL5)ptrs[default_temp]=sm_;
 	
 	if(sub_ind<index_set) index_set=sub_ind;
@@ -17115,6 +17131,18 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 		{
 		sub_ind=38;
 		}
+
+	else if(but==butLR_)
+		{
+		lc640_write_int(EE_SPEED_CHRG_CURR,20);
+		lc640_write_int(EE_SPEED_CHRG_VOLT,2400);
+		lc640_write_int(EE_SPEED_CHRG_TIME,1);
+		lc640_write_int(EE_SPEED_CHRG_D_U,50);
+		lc640_write_int(EE_SPEED_CHRG_AVT_EN,0);
+		lc640_write_int(EE_SPEED_CHRG_BLOCK_SRC,1);
+		lc640_write_int(EE_SPEED_CHRG_BLOCK_LOG,1);
+		lc640_write_int(EE_AUSW_MAIN_NUMBER,20000);
+		}
 		
 	else if(sub_ind==0)
 	     {
@@ -18188,7 +18216,7 @@ else if (ind==iDef_220_V2)
      }
 
 else if (ind==iDef_220_IPS_TERMOKOMPENSAT)
-#define SIMAXIDEF 6
+#define SIMAXIDEF 2
 	{
 	ret(1000);
 	if(but==butD)
@@ -18211,55 +18239,6 @@ else if (ind==iDef_220_IPS_TERMOKOMPENSAT)
 		if(sub_ind==0)
 			{
 			def_ips_set(220);
-			lc640_write_int(EE_DU,2315-1850);
-			lc640_write_int(EE_U_AVT,2200);
-			lc640_write_int(EE_IZMAX,20);
-			lc640_write_int(EE_AUSW_MAIN,22033);
-			}
-		else if(sub_ind==1)
-			{
-			def_ips_set(220);
-			lc640_write_int(EE_DU,2315-1850);
-			lc640_write_int(EE_U_AVT,2200);
-			lc640_write_int(EE_IZMAX,20);
-			lc640_write_int(EE_AUSW_MAIN,22063);
-			lc640_write_int(EE_NUMIST,4);
-			}
-		else if(sub_ind==2)
-			{
-			def_ips_set(220);
-			lc640_write_int(EE_DU,2315-1850);
-			lc640_write_int(EE_U_AVT,2200);
-			lc640_write_int(EE_IZMAX,20);
-			lc640_write_int(EE_AUSW_MAIN,22010);
-			lc640_write_int(EE_NUMIST,2);
-			lc640_write_int(EE_TERMOKOMP,1);
-			lc640_write_int(EE_IMAX,30);
-		     lc640_write_int(EE_IMIN,24);
-			}
-		else if(sub_ind==3)
-			{
-			def_ips_set(220);
-			//lc640_write_int(EE_DU,2315-1850);
-			lc640_write_int(EE_U_AVT,2200);
-			lc640_write_int(EE_IZMAX,10);
-			lc640_write_int(EE_IMAX,30);
-			lc640_write_int(EE_IMIN,24);
-			lc640_write_int(EE_AUSW_MAIN,22023);
-			lc640_write_int(EE_NUMIST,4);
-
-			lc640_write_int(EE_PAR,0);
-			lc640_write_int(EE_UMAX,2550);
-			lc640_write_int(EE_DU,2315-1110);
-			lc640_write_int(EE_IZMAX,20);
-			lc640_write_int(EE_UVZ,2440);
-			lc640_write_int(EE_UBM_AV,0);
-
-			}
-
-		else if(sub_ind==4)
-			{
-			def_ips_set(220);
 			//lc640_write_int(EE_DU,2315-1850);
 			lc640_write_int(EE_U_AVT,2200);
 			lc640_write_int(EE_IZMAX,10);
@@ -18278,7 +18257,7 @@ else if (ind==iDef_220_IPS_TERMOKOMPENSAT)
 			lc640_write_int(EE_UBM_AV,0);
 
 			}
-		else if(sub_ind==5)
+		else if(sub_ind==1)
 			{
 			def_ips_set(220);
 			lc640_write_int(EE_DU,2315-1850);
@@ -19236,7 +19215,7 @@ else if (ind==iLan_set)
 		lc640_write_int(EE_ETH_MASK_1,255);
 		lc640_write_int(EE_ETH_MASK_2,255);
 		lc640_write_int(EE_ETH_MASK_3,255);
-		lc640_write_int(EE_ETH_MASK_1,0);
+		lc640_write_int(EE_ETH_MASK_4,0);
 		lc640_write_int(EE_ETH_GW_1,192);
 		lc640_write_int(EE_ETH_GW_2,168);
 		lc640_write_int(EE_ETH_GW_3,1);
