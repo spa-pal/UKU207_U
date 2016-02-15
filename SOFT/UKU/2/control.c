@@ -1896,10 +1896,18 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 	gran(&lakb[i]._isOnCnt,0,50);*/
 
 	
-
-    bat[0]._Ub=lakb[0]._tot_bat_volt;
-    bat[0]._Tb=lakb[0]._max_cell_temp;
-    bat[0]._Ib=lakb[0]._ch_curr/10;
+if(sacredSunSilentCnt<3) 
+	{
+    	bat[0]._Ub=lakb[0]._tot_bat_volt;
+    	bat[0]._Tb=lakb[0]._max_cell_temp;
+   	bat[0]._Ib=lakb[0]._ch_curr/10;
+	}
+else 
+	{
+    	bat[0]._Ub=0;
+    	bat[0]._Tb=0;
+   	bat[0]._Ib=0;
+	}
 
 #endif
 

@@ -560,6 +560,7 @@ else if ( IIRValue == IIR_RDA )	/* Receive Data Available */
 		{
 		if(sacredSunRequestPhase==0)	mem_copy (sacredSunBatteryInBuff, bat_drv_rx_buff,  bat_drv_rx_cnt);
 		else if(sacredSunRequestPhase==1)	mem_copy (&sacredSunBatteryInBuff[150], bat_drv_rx_buff,  bat_drv_rx_cnt);
+		sacredSunSilentCnt=0;
 		}
 
 	}

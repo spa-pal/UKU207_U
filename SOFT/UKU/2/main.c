@@ -3079,8 +3079,8 @@ else if(ind==iMn_TELECORE2015)
 	//int2lcdyx(lc640_read_int(ADR_EE_BAT_IS_ON[0]),0,4,0);
 	//int2lcdyx(lc640_read_int(ADR_EE_BAT_IS_ON[1]),0,9,0);
 	//int2lcdyx(BAT_IS_ON[0],0,14,0);
-	int2lcdyx(cntrl_stat,0,19,0);
-	int2lcdyx(u_necc,0,4,0);
+	//int2lcdyx(cntrl_stat,0,19,0);
+	//int2lcdyx(u_necc,0,4,0);
 	}
 
 #ifndef _DEBUG_
@@ -3262,6 +3262,59 @@ else if (ind==iBat_li)
 		//int2lcdyx(lakb[sub_ind1]._battCommState,0,19,0);
 		}
 	}
+
+else if (ind==iBat_SacredSun)
+	{
+		{
+		if(bat[sub_ind1]._Ib/*lakb[sub_ind1]._ch_curr*/>0)
+		     {
+		     ptrs[1]="    заряжается      ";
+		     ptrs[3]=" Iзар=       #А     ";
+		     }
+		else
+		     {
+		     ptrs[1]=  "   разряжается      ";
+		     ptrs[3]=  " Iразр=      #А     ";
+		     }	
+		ptrs[2]=       " Uбат =    $В       ";
+		ptrs[3]=		" tбат =    ?°C      ";
+		ptrs[4]=		" SOC  =    w%       ";
+		ptrs[5]=		" SOH  =    >%       ";
+		ptrs[6]=sm_exit;
+
+
+ 
+		bgnd_par(		"    БАТАРЕЯ N@      ",
+					"   1 x FP16S4810A   ",
+					ptrs[sub_ind+1],ptrs[sub_ind+2]);
+	     
+	     int2lcd(sub_ind1+1,'@',0);
+	     int2lcd(bat[sub_ind1]._Ub,'$',1);//int2lcd(lakb[sub_ind1]._tot_bat_volt/10,'$',1);
+		/*if(lakb[sub_ind1]._ch_curr>0)
+			{
+			int2lcd_mmm(lakb[sub_ind1]._ch_curr,'#',2);
+			}
+		else 
+			{
+			int2lcd_mmm(lakb[sub_ind1]._dsch_curr,'#',2);
+			}*/
+		int2lcd_mmm(abs(bat[sub_ind1]._Ib),'#',2);
+	     int2lcd_mmm(bat[sub_ind1]._Tb,'?',0);
+	     //int2lcd_mmm(lakb[sub_ind1]._max_cell_temp,'?',0);
+	     int2lcd(lakb[sub_ind1]._s_o_c,'w',0);
+		int2lcd((short)(((long)lakb[sub_ind1]._rat_cap*(long)lakb[sub_ind1]._s_o_h)/1000L),'Q',1);
+	     if(sub_ind==8)lcd_buffer[60]=1;
+
+		int2lcd(lakb[sub_ind1]._rat_cap,'Q',1);
+		//int2lcd(lakb[sub_ind1]._s_o_c,'w',0);
+		int2lcd(lakb[sub_ind1]._c_c_l_v/10,'<',1);
+		int2lcd(lakb[sub_ind1]._s_o_h,'>',0);
+		int2lcd(lakb[sub_ind1]._r_b_t,'[',1);
+
+		//int2lcdyx(lakb[sub_ind1]._battCommState,0,19,0);
+		}
+	}
+
 
 else if(ind==iInv_tabl)
      {
@@ -11526,7 +11579,10 @@ else if(ind==iMn_6U)
 			}
 		else if((sub_ind>0)&&(sub_ind<=NUMBAT))
 		    	{
-		    	if(BAT_IS_ON[0]!=bisON)
+			#ifdef UKU_TELECORE2015
+			#endif		    	
+
+			if(BAT_IS_ON[0]!=bisON)
 				{
 				if(BAT_TYPE==0)tree_up(iBat_simple,0,0,1);
 				else if(BAT_TYPE==1) tree_up(iBat_li,0,0,1);
