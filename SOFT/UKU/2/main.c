@@ -10370,12 +10370,12 @@ else if(ind==iKlimat_TELECORE2015)
 						ptrs[index_set+2]);
 	pointer_set(1);
 
-	if(TELECORE2015_KLIMAT_WARM_SIGNAL==0) sub_bgnd("др юйа",'!',-5);
+	if(TELECORE2015_KLIMAT_WARM_SIGNAL==0) sub_bgnd("др 2",'!',-3);
 	else if(TELECORE2015_KLIMAT_WARM_SIGNAL==1) sub_bgnd("др 1",'!',-3);
-	else sub_bgnd("др BMS",'!',-5);
-	if(TELECORE2015_KLIMAT_VENT_SIGNAL==0) sub_bgnd("др юйа",'@',-5);
+	//else sub_bgnd("др BMS",'!',-5);
+	if(TELECORE2015_KLIMAT_VENT_SIGNAL==0) sub_bgnd("др 2",'@',-3);
 	else if(TELECORE2015_KLIMAT_VENT_SIGNAL==1) sub_bgnd("др 1",'@',-3);
-	else sub_bgnd("др BMS",'@',-5);
+	//else sub_bgnd("др BMS",'@',-5);
 	int2lcd_mmm(TELECORE2015_KLIMAT_WARM_ON,'$',0); 
 	int2lcd_mmm(TELECORE2015_KLIMAT_WARM_OFF,'<',0);
 	int2lcd_mmm(TELECORE2015_KLIMAT_CAP,'*',0);	
@@ -17320,7 +17320,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	     else if(but==butL)UMAX--;
 	     else if(but==butL_)UMAX-=10;
 
-	     gran(&UMAX,80,3000);
+	     gran(&UMAX,10,3000);
 
 	     lc640_write_int(EE_UMAX,UMAX);
 	     speed=1;
@@ -17331,7 +17331,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	     else if(but==butL_)DU+=10;
 	     else if(but==butR)DU--;
 	     else if(but==butR_)DU-=10;
-	     gran(&DU,50,UB20-250);
+	     gran(&DU,50,UB20-10);
 	     lc640_write_int(EE_DU,DU);
 	     speed=1;
 	     }	     
@@ -17341,7 +17341,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	     else if(but==butR_)UB0+=10;
 	     else if(but==butL)UB0--;
 	     else if(but==butL_)UB0-=10;
-		gran(&UB0,800,3000);
+		gran(&UB0,100,3000);
           lc640_write_int(EE_UB0,UB0);
 	     speed=1;
 	     }
@@ -17352,7 +17352,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	     else if(but==butR_)UB20+=10;
 	     else if(but==butL)UB20--;
 	     else if(but==butL_)UB20-=10;
-		gran(&UB20,800,3000);
+		gran(&UB20,100,3000);
 	     lc640_write_int(EE_UB20,UB20);
 	     speed=1;
 	     }	
@@ -17363,7 +17363,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	     else if(but==butR_)USIGN+=10;
 	     else if(but==butL)USIGN--;
 	     else if(but==butL_)USIGN-=10;
-		gran(&USIGN,80,300);
+		gran(&USIGN,10,300);
 	     lc640_write_int(EE_USIGN,USIGN);
 	     speed=1;
 	     }	
@@ -17384,7 +17384,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	     else if(but==butR_)U0B+=10;
 	     else if(but==butL)U0B--;
 	     else if(but==butL_)U0B-=10;
-		gran(&U0B,800,3000);
+		gran(&U0B,100,3000);
 	     lc640_write_int(EE_U0B,U0B);
 	     speed=1;
 	     }	
@@ -23111,7 +23111,7 @@ else if(ind==iK_load)
 	    gran(&temp_SS,300,2000);
 		#else 
 		#ifdef UKU_220_IPS_TERMOKOMPENSAT
-	    gran(&temp_SS,300,2000);
+	    gran(&temp_SS,50,2000);
 	    #else 
 		gran(&temp_SS,100,5000);
 		#endif
@@ -26196,7 +26196,7 @@ else if(ind==iKlimat_kontur)
 	     else if(but==butR_)TELECORE2015_KLIMAT_WARM_SIGNAL++;
 	     else if(but==butL)TELECORE2015_KLIMAT_WARM_SIGNAL--;
 	     else if(but==butL_)TELECORE2015_KLIMAT_WARM_SIGNAL--;
-	     gran_ring(&TELECORE2015_KLIMAT_WARM_SIGNAL,0,2);
+	     gran_ring(&TELECORE2015_KLIMAT_WARM_SIGNAL,0,1);
 	     lc640_write_int(EE_TELECORE2015_KLIMAT_WARM_SIGNAL,TELECORE2015_KLIMAT_WARM_SIGNAL);
 	     speed=1;
 	     }
@@ -26206,7 +26206,7 @@ else if(ind==iKlimat_kontur)
 	     else if(but==butR_)TELECORE2015_KLIMAT_VENT_SIGNAL++;
 	     else if(but==butL)TELECORE2015_KLIMAT_VENT_SIGNAL--;
 	     else if(but==butL_)TELECORE2015_KLIMAT_VENT_SIGNAL--;
-	     gran_ring(&TELECORE2015_KLIMAT_VENT_SIGNAL,0,2);
+	     gran_ring(&TELECORE2015_KLIMAT_VENT_SIGNAL,0,1);
 	     lc640_write_int(EE_TELECORE2015_KLIMAT_VENT_SIGNAL,TELECORE2015_KLIMAT_VENT_SIGNAL);
 	     speed=1;
 	     }

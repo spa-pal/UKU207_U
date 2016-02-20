@@ -1409,7 +1409,8 @@ bat[0]._Ib=Ib_ips_termokompensat;
 
 
 #ifdef UKU_TELECORE2015
-//Внешний датчик температуры №1(температура отсека MSAN)
+
+//Внешний датчик температуры №1
 if((adc_buff_[7]>800)&&(adc_buff_[7]<3800))ND_EXT[0]=0;
 else ND_EXT[0]=1;
 temp_SL=(signed long)adc_buff_[7];
@@ -1417,6 +1418,16 @@ temp_SL*=Ktext[0];
 temp_SL/=20000L;
 temp_SL-=273L;
 t_ext[0]=(signed short)temp_SL;
+
+
+//Внешний датчик температуры №2
+if((adc_buff_[6]>800)&&(adc_buff_[6]<3800))ND_EXT[1]=0;
+else ND_EXT[1]=1;
+temp_SL=(signed long)adc_buff_[6];
+temp_SL*=Ktext[1];
+temp_SL/=20000L;
+temp_SL-=273L;
+t_ext[1]=(signed short)temp_SL;
 
 #endif
 
@@ -4107,34 +4118,25 @@ char t_bps=20;
 
 if(TELECORE2015_KLIMAT_WARM_SIGNAL==0)
 	{
-	t_box_warm=bat[0]._Tb;
-	if(bat[0]._nd)t_box_warm=20;
+	t_box_warm=t_ext[1];
+	if(ND_EXT[1])t_box_warm=20;
 	}
 else if(TELECORE2015_KLIMAT_WARM_SIGNAL==1) 
 	{
 	t_box_warm=t_ext[0];
 	if(ND_EXT[0])t_box_warm=20;
 	}
-else 
-	{
-	t_box_warm=lakb[0]._max_cell_temp;
-	}
 
 if(TELECORE2015_KLIMAT_VENT_SIGNAL==0)
 	{
-	t_box_vent=bat[0]._Tb;
-	if(bat[0]._nd)t_box_vent=20;
+	t_box_vent=t_ext[1];
+	if(ND_EXT[1])t_box_vent=20;
 	}
 else if(TELECORE2015_KLIMAT_VENT_SIGNAL==1) 
 	{
 	t_box_vent=t_ext[0];
 	if(ND_EXT[0])t_box_vent=20;
 	}
-else 
-	{
-	t_box_vent=lakb[0]._max_cell_temp;
-	}
-
 
 TELECORE2015_KLIMAT_WARM_ON_temp=TELECORE2015_KLIMAT_WARM_ON;
 if(bat[0]._zar<TELECORE2015_KLIMAT_CAP)TELECORE2015_KLIMAT_WARM_ON_temp=10;
