@@ -1906,7 +1906,7 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 		}
 	gran(&lakb[i]._isOnCnt,0,50);*/
 
-	
+/*	
 if(sacredSunSilentCnt<3) 
 	{
     	bat[0]._Ub=lakb[0]._tot_bat_volt;
@@ -1918,7 +1918,7 @@ else
     	bat[0]._Ub=0;
     	bat[0]._Tb=0;
    	bat[0]._Ib=0;
-	}
+	} */
 
 #endif
 

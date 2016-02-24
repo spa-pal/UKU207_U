@@ -371,7 +371,7 @@
 #define MAX_NUM_OF_BPS	12
 //#define PAROL_ALL_ZERO
 
-#define AH_CONSTANT		36000L
+#define AH_CONSTANT		360000L
 
 //***********************************************
 //Состояние источников

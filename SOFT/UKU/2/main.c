@@ -3136,7 +3136,11 @@ else if (ind==iBat)
 	     if(BAT_C_REAL[sub_ind1]==0x5555)sub_bgnd("------",'Q',-1);
 	     else int2lcd(BAT_C_REAL[sub_ind1],'Q',1);
 	     if(sub_ind==5)lcd_buffer[60]=1;
-		 //int2lcdyx(bat[sub_ind1]._cnt_as,0,4,0);
+		 
+		 
+		//int2lcdyx(BAT_C_REAL[sub_ind1],0,4,0);
+		//int2lcdyx(BAT_C_NOM[sub_ind1],0,8,0);
+		//int2lcdyx(lc640_read_int(ADR_EE_BAT_ZAR_CNT[sub_ind1]),0,12,0);
 		 
 		}
 	} 
@@ -12027,15 +12031,16 @@ else if(ind==iMn_TELECORE2015)
 			}
 		else if((sub_ind>0)&&(sub_ind<=NUMBAT))
 		    	{
-		    	if(BAT_IS_ON[0]!=bisON)
+			tree_up(iBat,0,0,0);
+		    	//if(BAT_IS_ON[0]!=bisON)
 				{ 
 				/*if(BAT_TYPE==0)tree_up(iBat_simple,0,0,1);
-				else if(BAT_TYPE==1)*/ tree_up(iBat_li,0,0,1);
+				else if(BAT_TYPE==1)*/ //tree_up(iBat_li,0,0,1);
 				}
-		    	else 
+		    	//else 
 				{
 				/*if(BAT_TYPE==0)tree_up(iBat_simple,0,0,sub_ind-1);
-				else if(BAT_TYPE==1) */tree_up(iBat_li,0,0,sub_ind-1);
+				else if(BAT_TYPE==1) *///tree_up(iBat_li,0,0,sub_ind-1);
 				}
 		    	}
 		else if((sub_ind>NUMBAT)&&(sub_ind<=(NUMBAT+NUMIST)))
@@ -12730,7 +12735,7 @@ else if((ind==iPrl_bat_in_out)||(ind==iSet_prl)||(ind==iK_prl)
 		               lc640_write_int(ADR_EE_BAT_YEAR_OF_ON[sub_ind1],LPC_RTC->YEAR);
 		               lc640_write_int(ADR_EE_BAT_C_REAL[sub_ind1],0x5555);
 		               lc640_write_int(ADR_EE_BAT_RESURS[sub_ind1],0);
-					lc640_write_int(ADR_EE_BAT_ZAR_CNT[sub_ind1],0);
+					lc640_write_int(ADR_EE_BAT_ZAR_CNT[sub_ind1],lc640_read_int(ADR_EE_BAT_C_NOM[sub_ind1]));
 		               
 		               lc640_write(KE_PTR,0);
 					lc640_write(VZ_PTR,0);
