@@ -2723,25 +2723,13 @@ else if((ind==iMn_220)||(ind==iMn_220_IPS_TERMOKOMPENSAT))
 	int2lcdyx(speedChrgBlckLog,0,4,0);	
 	int2lcdyx(adc_buff_[11],0,7,0);
 	int2lcdyx(adc_buff_[13],0,10,0);
-	int2lcdyx(load_U,0,8,0);
+	
 	
 	int2lcdyx(speedChrgBlckStat,0,19,0); */
 
-/*	
-	if((speedChrgBlckSrc!=1)&&(speedChrgBlckSrc!=2)) speedChrgBlckStat=0;
-else
-	{
-	speedChrgBlckStat=0;
-	if(speedChrgBlckSrc==1)
-		{
-		if(((speedChrgBlckLog==0)&&(adc_buff_[11]>2000)) || ((speedChrgBlckLog==1)&&(adc_buff_[11]<2000))) speedChrgBlckStat=1;
-		}
-	else if(speedChrgBlckSrc==2)
-		{
-		if(((speedChrgBlckLog==0)&&(adc_buff_[13]>2000)) || ((speedChrgBlckLog==1)&&(adc_buff_[13]<2000))) speedChrgBlckStat=1;
-		}
-	}*/
-	
+	//int2lcdyx(load_U,0,8,0);
+	//int2lcdyx(u_necc,0,19,0);
+	//int2lcdyx(cntrl_stat,0,4,0);
 		 
 	}
 
