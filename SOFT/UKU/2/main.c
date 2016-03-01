@@ -32,6 +32,7 @@
 #include <rtl.h>
 #include "modbus.h"
 #include "sacred_sun.h"
+#include "mcp2515.h"
 
 extern U8 own_hw_adr[];
 extern U8  snmp_Community[];
@@ -475,6 +476,8 @@ char plazma_plazma_plazma;
 char bRESET=0;
 char bRESET_EXT=0;
 char ext_can_cnt;
+char bRESET_INT_WDT=0;
+char bRESET_EXT_WDT=0;
 //-----------------------------------------------
 //Состояние вводов
 signed short vvod_pos;
@@ -583,6 +586,7 @@ char bat_drv_rx_buff[512];
 char bat_drv_rx_in;
 
 short plazma_bat_drv0,plazma_bat_drv1,bat_drv_cnt_cnt;
+short can_plazma;
 
 //-----------------------------------------------
 //Ускоренный заряд
@@ -597,6 +601,10 @@ signed short speedChrgBlckSrc;		//Источник сигнала блокировки, 0-выкл., 1-СК1, 2
 signed short speedChrgBlckLog;		//Логика сигнала блокировки, 1 - блокировка по замкнутому СК, 0 - по разомкнутому
 signed short speedChrgBlckStat;		//Сигнал блокировки для выравнивающего и ускоренного заряда.
 char  	   speedChrgShowCnt;		//Счетчик показа информационного сообщения
+
+#ifdef MCP2515_CAN
+#define can1_out	mcp2515_transmit
+#endif
 
 //-----------------------------------------------
 void rtc_init (void) 
@@ -1004,7 +1012,184 @@ else if((cnt_net_drv==MINIM_INV_ADRESS+2)&&(NUMINV))
 
 }
 
+//-----------------------------------------------
+void net_drv_mcp2515(void)
+{ 
+//char temp_;    
 
+
+
+max_net_slot=MINIM_INV_ADRESS+NUMINV+8;
+//if(NUMINV) max_net_slot=MINIM_INV_ADRESS+NUMINV;
+//gran_char(&max_net_slot,0,MAX_NET_ADRESS);
+
+if(++cnt_net_drv>max_net_slot) 
+	{
+	cnt_net_drv=0;
+	//LPC_GPIO2->FIODIR|=(1UL<<7);
+	//LPC_GPIO2->FIOPIN^=(1UL<<7);
+	if(bCAN_INV)bCAN_INV=0;
+	else bCAN_INV=1;
+
+	} 
+
+
+#ifndef UKU_KONTUR
+if(cnt_net_drv<=11) // с 1 по 12 посылки адресные
+#endif
+#ifdef UKU_KONTUR
+if(cnt_net_drv<=7) // с 1 по 12 посылки адресные
+#endif
+	{ 
+	if(mess_find_unvol(MESS2NET_DRV))
+		{
+		if(mess_data[0]==PARAM_BPS_NET_OFF)
+			{
+			//mess_data[1]=1;
+			if(sub_ind1==cnt_net_drv)
+				{
+				return;
+				}
+			}
+		}
+			   
+	if(!bCAN_OFF)mcp2515_transmit(cnt_net_drv,cnt_net_drv,GETTM,bps[cnt_net_drv]._flags_tu,*((char*)(&bps[cnt_net_drv]._vol_u)),*((char*)((&bps[cnt_net_drv]._vol_u))+1),*((char*)(&bps[cnt_net_drv]._vol_i)),*((char*)((&bps[cnt_net_drv]._vol_i))+1));
+     
+	if(cnt_net_drv<=11)
+	     {
+	     if(bps[cnt_net_drv]._cnt<CNT_SRC_MAX)
+   	 		{    
+   	 		bps[cnt_net_drv]._cnt++;
+   	 		if( (bps[cnt_net_drv]._cnt>=CNT_SRC_MAX) && (!net_av) && (!(bps[cnt_net_drv]._av&0x08)) && (cnt_net_drv<NUMIST) ) 
+   	 			{
+   	 			avar_bps_hndl(cnt_net_drv,3,1);
+   	 			}
+   	 		}
+		else bps[cnt_net_drv]._cnt=CNT_SRC_MAX;
+						
+		if((bps[cnt_net_drv]._cnt>=3)&&(bps[cnt_net_drv]._cnt_old<3))bps[cnt_net_drv]._cnt_more2++;
+		bps[cnt_net_drv]._cnt_old=bps[cnt_net_drv]._cnt;
+	     }
+	}
+
+#ifdef UKU_KONTUR
+else if(cnt_net_drv==8)
+	{
+     if(!bCAN_OFF)can1_out(cnt_net_drv,cnt_net_drv,*((char*)(&Uvv[0])),*((char*)((&Uvv[0]))+1),*((char*)(&Uvv[1])),*((char*)((&Uvv[1]))+1),0,bRESET_EXT);
+     }
+
+else if(cnt_net_drv==9)
+	{
+     if(!bCAN_OFF)can1_out(cnt_net_drv,cnt_net_drv,(char)main_vent_pos,*((char*)(&POWER_CNT_ADRESS)),*((char*)((&POWER_CNT_ADRESS))+1),0,0,0);
+     }
+
+else if(cnt_net_drv==10)
+	{
+     if(!bCAN_OFF)can1_out(cnt_net_drv,cnt_net_drv,0,0,0,0,0,0);
+     }
+#endif
+else if(cnt_net_drv==12)
+	{
+     if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,MEM_KF,*((char*)(&UMAX)),*((char*)((&UMAX))+1),*((char*)(&DU)),*((char*)((&DU))+1),0);
+     } 
+     
+else if(cnt_net_drv==13)
+	{
+     if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,MEM_KF1,*((char*)(&TMAX)),*((char*)((&TMAX))+1),*((char*)(&TSIGN)),*((char*)((&TSIGN))+1),(char)TZAS);
+     byps._cnt++;
+	} 
+else if(cnt_net_drv==14)
+	{                 
+	static char makb_cnt;
+	makb_cnt++;
+	if(makb_cnt>=4)makb_cnt=0;
+     if(!bCAN_OFF)mcp2515_transmit(14,14,GET_MAKB,makb_cnt,makb_cnt,0,0,0);
+	makb[makb_cnt]._cnt++;
+	if(makb[makb_cnt]._cnt>20)makb[makb_cnt]._cnt=20;
+	}
+	
+	
+else if(cnt_net_drv==15)
+	{
+     if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,MEM_KF1,*((char*)(&TMAX)),*((char*)((&TMAX))+1),*((char*)(&TSIGN)),*((char*)((&TSIGN))+1),(char)TZAS);
+     }
+
+/*
+else if((cnt_net_drv>=MINIM_INV_ADRESS)&&(cnt_net_drv<(MINIM_INV_ADRESS+NUMINV))&&(NUMINV))
+	{
+    if(!bCAN_OFF) can1_out(cnt_net_drv,cnt_net_drv,GETTM,bps[cnt_net_drv]._flags_tu,*((char*)(&bps[cnt_net_drv]._vol_u)),*((char*)((&bps[cnt_net_drv]._vol_u))+1),*((char*)(&bps[cnt_net_drv]._vol_i)),*((char*)((&bps[cnt_net_drv]._vol_i))+1));
+
+	if(bps[cnt_net_drv]._cnt<CNT_SRC_MAX)
+   	 		{    
+   	 		bps[cnt_net_drv]._cnt++;
+   	 		if( (bps[cnt_net_drv]._cnt>=CNT_SRC_MAX) && (!net_av) && (!(bps[cnt_net_drv]._av&0x08)) && (cnt_net_drv<NUMIST) ) 
+   	 			{
+   	 			avar_bps_hndl(cnt_net_drv,3,1);
+   	 			}
+   	 		}
+		else bps[cnt_net_drv]._cnt=CNT_SRC_MAX;
+						
+		if((bps[cnt_net_drv]._cnt>=3)&&(bps[cnt_net_drv]._cnt_old<3))bps[cnt_net_drv]._cnt_more2++;
+		bps[cnt_net_drv]._cnt_old=bps[cnt_net_drv]._cnt;
+	} 
+*/	
+	
+
+else if(cnt_net_drv==19)
+	{
+     if(!bCAN_OFF)
+		{
+		mcp2515_transmit(cnt_net_drv,cnt_net_drv,GETTM,0,0,0,0,0);
+		lakb[0]._cnt++;
+		if(lakb[0]._cnt>20)lakb[0]._cnt=20;
+		lakb[1]._cnt++;
+		if(lakb[1]._cnt>20)lakb[1]._cnt=20;
+		}
+     }
+	
+	
+else if((cnt_net_drv>=MINIM_INV_ADRESS)&&(cnt_net_drv<MINIM_INV_ADRESS+15))
+	{
+	if(!bCAN_OFF)
+		{
+		if(bCAN_INV)
+			{
+			
+			mcp2515_transmit(cnt_net_drv,cnt_net_drv,GETTM,bps[cnt_net_drv]._flags_tu,*((char*)(&bps[cnt_net_drv]._vol_u)),*((char*)((&bps[cnt_net_drv]._vol_u))+1),*((char*)(&bps[cnt_net_drv]._vol_i)),*((char*)((&bps[cnt_net_drv]._vol_i))+1));
+     		}
+		else
+			{
+			
+			mcp2515_transmit(cnt_net_drv,cnt_net_drv,GETTM_INV,bps[cnt_net_drv]._flags_tu,*((char*)(&bps[cnt_net_drv]._vol_u)),*((char*)((&bps[cnt_net_drv]._vol_u))+1),*((char*)(&bps[cnt_net_drv]._vol_i)),*((char*)((&bps[cnt_net_drv]._vol_i))+1));
+     		} 
+		}
+	//if(cnt_net_drv<=11)
+	     {
+	     if(bps[cnt_net_drv]._cnt<CNT_SRC_MAX)
+   	 		{    
+   	 		bps[cnt_net_drv]._cnt++;
+   	 	/*	if( (bps[cnt_net_drv]._cnt>=CNT_SRC_MAX) && (!net_av) && (!(bps[cnt_net_drv]._av&0x08)) && (cnt_net_drv<NUMIST) ) 
+   	 			{
+   	 			avar_bps_hndl(cnt_net_drv,3,1);
+   	 			}*/
+   	 		}
+		else bps[cnt_net_drv]._cnt=CNT_SRC_MAX;
+						
+		if((bps[cnt_net_drv]._cnt>=3)&&(bps[cnt_net_drv]._cnt_old<3))bps[cnt_net_drv]._cnt_more2++;
+		bps[cnt_net_drv]._cnt_old=bps[cnt_net_drv]._cnt;
+	     }
+	}
+
+
+/*
+
+else if((cnt_net_drv==MINIM_INV_ADRESS+2)&&(NUMINV))
+	{
+    if(!bCAN_OFF) can1_out(cnt_net_drv,cnt_net_drv,0,0,0,0,0,0);
+	}*/
+
+
+}
 
 //-----------------------------------------------
 void parol_init(void)
@@ -9946,13 +10131,13 @@ else if(ind==iTst_220_IPS_TERMOKOMPENSAT)
      ptrs[11]=						" БПС N6             ";
 	ptrs[12]=						" БПС N7             ";
      ptrs[13]=						" БПС N8             ";
-     ptrs[14]=						" БПС N9            ";               
+     ptrs[14]=						" БПС N9             ";               
 	ptrs[15]=						" БПС N10            ";
      ptrs[16]=						" БПС N11            ";
      ptrs[17]=						" БПС N12            ";               
 	ptrs[6+NUMIST]=				" Выход              ";
-	ptrs[7+NUMIST]=				" Сброс              ";
-	ptrs[8+NUMIST]=				"                    ";
+	ptrs[7+NUMIST]=				" Проверка WDT(внутр)";
+	ptrs[8+NUMIST]=				" Проверка WDT(внешн)";
 
 	if((sub_ind-index_set)>2)index_set=sub_ind-2;
 	else if(sub_ind<index_set)index_set=sub_ind;
@@ -10159,7 +10344,7 @@ else if(ind==iTst_TELECORE2015)
 
 else if(ind==iTst_bps)
 	{
-	if(tst_state[5]==tstOFF)ptrs[0]=			" Выключен           ";
+	if(tst_state[5]==tstOFF)ptrs[0]=		" Выключен           ";
 	else if(tst_state[5]==tst1)ptrs[0]=		" Включен            ";
 	else ptrs[0]=							" Автономно          ";
     ptrs[1]=								" ШИМ              @ ";
@@ -11533,7 +11718,9 @@ else if(ind==iMn_6U)
 	else if(but==butE_)
 		{
 		can1_init(BITRATE62_5K25MHZ);
+#ifndef MCP2515CAN
 		FullCAN_SetFilter(0,0x18e);
+#endif
 		}
 	else if(but==butDR_)
 		{
@@ -26798,17 +26985,19 @@ LPC_GPIO0->FIOSET|=(1<<11);
 
 lc640_write_int(100,134);
 
+#ifndef MCP2515_CAN
 can1_init(BITRATE62_5K25MHZ); 
 can2_init(BITRATE125K25MHZ);
 FullCAN_SetFilter(1,0x0e9);
 FullCAN_SetFilter(0,0x18e);
+#endif
 
 
 
 memo_read();
 
 #ifndef UKU_220 
-UARTInit(0, /*(uint32_t)MODBUS_BAUDRATE*10UL*/9600UL);	/* baud rate setting */
+UARTInit(0, (uint32_t)MODBUS_BAUDRATE*10UL);	/* baud rate setting */
 #endif
 
 #ifdef UKU_220 
@@ -26888,6 +27077,9 @@ if((AUSW_MAIN==2400)||(AUSW_MAIN==4800)||(AUSW_MAIN==6000)||(BAT_TYPE==1))
 kb_init();
 //ind=iDeb;
 //sub_ind=6;
+#ifdef MCP2515_CAN
+can_mcp2515_init();
+#endif
 /*
 for(i=0;i<8;i++)
 	{
@@ -26902,6 +27094,12 @@ while (1)
      main_TcpNet ();
 
 	//watchdog_reset();
+
+	if(bMCP2515_IN)
+		{
+		bMCP2515_IN=0;
+		can_in_an1();
+		}
 
 	if(bMODBUS_TIMEOUT)
 		{
@@ -26943,8 +27141,10 @@ while (1)
 	if(b1000Hz)
 		{
 		b1000Hz=0;
-
-
+		#ifdef MCP2515_CAN
+		can_mcp2515_hndl();
+		//mcp2515_read_status();
+		#endif
 		}
 	
 	if(b100Hz)
@@ -26954,15 +27154,19 @@ while (1)
 		//LPC_GPIO2->FIODIR|=(1<<7);
 		//LPC_GPIO2->FIOPIN^=(1<<7);		
 
-		if(!bRESET)but_drv();
+		if((!bRESET_INT_WDT)&&(!bRESET_EXT_WDT))but_drv();
 		but_an();
 		}
 		 
 	if(b50Hz)
 		{
 		b50Hz=0;
-
+		#ifdef MCP2515_CAN
+		net_drv_mcp2515();
+		#endif
+		#ifndef MCP2515_CAN
 		net_drv();
+		#endif
 		}
 
 	if(b10Hz)
@@ -27006,7 +27210,7 @@ while (1)
 		ind_hndl(); 
 		#ifndef SIMULATOR
 		bitmap_hndl();
-		if(!bRESET)
+		if(!bRESET_EXT_WDT)
 			{
 			lcd_out(lcd_bitmap);
 			}
@@ -27028,11 +27232,11 @@ while (1)
 		{
 		b5Hz=0;
 
-		if(!bRESET)
+		if(!bRESET_EXT_WDT)
 			{
 			ad7705_drv();
 			}
-		if(!bRESET)
+		if(!bRESET_EXT_WDT)
 			{
 			memo_read();
 			}
@@ -27040,7 +27244,7 @@ while (1)
 		matemat();
 		
 		rele_hndl();
-		if(!bRESET)avar_hndl();
+		if(!bRESET_EXT_WDT)avar_hndl();
 		zar_superviser_drv();
 		snmp_data();
 		//LPC_GPIO1->FIODIR|=(1UL<<31);
@@ -27060,7 +27264,7 @@ while (1)
 	if(b1Hz)
 		{
 		b1Hz=0;
-		if(!bRESET)
+		if(!bRESET_INT_WDT)
 			{
 			watchdog_reset();
 			}

@@ -389,6 +389,7 @@
 
 
 #define delay_ms(x) {long xx; xx=(unsigned long)x * 12000UL; while(xx)xx--;}
+#define delay_us(x) {long xx; xx=(unsigned long)x * 12UL; while(xx)xx--;}
 
 //*************************************************
 //сообщения
@@ -1255,6 +1256,8 @@ extern signed short power_current;
 
 extern char bRESET;
 extern char bRESET_EXT;
+extern char bRESET_INT_WDT;
+extern char bRESET_EXT_WDT;
 
 //-----------------------------------------------
 //Климатконтроль и вентиляторы
@@ -1342,6 +1345,7 @@ extern unsigned short bat_drv_rx_cnt;
 extern char bat_drv_rx_buff[512];
 extern char bat_drv_rx_in;
 
+extern short can_plazma;
 
 //-----------------------------------------------
 //Климатконтроль TELECORE2015	
