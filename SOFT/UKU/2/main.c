@@ -33,6 +33,7 @@
 #include "modbus.h"
 #include "sacred_sun.h"
 #include "mcp2515.h"
+#include "sc16is7xx.h"
 
 extern U8 own_hw_adr[];
 extern U8  snmp_Community[];
@@ -27086,6 +27087,8 @@ for(i=0;i<8;i++)
 	bps[i]._av=0xff;
 	if(i<NUMIST)bps[i]._av=0x00;
 	}*/
+
+sc16is700_init();
 		
 while (1)  
 	{
@@ -27258,7 +27261,7 @@ while (1)
 		b2Hz=0;
 
 				//uart_out_adr1(dig,150);
-		
+		sc16is700_wr_byte(CS16IS7xx_THR, 0x55);
   		}
 
 	if(b1Hz)
@@ -27333,6 +27336,8 @@ while (1)
 		putchar2(0x59);
 		putchar2(0x5a);*/
 
+		
+	
 		}
 	if(b1min)
 		{

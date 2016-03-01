@@ -566,6 +566,11 @@
               <FileType>1</FileType>
               <FilePath>.\sacred_sun.c</FilePath>
             </File>
+            <File>
+              <FileName>sc16is7xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sc16is7xx.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1147,6 +1152,11 @@
               <FileName>sacred_sun.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\sacred_sun.c</FilePath>
+            </File>
+            <File>
+              <FileName>sc16is7xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sc16is7xx.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1730,6 +1740,11 @@
               <FileType>1</FileType>
               <FilePath>.\sacred_sun.c</FilePath>
             </File>
+            <File>
+              <FileName>sc16is7xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sc16is7xx.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2311,6 +2326,11 @@
               <FileName>sacred_sun.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\sacred_sun.c</FilePath>
+            </File>
+            <File>
+              <FileName>sc16is7xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sc16is7xx.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2894,6 +2914,11 @@
               <FileType>1</FileType>
               <FilePath>.\sacred_sun.c</FilePath>
             </File>
+            <File>
+              <FileName>sc16is7xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sc16is7xx.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3475,6 +3500,11 @@
               <FileName>sacred_sun.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\sacred_sun.c</FilePath>
+            </File>
+            <File>
+              <FileName>sc16is7xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sc16is7xx.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4058,6 +4088,11 @@
               <FileType>1</FileType>
               <FilePath>.\sacred_sun.c</FilePath>
             </File>
+            <File>
+              <FileName>sc16is7xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sc16is7xx.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4639,6 +4674,11 @@
               <FileName>sacred_sun.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\sacred_sun.c</FilePath>
+            </File>
+            <File>
+              <FileName>sc16is7xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sc16is7xx.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5357,6 +5397,11 @@
               <FileType>1</FileType>
               <FilePath>.\sacred_sun.c</FilePath>
             </File>
+            <File>
+              <FileName>sc16is7xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sc16is7xx.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5996,6 +6041,11 @@
               <FileType>1</FileType>
               <FilePath>.\sacred_sun.c</FilePath>
             </File>
+            <File>
+              <FileName>sc16is7xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sc16is7xx.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6578,6 +6628,11 @@
               <FileType>1</FileType>
               <FilePath>.\sacred_sun.c</FilePath>
             </File>
+            <File>
+              <FileName>sc16is7xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sc16is7xx.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -7159,6 +7214,11 @@
               <FileName>sacred_sun.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\sacred_sun.c</FilePath>
+            </File>
+            <File>
+              <FileName>sc16is7xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sc16is7xx.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7877,6 +7937,11 @@
               <FileType>1</FileType>
               <FilePath>.\sacred_sun.c</FilePath>
             </File>
+            <File>
+              <FileName>sc16is7xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sc16is7xx.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -8458,6 +8523,11 @@
               <FileName>sacred_sun.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\sacred_sun.c</FilePath>
+            </File>
+            <File>
+              <FileName>sc16is7xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sc16is7xx.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9332,6 +9402,11 @@
               <FileType>1</FileType>
               <FilePath>.\sacred_sun.c</FilePath>
             </File>
+            <File>
+              <FileName>sc16is7xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sc16is7xx.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -10105,6 +10180,11 @@
               <FileName>sacred_sun.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\sacred_sun.c</FilePath>
+            </File>
+            <File>
+              <FileName>sc16is7xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sc16is7xx.c</FilePath>
             </File>
           </Files>
         </Group>
