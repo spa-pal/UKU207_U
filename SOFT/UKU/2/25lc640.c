@@ -39,7 +39,7 @@ LPC_SPI->SPCCR=8;
 LPC_SPI->SPCR=0x20;
 }
 
-#ifdef MCP2515_CAN
+
 //----------------------------------------------- 
 //настройка SPI1
 void spi1_config_mcp2515(void)
@@ -56,7 +56,7 @@ S1SPCR=0x3f; */
 LPC_SPI->SPCCR=32;
 LPC_SPI->SPCR=0x38;
 }
-#endif
+
 
 //----------------------------------------------- 
 //выключение SPI1

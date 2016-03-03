@@ -18,9 +18,19 @@ S1SPCCR=100;
 S1SPCR=0x3f; */
 
 LPC_SPI->SPCCR=20;
-LPC_SPI->SPCR=0x38;
+LPC_SPI->SPCR=0x20;
 }
 
+void sc16is700_wr_buff(char reg_num,char num)
+{
+short i;
+sc16is700_spi_init();
+delay_us(2);
+sc16is700_CS_ON 
+spi1((reg_num&0x0f)<<3);
+for (i=0;i<num;i++)spi1(i);
+sc16is700_CS_OFF
+}
 
 void sc16is700_wr_byte(char reg_num,char data)
 {
@@ -33,15 +43,30 @@ sc16is700_CS_OFF
 }
 
 
+char sc16is700_rd_byte(char reg_num)
+{
+char out;
+sc16is700_spi_init();
+delay_us(2);
+sc16is700_CS_ON
+spi1(((reg_num&0x0f)<<3)|0x80);
+out = spi1(0xff);
+sc16is700_CS_OFF
+return out;
+}
+
+
 void sc16is700_init(void)
 {
 sc16is700_wr_byte(CS16IS7xx_LCR, 0x80);
-sc16is700_wr_byte(CS16IS7xx_DLL, 0x12);
-sc16is700_wr_byte(CS16IS7xx_DLH, 0x04);
+sc16is700_wr_byte(CS16IS7xx_DLL, 0x41);
+sc16is700_wr_byte(CS16IS7xx_DLH, 0x00);
 sc16is700_wr_byte(CS16IS7xx_LCR, 0xBF);
-sc16is700_wr_byte(CS16IS7xx_EFR, 0X00);
+sc16is700_wr_byte(CS16IS7xx_EFR, 0X10);
 sc16is700_wr_byte(CS16IS7xx_LCR, 0x03);
+sc16is700_wr_byte(CS16IS7xx_FCR, 0x06);
 sc16is700_wr_byte(CS16IS7xx_FCR, 0x01);
+sc16is700_wr_byte(CS16IS7xx_EFCR, 0X10);
 //sc16is700_wr_byte(CS16IS7xx_DLH, 0x04);
 //sc16is700_wr_byte(CS16IS7xx_DLH, 0x04);
 //sc16is700_wr_byte(CS16IS7xx_DLH, 0x04);

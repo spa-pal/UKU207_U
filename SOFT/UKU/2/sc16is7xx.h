@@ -6,6 +6,8 @@
 #define CS16IS7xx_LCR	0x03
 #define CS16IS7xx_MCR	0x04
 #define CS16IS7xx_LSR	0x05
+#define CS16IS7xx_SPR	0x07
+#define CS16IS7xx_EFCR	0x0f
 
 
 #define CS16IS7xx_DLL	0x00
@@ -20,3 +22,5 @@
 
 void sc16is700_init(void);
 void sc16is700_wr_byte(char reg_num,char data);
+char sc16is700_rd_byte(char reg_num);
+void sc16is700_wr_buff(char reg_num,char num);

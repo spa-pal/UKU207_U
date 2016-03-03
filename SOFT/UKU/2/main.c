@@ -27261,7 +27261,9 @@ while (1)
 		b2Hz=0;
 
 				//uart_out_adr1(dig,150);
-		sc16is700_wr_byte(CS16IS7xx_THR, 0x55);
+		sc16is700_wr_buff(CS16IS7xx_THR, 20);
+
+		//sc16is700_wr_byte(CS16IS7xx_LCR, 0x80);
   		}
 
 	if(b1Hz)
