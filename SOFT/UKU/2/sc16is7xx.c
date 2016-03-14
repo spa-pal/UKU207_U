@@ -2,7 +2,16 @@
 #include "sc16is7xx.h"
 #include <LPC17xx.H>
 #include "main.h"
+#include "modbus.h"
 
+char sc16is700ByteAvailable;
+char sc16is700TxFifoLevel;
+char tx_buffer_sc16is700[TX_BUFFER_SIZE_SC16IS700];//программный буфер передачи
+char tx_wr_index_sc16is700;//указатель записи в программный буфер передачи
+char tx_rd_index_sc16is700;//указатель чтения из программного буфера передачи
+char sc16is700TxFifoEmptyCnt; //Временной счетчик свободности ФИФО передачи
+char sc16is700TxPossibleFlag;//Флаг возможности передачи
+char sc16is700RecieveDisableFlag;
 
 //----------------------------------------------- 
 //настройка SPI1
@@ -21,6 +30,8 @@ LPC_SPI->SPCCR=20;
 LPC_SPI->SPCR=0x20;
 }
 
+//----------------------------------------------- 
+//Отправка num байт из программного буфера передачи в sc16is700
 void sc16is700_wr_buff(char reg_num,char num)
 {
 short i;
@@ -28,7 +39,7 @@ sc16is700_spi_init();
 delay_us(2);
 sc16is700_CS_ON 
 spi1((reg_num&0x0f)<<3);
-for (i=0;i<num;i++)spi1(i);
+for (i=0;i<num;i++)spi1(tx_buffer_sc16is700[i]);
 sc16is700_CS_OFF
 }
 
@@ -66,7 +77,7 @@ sc16is700_wr_byte(CS16IS7xx_EFR, 0X10);
 sc16is700_wr_byte(CS16IS7xx_LCR, 0x03);
 sc16is700_wr_byte(CS16IS7xx_FCR, 0x06);
 sc16is700_wr_byte(CS16IS7xx_FCR, 0x01);
-sc16is700_wr_byte(CS16IS7xx_EFCR, 0X10);
+sc16is700_wr_byte(CS16IS7xx_EFCR, 0X30);
 //sc16is700_wr_byte(CS16IS7xx_DLH, 0x04);
 //sc16is700_wr_byte(CS16IS7xx_DLH, 0x04);
 //sc16is700_wr_byte(CS16IS7xx_DLH, 0x04);
@@ -91,3 +102,65 @@ SPI_wr_752 (IOSTATE, 0x00, 0); // set GPIO [7:0] to 0x00 (LEDs on)
 SPI_wr_752 (IER, 0x01, 0); // enable Rx data ready interrupt
 }*/
 
+//----------------------------------------------- 
+//Посылка байта через sc16is700
+void putchar_sc16is700(char out_byte)
+{
+tx_buffer_sc16is700[tx_wr_index_sc16is700]=out_byte;
+if (++tx_wr_index_sc16is700 == TX_BUFFER_SIZE_SC16IS700) tx_wr_index_sc16is700=0;
+}
+
+
+//----------------------------------------------- 
+//Обработчик sc16is700
+void sc16is700_uart_hndl(void)
+{
+
+sc16is700ByteAvailable=sc16is700_rd_byte(CS16IS7xx_RXLVL); //Читаем состояние ФИФО приема микросхемы
+
+if(sc16is700ByteAvailable) //Если в приемном ФИФО	микросхемы есть данные
+	{
+	char i;
+	for(i=0;(i<sc16is700ByteAvailable)&&(i<5);i++) //Читаем их пачками не больше 5 в программный буфер модбас
+		{
+		if(!sc16is700RecieveDisableFlag)
+			{
+			modbus_rx_buffer[modbus_rx_buffer_ptr]=sc16is700_rd_byte(CS16IS7xx_RHR);
+			modbus_rx_buffer_ptr++;
+			modbus_timeout_cnt=0;   //Запускаем таймер опознавания конца посылки 
+			}
+		else sc16is700_rd_byte(CS16IS7xx_RHR);
+		}
+	}
+
+
+
+sc16is700TxFifoLevel=sc16is700_rd_byte(CS16IS7xx_TXLVL);//Читаем состояние ФИФО передачи
+
+if(sc16is700TxFifoLevel!=64) sc16is700TxFifoEmptyCnt==0;//Если ФИФО не пустой обнуляем счетчик свободности ФИФО передачи
+if(sc16is700TxFifoLevel==64) //если ФИФО пустой то плюсуем счетчик если он меньше константы
+	{
+	if(sc16is700TxFifoEmptyCnt<SC16IS700TXFIFOEMPTYCNTMAX)sc16is700TxFifoEmptyCnt++;
+	}
+if(sc16is700TxFifoEmptyCnt==SC16IS700TXFIFOEMPTYCNTMAX) sc16is700TxPossibleFlag=1;//Если счетчик сравнялся с константой поднимаем флаг возможности передачи
+else sc16is700TxPossibleFlag=0;//Если не сравнялся - флаг сбрасываем.
+
+
+if((tx_wr_index_sc16is700)&&(tx_wr_index_sc16is700!=tx_rd_index_sc16is700)) //Если программный буфер передачи не пуст
+	{
+	if(sc16is700TxPossibleFlag)//проверяем возможность передачи
+		{
+		//char i;
+		//for(;tx_rd_index_sc16is700++;tx_rd_index_sc16is700<=tx_wr_index_sc16is700)
+			//{
+		sc16is700RecieveDisableFlag=1;
+		sc16is700_wr_buff(CS16IS7xx_THR, tx_wr_index_sc16is700);
+			//}
+		tx_wr_index_sc16is700=0;
+		}
+	}
+
+if((sc16is700_rd_byte(CS16IS7xx_LSR))&0x40)	sc16is700RecieveDisableFlag=0;
+
+
+}

@@ -64,7 +64,7 @@ unsigned short modbus_rx_arg2;		//встроенный в посылку третий аргумент
 unsigned short modbus_rx_arg3;		//встроенный в посылку четвертый аргумент
 unsigned char modbus_func;			//встроенный в посылку код функции
 
-modbus_plazma++;
+
 
 mem_copy(modbus_an_buffer,modbus_rx_buffer,modbus_rx_buffer_ptr);
 modbus_rx_counter=modbus_rx_buffer_ptr;
@@ -87,10 +87,12 @@ modbus_rx_arg3=(((unsigned short)modbus_an_buffer[8])*((unsigned short)256))+((u
 
 if(crc16_calculated==crc16_incapsulated)
 	{
+	
 	if(modbus_an_buffer[0]==MODBUS_ADRESS)
 		{
 		if(modbus_func==3)		//чтение произвольного кол-ва регистров хранения
 			{
+			modbus_plazma++;
 			modbus_hold_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,modbus_rx_arg1);
 			}
 
@@ -416,6 +418,10 @@ for (i=0;i<8;i++)
 	{
 	putchar0(modbus_tx_buff[i]);
 	}
+for (i=0;i<8;i++)
+	{
+	putchar_sc16is700(modbus_tx_buff[i]);
+	}
 }
 
 //-----------------------------------------------
@@ -559,6 +565,10 @@ for (i=0;i<15/*(5+(reg_quantity*2))*/;i++)
 	{
 	putchar0(modbus_tx_buff[i]);
 	} 
+for (i=0;i<15;i++)
+	{
+	putchar_sc16is700(modbus_tx_buff[i]);
+	}
 }
 
 //-----------------------------------------------
@@ -641,6 +651,10 @@ modbus_tx_buff[7]=crc_temp/256;
 for (i=0;i<8;i++)
 	{
 	putchar0(modbus_tx_buff[i]);
+	}
+for (i=0;i<8;i++)
+	{
+	putchar_sc16is700(modbus_tx_buff[i]);
 	}
 }
 
@@ -738,6 +752,11 @@ modbus_tx_buff[4+(reg_quantity*2)]=crc_temp/256;
 for (i=0;i<(5+(reg_quantity*2));i++)
 	{
 	putchar0(modbus_tx_buff[i]);
+	}
+
+for (i=0;i<(5+(reg_quantity*2));i++)
+	{
+	putchar_sc16is700(modbus_tx_buff[i]);
 	}
 
 /*	putchar2(modbus_tx_buff[0]);
@@ -899,6 +918,10 @@ modbus_tx_buff[4+(reg_quantity*2)]=crc_temp/256;
 for (i=0;i<(5+(reg_quantity*2));i++)
 	{
 	putchar0(modbus_tx_buff[i]);
+	}
+for (i=0;i<(5+(reg_quantity*2));i++)
+	{
+	putchar_sc16is700(modbus_tx_buff[i]);
 	}
 }
 

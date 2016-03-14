@@ -1,5 +1,5 @@
 //Базовая ветка
-
+#define SC16IS740_UART
 
 #include "lcd_AGM1232_uku207_3.h"
 #include "rtl.h"
@@ -2909,13 +2909,17 @@ else if((ind==iMn_220)||(ind==iMn_220_IPS_TERMOKOMPENSAT))
 	int2lcdyx(speedChrgBlckLog,0,4,0);	
 	int2lcdyx(adc_buff_[11],0,7,0);
 	int2lcdyx(adc_buff_[13],0,10,0);
+								    */
 	
-	
-	int2lcdyx(speedChrgBlckStat,0,19,0); */
+	/*int2lcdyx(tx_wr_index_sc16is700,0,2,0);
+	int2lcdyx(tx_rd_index_sc16is700,0,5,0);
 
-	//int2lcdyx(load_U,0,8,0);
-	//int2lcdyx(u_necc,0,19,0);
-	//int2lcdyx(cntrl_stat,0,4,0);
+	int2lcdyx(sc16is700TxFifoLevel,0,8,0);
+	int2lcdyx(modbus_plazma,0,19,0);
+	int2lcdyx(sc16is700ByteAvailable,0,12,0); */
+	
+	//int2lcdyx(ad7705_buff_[0],0,5,0);
+	//int2lcdyx(ad7705_buff_[1],0,15,0);
 		 
 	}
 
@@ -11873,15 +11877,15 @@ else if((ind==iMn_220)||(ind==iMn_220_IPS_TERMOKOMPENSAT))
 		{
 		//ind=iMn;
 		sub_ind=0;
+		modbus_hold_registers_transmit(0x35,3,4,5);
 
-
-	putchar0(0x04);
+	/*putchar0(0x04);
 	putchar0(0x04);
 	putchar0(0x02);
 	putchar0(0x00);
 	putchar0(0x00);
 	putchar0(0x75);
-	putchar0(0x30);
+	putchar0(0x30); */
 /*	putchar2(0);
 	putchar2(1);
 	putchar2(2);
@@ -27117,6 +27121,14 @@ while (1)
 	
 		uart_in0();
 		} 
+
+/*	if(bRXIN_SC16IS700) 
+		{
+		bRXIN_SC16IS700=0;
+	
+		uart_in_SC16IS700();
+		}*/
+
 	/*
 	if(bRXIN1) 
 		{
@@ -27148,6 +27160,10 @@ while (1)
 		can_mcp2515_hndl();
 		//mcp2515_read_status();
 		#endif
+
+		#ifdef SC16IS740_UART
+		sc16is700_uart_hndl();
+		#endif		
 		}
 	
 	if(b100Hz)
@@ -27261,7 +27277,7 @@ while (1)
 		b2Hz=0;
 
 				//uart_out_adr1(dig,150);
-		sc16is700_wr_buff(CS16IS7xx_THR, 20);
+		//sc16is700_wr_buff(CS16IS7xx_THR, 20);
 
 		//sc16is700_wr_byte(CS16IS7xx_LCR, 0x80);
   		}
@@ -27339,7 +27355,7 @@ while (1)
 		putchar2(0x5a);*/
 
 		
-	
+		
 		}
 	if(b1min)
 		{
