@@ -34,7 +34,7 @@ extern char sc16is700TxFifoEmptyCnt; //Временной счетчик свободности ФИФО переда
 extern char sc16is700TxPossibleFlag;//Флаг возможности передачи
 
 
-void sc16is700_init(void);
+void sc16is700_init(uint32_t baudrate);
 void sc16is700_wr_byte(char reg_num,char data);
 char sc16is700_rd_byte(char reg_num);
 //----------------------------------------------- 

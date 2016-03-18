@@ -67,11 +67,17 @@ return out;
 }
 
 
-void sc16is700_init(void)
+void sc16is700_init(uint32_t baudrate)
 {
+
+unsigned char baud_h,baud_l;
+
+baud_h = (char)((10000000U/16U/baudrate)>>8);
+baud_l = (char)((10000000U/16U/baudrate)); 
+
 sc16is700_wr_byte(CS16IS7xx_LCR, 0x80);
-sc16is700_wr_byte(CS16IS7xx_DLL, 0x41);
-sc16is700_wr_byte(CS16IS7xx_DLH, 0x00);
+sc16is700_wr_byte(CS16IS7xx_DLL, baud_l);
+sc16is700_wr_byte(CS16IS7xx_DLH, baud_h);
 sc16is700_wr_byte(CS16IS7xx_LCR, 0xBF);
 sc16is700_wr_byte(CS16IS7xx_EFR, 0X10);
 sc16is700_wr_byte(CS16IS7xx_LCR, 0x03);

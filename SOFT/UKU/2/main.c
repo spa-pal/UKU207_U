@@ -27092,7 +27092,7 @@ for(i=0;i<8;i++)
 	if(i<NUMIST)bps[i]._av=0x00;
 	}*/
 
-sc16is700_init();
+sc16is700_init((uint32_t)(MODBUS_BAUDRATE*10UL));
 		
 while (1)  
 	{
