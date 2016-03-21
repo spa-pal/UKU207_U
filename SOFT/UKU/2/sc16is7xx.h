@@ -1,3 +1,5 @@
+#include "stdint.h"
+
 #define CS16IS7xx_RHR	0x00
 #define CS16IS7xx_THR	0x00
 #define CS16IS7xx_IER	0x01

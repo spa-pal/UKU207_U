@@ -1013,6 +1013,8 @@ else if((cnt_net_drv==MINIM_INV_ADRESS+2)&&(NUMINV))
 
 }
 
+#ifdef MCP2515_CAN
+
 //-----------------------------------------------
 void net_drv_mcp2515(void)
 { 
@@ -1191,7 +1193,7 @@ else if((cnt_net_drv==MINIM_INV_ADRESS+2)&&(NUMINV))
 
 
 }
-
+#endif
 //-----------------------------------------------
 void parol_init(void)
 {
@@ -1471,7 +1473,7 @@ const char* ptrs[50];
 const char* sub_ptrs[50];
 static char sub_cnt,sub_cnt1;
 char i,sub_cnt_max;
-char ii_;
+char ii_;				  
 static char ii_cnt,cnt_ind_bat;
 
 
@@ -23064,8 +23066,9 @@ else if(ind==iK_inv)
 		else if((sub_ind==10)||(sub_ind==11))sub_ind=12;
 		else if((sub_ind==13)||(sub_ind==14))sub_ind=15;
 		else if((sub_ind==16)||(sub_ind==17))sub_ind=18;
+		else if((sub_ind==19)||(sub_ind==20))sub_ind=21;
 
-		gran_char(&sub_ind,0,18);
+		gran_char(&sub_ind,0,24);
 		phase=0;
 		}
 	else if(but==butU)
@@ -23077,72 +23080,111 @@ else if(ind==iK_inv)
 		else if((sub_ind==10)||(sub_ind==11))sub_ind=9;
 		else if((sub_ind==13)||(sub_ind==14))sub_ind=12;
 		else if((sub_ind==16)||(sub_ind==17))sub_ind=15;
-		gran_char(&sub_ind,0,18);
+		else if((sub_ind==19)||(sub_ind==20))sub_ind=18;
+		gran_char(&sub_ind,0,24);
 		phase=0;
 		}
 	else if(but==butD_)
 		{
-		sub_ind=9;
+		sub_ind=24;
 		}
 	else if (sub_ind == 0)
 		{
-		if(but==butLR) can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(0*16)+1,(0*16)+1,0,0,0);
-	    else if(but==butR) can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(0*16)+2,(0*16)+2,0,0,0);
-		else if(but==butR_)	can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(0*16)+3,(0*16)+3,0,0,0);
-    	else if(but==butL) can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(0*16)+4,(0*16)+4,0,0,0); 
-		else if(but==butL_) can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(0*16)+5,(0*16)+5,0,0,0);
+		if(but==butR) 		can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,0xc2/*(12*16)+2*/,0xc2/*(12*16)+2*/,0,0,0);
+		else if(but==butR_)	can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,0xc3/*(12*16)+3*/,0xc3/*(12*16)+3*/,0,0,0);
+    		else if(but==butL) 	can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,0xc4/*(12*16)+4*/,0xc4/*(12*16)+4*/,0,0,0); 
+		else if(but==butL_) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,0xc5/*(12*16)+5*/,0xc5/*(12*16)+5*/,0,0,0);
+		speed=1;
+		}
+	else if (sub_ind == 3)
+		{
+		if(but==butLR) 	can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(0*16)+1,(0*16)+1,0,0,0);
+	    	else if(but==butR) 	can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(0*16)+2,(0*16)+2,0,0,0);
+		else if(but==butR_)	can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(0*16)+3,(0*16)+3,0,0,0);
+    		else if(but==butL) 	can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(0*16)+4,(0*16)+4,0,0,0); 
+		else if(but==butL_) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(0*16)+5,(0*16)+5,0,0,0);
 		speed=1;
 		}	
 		
-	else if (sub_ind == 3)
+	else if (sub_ind == 6)
 		{
 		if(but==butE)
 			{
-			can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(2*16)+1,(2*16)+1,0,0,0);
+			can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(2*16)+1,(2*16)+1,0,0,0);
 			phase=1;
 			}
-	    	else if(but==butR) can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(2*16)+2,(2*16)+2,0,0,0);
-		else if(but==butR_)	can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(2*16)+3,(2*16)+3,0,0,0);
-    		else if(but==butL) can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(2*16)+4,(2*16)+4,0,0,0); 
-		else if(but==butL_) can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(2*16)+5,(2*16)+5,0,0,0);
+	    	else if(but==butR) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(2*16)+2,(2*16)+2,0,0,0);
+		else if(but==butR_)	can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(2*16)+3,(2*16)+3,0,0,0);
+    		else if(but==butL) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(2*16)+4,(2*16)+4,0,0,0); 
+		else if(but==butL_) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(2*16)+5,(2*16)+5,0,0,0);
 		speed=1;
 		}		
 		
-	else if (sub_ind == 6)
+	else if (sub_ind == 9)
 		{
-		if(but==butR) can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(3*16)+2,(3*16)+2,0,0,0);
-		else if(but==butR_)	can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(3*16)+3,(3*16)+3,0,0,0);
-    	else if(but==butL) can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(3*16)+4,(3*16)+4,0,0,0); 
-		else if(but==butL_) can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(3*16)+5,(3*16)+5,0,0,0);
+		if(but==butR) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(3*16)+2,(3*16)+2,0,0,0);
+		else if(but==butR_)	can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(3*16)+3,(3*16)+3,0,0,0);
+    	else if(but==butL) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(3*16)+4,(3*16)+4,0,0,0); 
+		else if(but==butL_) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(3*16)+5,(3*16)+5,0,0,0);
 		speed=1;
 		}								
 			
-	else if (sub_ind == 9)
-		{
-		if(but==butR) can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(4*16)+2,(4*16)+2,0,0,0);
-		else if(but==butR_)	can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(4*16)+3,(4*16)+3,0,0,0);
-    	else if(but==butL) can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(4*16)+4,(4*16)+4,0,0,0); 
-		else if(but==butL_) can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(4*16)+5,(4*16)+5,0,0,0);
-		speed=1;
-		}
 	else if (sub_ind == 12)
 		{
-		if(but==butR) can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(5*16)+2,(5*16)+2,0,0,0);
-		else if(but==butR_)	can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(5*16)+3,(5*16)+3,0,0,0);
-    	else if(but==butL) can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(5*16)+4,(5*16)+4,0,0,0); 
-		else if(but==butL_) can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(5*16)+5,(5*16)+5,0,0,0);
+		if(but==butR) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(4*16)+2,(4*16)+2,0,0,0);
+		else if(but==butR_)	can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(4*16)+3,(4*16)+3,0,0,0);
+    	else if(but==butL) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(4*16)+4,(4*16)+4,0,0,0); 
+		else if(but==butL_) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(4*16)+5,(4*16)+5,0,0,0);
 		speed=1;
 		}
 	else if (sub_ind == 15)
 		{
-		if(but==butR) can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(6*16)+2,(6*16)+2,0,0,0);
-		else if(but==butR_)	can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(6*16)+3,(6*16)+3,0,0,0);
-    	else if(but==butL) can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(6*16)+4,(6*16)+4,0,0,0); 
-		else if(but==butL_) can1_out(GLADKOV_ADR,GLADKOV_ADR,KLBR,(6*16)+5,(6*16)+5,0,0,0);
+		if(but==butR) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(5*16)+2,(5*16)+2,0,0,0);
+		else if(but==butR_)	can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(5*16)+3,(5*16)+3,0,0,0);
+    		else if(but==butL) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(5*16)+4,(5*16)+4,0,0,0); 
+		else if(but==butL_) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(5*16)+5,(5*16)+5,0,0,0);
 		speed=1;
+		}
+	else if (sub_ind == 18)
+		{
+		if(but==butR) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(6*16)+2,(6*16)+2,0,0,0);
+		else if(but==butR_)	can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(6*16)+3,(6*16)+3,0,0,0);
+    		else if(but==butL) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(6*16)+4,(6*16)+4,0,0,0); 
+		else if(but==butL_) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(6*16)+5,(6*16)+5,0,0,0);
+		speed=1;	
 		}							
-							
-	else if(sub_ind==18)
+
+	else if (sub_ind == 21)
+		{
+		if(but==butR) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(13*16)+2,(13*16)+2,0,0,0);
+		else if(but==butR_)	can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(13*16)+2,(13*16)+2,0,0,0);
+    		else if(but==butL) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(13*16)+4,(13*16)+4,0,0,0); 
+		else if(but==butL_) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(13*16)+4,(13*16)+4,0,0,0);
+		speed=1;
+
+		}
+		
+	else if (sub_ind == 22)
+		{
+		if(but==butR) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(14*16)+2,(14*16)+2,0,0,0);
+		else if(but==butR_)	can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(14*16)+2,(14*16)+2,0,0,0);
+    		else if(but==butL) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(14*16)+4,(14*16)+4,0,0,0); 
+		else if(but==butL_) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(14*16)+4,(14*16)+4,0,0,0);
+		speed=1;
+
+		}
+
+	else if (sub_ind == 23)
+		{
+		if(but==butR) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(15*16)+2,(15*16)+2,0,0,0);
+		else if(but==butR_)	can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(15*16)+2,(15*16)+2,0,0,0);
+    		else if(but==butL) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(15*16)+4,(15*16)+4,0,0,0); 
+		else if(but==butL_) can1_out(sub_ind1+first_inv_slot,sub_ind1+first_inv_slot,KLBR,(15*16)+4,(15*16)+4,0,0,0);
+		speed=1;
+
+		}
+										
+	else if(sub_ind==24)
 		{
 		if(but==butE)
 			{
@@ -27101,13 +27143,13 @@ while (1)
      main_TcpNet ();
 
 	//watchdog_reset();
-
+#ifdef MCP2515_CAN
 	if(bMCP2515_IN)
 		{
 		bMCP2515_IN=0;
 		can_in_an1();
 		}
-
+#endif
 	if(bMODBUS_TIMEOUT)
 		{
 		bMODBUS_TIMEOUT=0;
