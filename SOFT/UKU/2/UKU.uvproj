@@ -10246,7 +10246,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\EXE\</OutputDirectory>
-          <OutputName>UKU_6U</OutputName>
+          <OutputName>UKU_6U_GLADKOV</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
