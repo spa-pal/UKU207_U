@@ -1,5 +1,5 @@
 //Базовая ветка
-#define SC16IS740_UART
+//#define SC16IS740_UART
 
 #include "lcd_AGM1232_uku207_3.h"
 #include "rtl.h"
@@ -33,7 +33,7 @@
 #include "modbus.h"
 #include "sacred_sun.h"
 #include "mcp2515.h"
-#include "sc16is7xx.h"
+//#include "sc16is7xx.h"
 
 extern U8 own_hw_adr[];
 extern U8  snmp_Community[];
@@ -27134,7 +27134,7 @@ for(i=0;i<8;i++)
 	if(i<NUMIST)bps[i]._av=0x00;
 	}*/
 
-sc16is700_init((uint32_t)(MODBUS_BAUDRATE*10UL));
+//sc16is700_init((uint32_t)(MODBUS_BAUDRATE*10UL));
 		
 while (1)  
 	{
