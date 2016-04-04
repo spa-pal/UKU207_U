@@ -1010,7 +1010,7 @@ extern BAT_STAT bat[2],bat_ips;
 extern signed short		bat_u_old_cnt;
 extern signed short 	Ib_ips_termokompensat;
 
-#ifdef UKU_TELECORE2015
+//#ifdef UKU_TELECORE2015
 typedef enum {bsOFF=0,bsCOMM_ON,bsOK} enum_batStat;
 //***********************************************
 //Состояние литиевой батареи
@@ -1055,7 +1055,7 @@ typedef struct
 	//signed short   _min_cell_volt;
 	} LI_BAT_STAT; 
 extern LI_BAT_STAT li_bat;
-#endif
+//#endif
 //***********************************************
 //Состояние байпаса
 typedef struct

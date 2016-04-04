@@ -266,11 +266,11 @@ char bLAKB_KONF_CH_EN;
 short LBAT_STRUKT;
 char lakb_error_cnt;	//счетчик неправильного показания ннапряжения батареи
 
-#ifdef UKU_TELECORE2015
+//#ifdef UKU_TELECORE2015
 //***********************************************
 //Состояние литиевой батареи  
 LI_BAT_STAT li_bat;
-#endif
+//#endif
 
 //***********************************************
 //Телеметрия по внутренней шине
@@ -27527,6 +27527,7 @@ for(i=0;i<8;i++)
 	}*/
 
 //sc16is700_init((uint32_t)(MODBUS_BAUDRATE*10UL));
+sc16is700_init();
 		
 while (1)  
 	{
