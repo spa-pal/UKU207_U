@@ -708,7 +708,7 @@ typedef enum {
 	#endif 
 	iSrv_sl,iNet,iNet3,iNetEM,
 	iSet,iSet_3U,iSet_RSTKM,iSet_GLONASS,iSet_KONTUR,iSet_6U,iSet_220,iSet_220_IPS_TERMOKOMPENSAT,iSet_220_V2,iInv_set_sel,
-	iBat,iBat_simple,iBat_li,iBat_SacredSun,iInv_set,iSet_TELECORE2015,
+	iBat,iBat_simple,iBat_li,iBat_SacredSun,iBat_universe,iInv_set,iSet_TELECORE2015,
 	iMakb,
 	iBps,iS2,iSet_prl,iK_prl,iDnd,
 	iK,iK_3U,iK_RSTKM,iK_GLONASS,iK_KONTUR,iK_6U,iK_220,iK_220_380,iK_220_IPS_TERMOKOMPENSAT,iK_220_IPS_TERMOKOMPENSAT_IB,
@@ -855,7 +855,8 @@ extern signed short TBOXVENTON;
 extern signed short TBOXVENTOFF;
 extern signed short TBOXWARMON; 
 extern signed short TBOXWARMOFF;
-extern signed short BAT_TYPE;
+extern signed short BAT_TYPE;		//Тип батареи. 0 - обычная свинцовая, 1-литиевая COSLIGHT, 2-литиевая SACRED SUN
+extern signed short DU_LI_BAT;	//Параметр, определяющий напряжение содержания литиевой батареи
 
 extern signed short NUMBAT;
 extern signed short NUMIST;
@@ -1009,6 +1010,52 @@ extern BAT_STAT bat[2],bat_ips;
 extern signed short		bat_u_old_cnt;
 extern signed short 	Ib_ips_termokompensat;
 
+#ifdef UKU_TELECORE2015
+typedef enum {bsOFF=0,bsCOMM_ON,bsOK} enum_batStat;
+//***********************************************
+//Состояние литиевой батареи
+typedef struct
+     {
+	//char 		_cnt_to_block;
+	signed short	_Ub;
+     //signed short	_Ubm;
+     //signed short	_dUbm;
+	signed short	_Ib;
+	signed short	_Tb;
+	char 		_nd;
+	char   		_soh;
+	char 		_soc;
+	signed short   _ratCap;
+	char 		_comErrStat;	//Состояние связи с батареей: 1-ошибка, 0-связь в норме
+	enum_batStat	_batStat;
+	signed short 	_cclv;
+	char 		_rbt;
+	short 		_canErrorCnt;
+	char			_canError;
+	char 		_485Error;
+	short 		_485ErrorCnt;
+	//char 		_full_ver;
+	//signed long 	_zar_cnt;
+	//signed long 	_zar_cnt_ke;
+	//unsigned short _Iintegr,_Iintegr_; 
+	//signed short 	_u_old[8];
+	//signed short	_u_old_cnt;
+	//unsigned long 	_wrk_date[2];
+	//char 		_rel_stat;
+	//char			_av;
+	//char			_time_cnt;
+	//char 		_temper_stat;
+	//0бит - подогрев
+	//1бит - перегрев
+	//signed short 	_sign_temper_cnt;
+	//signed short 	_max_temper_cnt;
+	//signed long 	_resurs_cnt;
+	//signed short 	_cnt_as; 	//счетчик несимметрии, считает до 5 минут при выполнении условий несимметрии, когда досчитывает - пишет в журнал
+     //signed short   _max_cell_volt;
+	//signed short   _min_cell_volt;
+	} LI_BAT_STAT; 
+extern LI_BAT_STAT li_bat;
+#endif
 //***********************************************
 //Состояние байпаса
 typedef struct
@@ -1045,7 +1092,7 @@ typedef struct
 	signed short	_min_cell_volt;
 	signed short	_max_cell_temp;
 	signed short	_min_cell_temp;
-	unsigned short	_tot_bat_volt;
+	signed short	_tot_bat_volt;
 	signed short	_ch_curr;
 	signed short	_dsch_curr;
 	signed short	_rat_cap;
@@ -1060,9 +1107,22 @@ typedef struct
 	signed short	_rs485_cnt;
 	signed short 	_cnt;
 	signed short 	_battCommState;	//0 - норма, 1 - отсутствует связь промежуточной платы и батареи(RS485), 2 - отсутствует связь с промежуточной платой (KAN) 	
+	signed short   _battIsOn;		//0 - отсутствует, 1 - присутствует
+	char 		_plazma[8];		//переменные для отладки
+	signed short 	_isOnCnt;
 	signed short	_s_o_c_abs;		//остаточный заряд в абсолютном выражении
 	} LAKB_STAT; 
-extern LAKB_STAT lakb[2];
+extern LAKB_STAT lakb[1];
+extern char lakb_damp[1][42];
+extern char bLAKB_KONF_CH;
+extern char bLAKB_KONF_CH_old;
+extern char lakb_ison_mass[7];
+extern short lakb_mn_ind_cnt;
+extern char bLAKB_KONF_CH_EN;
+extern char bRS485ERR;
+extern short LBAT_STRUKT;
+extern char lakb_error_cnt;	//счетчик неправильного показания ннапряжения батареи
+
 
 
 //***********************************************

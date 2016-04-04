@@ -127,7 +127,8 @@ signed short TBOXVENTON;
 signed short TBOXVENTOFF;
 signed short TBOXWARMON; 
 signed short TBOXWARMOFF;
-signed short BAT_TYPE;
+signed short BAT_TYPE;	//Тип батареи. 0 - обычная свинцовая, 1-литиевая COSLIGHT, 2-литиевая SACRED SUN
+signed short DU_LI_BAT;	//Параметр, определяющий напряжение содержания литиевой батареи
 
 signed short NUMBAT;
 signed short NUMIST;
@@ -254,7 +255,22 @@ MAKB_STAT makb[4];
 
 //***********************************************
 //Литиевые АКБ
-LAKB_STAT lakb[2];
+LAKB_STAT lakb[1];
+char lakb_damp[1][42];
+char bLAKB_KONF_CH=0;
+char bLAKB_KONF_CH_old=0;
+char lakb_ison_mass[7];
+short lakb_mn_ind_cnt;
+char bLAKB_KONF_CH_EN;
+//char bRS485ERR;
+short LBAT_STRUKT;
+char lakb_error_cnt;	//счетчик неправильного показания ннапряжения батареи
+
+#ifdef UKU_TELECORE2015
+//***********************************************
+//Состояние литиевой батареи  
+LI_BAT_STAT li_bat;
+#endif
 
 //***********************************************
 //Телеметрия по внутренней шине
@@ -966,6 +982,8 @@ else if(cnt_net_drv==19)
 		if(lakb[0]._cnt>20)lakb[0]._cnt=20;
 		lakb[1]._cnt++;
 		if(lakb[1]._cnt>20)lakb[1]._cnt=20;
+		if(li_bat._canErrorCnt<20)li_bat._canErrorCnt++;
+		else li_bat._canError=1;
 		}
      }
 	
@@ -3246,7 +3264,7 @@ else if(ind==iMn_TELECORE2015)
 	int2lcd(vz_cnt_s_/60,'x',0);
 	int2lcd(vz_cnt_h_,'X',0); 
 
-	//int2lcdyx(plazma_bat_drv0,0,2,0);
+ 
 //	int2lcdyx(plazma_bat_drv1,0,6,0);
 //	int2lcdyx(lakb[0]._s_o_c_abs,0,19,0);
 //	int2lcdyx(lakb[0]._ch_curr,0,12,0); 
@@ -3495,6 +3513,206 @@ else if (ind==iBat_SacredSun)
 		}
 	}
 
+else if (ind==iBat_universe)
+	{
+	if(BAT_TYPE==0)	//Обычная свинцово-кислотная батарея
+		{			//TODO следующий блок написан только для батареи без средней точки. Дописать автоизменение если в системе есть контроль СТ
+		if(bat[sub_ind1]._av&1)
+			{
+			if(bFL2)bgnd_par("       АВАРИЯ!        ",
+			                 "     Батарея №#       ",
+			                 "    не подключена     ",sm_);
+			else bgnd_par(sm_,sm_,sm_,sm_);
+			int2lcd(sub_ind1+1,'#',0);
+			}               
+		else
+			{
+			if(bat[sub_ind1]._Ib>0)
+			     {
+			     ptrs[1]="    заряжается      ";
+			     ptrs[3]=" Iзар=       #А     ";
+			     }
+			else
+			     {
+			     ptrs[1]=  "   разряжается      ";
+			     ptrs[3]=  " Iразр=      #А     ";
+			     }	
+			ptrs[2]=       " Uбат=            $В";
+	         // ptrs[3]=       " Uбат.с.т.=       zВ";
+		//	if(UBM_AV)
+		//	ptrs[3]=       " Uбат.с.т.=(^%)   zВ";
+			
+			if(bat[sub_ind1]._nd)ptrs[4]="    ДТ. неисправен  ";
+			else ptrs[4]="   tбат =   ?°C     ";
+			ptrs[5]="   Заряд=    w%     ";
+			ptrs[6]="   Cбат=     QА*ч   ";
+			ptrs[7]=sm_exit;
+	 
+			bgnd_par("    БАТА    N@      ",
+			          ptrs[sub_ind+1],ptrs[sub_ind+2],ptrs[sub_ind+3]);
+		     
+		     int2lcd(sub_ind1+1,'@',0);
+		     int2lcd(bat[sub_ind1]._Ub,'$',1);
+	          //int2lcd(bat[sub_ind1]._Ubm,'z',1);
+		     int2lcd_mmm(abs(bat[sub_ind1]._Ib),'#',2);
+		     int2lcd_mmm(bat[sub_ind1]._Tb,'?',0);
+		     int2lcd(bat[sub_ind1]._zar,'w',0);
+			//int2lcd(bat[sub_ind1]._dUbm,'^',0);
+		     if(BAT_C_REAL[sub_ind1]==0x5555)sub_bgnd("------",'Q',-1);
+		     else int2lcd(BAT_C_REAL[sub_ind1],'Q',1);
+		     if(sub_ind==4)lcd_buffer[60]=1;
+			}
+		} 
+	else if(BAT_TYPE==1)//Батарея	COSLIGHT
+		{
+		char *ptr;
+
+		/*if(bat[sub_ind1]._av&1)
+			{
+			if(bFL2)bgnd_par("       АВАРИЯ!        ",
+			                 "     Батарея №#       ",
+			                 "    не подключена     ",sm_);
+			else bgnd_par(sm_,sm_,sm_,sm_);
+			int2lcd(sub_ind1+1,'#',0);
+			}               
+		else*/	
+		if(li_bat._batStat==bsOFF)
+			{
+			if(bFL)
+				{
+				bgnd_par(		"  Сигналы телеметрии  ",
+			                 	"     не передаются    ",
+			                 	"                      ",
+							sm_);
+				}
+			else 
+				{
+				if(li_bat._Ib>0)
+					{
+					ptrs[0]=	"    заряжается      ";
+					ptrs[2]=	" Iзар=       #А     ";
+					}
+				else
+				     {
+				     ptrs[0]=  "   разряжается      ";
+				     ptrs[2]=  " Iразр=      #А     ";
+				     }	
+				ptrs[1]=       " Uбат=            $В";
+			     if(li_bat._nd)
+					ptrs[3]=	"    ДТ. неисправен  ";
+				else ptrs[3]=	"   tбат =   ?°C     ";
+					ptrs[4]=sm_exit;
+			 
+				bgnd_par(		"      БАТАРЕЯ       ",
+					          ptrs[sub_ind],
+							ptrs[sub_ind+1],
+							ptrs[sub_ind+2]);
+				     
+				int2lcd(li_bat._Ub,'$',1);
+			     
+				int2lcd_mmm(abs(li_bat._Ib),'#',1);
+				int2lcd_mmm(li_bat._Tb,'?',0);
+				} 
+
+			}               
+		else
+			{
+			if(li_bat._Ib>0)
+			     {
+			     ptrs[1]="    заряжается      ";
+			     ptrs[3]=" Iзар=       #А     ";
+			     }
+			else
+			     {
+			     ptrs[1]=  "   разряжается      ";
+			     ptrs[3]=  " Iразр=      #А     ";
+			     }	
+			ptrs[2]=       " Uбат =    $В       ";
+			ptrs[4]=		" tбат =    ?°C      ";
+			ptrs[5]=		" SOC  =    w%       ";
+			ptrs[6]=		" Cбат =    QА*ч     ";
+			ptrs[7]=		" SOH  =    >%       ";
+			ptrs[8]=		" Imax =    <A       ";
+			ptrs[9]=		" RBT  =    [ч       ";
+			ptrs[10]=sm_exit;
+	
+			ptr=			"      GYFP4875      ";
+			if(li_bat._ratCap==50) 
+			ptr=			"      GYFP4850      ";		    	
+
+	 
+			bgnd_par(		"      БАТАРЕЯ       ",
+						ptr,
+						ptrs[sub_ind+1],
+						ptrs[sub_ind+2]);
+		     
+		     int2lcd(sub_ind1+1,'@',0);
+		     int2lcd(li_bat._Ub,'$',1);
+			int2lcd_mmm(abs(li_bat._Ib),'#',1);
+			int2lcd_mmm(li_bat._Tb,'?',0);
+		     int2lcd(li_bat._soc,'w',0);
+			if(sub_ind==8)lcd_buffer[60]=1;
+			int2lcd(li_bat._ratCap,'Q',0);
+			int2lcd(li_bat._cclv,'<',1);
+			int2lcd(li_bat._soh,'>',0);
+			int2lcd(li_bat._rbt,'[',1);
+	
+			//int2lcdyx(lakb[i]._flags1,0,19,0);
+			}
+		//int2lcdyx(lakb[0]._flags1,0,10,0);
+		//int2lcdyx(lakb[0]._flags2,0,15,0);
+		//int2lcdyx(lakb[0]._b_p_ser_num,0,19,0);
+		}
+	else if(BAT_TYPE==2)//Батарея	SACRED SUN
+		{
+		if(bat[sub_ind1]._Ib/*lakb[sub_ind1]._ch_curr*/>0)
+		     {
+		     ptrs[1]="    заряжается      ";
+		     ptrs[3]=" Iзар=       #А     ";
+		     }
+		else
+		     {
+		     ptrs[1]=  "   разряжается      ";
+		     ptrs[3]=  " Iразр=      #А     ";
+		     }	
+		ptrs[2]=       " Uбат =    $В       ";
+		ptrs[3]=		" tбат =    ?°C      ";
+		ptrs[4]=		" SOC  =    w%       ";
+		ptrs[5]=		" SOH  =    >%       ";
+		ptrs[6]=sm_exit;
+
+
+ 
+		bgnd_par(		"    Б       N@      ",
+					"   1 x FP16S4810A   ",
+					ptrs[sub_ind+1],ptrs[sub_ind+2]);
+	     
+	     int2lcd(sub_ind1+1,'@',0);
+	     int2lcd(bat[sub_ind1]._Ub,'$',1);//int2lcd(lakb[sub_ind1]._tot_bat_volt/10,'$',1);
+		/*if(lakb[sub_ind1]._ch_curr>0)
+			{
+			int2lcd_mmm(lakb[sub_ind1]._ch_curr,'#',2);
+			}
+		else 
+			{
+			int2lcd_mmm(lakb[sub_ind1]._dsch_curr,'#',2);
+			}*/
+		int2lcd_mmm(abs(bat[sub_ind1]._Ib),'#',2);
+	     int2lcd_mmm(bat[sub_ind1]._Tb,'?',0);
+	     //int2lcd_mmm(lakb[sub_ind1]._max_cell_temp,'?',0);
+	     int2lcd(lakb[sub_ind1]._s_o_c,'w',0);
+		int2lcd((short)(((long)lakb[sub_ind1]._rat_cap*(long)lakb[sub_ind1]._s_o_h)/1000L),'Q',1);
+	     if(sub_ind==8)lcd_buffer[60]=1;
+
+		int2lcd(lakb[sub_ind1]._rat_cap,'Q',1);
+		//int2lcd(lakb[sub_ind1]._s_o_c,'w',0);
+		int2lcd(lakb[sub_ind1]._c_c_l_v/10,'<',1);
+		int2lcd(lakb[sub_ind1]._s_o_h,'>',0);
+		int2lcd(lakb[sub_ind1]._r_b_t,'[',1);
+
+		//int2lcdyx(lakb[sub_ind1]._battCommState,0,19,0);
+		}
+	}
 
 else if(ind==iInv_tabl)
      {
@@ -3676,7 +3894,9 @@ else if(ind==iMakb)
     // char2lcdhxy(bps[sub_ind1]._state,0x32);
     
     //	int2lcdyx(sub_ind,0,2,0);
-//	int2lcdyx(index_set,0,4,0);	
+//	int2lcdyx(index_set,0,4,0);
+	//int2lcdyx(u_necc,0,4,0);
+	//int2lcdyx(cntrl_stat,0,8,0);	
      }  
 else if(ind==iInv)
 	{
@@ -5141,14 +5361,25 @@ else if(ind==iPrl_bat_in_sel)
 
 else if(ind==iSet_bat_sel)
 	{
-	
+
+     ptrs[0]=	" Свинцово-кислотная ";
+     ptrs[1]=	" COSLIGHT POWER CO. ";
+     ptrs[2]=	" SACRED SUN         ";
+	ptrs[3]=	" Выход              ";
+
+	if(bFL2)ptrs[BAT_TYPE]=	
+			"                    ";	
+
+	if((sub_ind-index_set)>1)index_set=sub_ind-1;
+	else if(sub_ind<index_set)index_set=sub_ind;
+		
 	bgnd_par(	"  ТИП ИСПОЛЬЗУЕМОЙ  ",
 			"      БАТАРЕИ       ",
-			" Свинцово-кислотная ",
-			" GYFP4875T          ");
+			ptrs[index_set],
+			ptrs[index_set+1]);
 	
-	if(BAT_TYPE==0) pointer_set(2);
-	else if(BAT_TYPE==1)pointer_set(3);
+	pointer_set(2);
+	//int2lcdyx(BAT_TYPE,0,3,0);
 	}
 	
 else if(ind==iSet)
@@ -5762,10 +5993,11 @@ else if(ind==iSet_TELECORE2015)
 	ptrs[31]=		" Ethernet           ";
 	ptrs[32]=      " Серийный N        w";
 	ptrs[33]=      " Тип батареи        ";
-	ptrs[34]=      " Инверторы          ";
-    	ptrs[35]=		" Выход              ";
-    	ptrs[36]=		" Калибровки         "; 
-    	ptrs[37]=		"                    ";        
+	ptrs[34]=		" dUлит.бат.=      WВ";
+	ptrs[35]=      " Инверторы          ";
+    	ptrs[36]=		" Выход              ";
+    	ptrs[37]=		" Калибровки         "; 
+    	ptrs[38]=		"                    ";        
 	
 	if((sub_ind-index_set)>2)index_set=sub_ind-2;
 	else if(sub_ind<index_set)index_set=sub_ind;
@@ -5810,6 +6042,7 @@ else if(ind==iSet_TELECORE2015)
 	int2lcd(TVENTON,'(',0); 
 	int2lcd(TVENTOFF,')',0);
      int2lcd(POWER_CNT_ADRESS,'+',0);
+	int2lcd(DU_LI_BAT,'W',1);
      if(UBM_AV)
           {
           int2lcd(UBM_AV,'Q',0);
@@ -8451,8 +8684,8 @@ if(ind==iDeb)
 		//int2lcdyx((LPC_CAN1->GSR)>>16,0,16,0);
 		//int2lcdyx(avg,0,19,0);
 
-				int2lcdyx((((LPC_CAN1->GSR)&(0xff000000))>>24),0,19,0);
-		int2lcdyx((((LPC_CAN1->GSR)&(0x00ff0000))>>16),0,15,0);
+				//int2lcdyx((((LPC_CAN1->GSR)&(0xff000000))>>24),0,19,0);
+		//int2lcdyx((((LPC_CAN1->GSR)&(0x00ff0000))>>16),0,15,0);
 
  /*         int2lcdyx(bat[0]._Ubm,1,7,0); 	int2lcdyx(bat[0]._av,1,10,0);
 		int2lcdyx(bat[0]._dUbm,2,7,0);
@@ -8887,6 +9120,65 @@ if(ind==iDeb)
 		int2lcdyx(lakb[sub_ind1]._b_p_ser_num,3,14,0);
 		int2lcdyx(lakb[sub_ind1]._bRS485ERR,3,16,0);
 		int2lcdyx(lakb[sub_ind1]._rs485_cnt,3,19,0); 
+		
+     	}	
+
+    else if(sub_ind==11)
+     	{
+     	bgnd_par("LB                  ",
+     		    "                    ",
+     		    "                    ",
+     		    "                    ");
+
+     	int2lcdyx(sub_ind,0,1,0);
+		
+		int2lcdyx(u_necc,0,5,0);
+
+		int2lcdyx(load_U,0,11,0);
+		int2lcdyx(bps[0]._Uin,0,15,0);
+		int2lcdyx(bps[1]._Uii,0,19,0);
+
+		int2lcdyx(li_bat._Ub,1,3,0);
+
+
+		int2lcdyx(lakb[0]._tot_bat_volt,1,8,0);   
+
+		int2lcdyx(cntrl_stat,1,19,0);
+		
+		int2lcdyx(lakb_error_cnt,3,19,0);
+
+
+
+		//int2lcdyx(ccc_plazma[2],3,12,0);
+		//int2lcdyx(ccc_plazma[3],1,16,0);  
+		//int2lcdyx(ccc_plazma[4],2,16,0);  
+		//int2lcdyx(ccc_plazma[5],3,16,0); 
+
+		int2lcdyx(li_bat._canErrorCnt,2,5,0);
+		int2lcdyx(li_bat._canError,2,8,0);
+		int2lcdyx(li_bat._485ErrorCnt,3,5,0);
+		int2lcdyx(li_bat._485Error,3,8,0);
+			
+		/*int2lcdyx(lakb[sub_ind1]._cnt,0,6,0);
+
+		int2lcdyx(lakb[sub_ind1]._max_cell_temp,0,14,0);
+		int2lcdyx(lakb[sub_ind1]._min_cell_temp,0,19,0);
+
+		int2lcdyx(lakb[sub_ind1]._max_cell_volt,1,4,0);
+		int2lcdyx(lakb[sub_ind1]._min_cell_volt,1,9,0);
+		int2lcdyx(lakb[sub_ind1]._tot_bat_volt,1,14,0);
+		int2lcdyx(lakb[sub_ind1]._s_o_h,1,19,0);
+
+		int2lcdyx(lakb[sub_ind1]._ch_curr,2,4,0);
+		int2lcdyx(lakb[sub_ind1]._dsch_curr,2,9,0);
+		int2lcdyx(lakb[sub_ind1]._rat_cap,2,14,0);
+		int2lcdyx(lakb[sub_ind1]._s_o_c,2,19,0);
+
+		int2lcdyx(lakb[sub_ind1]._c_c_l_v,3,4,0);
+		int2lcdyx(lakb[sub_ind1]._r_b_t,3,9,0);
+		int2lcdyx(lakb[sub_ind1]._b_p_ser_num,3,14,0);
+		int2lcdyx(lakb[sub_ind1]._bRS485ERR,3,16,0);
+		 */
 		
      	}	
      			
@@ -10874,7 +11166,7 @@ if(but==butUD)
      if(ind!=iDeb)
           {
 		c_ind=a_ind;
-		tree_up(iDeb,10,0,0);
+		tree_up(iDeb,11,0,0);
 		
           }
      else 
@@ -10907,13 +11199,13 @@ else if(ind==iDeb)
 		{
 		sub_ind++;
 		index_set=0;
-		gran_ring_char(&sub_ind,0,10);
+		gran_ring_char(&sub_ind,0,11);
 		}
 	else if(but==butL)
 		{
 		sub_ind--;
 		index_set=0;
-		gran_ring_char(&sub_ind,0,10);
+		gran_ring_char(&sub_ind,0,11);
 		}
 		
 	else if(sub_ind==1)
@@ -12216,8 +12508,7 @@ else if(ind==iMn_TELECORE2015)
 				}
 		    	else 
 				{
-				/*if(BAT_TYPE==0)tree_up(iBat_simple,0,0,sub_ind-1);
-				else if(BAT_TYPE==1) */tree_up(iBat_li,0,0,sub_ind-1);
+				tree_up(iBat_universe,0,0,sub_ind-1);
 				}
 		    	}
 		else if((sub_ind>NUMBAT)&&(sub_ind<=(NUMBAT+NUMIST)))
@@ -12372,6 +12663,80 @@ else if(ind==iBat_li)
 		}		     
      }
 
+else if (ind==iBat_universe)
+	{
+	if(BAT_TYPE==0)	//Обычная свинцово-кислотная батарея
+		{			//TODO следующий блок написан только для батареи без средней точки. Дописать автоизменение если в системе есть контроль СТ
+		ret(1000);
+		if(but==butD)
+			{
+			sub_ind++;
+			gran_char(&sub_ind,0,4);
+			}
+		else if(but==butU)
+			{
+			sub_ind--;
+			gran_char(&sub_ind,0,4);
+			}
+		else if((but==butL)||((sub_ind==4)&&(but==butE)))
+		     {
+		     tree_down(0,0);
+		     ret(0);
+		     }
+		else if(but==butD_)
+			{
+			sub_ind=4;
+			}		 
+		} 
+	else if(BAT_TYPE==1)//Батарея	COSLIGHT
+		{
+		ret(1000);
+		if(but==butD)
+			{
+			sub_ind++;
+			gran_char(&sub_ind,0,8);
+			if(li_bat._batStat==bsOFF) gran_char(&sub_ind,0,1);
+			}
+		else if(but==butU)
+			{
+			sub_ind--;
+			gran_char(&sub_ind,0,8);
+			if(li_bat._batStat==bsOFF) gran_char(&sub_ind,0,1);
+			}
+		else if((but==butL)||((sub_ind==8)&&(but==butE)))
+		     {
+		     tree_down(0,0);
+		     ret(0);
+		     }
+		else if(but==butD_)
+			{
+			sub_ind=8;
+			}	
+		}
+	else if(BAT_TYPE==2)//Батарея	SACRED SUN
+		{
+		ret(1000);
+		if(but==butD)
+			{
+			sub_ind++;
+			gran_char(&sub_ind,0,8);
+			}
+		else if(but==butU)
+			{
+			sub_ind--;
+			gran_char(&sub_ind,0,8);
+			}
+		else if((but==butL)||((sub_ind==8)&&(but==butE)))
+		     {
+		     tree_down(0,0);
+		     ret(0);
+		     }
+		else if(but==butD_)
+			{
+			sub_ind=8;
+			}
+		}		     
+	}
 
 else if(ind==iInv_tabl)
 	{
@@ -13218,16 +13583,31 @@ else if(ind==iSet_bat_sel)
 	ret(1000);
 	if(but==butU)
 		{
-		lc640_write_int(EE_BAT_TYPE,0);
+		sub_ind--;
+		gran_char(&sub_ind,0,3);
+		//lc640_write_int(EE_BAT_TYPE,0);
 		}
 	else if (but==butD)
 		{
-		lc640_write_int(EE_BAT_TYPE,1);
+		sub_ind++;
+		gran_char(&sub_ind,0,3);
+		//lc640_write_int(EE_BAT_TYPE,1);
 		}
 	else if(but==butE)
 		{
-		tree_down(0,0);
-          ret(0);
+		if(sub_ind==3)
+			{
+			tree_down(0,0);
+          	ret(0);
+			}
+		}
+	else if(but==butE_)
+		{
+		if((sub_ind>=0)&&(sub_ind<=2))
+			{
+			BAT_TYPE=sub_ind;
+			lc640_write_int(EE_BAT_TYPE,BAT_TYPE);
+			}
 		}
 	}
 
@@ -16142,7 +16522,7 @@ else if(ind==iSet_TELECORE2015)
                
                }*/
 		
-		gran_char(&sub_ind,0,36);
+		gran_char(&sub_ind,0,37);
 		}
 	else if(but==butU)
 		{
@@ -16159,11 +16539,11 @@ else if(ind==iSet_TELECORE2015)
                sub_ind=31;
 		       index_set=31;
                } 
-		gran_char(&sub_ind,0,36);
+		gran_char(&sub_ind,0,37);
 		}
 	else if(but==butD_)
 		{
-		sub_ind=35;
+		sub_ind=36;
 		}
 		
 	else if(sub_ind==0)
@@ -16481,11 +16861,23 @@ else if(ind==iSet_TELECORE2015)
 		{
 		if(but==butE)
 		     {
-		     tree_up(iSet_bat_sel,0,0,0);
+		     tree_up(iSet_bat_sel,BAT_TYPE,0,0);
 		     ret(1000);
 		     }
 		}
-   	else if(sub_ind==34)
+
+	else if(sub_ind==34)
+	     {
+	     if(but==butR)DU_LI_BAT++;
+	     else if(but==butR_)DU_LI_BAT++;
+	     else if(but==butL)DU_LI_BAT--;
+	     else if(but==butL_)DU_LI_BAT--;
+	     gran(&DU_LI_BAT,1,30);
+	     lc640_write_int(EE_DU_LI_BAT,DU_LI_BAT);
+	     speed=1;
+	     }
+
+   	else if(sub_ind==35)
 		{
 		if(but==butE)
 		     {
@@ -16496,7 +16888,7 @@ else if(ind==iSet_TELECORE2015)
 				}
 		     }
 		}
-     else if((sub_ind==35) || (sub_ind==3))
+     else if((sub_ind==36) || (sub_ind==3))
 		{
 		if(but==butE)
 		     {
@@ -16505,7 +16897,7 @@ else if(ind==iSet_TELECORE2015)
 		     }
 		}
 				
-	else if(sub_ind==36)
+	else if(sub_ind==37)
 		{
 		if(but==butE)
 		     {		

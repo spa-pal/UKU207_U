@@ -123,6 +123,7 @@ speedChrgTimeInHour =lc640_read_int(EE_SPEED_CHRG_TIME);
 speedChrgAvtEn =lc640_read_int(EE_SPEED_CHRG_AVT_EN);
 speedChrgBlckSrc=lc640_read_int(EE_SPEED_CHRG_BLOCK_SRC);
 speedChrgBlckLog=lc640_read_int(EE_SPEED_CHRG_BLOCK_LOG);
+DU_LI_BAT=lc640_read_int(EE_DU_LI_BAT);
 
 BAT_IS_ON[0]=(enum_bat_is_on)lc640_read_int(EE_BAT1_IS_ON);
 BAT_IS_ON[1]=(enum_bat_is_on)lc640_read_int(EE_BAT2_IS_ON);

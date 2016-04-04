@@ -102,6 +102,7 @@ char plazma_can_pal_index;
 char plazma_can;
 char plazma_can1,plazma_can2,plazma_can3,plazma_can4;
 short can2_tx_cnt;
+char ccc_plazma[20];
 
 //-----------------------------------------------
 char CRC1_in(void)
@@ -1572,13 +1573,14 @@ if( (RXBUFF[1]==PUTTM_MAKB3)&&(RXBUFF[0]>=0)&&(RXBUFF[0]<=3))
 	makb[RXBUFF[0]]._cnt=0;
      }
 
-if(RXBUFF[0]==PUT_LB_TM1)
+/*if(RXBUFF[0]==PUT_LB_TM1)
      {
 	lakb[0]._max_cell_volt=(unsigned short)(*((unsigned short*)&RXBUFF[1]));
 	lakb[0]._min_cell_volt=(unsigned short)(*((unsigned short*)&RXBUFF[3]));
 	lakb[0]._tot_bat_volt=(unsigned short)(*((unsigned short*)&RXBUFF[5]));
 	lakb[0]._max_cell_temp=(unsigned short)RXBUFF[7];
 	lakb[0]._cnt=0;
+	lakb[0]._plazma[0]++;
      }
 if(RXBUFF[0]==PUT_LB_TM2)
      {
@@ -1587,6 +1589,7 @@ if(RXBUFF[0]==PUT_LB_TM2)
 	lakb[0]._rat_cap=(unsigned short)(*((unsigned short*)&RXBUFF[5]));
 	lakb[0]._min_cell_temp=(unsigned short)RXBUFF[7];
 	lakb[0]._cnt=0;
+	lakb[0]._plazma[1]++;
      }
 if(RXBUFF[0]==PUT_LB_TM3)
      {
@@ -1597,13 +1600,118 @@ if(RXBUFF[0]==PUT_LB_TM3)
 	lakb[0]._flags1=(unsigned short)RXBUFF[6];
 	lakb[0]._flags2=(unsigned short)RXBUFF[7];
 	lakb[0]._cnt=0;
+	lakb[0]._plazma[2]++;
      }
 if(RXBUFF[0]==PUT_LB_TM4)
      {
 	lakb[0]._bRS485ERR=(unsigned short)RXBUFF[1];
 	lakb[0]._rs485_cnt=(unsigned short)RXBUFF[2];
 	lakb[0]._cnt=0;
-     }	
+	lakb[0]._plazma[3]++;
+     }*/
+	
+if((RXBUFF[1]&0xf8)==PUT_LB_TM1)
+     {
+	char temp;
+	temp=RXBUFF[1]&0x07;
+	
+	if(temp==0) //у нас только одна батарея
+		{	
+		lakb_damp[temp][0]=RXBUFF[0];
+		mem_copy(&lakb_damp[temp][1],&RXBUFF[2],6);
+	
+		ccc_plazma[0]++;
+		ccc_plazma[7]=temp;
+		li_bat._canErrorCnt=0;
+		li_bat._canError=0;
+		}
+	}	
+
+if((RXBUFF[1]&0xf8)==PUT_LB_TM2)
+     {
+	char temp;
+	temp=RXBUFF[1]&0x07;
+	
+	if(temp==0) //у нас только одна батарея
+		{		
+		lakb_damp[temp][7]=RXBUFF[0];
+		mem_copy(&lakb_damp[temp][8],&RXBUFF[2],6);
+		
+		ccc_plazma[1]++;
+		ccc_plazma[8]=temp;
+		li_bat._canErrorCnt=0;
+		li_bat._canError=0;
+		}
+	}
+
+if((RXBUFF[1]&0xf8)==PUT_LB_TM3)
+     {
+	char temp;
+	temp=RXBUFF[1]&0x07;
+
+	if(temp==0) //у нас только одна батарея
+		{
+		lakb_damp[temp][14]=RXBUFF[0];
+		mem_copy(&lakb_damp[temp][15],&RXBUFF[2],6);
+		
+		ccc_plazma[2]++;
+		ccc_plazma[9]=temp;
+		li_bat._canErrorCnt=0;
+		li_bat._canError=0;
+		}
+	}	
+
+if((RXBUFF[1]&0xf8)==PUT_LB_TM4)
+     {
+	char temp;
+	temp=RXBUFF[1]&0x07;
+	
+	if(temp==0) //у нас только одна батарея
+		{
+		lakb_damp[temp][21]=RXBUFF[0];
+		mem_copy(&lakb_damp[temp][22],&RXBUFF[2],6);
+		
+		ccc_plazma[3]++;
+		ccc_plazma[10]=temp;
+		li_bat._canErrorCnt=0;
+		li_bat._canError=0;
+		}
+	}
+
+if((RXBUFF[1]&0xf8)==PUT_LB_TM5)
+     {
+	char temp;
+	temp=RXBUFF[1]&0x07;
+
+	if(temp==0) //у нас только одна батарея
+		{		
+		lakb_damp[temp][28]=RXBUFF[0];
+		mem_copy(&lakb_damp[temp][29],&RXBUFF[2],6);
+
+		ccc_plazma[4]++;
+		ccc_plazma[11]=temp;
+		li_bat._canErrorCnt=0;
+		li_bat._canError=0;
+		}
+	}
+
+if((RXBUFF[1]&0xf8)==PUT_LB_TM6)
+     {
+	char temp;
+	temp=RXBUFF[1]&0x07;
+		
+	if(temp==0) //у нас только одна батарея
+		{
+		lakb_damp[temp][35]=RXBUFF[0];
+		mem_copy(&lakb_damp[temp][36],&RXBUFF[2],6);
+		
+		ccc_plazma[5]++;
+		ccc_plazma[12]=temp;
+		li_bat._canErrorCnt=0;
+		li_bat._canError=0;	
+		}
+	}
+		
 	
 CAN_IN_AN1_end:
 bIN2=0;

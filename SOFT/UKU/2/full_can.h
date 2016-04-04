@@ -117,4 +117,5 @@ void CAN_IRQHandler(void);
 void CAN_ISR_Rx1( void );
 
 extern char can_debug_plazma[2][10];
+extern char ccc_plazma[20];
 
