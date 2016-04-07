@@ -489,8 +489,11 @@ void kb_hndl(void)
 {
 
 static signed short ibat[2],ibat_[2],ibat_ips,ibat_ips_;
-
+#ifdef UKU_TELECORE2015
 if(((++main_kb_cnt>=TBAT*60)&&(TBAT))&&(BAT_TYPE==0))
+#else 
+if(((++main_kb_cnt>=TBAT*60)&&(TBAT)))
+#endif
 	{
 	main_kb_cnt=0;
 	
@@ -1669,8 +1672,10 @@ else
 if((BAT_IS_ON[0]==bisON)&&(bat[0]._Ub>200)) Ibmax=bat[0]._Ib;
 if((BAT_IS_ON[1]==bisON)&&(bat[1]._Ub>200)&&(bat[1]._Ib>bat[0]._Ib)) Ibmax=bat[1]._Ib;
 
-if((AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043))Ibmax=Ib_ips_termokompensat;
-
+//if((AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043))Ibmax=Ib_ips_termokompensat;
+#ifdef UKU_220_IPS_TERMOKOMPENSAT
+Ibmax=Ib_ips_termokompensat;
+#endif
 for(i=0;i<NUMIST;i++)
 	{
 	if(bps[i]._cnt<25)
@@ -2635,15 +2640,26 @@ if(mess_find_unvol((MESS2RELE_HNDL))&&(PARAM_RELE_SAMOKALIBR))
 	}
 else SET_REG(LPC_GPIO0->FIOCLR,1,29,1);
 
-
+#ifndef UKU2071x
 //Реле аварии сети
 if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_NET))
 	{
-	if(mess_data[1]==0) SET_REG(LPC_GPIO3->FIOSET,1,SHIFT_REL_AV_NET,1);
-	else SET_REG(LPC_GPIO3->FIOCLR,1,SHIFT_REL_AV_NET,1);
+	if(mess_data[1]==0) 			SET_REG(LPC_GPIO3->FIOSET,1,SHIFT_REL_AV_NET,1);
+	else 						SET_REG(LPC_GPIO3->FIOCLR,1,SHIFT_REL_AV_NET,1);
 	}
-else	if(!(avar_ind_stat&0x00000001)) SET_REG(LPC_GPIO3->FIOSET,1,SHIFT_REL_AV_NET,1);
-else SET_REG(LPC_GPIO3->FIOCLR,1,SHIFT_REL_AV_NET,1);
+else	if(!(avar_ind_stat&0x00000001)) 	SET_REG(LPC_GPIO3->FIOSET,1,SHIFT_REL_AV_NET,1);
+else 							SET_REG(LPC_GPIO3->FIOCLR,1,SHIFT_REL_AV_NET,1);
+#endif
+#ifdef UKU2071x
+//Реле аварии сети
+if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_NET))
+	{
+	if(mess_data[1]==0)				SET_REG(LPC_GPIO3->FIOCLR,1,SHIFT_REL_AV_NET,1); 
+	else 						SET_REG(LPC_GPIO3->FIOSET,1,SHIFT_REL_AV_NET,1);
+	}
+else	if(!(avar_ind_stat&0x00000001))	SET_REG(LPC_GPIO3->FIOCLR,1,SHIFT_REL_AV_NET,1);
+else 					  		SET_REG(LPC_GPIO3->FIOSET,1,SHIFT_REL_AV_NET,1);
+#endif
 
 #ifdef UKU_3U
 //Реле аварий батарей
@@ -3082,6 +3098,7 @@ else
 
 if((AUSW_MAIN==22010)||(AUSW_MAIN==22011))
 	{
+	#ifndef UKU2071x
 	if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_NET))
 		{
 		if(mess_data[1]==0) SET_REG(LPC_GPIO3->FIOSET,1,25,1);
@@ -3089,7 +3106,16 @@ if((AUSW_MAIN==22010)||(AUSW_MAIN==22011))
 		}
 	else	if(!(avar_ind_stat&0x00000001)) SET_REG(LPC_GPIO3->FIOSET,1,25,1);
 	else SET_REG(LPC_GPIO3->FIOCLR,1,25,1);
-
+	#endif
+	#ifdef UKU2071x
+	if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_NET))
+		{
+		if(mess_data[1]==0) SET_REG(LPC_GPIO3->FIOCLR,1,25,1);
+		else SET_REG(LPC_GPIO3->FIOSET,1,25,1);
+		}
+	else	if(!(avar_ind_stat&0x00000001)) SET_REG(LPC_GPIO3->FIOCLR,1,25,1);
+	else SET_REG(LPC_GPIO3->FIOSET,1,25,1);
+	#endif
 
 	
 	
@@ -3118,18 +3144,6 @@ if((AUSW_MAIN==22010)||(AUSW_MAIN==22011))
 
 	}
 
-/*//Реле аварий батарей
-if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_BAT))
-	{
-	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_BAT,1);
-	else if(mess_data[1]==1) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_AV_BAT,1);
-     }
-else 
-	{
-	if(!(avar_ind_stat&0x00000002)) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_BAT,1);
-     else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_AV_BAT,1);
-	}*/ 
-
 else	if(AUSW_MAIN==22023)
 	{
 
@@ -3146,7 +3160,8 @@ else	if(AUSW_MAIN==22023)
 		} 
 
 
-	//Реле аварии сети
+	//Реле аварии сети ТУТ КАКАЯ то ЛАЖА с аварией сети. Обращение к разным портам
+	#ifndef UKU2071x
 	if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_NET))
 		{
 		if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_NET,1);
@@ -3154,6 +3169,16 @@ else	if(AUSW_MAIN==22023)
 		}
 	else	if(!(avar_ind_stat&0x00000001)) SET_REG(LPC_GPIO1->FIOCLR,1,SHIFT_REL_AV_NET,1);
 	else SET_REG(LPC_GPIO3->FIOCLR,1,SHIFT_REL_AV_NET,1);
+	#endif
+	#ifdef UKU2071x
+	if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_NET))
+		{
+		if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_AV_NET,1);
+		else SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_NET,1);
+		}
+	else	if(!(avar_ind_stat&0x00000001)) SET_REG(LPC_GPIO1->FIOSET,1,SHIFT_REL_AV_NET,1);
+	else SET_REG(LPC_GPIO3->FIOSET,1,SHIFT_REL_AV_NET,1);
+	#endif
 
 	if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_BPS))
 		{
@@ -3182,7 +3207,8 @@ else	if(AUSW_MAIN==22043)
 		} 
 
 
-	//Реле аварии сети
+	//Реле аварии сети ТУТ КАКАЯ то ЛАЖА с аварией сети. Обращение к разным портам
+	#ifndef UKU2071x 
 	if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_NET))
 		{
 		if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_NET,1);
@@ -3190,6 +3216,16 @@ else	if(AUSW_MAIN==22043)
 		}
 	else	if(!(avar_ind_stat&0x00000001)) SET_REG(LPC_GPIO1->FIOCLR,1,SHIFT_REL_AV_NET,1);
 	else SET_REG(LPC_GPIO3->FIOCLR,1,SHIFT_REL_AV_NET,1);
+	#endif
+	#ifdef UKU2071x 
+	if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_NET))
+		{
+		if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_AV_NET,1);
+		else SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_NET,1);
+		}
+	else	if(!(avar_ind_stat&0x00000001)) SET_REG(LPC_GPIO1->FIOSET,1,SHIFT_REL_AV_NET,1);
+	else SET_REG(LPC_GPIO3->FIOSET,1,SHIFT_REL_AV_NET,1);
+	#endif
 
 	if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_BPS))
 		{
@@ -3215,6 +3251,7 @@ else	if(AUSW_MAIN==22043)
 	}
 else	if(AUSW_MAIN==22033)
 	{
+	#ifndef UKU2071x 
 	if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_NET))
 		{
 		if(mess_data[1]==0) SET_REG(LPC_GPIO3->FIOSET,1,25,1);
@@ -3222,8 +3259,16 @@ else	if(AUSW_MAIN==22033)
 		}
 	else	if(!(avar_ind_stat&0x00000001)) SET_REG(LPC_GPIO3->FIOSET,1,25,1);
 	else SET_REG(LPC_GPIO3->FIOCLR,1,25,1);
-
-
+	#endif
+	#ifdef UKU2071x 
+	if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_NET))
+		{
+		if(mess_data[1]==0) SET_REG(LPC_GPIO3->FIOCLR,1,25,1);
+		else SET_REG(LPC_GPIO3->FIOSET,1,25,1);
+		}
+	else	if(!(avar_ind_stat&0x00000001)) SET_REG(LPC_GPIO3->FIOCLR,1,25,1);
+	else SET_REG(LPC_GPIO3->FIOSET,1,25,1);
+	#endif
 	
 	
 	if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_BPS))
@@ -3265,7 +3310,8 @@ else
 	} 	 
 else	
 	{
-	//Реле аварии сети
+	//Реле аварии сети ТУТ КАКАЯ то ЛАЖА с аварией сети. Обращение к разным портам
+	#ifndef UKU2071x 
 	if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_NET))
 		{
 		if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_NET,1);
@@ -3273,6 +3319,16 @@ else
 		}
 	else	if(!(avar_ind_stat&0x00000001)) SET_REG(LPC_GPIO1->FIOCLR,1,SHIFT_REL_AV_NET,1);
 	else SET_REG(LPC_GPIO3->FIOCLR,1,SHIFT_REL_AV_NET,1);
+	#endif
+	#ifdef UKU2071x 
+	if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_NET))
+		{
+		if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_AV_NET,1);
+		else SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_NET,1);
+		}
+	else	if(!(avar_ind_stat&0x00000001)) SET_REG(LPC_GPIO1->FIOSET,1,SHIFT_REL_AV_NET,1);
+	else SET_REG(LPC_GPIO3->FIOSET,1,SHIFT_REL_AV_NET,1);
+	#endif
 
 	if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_BPS))
 		{
@@ -5163,6 +5219,25 @@ else if(b1Hz_unh)
 
 	if(BAT_TYPE==0)
 		{
+		if(ND_EXT[0])mat_temper=20;
+		else mat_temper=t_ext[0];
+
+			
+		if(mat_temper<0)temp_SL=UB0; 
+		else 
+			{
+			if(mat_temper>40)mat_temper=40; 
+			temp_SL=(UB20-UB0)*10;
+			temp_SL*=mat_temper;
+			temp_SL/=200;
+			temp_SL+=UB0;
+			}
+		if(spc_stat==spcVZ)
+			{
+			temp_SL=UVZ;
+			}
+		u_necc=(unsigned int)temp_SL;
+	///u_necc=3456;
 		}
 	else if(BAT_TYPE==1)
 		{
@@ -5297,75 +5372,7 @@ if(ch_cnt0<10)
 		b1Hz_ch=1;
 		}
 	}
-//signed long temp_L;
 
-//plazma=0;
-
-/*if(St&0x01)
-	{
-	cntrl_stat=0;
-     old_cntrl_stat=0;
-     }
-else*//* if((kb_cnt[0]>15)&&(kb_cnt[0]<=30))
-	{
-	cntrl_stat=old_cntrl_stat-30;
-	gran(&cntrl_stat,30,970);
-	}
-else*/ /*if((kb_cnt[0]<=15)&&(kb_cnt[0]>0))
-	{
-	cntrl_stat=old_cntrl_stat+30;
-	gran(&cntrl_stat,30,970);
-	} 
-else*//* if((kb_cnt[1]>15)&&(kb_cnt[1]<=30))
-	{
-	cntrl_stat=old_cntrl_stat-100;
-	gran(&cntrl_stat,30,970);
-	}
-else if((kb_cnt[1]<=15)&&(kb_cnt[1]>0))
-	{
-	cntrl_stat=old_cntrl_stat+100;
-	gran(&cntrl_stat,30,970);
-	}
-else if(kb_full_ver)
-	{
-	cntrl_stat-=50;
-	if(cntrl_stat<30)
-		{
-		if((av_stat&0x0002)==0)avar_bat_hndl(1);
-		kb_full_ver=0;
-		gran(&TBAT,5,60);
-     	bat_ver_cnt=TBAT*300;
-		}
-	gran(&cntrl_stat,30,970);
-	} 	 	
-
-
-else*/ 
-/*if(mess_find(_MESS_FAST_REG))
-	{
- 	if(load_U>u_necc)
-		{
-		if(((load_U-u_necc)>10)&&(cntrl_stat>0))cntrl_stat-=50;
-		else if(cntrl_stat)cntrl_stat--;
-		}
-	else if(load_U<u_necc)
-		{
-		if(((u_necc-load_U)>10)&&(cntrl_stat<1015))cntrl_stat+=50;
-		else	if(cntrl_stat<1020)cntrl_stat++;
-		}		
-	}
-
-
-if(mess_find(_MESS_SRC_PWM))
-	{				
-	if(mess_data[0]==_MESS_SRC_PWM)
-		{
-		cntrl_stat=mess_data[1];
-		}				
-	}  */
-
-
-//cntrl_stat++;
 
 
 

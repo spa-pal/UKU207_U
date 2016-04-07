@@ -1,5 +1,11 @@
 #include <rtl.h>
 
+#ifdef UKU2071x
+#define MCP2515_CAN
+#define SC16IS740_UART
+//#define can1_out mcp2515_transmit
+#endif
+
 #define SOFT_NUM	1051
 #define SOFT_DATE	21112UL
 

@@ -1,6 +1,11 @@
 //Базовая ветка
 //#define SC16IS740_UART
 
+#ifdef UKU2071x
+#define can1_out mcp2515_transmit
+#endif
+
+
 #include "lcd_AGM1232_uku207_3.h"
 #include "rtl.h"
 #include "type.h"
@@ -980,8 +985,8 @@ else if(cnt_net_drv==19)
 		can1_out(cnt_net_drv,cnt_net_drv,GETTM,0,0,0,0,0);
 		lakb[0]._cnt++;
 		if(lakb[0]._cnt>20)lakb[0]._cnt=20;
-		lakb[1]._cnt++;
-		if(lakb[1]._cnt>20)lakb[1]._cnt=20;
+		//lakb[1]._cnt++;
+		//if(lakb[1]._cnt>20)lakb[1]._cnt=20;
 		if(li_bat._canErrorCnt<20)li_bat._canErrorCnt++;
 		else li_bat._canError=1;
 		}
@@ -1155,7 +1160,7 @@ else if((cnt_net_drv>=MINIM_INV_ADRESS)&&(cnt_net_drv<(MINIM_INV_ADRESS+NUMINV))
 	} 
 */	
 	
-
+/*
 else if(cnt_net_drv==19)
 	{
      if(!bCAN_OFF)
@@ -1167,7 +1172,7 @@ else if(cnt_net_drv==19)
 		if(lakb[1]._cnt>20)lakb[1]._cnt=20;
 		}
      }
-	
+*/	
 	
 else if((cnt_net_drv>=MINIM_INV_ADRESS)&&(cnt_net_drv<MINIM_INV_ADRESS+15))
 	{
@@ -2938,8 +2943,8 @@ else if((ind==iMn_220)||(ind==iMn_220_IPS_TERMOKOMPENSAT))
 	int2lcdyx(modbus_plazma,0,19,0);
 	int2lcdyx(sc16is700ByteAvailable,0,12,0); */
 	
-	//int2lcdyx(ad7705_buff_[0],0,5,0);
-	//int2lcdyx(ad7705_buff_[1],0,15,0);
+	//int2lcdyx(bps[0]._Uii,0,5,0);
+	//int2lcdyx(IZMAX_,0,10,0);
 		 
 	}
 
@@ -3519,9 +3524,10 @@ else if (ind==iBat_universe)
 		{			//TODO следующий блок написан только для батареи без средней точки. Дописать автоизменение если в системе есть контроль СТ
 		if(bat[sub_ind1]._av&1)
 			{
-			if(bFL2)bgnd_par("       АВАРИЯ!        ",
-			                 "     Батарея №#       ",
-			                 "    не подключена     ",sm_);
+			if(bFL2)bgnd_par(	"       АВАРИЯ!        ",
+			                 	"     Батарея №#       ",
+			                 	"    не подключена     ",
+							sm_);
 			else bgnd_par(sm_,sm_,sm_,sm_);
 			int2lcd(sub_ind1+1,'#',0);
 			}               
@@ -3529,8 +3535,8 @@ else if (ind==iBat_universe)
 			{
 			if(bat[sub_ind1]._Ib>0)
 			     {
-			     ptrs[1]="    заряжается      ";
-			     ptrs[3]=" Iзар=       #А     ";
+			     ptrs[1]=		"    заряжается      ";
+			     ptrs[3]=		" Iзар=       #А     ";
 			     }
 			else
 			     {
@@ -3538,18 +3544,17 @@ else if (ind==iBat_universe)
 			     ptrs[3]=  " Iразр=      #А     ";
 			     }	
 			ptrs[2]=       " Uбат=            $В";
-	         // ptrs[3]=       " Uбат.с.т.=       zВ";
-		//	if(UBM_AV)
-		//	ptrs[3]=       " Uбат.с.т.=(^%)   zВ";
 			
-			if(bat[sub_ind1]._nd)ptrs[4]="    ДТ. неисправен  ";
+			if(ND_EXT)ptrs[4]="    ДТ. неисправен  ";
 			else ptrs[4]="   tбат =   ?°C     ";
 			ptrs[5]="   Заряд=    w%     ";
 			ptrs[6]="   Cбат=     QА*ч   ";
 			ptrs[7]=sm_exit;
 	 
-			bgnd_par("    БАТА    N@      ",
-			          ptrs[sub_ind+1],ptrs[sub_ind+2],ptrs[sub_ind+3]);
+			bgnd_par("    БАТАРЕЯ N@      ",
+			          ptrs[sub_ind+1],
+					ptrs[sub_ind+2],
+					ptrs[sub_ind+3]);
 		     
 		     int2lcd(sub_ind1+1,'@',0);
 		     int2lcd(bat[sub_ind1]._Ub,'$',1);
@@ -6680,7 +6685,8 @@ else if(ind==iStr_220_IPS_TERMOKOMPENSAT)
 	ptrs[0]=" Источников        !";
 	ptrs[1]=" Датчиков темпер.  #";
 	ptrs[2]=" Мониторов АКБ     %";
-	ptrs[3]=" Выход              ";
+	ptrs[3]=" Сухих контактов   $";
+	ptrs[4]=" Выход              ";
 	
 	if(sub_ind<index_set) index_set=sub_ind;
 	else if((sub_ind-index_set)>2) index_set=sub_ind-2;
@@ -6691,6 +6697,7 @@ else if(ind==iStr_220_IPS_TERMOKOMPENSAT)
 	int2lcd(NUMIST,'!',0); 
 	int2lcd(NUMDT,'#',0);
 	int2lcd(NUMMAKB,'%',0);
+	int2lcd(NUMSK,'$',0);
 	}    
 
 else if(ind==iStr_GLONASS)
@@ -19617,12 +19624,12 @@ else if(ind==iStr_220_IPS_TERMOKOMPENSAT)
 	if(but==butD)
 		{
 		sub_ind++;
-		gran_char(&sub_ind,0,3);
+		gran_char(&sub_ind,0,4);
 		}
 	else if(but==butU)
 		{
 		sub_ind--;
-		gran_char(&sub_ind,0,3);
+		gran_char(&sub_ind,0,4);
 		}
 	else if(but==butD_)
 		{
@@ -19681,8 +19688,24 @@ else if(ind==iStr_220_IPS_TERMOKOMPENSAT)
 	     	gran(&NUMMAKB,0,4);
 	     	lc640_write_int(EE_NUMMAKB,NUMMAKB);
 	     	}
-          }	  			                 
+          }
     else if(sub_ind==3)
+	     {
+	     if((but==butR)||(but==butR_))
+	     	{
+	     	NUMSK++;
+	     	gran(&NUMSK,0,4);
+	     	lc640_write_int(EE_NUMSK,NUMSK);
+	     	}
+	     
+	     else if((but==butL)||(but==butL_))
+	     	{
+	     	NUMSK--;
+	     	gran(&NUMSK,0,4);
+	     	lc640_write_int(EE_NUMSK,NUMSK);
+	     	}
+		}			  			                 
+    else if(sub_ind==4)
 	     {
 	     if(but==butE)
 	          {
@@ -27526,7 +27549,9 @@ for(i=0;i<8;i++)
 	if(i<NUMIST)bps[i]._av=0x00;
 	}*/
 
+#ifdef SC16IS740_UART
 sc16is700_init((uint32_t)(MODBUS_BAUDRATE*10UL));
+#endif
 //sc16is700_init();
 		
 while (1)  
@@ -27615,12 +27640,12 @@ while (1)
 	if(b50Hz)
 		{
 		b50Hz=0;
-		#ifdef MCP2515_CAN
-		net_drv_mcp2515();
-		#endif
-		#ifndef MCP2515_CAN
+		//#ifdef MCP2515_CAN
+		//net_drv_mcp2515();
+		//#endif
+		//#ifndef MCP2515_CAN
 		net_drv();
-		#endif
+		//#endif
 		}
 
 	if(b10Hz)

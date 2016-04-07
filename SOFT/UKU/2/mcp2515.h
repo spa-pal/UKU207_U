@@ -7,13 +7,13 @@
 
 
 //#if(KAN_XTAL==8)
-#define CNF1_init	0xc3 /*0b11000011*/  //tq=500ns   //8MHz
-#define CNF2_init	0xfb /*0b11111011*/  //Ps1=7tq,Pr=2tq 
-#define CNF3_init	0x02 /*0b00000010*/  //Ps2=6tq   
+//#define CNF1_init	0xc3 /*0b11000011*/  //tq=500ns   //8MHz
+//#define CNF2_init	0xfb /*0b11111011*/  //Ps1=7tq,Pr=2tq 
+//#define CNF3_init	0x02 /*0b00000010*/  //Ps2=6tq   
 //#elif(KAN_XTAL==10)
-//#define CNF1_init	0xc3 /*0b11000011*/  //tq=500ns   //10MHz
-//#define CNF2_init	0xfe /*0b11111110*/  //Ps1=7tq,Pr=2tq 
-//#define CNF3_init	0x03 /*0b00000011*/  //Ps2=6tq
+#define CNF1_init	0xc3 /*0b11000011*/  //tq=500ns   //10MHz
+#define CNF2_init	0xfe /*0b11111110*/  //Ps1=7tq,Pr=2tq 
+#define CNF3_init	0x03 /*0b00000011*/  //Ps2=6tq
 //#elif(KAN_XTAL==20)
 //#define CNF1_init	0xc7 /*0b11000111*/  //tq=500ns   //20MHz
 //#define CNF2_init	0xfe /*0b11111110*/  //Ps1=7tq,Pr=2tq 
