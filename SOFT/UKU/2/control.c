@@ -5219,8 +5219,8 @@ else if(b1Hz_unh)
 
 	if(BAT_TYPE==0)
 		{
-		if(ND_EXT[0])mat_temper=20;
-		else mat_temper=t_ext[0];
+		if(bat[0]._nd)mat_temper=20;
+		else mat_temper=bat[0]._Tb;
 
 			
 		if(mat_temper<0)temp_SL=UB0; 

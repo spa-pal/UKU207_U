@@ -3522,18 +3522,18 @@ else if (ind==iBat_universe)
 	{
 	if(BAT_TYPE==0)	//Обычная свинцово-кислотная батарея
 		{			//TODO следующий блок написан только для батареи без средней точки. Дописать автоизменение если в системе есть контроль СТ
-		if(bat[sub_ind1]._av&1)
+		if(bat[0]._av&1)
 			{
 			if(bFL2)bgnd_par(	"       АВАРИЯ!        ",
 			                 	"     Батарея №#       ",
 			                 	"    не подключена     ",
 							sm_);
 			else bgnd_par(sm_,sm_,sm_,sm_);
-			int2lcd(sub_ind1+1,'#',0);
+			int2lcd(1,'#',0);
 			}               
 		else
 			{
-			if(bat[sub_ind1]._Ib>0)
+			if(bat[0]._Ib>0)
 			     {
 			     ptrs[1]=		"    заряжается      ";
 			     ptrs[3]=		" Iзар=       #А     ";
@@ -3545,7 +3545,7 @@ else if (ind==iBat_universe)
 			     }	
 			ptrs[2]=       " Uбат=            $В";
 			
-			if(ND_EXT)ptrs[4]="    ДТ. неисправен  ";
+			if(bat[0]._nd)ptrs[4]="    ДТ. неисправен  ";
 			else ptrs[4]="   tбат =   ?°C     ";
 			ptrs[5]="   Заряд=    w%     ";
 			ptrs[6]="   Cбат=     QА*ч   ";
@@ -3556,15 +3556,13 @@ else if (ind==iBat_universe)
 					ptrs[sub_ind+2],
 					ptrs[sub_ind+3]);
 		     
-		     int2lcd(sub_ind1+1,'@',0);
-		     int2lcd(bat[sub_ind1]._Ub,'$',1);
-	          //int2lcd(bat[sub_ind1]._Ubm,'z',1);
-		     int2lcd_mmm(abs(bat[sub_ind1]._Ib),'#',2);
-		     int2lcd_mmm(bat[sub_ind1]._Tb,'?',0);
-		     int2lcd(bat[sub_ind1]._zar,'w',0);
-			//int2lcd(bat[sub_ind1]._dUbm,'^',0);
-		     if(BAT_C_REAL[sub_ind1]==0x5555)sub_bgnd("------",'Q',-1);
-		     else int2lcd(BAT_C_REAL[sub_ind1],'Q',1);
+		     int2lcd(1,'@',0);
+		     int2lcd(bat[0]._Ub,'$',1);
+		     int2lcd_mmm(abs(bat[0]._Ib),'#',2);
+		     int2lcd_mmm(bat[0]._Tb,'?',0);
+		     int2lcd(bat[0]._zar,'w',0);
+		     if(BAT_C_REAL[0]==0x5555)sub_bgnd("------",'Q',-1);
+		     else int2lcd(BAT_C_REAL[0],'Q',1);
 		     if(sub_ind==4)lcd_buffer[60]=1;
 			}
 		} 
@@ -3681,14 +3679,14 @@ else if (ind==iBat_universe)
 		     ptrs[3]=  " Iразр=      #А     ";
 		     }	
 		ptrs[2]=       " Uбат =    $В       ";
-		ptrs[3]=		" tбат =    ?°C      ";
-		ptrs[4]=		" SOC  =    w%       ";
-		ptrs[5]=		" SOH  =    >%       ";
-		ptrs[6]=sm_exit;
+		ptrs[4]=		" tбат =    ?°C      ";
+		ptrs[5]=		" SOC  =    w%       ";
+		ptrs[6]=		" SOH  =    >%       ";
+		ptrs[7]=sm_exit;
 
 
  
-		bgnd_par(		"    Б       N@      ",
+		bgnd_par(		"    Батарея N@      ",
 					"   1 x FP16S4810A   ",
 					ptrs[sub_ind+1],ptrs[sub_ind+2]);
 	     
@@ -12726,21 +12724,21 @@ else if (ind==iBat_universe)
 		if(but==butD)
 			{
 			sub_ind++;
-			gran_char(&sub_ind,0,8);
+			gran_char(&sub_ind,0,5);
 			}
 		else if(but==butU)
 			{
 			sub_ind--;
-			gran_char(&sub_ind,0,8);
+			gran_char(&sub_ind,0,5);
 			}
-		else if((but==butL)||((sub_ind==8)&&(but==butE)))
+		else if((but==butL)||((sub_ind==5)&&(but==butE)))
 		     {
 		     tree_down(0,0);
 		     ret(0);
 		     }
 		else if(but==butD_)
 			{
-			sub_ind=8;
+			sub_ind=6;
 			}
 		}		     
 	}
