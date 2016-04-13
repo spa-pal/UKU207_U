@@ -524,6 +524,10 @@ short Kvv_eb2[3],Kpes_eb2[3];
 //Работа со щетчиком
 signed long power_summary;
 signed short power_current;
+signed long power_summary_tempo,power_summary_tempo_old;
+signed short power_current_tempo,power_current_tempo_old;
+char powerSummaryCnt;
+char powerCurrentCnt;
 
 //-----------------------------------------------
 //Климатконтроль и вентиляторы
@@ -3284,6 +3288,10 @@ else if(ind==iMn_TELECORE2015)
 	//int2lcdyx(BAT_IS_ON[0],0,14,0);
 	//int2lcdyx(cntrl_stat,0,19,0);
 	//int2lcdyx(u_necc,0,4,0);
+		long2lcdyx_mmm(power_summary_tempo,0,9,0);
+	long2lcdyx_mmm(power_current_tempo,0,19,0);
+	int2lcdyx(powerSummaryCnt,1,3,0);
+	int2lcdyx(powerCurrentCnt,2,3,0);
 	}
 
 #ifndef _DEBUG_
@@ -4188,7 +4196,8 @@ else if(ind==iNetEM)
  //temp_SL=(signed long)net_buff_;
 //temp_SL*=Kunet;    
 //int2lcdyx(net_buff_,0,4,0);
-//int2lcdyx(Kunet,0,9,0);
+
+
                   	      	   	    		
      }
 
@@ -12540,7 +12549,7 @@ else if(ind==iMn_TELECORE2015)
 		else if(sub_ind==(1+NUMBAT+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)))
 			{
 			tree_up(iNetEM,0,0,0);
-		     ret(1000);
+		      ret(0);//1204//ret(1000);
 			}
 		
 		else if(sub_ind==(2+NUMBAT+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)))
@@ -27540,12 +27549,6 @@ kb_init();
 #ifdef MCP2515_CAN
 can_mcp2515_init();
 #endif
-/*
-for(i=0;i<8;i++)
-	{
-	bps[i]._av=0xff;
-	if(i<NUMIST)bps[i]._av=0x00;
-	}*/
 
 #ifdef SC16IS740_UART
 sc16is700_init((uint32_t)(MODBUS_BAUDRATE*10UL));
@@ -27812,7 +27815,7 @@ while (1)
 		putchar2(0x59);
 		putchar2(0x5a);*/
 
-		
+		powerAntiAliasingHndl();
 		
 		}
 	if(b1min)

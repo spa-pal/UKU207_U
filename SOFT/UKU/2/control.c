@@ -3727,6 +3727,32 @@ for(i=0;i<NUMIST;i++)
 #define AVUMIN	4
 
 //-----------------------------------------------
+void powerAntiAliasingHndl(void)
+{
+if((power_summary_tempo/10UL)==(power_summary_tempo_old/10UL))
+	{
+	if(powerSummaryCnt<15)powerSummaryCnt++;
+	if(powerSummaryCnt>=10)
+		{
+		power_summary=power_summary_tempo;
+		}
+	}
+else powerSummaryCnt=0;
+power_summary_tempo_old=power_summary_tempo;
+
+if((power_current_tempo/10UL)==(power_current_tempo_old/10UL))
+	{
+	if(powerCurrentCnt<15)powerCurrentCnt++;
+	if(powerCurrentCnt>=10)
+		{
+		power_current=power_current_tempo;
+		}
+	}
+else powerCurrentCnt=0;
+power_current_tempo_old=power_current_tempo;
+}
+
+//-----------------------------------------------
 void inv_drv(char in)
 {
 char temp,temp_;

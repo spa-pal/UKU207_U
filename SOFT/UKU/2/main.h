@@ -1319,6 +1319,11 @@ extern signed short vvod_pos;
 //Работа со щетчиком
 extern signed long power_summary;
 extern signed short power_current;
+extern signed long power_summary_tempo,power_summary_tempo_old;
+extern signed short power_current_tempo,power_current_tempo_old;
+extern char powerSummaryCnt;
+extern char powerCurrentCnt;
+
 
 extern char bRESET;
 extern char bRESET_EXT;
