@@ -162,7 +162,7 @@ if(sc16is700ByteAvailable) //Если в приемном ФИФО	микросхемы есть данные
 
 sc16is700TxFifoLevel=sc16is700_rd_byte(CS16IS7xx_TXLVL);//Читаем состояние ФИФО передачи
 
-if(sc16is700TxFifoLevel!=64) sc16is700TxFifoEmptyCnt==0;//Если ФИФО не пустой обнуляем счетчик свободности ФИФО передачи
+if(sc16is700TxFifoLevel!=64) sc16is700TxFifoEmptyCnt=0;//Если ФИФО не пустой обнуляем счетчик свободности ФИФО передачи
 if(sc16is700TxFifoLevel==64) //если ФИФО пустой то плюсуем счетчик если он меньше константы
 	{
 	if(sc16is700TxFifoEmptyCnt<SC16IS700TXFIFOEMPTYCNTMAX)sc16is700TxFifoEmptyCnt++;

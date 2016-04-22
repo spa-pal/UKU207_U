@@ -3288,10 +3288,10 @@ else if(ind==iMn_TELECORE2015)
 	//int2lcdyx(BAT_IS_ON[0],0,14,0);
 	//int2lcdyx(cntrl_stat,0,19,0);
 	//int2lcdyx(u_necc,0,4,0);
-		long2lcdyx_mmm(power_summary_tempo,0,9,0);
-	long2lcdyx_mmm(power_current_tempo,0,19,0);
-	int2lcdyx(powerSummaryCnt,1,3,0);
-	int2lcdyx(powerCurrentCnt,2,3,0);
+	//	long2lcdyx_mmm(power_summary_tempo,0,9,0);
+	//long2lcdyx_mmm(power_current_tempo,0,19,0);
+	//int2lcdyx(powerSummaryCnt,1,3,0);
+	//int2lcdyx(powerCurrentCnt,2,3,0);
 	}
 
 #ifndef _DEBUG_
@@ -8950,51 +8950,8 @@ if(ind==iDeb)
 		int2lcdyx(IZMAX,1,14,0);*/
 
 		}
-   else if(sub_ind==5)
-     	{
-     	bgnd_par("**                  ",
-     		    "                    ",
-     		    "                    ",
-     		    "                    ");
-     		    
-
-
-     	
-     	int2lcdyx(vz_cnt_s_,0,6,0);
-		int2lcdyx(vz_cnt_s,1,6,0);
-		int2lcdyx(vz_cnt_h,2,6,0);
-		int2lcdyx(vz_cnt_h_,3,6,0);
-
-     	int2lcdyx(__ee_vz_cnt,3,12,0);
-		int2lcdyx(lc640_read_int(EE_VZ_CNT),1,10,0);
-	/*		int2lcdyx(eb2_data[10],2,10,0);
-/*		int2lcdyx(eb2_data[11],3,10,0);
-
-     	int2lcdyx(eb2_data[12],0,14,0);
-		int2lcdyx(eb2_data[13],1,14,0);
-		int2lcdyx(eb2_data[14],2,14,0);
-		int2lcdyx(eb2_data[15],3,14,0);
-     	
-     	int2lcdyx(eb2_data[16],0,18,0);
-		int2lcdyx(eb2_data[17],1,18,0);
-		int2lcdyx(eb2_data[18],2,18,0);
-		int2lcdyx(eb2_data[19],3,18,0);*/
-
-	/*	int2lcdyx(eb2_data_short[0],0,13,0);
-		int2lcdyx(eb2_data_short[1],1,13,0);
-		int2lcdyx(eb2_data_short[2],2,13,0);
-
-		int2lcdyx(eb2_data_short[3],0,19,0);
-		int2lcdyx(eb2_data_short[4],1,19,0);
-		int2lcdyx(eb2_data_short[5],2,19,0);  */
-
-     	/*int2lcdyx(eb2_data[20],0,10,0);
-		int2lcdyx(eb2_data[21],1,10,0);
-		int2lcdyx(eb2_data[22],2,10,0);
-		int2lcdyx(eb2_data[23],3,10,0);*/
-
-    		}
-    else if(sub_ind==6)
+ 
+    else if(sub_ind==5)
      	{
      	bgnd_par("                    ",
      		    "                    ",
@@ -9063,6 +9020,29 @@ if(ind==iDeb)
 		int2lcdyx(bat_drv_cnt_cnt,3,19,0);*/
 
     	}  		  		
+
+
+  else if(sub_ind==6)
+     	{
+     	bgnd_par("6                   ",
+     		    "                    ",
+     		    "                    ",
+     		    "                    ");
+     		    
+		int2lcdyx(t_ext[0],1,3,0);
+		int2lcdyx(t_ext[1],2,3,0);
+		int2lcdyx(li_bat._Tb,3,3,0);
+		
+		
+		int2lcdyx(t_box_warm,0,10,0);
+		int2lcdyx(t_box_vent,0,15,0);
+
+		int2lcdyx(t_box_warm_on_cnt,1,10,0);
+		int2lcdyx(t_box_vent_on_cnt,1,15,0);
+		int2lcdyx(warm_stat_k,2,10,0);
+		int2lcdyx(vent_stat_k,2,15,0);
+    		}
+
 
    else if(sub_ind==7)
      	{
