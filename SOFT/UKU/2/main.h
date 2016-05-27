@@ -476,6 +476,7 @@
 #define		PARAM_RELE_NPN						110
 #define		PARAM_RELE_WARM				     111
 #define 		PARAM_RELE_VVENT					112
+#define 		PARAM_RELE_EXT					113
 
 #define	MESS2IND_HNDL						215
 #define		PARAM_SAMOKALIBR					216
@@ -1183,13 +1184,12 @@ typedef struct
      char _adr_ee;
 	char _last_avar;
      } BPS_STAT; 
-extern BPS_STAT bps[40];
+extern BPS_STAT bps[32];
 
 //***********************************************
 //Состояние инверторов
 typedef struct
      {
-     //enum {dSRC=3,dINV=5}_device;
 	char _av;
 	//0бит - авария по перегреву
 	//1бит - авария по завышенному Uвых
@@ -1200,23 +1200,13 @@ typedef struct
      char _cnt_old;
      char _cnt_more2;
      char _buff[16]; 
-     //char _av_net;
-     //char _av_u_max;
-     //char _av_u_min;
-     //char _av_temper; 
      signed _Uio; 
-     //signed _Uin;
      signed _Ii;
      signed _Ti; 
-	 signed _Uil;
-	 signed _Uin;
-	 signed _Pio;
+	signed _Uil;
+	signed _Uin;
+	signed _Pio;
      char _flags_tu;
-     //char _flags_tu_old;
-     //char _is_ready;
-     //char _is_wrk;
-     //char _is_link;
-     //char _is_av;
      signed _vol_u;
      signed _vol_i;
      char _is_on_cnt;
@@ -1240,7 +1230,12 @@ typedef struct
 	char _pwm_en;
 	char _phase_mode;
      } INV_STAT; 
+#ifdef UKU_220_V2
+extern INV_STAT inv[3];
+#endif
+#ifndef UKU_220_V2
 extern INV_STAT inv[20];
+#endif
 extern char first_inv_slot;
 
 //***********************************************

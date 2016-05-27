@@ -1729,10 +1729,10 @@ if(load_I<0)load_I=0;
 
 #endif
 
-inv[0]._Uio=6;
+
 
 #ifdef UKU_GLONASS
-
+inv[0]._Uio=6;
 if (NUMINV)
 	{
 	for(i=0;i<NUMINV;i++)
@@ -2633,12 +2633,13 @@ if((((bat[1]._rel_stat) || (tbatdisable_stat!=tbdsON))&&(tbatdisable_cmnd))	&& (
 else SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_BAT2,1);
 
 
-if(mess_find_unvol((MESS2RELE_HNDL))&&(PARAM_RELE_SAMOKALIBR)) 
+if(mess_find_unvol((MESS2RELE_HNDL))&&(mess_data[0]==PARAM_RELE_SAMOKALIBR)) 
 	{
 	if(mess_data[1]==1)SET_REG(LPC_GPIO0->FIOSET,1,29,1);
 	else if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,29,1);
 	}
 else SET_REG(LPC_GPIO0->FIOCLR,1,29,1);
+
 
 #ifndef UKU2071x
 //Реле аварии сети
@@ -3095,7 +3096,6 @@ else
 
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
 
-
 if((AUSW_MAIN==22010)||(AUSW_MAIN==22011))
 	{
 	#ifndef UKU2071x
@@ -3116,9 +3116,6 @@ if((AUSW_MAIN==22010)||(AUSW_MAIN==22011))
 	else	if(!(avar_ind_stat&0x00000001)) SET_REG(LPC_GPIO3->FIOCLR,1,25,1);
 	else SET_REG(LPC_GPIO3->FIOSET,1,25,1);
 	#endif
-
-	
-	
 	if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_BPS))
 		{
 		if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,7,1);
@@ -3140,8 +3137,7 @@ if((AUSW_MAIN==22010)||(AUSW_MAIN==22011))
 		{
 		if(!(ips_bat_av_stat)) SET_REG(LPC_GPIO0->FIOCLR,1,4,1);
      	else SET_REG(LPC_GPIO0->FIOSET,1,4,1);
-		} 
-
+		}
 	}
 
 else	if(AUSW_MAIN==22023)
@@ -3193,7 +3189,6 @@ else	if(AUSW_MAIN==22023)
 	}
 else	if(AUSW_MAIN==22043)
 	{
-
 	//Реле аварий батарей
 	if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_BAT))
 		{
@@ -3205,8 +3200,6 @@ else	if(AUSW_MAIN==22043)
 		if(!(ips_bat_av_stat)) SET_REG(LPC_GPIO0->FIOCLR,1,4,1);
      	else SET_REG(LPC_GPIO0->FIOSET,1,4,1);
 		} 
-
-
 	//Реле аварии сети ТУТ КАКАЯ то ЛАЖА с аварией сети. Обращение к разным портам
 	#ifndef UKU2071x 
 	if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_NET))
@@ -3293,20 +3286,6 @@ else	if(AUSW_MAIN==22033)
 		if(!(ips_bat_av_stat)) SET_REG(LPC_GPIO0->FIOCLR,1,4,1);
      	else SET_REG(LPC_GPIO0->FIOSET,1,4,1);
 		} 
-
-
-
-/*//Реле аварий батарей
-if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_BAT))
-	{
-	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_BAT,1);
-	else if(mess_data[1]==1) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_AV_BAT,1);
-     }
-else 
-	{
-	if(!(avar_ind_stat&0x00000002)) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_BAT,1);
-     else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_AV_BAT,1);
-	}*/ 
 	} 	 
 else	
 	{
@@ -3339,8 +3318,19 @@ else
 		{
 		if(!(avar_ind_stat&0x000007f8)) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_BPS,1);
      	else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_AV_BPS,1);
-		} 
+		}
 	}
+//Дополнительное реле УКУ 
+if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_EXT))	 
+	{
+	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,9,1);
+	else if(mess_data[1]==1) SET_REG(LPC_GPIO0->FIOSET,1,9,1);
+	}
+else 
+	{
+	if(!speedChIsOn) SET_REG(LPC_GPIO0->FIOCLR,1,9,1);
+	else SET_REG(LPC_GPIO0->FIOSET,1,9,1);
+	} 	
 #endif
 
 #ifdef UKU_KONTUR
@@ -3832,126 +3822,6 @@ else if((temp)&&(!temp_))
 
 inv[in]._flags_tm_old=inv[in]._flags_tm;
 
-
-
-//inv[in]._Uii=bps[in+first_inv_slot]._Uii;
-//inv[in]._Ii=bps[in+first_inv_slot]._Ii;
-//inv[in]._Ti=bps[in+first_inv_slot]._Ti;
-
-
-/*
-
-temp=bps[in]._flags_tm;
-
-if((temp&(1<<AV_OVERLOAD)))
-	{
-	if(bps[in]._overload_av_cnt<10) 
-		{
-		bps[in]._overload_av_cnt++;
-		if(bps[in]._overload_av_cnt>=10)
-			{ 
-			bps[in]._overload_av_cnt=10;
-			if(!(bps[in]._av&(1<<4)))avar_bps_hndl(in,4,1);				
-			}
-		} 
-	}		
-else if(!(temp&(1<<AV_OVERLOAD)))
-	{
-	if(bps[in]._overload_av_cnt>0) 
-		{
-		bps[in]._overload_av_cnt--;
-		if(bps[in]._overload_av_cnt<=0)
-			{
-			bps[in]._overload_av_cnt=0;
-			avar_bps_hndl(in,4,0);
-			}
-		}
-	else if(bps[in]._overload_av_cnt<0) bps[in]._overload_av_cnt=0;		 
-	}
-
-if(temp&(1<<AV_T))
-	{
-	if(bps[in]._temp_av_cnt<1200) 
-		{
-		bps[in]._temp_av_cnt++;
-		if(bps[in]._temp_av_cnt>=1200)
-			{
-			bps[in]._temp_av_cnt=1200;
-		   	if(!(bps[in]._av&(1<<0)))avar_bps_hndl(in,0,1);
-			}
-		}
-	}
-else if(!(temp&(1<<AV_T)))
-	{
-	if(bps[in]._temp_av_cnt) 
-		{
-		bps[in]._temp_av_cnt--;
-		if(!bps[in]._temp_av_cnt)
-			{
-			if(bps[in]._av&(1<<0))avar_bps_hndl(in,0,0);
-			}
-		} 	
-	}
-
-if((temp&(1<<AVUMAX)))
-	{
-	if(bps[in]._umax_av_cnt<10) 
-		{
-		bps[in]._umax_av_cnt++;
-		if(bps[in]._umax_av_cnt>=10)
-			{ 
-			bps[in]._umax_av_cnt=10;
-			if(!(bps[in]._av&(1<<1)))avar_bps_hndl(in,1,1);				
-			}
-		} 
-	}		
-else if(!(temp&(1<<AVUMAX)))
-	{
-	if(bps[in]._umax_av_cnt>0) 
-		{
-		bps[in]._umax_av_cnt--;
-		if(bps[in]._umax_av_cnt==0)
-			{
-			bps[in]._umax_av_cnt=0;
-			avar_bps_hndl(in,1,0);
-			}
-		}
-	else if(bps[in]._umax_av_cnt<0) bps[in]._umax_av_cnt=0;		 
-	}
-
-if(temp&(1<<AVUMIN))
-	{
-	if(bps[in]._umin_av_cnt<10) 
-		{
-		bps[in]._umin_av_cnt++;
-		if(bps[in]._umin_av_cnt>=10)
-			{ 
-			bps[in]._umin_av_cnt=10;
-			if(!(bps[in]._av&(1<<2)))avar_bps_hndl(in,2,1);
-			}
-		} 
-	}	
-else if(!(temp&(1<<AVUMIN)))
-	{
-	if(bps[in]._umin_av_cnt) 
-		{
-		bps[in]._umin_av_cnt--;
-		if(bps[in]._umin_av_cnt==0)
-			{
-			bps[in]._umin_av_cnt=0;
-			avar_bps_hndl(in,2,0);
-			}
-		}
-	else if(bps[in]._umin_av_cnt>10)bps[in]._umin_av_cnt--;	 
-	}
-
-
-
-if (bps[in]._av&0x1f)						bps[in]._state=bsAV;
-else if ((net_av)&&(bps[in]._Uii<200))		bps[in]._state=bsOFF_AV_NET;
-else if (bps[in]._flags_tm&BIN8(100000))	bps[in]._state=bsRDY;
-else if (bps[in]._cnt<20)					bps[in]._state=bsWRK;
-*/
 }	
 
 //-----------------------------------------------
@@ -5563,6 +5433,11 @@ if(iiii==0)
      cntrl_stat=600;	
      cntrl_stat_old=600;
      cntrl_stat_new=600;
+	#ifdef UKU_TELECORE2015
+	cntrl_stat=0;
+	cntrl_stat_old=0;
+	cntrl_stat_new=0;
+	#endif
      }
 gran(&cntrl_stat,10,1010); 
 b1Hz_ch=0;
