@@ -203,6 +203,13 @@ const char sk_buff_TELECORE2015[4]={11,13,15,14};
 char	plazma_inv[4];
 char plazma_bat;
 
+//***********************************************
+//Ротация ведущего источника
+char numOfForvardBps;
+char numOfForvardBps_minCnt;
+short numOfForvardBps_hourCnt;
+
+
 //-----------------------------------------------
 void ke_start(char in)
 {          
@@ -3668,9 +3675,20 @@ else if(b1Hz_sh)
   	     
   	for(i=0;(i<NUMIST)&&(ptr__<num_necc);i++)
   		{
-  	     if((bps[i]._state==bsRDY)||(bps[i]._state==bsWRK))
+		char ii,iii;
+
+		ii=(char)NUMIST;
+		if(ii<0)ii=0;
+		if(ii>32)ii=32;
+		iii=numOfForvardBps;
+		if(iii<0)iii=0;
+		if(iii>=NUMIST)iii=0;
+		iii+=i;
+		iii=iii%ii;
+		
+  	     if((bps[iii]._state==bsRDY)||(bps[iii]._state==bsWRK))
   	         	{
-  	         	bps[i]._flags_tu=0;
+  	         	bps[iii]._flags_tu=0;
   	         	ptr__++;
   	         	}
   	     }
@@ -5812,6 +5830,43 @@ else	if(speedChrgBlckStat==0)
 
 }
 
+//-----------------------------------------------
+void	numOfForvardBps_hndl(void)			//Программа смены первого источника для равномерного износа БПСов
+{
+numOfForvardBps=0;
+
+//FORVARDBPSCHHOUR=10;
+
+if((FORVARDBPSCHHOUR<=0)||(FORVARDBPSCHHOUR>500))
+	{
+	FORVARDBPSCHHOUR=0;
+	return;
+	}
+
+numOfForvardBps_minCnt++;
+
+
+if(numOfForvardBps_minCnt>=60)
+	{
+	numOfForvardBps_minCnt=0;
+	numOfForvardBps_hourCnt=lc640_read_int(EE_FORVBPSHOURCNT);
+	numOfForvardBps_hourCnt++;
+	if(numOfForvardBps_hourCnt>=(FORVARDBPSCHHOUR*NUMIST))
+		{
+		numOfForvardBps_hourCnt=0;
+		}
+	lc640_write_int(EE_FORVBPSHOURCNT,numOfForvardBps_hourCnt);
+	}
+
+numOfForvardBps=numOfForvardBps_hourCnt/FORVARDBPSCHHOUR; 
+}
+
+//-----------------------------------------------
+void	numOfForvardBps_init(void)			//Программа сброса системы смены первого источника для равномерного износа БПСов
+{									//Должна вызываться при изменении кол-ва источников в структуре
+lc640_write_int(EE_FORVBPSHOURCNT,0);
+numOfForvardBps_minCnt=0;
+}
 
 //-----------------------------------------------
 void vent_hndl(void)

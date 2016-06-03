@@ -113,6 +113,12 @@ extern signed int avg;
 extern char bAVG;
 extern const char sk_buff_TELECORE2015[4];
 
+//***********************************************
+//Ротация ведущего источника
+extern char numOfForvardBps;
+extern char numOfForvardBps_minCnt;
+extern short numOfForvardBps_hourCnt;
+
 
 void zar_superviser_drv(void);
 void zar_superviser_start(void);

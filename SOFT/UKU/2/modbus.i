@@ -2865,7 +2865,7 @@ extern signed short TBOXWARMON;
 extern signed short TBOXWARMOFF;
 extern signed short BAT_TYPE;		
 extern signed short DU_LI_BAT;	
-
+extern signed short FORVARDBPSCHHOUR;	
 extern signed short NUMBAT;
 extern signed short NUMIST;
 extern signed short NUMINV;
@@ -3872,38 +3872,38 @@ extern __declspec(__nothrow) void _membitmovewb(void *  , const void *  , int  ,
 
 
 
-#line 123 "eeprom_map.h"
+#line 125 "eeprom_map.h"
 
 
 
-#line 140 "eeprom_map.h"
+#line 142 "eeprom_map.h"
 
 
 
-#line 152 "eeprom_map.h"
+#line 154 "eeprom_map.h"
 
 
-#line 163 "eeprom_map.h"
-
-
-
-#line 174 "eeprom_map.h"
+#line 165 "eeprom_map.h"
 
 
 
-#line 230 "eeprom_map.h"
-
-
-#line 272 "eeprom_map.h"
+#line 176 "eeprom_map.h"
 
 
 
+#line 232 "eeprom_map.h"
 
+
+#line 274 "eeprom_map.h"
 
 
 
 
-#line 294 "eeprom_map.h"
+
+
+
+
+#line 296 "eeprom_map.h"
 
 
 
@@ -4813,10 +4813,11 @@ for (i=0;i<(5+(reg_quantity*2));i++)
 
 void modbus_input_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity)
 {
-char modbus_registers[110];
+char modbus_registers[450];
 char modbus_tx_buff[120];
 unsigned short crc_temp;
 char i;
+short tempS;
 
 modbus_registers[0]=(char)(load_U/256);					
 modbus_registers[1]=(char)(load_U%256);
@@ -4918,12 +4919,50 @@ modbus_registers[96]=(char)(bps[6]._av/256);
 modbus_registers[97]=(char)(bps[6]._av%256);
 modbus_registers[98]=(char)(bps[7]._Uii/256);			
 modbus_registers[99]=(char)(bps[7]._Uii%256);
-modbus_registers[100]=(char)(bps[7]._Ii/256);				
+modbus_registers[100]=(char)(bps[7]._Ii/256);			
 modbus_registers[101]=(char)(bps[7]._Ii%256);
-modbus_registers[102]=(char)(bps[7]._Ti/256);				
+modbus_registers[102]=(char)(bps[7]._Ti/256);			
 modbus_registers[103]=(char)(bps[7]._Ti%256);
-modbus_registers[104]=(char)(bps[7]._av/256);				
+modbus_registers[104]=(char)(bps[7]._av/256);			
 modbus_registers[105]=(char)(bps[7]._av%256);
+
+tempS=t_ext[0];
+if(ND_EXT[0])tempS=-1000;
+modbus_registers[400]=(char)(tempS/256);				
+modbus_registers[401]=(char)(tempS%256);
+tempS=t_ext[1];
+if(ND_EXT[1])tempS=-1000;
+modbus_registers[402]=(char)(tempS/256);				
+modbus_registers[403]=(char)(tempS%256);
+tempS=t_ext[2];
+if(ND_EXT[2])tempS=-1000;
+modbus_registers[404]=(char)(tempS/256);				
+modbus_registers[405]=(char)(tempS%256);
+tempS=t_ext[3];
+if(ND_EXT[3])tempS=-1000;
+modbus_registers[406]=(char)(tempS/256);				
+modbus_registers[407]=(char)(tempS%256);
+
+tempS=0;
+if(sk_stat[0]==ssON) tempS|=0x0001;
+if(sk_av_stat[0]==sasON) tempS|=0x0002;
+modbus_registers[420]=(char)(tempS/256);				
+modbus_registers[421]=(char)(tempS%256);
+tempS=0;
+if(sk_stat[1]==ssON) tempS|=0x0001;
+if(sk_av_stat[1]==sasON) tempS|=0x0002;
+modbus_registers[422]=(char)(tempS/256);				
+modbus_registers[423]=(char)(tempS%256);
+tempS=0;
+if(sk_stat[2]==ssON) tempS|=0x0001;
+if(sk_av_stat[2]==sasON) tempS|=0x0002;
+modbus_registers[424]=(char)(tempS/256);				
+modbus_registers[425]=(char)(tempS%256);
+tempS=0;
+if(sk_stat[3]==ssON) tempS|=0x0001;
+if(sk_av_stat[3]==sasON) tempS|=0x0002;
+modbus_registers[426]=(char)(tempS/256);				
+modbus_registers[427]=(char)(tempS%256);
 
 modbus_tx_buff[0]=adr;
 modbus_tx_buff[1]=func;

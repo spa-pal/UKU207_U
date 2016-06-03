@@ -864,7 +864,7 @@ extern signed short TBOXWARMON;
 extern signed short TBOXWARMOFF;
 extern signed short BAT_TYPE;		//Тип батареи. 0 - обычная свинцовая, 1-литиевая COSLIGHT, 2-литиевая SACRED SUN
 extern signed short DU_LI_BAT;	//Параметр, определяющий напряжение содержания литиевой батареи
-
+extern signed short FORVARDBPSCHHOUR;	//Периодичностьсмены ведущего источника в часах. Если 0 - функция выключена и ведущий первый источник
 extern signed short NUMBAT;
 extern signed short NUMIST;
 extern signed short NUMINV;

@@ -2901,7 +2901,7 @@ extern signed short TBOXWARMON;
 extern signed short TBOXWARMOFF;
 extern signed short BAT_TYPE;		
 extern signed short DU_LI_BAT;	
-
+extern signed short FORVARDBPSCHHOUR;	
 extern signed short NUMBAT;
 extern signed short NUMIST;
 extern signed short NUMINV;
@@ -3601,6 +3601,12 @@ extern signed int i_avg_max,i_avg_min,i_avg_summ,i_avg;
 extern signed int avg;
 extern char bAVG;
 extern const char sk_buff_TELECORE2015[4];
+
+
+
+extern char numOfForvardBps;
+extern char numOfForvardBps_minCnt;
+extern short numOfForvardBps_hourCnt;
 
 
 void zar_superviser_drv(void);

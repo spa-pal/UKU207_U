@@ -2924,7 +2924,7 @@ extern signed short TBOXWARMON;
 extern signed short TBOXWARMOFF;
 extern signed short BAT_TYPE;		
 extern signed short DU_LI_BAT;	
-
+extern signed short FORVARDBPSCHHOUR;	
 extern signed short NUMBAT;
 extern signed short NUMIST;
 extern signed short NUMINV;

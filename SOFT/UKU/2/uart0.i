@@ -2886,7 +2886,7 @@ extern signed short TBOXWARMON;
 extern signed short TBOXWARMOFF;
 extern signed short BAT_TYPE;		
 extern signed short DU_LI_BAT;	
-
+extern signed short FORVARDBPSCHHOUR;	
 extern signed short NUMBAT;
 extern signed short NUMIST;
 extern signed short NUMINV;
@@ -3577,6 +3577,12 @@ extern char bAVG;
 extern const char sk_buff_TELECORE2015[4];
 
 
+
+extern char numOfForvardBps;
+extern char numOfForvardBps_minCnt;
+extern short numOfForvardBps_hourCnt;
+
+
 void zar_superviser_drv(void);
 void zar_superviser_start(void);
 void vent_hndl(void);
@@ -3608,38 +3614,38 @@ void speedChargeStartStop(void);
 
 
 
-#line 123 "eeprom_map.h"
+#line 125 "eeprom_map.h"
 
 
 
-#line 140 "eeprom_map.h"
+#line 142 "eeprom_map.h"
 
 
 
-#line 152 "eeprom_map.h"
+#line 154 "eeprom_map.h"
 
 
-#line 163 "eeprom_map.h"
-
-
-
-#line 174 "eeprom_map.h"
+#line 165 "eeprom_map.h"
 
 
 
-#line 230 "eeprom_map.h"
-
-
-#line 272 "eeprom_map.h"
+#line 176 "eeprom_map.h"
 
 
 
+#line 232 "eeprom_map.h"
 
+
+#line 274 "eeprom_map.h"
 
 
 
 
-#line 294 "eeprom_map.h"
+
+
+
+
+#line 296 "eeprom_map.h"
 
 
 

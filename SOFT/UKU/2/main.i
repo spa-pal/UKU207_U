@@ -1097,7 +1097,7 @@ extern signed short TBOXWARMON;
 extern signed short TBOXWARMOFF;
 extern signed short BAT_TYPE;		
 extern signed short DU_LI_BAT;	
-
+extern signed short FORVARDBPSCHHOUR;	
 extern signed short NUMBAT;
 extern signed short NUMIST;
 extern signed short NUMINV;
@@ -2130,38 +2130,38 @@ void ret_hndl(void);
 
 
 
-#line 123 "eeprom_map.h"
+#line 125 "eeprom_map.h"
 
 
 
-#line 140 "eeprom_map.h"
+#line 142 "eeprom_map.h"
 
 
 
-#line 152 "eeprom_map.h"
+#line 154 "eeprom_map.h"
 
 
-#line 163 "eeprom_map.h"
-
-
-
-#line 174 "eeprom_map.h"
+#line 165 "eeprom_map.h"
 
 
 
-#line 230 "eeprom_map.h"
-
-
-#line 272 "eeprom_map.h"
+#line 176 "eeprom_map.h"
 
 
 
+#line 232 "eeprom_map.h"
 
+
+#line 274 "eeprom_map.h"
 
 
 
 
-#line 294 "eeprom_map.h"
+
+
+
+
+#line 296 "eeprom_map.h"
 
 
 
@@ -2457,6 +2457,12 @@ extern signed int i_avg_max,i_avg_min,i_avg_summ,i_avg;
 extern signed int avg;
 extern char bAVG;
 extern const char sk_buff_TELECORE2015[4];
+
+
+
+extern char numOfForvardBps;
+extern char numOfForvardBps_minCnt;
+extern short numOfForvardBps_hourCnt;
 
 
 void zar_superviser_drv(void);
@@ -3532,7 +3538,7 @@ extern LOCALM localm[];
 
 
 char b10000Hz,b1000Hz,b2000Hz,b100Hz,b50Hz,b10Hz,b5Hz,b2Hz,b1Hz,b1min;
-short t0cnt,t0cnt0,t0cnt1,t0cnt2,t0cnt3,t0cnt4,t0cnt5,t0cnt6,t0_cnt7,t0_cnt_min;
+short t0cnt,t0cnt0,t0cnt1,t0cnt2,t0cnt3,t0cnt4,t0cnt5,t0cnt6,t0_cnt7,t0_cnt_min,t0cntMin;
 char bFL5,bFL2,bFL,bFL_,bTPS;
 signed short main_10Hz_cnt=0;
 signed short main_1Hz_cnt=0;
@@ -3616,7 +3622,7 @@ signed short TBOXWARMON;
 signed short TBOXWARMOFF;
 signed short BAT_TYPE;	
 signed short DU_LI_BAT;	
-
+signed short FORVARDBPSCHHOUR;	
 signed short NUMBAT;
 signed short NUMIST;
 signed short NUMINV;
@@ -10599,6 +10605,7 @@ else if(a_ind . i==iSet_bat_sel)
      ptrs[2]=	" SACRED SUN         ";
 	ptrs[3]=	" Выход              ";
 
+	gran(&BAT_TYPE,0,2);
 	if(bFL2)ptrs[BAT_TYPE]=	
 			"                    ";	
 
@@ -11080,31 +11087,31 @@ else if(a_ind . i==iSet_KONTUR)
 
 else if(a_ind . i==iSet_6U)
 	{
-    ptrs[0]=		" Стандартные        ";
+    	ptrs[0]=		" Стандартные        ";
 	ptrs[1]=		" Время и дата       ";
-    ptrs[2]=		" Структура          ";
+    	ptrs[2]=		" Структура          ";
 	ptrs[3]=		" Выход              ";
-    ptrs[4]=		" Мнемоника         y";
+    	ptrs[4]=		" Мнемоника         y";
 	ptrs[5]=		" Зв.сигн.   (       ";
 	ptrs[6]=		" Отключение сигнала ";
 	ptrs[7]=		"  аварии    )       ";
 	ptrs[8]=		" АПВ источников     ";
 	ptrs[9]=		" Паралл.работа z    ";
 	ptrs[10]=		" T проверки   цепи  ";
-    ptrs[11]=		" батареи     qмин.  ";
-    ptrs[12]=		" Umax=       !В     ";
-    ptrs[13]=		" Umin=       ZВ     ";
-    ptrs[14]=		" Uб0°=       @В     ";
-    ptrs[15]=		" Uб20°=      #В     ";
-    ptrs[16]=		" Uсигн=      ^В     ";
-    ptrs[17]=		" Umin.сети=  &В     ";
+    	ptrs[11]=		" батареи     qмин.  ";
+    	ptrs[12]=		" Umax=       !В     ";
+    	ptrs[13]=		" Umin=       ZВ     ";
+    	ptrs[14]=		" Uб0°=       @В     ";
+    	ptrs[15]=		" Uб20°=      #В     ";
+    	ptrs[16]=		" Uсигн=      ^В     ";
+    	ptrs[17]=		" Umin.сети=  &В     ";
 	ptrs[18]=		" U0б=        >В     ";
 	ptrs[19]=		" Iбк.=       jА     ";
-    ptrs[20]=		" Iз.мах.=    JА     ";
-    ptrs[21]=		" Imax =      ]A     ";
-    ptrs[22]=		" Imin =      {A     ";
-    ptrs[23]=		" Uвыр.зар.=   [В    ";
-    ptrs[24]=		" Tз.вкл.а.с. !с     ";
+    	ptrs[20]=		" Iз.мах.=    JА     ";
+    	ptrs[21]=		" Imax =      ]A     ";
+    	ptrs[22]=		" Imin =      {A     ";
+    	ptrs[23]=		" Uвыр.зар.=   [В    ";
+    	ptrs[24]=		" Tз.вкл.а.с. !с     ";
 	ptrs[25]=		" tи.max=     $°C    ";
 	ptrs[26]=		" tи.сигн=    z°C    ";
 	ptrs[27]=		" tбат.max=   b°C    ";
@@ -11115,14 +11122,16 @@ else if(a_ind . i==iSet_6U)
 	ptrs[32]=		" тора          >    ";
 	ptrs[33]=		" Отключение низко-  ";
 	ptrs[34]=		" приоритетной нагр. ";
-    ptrs[35]=		" Внешние датчики    ";
+    	ptrs[35]=		" Внешние датчики    ";
 	ptrs[36]=		" Ethernet           ";
 	ptrs[37]=      " Серийный N        w";
 	ptrs[38]=      " Тип батареи        ";
 	ptrs[39]=      " Инверторы          ";
-    ptrs[40]=		" Выход              ";
-    ptrs[41]=		" Калибровки         "; 
-    ptrs[42]=		"                    ";        
+	ptrs[40]=      " Время ротации      ";
+	ptrs[41]=      " источников    lчас.";
+    	ptrs[42]=		" Выход              ";
+    	ptrs[43]=		" Калибровки         "; 
+    	ptrs[44]=		"                    ";        
 	
 	if((a_ind . s_i-a_ind . i_s)>2)a_ind . i_s=a_ind . s_i-2;
 	else if(a_ind . s_i<a_ind . i_s)a_ind . i_s=a_ind . s_i;
@@ -11178,6 +11187,12 @@ else if(a_ind . i==iSet_6U)
 	else sub_bgnd("Tвн.датч.",'>',-5);
 
 	long2lcd_mmm(AUSW_MAIN_NUMBER,'w',0);
+
+	if((FORVARDBPSCHHOUR<=0)||(FORVARDBPSCHHOUR>500)) {
+		sub_bgnd("ВЫКЛ.",'l',0);
+	} else {
+		int2lcd(FORVARDBPSCHHOUR,'l',0);	
+	}
 
 	
 	
@@ -11520,9 +11535,11 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 	ptrs[36]=		" MODBUS BAUDRATE    ";
 	ptrs[37]=		"                  >0";
 	ptrs[38]=		" Ускоренный заряд   ";
-     ptrs[39]=		" Выход              ";
-     ptrs[40]=		" Калибровки         "; 
-     ptrs[41]=		"                    ";        
+	ptrs[39]=      " Время ротации      ";
+	ptrs[40]=      " источников    lчас.";
+     ptrs[41]=		" Выход              ";
+     ptrs[42]=		" Калибровки         "; 
+     ptrs[43]=		"                    ";        
 	
 	if((a_ind . s_i-a_ind . i_s)>2)a_ind . i_s=a_ind . s_i-2;
 	else if(a_ind . s_i<a_ind . i_s)a_ind . i_s=a_ind . s_i;
@@ -11582,6 +11599,12 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 		}
 	int2lcd(MODBUS_ADRESS,'<',0);
 	int2lcd(MODBUS_BAUDRATE,'>',0);
+
+	if((FORVARDBPSCHHOUR<=0)||(FORVARDBPSCHHOUR>500)) {
+		sub_bgnd("ВЫКЛ.",'l',0);
+	} else {
+		int2lcd(FORVARDBPSCHHOUR,'l',0);	
+	}
 	}
 
 
@@ -13977,48 +14000,23 @@ if(a_ind . i==iDeb)
 
     else if(a_ind . s_i==2)
      	{
-     	bgnd_par(	"КБ                  ",
+     	bgnd_par(	"F                   ",
      		    	"                    ",
      		    	"                    ",
      		    	"                    ");
 
-		int2lcdyx(main_kb_cnt,1,4,0);
-		int2lcdyx(TBAT,2,4,0);
-		int2lcdyx(cntrl_stat,3,4,0); 
 
-		int2lcdyx(kb_start[0],1,7,0);
-		int2lcdyx(kb_start[1],2,7,0);
-		int2lcdyx(kb_start_ips,3,7,0); 
+		int2lcdyx(numOfForvardBps,0,3,0);
+		int2lcdyx(num_necc,0,5,0); 
 
-		int2lcdyx(kb_cnt_1lev,1,10,0);
-		int2lcdyx(kb_cnt_2lev,2,10,0);
-		int2lcdyx(kb_full_ver,3,10,0);
+		int2lcdyx(numOfForvardBps_minCnt,3,15,0);
+		int2lcdyx(numOfForvardBps_hourCnt,3,12,0);
 
+		int2lcdyx(bps[0]._flags_tu,0,19,0);
+		int2lcdyx(bps[1]._flags_tu,1,19,0);
+		int2lcdyx(bps[2]._flags_tu,2,19,0);
+		int2lcdyx(bps[3]._flags_tu,3,19,0);
 
-		int2lcdyx(ips_bat_av_vzvod,0,10,0);
-		int2lcdyx(ips_bat_av_stat,0,7,0);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
 		}  
 
 	else if(a_ind . s_i==3)
@@ -16243,12 +16241,12 @@ else if(a_ind . i==iBps_list)
 }							    
 
 
-#line 11037 "main.c"
+#line 11029 "main.c"
 
 
 
 
-#line 11060 "main.c"
+#line 11052 "main.c"
 
 
 
@@ -16439,8 +16437,13 @@ else if(a_ind . i==iDeb)
 			}
 	     
 			
+		} 
+
+	 else if(a_ind . s_i==5)
+	 	{
+		if(but==126)	numOfForvardBps_init();
 		}
-		
+				
 	 else if(a_ind . s_i==5)
 	 	{
 		if(but==126)
@@ -16566,7 +16569,7 @@ else if(a_ind . i==iMn)
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV)))
 			{
-#line 11385 "main.c"
+#line 11382 "main.c"
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV+1)))
 			{
@@ -16580,9 +16583,9 @@ else if(a_ind . i==iMn)
 		     ret(1000);
 			}
 
-#line 11405 "main.c"
+#line 11402 "main.c"
 
-#line 11413 "main.c"
+#line 11410 "main.c"
 
 		else if(a_ind . s_i==(4+NUMBAT+NUMIST+2)+(NUMAVT!=0))
 			{
@@ -18503,11 +18506,11 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==184) 
 				{
 				tree_down(0,0);
-#line 13352 "main.c"
+#line 13349 "main.c"
 				tree_up(iSet_220_IPS_TERMOKOMPENSAT,0,0,0);
 
 
-#line 13361 "main.c"
+#line 13358 "main.c"
 
 				ret(1000);
 				}
@@ -18525,7 +18528,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==873) 
 				{
 				tree_down(0,0);
-#line 13409 "main.c"
+#line 13406 "main.c"
 				if(AUSW_MAIN==22033)
 					{
 					tree_up(iK_220_IPS_TERMOKOMPENSAT,0,0,0);
@@ -18602,7 +18605,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 			if(tempU==999) 
 				{
 				tree_down(0,0);
-#line 13515 "main.c"
+#line 13512 "main.c"
 				tree_up(iTst_220_IPS_TERMOKOMPENSAT,0,0,0);
 
 
@@ -19206,7 +19209,7 @@ else if(a_ind . i==iSet)
 	     {
 	     if(but==254)
 	          {
-#line 14130 "main.c"
+#line 14127 "main.c"
 	          ret(1000);
 	          default_temp=10;
 	          }
@@ -19228,7 +19231,7 @@ else if(a_ind . i==iSet)
 		{
 		if(but==254)
 		     {
-#line 14176 "main.c"
+#line 14173 "main.c"
 
 
 
@@ -21139,14 +21142,25 @@ else if(a_ind . i==iSet_6U)
                a_ind . s_i=35;
                
                }
-		
-		gran_char(&a_ind . s_i,0,41);
+
+          if(a_ind . s_i==41)
+               {
+               a_ind . s_i=42;
+               
+               }		
+		gran_char(&a_ind . s_i,0,43);
 		}
 	else if(but==253)
 		{
 		a_ind . s_i--;
 		if(a_ind . s_i==7)a_ind . s_i=6;
 		if(a_ind . s_i==11)a_ind . s_i=8;
+
+		if(a_ind . s_i==41)
+               {
+               a_ind . s_i=40;
+               a_ind . i_s=40;
+               }
         if(a_ind . s_i==34)
                {
                a_ind . s_i=33;
@@ -21157,11 +21171,11 @@ else if(a_ind . i==iSet_6U)
                a_ind . s_i=31;
 		       a_ind . i_s=31;
                } 
-		gran_char(&a_ind . s_i,0,41);
+		gran_char(&a_ind . s_i,0,43);
 		}
 	else if(but==123)
 		{
-		a_ind . s_i=40;
+		a_ind . s_i=42;
 		}
 		
 	else if(a_ind . s_i==0)
@@ -21530,7 +21544,18 @@ else if(a_ind . i==iSet_6U)
 				}
 		     }
 		}
-     else if((a_ind . s_i==40) || (a_ind . s_i==3))
+  	else if(a_ind . s_i==40)
+	     {
+	     if(but==239)FORVARDBPSCHHOUR++;
+	     else if(but==111)FORVARDBPSCHHOUR+=2;
+	     else if(but==247)FORVARDBPSCHHOUR--;
+	     else if(but==119)FORVARDBPSCHHOUR-=2;
+	     gran(&FORVARDBPSCHHOUR,0,500);
+	     lc640_write_int(0x10+100+178,FORVARDBPSCHHOUR);
+	     numOfForvardBps_init();
+		speed=1;
+	     }
+     else if((a_ind . s_i==42) || (a_ind . s_i==3))
 		{
 		if(but==254)
 		     {
@@ -21539,7 +21564,7 @@ else if(a_ind . i==iSet_6U)
 		     }
 		}
 				
-	else if(a_ind . s_i==41)
+	else if(a_ind . s_i==43)
 		{
 		if(but==254)
 		     {		
@@ -22786,15 +22811,17 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
           if(a_ind . s_i==33)
                {
                a_ind . s_i=34;
-               
                }
 		if(a_ind . s_i==36)a_ind . i_s=35;
           if(a_ind . s_i==37)
                {
                a_ind . s_i=38;
-               
-               }		
-		gran_char(&a_ind . s_i,0,40);
+               }
+          if(a_ind . s_i==40)
+               {
+               a_ind . s_i=41;
+               }					
+		gran_char(&a_ind . s_i,0,42);
 		}
 	else if(but==253)
 		{
@@ -22812,11 +22839,17 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 			a_ind . i_s=35;
                
                }
-		gran_char(&a_ind . s_i,0,40);
+          if(a_ind . s_i==40)
+               {
+               a_ind . s_i=39;
+			a_ind . i_s=38;
+               }
+
+		gran_char(&a_ind . s_i,0,42);
 		}
 	else if(but==123)
 		{
-		a_ind . s_i=38;
+		a_ind . s_i=40;
 		}
 
 	else if(but==103)
@@ -23236,8 +23269,19 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 		     ret(1000);
 		     }
 		} 
+  	else if(a_ind . s_i==39)
+	     {
+	     if(but==239)FORVARDBPSCHHOUR++;
+	     else if(but==111)FORVARDBPSCHHOUR+=2;
+	     else if(but==247)FORVARDBPSCHHOUR--;
+	     else if(but==119)FORVARDBPSCHHOUR-=2;
+	     gran(&FORVARDBPSCHHOUR,0,500);
+	     lc640_write_int(0x10+100+178,FORVARDBPSCHHOUR);
+	     numOfForvardBps_init();
+		speed=1;
+	     }
 
-     else if((a_ind . s_i==39) || (a_ind . s_i==3))
+     else if((a_ind . s_i==41) || (a_ind . s_i==3))
 		{
 		if(but==254)
 		     {
@@ -23246,7 +23290,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 		     }
 		}
 				
-	else if(a_ind . s_i==40)
+	else if(a_ind . s_i==42)
 		{
 		if(but==254)
 		     {		
@@ -24201,6 +24245,7 @@ else if(a_ind . i==iStr)
 	     	NUMIST++;
 	     	gran(&NUMIST,0,12);
 	     	lc640_write_int(0x10+100+36,NUMIST);
+			numOfForvardBps_init();
 	     	}
 	     
 	     else if((but==247)||(but==119))
@@ -24208,6 +24253,7 @@ else if(a_ind . i==iStr)
 	     	NUMIST--;
 	     	gran(&NUMIST,0,12);
 	     	lc640_write_int(0x10+100+36,NUMIST);
+			numOfForvardBps_init();
 	     	}
           }	
  
@@ -24286,6 +24332,7 @@ else if(a_ind . i==iStr_RSTKM)
 	     	NUMIST++;
 	     	gran(&NUMIST,0,12);
 	     	lc640_write_int(0x10+100+36,NUMIST);
+			numOfForvardBps_init();
 	     	}
 	     
 	     else if((but==247)||(but==119))
@@ -24293,6 +24340,7 @@ else if(a_ind . i==iStr_RSTKM)
 	     	NUMIST--;
 	     	gran(&NUMIST,0,12);
 	     	lc640_write_int(0x10+100+36,NUMIST);
+			numOfForvardBps_init();
 	     	}
           }	
 
@@ -24366,6 +24414,7 @@ else if(a_ind . i==iStr_3U)
 	     	NUMIST++;
 	     	gran(&NUMIST,0,2);
 	     	lc640_write_int(0x10+100+36,NUMIST);
+			numOfForvardBps_init();
 	     	}
 	     
 	     else if((but==247)||(but==119))
@@ -24373,6 +24422,7 @@ else if(a_ind . i==iStr_3U)
 	     	NUMIST--;
 	     	gran(&NUMIST,0,2);
 	     	lc640_write_int(0x10+100+36,NUMIST);
+			numOfForvardBps_init();
 	     	}
           }	
 
@@ -24446,6 +24496,7 @@ else if(a_ind . i==iStr_GLONASS)
 	     	NUMIST++;
 	     	gran(&NUMIST,0,4);
 	     	lc640_write_int(0x10+100+36,NUMIST);
+			numOfForvardBps_init();
 	     	}
 	     
 	     else if((but==247)||(but==119))
@@ -24453,6 +24504,7 @@ else if(a_ind . i==iStr_GLONASS)
 	     	NUMIST--;
 	     	gran(&NUMIST,0,4);
 	     	lc640_write_int(0x10+100+36,NUMIST);
+			numOfForvardBps_init();
 	     	}
           }	
 
@@ -24522,6 +24574,7 @@ else if(a_ind . i==iStr_KONTUR)
 	     	NUMIST++;
 	     	gran(&NUMIST,0,12);
 	     	lc640_write_int(0x10+100+36,NUMIST);
+			numOfForvardBps_init();
 	     	}
 	     
 	     else if((but==247)||(but==119))
@@ -24529,6 +24582,7 @@ else if(a_ind . i==iStr_KONTUR)
 	     	NUMIST--;
 	     	gran(&NUMIST,0,12);
 	     	lc640_write_int(0x10+100+36,NUMIST);
+			numOfForvardBps_init();
 	     	}
           }	
           
@@ -24565,6 +24619,7 @@ else if(a_ind . i==iStr_6U)
 	     	NUMIST++;
 	     	gran(&NUMIST,0,12);
 	     	lc640_write_int(0x10+100+36,NUMIST);
+			numOfForvardBps_init();
 	     	}
 	     
 	     else if((but==247)||(but==119))
@@ -24572,6 +24627,7 @@ else if(a_ind . i==iStr_6U)
 	     	NUMIST--;
 	     	gran(&NUMIST,0,12);
 	     	lc640_write_int(0x10+100+36,NUMIST);
+			numOfForvardBps_init();
 	     	}
           }	
           
@@ -24692,6 +24748,7 @@ else if(a_ind . i==iStr_220_IPS_TERMOKOMPENSAT)
 	     	NUMIST++;
 	     	gran(&NUMIST,0,12);
 	     	lc640_write_int(0x10+100+36,NUMIST);
+			numOfForvardBps_init();
 	     	}
 	     
 	     else if((but==247)||(but==119))
@@ -24699,6 +24756,7 @@ else if(a_ind . i==iStr_220_IPS_TERMOKOMPENSAT)
 	     	NUMIST--;
 	     	gran(&NUMIST,0,12);
 	     	lc640_write_int(0x10+100+36,NUMIST);
+			numOfForvardBps_init();
 	     	}
           }	
           
@@ -28514,7 +28572,7 @@ else if(a_ind . i==iK_inv)
 			}
 		}			
 	}
-#line 23608 "main.c"
+#line 23660 "main.c"
 
 else if(a_ind . i==iK_byps)
 	{
@@ -30841,7 +30899,7 @@ else if(a_ind . i==iTst_220_IPS_TERMOKOMPENSAT)
 		}
 	else if((a_ind . s_i>=8)&&(a_ind . s_i<(8+NUMIST))&&(NUMIST)&&((but==254)))	
 		{
-		tree_up(iTst_bps,0,0,a_ind . s_i-6);
+		tree_up(iTst_bps,0,0,a_ind . s_i-8);
 		mcp2515_transmit(a_ind . s_i1,a_ind . s_i1,0x16,0x63,0,0,0,0);
 		tst_state[5]=tst1;
 		tst_state[6]=tstOFF;
@@ -31855,6 +31913,13 @@ if(++t0cnt>=10)
 		if(main_1Hz_cnt<10000) main_1Hz_cnt++;
 		if(bFL)bFL=0;
 		else bFL=1;
+
+		t0cntMin++;
+		if(t0cntMin>=60)
+			{
+			t0cntMin=0;
+			b1min=1;
+			}
 	     }
      }
 
@@ -32020,9 +32085,9 @@ lcd_clear();
 rtc_init();
 
 a_ind . i=iMn;
-#line 27132 "main.c"
+#line 27191 "main.c"
 a_ind . i=iMn_220_IPS_TERMOKOMPENSAT;
-#line 27140 "main.c"
+#line 27199 "main.c"
 
 
 
@@ -32062,7 +32127,7 @@ adc_init();
 
 lc640_write_int(100,134);
 
-#line 27185 "main.c"
+#line 27244 "main.c"
 
 
 
@@ -32440,8 +32505,8 @@ while (1)
 			{
 			if(!tbatdisable_cmnd)tbatdisable_cmnd=20;
 			}
-
 		
+		numOfForvardBps_hndl();			
 		}
 	}
 }
