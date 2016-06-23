@@ -1150,7 +1150,7 @@ char slave_num;
 //can_debug_plazma[1][2]++;
 can_rotor[1]++;
 
-if((RXBUFF[0]==sub_ind1)&&(RXBUFF[1]==PUTID)&&(RXBUFF[2]==0xdd)&&(RXBUFF[3]==0xdd)&&(sub_ind==6))
+if((RXBUFF[0]==sub_ind1)&&(RXBUFF[1]==PUTID)&&(RXBUFF[2]==0xdd)&&(RXBUFF[3]==0xdd)/*&&(sub_ind==6)*/)
 	{
 	mess_send(MESS2IND_HNDL,PARAM_U_AVT_GOOD,0,10);
 	can_reset_cnt=0;

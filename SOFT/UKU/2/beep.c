@@ -2,6 +2,7 @@
 #include "main.h"
 #include "LPC17XX.H"
 #include "avar_hndl.h"
+#include "mess.h"
 
 unsigned long beep_stat_temp,beep_stat;
 char beep_stat_cnt;
@@ -71,7 +72,12 @@ if((avar_ind_stat)||(ips_bat_av_stat))beep_init(0x33333333,'R');
 
 else if ( (((bat[0]._Ub<(USIGN*10))&&(BAT_IS_ON[0]==bisON))||((bat[1]._Ub<(USIGN*10))&&(BAT_IS_ON[1]==bisON)))) 
 	{
-	if(!bSILENT)beep_init(0x01010101,'R');
+	if(!bSILENT)
+		{
+		beep_init(0x01010101,'R');
+		mess_send(MESS2RELE_HNDL,PARAM_RELE_BAT_IS_DISCHARGED,1,5);
+		}
+
 	//bU_BAT2REL_AV_BAT=1;
 	}
 

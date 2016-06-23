@@ -707,426 +707,426 @@
 000588  f7fffffe          BL       lc640_read_int
 00058c  49f7              LDR      r1,|L1.2412|
 00058e  8008              STRH     r0,[r1,#0]
-;;;129    
-;;;130    BAT_IS_ON[0]=(enum_bat_is_on)lc640_read_int(EE_BAT1_IS_ON);
-000590  f44f70d0          MOV      r0,#0x1a0
+;;;129    U_OUT_KONTR_MAX=lc640_read_int(EE_U_OUT_KONTR_MAX);
+000590  f44f7095          MOV      r0,#0x12a
 000594  f7fffffe          BL       lc640_read_int
-000598  4df5              LDR      r5,|L1.2416|
-00059a  7028              STRB     r0,[r5,#0]
-;;;131    BAT_IS_ON[1]=(enum_bat_is_on)lc640_read_int(EE_BAT2_IS_ON);
-00059c  f44f70df          MOV      r0,#0x1be
+000598  49f5              LDR      r1,|L1.2416|
+00059a  8008              STRH     r0,[r1,#0]
+;;;130    U_OUT_KONTR_MIN=lc640_read_int(EE_U_OUT_KONTR_MIN);
+00059c  f44f7096          MOV      r0,#0x12c
 0005a0  f7fffffe          BL       lc640_read_int
-0005a4  b2c0              UXTB     r0,r0
-0005a6  7068              STRB     r0,[r5,#1]
-;;;132    NUMBAT=0;
-0005a8  49f2              LDR      r1,|L1.2420|
-0005aa  f04f0400          MOV      r4,#0
-0005ae  800c              STRH     r4,[r1,#0]
-;;;133    if(BAT_IS_ON[0]==bisON)NUMBAT+=1;
-0005b0  782a              LDRB     r2,[r5,#0]  ; BAT_IS_ON
-0005b2  2a55              CMP      r2,#0x55
-0005b4  d102              BNE      |L1.1468|
-0005b6  f1040201          ADD      r2,r4,#1
-0005ba  800a              STRH     r2,[r1,#0]
-                  |L1.1468|
-;;;134    if(BAT_IS_ON[1]==bisON)NUMBAT+=1;
-0005bc  2855              CMP      r0,#0x55
-0005be  d103              BNE      |L1.1480|
-0005c0  8808              LDRH     r0,[r1,#0]  ; NUMBAT
-0005c2  f1000001          ADD      r0,r0,#1
-0005c6  8008              STRH     r0,[r1,#0]
-                  |L1.1480|
-;;;135    
-;;;136    BAT_DAY_OF_ON[0]=lc640_read_int(EE_BAT1_DAY_OF_ON);
-0005c8  f44f70d1          MOV      r0,#0x1a2
-0005cc  f7fffffe          BL       lc640_read_int
-0005d0  4de9              LDR      r5,|L1.2424|
-0005d2  8028              STRH     r0,[r5,#0]
-;;;137    BAT_MONTH_OF_ON[0]=lc640_read_int(EE_BAT1_MONTH_OF_ON);
-0005d4  f44f70d2          MOV      r0,#0x1a4
-0005d8  f7fffffe          BL       lc640_read_int
-0005dc  4ee7              LDR      r6,|L1.2428|
-0005de  8030              STRH     r0,[r6,#0]
-;;;138    BAT_YEAR_OF_ON[0]=lc640_read_int(EE_BAT1_YEAR_OF_ON);
-0005e0  f44f70d3          MOV      r0,#0x1a6
-0005e4  f7fffffe          BL       lc640_read_int
-0005e8  4fe5              LDR      r7,|L1.2432|
-0005ea  8038              STRH     r0,[r7,#0]
-;;;139    BAT_C_REAL[0]=lc640_read_int(EE_BAT1_C_REAL);
-0005ec  f44f70d4          MOV      r0,#0x1a8
-0005f0  f7fffffe          BL       lc640_read_int
-0005f4  f8df838c          LDR      r8,|L1.2436|
-0005f8  f8a80000          STRH     r0,[r8,#0]
-;;;140    BAT_C_NOM[0]=lc640_read_int(EE_BAT1_C_NOM);
-0005fc  f44f70d8          MOV      r0,#0x1b0
-000600  f7fffffe          BL       lc640_read_int
-000604  f8df9380          LDR      r9,|L1.2440|
-000608  f8a90000          STRH     r0,[r9,#0]
-;;;141    BAT_RESURS[0]=lc640_read_int(EE_BAT1_RESURS);
-00060c  f44f70d5          MOV      r0,#0x1aa
-000610  f7fffffe          BL       lc640_read_int
-000614  f8dfa374          LDR      r10,|L1.2444|
-000618  f8aa0000          STRH     r0,[r10,#0]
-;;;142    
-;;;143    
-;;;144    BAT_DAY_OF_ON[1]=lc640_read_int(EE_BAT2_DAY_OF_ON);
-00061c  f44f70e0          MOV      r0,#0x1c0
+0005a4  49f3              LDR      r1,|L1.2420|
+0005a6  8008              STRH     r0,[r1,#0]
+;;;131    U_OUT_KONTR_DELAY=lc640_read_int(EE_U_OUT_KONTR_DELAY);
+0005a8  f44f7097          MOV      r0,#0x12e
+0005ac  f7fffffe          BL       lc640_read_int
+0005b0  49f1              LDR      r1,|L1.2424|
+0005b2  8008              STRH     r0,[r1,#0]
+;;;132    DOP_RELE_FUNC=lc640_read_int(EE_DOP_RELE_FUNC);
+0005b4  f44f7098          MOV      r0,#0x130
+0005b8  f7fffffe          BL       lc640_read_int
+0005bc  49ef              LDR      r1,|L1.2428|
+0005be  8008              STRH     r0,[r1,#0]
+;;;133    
+;;;134    BAT_IS_ON[0]=(enum_bat_is_on)lc640_read_int(EE_BAT1_IS_ON);
+0005c0  f44f70d0          MOV      r0,#0x1a0
+0005c4  f7fffffe          BL       lc640_read_int
+0005c8  4ded              LDR      r5,|L1.2432|
+0005ca  7028              STRB     r0,[r5,#0]
+;;;135    BAT_IS_ON[1]=(enum_bat_is_on)lc640_read_int(EE_BAT2_IS_ON);
+0005cc  f44f70df          MOV      r0,#0x1be
+0005d0  f7fffffe          BL       lc640_read_int
+0005d4  b2c0              UXTB     r0,r0
+0005d6  7068              STRB     r0,[r5,#1]
+;;;136    NUMBAT=0;
+0005d8  49ea              LDR      r1,|L1.2436|
+0005da  f04f0400          MOV      r4,#0
+0005de  800c              STRH     r4,[r1,#0]
+;;;137    if(BAT_IS_ON[0]==bisON)NUMBAT+=1;
+0005e0  782a              LDRB     r2,[r5,#0]  ; BAT_IS_ON
+0005e2  2a55              CMP      r2,#0x55
+0005e4  d102              BNE      |L1.1516|
+0005e6  f1040201          ADD      r2,r4,#1
+0005ea  800a              STRH     r2,[r1,#0]
+                  |L1.1516|
+;;;138    if(BAT_IS_ON[1]==bisON)NUMBAT+=1;
+0005ec  2855              CMP      r0,#0x55
+0005ee  d103              BNE      |L1.1528|
+0005f0  8808              LDRH     r0,[r1,#0]  ; NUMBAT
+0005f2  f1000001          ADD      r0,r0,#1
+0005f6  8008              STRH     r0,[r1,#0]
+                  |L1.1528|
+;;;139    
+;;;140    BAT_DAY_OF_ON[0]=lc640_read_int(EE_BAT1_DAY_OF_ON);
+0005f8  f44f70d1          MOV      r0,#0x1a2
+0005fc  f7fffffe          BL       lc640_read_int
+000600  4de1              LDR      r5,|L1.2440|
+000602  8028              STRH     r0,[r5,#0]
+;;;141    BAT_MONTH_OF_ON[0]=lc640_read_int(EE_BAT1_MONTH_OF_ON);
+000604  f44f70d2          MOV      r0,#0x1a4
+000608  f7fffffe          BL       lc640_read_int
+00060c  4edf              LDR      r6,|L1.2444|
+00060e  8030              STRH     r0,[r6,#0]
+;;;142    BAT_YEAR_OF_ON[0]=lc640_read_int(EE_BAT1_YEAR_OF_ON);
+000610  f44f70d3          MOV      r0,#0x1a6
+000614  f7fffffe          BL       lc640_read_int
+000618  4fdd              LDR      r7,|L1.2448|
+00061a  8038              STRH     r0,[r7,#0]
+;;;143    BAT_C_REAL[0]=lc640_read_int(EE_BAT1_C_REAL);
+00061c  f44f70d4          MOV      r0,#0x1a8
 000620  f7fffffe          BL       lc640_read_int
-000624  8068              STRH     r0,[r5,#2]
-;;;145    BAT_MONTH_OF_ON[1]=lc640_read_int(EE_BAT2_MONTH_OF_ON);
-000626  f44f70e1          MOV      r0,#0x1c2
-00062a  f7fffffe          BL       lc640_read_int
-00062e  8070              STRH     r0,[r6,#2]
-;;;146    BAT_YEAR_OF_ON[1]=lc640_read_int(EE_BAT2_YEAR_OF_ON);
-000630  f44f70e2          MOV      r0,#0x1c4
-000634  f7fffffe          BL       lc640_read_int
-000638  8078              STRH     r0,[r7,#2]
-;;;147    BAT_C_REAL[1]=lc640_read_int(EE_BAT2_C_REAL);
-00063a  f44f70e3          MOV      r0,#0x1c6
-00063e  f7fffffe          BL       lc640_read_int
-000642  f8a80002          STRH     r0,[r8,#2]
-;;;148    BAT_C_NOM[1]=lc640_read_int(EE_BAT2_C_NOM);
-000646  f44f70e8          MOV      r0,#0x1d0
-00064a  f7fffffe          BL       lc640_read_int
-00064e  f8a90002          STRH     r0,[r9,#2]
-;;;149    BAT_RESURS[1]=lc640_read_int(EE_BAT2_RESURS);
-000652  f44f70e4          MOV      r0,#0x1c8
-000656  f7fffffe          BL       lc640_read_int
-00065a  f8aa0002          STRH     r0,[r10,#2]
-;;;150    
-;;;151    
-;;;152    BAT_LINK=lc640_read_int(EE_BAT_LINK);
-00065e  f44f7046          MOV      r0,#0x318
-000662  f7fffffe          BL       lc640_read_int
-000666  49ca              LDR      r1,|L1.2448|
-000668  8008              STRH     r0,[r1,#0]
-;;;153    
-;;;154    APV_ON1=(enum_apv_on)lc640_read_int(EE_APV_ON1);
-00066a  20a0              MOVS     r0,#0xa0
-00066c  f7fffffe          BL       lc640_read_int
-000670  49c8              LDR      r1,|L1.2452|
-000672  7008              STRB     r0,[r1,#0]
-;;;155    APV_ON2=(enum_apv_on)lc640_read_int(EE_APV_ON2);
-000674  20a2              MOVS     r0,#0xa2
-000676  f7fffffe          BL       lc640_read_int
-00067a  49c7              LDR      r1,|L1.2456|
-00067c  7008              STRB     r0,[r1,#0]
-;;;156    APV_ON2_TIME=lc640_read_int(EE_APV_ON2_TIME);
-00067e  20a4              MOVS     r0,#0xa4
-000680  f7fffffe          BL       lc640_read_int
-000684  49c5              LDR      r1,|L1.2460|
-000686  8008              STRH     r0,[r1,#0]
-;;;157    VZ_HR=lc640_read_int(EE_VZ_HR);
-000688  20c0              MOVS     r0,#0xc0
-00068a  f7fffffe          BL       lc640_read_int
-00068e  49c4              LDR      r1,|L1.2464|
-000690  8008              STRH     r0,[r1,#0]
-;;;158    TBAT=lc640_read_int(EE_TBAT);
-000692  20c2              MOVS     r0,#0xc2
-000694  f7fffffe          BL       lc640_read_int
-000698  49c2              LDR      r1,|L1.2468|
-00069a  8008              STRH     r0,[r1,#0]
-;;;159    
-;;;160    AUSW_MAIN=lc640_read_int(EE_AUSW_MAIN);
-00069c  f44f709e          MOV      r0,#0x13c
-0006a0  f7fffffe          BL       lc640_read_int
-0006a4  49c0              LDR      r1,|L1.2472|
-0006a6  8008              STRH     r0,[r1,#0]
-;;;161    	AUSW_MAIN_NUMBER=lc640_read_long(EE_AUSW_MAIN_NUMBER);
-0006a8  f44f709f          MOV      r0,#0x13e
-0006ac  f7fffffe          BL       lc640_read_long
-0006b0  49be              LDR      r1,|L1.2476|
-0006b2  6008              STR      r0,[r1,#0]  ; AUSW_MAIN_NUMBER
-;;;162    	AUSW_DAY=lc640_read_int(EE_AUSW_DAY);
-0006b4  f44f70a3          MOV      r0,#0x146
-0006b8  f7fffffe          BL       lc640_read_int
-0006bc  49bc              LDR      r1,|L1.2480|
-0006be  8008              STRH     r0,[r1,#0]
-;;;163    	AUSW_MONTH=lc640_read_int(EE_AUSW_MONTH);
-0006c0  f44f70a4          MOV      r0,#0x148
+000624  f8df836c          LDR      r8,|L1.2452|
+000628  f8a80000          STRH     r0,[r8,#0]
+;;;144    BAT_C_NOM[0]=lc640_read_int(EE_BAT1_C_NOM);
+00062c  f44f70d8          MOV      r0,#0x1b0
+000630  f7fffffe          BL       lc640_read_int
+000634  f8df9360          LDR      r9,|L1.2456|
+000638  f8a90000          STRH     r0,[r9,#0]
+;;;145    BAT_RESURS[0]=lc640_read_int(EE_BAT1_RESURS);
+00063c  f44f70d5          MOV      r0,#0x1aa
+000640  f7fffffe          BL       lc640_read_int
+000644  f8dfa354          LDR      r10,|L1.2460|
+000648  f8aa0000          STRH     r0,[r10,#0]
+;;;146    
+;;;147    
+;;;148    BAT_DAY_OF_ON[1]=lc640_read_int(EE_BAT2_DAY_OF_ON);
+00064c  f44f70e0          MOV      r0,#0x1c0
+000650  f7fffffe          BL       lc640_read_int
+000654  8068              STRH     r0,[r5,#2]
+;;;149    BAT_MONTH_OF_ON[1]=lc640_read_int(EE_BAT2_MONTH_OF_ON);
+000656  f44f70e1          MOV      r0,#0x1c2
+00065a  f7fffffe          BL       lc640_read_int
+00065e  8070              STRH     r0,[r6,#2]
+;;;150    BAT_YEAR_OF_ON[1]=lc640_read_int(EE_BAT2_YEAR_OF_ON);
+000660  f44f70e2          MOV      r0,#0x1c4
+000664  f7fffffe          BL       lc640_read_int
+000668  8078              STRH     r0,[r7,#2]
+;;;151    BAT_C_REAL[1]=lc640_read_int(EE_BAT2_C_REAL);
+00066a  f44f70e3          MOV      r0,#0x1c6
+00066e  f7fffffe          BL       lc640_read_int
+000672  f8a80002          STRH     r0,[r8,#2]
+;;;152    BAT_C_NOM[1]=lc640_read_int(EE_BAT2_C_NOM);
+000676  f44f70e8          MOV      r0,#0x1d0
+00067a  f7fffffe          BL       lc640_read_int
+00067e  f8a90002          STRH     r0,[r9,#2]
+;;;153    BAT_RESURS[1]=lc640_read_int(EE_BAT2_RESURS);
+000682  f44f70e4          MOV      r0,#0x1c8
+000686  f7fffffe          BL       lc640_read_int
+00068a  f8aa0002          STRH     r0,[r10,#2]
+;;;154    
+;;;155    
+;;;156    BAT_LINK=lc640_read_int(EE_BAT_LINK);
+00068e  f44f7046          MOV      r0,#0x318
+000692  f7fffffe          BL       lc640_read_int
+000696  49c2              LDR      r1,|L1.2464|
+000698  8008              STRH     r0,[r1,#0]
+;;;157    
+;;;158    APV_ON1=(enum_apv_on)lc640_read_int(EE_APV_ON1);
+00069a  20a0              MOVS     r0,#0xa0
+00069c  f7fffffe          BL       lc640_read_int
+0006a0  49c0              LDR      r1,|L1.2468|
+0006a2  7008              STRB     r0,[r1,#0]
+;;;159    APV_ON2=(enum_apv_on)lc640_read_int(EE_APV_ON2);
+0006a4  20a2              MOVS     r0,#0xa2
+0006a6  f7fffffe          BL       lc640_read_int
+0006aa  49bf              LDR      r1,|L1.2472|
+0006ac  7008              STRB     r0,[r1,#0]
+;;;160    APV_ON2_TIME=lc640_read_int(EE_APV_ON2_TIME);
+0006ae  20a4              MOVS     r0,#0xa4
+0006b0  f7fffffe          BL       lc640_read_int
+0006b4  49bd              LDR      r1,|L1.2476|
+0006b6  8008              STRH     r0,[r1,#0]
+;;;161    VZ_HR=lc640_read_int(EE_VZ_HR);
+0006b8  20c0              MOVS     r0,#0xc0
+0006ba  f7fffffe          BL       lc640_read_int
+0006be  49bc              LDR      r1,|L1.2480|
+0006c0  8008              STRH     r0,[r1,#0]
+;;;162    TBAT=lc640_read_int(EE_TBAT);
+0006c2  20c2              MOVS     r0,#0xc2
 0006c4  f7fffffe          BL       lc640_read_int
 0006c8  49ba              LDR      r1,|L1.2484|
 0006ca  8008              STRH     r0,[r1,#0]
-;;;164    	AUSW_YEAR=lc640_read_int(EE_AUSW_YEAR);
-0006cc  f44f70a5          MOV      r0,#0x14a
+;;;163    
+;;;164    AUSW_MAIN=lc640_read_int(EE_AUSW_MAIN);
+0006cc  f44f709e          MOV      r0,#0x13c
 0006d0  f7fffffe          BL       lc640_read_int
 0006d4  49b8              LDR      r1,|L1.2488|
 0006d6  8008              STRH     r0,[r1,#0]
-;;;165    	AUSW_BPS1_NUMBER=lc640_read_long(EE_AUSW_BPS1_NUMBER);
-0006d8  f44f70a6          MOV      r0,#0x14c
+;;;165    	AUSW_MAIN_NUMBER=lc640_read_long(EE_AUSW_MAIN_NUMBER);
+0006d8  f44f709f          MOV      r0,#0x13e
 0006dc  f7fffffe          BL       lc640_read_long
 0006e0  49b6              LDR      r1,|L1.2492|
-0006e2  6008              STR      r0,[r1,#0]  ; AUSW_BPS1_NUMBER
-;;;166    	AUSW_BPS2_NUMBER=lc640_read_long(EE_AUSW_BPS2_NUMBER);
-0006e4  f44f70a7          MOV      r0,#0x14e
-0006e8  f7fffffe          BL       lc640_read_long
+0006e2  6008              STR      r0,[r1,#0]  ; AUSW_MAIN_NUMBER
+;;;166    	AUSW_DAY=lc640_read_int(EE_AUSW_DAY);
+0006e4  f44f70a3          MOV      r0,#0x146
+0006e8  f7fffffe          BL       lc640_read_int
 0006ec  49b4              LDR      r1,|L1.2496|
-0006ee  6008              STR      r0,[r1,#0]  ; AUSW_BPS2_NUMBER
-;;;167    	AUSW_RS232=lc640_read_int(EE_AUSW_RS232);
-0006f0  f44f70a8          MOV      r0,#0x150
+0006ee  8008              STRH     r0,[r1,#0]
+;;;167    	AUSW_MONTH=lc640_read_int(EE_AUSW_MONTH);
+0006f0  f44f70a4          MOV      r0,#0x148
 0006f4  f7fffffe          BL       lc640_read_int
 0006f8  49b2              LDR      r1,|L1.2500|
 0006fa  8008              STRH     r0,[r1,#0]
-;;;168    	AUSW_PDH=lc640_read_int(EE_AUSW_PDH);
-0006fc  f44f70a9          MOV      r0,#0x152
+;;;168    	AUSW_YEAR=lc640_read_int(EE_AUSW_YEAR);
+0006fc  f44f70a5          MOV      r0,#0x14a
 000700  f7fffffe          BL       lc640_read_int
 000704  49b0              LDR      r1,|L1.2504|
 000706  8008              STRH     r0,[r1,#0]
-;;;169    	AUSW_SDH=lc640_read_int(EE_AUSW_SDH);
-000708  f44f70aa          MOV      r0,#0x154
-00070c  f7fffffe          BL       lc640_read_int
+;;;169    	AUSW_BPS1_NUMBER=lc640_read_long(EE_AUSW_BPS1_NUMBER);
+000708  f44f70a6          MOV      r0,#0x14c
+00070c  f7fffffe          BL       lc640_read_long
 000710  49ae              LDR      r1,|L1.2508|
-000712  8008              STRH     r0,[r1,#0]
-;;;170    	AUSW_ETH=lc640_read_int(EE_AUSW_ETH);
-000714  f44f70ab          MOV      r0,#0x156
-000718  f7fffffe          BL       lc640_read_int
+000712  6008              STR      r0,[r1,#0]  ; AUSW_BPS1_NUMBER
+;;;170    	AUSW_BPS2_NUMBER=lc640_read_long(EE_AUSW_BPS2_NUMBER);
+000714  f44f70a7          MOV      r0,#0x14e
+000718  f7fffffe          BL       lc640_read_long
 00071c  49ac              LDR      r1,|L1.2512|
-00071e  8008              STRH     r0,[r1,#0]
-;;;171    	AUSW_UKU=lc640_read_int(EE_AUSW_UKU);
-000720  f44f70a0          MOV      r0,#0x140
+00071e  6008              STR      r0,[r1,#0]  ; AUSW_BPS2_NUMBER
+;;;171    	AUSW_RS232=lc640_read_int(EE_AUSW_RS232);
+000720  f44f70a8          MOV      r0,#0x150
 000724  f7fffffe          BL       lc640_read_int
 000728  49aa              LDR      r1,|L1.2516|
 00072a  8008              STRH     r0,[r1,#0]
-;;;172    	AUSW_UKU_SUB=lc640_read_int(EE_AUSW_UKU_SUB);
-00072c  f44f70a1          MOV      r0,#0x142
+;;;172    	AUSW_PDH=lc640_read_int(EE_AUSW_PDH);
+00072c  f44f70a9          MOV      r0,#0x152
 000730  f7fffffe          BL       lc640_read_int
 000734  49a8              LDR      r1,|L1.2520|
 000736  8008              STRH     r0,[r1,#0]
-;;;173    	AUSW_UKU_NUMBER=lc640_read_long(EE_AUSW_UKU_NUMBER);			
-000738  f44f70a2          MOV      r0,#0x144
-00073c  f7fffffe          BL       lc640_read_long
+;;;173    	AUSW_SDH=lc640_read_int(EE_AUSW_SDH);
+000738  f44f70aa          MOV      r0,#0x154
+00073c  f7fffffe          BL       lc640_read_int
 000740  49a6              LDR      r1,|L1.2524|
-000742  6008              STR      r0,[r1,#0]  ; AUSW_UKU_NUMBER
-;;;174    
-;;;175    
-;;;176    TMAX_EXT_EN[0]=lc640_read_int(EE_TMAX_EXT_EN0);
-000744  f44f7001          MOV      r0,#0x204
+000742  8008              STRH     r0,[r1,#0]
+;;;174    	AUSW_ETH=lc640_read_int(EE_AUSW_ETH);
+000744  f44f70ab          MOV      r0,#0x156
 000748  f7fffffe          BL       lc640_read_int
 00074c  49a4              LDR      r1,|L1.2528|
 00074e  8008              STRH     r0,[r1,#0]
-;;;177    TMAX_EXT[0]=lc640_read_int(EE_TMAX_EXT0);
-000750  f2402006          MOV      r0,#0x206
+;;;175    	AUSW_UKU=lc640_read_int(EE_AUSW_UKU);
+000750  f44f70a0          MOV      r0,#0x140
 000754  f7fffffe          BL       lc640_read_int
 000758  49a2              LDR      r1,|L1.2532|
 00075a  8008              STRH     r0,[r1,#0]
-;;;178    TMIN_EXT_EN[0]=lc640_read_int(EE_TMIN_EXT_EN0);
-00075c  f44f7002          MOV      r0,#0x208
+;;;176    	AUSW_UKU_SUB=lc640_read_int(EE_AUSW_UKU_SUB);
+00075c  f44f70a1          MOV      r0,#0x142
 000760  f7fffffe          BL       lc640_read_int
 000764  49a0              LDR      r1,|L1.2536|
 000766  8008              STRH     r0,[r1,#0]
-;;;179    TMIN_EXT[0]=lc640_read_int(EE_TMIN_EXT0);	
-000768  f240200a          MOV      r0,#0x20a
-00076c  f7fffffe          BL       lc640_read_int
+;;;177    	AUSW_UKU_NUMBER=lc640_read_long(EE_AUSW_UKU_NUMBER);			
+000768  f44f70a2          MOV      r0,#0x144
+00076c  f7fffffe          BL       lc640_read_long
 000770  499e              LDR      r1,|L1.2540|
-000772  8008              STRH     r0,[r1,#0]
-;;;180    T_EXT_REL_EN[0]=lc640_read_int(EE_T_EXT_REL_EN0);
-000774  f44f7003          MOV      r0,#0x20c
+000772  6008              STR      r0,[r1,#0]  ; AUSW_UKU_NUMBER
+;;;178    
+;;;179    
+;;;180    TMAX_EXT_EN[0]=lc640_read_int(EE_TMAX_EXT_EN0);
+000774  f44f7001          MOV      r0,#0x204
 000778  f7fffffe          BL       lc640_read_int
 00077c  499c              LDR      r1,|L1.2544|
 00077e  8008              STRH     r0,[r1,#0]
-;;;181    T_EXT_ZVUK_EN[0]=lc640_read_int(EE_T_EXT_ZVUK_EN0);
-000780  f240200e          MOV      r0,#0x20e
+;;;181    TMAX_EXT[0]=lc640_read_int(EE_TMAX_EXT0);
+000780  f2402006          MOV      r0,#0x206
 000784  f7fffffe          BL       lc640_read_int
 000788  499a              LDR      r1,|L1.2548|
 00078a  8008              STRH     r0,[r1,#0]
-;;;182    T_EXT_LCD_EN[0]=lc640_read_int(EE_T_EXT_LCD_EN0);
-00078c  f44f7004          MOV      r0,#0x210
+;;;182    TMIN_EXT_EN[0]=lc640_read_int(EE_TMIN_EXT_EN0);
+00078c  f44f7002          MOV      r0,#0x208
 000790  f7fffffe          BL       lc640_read_int
 000794  4998              LDR      r1,|L1.2552|
 000796  8008              STRH     r0,[r1,#0]
-;;;183    T_EXT_RS_EN[0]=lc640_read_int(EE_T_EXT_RS_EN0);
-000798  f2402012          MOV      r0,#0x212
+;;;183    TMIN_EXT[0]=lc640_read_int(EE_TMIN_EXT0);	
+000798  f240200a          MOV      r0,#0x20a
 00079c  f7fffffe          BL       lc640_read_int
 0007a0  4996              LDR      r1,|L1.2556|
 0007a2  8008              STRH     r0,[r1,#0]
-;;;184    SK_SIGN[0]=lc640_read_int(EE_SK_SIGN0);
-0007a4  f44f700d          MOV      r0,#0x234
+;;;184    T_EXT_REL_EN[0]=lc640_read_int(EE_T_EXT_REL_EN0);
+0007a4  f44f7003          MOV      r0,#0x20c
 0007a8  f7fffffe          BL       lc640_read_int
-0007ac  4d94              LDR      r5,|L1.2560|
-0007ae  8028              STRH     r0,[r5,#0]
-;;;185    SK_REL_EN[0]=lc640_read_int(EE_SK_REL_EN0);
-0007b0  f2402036          MOV      r0,#0x236
+0007ac  4994              LDR      r1,|L1.2560|
+0007ae  8008              STRH     r0,[r1,#0]
+;;;185    T_EXT_ZVUK_EN[0]=lc640_read_int(EE_T_EXT_ZVUK_EN0);
+0007b0  f240200e          MOV      r0,#0x20e
 0007b4  f7fffffe          BL       lc640_read_int
-0007b8  4e92              LDR      r6,|L1.2564|
-0007ba  8030              STRH     r0,[r6,#0]
-;;;186    SK_ZVUK_EN[0]=lc640_read_int(EE_SK_ZVUK_EN0);
-0007bc  f44f700e          MOV      r0,#0x238
+0007b8  4992              LDR      r1,|L1.2564|
+0007ba  8008              STRH     r0,[r1,#0]
+;;;186    T_EXT_LCD_EN[0]=lc640_read_int(EE_T_EXT_LCD_EN0);
+0007bc  f44f7004          MOV      r0,#0x210
 0007c0  f7fffffe          BL       lc640_read_int
-0007c4  4f90              LDR      r7,|L1.2568|
-0007c6  8038              STRH     r0,[r7,#0]
-;;;187    SK_LCD_EN[0]=lc640_read_int(EE_SK_LCD_EN0);	
-0007c8  f240203a          MOV      r0,#0x23a
+0007c4  4990              LDR      r1,|L1.2568|
+0007c6  8008              STRH     r0,[r1,#0]
+;;;187    T_EXT_RS_EN[0]=lc640_read_int(EE_T_EXT_RS_EN0);
+0007c8  f2402012          MOV      r0,#0x212
 0007cc  f7fffffe          BL       lc640_read_int
-0007d0  f8df8238          LDR      r8,|L1.2572|
-0007d4  f8a80000          STRH     r0,[r8,#0]
-;;;188    SK_RS_EN[0]=lc640_read_int(EE_SK_RS_EN0);
-0007d8  f44f700f          MOV      r0,#0x23c
-0007dc  f7fffffe          BL       lc640_read_int
-0007e0  f8df922c          LDR      r9,|L1.2576|
-0007e4  f8a90000          STRH     r0,[r9,#0]
-;;;189    SK_SIGN[1]=lc640_read_int(EE_SK_SIGN1);
-0007e8  f240203e          MOV      r0,#0x23e
-0007ec  f7fffffe          BL       lc640_read_int
-0007f0  8068              STRH     r0,[r5,#2]
-;;;190    SK_REL_EN[1]=lc640_read_int(EE_SK_REL_EN1);
-0007f2  f44f7010          MOV      r0,#0x240
-0007f6  f7fffffe          BL       lc640_read_int
-0007fa  8070              STRH     r0,[r6,#2]
-;;;191    SK_ZVUK_EN[1]=lc640_read_int(EE_SK_ZVUK_EN1);
-0007fc  f2402042          MOV      r0,#0x242
-000800  f7fffffe          BL       lc640_read_int
-000804  8078              STRH     r0,[r7,#2]
-;;;192    SK_LCD_EN[1]=lc640_read_int(EE_SK_LCD_EN1);	
-000806  f44f7011          MOV      r0,#0x244
-00080a  f7fffffe          BL       lc640_read_int
-00080e  f8a80002          STRH     r0,[r8,#2]
-;;;193    SK_RS_EN[1]=lc640_read_int(EE_SK_RS_EN1);
-000812  f2402046          MOV      r0,#0x246
-000816  f7fffffe          BL       lc640_read_int
-00081a  f8a90002          STRH     r0,[r9,#2]
-;;;194    SK_SIGN[2]=lc640_read_int(EE_SK_SIGN2);
-00081e  f44f7012          MOV      r0,#0x248
-000822  f7fffffe          BL       lc640_read_int
-000826  80a8              STRH     r0,[r5,#4]
-;;;195    SK_REL_EN[2]=lc640_read_int(EE_SK_REL_EN2);
-000828  f240204a          MOV      r0,#0x24a
-00082c  f7fffffe          BL       lc640_read_int
-000830  80b0              STRH     r0,[r6,#4]
-;;;196    SK_ZVUK_EN[2]=lc640_read_int(EE_SK_ZVUK_EN2);
-000832  f44f7013          MOV      r0,#0x24c
-000836  f7fffffe          BL       lc640_read_int
-00083a  80b8              STRH     r0,[r7,#4]
-;;;197    SK_LCD_EN[2]=lc640_read_int(EE_SK_LCD_EN2);	
-00083c  f240204e          MOV      r0,#0x24e
-000840  f7fffffe          BL       lc640_read_int
-000844  f8a80004          STRH     r0,[r8,#4]
-;;;198    SK_RS_EN[2]=lc640_read_int(EE_SK_RS_EN2);
-000848  f44f7014          MOV      r0,#0x250
-00084c  f7fffffe          BL       lc640_read_int
-000850  f8a90004          STRH     r0,[r9,#4]
-;;;199    SK_SIGN[3]=lc640_read_int(EE_SK_SIGN3);
-000854  f2402052          MOV      r0,#0x252
-000858  f7fffffe          BL       lc640_read_int
-00085c  80e8              STRH     r0,[r5,#6]
-;;;200    SK_REL_EN[3]=lc640_read_int(EE_SK_REL_EN3);
-00085e  f44f7015          MOV      r0,#0x254
-000862  f7fffffe          BL       lc640_read_int
-000866  80f0              STRH     r0,[r6,#6]
-;;;201    SK_ZVUK_EN[3]=lc640_read_int(EE_SK_ZVUK_EN3);
-000868  f2402056          MOV      r0,#0x256
-00086c  f7fffffe          BL       lc640_read_int
-000870  80f8              STRH     r0,[r7,#6]
-;;;202    SK_LCD_EN[3]=lc640_read_int(EE_SK_LCD_EN3);	
-000872  f44f7016          MOV      r0,#0x258
-000876  f7fffffe          BL       lc640_read_int
-00087a  f8a80006          STRH     r0,[r8,#6]
-;;;203    SK_RS_EN[3]=lc640_read_int(EE_SK_RS_EN3);
-00087e  f240205a          MOV      r0,#0x25a
-000882  f7fffffe          BL       lc640_read_int
-000886  f8a90006          STRH     r0,[r9,#6]
-;;;204    RELE_VENT_LOGIC=lc640_read_int(EE_RELE_VENT_LOGIC);
-00088a  20e0              MOVS     r0,#0xe0
-00088c  f7fffffe          BL       lc640_read_int
-000890  4960              LDR      r1,|L1.2580|
-000892  8008              STRH     r0,[r1,#0]
-;;;205    
-;;;206    
-;;;207    AVZ=(enum_avz)(lc640_read_int(EE_AVZ));
-000894  20ba              MOVS     r0,#0xba
-000896  f7fffffe          BL       lc640_read_int
-00089a  495f              LDR      r1,|L1.2584|
-00089c  7008              STRB     r0,[r1,#0]
-;;;208    AVZ_TIME=lc640_read_int(EE_AVZ_TIME);
-00089e  20ac              MOVS     r0,#0xac
-0008a0  f7fffffe          BL       lc640_read_int
-0008a4  495d              LDR      r1,|L1.2588|
-0008a6  8008              STRH     r0,[r1,#0]
-;;;209    HOUR_AVZ=lc640_read_int(EE_HOUR_AVZ);
-0008a8  20ae              MOVS     r0,#0xae
-0008aa  f7fffffe          BL       lc640_read_int
-0008ae  495c              LDR      r1,|L1.2592|
-0008b0  8008              STRH     r0,[r1,#0]
-;;;210    MIN_AVZ=lc640_read_int(EE_MIN_AVZ);
-0008b2  20b0              MOVS     r0,#0xb0
-0008b4  f7fffffe          BL       lc640_read_int
-0008b8  495a              LDR      r1,|L1.2596|
-0008ba  8008              STRH     r0,[r1,#0]
-;;;211    SEC_AVZ=lc640_read_int(EE_SEC_AVZ);
-0008bc  20b2              MOVS     r0,#0xb2
-0008be  f7fffffe          BL       lc640_read_int
-0008c2  4959              LDR      r1,|L1.2600|
-0008c4  8008              STRH     r0,[r1,#0]
-;;;212    DATE_AVZ=lc640_read_int(EE_DATE_AVZ);
-0008c6  20b4              MOVS     r0,#0xb4
-0008c8  f7fffffe          BL       lc640_read_int
-0008cc  4957              LDR      r1,|L1.2604|
-0008ce  8008              STRH     r0,[r1,#0]
-;;;213    MONTH_AVZ=lc640_read_int(EE_MONTH_AVZ);
-0008d0  20b6              MOVS     r0,#0xb6
-0008d2  f7fffffe          BL       lc640_read_int
-0008d6  4956              LDR      r1,|L1.2608|
-0008d8  b280              UXTH     r0,r0
-0008da  8008              STRH     r0,[r1,#0]
-;;;214    if(!((MONTH_AVZ>0)&&(MONTH_AVZ<13)))MONTH_AVZ=0;
-0008dc  b108              CBZ      r0,|L1.2274|
-0008de  280d              CMP      r0,#0xd
-0008e0  d300              BCC      |L1.2276|
-                  |L1.2274|
-0008e2  800c              STRH     r4,[r1,#0]
-                  |L1.2276|
-;;;215    YEAR_AVZ=lc640_read_int(EE_YEAR_AVZ);
-0008e4  20b8              MOVS     r0,#0xb8
-0008e6  f7fffffe          BL       lc640_read_int
-0008ea  4952              LDR      r1,|L1.2612|
-0008ec  8008              STRH     r0,[r1,#0]
-;;;216    
-;;;217    pos_vent=lc640_read_int(EE_POS_VENT);
-0008ee  f44f7018          MOV      r0,#0x260
-0008f2  f7fffffe          BL       lc640_read_int
-0008f6  4950              LDR      r1,|L1.2616|
-0008f8  8008              STRH     r0,[r1,#0]
-;;;218    POWER_CNT_ADRESS=lc640_read_int(EE_POWER_CNT_ADRESS);
-0008fa  f2402062          MOV      r0,#0x262
-0008fe  f7fffffe          BL       lc640_read_int
-000902  494e              LDR      r1,|L1.2620|
-000904  8008              STRH     r0,[r1,#0]
-;;;219    
-;;;220    ETH_IS_ON=lc640_read_int(EE_ETH_IS_ON);
-000906  f44f7033          MOV      r0,#0x2cc
-00090a  f7fffffe          BL       lc640_read_int
-00090e  494c              LDR      r1,|L1.2624|
-000910  8008              STRH     r0,[r1,#0]
-;;;221    ETH_DHCP_ON=lc640_read_int(EE_ETH_DHCP_ON);
-000912  f24020ce          MOV      r0,#0x2ce
+0007d0  498e              LDR      r1,|L1.2572|
+0007d2  8008              STRH     r0,[r1,#0]
+;;;188    SK_SIGN[0]=lc640_read_int(EE_SK_SIGN0);
+0007d4  f44f700d          MOV      r0,#0x234
+0007d8  f7fffffe          BL       lc640_read_int
+0007dc  4d8c              LDR      r5,|L1.2576|
+0007de  8028              STRH     r0,[r5,#0]
+;;;189    SK_REL_EN[0]=lc640_read_int(EE_SK_REL_EN0);
+0007e0  f2402036          MOV      r0,#0x236
+0007e4  f7fffffe          BL       lc640_read_int
+0007e8  4e8a              LDR      r6,|L1.2580|
+0007ea  8030              STRH     r0,[r6,#0]
+;;;190    SK_ZVUK_EN[0]=lc640_read_int(EE_SK_ZVUK_EN0);
+0007ec  f44f700e          MOV      r0,#0x238
+0007f0  f7fffffe          BL       lc640_read_int
+0007f4  4f88              LDR      r7,|L1.2584|
+0007f6  8038              STRH     r0,[r7,#0]
+;;;191    SK_LCD_EN[0]=lc640_read_int(EE_SK_LCD_EN0);	
+0007f8  f240203a          MOV      r0,#0x23a
+0007fc  f7fffffe          BL       lc640_read_int
+000800  f8df8218          LDR      r8,|L1.2588|
+000804  f8a80000          STRH     r0,[r8,#0]
+;;;192    SK_RS_EN[0]=lc640_read_int(EE_SK_RS_EN0);
+000808  f44f700f          MOV      r0,#0x23c
+00080c  f7fffffe          BL       lc640_read_int
+000810  f8df920c          LDR      r9,|L1.2592|
+000814  f8a90000          STRH     r0,[r9,#0]
+;;;193    SK_SIGN[1]=lc640_read_int(EE_SK_SIGN1);
+000818  f240203e          MOV      r0,#0x23e
+00081c  f7fffffe          BL       lc640_read_int
+000820  8068              STRH     r0,[r5,#2]
+;;;194    SK_REL_EN[1]=lc640_read_int(EE_SK_REL_EN1);
+000822  f44f7010          MOV      r0,#0x240
+000826  f7fffffe          BL       lc640_read_int
+00082a  8070              STRH     r0,[r6,#2]
+;;;195    SK_ZVUK_EN[1]=lc640_read_int(EE_SK_ZVUK_EN1);
+00082c  f2402042          MOV      r0,#0x242
+000830  f7fffffe          BL       lc640_read_int
+000834  8078              STRH     r0,[r7,#2]
+;;;196    SK_LCD_EN[1]=lc640_read_int(EE_SK_LCD_EN1);	
+000836  f44f7011          MOV      r0,#0x244
+00083a  f7fffffe          BL       lc640_read_int
+00083e  f8a80002          STRH     r0,[r8,#2]
+;;;197    SK_RS_EN[1]=lc640_read_int(EE_SK_RS_EN1);
+000842  f2402046          MOV      r0,#0x246
+000846  f7fffffe          BL       lc640_read_int
+00084a  f8a90002          STRH     r0,[r9,#2]
+;;;198    SK_SIGN[2]=lc640_read_int(EE_SK_SIGN2);
+00084e  f44f7012          MOV      r0,#0x248
+000852  f7fffffe          BL       lc640_read_int
+000856  80a8              STRH     r0,[r5,#4]
+;;;199    SK_REL_EN[2]=lc640_read_int(EE_SK_REL_EN2);
+000858  f240204a          MOV      r0,#0x24a
+00085c  f7fffffe          BL       lc640_read_int
+000860  80b0              STRH     r0,[r6,#4]
+;;;200    SK_ZVUK_EN[2]=lc640_read_int(EE_SK_ZVUK_EN2);
+000862  f44f7013          MOV      r0,#0x24c
+000866  f7fffffe          BL       lc640_read_int
+00086a  80b8              STRH     r0,[r7,#4]
+;;;201    SK_LCD_EN[2]=lc640_read_int(EE_SK_LCD_EN2);	
+00086c  f240204e          MOV      r0,#0x24e
+000870  f7fffffe          BL       lc640_read_int
+000874  f8a80004          STRH     r0,[r8,#4]
+;;;202    SK_RS_EN[2]=lc640_read_int(EE_SK_RS_EN2);
+000878  f44f7014          MOV      r0,#0x250
+00087c  f7fffffe          BL       lc640_read_int
+000880  f8a90004          STRH     r0,[r9,#4]
+;;;203    SK_SIGN[3]=lc640_read_int(EE_SK_SIGN3);
+000884  f2402052          MOV      r0,#0x252
+000888  f7fffffe          BL       lc640_read_int
+00088c  80e8              STRH     r0,[r5,#6]
+;;;204    SK_REL_EN[3]=lc640_read_int(EE_SK_REL_EN3);
+00088e  f44f7015          MOV      r0,#0x254
+000892  f7fffffe          BL       lc640_read_int
+000896  80f0              STRH     r0,[r6,#6]
+;;;205    SK_ZVUK_EN[3]=lc640_read_int(EE_SK_ZVUK_EN3);
+000898  f2402056          MOV      r0,#0x256
+00089c  f7fffffe          BL       lc640_read_int
+0008a0  80f8              STRH     r0,[r7,#6]
+;;;206    SK_LCD_EN[3]=lc640_read_int(EE_SK_LCD_EN3);	
+0008a2  f44f7016          MOV      r0,#0x258
+0008a6  f7fffffe          BL       lc640_read_int
+0008aa  f8a80006          STRH     r0,[r8,#6]
+;;;207    SK_RS_EN[3]=lc640_read_int(EE_SK_RS_EN3);
+0008ae  f240205a          MOV      r0,#0x25a
+0008b2  f7fffffe          BL       lc640_read_int
+0008b6  f8a90006          STRH     r0,[r9,#6]
+;;;208    RELE_VENT_LOGIC=lc640_read_int(EE_RELE_VENT_LOGIC);
+0008ba  20e0              MOVS     r0,#0xe0
+0008bc  f7fffffe          BL       lc640_read_int
+0008c0  4958              LDR      r1,|L1.2596|
+0008c2  8008              STRH     r0,[r1,#0]
+;;;209    
+;;;210    
+;;;211    AVZ=(enum_avz)(lc640_read_int(EE_AVZ));
+0008c4  20ba              MOVS     r0,#0xba
+0008c6  f7fffffe          BL       lc640_read_int
+0008ca  4957              LDR      r1,|L1.2600|
+0008cc  7008              STRB     r0,[r1,#0]
+;;;212    AVZ_TIME=lc640_read_int(EE_AVZ_TIME);
+0008ce  20ac              MOVS     r0,#0xac
+0008d0  f7fffffe          BL       lc640_read_int
+0008d4  4955              LDR      r1,|L1.2604|
+0008d6  8008              STRH     r0,[r1,#0]
+;;;213    HOUR_AVZ=lc640_read_int(EE_HOUR_AVZ);
+0008d8  20ae              MOVS     r0,#0xae
+0008da  f7fffffe          BL       lc640_read_int
+0008de  4954              LDR      r1,|L1.2608|
+0008e0  8008              STRH     r0,[r1,#0]
+;;;214    MIN_AVZ=lc640_read_int(EE_MIN_AVZ);
+0008e2  20b0              MOVS     r0,#0xb0
+0008e4  f7fffffe          BL       lc640_read_int
+0008e8  4952              LDR      r1,|L1.2612|
+0008ea  8008              STRH     r0,[r1,#0]
+;;;215    SEC_AVZ=lc640_read_int(EE_SEC_AVZ);
+0008ec  20b2              MOVS     r0,#0xb2
+0008ee  f7fffffe          BL       lc640_read_int
+0008f2  4951              LDR      r1,|L1.2616|
+0008f4  8008              STRH     r0,[r1,#0]
+;;;216    DATE_AVZ=lc640_read_int(EE_DATE_AVZ);
+0008f6  20b4              MOVS     r0,#0xb4
+0008f8  f7fffffe          BL       lc640_read_int
+0008fc  494f              LDR      r1,|L1.2620|
+0008fe  8008              STRH     r0,[r1,#0]
+;;;217    MONTH_AVZ=lc640_read_int(EE_MONTH_AVZ);
+000900  20b6              MOVS     r0,#0xb6
+000902  f7fffffe          BL       lc640_read_int
+000906  494e              LDR      r1,|L1.2624|
+000908  b280              UXTH     r0,r0
+00090a  8008              STRH     r0,[r1,#0]
+;;;218    if(!((MONTH_AVZ>0)&&(MONTH_AVZ<13)))MONTH_AVZ=0;
+00090c  b108              CBZ      r0,|L1.2322|
+00090e  280d              CMP      r0,#0xd
+000910  d300              BCC      |L1.2324|
+                  |L1.2322|
+000912  800c              STRH     r4,[r1,#0]
+                  |L1.2324|
+;;;219    YEAR_AVZ=lc640_read_int(EE_YEAR_AVZ);
+000914  20b8              MOVS     r0,#0xb8
 000916  f7fffffe          BL       lc640_read_int
 00091a  494a              LDR      r1,|L1.2628|
 00091c  8008              STRH     r0,[r1,#0]
-;;;222    ETH_IP_1=lc640_read_int(EE_ETH_IP_1);
-00091e  f44f7034          MOV      r0,#0x2d0
+;;;220    
+;;;221    pos_vent=lc640_read_int(EE_POS_VENT);
+00091e  f44f7018          MOV      r0,#0x260
 000922  f7fffffe          BL       lc640_read_int
 000926  4948              LDR      r1,|L1.2632|
 000928  8008              STRH     r0,[r1,#0]
-;;;223    ETH_IP_2=lc640_read_int(EE_ETH_IP_2);
-00092a  f24020d2          MOV      r0,#0x2d2
+;;;222    POWER_CNT_ADRESS=lc640_read_int(EE_POWER_CNT_ADRESS);
+00092a  f2402062          MOV      r0,#0x262
 00092e  f7fffffe          BL       lc640_read_int
 000932  4946              LDR      r1,|L1.2636|
 000934  8008              STRH     r0,[r1,#0]
-;;;224    ETH_IP_3=lc640_read_int(EE_ETH_IP_3);
-000936  f44f7035          MOV      r0,#0x2d4
+;;;223    
+;;;224    ETH_IS_ON=lc640_read_int(EE_ETH_IS_ON);
+000936  f44f7033          MOV      r0,#0x2cc
 00093a  f7fffffe          BL       lc640_read_int
 00093e  4944              LDR      r1,|L1.2640|
 000940  8008              STRH     r0,[r1,#0]
-;;;225    ETH_IP_4=lc640_read_int(EE_ETH_IP_4);
-000942  f24020d6          MOV      r0,#0x2d6
+;;;225    ETH_DHCP_ON=lc640_read_int(EE_ETH_DHCP_ON);
+000942  f24020ce          MOV      r0,#0x2ce
 000946  f7fffffe          BL       lc640_read_int
 00094a  4942              LDR      r1,|L1.2644|
 00094c  8008              STRH     r0,[r1,#0]
-;;;226    ETH_MASK_1=lc640_read_int(EE_ETH_MASK_1);
-00094e  f44f7036          MOV      r0,#0x2d8
+;;;226    ETH_IP_1=lc640_read_int(EE_ETH_IP_1);
+00094e  f44f7034          MOV      r0,#0x2d0
 000952  f7fffffe          BL       lc640_read_int
 000956  4940              LDR      r1,|L1.2648|
 000958  8008              STRH     r0,[r1,#0]
-;;;227    ETH_MASK_2=lc640_read_int(EE_ETH_MASK_2);
+;;;227    ETH_IP_2=lc640_read_int(EE_ETH_IP_2);
 00095a  e07f              B        |L1.2652|
                   |L1.2396|
                           DCD      speedChrgBlckSrc
@@ -1139,405 +1139,433 @@
                   |L1.2412|
                           DCD      FORVARDBPSCHHOUR
                   |L1.2416|
-                          DCD      BAT_IS_ON
+                          DCD      U_OUT_KONTR_MAX
                   |L1.2420|
-                          DCD      NUMBAT
+                          DCD      U_OUT_KONTR_MIN
                   |L1.2424|
-                          DCD      BAT_DAY_OF_ON
+                          DCD      U_OUT_KONTR_DELAY
                   |L1.2428|
-                          DCD      BAT_MONTH_OF_ON
+                          DCD      DOP_RELE_FUNC
                   |L1.2432|
-                          DCD      BAT_YEAR_OF_ON
+                          DCD      BAT_IS_ON
                   |L1.2436|
-                          DCD      BAT_C_REAL
+                          DCD      NUMBAT
                   |L1.2440|
-                          DCD      BAT_C_NOM
+                          DCD      BAT_DAY_OF_ON
                   |L1.2444|
-                          DCD      BAT_RESURS
+                          DCD      BAT_MONTH_OF_ON
                   |L1.2448|
-                          DCD      BAT_LINK
+                          DCD      BAT_YEAR_OF_ON
                   |L1.2452|
-                          DCD      APV_ON1
+                          DCD      BAT_C_REAL
                   |L1.2456|
-                          DCD      APV_ON2
+                          DCD      BAT_C_NOM
                   |L1.2460|
-                          DCD      APV_ON2_TIME
+                          DCD      BAT_RESURS
                   |L1.2464|
-                          DCD      VZ_HR
+                          DCD      BAT_LINK
                   |L1.2468|
-                          DCD      TBAT
+                          DCD      APV_ON1
                   |L1.2472|
-                          DCD      AUSW_MAIN
+                          DCD      APV_ON2
                   |L1.2476|
-                          DCD      AUSW_MAIN_NUMBER
+                          DCD      APV_ON2_TIME
                   |L1.2480|
-                          DCD      AUSW_DAY
+                          DCD      VZ_HR
                   |L1.2484|
-                          DCD      AUSW_MONTH
+                          DCD      TBAT
                   |L1.2488|
-                          DCD      AUSW_YEAR
+                          DCD      AUSW_MAIN
                   |L1.2492|
-                          DCD      AUSW_BPS1_NUMBER
+                          DCD      AUSW_MAIN_NUMBER
                   |L1.2496|
-                          DCD      AUSW_BPS2_NUMBER
+                          DCD      AUSW_DAY
                   |L1.2500|
-                          DCD      AUSW_RS232
+                          DCD      AUSW_MONTH
                   |L1.2504|
-                          DCD      AUSW_PDH
+                          DCD      AUSW_YEAR
                   |L1.2508|
-                          DCD      AUSW_SDH
+                          DCD      AUSW_BPS1_NUMBER
                   |L1.2512|
-                          DCD      AUSW_ETH
+                          DCD      AUSW_BPS2_NUMBER
                   |L1.2516|
-                          DCD      AUSW_UKU
+                          DCD      AUSW_RS232
                   |L1.2520|
-                          DCD      AUSW_UKU_SUB
+                          DCD      AUSW_PDH
                   |L1.2524|
-                          DCD      AUSW_UKU_NUMBER
+                          DCD      AUSW_SDH
                   |L1.2528|
-                          DCD      TMAX_EXT_EN
+                          DCD      AUSW_ETH
                   |L1.2532|
-                          DCD      TMAX_EXT
+                          DCD      AUSW_UKU
                   |L1.2536|
-                          DCD      TMIN_EXT_EN
+                          DCD      AUSW_UKU_SUB
                   |L1.2540|
-                          DCD      TMIN_EXT
+                          DCD      AUSW_UKU_NUMBER
                   |L1.2544|
-                          DCD      T_EXT_REL_EN
+                          DCD      TMAX_EXT_EN
                   |L1.2548|
-                          DCD      T_EXT_ZVUK_EN
+                          DCD      TMAX_EXT
                   |L1.2552|
-                          DCD      T_EXT_LCD_EN
+                          DCD      TMIN_EXT_EN
                   |L1.2556|
-                          DCD      T_EXT_RS_EN
+                          DCD      TMIN_EXT
                   |L1.2560|
-                          DCD      SK_SIGN
+                          DCD      T_EXT_REL_EN
                   |L1.2564|
-                          DCD      SK_REL_EN
+                          DCD      T_EXT_ZVUK_EN
                   |L1.2568|
-                          DCD      SK_ZVUK_EN
+                          DCD      T_EXT_LCD_EN
                   |L1.2572|
-                          DCD      SK_LCD_EN
+                          DCD      T_EXT_RS_EN
                   |L1.2576|
-                          DCD      SK_RS_EN
+                          DCD      SK_SIGN
                   |L1.2580|
-                          DCD      RELE_VENT_LOGIC
+                          DCD      SK_REL_EN
                   |L1.2584|
-                          DCD      AVZ
+                          DCD      SK_ZVUK_EN
                   |L1.2588|
-                          DCD      AVZ_TIME
+                          DCD      SK_LCD_EN
                   |L1.2592|
-                          DCD      HOUR_AVZ
+                          DCD      SK_RS_EN
                   |L1.2596|
-                          DCD      MIN_AVZ
+                          DCD      RELE_VENT_LOGIC
                   |L1.2600|
-                          DCD      SEC_AVZ
+                          DCD      AVZ
                   |L1.2604|
-                          DCD      DATE_AVZ
+                          DCD      AVZ_TIME
                   |L1.2608|
-                          DCD      MONTH_AVZ
+                          DCD      HOUR_AVZ
                   |L1.2612|
-                          DCD      YEAR_AVZ
+                          DCD      MIN_AVZ
                   |L1.2616|
-                          DCD      pos_vent
+                          DCD      SEC_AVZ
                   |L1.2620|
-                          DCD      POWER_CNT_ADRESS
+                          DCD      DATE_AVZ
                   |L1.2624|
-                          DCD      ETH_IS_ON
+                          DCD      MONTH_AVZ
                   |L1.2628|
-                          DCD      ETH_DHCP_ON
+                          DCD      YEAR_AVZ
                   |L1.2632|
-                          DCD      ETH_IP_1
+                          DCD      pos_vent
                   |L1.2636|
-                          DCD      ETH_IP_2
+                          DCD      POWER_CNT_ADRESS
                   |L1.2640|
-                          DCD      ETH_IP_3
+                          DCD      ETH_IS_ON
                   |L1.2644|
-                          DCD      ETH_IP_4
+                          DCD      ETH_DHCP_ON
                   |L1.2648|
-                          DCD      ETH_MASK_1
+                          DCD      ETH_IP_1
                   |L1.2652|
-000a5c  f24020da          MOV      r0,#0x2da
+000a5c  f24020d2          MOV      r0,#0x2d2
 000a60  f7fffffe          BL       lc640_read_int
-000a64  4975              LDR      r1,|L1.3132|
+000a64  4981              LDR      r1,|L1.3180|
 000a66  8008              STRH     r0,[r1,#0]
-;;;228    ETH_MASK_3=lc640_read_int(EE_ETH_MASK_3);
-000a68  f44f7037          MOV      r0,#0x2dc
+;;;228    ETH_IP_3=lc640_read_int(EE_ETH_IP_3);
+000a68  f44f7035          MOV      r0,#0x2d4
 000a6c  f7fffffe          BL       lc640_read_int
-000a70  4973              LDR      r1,|L1.3136|
+000a70  497f              LDR      r1,|L1.3184|
 000a72  8008              STRH     r0,[r1,#0]
-;;;229    ETH_MASK_4=lc640_read_int(EE_ETH_MASK_4);
-000a74  f24020de          MOV      r0,#0x2de
+;;;229    ETH_IP_4=lc640_read_int(EE_ETH_IP_4);
+000a74  f24020d6          MOV      r0,#0x2d6
 000a78  f7fffffe          BL       lc640_read_int
-000a7c  4971              LDR      r1,|L1.3140|
+000a7c  497d              LDR      r1,|L1.3188|
 000a7e  8008              STRH     r0,[r1,#0]
-;;;230    ETH_GW_1=lc640_read_int(EE_ETH_GW_1);
-000a80  f44f7043          MOV      r0,#0x30c
+;;;230    ETH_MASK_1=lc640_read_int(EE_ETH_MASK_1);
+000a80  f44f7036          MOV      r0,#0x2d8
 000a84  f7fffffe          BL       lc640_read_int
-000a88  496f              LDR      r1,|L1.3144|
+000a88  497b              LDR      r1,|L1.3192|
 000a8a  8008              STRH     r0,[r1,#0]
-;;;231    ETH_GW_2=lc640_read_int(EE_ETH_GW_2);
-000a8c  f240300e          MOV      r0,#0x30e
+;;;231    ETH_MASK_2=lc640_read_int(EE_ETH_MASK_2);
+000a8c  f24020da          MOV      r0,#0x2da
 000a90  f7fffffe          BL       lc640_read_int
-000a94  496d              LDR      r1,|L1.3148|
+000a94  4979              LDR      r1,|L1.3196|
 000a96  8008              STRH     r0,[r1,#0]
-;;;232    ETH_GW_3=lc640_read_int(EE_ETH_GW_3);
-000a98  f44f7044          MOV      r0,#0x310
+;;;232    ETH_MASK_3=lc640_read_int(EE_ETH_MASK_3);
+000a98  f44f7037          MOV      r0,#0x2dc
 000a9c  f7fffffe          BL       lc640_read_int
-000aa0  496b              LDR      r1,|L1.3152|
+000aa0  4977              LDR      r1,|L1.3200|
 000aa2  8008              STRH     r0,[r1,#0]
-;;;233    ETH_GW_4=lc640_read_int(EE_ETH_GW_4);
-000aa4  f2403012          MOV      r0,#0x312
+;;;233    ETH_MASK_4=lc640_read_int(EE_ETH_MASK_4);
+000aa4  f24020de          MOV      r0,#0x2de
 000aa8  f7fffffe          BL       lc640_read_int
-000aac  4969              LDR      r1,|L1.3156|
+000aac  4975              LDR      r1,|L1.3204|
 000aae  8008              STRH     r0,[r1,#0]
-;;;234    ETH_TRAP1_IP_1=lc640_read_int(EE_ETH_TRAP1_IP_1);
-000ab0  f44f7038          MOV      r0,#0x2e0
+;;;234    ETH_GW_1=lc640_read_int(EE_ETH_GW_1);
+000ab0  f44f7043          MOV      r0,#0x30c
 000ab4  f7fffffe          BL       lc640_read_int
-000ab8  4967              LDR      r1,|L1.3160|
+000ab8  4973              LDR      r1,|L1.3208|
 000aba  8008              STRH     r0,[r1,#0]
-;;;235    ETH_TRAP1_IP_2=lc640_read_int(EE_ETH_TRAP1_IP_2);
-000abc  f24020e2          MOV      r0,#0x2e2
+;;;235    ETH_GW_2=lc640_read_int(EE_ETH_GW_2);
+000abc  f240300e          MOV      r0,#0x30e
 000ac0  f7fffffe          BL       lc640_read_int
-000ac4  4965              LDR      r1,|L1.3164|
+000ac4  4971              LDR      r1,|L1.3212|
 000ac6  8008              STRH     r0,[r1,#0]
-;;;236    ETH_TRAP1_IP_3=lc640_read_int(EE_ETH_TRAP1_IP_3);
-000ac8  f44f7039          MOV      r0,#0x2e4
+;;;236    ETH_GW_3=lc640_read_int(EE_ETH_GW_3);
+000ac8  f44f7044          MOV      r0,#0x310
 000acc  f7fffffe          BL       lc640_read_int
-000ad0  4963              LDR      r1,|L1.3168|
+000ad0  496f              LDR      r1,|L1.3216|
 000ad2  8008              STRH     r0,[r1,#0]
-;;;237    ETH_TRAP1_IP_4=lc640_read_int(EE_ETH_TRAP1_IP_4);
-000ad4  f24020e6          MOV      r0,#0x2e6
+;;;237    ETH_GW_4=lc640_read_int(EE_ETH_GW_4);
+000ad4  f2403012          MOV      r0,#0x312
 000ad8  f7fffffe          BL       lc640_read_int
-000adc  4961              LDR      r1,|L1.3172|
+000adc  496d              LDR      r1,|L1.3220|
 000ade  8008              STRH     r0,[r1,#0]
-;;;238    ETH_TRAP2_IP_1=lc640_read_int(EE_ETH_TRAP2_IP_1);
-000ae0  f44f703a          MOV      r0,#0x2e8
+;;;238    ETH_TRAP1_IP_1=lc640_read_int(EE_ETH_TRAP1_IP_1);
+000ae0  f44f7038          MOV      r0,#0x2e0
 000ae4  f7fffffe          BL       lc640_read_int
-000ae8  495f              LDR      r1,|L1.3176|
+000ae8  496b              LDR      r1,|L1.3224|
 000aea  8008              STRH     r0,[r1,#0]
-;;;239    ETH_TRAP2_IP_2=lc640_read_int(EE_ETH_TRAP2_IP_2);
-000aec  f24020ea          MOV      r0,#0x2ea
+;;;239    ETH_TRAP1_IP_2=lc640_read_int(EE_ETH_TRAP1_IP_2);
+000aec  f24020e2          MOV      r0,#0x2e2
 000af0  f7fffffe          BL       lc640_read_int
-000af4  495d              LDR      r1,|L1.3180|
+000af4  4969              LDR      r1,|L1.3228|
 000af6  8008              STRH     r0,[r1,#0]
-;;;240    ETH_TRAP2_IP_3=lc640_read_int(EE_ETH_TRAP2_IP_3);
-000af8  f44f703b          MOV      r0,#0x2ec
+;;;240    ETH_TRAP1_IP_3=lc640_read_int(EE_ETH_TRAP1_IP_3);
+000af8  f44f7039          MOV      r0,#0x2e4
 000afc  f7fffffe          BL       lc640_read_int
-000b00  495b              LDR      r1,|L1.3184|
+000b00  4967              LDR      r1,|L1.3232|
 000b02  8008              STRH     r0,[r1,#0]
-;;;241    ETH_TRAP2_IP_4=lc640_read_int(EE_ETH_TRAP2_IP_4);
-000b04  f24020ee          MOV      r0,#0x2ee
+;;;241    ETH_TRAP1_IP_4=lc640_read_int(EE_ETH_TRAP1_IP_4);
+000b04  f24020e6          MOV      r0,#0x2e6
 000b08  f7fffffe          BL       lc640_read_int
-000b0c  4959              LDR      r1,|L1.3188|
+000b0c  4965              LDR      r1,|L1.3236|
 000b0e  8008              STRH     r0,[r1,#0]
-;;;242    ETH_TRAP3_IP_1=lc640_read_int(EE_ETH_TRAP3_IP_1);
-000b10  f44f703c          MOV      r0,#0x2f0
+;;;242    ETH_TRAP2_IP_1=lc640_read_int(EE_ETH_TRAP2_IP_1);
+000b10  f44f703a          MOV      r0,#0x2e8
 000b14  f7fffffe          BL       lc640_read_int
-000b18  4957              LDR      r1,|L1.3192|
+000b18  4963              LDR      r1,|L1.3240|
 000b1a  8008              STRH     r0,[r1,#0]
-;;;243    ETH_TRAP3_IP_2=lc640_read_int(EE_ETH_TRAP3_IP_2);
-000b1c  f24020f2          MOV      r0,#0x2f2
+;;;243    ETH_TRAP2_IP_2=lc640_read_int(EE_ETH_TRAP2_IP_2);
+000b1c  f24020ea          MOV      r0,#0x2ea
 000b20  f7fffffe          BL       lc640_read_int
-000b24  4955              LDR      r1,|L1.3196|
+000b24  4961              LDR      r1,|L1.3244|
 000b26  8008              STRH     r0,[r1,#0]
-;;;244    ETH_TRAP3_IP_3=lc640_read_int(EE_ETH_TRAP3_IP_3);
-000b28  f44f703d          MOV      r0,#0x2f4
+;;;244    ETH_TRAP2_IP_3=lc640_read_int(EE_ETH_TRAP2_IP_3);
+000b28  f44f703b          MOV      r0,#0x2ec
 000b2c  f7fffffe          BL       lc640_read_int
-000b30  4953              LDR      r1,|L1.3200|
+000b30  495f              LDR      r1,|L1.3248|
 000b32  8008              STRH     r0,[r1,#0]
-;;;245    ETH_TRAP3_IP_4=lc640_read_int(EE_ETH_TRAP3_IP_4);
-000b34  f24020f6          MOV      r0,#0x2f6
+;;;245    ETH_TRAP2_IP_4=lc640_read_int(EE_ETH_TRAP2_IP_4);
+000b34  f24020ee          MOV      r0,#0x2ee
 000b38  f7fffffe          BL       lc640_read_int
-000b3c  4951              LDR      r1,|L1.3204|
+000b3c  495d              LDR      r1,|L1.3252|
 000b3e  8008              STRH     r0,[r1,#0]
-;;;246    ETH_TRAP4_IP_1=lc640_read_int(EE_ETH_TRAP4_IP_1);
-000b40  f44f703e          MOV      r0,#0x2f8
+;;;246    ETH_TRAP3_IP_1=lc640_read_int(EE_ETH_TRAP3_IP_1);
+000b40  f44f703c          MOV      r0,#0x2f0
 000b44  f7fffffe          BL       lc640_read_int
-000b48  494f              LDR      r1,|L1.3208|
+000b48  495b              LDR      r1,|L1.3256|
 000b4a  8008              STRH     r0,[r1,#0]
-;;;247    ETH_TRAP4_IP_2=lc640_read_int(EE_ETH_TRAP4_IP_2);
-000b4c  f24020fa          MOV      r0,#0x2fa
+;;;247    ETH_TRAP3_IP_2=lc640_read_int(EE_ETH_TRAP3_IP_2);
+000b4c  f24020f2          MOV      r0,#0x2f2
 000b50  f7fffffe          BL       lc640_read_int
-000b54  494d              LDR      r1,|L1.3212|
+000b54  4959              LDR      r1,|L1.3260|
 000b56  8008              STRH     r0,[r1,#0]
-;;;248    ETH_TRAP4_IP_3=lc640_read_int(EE_ETH_TRAP4_IP_3);
-000b58  f44f703f          MOV      r0,#0x2fc
+;;;248    ETH_TRAP3_IP_3=lc640_read_int(EE_ETH_TRAP3_IP_3);
+000b58  f44f703d          MOV      r0,#0x2f4
 000b5c  f7fffffe          BL       lc640_read_int
-000b60  494b              LDR      r1,|L1.3216|
+000b60  4957              LDR      r1,|L1.3264|
 000b62  8008              STRH     r0,[r1,#0]
-;;;249    ETH_TRAP4_IP_4=lc640_read_int(EE_ETH_TRAP4_IP_4);
-000b64  f24020fe          MOV      r0,#0x2fe
+;;;249    ETH_TRAP3_IP_4=lc640_read_int(EE_ETH_TRAP3_IP_4);
+000b64  f24020f6          MOV      r0,#0x2f6
 000b68  f7fffffe          BL       lc640_read_int
-000b6c  4949              LDR      r1,|L1.3220|
+000b6c  4955              LDR      r1,|L1.3268|
 000b6e  8008              STRH     r0,[r1,#0]
-;;;250    ETH_TRAP5_IP_1=lc640_read_int(EE_ETH_TRAP5_IP_1);
-000b70  f44f7040          MOV      r0,#0x300
+;;;250    ETH_TRAP4_IP_1=lc640_read_int(EE_ETH_TRAP4_IP_1);
+000b70  f44f703e          MOV      r0,#0x2f8
 000b74  f7fffffe          BL       lc640_read_int
-000b78  4947              LDR      r1,|L1.3224|
+000b78  4953              LDR      r1,|L1.3272|
 000b7a  8008              STRH     r0,[r1,#0]
-;;;251    ETH_TRAP5_IP_2=lc640_read_int(EE_ETH_TRAP5_IP_2);
-000b7c  f2403002          MOV      r0,#0x302
+;;;251    ETH_TRAP4_IP_2=lc640_read_int(EE_ETH_TRAP4_IP_2);
+000b7c  f24020fa          MOV      r0,#0x2fa
 000b80  f7fffffe          BL       lc640_read_int
-000b84  4945              LDR      r1,|L1.3228|
+000b84  4951              LDR      r1,|L1.3276|
 000b86  8008              STRH     r0,[r1,#0]
-;;;252    ETH_TRAP5_IP_3=lc640_read_int(EE_ETH_TRAP5_IP_3);
-000b88  f44f7041          MOV      r0,#0x304
+;;;252    ETH_TRAP4_IP_3=lc640_read_int(EE_ETH_TRAP4_IP_3);
+000b88  f44f703f          MOV      r0,#0x2fc
 000b8c  f7fffffe          BL       lc640_read_int
-000b90  4943              LDR      r1,|L1.3232|
+000b90  494f              LDR      r1,|L1.3280|
 000b92  8008              STRH     r0,[r1,#0]
-;;;253    ETH_TRAP5_IP_4=lc640_read_int(EE_ETH_TRAP5_IP_4);
-000b94  f2403006          MOV      r0,#0x306
+;;;253    ETH_TRAP4_IP_4=lc640_read_int(EE_ETH_TRAP4_IP_4);
+000b94  f24020fe          MOV      r0,#0x2fe
 000b98  f7fffffe          BL       lc640_read_int
-000b9c  4941              LDR      r1,|L1.3236|
+000b9c  494d              LDR      r1,|L1.3284|
 000b9e  8008              STRH     r0,[r1,#0]
-;;;254    ETH_SNMP_PORT_READ=lc640_read_int(EE_ETH_SNMP_PORT_READ);
-000ba0  f44f7042          MOV      r0,#0x308
+;;;254    ETH_TRAP5_IP_1=lc640_read_int(EE_ETH_TRAP5_IP_1);
+000ba0  f44f7040          MOV      r0,#0x300
 000ba4  f7fffffe          BL       lc640_read_int
-000ba8  493f              LDR      r1,|L1.3240|
+000ba8  494b              LDR      r1,|L1.3288|
 000baa  8008              STRH     r0,[r1,#0]
-;;;255    ETH_SNMP_PORT_WRITE=lc640_read_int(EE_ETH_SNMP_PORT_WRITE);
-000bac  f240300a          MOV      r0,#0x30a
+;;;255    ETH_TRAP5_IP_2=lc640_read_int(EE_ETH_TRAP5_IP_2);
+000bac  f2403002          MOV      r0,#0x302
 000bb0  f7fffffe          BL       lc640_read_int
-000bb4  493d              LDR      r1,|L1.3244|
+000bb4  4949              LDR      r1,|L1.3292|
 000bb6  8008              STRH     r0,[r1,#0]
-;;;256    MODBUS_ADRESS=lc640_read_int(EE_MODBUS_ADRESS);
-000bb8  f44f7045          MOV      r0,#0x314
+;;;256    ETH_TRAP5_IP_3=lc640_read_int(EE_ETH_TRAP5_IP_3);
+000bb8  f44f7041          MOV      r0,#0x304
 000bbc  f7fffffe          BL       lc640_read_int
-000bc0  493b              LDR      r1,|L1.3248|
+000bc0  4947              LDR      r1,|L1.3296|
 000bc2  8008              STRH     r0,[r1,#0]
-;;;257    MODBUS_BAUDRATE=lc640_read_int(EE_MODBUS_BAUDRATE);
-000bc4  f2403016          MOV      r0,#0x316
+;;;257    ETH_TRAP5_IP_4=lc640_read_int(EE_ETH_TRAP5_IP_4);
+000bc4  f2403006          MOV      r0,#0x306
 000bc8  f7fffffe          BL       lc640_read_int
-000bcc  4939              LDR      r1,|L1.3252|
+000bcc  4945              LDR      r1,|L1.3300|
 000bce  8008              STRH     r0,[r1,#0]
-;;;258    
-;;;259    for(i=0;i<64;i++)
-000bd0  f04f0400          MOV      r4,#0
-;;;260    	{
-;;;261    	snmp_location[i]=lc640_read(EE_LOCATION+i);
-000bd4  4d38              LDR      r5,|L1.3256|
-                  |L1.3030|
-000bd6  f5047065          ADD      r0,r4,#0x394
-000bda  f7fffffe          BL       lc640_read
-000bde  5528              STRB     r0,[r5,r4]
-000be0  f1040401          ADD      r4,r4,#1              ;259
-000be4  b2e4              UXTB     r4,r4                 ;259
-000be6  2c40              CMP      r4,#0x40              ;259
-000be8  d3f5              BCC      |L1.3030|
-;;;262    	}
-;;;263    for(i=0;i<10;i++)
-000bea  f04f0400          MOV      r4,#0
+;;;258    ETH_SNMP_PORT_READ=lc640_read_int(EE_ETH_SNMP_PORT_READ);
+000bd0  f44f7042          MOV      r0,#0x308
+000bd4  f7fffffe          BL       lc640_read_int
+000bd8  4943              LDR      r1,|L1.3304|
+000bda  8008              STRH     r0,[r1,#0]
+;;;259    ETH_SNMP_PORT_WRITE=lc640_read_int(EE_ETH_SNMP_PORT_WRITE);
+000bdc  f240300a          MOV      r0,#0x30a
+000be0  f7fffffe          BL       lc640_read_int
+000be4  4941              LDR      r1,|L1.3308|
+000be6  8008              STRH     r0,[r1,#0]
+;;;260    MODBUS_ADRESS=lc640_read_int(EE_MODBUS_ADRESS);
+000be8  f44f7045          MOV      r0,#0x314
+000bec  f7fffffe          BL       lc640_read_int
+000bf0  493f              LDR      r1,|L1.3312|
+000bf2  8008              STRH     r0,[r1,#0]
+;;;261    MODBUS_BAUDRATE=lc640_read_int(EE_MODBUS_BAUDRATE);
+000bf4  f2403016          MOV      r0,#0x316
+000bf8  f7fffffe          BL       lc640_read_int
+000bfc  493d              LDR      r1,|L1.3316|
+000bfe  8008              STRH     r0,[r1,#0]
+;;;262    
+;;;263    for(i=0;i<64;i++)
+000c00  f04f0400          MOV      r4,#0
 ;;;264    	{
-;;;265    	snmp_community[i]=lc640_read(EE_COMMUNITY+(i*2));
-000bee  4d33              LDR      r5,|L1.3260|
-000bf0  f24036da          MOV      r6,#0x3da
-                  |L1.3060|
-000bf4  eb060044          ADD      r0,r6,r4,LSL #1
-000bf8  f7fffffe          BL       lc640_read
-000bfc  5528              STRB     r0,[r5,r4]
-000bfe  f1040401          ADD      r4,r4,#1              ;263
-000c02  b2e4              UXTB     r4,r4                 ;263
-000c04  2c0a              CMP      r4,#0xa               ;263
-000c06  d3f5              BCC      |L1.3060|
+;;;265    	snmp_location[i]=lc640_read(EE_LOCATION+i);
+000c04  4d3c              LDR      r5,|L1.3320|
+                  |L1.3078|
+000c06  f5047065          ADD      r0,r4,#0x394
+000c0a  f7fffffe          BL       lc640_read
+000c0e  5528              STRB     r0,[r5,r4]
+000c10  f1040401          ADD      r4,r4,#1              ;263
+000c14  b2e4              UXTB     r4,r4                 ;263
+000c16  2c40              CMP      r4,#0x40              ;263
+000c18  d3f5              BCC      |L1.3078|
 ;;;266    	}
-;;;267    
-;;;268    __ee_vz_cnt=lc640_read_int(EE_VZ_CNT);
-000c08  f44f70f9          MOV      r0,#0x1f2
-000c0c  f7fffffe          BL       lc640_read_int
-000c10  492b              LDR      r1,|L1.3264|
-000c12  8008              STRH     r0,[r1,#0]
-;;;269    __ee_spc_stat=lc640_read_int(EE_SPC_STAT);
-000c14  f44f70f8          MOV      r0,#0x1f0
-000c18  f7fffffe          BL       lc640_read_int
-000c1c  4929              LDR      r1,|L1.3268|
-000c1e  8008              STRH     r0,[r1,#0]
-;;;270    __ee_spc_bat=lc640_read_int(EE_SPC_BAT);
-000c20  f44f70fa          MOV      r0,#0x1f4
-000c24  f7fffffe          BL       lc640_read_int
-000c28  4927              LDR      r1,|L1.3272|
-000c2a  8008              STRH     r0,[r1,#0]
-;;;271    __ee_spc_phase=lc640_read_int(EE_SPC_PHASE);
-000c2c  f44f70fb          MOV      r0,#0x1f6
-000c30  f7fffffe          BL       lc640_read_int
-000c34  4925              LDR      r1,|L1.3276|
-000c36  8008              STRH     r0,[r1,#0]
-;;;272    }
-000c38  e8bd87f0          POP      {r4-r10,pc}
-;;;273    
+;;;267    for(i=0;i<10;i++)
+000c1a  f04f0400          MOV      r4,#0
+;;;268    	{
+;;;269    	snmp_community[i]=lc640_read(EE_COMMUNITY+(i*2));
+000c1e  4d37              LDR      r5,|L1.3324|
+000c20  f24036da          MOV      r6,#0x3da
+                  |L1.3108|
+000c24  eb060044          ADD      r0,r6,r4,LSL #1
+000c28  f7fffffe          BL       lc640_read
+000c2c  5528              STRB     r0,[r5,r4]
+000c2e  f1040401          ADD      r4,r4,#1              ;267
+000c32  b2e4              UXTB     r4,r4                 ;267
+000c34  2c0a              CMP      r4,#0xa               ;267
+000c36  d3f5              BCC      |L1.3108|
+;;;270    	}
+;;;271    
+;;;272    __ee_vz_cnt=lc640_read_int(EE_VZ_CNT);
+000c38  f44f70f9          MOV      r0,#0x1f2
+000c3c  f7fffffe          BL       lc640_read_int
+000c40  492f              LDR      r1,|L1.3328|
+000c42  8008              STRH     r0,[r1,#0]
+;;;273    __ee_spc_stat=lc640_read_int(EE_SPC_STAT);
+000c44  f44f70f8          MOV      r0,#0x1f0
+000c48  f7fffffe          BL       lc640_read_int
+000c4c  492d              LDR      r1,|L1.3332|
+000c4e  8008              STRH     r0,[r1,#0]
+;;;274    __ee_spc_bat=lc640_read_int(EE_SPC_BAT);
+000c50  f44f70fa          MOV      r0,#0x1f4
+000c54  f7fffffe          BL       lc640_read_int
+000c58  492b              LDR      r1,|L1.3336|
+000c5a  8008              STRH     r0,[r1,#0]
+;;;275    __ee_spc_phase=lc640_read_int(EE_SPC_PHASE);
+000c5c  f44f70fb          MOV      r0,#0x1f6
+000c60  f7fffffe          BL       lc640_read_int
+000c64  4929              LDR      r1,|L1.3340|
+000c66  8008              STRH     r0,[r1,#0]
+;;;276    }
+000c68  e8bd87f0          POP      {r4-r10,pc}
+;;;277    
                           ENDP
 
-                  |L1.3132|
-                          DCD      ETH_MASK_2
-                  |L1.3136|
-                          DCD      ETH_MASK_3
-                  |L1.3140|
-                          DCD      ETH_MASK_4
-                  |L1.3144|
-                          DCD      ETH_GW_1
-                  |L1.3148|
-                          DCD      ETH_GW_2
-                  |L1.3152|
-                          DCD      ETH_GW_3
-                  |L1.3156|
-                          DCD      ETH_GW_4
-                  |L1.3160|
-                          DCD      ETH_TRAP1_IP_1
-                  |L1.3164|
-                          DCD      ETH_TRAP1_IP_2
-                  |L1.3168|
-                          DCD      ETH_TRAP1_IP_3
-                  |L1.3172|
-                          DCD      ETH_TRAP1_IP_4
-                  |L1.3176|
-                          DCD      ETH_TRAP2_IP_1
                   |L1.3180|
-                          DCD      ETH_TRAP2_IP_2
+                          DCD      ETH_IP_2
                   |L1.3184|
-                          DCD      ETH_TRAP2_IP_3
+                          DCD      ETH_IP_3
                   |L1.3188|
-                          DCD      ETH_TRAP2_IP_4
+                          DCD      ETH_IP_4
                   |L1.3192|
-                          DCD      ETH_TRAP3_IP_1
+                          DCD      ETH_MASK_1
                   |L1.3196|
-                          DCD      ETH_TRAP3_IP_2
+                          DCD      ETH_MASK_2
                   |L1.3200|
-                          DCD      ETH_TRAP3_IP_3
+                          DCD      ETH_MASK_3
                   |L1.3204|
-                          DCD      ETH_TRAP3_IP_4
+                          DCD      ETH_MASK_4
                   |L1.3208|
-                          DCD      ETH_TRAP4_IP_1
+                          DCD      ETH_GW_1
                   |L1.3212|
-                          DCD      ETH_TRAP4_IP_2
+                          DCD      ETH_GW_2
                   |L1.3216|
-                          DCD      ETH_TRAP4_IP_3
+                          DCD      ETH_GW_3
                   |L1.3220|
-                          DCD      ETH_TRAP4_IP_4
+                          DCD      ETH_GW_4
                   |L1.3224|
-                          DCD      ETH_TRAP5_IP_1
+                          DCD      ETH_TRAP1_IP_1
                   |L1.3228|
-                          DCD      ETH_TRAP5_IP_2
+                          DCD      ETH_TRAP1_IP_2
                   |L1.3232|
-                          DCD      ETH_TRAP5_IP_3
+                          DCD      ETH_TRAP1_IP_3
                   |L1.3236|
-                          DCD      ETH_TRAP5_IP_4
+                          DCD      ETH_TRAP1_IP_4
                   |L1.3240|
-                          DCD      ETH_SNMP_PORT_READ
+                          DCD      ETH_TRAP2_IP_1
                   |L1.3244|
-                          DCD      ETH_SNMP_PORT_WRITE
+                          DCD      ETH_TRAP2_IP_2
                   |L1.3248|
-                          DCD      MODBUS_ADRESS
+                          DCD      ETH_TRAP2_IP_3
                   |L1.3252|
-                          DCD      MODBUS_BAUDRATE
+                          DCD      ETH_TRAP2_IP_4
                   |L1.3256|
-                          DCD      snmp_location
+                          DCD      ETH_TRAP3_IP_1
                   |L1.3260|
-                          DCD      snmp_community
+                          DCD      ETH_TRAP3_IP_2
                   |L1.3264|
-                          DCD      __ee_vz_cnt
+                          DCD      ETH_TRAP3_IP_3
                   |L1.3268|
-                          DCD      __ee_spc_stat
+                          DCD      ETH_TRAP3_IP_4
                   |L1.3272|
-                          DCD      __ee_spc_bat
+                          DCD      ETH_TRAP4_IP_1
                   |L1.3276|
+                          DCD      ETH_TRAP4_IP_2
+                  |L1.3280|
+                          DCD      ETH_TRAP4_IP_3
+                  |L1.3284|
+                          DCD      ETH_TRAP4_IP_4
+                  |L1.3288|
+                          DCD      ETH_TRAP5_IP_1
+                  |L1.3292|
+                          DCD      ETH_TRAP5_IP_2
+                  |L1.3296|
+                          DCD      ETH_TRAP5_IP_3
+                  |L1.3300|
+                          DCD      ETH_TRAP5_IP_4
+                  |L1.3304|
+                          DCD      ETH_SNMP_PORT_READ
+                  |L1.3308|
+                          DCD      ETH_SNMP_PORT_WRITE
+                  |L1.3312|
+                          DCD      MODBUS_ADRESS
+                  |L1.3316|
+                          DCD      MODBUS_BAUDRATE
+                  |L1.3320|
+                          DCD      snmp_location
+                  |L1.3324|
+                          DCD      snmp_community
+                  |L1.3328|
+                          DCD      __ee_vz_cnt
+                  |L1.3332|
+                          DCD      __ee_spc_stat
+                  |L1.3336|
+                          DCD      __ee_spc_bat
+                  |L1.3340|
                           DCD      __ee_spc_phase

@@ -126,6 +126,10 @@ speedChrgBlckLog=lc640_read_int(EE_SPEED_CHRG_BLOCK_LOG);
 speedChrgDU=lc640_read_int(EE_SPEED_CHRG_D_U);
 DU_LI_BAT=lc640_read_int(EE_DU_LI_BAT);
 FORVARDBPSCHHOUR=lc640_read_int(EE_FORVARDBPSCHHOUR);
+U_OUT_KONTR_MAX=lc640_read_int(EE_U_OUT_KONTR_MAX);
+U_OUT_KONTR_MIN=lc640_read_int(EE_U_OUT_KONTR_MIN);
+U_OUT_KONTR_DELAY=lc640_read_int(EE_U_OUT_KONTR_DELAY);
+DOP_RELE_FUNC=lc640_read_int(EE_DOP_RELE_FUNC);
 
 BAT_IS_ON[0]=(enum_bat_is_on)lc640_read_int(EE_BAT1_IS_ON);
 BAT_IS_ON[1]=(enum_bat_is_on)lc640_read_int(EE_BAT2_IS_ON);

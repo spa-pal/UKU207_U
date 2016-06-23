@@ -469,14 +469,15 @@
 //#define		PARAM_RELE_WARM					104
 #define		PARAM_RELE_AV_COMM					105
 #define		PARAM_RELE_AV_BPS					106
-#define		PARAM_RELE_VENT					107
+#define		PARAM_RELE_VENT						107
 #define		PARAM_RELE_VENT_WARM				107
 #define		PARAM_RELE_AV_BAT1					108
 #define		PARAM_RELE_AV_BAT2					109
 #define		PARAM_RELE_NPN						110
-#define		PARAM_RELE_WARM				     111
-#define 		PARAM_RELE_VVENT					112
+#define		PARAM_RELE_WARM				     	111
+#define 		PARAM_RELE_VVENT				112
 #define 		PARAM_RELE_EXT					113
+#define 		PARAM_RELE_BAT_IS_DISCHARGED	114
 
 #define	MESS2IND_HNDL						215
 #define		PARAM_SAMOKALIBR					216
@@ -719,7 +720,7 @@ typedef enum {
 	iMakb,
 	iBps,iS2,iSet_prl,iK_prl,iDnd,
 	iK,iK_3U,iK_RSTKM,iK_GLONASS,iK_KONTUR,iK_6U,iK_220,iK_220_380,iK_220_IPS_TERMOKOMPENSAT,iK_220_IPS_TERMOKOMPENSAT_IB,
-	iSpcprl,iSpc,k,Crash_0,Crash_1,iKednd,iAv_view_avt,iAKE,
+	iSpcprl,iSpc,k,Crash_0,Crash_1,iKednd,iAv_view_avt,iAKE,iSpc_termocompensat,
 	iLoad,iSpc_prl_vz,iSpc_prl_ke,iKe,iVz,iAvz,iAVAR,
 	iStr,iStr_3U,iStr_RSTKM,iStr_GLONASS,iStr_KONTUR,iStr_6U,iStr_220_IPS_TERMOKOMPENSAT,
 	iVrs,iPrltst,iApv,
@@ -751,7 +752,10 @@ typedef enum {
 	iNpn_set,
 	iByps,iInv_tabl,iSet_bat_sel,
 	iBps_list,
-	iSpch_set}i_enum;
+	iSpch_set,
+	iAvt_set_sel,iAvt_set,
+	iOut_volt_contr,iDop_rele_set}i_enum;
+
 typedef struct  
 {
 
@@ -874,6 +878,10 @@ extern signed short NUMEXT;
 extern signed short NUMAVT;
 extern signed short NUMMAKB;
 extern signed short NUMBYPASS;
+extern signed short U_OUT_KONTR_MAX;
+extern signed short U_OUT_KONTR_MIN;
+extern signed short U_OUT_KONTR_DELAY;
+extern signed short DOP_RELE_FUNC;
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
 extern enum_apv_on APV_ON1,APV_ON2;
@@ -1450,6 +1458,11 @@ extern signed short speedChrgBlckSrc;		//Источник сигнала блокировки, 0-выкл., 1
 extern signed short speedChrgBlckLog;		//Логика сигнала блокировки, 1 - блокировка по замкнутому СК, 0 - по разомкнутому
 extern signed short speedChrgBlckStat;		//Сигнал блокировки для выравнивающего и ускоренного заряда.
 extern char  		speedChrgShowCnt;		//Счетчик показа информационного сообщения
+
+//-----------------------------------------------
+//Контроль выходного напряжения
+extern signed short outVoltContrHndlCnt;
+
 /*----------------------------------------------------------------------------
  * end of file
  *---------------------------------------------------------------------------*/

@@ -362,6 +362,186 @@ avar_unet_hndl_end:
 
 
 //-----------------------------------------------
+void avar_uout_hndl(char in)
+{
+
+char data[4];
+unsigned int event_ptr,lc640_adr,event_ptr_find,event_cnt;
+
+
+if(in==1)
+	{
+	//net_av=1;
+
+	//beep_init(0x01L,'O');
+	//a.av.bAN=1;
+
+
+	//beep_init(0x33333333,'A');
+	 
+	event_ptr=lc640_read_int(PTR_EVENT_LOG);
+	event_ptr++;	
+	if(event_ptr>63)event_ptr=0;	
+	lc640_write_int(PTR_EVENT_LOG,event_ptr);	
+	
+    event_cnt=lc640_read_int(CNT_EVENT_LOG);
+	if(event_cnt!=63)event_cnt=event_ptr;
+	lc640_write_int(CNT_EVENT_LOG,event_cnt); 
+	
+	lc640_adr=EVENT_LOG+(lc640_read_int(PTR_EVENT_LOG)*32);
+	
+	data[0]='Q';
+	data[1]=0;
+	data[2]='A';
+	data[3]=0;
+	lc640_write_long_ptr(lc640_adr,data);
+
+	data[0]=0;//*((char*)&Unet_store);
+	data[1]=0;//*(((char*)&Unet_store)+1);
+	data[2]=0;
+	data[3]=0;
+	lc640_write_long_ptr(lc640_adr+4,data);
+
+	data[0]=LPC_RTC->YEAR;
+	data[1]=LPC_RTC->MONTH;
+	data[2]=LPC_RTC->DOM;
+	data[3]=0;
+	lc640_write_long_ptr(lc640_adr+8,data);
+
+	data[0]=LPC_RTC->HOUR;
+	data[1]=LPC_RTC->MIN;
+	data[2]=LPC_RTC->SEC;
+	data[3]=0;
+	lc640_write_long_ptr(lc640_adr+12,data);
+	
+	data[0]='A';
+	data[1]='A';
+	data[2]='A';
+	data[3]='A';
+	lc640_write_long_ptr(lc640_adr+16,data);
+	
+	data[0]='A';
+	data[1]='A';
+	data[2]='A';
+	data[3]='A';
+	lc640_write_long_ptr(lc640_adr+20,data);
+	
+	data[0]='A';
+	data[1]='A';
+	data[2]='A';
+	data[3]='A';
+	lc640_write_long_ptr(lc640_adr+24,data);
+	
+	data[0]='A';
+	data[1]='A';
+	data[2]='A';
+	data[3]='A';
+	lc640_write_long_ptr(lc640_adr+28,data);				
+	
+/*	memo_out0[0]=0x55;
+     memo_out0[1]=0x00+2;
+     memo_out0[2]=1;
+     memo_out0[3]=0x0b;
+     memo_out0[4]=0x55;
+     memo_out0[5]=0x55; 
+     	
+     memo_out0[6]=crc_87(memo_out0,6);
+	memo_out0[7]=crc_95(memo_out0,6);
+     usart_out_adr0(memo_out0,8); 
+	*/
+	//snmp_trap_send("Main power is off",2,1,0);
+	}
+
+else if(in==0)
+	{
+	//net_av=0;
+
+  /*
+	SET_REG(C2GSR,3,24,8);
+	C2MOD=0;
+	bOUT_FREE2=1;*/
+
+
+	//C2MOD=0;
+
+	//can2_init(7,8,CANBitrate250k_60MHz);
+
+     //beep_init(0x02L,'O');
+	//a_.av.bAN=0;
+//	SET_REG(avar_stat,0,0,1);
+
+	//if(AV_OFF_AVT)a.av.bAN=0;
+	
+	//if(AV_OFF_AVT) SET_REG(avar_ind_stat,0,0,1);
+
+    event_ptr=lc640_read_int(PTR_EVENT_LOG);
+	event_ptr_find=event_ptr;
+avar_uout_hndl_lbl1:
+	lc640_adr=EVENT_LOG+(event_ptr_find*32);
+
+     lc640_read_long_ptr(lc640_adr,data);
+     
+     if(!((data[0]=='Q')&&(data[1]==0)&&(data[2]=='A')))
+     	{        
+     	if(event_ptr_find)event_ptr_find--;
+     	else event_ptr_find=63;
+     	if(event_ptr_find==event_ptr)goto avar_unet_hndl_end;
+     	else goto avar_uout_hndl_lbl1;
+     	}
+     else 
+     	{
+     	lc640_read_long_ptr(lc640_adr+16,data);
+     	if(!((data[0]=='A')&&(data[1]=='A')&&(data[2]=='A')&&(data[3]=='A')))
+     		{        
+     		if(event_ptr_find)event_ptr_find--;
+         		else event_ptr_find=63;
+         		if(event_ptr_find==event_ptr)goto avar_unet_hndl_end;
+     		else goto avar_uout_hndl_lbl1;
+     		}
+
+     	}	
+	
+	data[0]=LPC_RTC->YEAR;
+	data[1]=LPC_RTC->MONTH;
+	data[2]=LPC_RTC->DOM;
+	data[3]=0;
+	lc640_write_long_ptr(lc640_adr+16,data);
+
+	data[0]=LPC_RTC->HOUR;
+	data[1]=LPC_RTC->MIN;
+	data[2]=LPC_RTC->SEC;
+	data[3]=0;
+	lc640_write_long_ptr(lc640_adr+20,data); 
+	
+	data[0]=*((char*)(&net_Ustore));
+	data[1]=*(((char*)(&net_Ustore))+1);
+	data[2]='B';
+	data[3]='B';
+	lc640_write_long_ptr(lc640_adr+24,data);
+	
+	data[0]='B';
+	data[1]='B';
+	data[2]='B';
+	data[3]='B';
+	lc640_write_long_ptr(lc640_adr+28,data);	
+	
+/*	memo_out0[0]=0x55;
+     memo_out0[1]=0x00+2;
+     memo_out0[2]=1;
+     memo_out0[3]=0x0b;
+     memo_out0[4]=0xaa;
+     memo_out0[5]=0xaa; 
+     	
+     memo_out0[6]=crc_87(memo_out0,6);
+	memo_out0[7]=crc_95(memo_out0,6);
+     usart_out_adr0(memo_out0,8); */
+     snmp_trap_send("Main power is on",2,1,1);	
+	}
+avar_unet_hndl_end:
+	__nop();		
+}
+
+//-----------------------------------------------
 void avar_bps_hndl(char dev, char v, char in)
 {
 char data[4];

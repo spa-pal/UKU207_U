@@ -81,38 +81,38 @@ void ret_hndl(void);
 
 
 
-#line 125 "eeprom_map.h"
+#line 129 "eeprom_map.h"
 
 
 
-#line 142 "eeprom_map.h"
+#line 146 "eeprom_map.h"
 
 
 
-#line 154 "eeprom_map.h"
+#line 158 "eeprom_map.h"
 
 
-#line 165 "eeprom_map.h"
-
-
-
-#line 176 "eeprom_map.h"
+#line 169 "eeprom_map.h"
 
 
 
-#line 232 "eeprom_map.h"
-
-
-#line 274 "eeprom_map.h"
+#line 180 "eeprom_map.h"
 
 
 
+#line 236 "eeprom_map.h"
 
+
+#line 278 "eeprom_map.h"
 
 
 
 
-#line 296 "eeprom_map.h"
+
+
+
+
+#line 300 "eeprom_map.h"
 
 
 
@@ -817,11 +817,9 @@ extern BOOL snmp_set_community (const char *community);
 
 #line 469 "main.h"
 
-#line 480 "main.h"
+#line 481 "main.h"
 
-#line 496 "main.h"
-
-
+#line 497 "main.h"
 
 
 
@@ -841,9 +839,11 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 530 "main.h"
 
-#line 544 "main.h"
+
+#line 531 "main.h"
+
+#line 545 "main.h"
 
 
 
@@ -856,25 +856,25 @@ extern BOOL snmp_set_community (const char *community);
  
 
 
-#line 565 "main.h"
+#line 566 "main.h"
 
-#line 575 "main.h"
+#line 576 "main.h"
 
-#line 584 "main.h"
+#line 585 "main.h"
 
-#line 593 "main.h"
+#line 594 "main.h"
 
-#line 605 "main.h"
+#line 606 "main.h"
 
-#line 615 "main.h"
+#line 616 "main.h"
 
-#line 624 "main.h"
+#line 625 "main.h"
 
-#line 632 "main.h"
+#line 633 "main.h"
 
-#line 641 "main.h"
+#line 642 "main.h"
 
-#line 653 "main.h"
+#line 654 "main.h"
 
 
 
@@ -897,7 +897,7 @@ extern char cnt_of_slave;
 typedef enum {
 
 	iMn_220_IPS_TERMOKOMPENSAT,
-#line 694 "main.h"
+#line 695 "main.h"
 	iMn,iMn_3U,iMn_RSTKM,
 
 
@@ -926,7 +926,7 @@ typedef enum {
 	iMakb,
 	iBps,iS2,iSet_prl,iK_prl,iDnd,
 	iK,iK_3U,iK_RSTKM,iK_GLONASS,iK_KONTUR,iK_6U,iK_220,iK_220_380,iK_220_IPS_TERMOKOMPENSAT,iK_220_IPS_TERMOKOMPENSAT_IB,
-	iSpcprl,iSpc,k,Crash_0,Crash_1,iKednd,iAv_view_avt,iAKE,
+	iSpcprl,iSpc,k,Crash_0,Crash_1,iKednd,iAv_view_avt,iAKE,iSpc_termocompensat,
 	iLoad,iSpc_prl_vz,iSpc_prl_ke,iKe,iVz,iAvz,iAVAR,
 	iStr,iStr_3U,iStr_RSTKM,iStr_GLONASS,iStr_KONTUR,iStr_6U,iStr_220_IPS_TERMOKOMPENSAT,
 	iVrs,iPrltst,iApv,
@@ -958,7 +958,10 @@ typedef enum {
 	iNpn_set,
 	iByps,iInv_tabl,iSet_bat_sel,
 	iBps_list,
-	iSpch_set}i_enum;
+	iSpch_set,
+	iAvt_set_sel,iAvt_set,
+	iOut_volt_contr,iDop_rele_set}i_enum;
+
 typedef struct  
 {
 
@@ -1081,6 +1084,10 @@ extern signed short NUMEXT;
 extern signed short NUMAVT;
 extern signed short NUMMAKB;
 extern signed short NUMBYPASS;
+extern signed short U_OUT_KONTR_MAX;
+extern signed short U_OUT_KONTR_MIN;
+extern signed short U_OUT_KONTR_DELAY;
+extern signed short DOP_RELE_FUNC;
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
 extern enum_apv_on APV_ON1,APV_ON2;
@@ -1559,9 +1566,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1363 "main.h"
+#line 1371 "main.h"
 
-#line 1374 "main.h"
+#line 1382 "main.h"
 
 
 
@@ -1641,6 +1648,11 @@ extern signed short speedChrgBlckSrc;
 extern signed short speedChrgBlckLog;		
 extern signed short speedChrgBlckStat;		
 extern char  		speedChrgShowCnt;		
+
+
+
+extern signed short outVoltContrHndlCnt;
+
 
 
  
@@ -4050,22 +4062,23 @@ lc640_read_long_ptr(tempii+12,dt__);
 iii=find(simbol);
      
 if(dt[0]=='U')
-    	{ 
-    	if(dt[2]=='R')
-    		{
-    		lcd_buffer[iii++]='Â';
-    		lcd_buffer[iii++]='ê';
-    		lcd_buffer[iii++]='ë';
-    		}
+    { 
+    if(dt[2]=='R')
+   		{
+    	lcd_buffer[iii++]='Â';
+   		lcd_buffer[iii++]='ê';
+    	lcd_buffer[iii++]='ë';
+   		}
     	
 	lcd_buffer[iii++]=' ';
 	lcd_buffer[iii++]=' ';     		
    	lcd_buffer[iii++]=' ';
    	lcd_buffer[iii++]=' ';
+	lcd_buffer[iii++]=' ';
 
-    	if((dt_[0]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->YEAR)&&(dt_[1]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MONTH)&&(dt_[2]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->DOM))
-    		{
-    	    	lcd_buffer[iii++]='0';
+    if((dt_[0]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->YEAR)&&(dt_[1]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MONTH)&&(dt_[2]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->DOM))
+    	{
+    	lcd_buffer[iii++]='0';
      	lcd_buffer[iii++]='!';
      	lcd_buffer[iii++]=':'; 
      	lcd_buffer[iii++]='0';
@@ -4078,7 +4091,7 @@ if(dt[0]=='U')
      	int2lcd(dt__[2],'#',0);    		     		
      	}	                   
 	else      	
-          {
+        {
  		lcd_buffer[iii++]=' ';
      	lcd_buffer[iii++]='0';
      	lcd_buffer[iii++]='!';
@@ -4096,15 +4109,58 @@ if(dt[0]=='U')
      
 else if(dt[0]=='P')
 	{
-     lcd_buffer[iii++]='Ï';
-     lcd_buffer[iii++]='Ñ';
-    	lcd_buffer[iii++]=' ';
-     lcd_buffer[iii++]=' ';     		
-     lcd_buffer[iii++]=' ';
-     lcd_buffer[iii++]=' ';
-     lcd_buffer[iii++]=' ';
+  	lcd_buffer[iii++]='À';
+    lcd_buffer[iii++]='Â';     		
+    lcd_buffer[iii++]='.';
+    lcd_buffer[iii++]='Ï';
+    lcd_buffer[iii++]='Ñ';
+	lcd_buffer[iii++]=' ';
+    lcd_buffer[iii++]=' ';
+	lcd_buffer[iii++]=' ';
      	
-     if((dt_[0]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->YEAR)&&(dt_[1]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MONTH)&&(dt_[2]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->DOM))
+    if((dt_[0]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->YEAR)&&(dt_[1]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MONTH)&&(dt_[2]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->DOM))
+     	{
+         	lcd_buffer[iii++]='0';
+     	lcd_buffer[iii++]='!';
+    	    	lcd_buffer[iii++]=':'; 
+    		lcd_buffer[iii++]='0';
+    		lcd_buffer[iii++]='@';
+     	lcd_buffer[iii++]=':';
+     	lcd_buffer[iii++]='0';
+     	lcd_buffer[iii++]='#';
+         	int2lcd(dt__[0],'!',0);
+     	int2lcd(dt__[1],'@',0);
+     	int2lcd(dt__[2],'#',0);    		     		
+     	}	                   
+    	else      	
+     	{
+      	lcd_buffer[iii++]=' ';
+     	lcd_buffer[iii++]='0';
+     	lcd_buffer[iii++]='!';
+     	lcd_buffer[iii++]='@'; 
+      	lcd_buffer[iii++]=' ';
+      	lcd_buffer[iii++]=' ';
+      	lcd_buffer[iii++]='0';
+      	lcd_buffer[iii++]='#';
+      	int2lcd(dt_[2],'!',0);
+     	int2lcd(dt_[0],'#',0);   
+      	if(!((dt_[1]>=1)&&(dt_[1]<=12)))dt_[1]=1;
+	 	sub_bgnd(sm_mont[dt_[1]],'@',0);  
+  		}     	
+     }   
+
+else if(dt[0]=='Q')
+	{
+  	lcd_buffer[iii++]='À';
+    lcd_buffer[iii++]='Â';     		
+    lcd_buffer[iii++]='.';
+    lcd_buffer[iii++]='U';
+    lcd_buffer[iii++]='â';
+	lcd_buffer[iii++]='û';
+    lcd_buffer[iii++]='õ';
+	lcd_buffer[iii++]=' ';
+     	
+    if((dt_[0]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->YEAR)&&(dt_[1]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MONTH)&&(dt_[2]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->DOM))
      	{
          	lcd_buffer[iii++]='0';
      	lcd_buffer[iii++]='!';
@@ -4139,20 +4195,23 @@ else if(dt[0]=='B')
     	{
     	if(dt[2]=='C')
     		{
+  			lcd_buffer[iii++]='À';
+    		lcd_buffer[iii++]='Â';     		
+    		lcd_buffer[iii++]='.';
     		lcd_buffer[iii++]='Á';
     		lcd_buffer[iii++]='à';
     		lcd_buffer[iii++]='ò';
 		if(dt[1]<9)
     			{
     			lcd_buffer[iii++]=0x31+dt[1];
-    			lcd_buffer[iii++]='À';
+    			lcd_buffer[iii++]=' ';
     			lcd_buffer[iii++]=' ';
     			}
     		else if((dt[1]>=9)&&(dt[1]<99))
     			{
     			lcd_buffer[iii++]=0x30+((dt[1]+1)/10);
     			lcd_buffer[iii++]=0x30+((dt[1]+1)%10);
-    			lcd_buffer[iii++]='À';
+    			lcd_buffer[iii++]=' ';
     			}
     		else 
     			{
@@ -4160,7 +4219,7 @@ else if(dt[0]=='B')
     			lcd_buffer[iii++]=' '; 
     			lcd_buffer[iii++]=' ';    		
     			} 
-    		lcd_buffer[iii++]=' ';
+    		
      	
     		if((dt_[0]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->YEAR)&&(dt_[1]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MONTH)&&(dt_[2]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->DOM))
     			{
@@ -4195,6 +4254,9 @@ else if(dt[0]=='B')
 
     	if(dt[2]=='S')
     		{
+  			lcd_buffer[iii++]='À';
+    		lcd_buffer[iii++]='Â';     		
+    		lcd_buffer[iii++]='.';
     		lcd_buffer[iii++]='Á';
     		lcd_buffer[iii++]='à';
     		lcd_buffer[iii++]='ò';
@@ -4216,7 +4278,7 @@ else if(dt[0]=='B')
     			lcd_buffer[iii++]=' '; 
     			lcd_buffer[iii++]=' ';    		
     			} 
-    		lcd_buffer[iii++]=' ';
+    		
      	
     		if((dt_[0]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->YEAR)&&(dt_[1]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MONTH)&&(dt_[2]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->DOM))
     			{
@@ -4429,6 +4491,9 @@ else if(dt[0]=='B')
      	
 else if(dt[0]=='S')
     	{
+  		lcd_buffer[iii++]='À';
+    	lcd_buffer[iii++]='Â';     		
+    	lcd_buffer[iii++]='.';
     	lcd_buffer[iii++]='Á';
     	lcd_buffer[iii++]='Ï';
     	lcd_buffer[iii++]='Ñ';
@@ -4448,7 +4513,7 @@ else if(dt[0]=='S')
     		lcd_buffer[iii++]=' ';     		
     		} 
     	lcd_buffer[iii++]=' '; 
-    	lcd_buffer[iii++]=' ';
+ 
     	
     	if((dt_[0]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->YEAR)&&(dt_[1]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MONTH)&&(dt_[2]==((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->DOM))
     		{
@@ -4506,6 +4571,9 @@ else if(dt[0]=='B')
      	
 else if(dt[0]=='I')
     	{
+  		lcd_buffer[iii++]='À';
+    	lcd_buffer[iii++]='Â';     		
+    	lcd_buffer[iii++]='.';
     	lcd_buffer[iii++]='È';
     	lcd_buffer[iii++]='í';
     	lcd_buffer[iii++]='â';

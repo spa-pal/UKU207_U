@@ -3333,11 +3333,16 @@ if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_EXT))
 	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,9,1);
 	else if(mess_data[1]==1) SET_REG(LPC_GPIO0->FIOSET,1,9,1);
 	}
-else 
+else if(DOP_RELE_FUNC==0)	//если допреле подключено к ускоренному заряду
 	{
 	if(!speedChIsOn) SET_REG(LPC_GPIO0->FIOCLR,1,9,1);
 	else SET_REG(LPC_GPIO0->FIOSET,1,9,1);
-	} 	
+	}
+else if(DOP_RELE_FUNC==1)  //если допреле подключено к индиказии разряженной батареи
+	{
+	if((mess_find_unvol(MESS2RELE_HNDL))&& (mess_data[0]==PARAM_RELE_BAT_IS_DISCHARGED)) SET_REG(LPC_GPIO0->FIOCLR,1,9,1);
+	else SET_REG(LPC_GPIO0->FIOSET,1,9,1);
+	}	 	
 #endif
 
 #ifdef UKU_KONTUR
@@ -5866,6 +5871,45 @@ void	numOfForvardBps_init(void)			//Программа сброса системы смены первого источ
 {									//Должна вызываться при изменении кол-ва источников в структуре
 lc640_write_int(EE_FORVBPSHOURCNT,0);
 numOfForvardBps_minCnt=0;
+}
+
+//-----------------------------------------------
+void outVoltContrHndl(void)
+{ 
+if((load_U>U_OUT_KONTR_MAX)||(load_U<U_OUT_KONTR_MIN))
+	{
+	if(outVoltContrHndlCnt<U_OUT_KONTR_DELAY)
+		{
+		outVoltContrHndlCnt++;
+		if(outVoltContrHndlCnt==U_OUT_KONTR_DELAY)
+			{
+
+			}
+		}
+	}
+else
+	{
+	if(outVoltContrHndlCnt)
+		{
+		outVoltContrHndlCnt--;
+		if(outVoltContrHndlCnt==0)
+			{
+
+			}
+		}
+	}
+
+if (load_U<(USIGN*10)) 
+	{
+	if(!bSILENT)
+		{
+		mess_send(MESS2RELE_HNDL,PARAM_RELE_BAT_IS_DISCHARGED,1,20);
+		}
+
+	//bU_BAT2REL_AV_BAT=1;
+	}
+
+
 }
 
 //-----------------------------------------------

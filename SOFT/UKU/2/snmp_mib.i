@@ -2979,11 +2979,9 @@ typedef struct
 
 #line 469 "main.H"
 
-#line 480 "main.H"
+#line 481 "main.H"
 
-#line 496 "main.H"
-
-
+#line 497 "main.H"
 
 
 
@@ -3003,9 +3001,11 @@ typedef struct
 
 
 
-#line 530 "main.H"
 
-#line 544 "main.H"
+
+#line 531 "main.H"
+
+#line 545 "main.H"
 
 
 
@@ -3018,25 +3018,25 @@ typedef struct
  
 
 
-#line 565 "main.H"
+#line 566 "main.H"
 
-#line 575 "main.H"
+#line 576 "main.H"
 
-#line 584 "main.H"
+#line 585 "main.H"
 
-#line 593 "main.H"
+#line 594 "main.H"
 
-#line 605 "main.H"
+#line 606 "main.H"
 
-#line 615 "main.H"
+#line 616 "main.H"
 
-#line 624 "main.H"
+#line 625 "main.H"
 
-#line 632 "main.H"
+#line 633 "main.H"
 
-#line 641 "main.H"
+#line 642 "main.H"
 
-#line 653 "main.H"
+#line 654 "main.H"
 
 
 
@@ -3059,7 +3059,7 @@ extern char cnt_of_slave;
 typedef enum {
 
 	iMn_220_IPS_TERMOKOMPENSAT,
-#line 694 "main.H"
+#line 695 "main.H"
 	iMn,iMn_3U,iMn_RSTKM,
 
 
@@ -3088,7 +3088,7 @@ typedef enum {
 	iMakb,
 	iBps,iS2,iSet_prl,iK_prl,iDnd,
 	iK,iK_3U,iK_RSTKM,iK_GLONASS,iK_KONTUR,iK_6U,iK_220,iK_220_380,iK_220_IPS_TERMOKOMPENSAT,iK_220_IPS_TERMOKOMPENSAT_IB,
-	iSpcprl,iSpc,k,Crash_0,Crash_1,iKednd,iAv_view_avt,iAKE,
+	iSpcprl,iSpc,k,Crash_0,Crash_1,iKednd,iAv_view_avt,iAKE,iSpc_termocompensat,
 	iLoad,iSpc_prl_vz,iSpc_prl_ke,iKe,iVz,iAvz,iAVAR,
 	iStr,iStr_3U,iStr_RSTKM,iStr_GLONASS,iStr_KONTUR,iStr_6U,iStr_220_IPS_TERMOKOMPENSAT,
 	iVrs,iPrltst,iApv,
@@ -3120,7 +3120,10 @@ typedef enum {
 	iNpn_set,
 	iByps,iInv_tabl,iSet_bat_sel,
 	iBps_list,
-	iSpch_set}i_enum;
+	iSpch_set,
+	iAvt_set_sel,iAvt_set,
+	iOut_volt_contr,iDop_rele_set}i_enum;
+
 typedef struct  
 {
 
@@ -3243,6 +3246,10 @@ extern signed short NUMEXT;
 extern signed short NUMAVT;
 extern signed short NUMMAKB;
 extern signed short NUMBYPASS;
+extern signed short U_OUT_KONTR_MAX;
+extern signed short U_OUT_KONTR_MIN;
+extern signed short U_OUT_KONTR_DELAY;
+extern signed short DOP_RELE_FUNC;
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
 extern enum_apv_on APV_ON1,APV_ON2;
@@ -3721,9 +3728,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1363 "main.H"
+#line 1371 "main.H"
 
-#line 1374 "main.H"
+#line 1382 "main.H"
 
 
 
@@ -3803,6 +3810,11 @@ extern signed short speedChrgBlckSrc;
 extern signed short speedChrgBlckLog;		
 extern signed short speedChrgBlckStat;		
 extern char  		speedChrgShowCnt;		
+
+
+
+extern signed short outVoltContrHndlCnt;
+
 
 
  

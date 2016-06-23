@@ -17,6 +17,7 @@ extern unsigned avar_stat_new,avar_stat_offed;
 
 void avar_hndl(void);
 void avar_unet_hndl(char in);
+void avar_uout_hndl(char in);
 void reload_hndl(void);
 void avar_bps_hndl(char bps, char v, char in);
 void avar_bat_hndl(char bat, char in);
