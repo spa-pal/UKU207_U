@@ -1678,6 +1678,7 @@ extern char  		speedChrgShowCnt;
 
 
 extern signed short outVoltContrHndlCnt;
+extern char uout_av;
 
 
 
@@ -5940,6 +5941,7 @@ char  	   speedChrgShowCnt;
 
 
 signed short outVoltContrHndlCnt;
+char uout_av;
 
 
 
@@ -6232,7 +6234,7 @@ if(cnt_net_drv<=11)
 	     }
 	}
 
-#line 951 "main.c"
+#line 952 "main.c"
 else if(cnt_net_drv==12)
 	{
      if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x62,*((char*)(&UMAX)),*((char*)((&UMAX))+1),*((char*)(&DU)),*((char*)((&DU))+1),0);
@@ -6400,7 +6402,7 @@ if(cnt_net_drv<=11)
 	     }
 	}
 
-#line 1134 "main.c"
+#line 1135 "main.c"
 else if(cnt_net_drv==12)
 	{
      if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x62,*((char*)(&UMAX)),*((char*)((&UMAX))+1),*((char*)(&DU)),*((char*)((&DU))+1),0);
@@ -6867,9 +6869,9 @@ if(avar_stat&(1<<(3+7)))
 	sub_cnt_max++;	
 	}
 
-#line 1619 "main.c"
+#line 1620 "main.c"
 
-#line 1639 "main.c"
+#line 1640 "main.c"
 
 
 if((sk_av_stat[0]==sasON)&&(NUMSK)&&(!SK_LCD_EN[0]))
@@ -14204,12 +14206,22 @@ if(a_ind . i==iDeb)
      		    	"                    ");
 
 
-		int2lcdyx(load_U,1,5,0);
+		int2lcdyx(uout_av,1,5,0);
 		int2lcdyx(USIGN,2,5,0); 
 
 		int2lcdyx(bSILENT,3,5,0);
 
+		
+		
+		int2lcdyx(U_OUT_KONTR_MAX,0,19,0);
+		int2lcdyx(load_U,1,19,0);
+		int2lcdyx(U_OUT_KONTR_MIN,2,19,0);
+		
+		int2lcdyx(outVoltContrHndlCnt,3,19,0);
 
+		long2lcdhyx(0x12345678UL,1,14);
+		long2lcdhyx(avar_stat,2,14);
+		long2lcdhyx(avar_ind_stat,3,14);
 		}  
 
 	else if(a_ind . s_i==3)
@@ -16561,12 +16573,12 @@ else if(a_ind . i==iDop_rele_set)
 }							    
 
 
-#line 11336 "main.c"
+#line 11347 "main.c"
 
 
 
 
-#line 11359 "main.c"
+#line 11370 "main.c"
 
 
 
@@ -16889,7 +16901,7 @@ else if(a_ind . i==iMn)
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV)))
 			{
-#line 11689 "main.c"
+#line 11700 "main.c"
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV+1)))
 			{
@@ -16903,9 +16915,9 @@ else if(a_ind . i==iMn)
 		     ret(1000);
 			}
 
-#line 11709 "main.c"
+#line 11720 "main.c"
 
-#line 11717 "main.c"
+#line 11728 "main.c"
 
 		else if(a_ind . s_i==(4+NUMBAT+NUMIST+2)+(NUMAVT!=0))
 			{
@@ -18961,11 +18973,11 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==184) 
 				{
 				tree_down(0,0);
-#line 13791 "main.c"
+#line 13802 "main.c"
 				tree_up(iSet_220_IPS_TERMOKOMPENSAT,0,0,0);
 
 
-#line 13800 "main.c"
+#line 13811 "main.c"
 
 				ret(1000);
 				}
@@ -18983,7 +18995,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==873) 
 				{
 				tree_down(0,0);
-#line 13848 "main.c"
+#line 13859 "main.c"
 				if(AUSW_MAIN==22033)
 					{
 					tree_up(iK_220_IPS_TERMOKOMPENSAT,0,0,0);
@@ -19060,7 +19072,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 			if(tempU==999) 
 				{
 				tree_down(0,0);
-#line 13954 "main.c"
+#line 13965 "main.c"
 				tree_up(iTst_220_IPS_TERMOKOMPENSAT,0,0,0);
 
 
@@ -19693,7 +19705,7 @@ else if(a_ind . i==iSet)
 	     {
 	     if(but==254)
 	          {
-#line 14598 "main.c"
+#line 14609 "main.c"
 	          ret(1000);
 	          default_temp=10;
 	          }
@@ -19715,7 +19727,7 @@ else if(a_ind . i==iSet)
 		{
 		if(but==254)
 		     {
-#line 14644 "main.c"
+#line 14655 "main.c"
 
 
 
@@ -29101,7 +29113,7 @@ else if(a_ind . i==iK_inv)
 			}
 		}			
 	}
-#line 24176 "main.c"
+#line 24187 "main.c"
 
 else if(a_ind . i==iK_byps)
 	{
@@ -32461,7 +32473,7 @@ else if(a_ind . i==iOut_volt_contr)
 		if(but==239)U_OUT_KONTR_MAX++;
 		else if(but==111)U_OUT_KONTR_MAX=(U_OUT_KONTR_MAX/5+1)*5;
 		else if(but==247)U_OUT_KONTR_MAX--;
-		else if(but==119)U_OUT_KONTR_MAX=(U_OUT_KONTR_MAX/5+1)*5;
+		else if(but==119)U_OUT_KONTR_MAX=(U_OUT_KONTR_MAX/5-1)*5;
 		gran(&U_OUT_KONTR_MAX,10,3000);
 		lc640_write_int(0x10+100+182,U_OUT_KONTR_MAX);
 		speed=1;
@@ -32472,7 +32484,7 @@ else if(a_ind . i==iOut_volt_contr)
 		if(but==239)U_OUT_KONTR_MIN++;
 		else if(but==111)U_OUT_KONTR_MIN=(U_OUT_KONTR_MIN/5+1)*5;
 		else if(but==247)U_OUT_KONTR_MIN--;
-		else if(but==119)U_OUT_KONTR_MIN=(U_OUT_KONTR_MIN/5+1)*5;
+		else if(but==119)U_OUT_KONTR_MIN=(U_OUT_KONTR_MIN/5-1)*5;
 		gran(&U_OUT_KONTR_MIN,10,3000);
 		lc640_write_int(0x10+100+184,U_OUT_KONTR_MIN);
 		speed=1;
@@ -32810,9 +32822,9 @@ lcd_clear();
 rtc_init();
 
 a_ind . i=iMn;
-#line 27903 "main.c"
+#line 27914 "main.c"
 a_ind . i=iMn_220_IPS_TERMOKOMPENSAT;
-#line 27911 "main.c"
+#line 27922 "main.c"
 
 
 
@@ -32852,7 +32864,7 @@ adc_init();
 
 lc640_write_int(100,134);
 
-#line 27956 "main.c"
+#line 27967 "main.c"
 
 
 

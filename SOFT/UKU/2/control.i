@@ -1818,6 +1818,7 @@ extern char  		speedChrgShowCnt;
 
 
 extern signed short outVoltContrHndlCnt;
+extern char uout_av;
 
 
 
@@ -4297,6 +4298,7 @@ extern unsigned avar_stat_new,avar_stat_offed;
 
 
 
+
 short cntrl_stat_blok_cnt,cntrl_stat_blok_cnt_,cntrl_stat_blok_cnt_plus[2],cntrl_stat_blok_cnt_minus[2];
 
 
@@ -4880,23 +4882,23 @@ signed long temp_SL ;
 char  i;
 signed short temp_SS;
 
-#line 781 "control.c"
+#line 782 "control.c"
 
-#line 789 "control.c"
+#line 790 "control.c"
 
-#line 797 "control.c"
+#line 798 "control.c"
 
-#line 859 "control.c"
+#line 860 "control.c"
 
-#line 867 "control.c"
+#line 868 "control.c"
 
-#line 875 "control.c"
-
-
-#line 885 "control.c"
+#line 876 "control.c"
 
 
-#line 924 "control.c"
+#line 886 "control.c"
+
+
+#line 925 "control.c"
 
 
 
@@ -4994,7 +4996,7 @@ else
 if(bps[11]._device!=dNET_METR) net_F3=net_F;
 
 
-#line 1028 "control.c"
+#line 1029 "control.c"
 
 
 temp_SL=(signed long)adc_buff_[0];
@@ -5002,33 +5004,33 @@ temp_SL*=Kubat[0];
 temp_SL/=2000L;
 bat[0]._Ub=(signed short)temp_SL;
 
-#line 1042 "control.c"
+#line 1043 "control.c"
 
-#line 1050 "control.c"
+#line 1051 "control.c"
 
 temp_SL=(signed long)adc_buff_[4];
 temp_SL*=Kubatm[0];
 temp_SL/=700L;
 bat[0]._Ubm=(signed short)temp_SL;
 
-#line 1062 "control.c"
+#line 1063 "control.c"
 
 temp_SL=(signed long)adc_buff_[12];
 temp_SL*=Kubat[1];
 temp_SL/=2000L;
 bat[1]._Ub=(signed short)temp_SL;
 
-#line 1074 "control.c"
+#line 1075 "control.c"
 
-#line 1081 "control.c"
+#line 1082 "control.c"
 
 temp_SL=(signed long)adc_buff_[1];
 temp_SL*=Kubatm[1];
 temp_SL/=700L;
 bat[1]._Ubm=(signed short)temp_SL;
-#line 1092 "control.c"
+#line 1093 "control.c"
 
-#line 1099 "control.c"
+#line 1100 "control.c"
 
 
 
@@ -5081,7 +5083,7 @@ if(!mess_find_unvol(220))
 
 
 
-#line 1160 "control.c"
+#line 1161 "control.c"
 if((adc_buff_[6]>800)&&(adc_buff_[6]<3800))bat[0]._nd=0;
 else bat[0]._nd=1;
 temp_SL=(signed long)adc_buff_[6];
@@ -5091,7 +5093,7 @@ temp_SL-=273L;
 bat[0]._Tb=(signed short)temp_SL;
 
 
-#line 1178 "control.c"
+#line 1179 "control.c"
 if((adc_buff_[7]>800)&&(adc_buff_[7]<3800))bat[1]._nd=0;
 else bat[1]._nd=1;
 temp_SL=(signed long)adc_buff_[7];
@@ -5101,7 +5103,7 @@ temp_SL-=273L;
 bat[1]._Tb=(signed short)temp_SL;
 
 
-#line 1259 "control.c"
+#line 1260 "control.c"
 
 
 
@@ -5110,9 +5112,9 @@ temp_SL*=Kuload;
 temp_SL/=2000L;
 load_U=(signed short)temp_SL;
 
-#line 1274 "control.c"
+#line 1275 "control.c"
 
-#line 1282 "control.c"
+#line 1283 "control.c"
 
 
 
@@ -5124,7 +5126,7 @@ load_U=(signed short)temp_SL;
 
 
 
-#line 1303 "control.c"
+#line 1304 "control.c"
 
 if((adc_buff_[5]>800)&&(adc_buff_[5]<3800))ND_EXT[0]=0;
 else ND_EXT[0]=1;
@@ -5135,7 +5137,7 @@ temp_SL-=273L;
 t_ext[0]=(signed short)temp_SL;
 
 
-#line 1334 "control.c"
+#line 1335 "control.c"
 
 
 
@@ -5149,9 +5151,9 @@ temp_SL/=20000L;
 temp_SL-=273L;
 t_ext[0]=(signed short)temp_SL;
 
-#line 1371 "control.c"
+#line 1372 "control.c"
 
-#line 1393 "control.c"
+#line 1394 "control.c"
 
 
 
@@ -5180,7 +5182,7 @@ bat[0]._Ib=Ib_ips_termokompensat;
 
 
 
-#line 1443 "control.c"
+#line 1444 "control.c"
 
 
 temp_SL=(signed long)adc_buff_ext_[0];
@@ -5479,7 +5481,7 @@ if(load_I<0)load_I=0;
 
 
 
-#line 1770 "control.c"
+#line 1771 "control.c"
 
 
 if (NUMINV)
@@ -5524,7 +5526,7 @@ if (NUMINV)
    	}
 
 
-#line 1833 "control.c"
+#line 1834 "control.c"
 
 
 
@@ -5543,10 +5545,10 @@ if (NUMINV)
 
  
 
-#line 1997 "control.c"
+#line 1998 "control.c"
 
 
-#line 2033 "control.c"
+#line 2034 "control.c"
 
 
 
@@ -5677,7 +5679,7 @@ if(adc_ch_net)
 		}
 	if((adc_net_buff_cnt&0x03ff)==0)
 		{
-#line 2169 "control.c"
+#line 2170 "control.c"
 		net_buff_=(short)((main_power_buffer[adc_net_buff_cnt>>10])>>8);
 
 
@@ -6160,7 +6162,7 @@ if(mess_find_unvol((210))&&(mess_data[0]==100))
 else ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR & ~((0xffffffff>>(32-1))<<29)) | (1 << 29) );
 
 
-#line 2662 "control.c"
+#line 2663 "control.c"
 
 if((mess_find_unvol(210))&&	(mess_data[0]==102))
 	{
@@ -6171,28 +6173,28 @@ else	if(!(avar_ind_stat&0x00000001))	((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x0
 else 					  		((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOSET & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
 
 
-#line 2708 "control.c"
+#line 2709 "control.c"
 
 
-#line 2746 "control.c"
+#line 2747 "control.c"
 
-#line 2766 "control.c"
+#line 2767 "control.c"
 
-#line 2833 "control.c"
+#line 2834 "control.c"
 
-#line 2947 "control.c"
+#line 2948 "control.c"
 
-#line 3013 "control.c"
+#line 3014 "control.c"
 
-#line 3058 "control.c"
+#line 3059 "control.c"
 
-#line 3103 "control.c"
+#line 3104 "control.c"
 
 
 
 if((AUSW_MAIN==22010)||(AUSW_MAIN==22011))
 	{
-#line 3118 "control.c"
+#line 3119 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOCLR & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6208,7 +6210,7 @@ if((AUSW_MAIN==22010)||(AUSW_MAIN==22011))
 	     }
 	else 
 		{
-		if(!(avar_ind_stat&0x000007f8)) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR & ~((0xffffffff>>(32-1))<<7)) | (1 << 7) );
+		if(!(avar_ind_stat&0x100007f8)) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR & ~((0xffffffff>>(32-1))<<7)) | (1 << 7) );
 	     else ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<7)) | (1 << 7) );
 		} 
 
@@ -6242,7 +6244,7 @@ else	if(AUSW_MAIN==22023)
 
 
 	
-#line 3177 "control.c"
+#line 3178 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6259,7 +6261,7 @@ else	if(AUSW_MAIN==22023)
 	     }
 	else 
 		{
-		if(!(avar_ind_stat&0x000007f8)) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR & ~((0xffffffff>>(32-1))<<7)) | (1 << 7) );
+		if(!(avar_ind_stat&0x100007f8)) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR & ~((0xffffffff>>(32-1))<<7)) | (1 << 7) );
 	     else ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<7)) | (1 << 7) );
 		} 
 	}
@@ -6277,7 +6279,7 @@ else	if(AUSW_MAIN==22043)
      	else ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<4)) | (1 << 4) );
 		} 
 	
-#line 3221 "control.c"
+#line 3222 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6294,7 +6296,7 @@ else	if(AUSW_MAIN==22043)
 	     }
 	else 
 		{
-		if(!(avar_ind_stat&0x000007f8)) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR & ~((0xffffffff>>(32-1))<<7)) | (1 << 7) );
+		if(!(avar_ind_stat&0x100007f8)) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR & ~((0xffffffff>>(32-1))<<7)) | (1 << 7) );
 	     else ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<7)) | (1 << 7) );
 		}
 	
@@ -6305,13 +6307,13 @@ else	if(AUSW_MAIN==22043)
      	}
 	else 
 		{
-		if(!(avar_ind_stat&0x000007f8)) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR & ~((0xffffffff>>(32-1))<<5)) | (1 << 5) );
+		if(!(avar_ind_stat&0x100007f8)) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR & ~((0xffffffff>>(32-1))<<5)) | (1 << 5) );
      	else ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<5)) | (1 << 5) );
 		} 
 	}
 else	if(AUSW_MAIN==22033)
 	{
-#line 3264 "control.c"
+#line 3265 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOCLR & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6329,7 +6331,7 @@ else	if(AUSW_MAIN==22033)
 	     }
 	else 
 		{
-		if(!(avar_ind_stat&0x000007f8)) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR & ~((0xffffffff>>(32-1))<<7)) | (1 << 7) );
+		if(!(avar_ind_stat&0x100007f8)) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR & ~((0xffffffff>>(32-1))<<7)) | (1 << 7) );
 	     else ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<7)) | (1 << 7) );
 		} 
 
@@ -6348,7 +6350,7 @@ else	if(AUSW_MAIN==22033)
 else	
 	{
 	
-#line 3310 "control.c"
+#line 3311 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6365,7 +6367,7 @@ else
      	}
 	else 
 		{
-		if(!(avar_ind_stat&0x000007f8)) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR & ~((0xffffffff>>(32-1))<<5)) | (1 << 5) );
+		if(!(avar_ind_stat&0x100007f8)) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR & ~((0xffffffff>>(32-1))<<5)) | (1 << 5) );
      	else ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<5)) | (1 << 5) );
 		}
 	}
@@ -6387,10 +6389,10 @@ else if(DOP_RELE_FUNC==1)
 	}	 	
 
 
-#line 3461 "control.c"
+#line 3462 "control.c"
 
 
-#line 3522 "control.c"
+#line 3523 "control.c"
 
 }
 
@@ -7051,7 +7053,7 @@ else
  
 }
 
-#line 4246 "control.c"
+#line 4247 "control.c"
 
 
 
@@ -7122,7 +7124,7 @@ if(main_vent_pos<=1)mixer_vent_stat=mvsON;
 else mixer_vent_stat=mvsOFF;
 
 
-#line 4333 "control.c"
+#line 4334 "control.c"
 
 if((TBATDISABLE>=50) && (TBATDISABLE<=90))
 	{
@@ -7179,7 +7181,7 @@ else
 }
 
 
-#line 4522 "control.c"
+#line 4523 "control.c"
 
 
 void bat_drv(char in)
@@ -7666,7 +7668,7 @@ if(mess_find_unvol(190))
 
 
 
-#line 5218 "control.c"
+#line 5219 "control.c"
 
 temp_L=(signed long) u_necc;
 temp_L*=98L;
@@ -7771,11 +7773,11 @@ if(mess_find_unvol(225))
 
 	else if(mess_data[0]==230)
 		{
-#line 5334 "control.c"
+#line 5335 "control.c"
 
 
 
-#line 5349 "control.c"
+#line 5350 "control.c"
 
 		if(load_U>u_necc)
 			{
@@ -7904,7 +7906,7 @@ char i;
 
 for(i=0;i<NUMSK;i++)
 	{
-#line 5502 "control.c"
+#line 5503 "control.c"
 	if(adc_buff_[sk_buff_220[i]]<2000)
 
 
@@ -7997,7 +7999,7 @@ for(i=0;i<NUMSK;i++)
 	 	}
 
 
-#line 5614 "control.c"
+#line 5615 "control.c"
 	sk_av_stat_old[i]=sk_av_stat[i];
 	}
 }
@@ -8270,7 +8272,7 @@ if((load_U>U_OUT_KONTR_MAX)||(load_U<U_OUT_KONTR_MIN))
 		outVoltContrHndlCnt++;
 		if(outVoltContrHndlCnt==U_OUT_KONTR_DELAY)
 			{
-
+			avar_uout_hndl(1);
 			}
 		}
 	}
@@ -8281,7 +8283,7 @@ else
 		outVoltContrHndlCnt--;
 		if(outVoltContrHndlCnt==0)
 			{
-
+			avar_uout_hndl(0);
 			}
 		}
 	}

@@ -186,6 +186,7 @@ extern unsigned avar_stat_new,avar_stat_offed;
 //5бит  - инверторы
 //4бита - внешние датчики температуры
 //4бита - внешние сухие контакты
+//1бит	- контроль выходного напряжения
 
 
 short cntrl_stat_blok_cnt,cntrl_stat_blok_cnt_,cntrl_stat_blok_cnt_plus[2],cntrl_stat_blok_cnt_minus[2];
@@ -3130,7 +3131,7 @@ if((AUSW_MAIN==22010)||(AUSW_MAIN==22011))
 	     }
 	else 
 		{
-		if(!(avar_ind_stat&0x000007f8)) SET_REG(LPC_GPIO0->FIOCLR,1,7,1);
+		if(!(avar_ind_stat&0x100007f8)) SET_REG(LPC_GPIO0->FIOCLR,1,7,1);
 	     else SET_REG(LPC_GPIO0->FIOSET,1,7,1);
 		} 
 
@@ -3190,7 +3191,7 @@ else	if(AUSW_MAIN==22023)
 	     }
 	else 
 		{
-		if(!(avar_ind_stat&0x000007f8)) SET_REG(LPC_GPIO0->FIOCLR,1,7,1);
+		if(!(avar_ind_stat&0x100007f8)) SET_REG(LPC_GPIO0->FIOCLR,1,7,1);
 	     else SET_REG(LPC_GPIO0->FIOSET,1,7,1);
 		} 
 	}
@@ -3234,7 +3235,7 @@ else	if(AUSW_MAIN==22043)
 	     }
 	else 
 		{
-		if(!(avar_ind_stat&0x000007f8)) SET_REG(LPC_GPIO0->FIOCLR,1,7,1);
+		if(!(avar_ind_stat&0x100007f8)) SET_REG(LPC_GPIO0->FIOCLR,1,7,1);
 	     else SET_REG(LPC_GPIO0->FIOSET,1,7,1);
 		}
 	//Реле аварии БПС
@@ -3245,7 +3246,7 @@ else	if(AUSW_MAIN==22043)
      	}
 	else 
 		{
-		if(!(avar_ind_stat&0x000007f8)) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_BPS,1);
+		if(!(avar_ind_stat&0x100007f8)) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_BPS,1);
      	else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_AV_BPS,1);
 		} 
 	}
@@ -3278,7 +3279,7 @@ else	if(AUSW_MAIN==22033)
 	     }
 	else 
 		{
-		if(!(avar_ind_stat&0x000007f8)) SET_REG(LPC_GPIO0->FIOCLR,1,7,1);
+		if(!(avar_ind_stat&0x100007f8)) SET_REG(LPC_GPIO0->FIOCLR,1,7,1);
 	     else SET_REG(LPC_GPIO0->FIOSET,1,7,1);
 		} 
 
@@ -3323,7 +3324,7 @@ else
      	}
 	else 
 		{
-		if(!(avar_ind_stat&0x000007f8)) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_BPS,1);
+		if(!(avar_ind_stat&0x100007f8)) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_BPS,1);
      	else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_AV_BPS,1);
 		}
 	}
@@ -5883,7 +5884,7 @@ if((load_U>U_OUT_KONTR_MAX)||(load_U<U_OUT_KONTR_MIN))
 		outVoltContrHndlCnt++;
 		if(outVoltContrHndlCnt==U_OUT_KONTR_DELAY)
 			{
-
+			avar_uout_hndl(1);
 			}
 		}
 	}
@@ -5894,7 +5895,7 @@ else
 		outVoltContrHndlCnt--;
 		if(outVoltContrHndlCnt==0)
 			{
-
+			avar_uout_hndl(0);
 			}
 		}
 	}

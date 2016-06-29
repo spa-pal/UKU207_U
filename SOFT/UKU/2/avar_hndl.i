@@ -3765,6 +3765,7 @@ extern char  		speedChrgShowCnt;
 
 
 extern signed short outVoltContrHndlCnt;
+extern char uout_av;
 
 
 
@@ -3988,19 +3989,23 @@ for(i=0;i<4;i++)
 	else	   		avar_stat = ( (avar_stat & ~((0xffffffff>>(32-1))<<25+i)) | (0 << 25+i) );
 	}
 
+if(uout_av)			avar_stat = ( (avar_stat & ~((0xffffffff>>(32-1))<<28)) | (1 << 28) );
+else	   			avar_stat = ( (avar_stat & ~((0xffffffff>>(32-1))<<28)) | (0 << 28) );
+
+
 avar_stat_new=(avar_stat^avar_stat_old)&avar_stat;
 
 avar_ind_stat|=avar_stat_new;
 
-if((SK_ZVUK_EN[0])) avar_ind_stat&=(~(1UL<<25));
-if((SK_ZVUK_EN[1])) avar_ind_stat&=(~(1UL<<26));
-if((SK_ZVUK_EN[2])) avar_ind_stat&=(~(1UL<<27));
-if((SK_ZVUK_EN[3])) avar_ind_stat&=(~(1UL<<28));	
+if((SK_ZVUK_EN[0])) avar_ind_stat&=(~(1UL<<24));
+if((SK_ZVUK_EN[1])) avar_ind_stat&=(~(1UL<<25));
+if((SK_ZVUK_EN[2])) avar_ind_stat&=(~(1UL<<26));
+if((SK_ZVUK_EN[3])) avar_ind_stat&=(~(1UL<<27));	
 
 
 avar_stat_offed=~((avar_stat^avar_stat_old)&avar_stat_old);
 
-if(!AV_OFF_AVT)avar_stat_offed|=0xfffffffe;
+if(!AV_OFF_AVT)avar_stat_offed|=0xeffffffe;
 
 avar_ind_stat&=avar_stat_offed; 
 
@@ -4274,6 +4279,8 @@ if(in==1)
 
 
 	
+
+	uout_av=1;
 	 
 	event_ptr=lc640_read_int(1024+1024+512+1024);
 	event_ptr++;	
@@ -4350,7 +4357,7 @@ if(in==1)
 
 else if(in==0)
 	{
-	
+	uout_av=0;
 
   
 

@@ -3436,6 +3436,7 @@ extern char  		speedChrgShowCnt;
 
 
 extern signed short outVoltContrHndlCnt;
+extern char uout_av;
 
 
 

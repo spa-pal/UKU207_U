@@ -640,6 +640,7 @@ char  	   speedChrgShowCnt;		//Счетчик показа информационного сообщения
 //-----------------------------------------------
 //Контроль выходного напряжения
 signed short outVoltContrHndlCnt;
+char uout_av;
 
 #ifdef MCP2515_CAN
 #define can1_out	mcp2515_transmit
@@ -8970,12 +8971,22 @@ if(ind==iDeb)
      		    	"                    ");
 
 
-		int2lcdyx(load_U,1,5,0);
+		int2lcdyx(uout_av,1,5,0);
 		int2lcdyx(USIGN,2,5,0); 
 
 		int2lcdyx(bSILENT,3,5,0);
 
+		
+		
+		int2lcdyx(U_OUT_KONTR_MAX,0,19,0);
+		int2lcdyx(load_U,1,19,0);
+		int2lcdyx(U_OUT_KONTR_MIN,2,19,0);
+		//int2lcdyx(U_OUT_KONTR_DELAY,3,19,0);
+		int2lcdyx(outVoltContrHndlCnt,3,19,0);
 
+		long2lcdhyx(0x12345678UL,1,14);
+		long2lcdhyx(avar_stat,2,14);
+		long2lcdhyx(avar_ind_stat,3,14);
 		}  
 
 	else if(sub_ind==3)
@@ -27532,7 +27543,7 @@ else if(ind==iOut_volt_contr)
 		if(but==butR)U_OUT_KONTR_MAX++;
 		else if(but==butR_)U_OUT_KONTR_MAX=(U_OUT_KONTR_MAX/5+1)*5;
 		else if(but==butL)U_OUT_KONTR_MAX--;
-		else if(but==butL_)U_OUT_KONTR_MAX=(U_OUT_KONTR_MAX/5+1)*5;
+		else if(but==butL_)U_OUT_KONTR_MAX=(U_OUT_KONTR_MAX/5-1)*5;
 		gran(&U_OUT_KONTR_MAX,10,3000);
 		lc640_write_int(EE_U_OUT_KONTR_MAX,U_OUT_KONTR_MAX);
 		speed=1;
@@ -27543,7 +27554,7 @@ else if(ind==iOut_volt_contr)
 		if(but==butR)U_OUT_KONTR_MIN++;
 		else if(but==butR_)U_OUT_KONTR_MIN=(U_OUT_KONTR_MIN/5+1)*5;
 		else if(but==butL)U_OUT_KONTR_MIN--;
-		else if(but==butL_)U_OUT_KONTR_MIN=(U_OUT_KONTR_MIN/5+1)*5;
+		else if(but==butL_)U_OUT_KONTR_MIN=(U_OUT_KONTR_MIN/5-1)*5;
 		gran(&U_OUT_KONTR_MIN,10,3000);
 		lc640_write_int(EE_U_OUT_KONTR_MIN,U_OUT_KONTR_MIN);
 		speed=1;

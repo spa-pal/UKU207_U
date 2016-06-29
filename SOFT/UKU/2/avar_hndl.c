@@ -92,19 +92,23 @@ for(i=0;i<4;i++)
 	else	   		SET_REG(avar_stat,0,25+i,1);
 	}
 
+if(uout_av)			SET_REG(avar_stat,1,28,1);
+else	   			SET_REG(avar_stat,0,28,1);
+
+
 avar_stat_new=(avar_stat^avar_stat_old)&avar_stat;
 
 avar_ind_stat|=avar_stat_new;
 
-if((SK_ZVUK_EN[0])) avar_ind_stat&=(~(1UL<<25));
-if((SK_ZVUK_EN[1])) avar_ind_stat&=(~(1UL<<26));
-if((SK_ZVUK_EN[2])) avar_ind_stat&=(~(1UL<<27));
-if((SK_ZVUK_EN[3])) avar_ind_stat&=(~(1UL<<28));	
+if((SK_ZVUK_EN[0])) avar_ind_stat&=(~(1UL<<24));
+if((SK_ZVUK_EN[1])) avar_ind_stat&=(~(1UL<<25));
+if((SK_ZVUK_EN[2])) avar_ind_stat&=(~(1UL<<26));
+if((SK_ZVUK_EN[3])) avar_ind_stat&=(~(1UL<<27));	
 
 
 avar_stat_offed=~((avar_stat^avar_stat_old)&avar_stat_old);
 
-if(!AV_OFF_AVT)avar_stat_offed|=0xfffffffe;
+if(!AV_OFF_AVT)avar_stat_offed|=0xeffffffe;
 
 avar_ind_stat&=avar_stat_offed; 
 
@@ -378,6 +382,8 @@ if(in==1)
 
 
 	//beep_init(0x33333333,'A');
+
+	uout_av=1;
 	 
 	event_ptr=lc640_read_int(PTR_EVENT_LOG);
 	event_ptr++;	
@@ -454,7 +460,7 @@ if(in==1)
 
 else if(in==0)
 	{
-	//net_av=0;
+	uout_av=0;
 
   /*
 	SET_REG(C2GSR,3,24,8);
