@@ -3440,7 +3440,7 @@
 001998  78c3              LDRB     r3,[r0,#3]  ; a_ind
 00199a  7882              LDRB     r2,[r0,#2]  ; a_ind
 00199c  7841              LDRB     r1,[r0,#1]  ; a_ind
-00199e  209a              MOVS     r0,#0x9a
+00199e  209b              MOVS     r0,#0x9b
 0019a0  f7fffffe          BL       tree_up
 ;;;1236   ret((char)(m_sec/100));
 0019a4  2064              MOVS     r0,#0x64

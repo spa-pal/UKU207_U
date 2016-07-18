@@ -1282,12 +1282,30 @@ load_U=(signed short)temp_SL;
 #endif
 
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
-//Напряжение нагрузки
-temp_SL=(signed long)adc_buff_[2];
-temp_SL*=Kuload;
+//Напряжение шины
+temp_SL=(signed long)adc_buff_[1];
+temp_SL*=Kuout;
 if(AUSW_MAIN==22010)temp_SL/=400L;
 else temp_SL/=500L;
-load_U=(signed short)temp_SL;
+out_U=(signed short)temp_SL;
+load_U=out_U;
+
+//Напряжение выпрямителей
+temp_SL=(signed long)adc_buff_[2];
+temp_SL*=Kubps;
+if(AUSW_MAIN==22010)temp_SL/=400L;
+else temp_SL/=500L;
+bps_U=(signed short)temp_SL;
+
+//Суммарный ток выпрямителей
+temp_SL=0;
+for (i=0;i<NUMIST;i++)
+	{
+	temp_SL+=((signed long)bps[i]._Ii);
+	}
+bps_I=(signed short)temp_SL;
+
+
 #endif
 
 
@@ -3705,7 +3723,13 @@ else if(b1Hz_sh)
 	     	bps[i]._flags_tu=0;
 	     	}	
 		}
-	
+	if(ipsBlckStat)
+		{
+     	for(i=0;i<=NUMIST;i++)
+			{
+	     	bps[i]._flags_tu=1;
+	     	}
+		}
 		 
   	}
 
@@ -3847,6 +3871,21 @@ else if((temp)&&(!temp_))
 inv[in]._flags_tm_old=inv[in]._flags_tm;
 
 }	
+
+//-----------------------------------------------
+void ipsBlckHndl(char in)
+{
+
+ipsBlckStat=0;
+if(ipsBlckSrc==1)
+	{
+	if(((ipsBlckLog==0)&&(adc_buff_[11]>2000)) || ((ipsBlckLog==1)&&(adc_buff_[11]<2000))) ipsBlckStat=1;
+	}
+else if(ipsBlckSrc==2)
+	{
+	if(((ipsBlckLog==0)&&(adc_buff_[13]>2000)) || ((ipsBlckLog==1)&&(adc_buff_[13]<2000))) ipsBlckStat=1;
+	}
+}
 
 //-----------------------------------------------
 void bps_drv(char in)
@@ -4963,7 +5002,8 @@ char i;
 
 if(!TERMOKOMPENS)
 	{
-	u_necc=U0B;
+	//u_necc=U0B;
+	u_necc=UB20;
 	}
 else
 	{
@@ -5828,12 +5868,21 @@ if(speedChIsOn)
 	speedChIsOn=0;
 	}
 
-else	if(speedChrgBlckStat==0)
+else
 	{
-	speedChIsOn=1;
-	speedChTimeCnt=0;
-	} 
-
+	if(speedChrgBlckStat==0)
+		{
+		speedChIsOn=1;
+		speedChTimeCnt=0;
+		}
+	else
+		{
+		show_mess(	"     Ускоренный     ",
+	          		"       заряд        ",
+	          		"    заблокирован!   ",
+	          		"                    ",2000);	 
+		}
+	}
 }
 
 //-----------------------------------------------
@@ -5879,6 +5928,7 @@ void outVoltContrHndl(void)
 { 
 if((load_U>U_OUT_KONTR_MAX)||(load_U<U_OUT_KONTR_MIN))
 	{
+	outVoltContrHndlCnt_=0;
 	if(outVoltContrHndlCnt<U_OUT_KONTR_DELAY)
 		{
 		outVoltContrHndlCnt++;
@@ -5892,10 +5942,14 @@ else
 	{
 	if(outVoltContrHndlCnt)
 		{
-		outVoltContrHndlCnt--;
-		if(outVoltContrHndlCnt==0)
+		if(outVoltContrHndlCnt_<5)
 			{
-			avar_uout_hndl(0);
+			outVoltContrHndlCnt_++;
+			if(outVoltContrHndlCnt_>=5)
+				{
+				outVoltContrHndlCnt=0;
+				if(uout_av)avar_uout_hndl(0);
+				}
 			}
 		}
 	}

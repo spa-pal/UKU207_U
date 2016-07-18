@@ -88,8 +88,8 @@ for(i=0;i<6;i++)
 	}  */
 for(i=0;i<4;i++)
 	{
-	if(sk_av_stat[i]==sasON)	SET_REG(avar_stat,1,25+i,1);
-	else	   		SET_REG(avar_stat,0,25+i,1);
+	if(sk_av_stat[i]==sasON)	SET_REG(avar_stat,1,24+i,1);
+	else	   		SET_REG(avar_stat,0,24+i,1);
 	}
 
 if(uout_av)			SET_REG(avar_stat,1,28,1);

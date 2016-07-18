@@ -2725,7 +2725,7 @@ typedef enum {
 	iStr,iStr_3U,iStr_RSTKM,iStr_GLONASS,iStr_KONTUR,iStr_6U,iStr_220_IPS_TERMOKOMPENSAT,
 	iVrs,iPrltst,iApv,
 	iK_bps,iK_bps_sel,iK_bat,iK_bat_simple,iK_bat_ips_termokompensat_ib,iK_bat_sel,iK_load,iK_net,iK_net3,
-	iK_makb_sel,iK_makb,
+	iK_makb_sel,iK_makb,iK_out,
 	iTst,iTst_3U,iTst_RSTKM,iTst_GLONASS,iTst_KONTUR,iTst_6U,iTst_220,iTst_220_380,iTst_220_IPS_TERMOKOMPENSAT,
 	iTst_TELECORE2015,
 	iTst_klbr,iTst_BPS1,iTst_BPS2,iTst_BPS12,iDebug,
@@ -2754,7 +2754,7 @@ typedef enum {
 	iBps_list,
 	iSpch_set,
 	iAvt_set_sel,iAvt_set,
-	iOut_volt_contr,iDop_rele_set}i_enum;
+	iOut_volt_contr,iDop_rele_set,iBlok_ips_set}i_enum;
 
 typedef struct  
 {
@@ -2806,6 +2806,8 @@ extern signed short Kunet_ext[3];
 extern signed short KunetA;
 extern signed short KunetB;
 extern signed short KunetC;
+extern signed short Kubps;
+extern signed short Kuout;
 
 extern signed short MAIN_IST;
 extern signed short UMAX;
@@ -3253,6 +3255,11 @@ extern signed short load_I;
 
 
 
+extern signed short bps_U;
+extern signed short out_U;
+extern signed short bps_I;
+
+
 
 extern signed short net_U,net_Ustore,net_Ua,net_Ub,net_Uc;
 extern char bFF,bFF_;
@@ -3360,9 +3367,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1371 "main.h"
+#line 1378 "main.h"
 
-#line 1382 "main.h"
+#line 1389 "main.h"
 
 
 
@@ -3445,7 +3452,14 @@ extern char  		speedChrgShowCnt;
 
 
 
-extern signed short outVoltContrHndlCnt;
+extern signed short ipsBlckSrc;
+extern signed short ipsBlckLog;
+extern signed short ipsBlckStat;
+
+
+
+extern signed short outVoltContrHndlCnt;		
+extern signed short outVoltContrHndlCnt_;		
 extern char uout_av;
 
 
@@ -3881,42 +3895,42 @@ extern __declspec(__nothrow) void _membitmovewb(void *  , const void *  , int  ,
 
 
 
-#line 32 "eeprom_map.h"
+#line 34 "eeprom_map.h"
 
 
 
-#line 129 "eeprom_map.h"
+#line 133 "eeprom_map.h"
 
 
 
-#line 146 "eeprom_map.h"
+#line 150 "eeprom_map.h"
 
 
 
-#line 158 "eeprom_map.h"
+#line 162 "eeprom_map.h"
 
 
-#line 169 "eeprom_map.h"
-
-
-
-#line 180 "eeprom_map.h"
+#line 173 "eeprom_map.h"
 
 
 
-#line 236 "eeprom_map.h"
-
-
-#line 278 "eeprom_map.h"
+#line 184 "eeprom_map.h"
 
 
 
+#line 240 "eeprom_map.h"
 
+
+#line 282 "eeprom_map.h"
 
 
 
 
-#line 300 "eeprom_map.h"
+
+
+
+
+#line 304 "eeprom_map.h"
 
 
 
@@ -4832,10 +4846,10 @@ unsigned short crc_temp;
 char i;
 short tempS;
 
-modbus_registers[0]=(char)(load_U/256);					
-modbus_registers[1]=(char)(load_U%256);
-modbus_registers[2]=(char)(load_I/256);					
-modbus_registers[3]=(char)(load_I%256);
+modbus_registers[0]=(char)(out_U/256);					
+modbus_registers[1]=(char)(out_U%256);
+modbus_registers[2]=(char)(bps_I/256);					
+modbus_registers[3]=(char)(bps_I%256);
 modbus_registers[4]=(char)(net_U/256);					
 modbus_registers[5]=(char)(net_U%256);
 modbus_registers[6]=(char)(net_F/256);					
@@ -4938,6 +4952,8 @@ modbus_registers[102]=(char)(bps[7]._Ti/256);
 modbus_registers[103]=(char)(bps[7]._Ti%256);
 modbus_registers[104]=(char)(bps[7]._av/256);			
 modbus_registers[105]=(char)(bps[7]._av%256);
+modbus_registers[106]=(char)(bps_U/256);					
+modbus_registers[107]=(char)(bps_U%256);
 
 tempS=t_ext[0];
 if(ND_EXT[0])tempS=-1000;

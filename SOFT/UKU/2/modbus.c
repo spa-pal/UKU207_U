@@ -784,10 +784,10 @@ unsigned short crc_temp;
 char i;
 short tempS;
 
-modbus_registers[0]=(char)(load_U/256);					//Рег1   	напряжение нагрузки, 0.1В
-modbus_registers[1]=(char)(load_U%256);
-modbus_registers[2]=(char)(load_I/256);					//Рег2   	ток нагрузки, 0.1А
-modbus_registers[3]=(char)(load_I%256);
+modbus_registers[0]=(char)(out_U/256);					//Рег1   	напряжение выходной шины, 0.1В
+modbus_registers[1]=(char)(out_U%256);
+modbus_registers[2]=(char)(bps_I/256);					//Рег2   	ток выпрямителей, 0.1А
+modbus_registers[3]=(char)(bps_I%256);
 modbus_registers[4]=(char)(net_U/256);					//Рег3   	напряжение сети питания, 1В
 modbus_registers[5]=(char)(net_U%256);
 modbus_registers[6]=(char)(net_F/256);					//Рег4   	частота сети питания, 0.1Гц
@@ -890,6 +890,8 @@ modbus_registers[102]=(char)(bps[7]._Ti/256);			//Рег52	Температура радиатора вы
 modbus_registers[103]=(char)(bps[7]._Ti%256);
 modbus_registers[104]=(char)(bps[7]._av/256);			//Рег53	Байт флагов выпрямителя №8, 0x01 - перегрев, 0x02 завышено Uвых, 0x04 занижено Uвых, 0x08 - отсутствует связь с выпрямителем
 modbus_registers[105]=(char)(bps[7]._av%256);
+modbus_registers[106]=(char)(bps_U/256);					//Рег54   	напряжение выпрямителей, 0.1В
+modbus_registers[107]=(char)(bps_U%256);
 
 tempS=t_ext[0];
 if(ND_EXT[0])tempS=-1000;
@@ -916,17 +918,17 @@ modbus_registers[421]=(char)(tempS%256);
 tempS=0;
 if(sk_stat[1]==ssON) tempS|=0x0001;
 if(sk_av_stat[1]==sasON) tempS|=0x0002;
-modbus_registers[422]=(char)(tempS/256);				//Рег211	Состояние  сухого контакта №1, (нулевой бит - физическое состояние, 1 - замкнут, 0 - разомкнут, первый бит - аварийность, 1 - авария, 0 - норма)
+modbus_registers[422]=(char)(tempS/256);				//Рег212	Состояние  сухого контакта №1, (нулевой бит - физическое состояние, 1 - замкнут, 0 - разомкнут, первый бит - аварийность, 1 - авария, 0 - норма)
 modbus_registers[423]=(char)(tempS%256);
 tempS=0;
 if(sk_stat[2]==ssON) tempS|=0x0001;
 if(sk_av_stat[2]==sasON) tempS|=0x0002;
-modbus_registers[424]=(char)(tempS/256);				//Рег211	Состояние  сухого контакта №1, (нулевой бит - физическое состояние, 1 - замкнут, 0 - разомкнут, первый бит - аварийность, 1 - авария, 0 - норма)
+modbus_registers[424]=(char)(tempS/256);				//Рег213	Состояние  сухого контакта №1, (нулевой бит - физическое состояние, 1 - замкнут, 0 - разомкнут, первый бит - аварийность, 1 - авария, 0 - норма)
 modbus_registers[425]=(char)(tempS%256);
 tempS=0;
 if(sk_stat[3]==ssON) tempS|=0x0001;
 if(sk_av_stat[3]==sasON) tempS|=0x0002;
-modbus_registers[426]=(char)(tempS/256);				//Рег211	Состояние  сухого контакта №1, (нулевой бит - физическое состояние, 1 - замкнут, 0 - разомкнут, первый бит - аварийность, 1 - авария, 0 - норма)
+modbus_registers[426]=(char)(tempS/256);				//Рег214	Состояние  сухого контакта №1, (нулевой бит - физическое состояние, 1 - замкнут, 0 - разомкнут, первый бит - аварийность, 1 - авария, 0 - норма)
 modbus_registers[427]=(char)(tempS%256);
 
 modbus_tx_buff[0]=adr;

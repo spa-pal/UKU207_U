@@ -43,6 +43,8 @@ Kpes_eb2[2]=lc640_read_int(EE_KPES2_EB2);
 KunetA=lc640_read_int(EE_KUNETA);
 KunetB=lc640_read_int(EE_KUNETB);
 KunetC=lc640_read_int(EE_KUNETC);
+Kubps=lc640_read_int(EE_KUBPS);
+Kuout=lc640_read_int(EE_KUOUT);
 
 Ktext[0]=lc640_read_int(KT_EXT0);
 Ktext[1]=lc640_read_int(KT_EXT1);
@@ -130,6 +132,8 @@ U_OUT_KONTR_MAX=lc640_read_int(EE_U_OUT_KONTR_MAX);
 U_OUT_KONTR_MIN=lc640_read_int(EE_U_OUT_KONTR_MIN);
 U_OUT_KONTR_DELAY=lc640_read_int(EE_U_OUT_KONTR_DELAY);
 DOP_RELE_FUNC=lc640_read_int(EE_DOP_RELE_FUNC);
+ipsBlckSrc=lc640_read_int(EE_IPS_BLOCK_SRC);
+ipsBlckLog=lc640_read_int(EE_IPS_BLOCK_LOG);
 
 BAT_IS_ON[0]=(enum_bat_is_on)lc640_read_int(EE_BAT1_IS_ON);
 BAT_IS_ON[1]=(enum_bat_is_on)lc640_read_int(EE_BAT2_IS_ON);

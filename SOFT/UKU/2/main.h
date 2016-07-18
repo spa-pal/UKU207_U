@@ -725,7 +725,7 @@ typedef enum {
 	iStr,iStr_3U,iStr_RSTKM,iStr_GLONASS,iStr_KONTUR,iStr_6U,iStr_220_IPS_TERMOKOMPENSAT,
 	iVrs,iPrltst,iApv,
 	iK_bps,iK_bps_sel,iK_bat,iK_bat_simple,iK_bat_ips_termokompensat_ib,iK_bat_sel,iK_load,iK_net,iK_net3,
-	iK_makb_sel,iK_makb,
+	iK_makb_sel,iK_makb,iK_out,
 	iTst,iTst_3U,iTst_RSTKM,iTst_GLONASS,iTst_KONTUR,iTst_6U,iTst_220,iTst_220_380,iTst_220_IPS_TERMOKOMPENSAT,
 	iTst_TELECORE2015,
 	iTst_klbr,iTst_BPS1,iTst_BPS2,iTst_BPS12,iDebug,
@@ -754,7 +754,7 @@ typedef enum {
 	iBps_list,
 	iSpch_set,
 	iAvt_set_sel,iAvt_set,
-	iOut_volt_contr,iDop_rele_set}i_enum;
+	iOut_volt_contr,iDop_rele_set,iBlok_ips_set}i_enum;
 
 typedef struct  
 {
@@ -806,6 +806,8 @@ extern signed short Kunet_ext[3];
 extern signed short KunetA;
 extern signed short KunetB;
 extern signed short KunetC;
+extern signed short Kubps;
+extern signed short Kuout;
 
 extern signed short MAIN_IST;
 extern signed short UMAX;
@@ -1251,6 +1253,11 @@ extern char first_inv_slot;
 extern signed short load_U;
 extern signed short load_I;
 
+//***********************************************
+//Состояние выхода
+extern signed short bps_U;
+extern signed short out_U;
+extern signed short bps_I;
 
 //***********************************************
 //Состояние первичной сети
@@ -1460,8 +1467,15 @@ extern signed short speedChrgBlckStat;		//Сигнал блокировки для выравнивающего и
 extern char  		speedChrgShowCnt;		//Счетчик показа информационного сообщения
 
 //-----------------------------------------------
+//Блокировка ИПС
+extern signed short ipsBlckSrc;
+extern signed short ipsBlckLog;
+extern signed short ipsBlckStat;
+
+//-----------------------------------------------
 //Контроль выходного напряжения
-extern signed short outVoltContrHndlCnt;
+extern signed short outVoltContrHndlCnt;		//Счетчик, считает в плюс в случае выполнения условия аварии
+extern signed short outVoltContrHndlCnt_;		//Счетчик, считает в плюс в случае отсутствия выполнения условия аварии
 extern char uout_av;
 
 /*----------------------------------------------------------------------------

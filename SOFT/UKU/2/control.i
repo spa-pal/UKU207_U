@@ -239,42 +239,42 @@ void community2lcd(char* in,
 
 
 
-#line 32 "eeprom_map.h"
+#line 34 "eeprom_map.h"
 
 
 
-#line 129 "eeprom_map.h"
+#line 133 "eeprom_map.h"
 
 
 
-#line 146 "eeprom_map.h"
+#line 150 "eeprom_map.h"
 
 
 
-#line 158 "eeprom_map.h"
+#line 162 "eeprom_map.h"
 
 
-#line 169 "eeprom_map.h"
-
-
-
-#line 180 "eeprom_map.h"
+#line 173 "eeprom_map.h"
 
 
 
-#line 236 "eeprom_map.h"
-
-
-#line 278 "eeprom_map.h"
+#line 184 "eeprom_map.h"
 
 
 
+#line 240 "eeprom_map.h"
 
+
+#line 282 "eeprom_map.h"
 
 
 
 
-#line 300 "eeprom_map.h"
+
+
+
+
+#line 304 "eeprom_map.h"
 
 
 
@@ -1097,7 +1097,7 @@ typedef enum {
 	iStr,iStr_3U,iStr_RSTKM,iStr_GLONASS,iStr_KONTUR,iStr_6U,iStr_220_IPS_TERMOKOMPENSAT,
 	iVrs,iPrltst,iApv,
 	iK_bps,iK_bps_sel,iK_bat,iK_bat_simple,iK_bat_ips_termokompensat_ib,iK_bat_sel,iK_load,iK_net,iK_net3,
-	iK_makb_sel,iK_makb,
+	iK_makb_sel,iK_makb,iK_out,
 	iTst,iTst_3U,iTst_RSTKM,iTst_GLONASS,iTst_KONTUR,iTst_6U,iTst_220,iTst_220_380,iTst_220_IPS_TERMOKOMPENSAT,
 	iTst_TELECORE2015,
 	iTst_klbr,iTst_BPS1,iTst_BPS2,iTst_BPS12,iDebug,
@@ -1126,7 +1126,7 @@ typedef enum {
 	iBps_list,
 	iSpch_set,
 	iAvt_set_sel,iAvt_set,
-	iOut_volt_contr,iDop_rele_set}i_enum;
+	iOut_volt_contr,iDop_rele_set,iBlok_ips_set}i_enum;
 
 typedef struct  
 {
@@ -1178,6 +1178,8 @@ extern signed short Kunet_ext[3];
 extern signed short KunetA;
 extern signed short KunetB;
 extern signed short KunetC;
+extern signed short Kubps;
+extern signed short Kuout;
 
 extern signed short MAIN_IST;
 extern signed short UMAX;
@@ -1625,6 +1627,11 @@ extern signed short load_I;
 
 
 
+extern signed short bps_U;
+extern signed short out_U;
+extern signed short bps_I;
+
+
 
 extern signed short net_U,net_Ustore,net_Ua,net_Ub,net_Uc;
 extern char bFF,bFF_;
@@ -1732,9 +1739,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1371 "main.h"
+#line 1378 "main.h"
 
-#line 1382 "main.h"
+#line 1389 "main.h"
 
 
 
@@ -1817,7 +1824,14 @@ extern char  		speedChrgShowCnt;
 
 
 
-extern signed short outVoltContrHndlCnt;
+extern signed short ipsBlckSrc;
+extern signed short ipsBlckLog;
+extern signed short ipsBlckStat;
+
+
+
+extern signed short outVoltContrHndlCnt;		
+extern signed short outVoltContrHndlCnt_;		
 extern char uout_av;
 
 
@@ -5118,15 +5132,33 @@ load_U=(signed short)temp_SL;
 
 
 
-temp_SL=(signed long)adc_buff_[2];
-temp_SL*=Kuload;
+temp_SL=(signed long)adc_buff_[1];
+temp_SL*=Kuout;
 if(AUSW_MAIN==22010)temp_SL/=400L;
 else temp_SL/=500L;
-load_U=(signed short)temp_SL;
+out_U=(signed short)temp_SL;
+load_U=out_U;
+
+
+temp_SL=(signed long)adc_buff_[2];
+temp_SL*=Kubps;
+if(AUSW_MAIN==22010)temp_SL/=400L;
+else temp_SL/=500L;
+bps_U=(signed short)temp_SL;
+
+
+temp_SL=0;
+for (i=0;i<NUMIST;i++)
+	{
+	temp_SL+=((signed long)bps[i]._Ii);
+	}
+bps_I=(signed short)temp_SL;
 
 
 
-#line 1304 "control.c"
+
+
+#line 1322 "control.c"
 
 if((adc_buff_[5]>800)&&(adc_buff_[5]<3800))ND_EXT[0]=0;
 else ND_EXT[0]=1;
@@ -5137,7 +5169,7 @@ temp_SL-=273L;
 t_ext[0]=(signed short)temp_SL;
 
 
-#line 1335 "control.c"
+#line 1353 "control.c"
 
 
 
@@ -5151,9 +5183,9 @@ temp_SL/=20000L;
 temp_SL-=273L;
 t_ext[0]=(signed short)temp_SL;
 
-#line 1372 "control.c"
+#line 1390 "control.c"
 
-#line 1394 "control.c"
+#line 1412 "control.c"
 
 
 
@@ -5182,7 +5214,7 @@ bat[0]._Ib=Ib_ips_termokompensat;
 
 
 
-#line 1444 "control.c"
+#line 1462 "control.c"
 
 
 temp_SL=(signed long)adc_buff_ext_[0];
@@ -5481,7 +5513,7 @@ if(load_I<0)load_I=0;
 
 
 
-#line 1771 "control.c"
+#line 1789 "control.c"
 
 
 if (NUMINV)
@@ -5526,7 +5558,7 @@ if (NUMINV)
    	}
 
 
-#line 1834 "control.c"
+#line 1852 "control.c"
 
 
 
@@ -5545,10 +5577,10 @@ if (NUMINV)
 
  
 
-#line 1998 "control.c"
+#line 2016 "control.c"
 
 
-#line 2034 "control.c"
+#line 2052 "control.c"
 
 
 
@@ -5679,7 +5711,7 @@ if(adc_ch_net)
 		}
 	if((adc_net_buff_cnt&0x03ff)==0)
 		{
-#line 2170 "control.c"
+#line 2188 "control.c"
 		net_buff_=(short)((main_power_buffer[adc_net_buff_cnt>>10])>>8);
 
 
@@ -6162,7 +6194,7 @@ if(mess_find_unvol((210))&&(mess_data[0]==100))
 else ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR & ~((0xffffffff>>(32-1))<<29)) | (1 << 29) );
 
 
-#line 2663 "control.c"
+#line 2681 "control.c"
 
 if((mess_find_unvol(210))&&	(mess_data[0]==102))
 	{
@@ -6173,28 +6205,28 @@ else	if(!(avar_ind_stat&0x00000001))	((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x0
 else 					  		((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOSET & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
 
 
-#line 2709 "control.c"
+#line 2727 "control.c"
 
 
-#line 2747 "control.c"
+#line 2765 "control.c"
 
-#line 2767 "control.c"
+#line 2785 "control.c"
 
-#line 2834 "control.c"
+#line 2852 "control.c"
 
-#line 2948 "control.c"
+#line 2966 "control.c"
 
-#line 3014 "control.c"
+#line 3032 "control.c"
 
-#line 3059 "control.c"
+#line 3077 "control.c"
 
-#line 3104 "control.c"
+#line 3122 "control.c"
 
 
 
 if((AUSW_MAIN==22010)||(AUSW_MAIN==22011))
 	{
-#line 3119 "control.c"
+#line 3137 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOCLR & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6244,7 +6276,7 @@ else	if(AUSW_MAIN==22023)
 
 
 	
-#line 3178 "control.c"
+#line 3196 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6279,7 +6311,7 @@ else	if(AUSW_MAIN==22043)
      	else ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<4)) | (1 << 4) );
 		} 
 	
-#line 3222 "control.c"
+#line 3240 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6313,7 +6345,7 @@ else	if(AUSW_MAIN==22043)
 	}
 else	if(AUSW_MAIN==22033)
 	{
-#line 3265 "control.c"
+#line 3283 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOCLR & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6350,7 +6382,7 @@ else	if(AUSW_MAIN==22033)
 else	
 	{
 	
-#line 3311 "control.c"
+#line 3329 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6389,10 +6421,10 @@ else if(DOP_RELE_FUNC==1)
 	}	 	
 
 
-#line 3462 "control.c"
+#line 3480 "control.c"
 
 
-#line 3523 "control.c"
+#line 3541 "control.c"
 
 }
 
@@ -6578,7 +6610,13 @@ else if(b1Hz_sh)
 	     	bps[i]._flags_tu=0;
 	     	}	
 		}
-	
+	if(ipsBlckStat)
+		{
+     	for(i=0;i<=NUMIST;i++)
+			{
+	     	bps[i]._flags_tu=1;
+	     	}
+		}
 		 
   	}
 
@@ -6720,6 +6758,21 @@ else if((temp)&&(!temp_))
 inv[in]._flags_tm_old=inv[in]._flags_tm;
 
 }	
+
+
+void ipsBlckHndl(char in)
+{
+
+ipsBlckStat=0;
+if(ipsBlckSrc==1)
+	{
+	if(((ipsBlckLog==0)&&(adc_buff_[11]>2000)) || ((ipsBlckLog==1)&&(adc_buff_[11]<2000))) ipsBlckStat=1;
+	}
+else if(ipsBlckSrc==2)
+	{
+	if(((ipsBlckLog==0)&&(adc_buff_[13]>2000)) || ((ipsBlckLog==1)&&(adc_buff_[13]<2000))) ipsBlckStat=1;
+	}
+}
 
 
 void bps_drv(char in)
@@ -7053,7 +7106,7 @@ else
  
 }
 
-#line 4247 "control.c"
+#line 4286 "control.c"
 
 
 
@@ -7124,7 +7177,7 @@ if(main_vent_pos<=1)mixer_vent_stat=mvsON;
 else mixer_vent_stat=mvsOFF;
 
 
-#line 4334 "control.c"
+#line 4373 "control.c"
 
 if((TBATDISABLE>=50) && (TBATDISABLE<=90))
 	{
@@ -7181,7 +7234,7 @@ else
 }
 
 
-#line 4523 "control.c"
+#line 4562 "control.c"
 
 
 void bat_drv(char in)
@@ -7625,7 +7678,8 @@ char i;
 
 if(!TERMOKOMPENS)
 	{
-	u_necc=U0B;
+	
+	u_necc=UB20;
 	}
 else
 	{
@@ -7668,7 +7722,7 @@ if(mess_find_unvol(190))
 
 
 
-#line 5219 "control.c"
+#line 5259 "control.c"
 
 temp_L=(signed long) u_necc;
 temp_L*=98L;
@@ -7773,11 +7827,11 @@ if(mess_find_unvol(225))
 
 	else if(mess_data[0]==230)
 		{
-#line 5335 "control.c"
+#line 5375 "control.c"
 
 
 
-#line 5350 "control.c"
+#line 5390 "control.c"
 
 		if(load_U>u_necc)
 			{
@@ -7906,7 +7960,7 @@ char i;
 
 for(i=0;i<NUMSK;i++)
 	{
-#line 5503 "control.c"
+#line 5543 "control.c"
 	if(adc_buff_[sk_buff_220[i]]<2000)
 
 
@@ -7999,7 +8053,7 @@ for(i=0;i<NUMSK;i++)
 	 	}
 
 
-#line 5615 "control.c"
+#line 5655 "control.c"
 	sk_av_stat_old[i]=sk_av_stat[i];
 	}
 }
@@ -8216,12 +8270,21 @@ if(speedChIsOn)
 	speedChIsOn=0;
 	}
 
-else	if(speedChrgBlckStat==0)
+else
 	{
-	speedChIsOn=1;
-	speedChTimeCnt=0;
-	} 
-
+	if(speedChrgBlckStat==0)
+		{
+		speedChIsOn=1;
+		speedChTimeCnt=0;
+		}
+	else
+		{
+		show_mess(	"     Ускоренный     ",
+	          		"       заряд        ",
+	          		"    заблокирован!   ",
+	          		"                    ",2000);	 
+		}
+	}
 }
 
 
@@ -8267,6 +8330,7 @@ void outVoltContrHndl(void)
 { 
 if((load_U>U_OUT_KONTR_MAX)||(load_U<U_OUT_KONTR_MIN))
 	{
+	outVoltContrHndlCnt_=0;
 	if(outVoltContrHndlCnt<U_OUT_KONTR_DELAY)
 		{
 		outVoltContrHndlCnt++;
@@ -8280,10 +8344,14 @@ else
 	{
 	if(outVoltContrHndlCnt)
 		{
-		outVoltContrHndlCnt--;
-		if(outVoltContrHndlCnt==0)
+		if(outVoltContrHndlCnt_<5)
 			{
-			avar_uout_hndl(0);
+			outVoltContrHndlCnt_++;
+			if(outVoltContrHndlCnt_>=5)
+				{
+				outVoltContrHndlCnt=0;
+				if(uout_av)avar_uout_hndl(0);
+				}
 			}
 		}
 	}
