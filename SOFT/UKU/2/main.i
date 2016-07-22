@@ -12109,10 +12109,11 @@ else if (a_ind . i==iDef_220)
 else if (a_ind . i==iDef_220_V2)
 	{ 
 	ptrs[0]=" AC220/220-20A-18   ";
-	ptrs[1]=" AC220/220-20A-17  ";
+	ptrs[1]=" AC220/220-20A-17   ";
+	ptrs[2]=" AC380/220-45A-18   ";
 	
-	ptrs[2]=sm_exit;
-	ptrs[3]="                    ";
+	ptrs[3]=sm_exit;
+	ptrs[4]="                    ";
 	if(bFL5)ptrs[default_temp]=sm_;
 	
 	if(a_ind . s_i<a_ind . i_s) a_ind . i_s=a_ind . s_i;
@@ -16789,12 +16790,12 @@ else if(a_ind . i==iDop_rele_set)
 }							    
 
 
-#line 11549 "main.c"
+#line 11550 "main.c"
 
 
 
 
-#line 11572 "main.c"
+#line 11573 "main.c"
 
 
 
@@ -17117,7 +17118,7 @@ else if(a_ind . i==iMn)
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV)))
 			{
-#line 11902 "main.c"
+#line 11903 "main.c"
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV+1)))
 			{
@@ -17131,9 +17132,9 @@ else if(a_ind . i==iMn)
 		     ret(1000);
 			}
 
-#line 11922 "main.c"
+#line 11923 "main.c"
 
-#line 11930 "main.c"
+#line 11931 "main.c"
 
 		else if(a_ind . s_i==(4+NUMBAT+NUMIST+2)+(NUMAVT!=0))
 			{
@@ -19195,11 +19196,11 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==184) 
 				{
 				tree_down(0,0);
-#line 14010 "main.c"
+#line 14011 "main.c"
 				tree_up(iSet_220_IPS_TERMOKOMPENSAT,0,0,0);
 
 
-#line 14019 "main.c"
+#line 14020 "main.c"
 
 				ret(1000);
 				}
@@ -19217,7 +19218,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==873) 
 				{
 				tree_down(0,0);
-#line 14067 "main.c"
+#line 14068 "main.c"
 				if(AUSW_MAIN==22033)
 					{
 					tree_up(iK_220_IPS_TERMOKOMPENSAT,0,0,0);
@@ -19294,7 +19295,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 			if(tempU==999) 
 				{
 				tree_down(0,0);
-#line 14173 "main.c"
+#line 14174 "main.c"
 				tree_up(iTst_220_IPS_TERMOKOMPENSAT,0,0,0);
 
 
@@ -19927,7 +19928,7 @@ else if(a_ind . i==iSet)
 	     {
 	     if(but==254)
 	          {
-#line 14817 "main.c"
+#line 14818 "main.c"
 	          ret(1000);
 	          default_temp=10;
 	          }
@@ -19949,7 +19950,7 @@ else if(a_ind . i==iSet)
 		{
 		if(but==254)
 		     {
-#line 14863 "main.c"
+#line 14864 "main.c"
 
 
 
@@ -24670,16 +24671,16 @@ else if (a_ind . i==iDef_220_V2)
 	if(but==251)
 		{
 		a_ind . s_i++;
-		gran_char(&a_ind . s_i,0,2);
+		gran_char(&a_ind . s_i,0,3);
 		}
 	else if(but==253)
 		{
 		a_ind . s_i--;
-		gran_char(&a_ind . s_i,0,2);
+		gran_char(&a_ind . s_i,0,3);
 		}
 	else if(but==123)
 		{
-		a_ind . s_i=2;
+		a_ind . s_i=3;
 		}
 	
 	else if(but==254)
@@ -24700,9 +24701,16 @@ else if (a_ind . i==iDef_220_V2)
 			lc640_write_int(0x10+100+30,20);
 			lc640_write_int(0x10+300,22010);
 			}
-
-
 		else if(a_ind . s_i==2)
+			{
+			def_set(2700,2590,2450,198,100,2200,4,2590);
+			lc640_write_int(0x10+100+84,2450-1200);
+			lc640_write_int(0x10+100+80,2450);
+			lc640_write_int(0x10+100+30,20);
+			lc640_write_int(0x10+300,22033);
+			}
+
+		else if(a_ind . s_i==3)
 			{
 			tree_down(0,0);
 			}
@@ -29418,7 +29426,7 @@ else if(a_ind . i==iK_inv)
 			}
 		}			
 	}
-#line 24478 "main.c"
+#line 24486 "main.c"
 
 else if(a_ind . i==iK_byps)
 	{
@@ -33200,9 +33208,9 @@ lcd_clear();
 rtc_init();
 
 a_ind . i=iMn;
-#line 28278 "main.c"
-a_ind . i=iMn_220_IPS_TERMOKOMPENSAT;
 #line 28286 "main.c"
+a_ind . i=iMn_220_IPS_TERMOKOMPENSAT;
+#line 28294 "main.c"
 
 
 
@@ -33242,7 +33250,7 @@ adc_init();
 
 lc640_write_int(100,134);
 
-#line 28331 "main.c"
+#line 28339 "main.c"
 
 
 

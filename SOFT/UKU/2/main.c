@@ -6860,10 +6860,11 @@ else if (ind==iDef_220)
 else if (ind==iDef_220_V2)
 	{ 
 	ptrs[0]=" AC220/220-20A-18   ";
-	ptrs[1]=" AC220/220-20A-17  ";
+	ptrs[1]=" AC220/220-20A-17   ";
+	ptrs[2]=" AC380/220-45A-18   ";
 	
-	ptrs[2]=sm_exit;
-	ptrs[3]="                    ";
+	ptrs[3]=sm_exit;
+	ptrs[4]="                    ";
 	if(bFL5)ptrs[default_temp]=sm_;
 	
 	if(sub_ind<index_set) index_set=sub_ind;
@@ -19574,7 +19575,7 @@ else if (ind==iDef_220)
      }
 
 else if (ind==iDef_220_V2)
-#define SIMAXIDEF 2
+#define SIMAXIDEF 3
 	{
 	ret(1000);
 	if(but==butD)
@@ -19610,7 +19611,14 @@ else if (ind==iDef_220_V2)
 			lc640_write_int(EE_IZMAX,20);
 			lc640_write_int(EE_AUSW_MAIN,22010);
 			}
-
+		else if(sub_ind==2)
+			{
+			def_set(2700,2590,2450,198,100,2200,3,2590);
+			lc640_write_int(EE_DU,2450-1200);
+			lc640_write_int(EE_U_AVT,2450);
+			lc640_write_int(EE_IZMAX,20);
+			lc640_write_int(EE_AUSW_MAIN,22033);
+			}
 
 		else if(sub_ind==SIMAXIDEF)
 			{
@@ -22646,7 +22654,7 @@ else if(ind==iK_220)
 		{
 		if(sub_ind==0)
 			{
-			if(AUSW_MAIN==22035)
+			if((AUSW_MAIN==22035)||(AUSW_MAIN==22033))
 				{
 				tree_up(iK_net3,0,0,0);
 		     	ret(1000);

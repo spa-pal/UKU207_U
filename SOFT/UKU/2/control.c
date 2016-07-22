@@ -877,11 +877,35 @@ net_U=(signed short)temp_SL;
 
 #ifdef UKU_220_V2
 //напряжение сети
+
+if(AUSW_MAIN==22033)
+	{
+	temp_SL=(signed long)net_buff_;
+	temp_SL*=KunetA;
+	temp_SL/=6000L;
+	net_Ua=(signed short)temp_SL;
+
+	temp_SL=(signed long)adc_buff_[3];
+	temp_SL*=KunetB;
+	temp_SL/=6000L;
+	net_Ub=(signed short)temp_SL;
+
+	temp_SL=(signed long)adc_buff_[10];
+	temp_SL*=KunetC;
+	temp_SL/=6000L;
+	net_Uc=(signed short)temp_SL;
+
+	net_U=net_Ua;
+	if(net_Ub<net_U)net_U=net_Ub;
+	if(net_Uc<net_U)net_U=net_Uc;
+	}
+else
+	{
 	temp_SL=(signed long)net_buff_;
 	temp_SL*=Kunet;
 	temp_SL/=5000L;
 	net_U=(signed short)temp_SL;
-
+	}
 #endif
 
 
