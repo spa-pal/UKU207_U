@@ -19683,7 +19683,7 @@ else if (ind==iDef_220_IPS_TERMOKOMPENSAT)
 			lc640_write_int(EE_TERMOKOMP,1);
 			//lc640_write_int(EE_IMAX,30);
 		     //lc640_write_int(EE_IMIN,24);
-			lc640_write_int(EE_UMAX,2450);
+			//lc640_write_int(EE_UMAX,2450);
 	/*		}
 		else if(sub_ind==3)
 			{ */
