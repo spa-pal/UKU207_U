@@ -8,6 +8,7 @@
 #include "avar_hndl.h"
 #include "modbus.h"
 #include "sacred_sun.h"
+#include "ztt.h"
 
 char bRXIN0;
 char UIB0[100]={0,0,0,0,0,0,0,0,0,0};
@@ -558,9 +559,18 @@ else if ( IIRValue == IIR_RDA )	/* Receive Data Available */
 
 	if(data==0x0d)
 		{
-		if(sacredSunRequestPhase==0)	mem_copy (sacredSunBatteryInBuff, bat_drv_rx_buff,  bat_drv_rx_cnt);
-		else if(sacredSunRequestPhase==1)	mem_copy (&sacredSunBatteryInBuff[150], bat_drv_rx_buff,  bat_drv_rx_cnt);
-		sacredSunSilentCnt=0;
+		if(BAT_TYPE==2)
+			{
+			if(sacredSunRequestPhase==0)	mem_copy (liBatteryInBuff, bat_drv_rx_buff,  bat_drv_rx_cnt);
+			else if(sacredSunRequestPhase==1)	mem_copy (&liBatteryInBuff[150], bat_drv_rx_buff,  bat_drv_rx_cnt);
+			sacredSunSilentCnt=0;
+			}
+		else if (BAT_TYPE==3)
+			{
+			if(zTTRequestPhase==0)	mem_copy (liBatteryInBuff, bat_drv_rx_buff,  bat_drv_rx_cnt);
+			else if(zTTRequestPhase==1)	mem_copy (&liBatteryInBuff[150], bat_drv_rx_buff,  bat_drv_rx_cnt);
+			zTTSilentCnt=0;
+			}
 		}
 
 	}

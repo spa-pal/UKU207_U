@@ -37,6 +37,7 @@
 #include <rtl.h>
 #include "modbus.h"
 #include "sacred_sun.h"
+#include "ztt.h"
 #include "mcp2515.h"
 //#include "sc16is7xx.h"
 
@@ -134,10 +135,11 @@ signed short TBOXVENTON;
 signed short TBOXVENTOFF;
 signed short TBOXWARMON; 
 signed short TBOXWARMOFF;
-signed short BAT_TYPE;	//Тип батареи. 0 - обычная свинцовая, 1-литиевая COSLIGHT, 2-литиевая SACRED SUN
+signed short BAT_TYPE;	//Тип батареи. 0 - обычная свинцовая, 1-литиевая COSLIGHT, 2-литиевая SACRED SUN , 3-литиевая ZTT
 signed short DU_LI_BAT;	//Параметр, определяющий напряжение содержания литиевой батареи
 signed short FORVARDBPSCHHOUR;	//Периодичностьсмены ведущего источника в часах. Если 0 - функция выключена и ведущий первый источник
 signed short NUMBAT;
+signed short NUMBAT_TELECORE;
 signed short NUMIST;
 signed short NUMINV;
 signed short NUMDT;
@@ -266,7 +268,7 @@ MAKB_STAT makb[4];
 
 //***********************************************
 //Литиевые АКБ
-LAKB_STAT lakb[1];
+LAKB_STAT lakb[3];
 char lakb_damp[1][42];
 char bLAKB_KONF_CH=0;
 char bLAKB_KONF_CH_old=0;
@@ -657,6 +659,11 @@ signed short ipsBlckStat;
 signed short outVoltContrHndlCnt;		//Счетчик, считает в плюс в случае выполнения условия аварии
 signed short outVoltContrHndlCnt_;		//Счетчик, считает в плюс в случае отсутствия выполнения условия аварии
 char uout_av;
+
+
+short plazma_numOfCells;
+short plazma_numOfTemperCells;
+short plazma_numOfPacks;
 
 #ifdef MCP2515_CAN
 #define can1_out	mcp2515_transmit
@@ -3407,62 +3414,62 @@ else if(ind==iMn_TELECORE2015)
      i=0;
  	
  	ptrs[1]="Uбz=   ]В Iбz=    @А";
-     ptrs[2]="Uн=    #В Iн=     $А";
-     ptrs[3]=" 0%:0^:0& 0</>  /0{ ";
+    ptrs[2]="Uн=    #В Iн=     $А";
+    ptrs[3]=" 0%:0^:0& 0</>  /0{ ";
      
  	ptrs[4]=										" Батарея N1         ";
-     ptrs[5]=										" Батарея N2         ";
-     if((NUMBAT==1)&&(BAT_IS_ON[0]!=bisON))ptrs[4]=		" Батарея N2         ";
+    ptrs[5]=										" Батарея N2         ";
+    
 								
-	ptrs[4+NUMBAT]=  								" БПС N1             ";
-     ptrs[5+NUMBAT]=  								" БПС N2             ";
-     ptrs[6+NUMBAT]=  								" БПС N3             ";
-     ptrs[7+NUMBAT]=  								" БПС N4             ";
-     ptrs[8+NUMBAT]= 								" БПС N5             ";
-     ptrs[9+NUMBAT]= 								" БПС N6             ";
-     ptrs[10+NUMBAT]= 								" БПС N7             ";
-     ptrs[11+NUMBAT]= 								" БПС N8             ";
-     ptrs[12+NUMBAT]= 								" БПС N9             ";
-     ptrs[13+NUMBAT]= 								" БПС N10            ";
-     ptrs[14+NUMBAT]= 								" БПС N11            ";
-     ptrs[15+NUMBAT]= 								" БПС N12            ";
+	ptrs[4+NUMBAT_TELECORE]=  								" БПС N1             ";
+     ptrs[5+NUMBAT_TELECORE]=  								" БПС N2             ";
+     ptrs[6+NUMBAT_TELECORE]=  								" БПС N3             ";
+     ptrs[7+NUMBAT_TELECORE]=  								" БПС N4             ";
+     ptrs[8+NUMBAT_TELECORE]= 								" БПС N5             ";
+     ptrs[9+NUMBAT_TELECORE]= 								" БПС N6             ";
+     ptrs[10+NUMBAT_TELECORE]= 								" БПС N7             ";
+     ptrs[11+NUMBAT_TELECORE]= 								" БПС N8             ";
+     ptrs[12+NUMBAT_TELECORE]= 								" БПС N9             ";
+     ptrs[13+NUMBAT_TELECORE]= 								" БПС N10            ";
+     ptrs[14+NUMBAT_TELECORE]= 								" БПС N11            ";
+     ptrs[15+NUMBAT_TELECORE]= 								" БПС N12            ";
 
-	ptrs[4+NUMIST+NUMBAT]=  							" Байпас            ";     
+	ptrs[4+NUMIST+NUMBAT_TELECORE]=  							" Байпас            ";     
 
-     ptrs[4+NUMIST+NUMBAT+NUMBYPASS]=  					" Инвертор N1        ";
-     ptrs[5+NUMIST+NUMBAT+NUMBYPASS]=  					" Инвертор N2        ";
-     ptrs[6+NUMIST+NUMBAT+NUMBYPASS]=  					" Инвертор N3        ";
-     ptrs[7+NUMIST+NUMBAT+NUMBYPASS]=  					" Инвертор N4        ";
-     ptrs[8+NUMIST+NUMBAT+NUMBYPASS]=  					" Инвертор N5        ";
-     ptrs[9+NUMIST+NUMBAT+NUMBYPASS]=  					" Инвертор N6        ";
-     ptrs[10+NUMIST+NUMBAT+NUMBYPASS]=  				" Инвертор N7        ";
-     ptrs[11+NUMIST+NUMBAT+NUMBYPASS]=  				" Инвертор N8        ";
-     ptrs[12+NUMIST+NUMBAT+NUMBYPASS]=  				" Инвертор N9        ";
-     ptrs[13+NUMIST+NUMBAT+NUMBYPASS]=  				" Инвертор N10       ";
-     ptrs[14+NUMIST+NUMBAT+NUMBYPASS]=  				" Инвертор N11       ";
-     ptrs[15+NUMIST+NUMBAT+NUMBYPASS]=  				" Инвертор N12       ";
-     ptrs[16+NUMIST+NUMBAT+NUMBYPASS]=  				" Инвертор N13       ";
-     ptrs[17+NUMIST+NUMBAT+NUMBYPASS]=  				" Инвертор N14       ";
-     ptrs[18+NUMIST+NUMBAT+NUMBYPASS]=  				" Инвертор N15       ";
+     ptrs[4+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  					" Инвертор N1        ";
+     ptrs[5+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  					" Инвертор N2        ";
+     ptrs[6+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  					" Инвертор N3        ";
+     ptrs[7+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  					" Инвертор N4        ";
+     ptrs[8+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  					" Инвертор N5        ";
+     ptrs[9+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  					" Инвертор N6        ";
+     ptrs[10+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  				" Инвертор N7        ";
+     ptrs[11+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  				" Инвертор N8        ";
+     ptrs[12+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  				" Инвертор N9        ";
+     ptrs[13+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  				" Инвертор N10       ";
+     ptrs[14+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  				" Инвертор N11       ";
+     ptrs[15+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  				" Инвертор N12       ";
+     ptrs[16+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  				" Инвертор N13       ";
+     ptrs[17+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  				" Инвертор N14       ";
+     ptrs[18+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  				" Инвертор N15       ";
 
-	ptrs[4+NUMIST+NUMBAT+NUMBYPASS+NUMINV]= 			" Таблица инверторов ";
+	ptrs[4+NUMIST+NUMBAT_TELECORE+NUMBYPASS+NUMINV]= 			" Таблица инверторов ";
 
-     ptrs[4+NUMIST+NUMBAT+NUMINV+NUMBYPASS+(NUMINV!=0)]=				" Монитор АКБ N1     ";
-     ptrs[5+NUMIST+NUMBAT+NUMINV+NUMBYPASS+(NUMINV!=0)]=				" Монитор АКБ N2     ";
-     ptrs[6+NUMIST+NUMBAT+NUMINV+NUMBYPASS+(NUMINV!=0)]=				" Монитор АКБ N3     ";
-     ptrs[7+NUMIST+NUMBAT+NUMINV+NUMBYPASS+(NUMINV!=0)]=				" Монитор АКБ N4     ";
+     ptrs[4+NUMIST+NUMBAT_TELECORE+NUMINV+NUMBYPASS+(NUMINV!=0)]=				" Монитор АКБ N1     ";
+     ptrs[5+NUMIST+NUMBAT_TELECORE+NUMINV+NUMBYPASS+(NUMINV!=0)]=				" Монитор АКБ N2     ";
+     ptrs[6+NUMIST+NUMBAT_TELECORE+NUMINV+NUMBYPASS+(NUMINV!=0)]=				" Монитор АКБ N3     ";
+     ptrs[7+NUMIST+NUMBAT_TELECORE+NUMINV+NUMBYPASS+(NUMINV!=0)]=				" Монитор АКБ N4     ";
 
 
-     ptrs[4+NUMIST+NUMBAT+NUMINV+NUMMAKB+NUMBYPASS+(NUMINV!=0)]= 				" Сеть               "; 
-     ptrs[5+NUMIST+NUMBAT+NUMINV+NUMMAKB+NUMBYPASS+(NUMINV!=0)]= 				" Нагрузка           "; 
-     ptrs[6+NUMIST+NUMBAT+NUMINV+NUMMAKB+NUMBYPASS+(NUMINV!=0)]= 				" Внешние датчики    "; 
- 	ptrs[6+NUMIST+NUMBAT+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0)+(NUMINV!=0)]= 	" Спецфункции    	 ";
-     ptrs[7+NUMIST+NUMBAT+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0)+(NUMINV!=0)]= 	" Установки          "; 
-     ptrs[8+NUMIST+NUMBAT+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0)+(NUMINV!=0)]= 	" Журнал событий     "; 
-     ptrs[9+NUMIST+NUMBAT+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0)+(NUMINV!=0)]= 	" Выход              "; 
-     ptrs[10+NUMIST+NUMBAT+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0)+(NUMINV!=0)]= 	" Журнал батареи N1  "; 
-     ptrs[11+NUMIST+NUMBAT+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0)+(NUMINV!=0)]= 	" Журнал батареи N2  "; 
-	ptrs[12+NUMIST+NUMBAT+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0)+(NUMINV!=0)]=	" Тест               ";
+     ptrs[4+NUMIST+NUMBAT_TELECORE+NUMINV+NUMMAKB+NUMBYPASS+(NUMINV!=0)]= 				" Сеть               "; 
+     ptrs[5+NUMIST+NUMBAT_TELECORE+NUMINV+NUMMAKB+NUMBYPASS+(NUMINV!=0)]= 				" Нагрузка           "; 
+     ptrs[6+NUMIST+NUMBAT_TELECORE+NUMINV+NUMMAKB+NUMBYPASS+(NUMINV!=0)]= 				" Внешние датчики    "; 
+ 	ptrs[6+NUMIST+NUMBAT_TELECORE+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0)+(NUMINV!=0)]= 	" Спецфункции    	 ";
+     ptrs[7+NUMIST+NUMBAT_TELECORE+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0)+(NUMINV!=0)]= 	" Установки          "; 
+     ptrs[8+NUMIST+NUMBAT_TELECORE+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0)+(NUMINV!=0)]= 	" Журнал событий     "; 
+     ptrs[9+NUMIST+NUMBAT_TELECORE+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0)+(NUMINV!=0)]= 	" Выход              "; 
+     ptrs[10+NUMIST+NUMBAT_TELECORE+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0)+(NUMINV!=0)]= 	" Журнал батареи N1  "; 
+     ptrs[11+NUMIST+NUMBAT_TELECORE+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0)+(NUMINV!=0)]= 	" Журнал батареи N2  "; 
+	ptrs[12+NUMIST+NUMBAT_TELECORE+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0)+(NUMINV!=0)]=	" Тест               ";
 
      if(sub_ind==0)index_set=0;
 	else if((index_set-sub_ind)>2)index_set=sub_ind+2;
@@ -3563,11 +3570,17 @@ else if(ind==iMn_TELECORE2015)
 	//int2lcdyx(lc640_read_int(ADR_EE_BAT_IS_ON[1]),0,9,0);
 	//int2lcdyx(BAT_IS_ON[0],0,14,0);
 	//int2lcdyx(cntrl_stat,0,19,0);
-	//int2lcdyx(u_necc,0,4,0);
+	
 	//	long2lcdyx_mmm(power_summary_tempo,0,9,0);
 	//long2lcdyx_mmm(power_current_tempo,0,19,0);
-	//int2lcdyx(powerSummaryCnt,1,3,0);
-	//int2lcdyx(cntrl_stat,0,3,0);
+	
+	  
+	 
+/*	int2lcdyx(bat_drv_rx_cnt,0,3,0);
+	int2lcdyx(zTTButteryCnter,0,6,0);
+	int2lcdyx(plazma_numOfPacks,0,9,0);
+	int2lcdyx(plazma_numOfTemperCells,0,12,0);
+	int2lcdyx(plazma_numOfCells,0,19,0); */
 	}
 
 #ifndef _DEBUG_
@@ -3998,6 +4011,41 @@ else if (ind==iBat_universe)
 		int2lcd(lakb[sub_ind1]._r_b_t,'[',1);
 
 		//int2lcdyx(lakb[sub_ind1]._battCommState,0,19,0);
+		}
+	else if(BAT_TYPE==3)//Батарея	ZTT
+		{
+		if(lakb[sub_ind1]._ch_curr>0)
+		     {
+		     ptrs[1]="    заряжается      ";
+		     ptrs[3]=" Iзар=       #А     ";
+		     }
+		else
+		     {
+		     ptrs[1]=  "   разряжается      ";
+		     ptrs[3]=  " Iразр=      #А     ";
+		     }	
+		ptrs[2]=       " Uбат =    $В       ";
+		ptrs[4]=		" tбат =    ?°C      ";
+		ptrs[5]=		" SOC  =    wA*ч     ";
+		ptrs[6]=		" SOH  =    >A*ч     ";
+		ptrs[7]=sm_exit;
+
+
+ 
+		bgnd_par(		"    Батарея N@      ",
+						"      48V50Ah       ",
+					ptrs[sub_ind+1],ptrs[sub_ind+2]);
+	     
+		int2lcd(sub_ind1+1,'@',0);
+	    int2lcd(lakb[sub_ind1]._tot_bat_volt,'$',1);
+		int2lcd_mmm(abs(lakb[sub_ind1]._ch_curr),'#',2);
+	    int2lcd_mmm(lakb[sub_ind1]._max_cell_temp,'?',1);
+	    int2lcd(lakb[sub_ind1]._s_o_c,'w',1);
+		if(sub_ind==8)lcd_buffer[60]=1;
+		int2lcd(lakb[sub_ind1]._s_o_h,'>',1);
+		
+	/*	int2lcdyx(u_necc,0,19,0); 
+		int2lcdyx(cntrl_stat,0,15,0);*/ 
 		}
 	}
 
@@ -5684,15 +5732,14 @@ else if(ind==iPrl_bat_in_sel)
 
 else if(ind==iSet_bat_sel)
 	{
+	ptrs[0]=	" Свинцово-кислотная ";
+    ptrs[1]=	" COSLIGHT POWER CO. ";
+    ptrs[2]=	" SACRED SUN         ";
+	ptrs[3]=	" ZTT                ";
+	ptrs[4]=	" Выход              ";
 
-     ptrs[0]=	" Свинцово-кислотная ";
-     ptrs[1]=	" COSLIGHT POWER CO. ";
-     ptrs[2]=	" SACRED SUN         ";
-	ptrs[3]=	" Выход              ";
-
-	gran(&BAT_TYPE,0,2);
-	if(bFL2)ptrs[BAT_TYPE]=	
-			"                    ";	
+	gran(&BAT_TYPE,0,3);
+	if(bFL2)ptrs[BAT_TYPE]=		"                    ";	
 
 	if((sub_ind-index_set)>1)index_set=sub_ind-1;
 	else if(sub_ind<index_set)index_set=sub_ind;
@@ -5703,7 +5750,6 @@ else if(ind==iSet_bat_sel)
 			ptrs[index_set+1]);
 	
 	pointer_set(2);
-	//int2lcdyx(BAT_TYPE,0,3,0);
 	}
 	
 else if(ind==iSet)
@@ -7085,6 +7131,26 @@ else if(ind==iStr_KONTUR)
 	int2lcd(NUMDT,'#',0);
 	int2lcd(NUMSK,'$',0);
 	}  
+
+else if(ind==iStr_TELECORE2015)
+	{
+	ptrs[0]=" Батарей           @";
+	ptrs[1]=" Источников        !";
+	ptrs[2]=" Датчиков темпер.  #";
+	ptrs[3]=" Сухих контактов   $";
+	ptrs[4]=" Выход              ";
+	
+	if(sub_ind<index_set) index_set=sub_ind;
+	else if((sub_ind-index_set)>2) index_set=sub_ind-2;
+	bgnd_par("      СТРУКТУРА     ",ptrs[index_set],ptrs[index_set+1],ptrs[index_set+2]);
+	
+	pointer_set(1);
+
+	int2lcd(NUMBAT_TELECORE,'@',0);		
+	int2lcd(NUMIST,'!',0); 
+	int2lcd(NUMDT,'#',0);
+	int2lcd(NUMSK,'$',0);
+	}    
 
 else if (ind==iLan_set)
 	{
@@ -13159,88 +13225,80 @@ else if(ind==iMn_TELECORE2015)
 					}
 				}																							
 			}
-		else if((sub_ind>0)&&(sub_ind<=NUMBAT))
+		else if((sub_ind>0)&&(sub_ind<=NUMBAT_TELECORE))
 		    	{
-		    	if(BAT_IS_ON[0]!=bisON)
-				{ 
-				/*if(BAT_TYPE==0)tree_up(iBat_simple,0,0,1);
-				else if(BAT_TYPE==1)*/ tree_up(iBat_li,0,0,1);
-				}
-		    	else 
-				{
-				tree_up(iBat_universe,0,0,sub_ind-1);
-				}
-		    	}
-		else if((sub_ind>NUMBAT)&&(sub_ind<=(NUMBAT+NUMIST)))
+		    	tree_up(iBat_universe,0,0,sub_ind-1);
+				} 
+		else if((sub_ind>NUMBAT_TELECORE)&&(sub_ind<=(NUMBAT_TELECORE+NUMIST)))
 		    	{
-		    	tree_up(iBps,0,0,sub_ind-(1+NUMBAT));
+		    	tree_up(iBps,0,0,sub_ind-(1+NUMBAT_TELECORE));
 		    	}
-		else if((sub_ind>(NUMBAT+NUMIST))&&(sub_ind<=(NUMBAT+NUMIST+NUMBYPASS)))
+		else if((sub_ind>(NUMBAT_TELECORE+NUMIST))&&(sub_ind<=(NUMBAT_TELECORE+NUMIST+NUMBYPASS)))
 		    	{
 		    	tree_up(iByps,0,0,0);
 		    	}
-		else if((sub_ind>(NUMBAT+NUMIST+NUMBYPASS))&&(sub_ind<=(NUMBAT+NUMIST+NUMBYPASS+NUMINV)))
+		else if((sub_ind>(NUMBAT_TELECORE+NUMIST+NUMBYPASS))&&(sub_ind<=(NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV)))
 		    	{
-		    	tree_up(iInv_v2,0,0,sub_ind-(1+NUMBAT+NUMIST+NUMBYPASS));
+		    	tree_up(iInv_v2,0,0,sub_ind-(1+NUMBAT_TELECORE+NUMIST+NUMBYPASS));
 		    	}
-		else if((sub_ind==(1+NUMBAT+NUMIST+NUMBYPASS+NUMINV))&&(NUMINV))
+		else if((sub_ind==(1+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV))&&(NUMINV))
 			{
 			tree_up(iInv_tabl,0,0,0);
 		     //ret(500);
 		     }
-		else if((sub_ind>(NUMBAT+NUMIST+NUMBYPASS+NUMINV+(NUMINV!=0)))&&(sub_ind<=(NUMBAT+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0))))
+		else if((sub_ind>(NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+(NUMINV!=0)))&&(sub_ind<=(NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0))))
 		    	{
-		    	tree_up(iMakb,0,0,sub_ind-(1+NUMBAT+NUMIST+NUMBYPASS+NUMINV+(NUMINV!=0)));
+		    	tree_up(iMakb,0,0,sub_ind-(1+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+(NUMINV!=0)));
 		    	}
-		else if(sub_ind==(1+NUMBAT+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)))
+		else if(sub_ind==(1+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)))
 			{
 			tree_up(iNetEM,0,0,0);
 		      ret(0);//1204//ret(1000);
 			}
 		
-		else if(sub_ind==(2+NUMBAT+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)))
+		else if(sub_ind==(2+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)))
 			{
 			tree_up(iLoad,0,0,0);
 		     ret(1000);
 			}
-		else if((sub_ind==(3+NUMBAT+NUMIST+NUMBYPASS+NUMINV+NUMMAKB)+(NUMINV!=0))&&(NUMEXT))
+		else if((sub_ind==(3+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+NUMMAKB)+(NUMINV!=0))&&(NUMEXT))
 			{
 			tree_up(iExtern_TELECORE2015,0,0,0);
 		     ret(1000);
 			}
 
-		else if(sub_ind==(3+NUMBAT+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)+(NUMEXT!=0)))
+		else if(sub_ind==(3+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)+(NUMEXT!=0)))
 			{
 			tree_up(iSpc,0,0,0);
 		     ret(1000);
 			}
 
-		else if(sub_ind==(4+NUMBAT+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)+(NUMEXT!=0)))
+		else if(sub_ind==(4+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)+(NUMEXT!=0)))
 			{
 			tree_up(iSet_prl,0,0,0);
 		     ret(50);
 		     parol_init();
 			}
-		else if(sub_ind==(5+NUMBAT+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)+(NUMEXT!=0)))
+		else if(sub_ind==(5+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)+(NUMEXT!=0)))
 			{
 			tree_up(iLog,0,0,0);
 		     ret(1000);
 			}
-		else if(sub_ind==(6+NUMBAT+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)+(NUMEXT!=0)))
+		else if(sub_ind==(6+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)+(NUMEXT!=0)))
 			{
 			sub_ind=0;
 			}
-		else if(sub_ind==(7+NUMBAT+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)+(NUMEXT!=0)))
+		else if(sub_ind==(7+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)+(NUMEXT!=0)))
 			{
 			tree_up(iBatLog,0,0,0);
 		     ret(1000);
 			}
-		else if(sub_ind==(8+NUMBAT+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)+(NUMEXT!=0)))
+		else if(sub_ind==(8+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)+(NUMEXT!=0)))
 			{
 			tree_up(iBatLog,0,0,1);
 		     ret(1000);
 			}
-		else if(sub_ind==(9+NUMBAT+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)+(NUMEXT!=0)))
+		else if(sub_ind==(9+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)+(NUMEXT!=0)))
 			{
 			if(but==butE)
 		     	{
@@ -13395,7 +13453,30 @@ else if (ind==iBat_universe)
 			{
 			sub_ind=6;
 			}
-		}		     
+		}
+	else if(BAT_TYPE==3)//Батарея	ZTT
+		{
+		ret(1000);
+		if(but==butD)
+			{
+			sub_ind++;
+			gran_char(&sub_ind,0,5);
+			}
+		else if(but==butU)
+			{
+			sub_ind--;
+			gran_char(&sub_ind,0,5);
+			}
+		else if((but==butL)||((sub_ind==5)&&(but==butE)))
+		     {
+		     tree_down(0,0);
+		     ret(0);
+		     }
+		else if(but==butD_)
+			{
+			sub_ind=6;
+			}
+		}					     
 	}
 
 else if(ind==iInv_tabl)
@@ -14244,18 +14325,16 @@ else if(ind==iSet_bat_sel)
 	if(but==butU)
 		{
 		sub_ind--;
-		gran_char(&sub_ind,0,3);
-		//lc640_write_int(EE_BAT_TYPE,0);
+		gran_char(&sub_ind,0,4);
 		}
 	else if (but==butD)
 		{
 		sub_ind++;
-		gran_char(&sub_ind,0,3);
-		//lc640_write_int(EE_BAT_TYPE,1);
+		gran_char(&sub_ind,0,4);
 		}
 	else if(but==butE)
 		{
-		if(sub_ind==3)
+		if(sub_ind==4)
 			{
 			tree_down(0,0);
           	ret(0);
@@ -14263,7 +14342,7 @@ else if(ind==iSet_bat_sel)
 		}
 	else if(but==butE_)
 		{
-		if((sub_ind>=0)&&(sub_ind<=2))
+		if((sub_ind>=0)&&(sub_ind<=3))
 			{
 			BAT_TYPE=sub_ind;
 			lc640_write_int(EE_BAT_TYPE,BAT_TYPE);
@@ -17286,7 +17365,7 @@ else if(ind==iSet_TELECORE2015)
 		{
 		if(but==butE)
 		     {
-		     tree_up(iStr_6U,0,0,0);
+		     tree_up(iStr_TELECORE2015,0,0,0);
 		     ret(1000);
 		     index_set=0;
  		     }
@@ -20507,7 +20586,97 @@ else if(ind==iStr_220_IPS_TERMOKOMPENSAT)
 	          }
           }
 	}
-
+else if(ind==iStr_TELECORE2015)
+	{
+	ret(1000);
+	if(but==butD)
+		{
+		sub_ind++;
+		gran_char(&sub_ind,0,4);
+		}
+	else if(but==butU)
+		{
+		sub_ind--;
+		gran_char(&sub_ind,0,4);
+		}
+	else if(but==butD_)
+		{
+		sub_ind=4;
+		}
+     else if(sub_ind==0)
+	     {
+	     if((but==butR)||(but==butR_))
+	     	{
+	     	NUMBAT_TELECORE++;
+	     	gran(&NUMBAT_TELECORE,1,3);
+	     	lc640_write_int(EE_NUMBAT_TELECORE,NUMBAT_TELECORE);
+			}
+	     
+	     else if((but==butL)||(but==butL_))
+	     	{
+	     	NUMBAT_TELECORE--;
+	     	gran(&NUMBAT_TELECORE,1,3);
+	     	lc640_write_int(EE_NUMBAT_TELECORE,NUMBAT_TELECORE);
+	     	}
+          }							
+     else if(sub_ind==1)
+	     {
+	     if((but==butR)||(but==butR_))
+	     	{
+	     	NUMIST++;
+	     	gran(&NUMIST,0,12);
+	     	lc640_write_int(EE_NUMIST,NUMIST);
+			numOfForvardBps_init();
+	     	}
+	     
+	     else if((but==butL)||(but==butL_))
+	     	{
+	     	NUMIST--;
+	     	gran(&NUMIST,0,12);
+	     	lc640_write_int(EE_NUMIST,NUMIST);
+			numOfForvardBps_init();
+	     	}
+         }	     			          
+     else if(sub_ind==2)
+	     {
+	     if((but==butR)||(but==butR_))
+	     	{
+	     	NUMDT++;
+	     	gran(&NUMDT,0,3);
+	     	lc640_write_int(EE_NUMDT,NUMDT);
+	     	}
+	     
+	     else if((but==butL)||(but==butL_))
+	     	{
+	     	NUMDT--;
+	     	gran(&NUMDT,0,3);
+	     	lc640_write_int(EE_NUMDT,NUMDT);
+	     	}
+          }	
+     else if(sub_ind==3)
+	     {
+	     if((but==butR)||(but==butR_))
+	     	{
+	     	NUMSK++;
+	     	gran(&NUMSK,0,4);
+	     	lc640_write_int(EE_NUMSK,NUMSK);
+	     	}
+	     
+	     else if((but==butL)||(but==butL_))
+	     	{
+	     	NUMSK--;
+	     	gran(&NUMSK,0,4);
+	     	lc640_write_int(EE_NUMSK,NUMSK);
+	     	}
+          }              
+    else if(sub_ind==4)
+	     {
+	     if(but==butE)
+	          {
+				tree_down(0,0);
+	          }
+          }	          
+	}     
 else if (ind==iLan_set)
 	{
 	char si_max;
@@ -28672,7 +28841,8 @@ while (1)
 
 		#ifdef UKU_TELECORE2015
 
-		sacred_san_bat_hndl();
+		if(BAT_TYPE==2)sacred_san_bat_hndl();
+		else if(BAT_TYPE==3)ztt_bat_hndl();
 
 		#endif
 

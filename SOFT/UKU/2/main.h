@@ -722,7 +722,7 @@ typedef enum {
 	iK,iK_3U,iK_RSTKM,iK_GLONASS,iK_KONTUR,iK_6U,iK_220,iK_220_380,iK_220_IPS_TERMOKOMPENSAT,iK_220_IPS_TERMOKOMPENSAT_IB,
 	iSpcprl,iSpc,k,Crash_0,Crash_1,iKednd,iAv_view_avt,iAKE,iSpc_termocompensat,
 	iLoad,iSpc_prl_vz,iSpc_prl_ke,iKe,iVz,iAvz,iAVAR,
-	iStr,iStr_3U,iStr_RSTKM,iStr_GLONASS,iStr_KONTUR,iStr_6U,iStr_220_IPS_TERMOKOMPENSAT,
+	iStr,iStr_3U,iStr_RSTKM,iStr_GLONASS,iStr_KONTUR,iStr_6U,iStr_220_IPS_TERMOKOMPENSAT,iStr_TELECORE2015,
 	iVrs,iPrltst,iApv,
 	iK_bps,iK_bps_sel,iK_bat,iK_bat_simple,iK_bat_ips_termokompensat_ib,iK_bat_sel,iK_load,iK_net,iK_net3,
 	iK_makb_sel,iK_makb,iK_out,
@@ -868,10 +868,11 @@ extern signed short TBOXVENTON;
 extern signed short TBOXVENTOFF;
 extern signed short TBOXWARMON; 
 extern signed short TBOXWARMOFF;
-extern signed short BAT_TYPE;		//Тип батареи. 0 - обычная свинцовая, 1-литиевая COSLIGHT, 2-литиевая SACRED SUN
+extern signed short BAT_TYPE;	//Тип батареи. 0 - обычная свинцовая, 1-литиевая COSLIGHT, 2-литиевая SACRED SUN , 3-литиевая ZTT
 extern signed short DU_LI_BAT;	//Параметр, определяющий напряжение содержания литиевой батареи
 extern signed short FORVARDBPSCHHOUR;	//Периодичностьсмены ведущего источника в часах. Если 0 - функция выключена и ведущий первый источник
 extern signed short NUMBAT;
+extern signed short NUMBAT_TELECORE;
 extern signed short NUMIST;
 extern signed short NUMINV;
 extern signed short NUMDT;
@@ -1129,7 +1130,7 @@ typedef struct
 	signed short 	_isOnCnt;
 	signed short	_s_o_c_abs;		//остаточный заряд в абсолютном выражении
 	} LAKB_STAT; 
-extern LAKB_STAT lakb[1];
+extern LAKB_STAT lakb[3];
 extern char lakb_damp[1][42];
 extern char bLAKB_KONF_CH;
 extern char bLAKB_KONF_CH_old;
@@ -1477,6 +1478,11 @@ extern signed short ipsBlckStat;
 extern signed short outVoltContrHndlCnt;		//Счетчик, считает в плюс в случае выполнения условия аварии
 extern signed short outVoltContrHndlCnt_;		//Счетчик, считает в плюс в случае отсутствия выполнения условия аварии
 extern char uout_av;
+
+
+extern short plazma_numOfCells;
+extern short plazma_numOfTemperCells;
+extern short plazma_numOfPacks;
 
 /*----------------------------------------------------------------------------
  * end of file
