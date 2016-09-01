@@ -1269,19 +1269,19 @@ else if((cnt_net_drv>=MINIM_INV_ADRESS)&&(cnt_net_drv<(MINIM_INV_ADRESS+NUMINV))
 	} 
 */	
 	
-/*
+
 else if(cnt_net_drv==19)
 	{
      if(!bCAN_OFF)
 		{
-		mcp2515_transmit(cnt_net_drv,cnt_net_drv,GETTM,0,0,0,0,0);
+		mcp2515_transmit(cnt_net_drv,cnt_net_drv,GETTM,BAT_TYPE,BATNUM,0,0,0);
 		lakb[0]._cnt++;
 		if(lakb[0]._cnt>20)lakb[0]._cnt=20;
 		lakb[1]._cnt++;
 		if(lakb[1]._cnt>20)lakb[1]._cnt=20;
 		}
      }
-*/	
+	
 	
 else if((cnt_net_drv>=MINIM_INV_ADRESS)&&(cnt_net_drv<MINIM_INV_ADRESS+15))
 	{
