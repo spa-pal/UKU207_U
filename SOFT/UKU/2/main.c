@@ -1274,7 +1274,7 @@ else if(cnt_net_drv==19)
 	{
      if(!bCAN_OFF)
 		{
-		mcp2515_transmit(cnt_net_drv,cnt_net_drv,GETTM,BAT_TYPE,BATNUM,0,0,0);
+		mcp2515_transmit(cnt_net_drv,cnt_net_drv,GETTM,BAT_TYPE,NUMBAT,0,0,0);
 		lakb[0]._cnt++;
 		if(lakb[0]._cnt>20)lakb[0]._cnt=20;
 		lakb[1]._cnt++;
@@ -3392,7 +3392,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 
 else if(ind==iMn_TELECORE2015)
 	{
-	ptrs[0]	=	"                    ";
+	ptrs[0]	=	"*                   ";
 	if(num_of_wrks_bps)	
 		{
 		ptrs[0]	=	"  В работе    rист. ";
@@ -3421,57 +3421,29 @@ else if(ind==iMn_TELECORE2015)
     ptrs[5]=										" Батарея N2         ";
     
 								
-	ptrs[4+NUMBAT_TELECORE]=  								" БПС N1             ";
-     ptrs[5+NUMBAT_TELECORE]=  								" БПС N2             ";
-     ptrs[6+NUMBAT_TELECORE]=  								" БПС N3             ";
-     ptrs[7+NUMBAT_TELECORE]=  								" БПС N4             ";
-     ptrs[8+NUMBAT_TELECORE]= 								" БПС N5             ";
-     ptrs[9+NUMBAT_TELECORE]= 								" БПС N6             ";
-     ptrs[10+NUMBAT_TELECORE]= 								" БПС N7             ";
-     ptrs[11+NUMBAT_TELECORE]= 								" БПС N8             ";
-     ptrs[12+NUMBAT_TELECORE]= 								" БПС N9             ";
-     ptrs[13+NUMBAT_TELECORE]= 								" БПС N10            ";
-     ptrs[14+NUMBAT_TELECORE]= 								" БПС N11            ";
-     ptrs[15+NUMBAT_TELECORE]= 								" БПС N12            ";
+	ptrs[4+NUMBAT_TELECORE]=  						" БПС N1             ";
+    ptrs[5+NUMBAT_TELECORE]=  						" БПС N2             ";
+    ptrs[6+NUMBAT_TELECORE]=  						" БПС N3             ";
+    ptrs[7+NUMBAT_TELECORE]=  						" БПС N4             ";
+    ptrs[8+NUMBAT_TELECORE]= 						" БПС N5             ";
+    ptrs[9+NUMBAT_TELECORE]= 						" БПС N6             ";
+    ptrs[10+NUMBAT_TELECORE]= 						" БПС N7             ";
+    ptrs[11+NUMBAT_TELECORE]= 						" БПС N8             ";
+    ptrs[12+NUMBAT_TELECORE]= 						" БПС N9             ";
+    ptrs[13+NUMBAT_TELECORE]= 						" БПС N10            ";
+    ptrs[14+NUMBAT_TELECORE]= 						" БПС N11            ";
+    ptrs[15+NUMBAT_TELECORE]= 						" БПС N12            ";
 
-	ptrs[4+NUMIST+NUMBAT_TELECORE]=  							" Байпас            ";     
+    ptrs[4+NUMIST+NUMBAT_TELECORE]= 				" Сеть               "; 
+    ptrs[5+NUMIST+NUMBAT_TELECORE]= 				" Нагрузка           "; 
+    ptrs[6+NUMIST+NUMBAT_TELECORE]= 				" Внешние датчики    "; 
+	ptrs[6+NUMIST+NUMBAT_TELECORE]= 				" Спецфункции    	 ";
+    ptrs[7+NUMIST+NUMBAT_TELECORE]= 				" Установки          "; 
+    ptrs[8+NUMIST+NUMBAT_TELECORE]= 				" Журнал событий     "; 
+    ptrs[9+NUMIST+NUMBAT_TELECORE]= 				" Выход              "; 
+	ptrs[10+NUMIST+NUMBAT_TELECORE]=				" Тест               ";
 
-     ptrs[4+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  					" Инвертор N1        ";
-     ptrs[5+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  					" Инвертор N2        ";
-     ptrs[6+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  					" Инвертор N3        ";
-     ptrs[7+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  					" Инвертор N4        ";
-     ptrs[8+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  					" Инвертор N5        ";
-     ptrs[9+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  					" Инвертор N6        ";
-     ptrs[10+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  				" Инвертор N7        ";
-     ptrs[11+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  				" Инвертор N8        ";
-     ptrs[12+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  				" Инвертор N9        ";
-     ptrs[13+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  				" Инвертор N10       ";
-     ptrs[14+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  				" Инвертор N11       ";
-     ptrs[15+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  				" Инвертор N12       ";
-     ptrs[16+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  				" Инвертор N13       ";
-     ptrs[17+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  				" Инвертор N14       ";
-     ptrs[18+NUMIST+NUMBAT_TELECORE+NUMBYPASS]=  				" Инвертор N15       ";
-
-	ptrs[4+NUMIST+NUMBAT_TELECORE+NUMBYPASS+NUMINV]= 			" Таблица инверторов ";
-
-     ptrs[4+NUMIST+NUMBAT_TELECORE+NUMINV+NUMBYPASS+(NUMINV!=0)]=				" Монитор АКБ N1     ";
-     ptrs[5+NUMIST+NUMBAT_TELECORE+NUMINV+NUMBYPASS+(NUMINV!=0)]=				" Монитор АКБ N2     ";
-     ptrs[6+NUMIST+NUMBAT_TELECORE+NUMINV+NUMBYPASS+(NUMINV!=0)]=				" Монитор АКБ N3     ";
-     ptrs[7+NUMIST+NUMBAT_TELECORE+NUMINV+NUMBYPASS+(NUMINV!=0)]=				" Монитор АКБ N4     ";
-
-
-     ptrs[4+NUMIST+NUMBAT_TELECORE+NUMINV+NUMMAKB+NUMBYPASS+(NUMINV!=0)]= 				" Сеть               "; 
-     ptrs[5+NUMIST+NUMBAT_TELECORE+NUMINV+NUMMAKB+NUMBYPASS+(NUMINV!=0)]= 				" Нагрузка           "; 
-     ptrs[6+NUMIST+NUMBAT_TELECORE+NUMINV+NUMMAKB+NUMBYPASS+(NUMINV!=0)]= 				" Внешние датчики    "; 
- 	ptrs[6+NUMIST+NUMBAT_TELECORE+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0)+(NUMINV!=0)]= 	" Спецфункции    	 ";
-     ptrs[7+NUMIST+NUMBAT_TELECORE+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0)+(NUMINV!=0)]= 	" Установки          "; 
-     ptrs[8+NUMIST+NUMBAT_TELECORE+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0)+(NUMINV!=0)]= 	" Журнал событий     "; 
-     ptrs[9+NUMIST+NUMBAT_TELECORE+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0)+(NUMINV!=0)]= 	" Выход              "; 
-     ptrs[10+NUMIST+NUMBAT_TELECORE+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0)+(NUMINV!=0)]= 	" Журнал батареи N1  "; 
-     ptrs[11+NUMIST+NUMBAT_TELECORE+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0)+(NUMINV!=0)]= 	" Журнал батареи N2  "; 
-	ptrs[12+NUMIST+NUMBAT_TELECORE+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0)+(NUMINV!=0)]=	" Тест               ";
-
-     if(sub_ind==0)index_set=0;
+    if(sub_ind==0)index_set=0;
 	else if((index_set-sub_ind)>2)index_set=sub_ind+2;
 	else if(sub_ind>index_set)index_set=sub_ind;
 	
@@ -3482,10 +3454,8 @@ else if(ind==iMn_TELECORE2015)
 		{
 	if((ii_!=139)&&(/*(src_state[0]==ssWRK)||(src_state[1]==ssWRK)||(src_state[2]==ssWRK))*/num_of_wrks_bps!=0))
 		{
-		
 		if(sub_cnt<5)int2lcdyx(num_of_wrks_bps,0,14,0);
-
-          }
+		}
      }
 
 	if((!NUMBAT)&&(!NUMINV)) {
@@ -13175,14 +13145,14 @@ else if(ind==iMn_TELECORE2015)
 	if(but==butD)
 		{
 		sub_ind++;
-		gran_char(&sub_ind,0,9+NUMBAT+NUMIST+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0));
+		gran_char(&sub_ind,0,9+NUMBAT_TELECORE+NUMIST);
 		//can1_init(BITRATE62_5K25MHZ);
 		}
 		
 	else if(but==butU)
 		{
 		sub_ind--;
-		gran_char(&sub_ind,0,9+NUMBAT+NUMIST+NUMINV+NUMMAKB+NUMBYPASS+(NUMEXT!=0));
+		gran_char(&sub_ind,0,9+NUMBAT_TELECORE+NUMIST);
 		//LPC_CAN1->CMR=0x00000022;
 		}	
 
@@ -13233,72 +13203,46 @@ else if(ind==iMn_TELECORE2015)
 		    	{
 		    	tree_up(iBps,0,0,sub_ind-(1+NUMBAT_TELECORE));
 		    	}
-		else if((sub_ind>(NUMBAT_TELECORE+NUMIST))&&(sub_ind<=(NUMBAT_TELECORE+NUMIST+NUMBYPASS)))
-		    	{
-		    	tree_up(iByps,0,0,0);
-		    	}
-		else if((sub_ind>(NUMBAT_TELECORE+NUMIST+NUMBYPASS))&&(sub_ind<=(NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV)))
-		    	{
-		    	tree_up(iInv_v2,0,0,sub_ind-(1+NUMBAT_TELECORE+NUMIST+NUMBYPASS));
-		    	}
-		else if((sub_ind==(1+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV))&&(NUMINV))
-			{
-			tree_up(iInv_tabl,0,0,0);
-		     //ret(500);
-		     }
-		else if((sub_ind>(NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+(NUMINV!=0)))&&(sub_ind<=(NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0))))
-		    	{
-		    	tree_up(iMakb,0,0,sub_ind-(1+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+(NUMINV!=0)));
-		    	}
-		else if(sub_ind==(1+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)))
+		else if(sub_ind==(1+NUMBAT_TELECORE+NUMIST))
 			{
 			tree_up(iNetEM,0,0,0);
 		      ret(0);//1204//ret(1000);
 			}
 		
-		else if(sub_ind==(2+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)))
+		else if(sub_ind==(2+NUMBAT_TELECORE+NUMIST))
 			{
 			tree_up(iLoad,0,0,0);
-		     ret(1000);
+		    ret(1000);
 			}
-		else if((sub_ind==(3+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+NUMMAKB)+(NUMINV!=0))&&(NUMEXT))
+		else if(sub_ind==(3+NUMBAT_TELECORE+NUMIST))
 			{
 			tree_up(iExtern_TELECORE2015,0,0,0);
-		     ret(1000);
+		    ret(1000);
 			}
 
-		else if(sub_ind==(3+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)+(NUMEXT!=0)))
+		else if(sub_ind==(3+NUMBAT_TELECORE+NUMIST))
 			{
 			tree_up(iSpc,0,0,0);
-		     ret(1000);
+		    ret(1000);
 			}
 
-		else if(sub_ind==(4+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)+(NUMEXT!=0)))
+		else if(sub_ind==(4+NUMBAT_TELECORE+NUMIST))
 			{
 			tree_up(iSet_prl,0,0,0);
-		     ret(50);
-		     parol_init();
+		    ret(50);
+		    parol_init();
 			}
-		else if(sub_ind==(5+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)+(NUMEXT!=0)))
+		else if(sub_ind==(5+NUMBAT_TELECORE+NUMIST))
 			{
 			tree_up(iLog,0,0,0);
-		     ret(1000);
+		    ret(1000);
 			}
-		else if(sub_ind==(6+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)+(NUMEXT!=0)))
+		else if(sub_ind==(6+NUMBAT_TELECORE+NUMIST))
 			{
 			sub_ind=0;
 			}
-		else if(sub_ind==(7+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)+(NUMEXT!=0)))
-			{
-			tree_up(iBatLog,0,0,0);
-		     ret(1000);
-			}
-		else if(sub_ind==(8+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)+(NUMEXT!=0)))
-			{
-			tree_up(iBatLog,0,0,1);
-		     ret(1000);
-			}
-		else if(sub_ind==(9+NUMBAT_TELECORE+NUMIST+NUMBYPASS+NUMINV+NUMMAKB+(NUMINV!=0)+(NUMEXT!=0)))
+
+		else if(sub_ind==(7+NUMBAT_TELECORE+NUMIST))
 			{
 			if(but==butE)
 		     	{
@@ -13307,7 +13251,7 @@ else if(ind==iMn_TELECORE2015)
 		     	}
 			}
 		}
-    	}
+    }
 
 else if(ind==iBat)
 	{

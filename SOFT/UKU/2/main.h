@@ -1,5 +1,10 @@
 #include <rtl.h>
 
+#ifdef UKU_TELECORE2016
+#define UKU_TELECORE2015
+#define UKU2071x
+#endif
+
 #ifdef UKU2071x
 #define MCP2515_CAN
 #define SC16IS740_UART
