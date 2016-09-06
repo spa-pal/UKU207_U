@@ -1140,8 +1140,10 @@ extern char bLAKB_KONF_CH_EN;
 extern char bRS485ERR;
 extern short LBAT_STRUKT;
 extern char lakb_error_cnt;	//счетчик неправильного показания ннапряжения батареи
-
-
+extern char zTTButteryCnter;
+extern char zTTBatteryHndlPhase;
+extern short numOfPacks,numOfPacks_;
+extern short numOfCells, numOfTemperCells, baseOfData;
 
 //***********************************************
 //Телеметрия по внутренней шине
@@ -1483,6 +1485,8 @@ extern char uout_av;
 extern short plazma_numOfCells;
 extern short plazma_numOfTemperCells;
 extern short plazma_numOfPacks;
+
+extern char plazma_pavlik;
 
 /*----------------------------------------------------------------------------
  * end of file

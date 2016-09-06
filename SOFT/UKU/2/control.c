@@ -9,6 +9,7 @@
 #include "beep.h"
 #include "snmp_data_file.h" 
 #include "sacred_sun.h"
+#include "ztt.h"
 #include <LPC17xx.h>
 
 #define KOEFPOT  105L
@@ -1965,17 +1966,14 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 		}
 	else if(BAT_TYPE==3)
 		{
-		short numOfPacks;
-		short numOfCells, numOfTemperCells, baseOfData;
-
 		numOfCells=((ascii2halFhex(liBatteryInBuff[17]))<<4)+((ascii2halFhex(liBatteryInBuff[18])));
 		numOfTemperCells=((ascii2halFhex(liBatteryInBuff[17+(numOfCells*4)+2]))<<4)+((ascii2halFhex(liBatteryInBuff[18+(numOfCells*4)+2])));
 		numOfPacks=((ascii2halFhex(liBatteryInBuff[15]))<<4)+((ascii2halFhex(liBatteryInBuff[16])));
 		if(numOfPacks)numOfPacks-=1;
 		if((numOfPacks<0)||(numOfPacks>NUMBAT_TELECORE))numOfPacks=0;
-		plazma_numOfCells=numOfCells;
-		plazma_numOfTemperCells=numOfTemperCells;
-		plazma_numOfPacks=numOfPacks;
+		//plazma_numOfCells=numOfCells;
+		//plazma_numOfTemperCells=numOfTemperCells;
+		//plazma_numOfPacks=numOfPacks;
 
 
 		baseOfData=16+(numOfCells*4)+2+(numOfTemperCells*4)+2;
@@ -2013,7 +2011,22 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 							((ascii2halFhex(liBatteryInBuff[2+baseOfData+14]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[3+baseOfData+14]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[4+baseOfData+14])))
-							)/10;								  
+							)/10;
+		
+		for(i=0;i<NUMBAT;i++)
+			{					
+			if(zTTSilentCnt[i]==50)lakb[i]._battCommState=0;
+			else if(zTTSilentCnt[i]==0)lakb[i]._battCommState=1;
+			
+			if(lakb[i]._battCommState==1)
+				{
+				lakb[i]._ch_curr=0;	  
+				lakb[i]._tot_bat_volt=0;
+				lakb[i]._max_cell_temp=0;
+				lakb[i]._s_o_c=0;
+				lakb[i]._s_o_h=0;
+				}
+			}												  
 		}
 	
 if(sacredSunSilentCnt<3) 

@@ -567,9 +567,15 @@ else if ( IIRValue == IIR_RDA )	/* Receive Data Available */
 			}
 		else if (BAT_TYPE==3)
 			{
+			numOfPacks_=((ascii2halFhex(bat_drv_rx_buff[15]))<<4)+((ascii2halFhex(bat_drv_rx_buff[16])));
+			if(numOfPacks_)numOfPacks_--;
+		   	if(numOfPacks_<0)numOfPacks_=0;
+			if(numOfPacks_>NUMBAT)numOfPacks_=0;
+			zTTSilentCnt[numOfPacks_]=50;
+
 			if(zTTRequestPhase==0)	mem_copy (liBatteryInBuff, bat_drv_rx_buff,  bat_drv_rx_cnt);
 			else if(zTTRequestPhase==1)	mem_copy (&liBatteryInBuff[150], bat_drv_rx_buff,  bat_drv_rx_cnt);
-			zTTSilentCnt=0;
+			//zTTSilentCnt=0;
 			}
 		}
 
