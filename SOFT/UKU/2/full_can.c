@@ -1711,7 +1711,68 @@ if((RXBUFF[1]&0xf8)==PUT_LB_TM6)
 		li_bat._canError=0;	
 		}
 	}
-		
+
+
+if(RXBUFF[1]==PUT_ZTT_TM1)
+    {
+	lakb[0]._rs485_cnt=(signed short)(*((signed char*)&RXBUFF[0]));
+	lakb[0]._ch_curr=(signed short)(*((signed short*)&RXBUFF[2]));
+	lakb[0]._tot_bat_volt=(signed short)(*((signed short*)&RXBUFF[4]));
+	lakb[0]._max_cell_temp=(signed short)(*((signed short*)&RXBUFF[6]));
+	
+	plazma_ztt[0]++;
+
+	}
+
+if(RXBUFF[1]==PUT_ZTT_TM2)
+    {
+	lakb[0]._bRS485ERR=(signed short)(*((signed char*)&RXBUFF[0]));
+	lakb[0]._s_o_c=(signed short)(*((signed short*)&RXBUFF[2]));
+	lakb[0]._s_o_h=(signed short)(*((signed short*)&RXBUFF[4]));
+
+	//RXBUFF[7]=0x68;
+	//RXBUFF[6]=0x60;
+
+	lakb[0]._plazma_ss=(signed short)(*((signed short*)&RXBUFF[6]));
+	
+	plazma_ztt[1]++;
+	}		
+
+if(RXBUFF[1]==PUT_ZTT_TM3)
+    {
+	lakb[1]._rs485_cnt=(signed short)(*((signed char*)&RXBUFF[0]));
+	lakb[1]._ch_curr=(signed short)(*((signed short*)&RXBUFF[2]));
+	lakb[1]._tot_bat_volt=(signed short)(*((signed short*)&RXBUFF[4]));
+	lakb[1]._max_cell_temp=(signed short)(*((signed short*)&RXBUFF[6]));
+	
+	}
+
+if(RXBUFF[1]==PUT_ZTT_TM4)
+    {
+	lakb[1]._bRS485ERR=(signed short)(*((signed char*)&RXBUFF[0]));
+	lakb[1]._s_o_c=(signed short)(*((signed short*)&RXBUFF[2]));
+	lakb[1]._s_o_h=(signed short)(*((signed short*)&RXBUFF[4]));
+	lakb[1]._plazma_ss=(signed short)(*((signed short*)&RXBUFF[6]));
+	
+	}	
+
+if(RXBUFF[1]==PUT_ZTT_TM5)
+    {
+	lakb[2]._rs485_cnt=(signed short)(*((signed char*)&RXBUFF[0]));
+	lakb[2]._ch_curr=(signed short)(*((signed short*)&RXBUFF[2]));
+	lakb[2]._tot_bat_volt=(signed short)(*((signed short*)&RXBUFF[4]));
+	lakb[2]._max_cell_temp=(signed short)(*((signed short*)&RXBUFF[6]));
+	
+	}
+
+if(RXBUFF[1]==PUT_ZTT_TM6)
+    {
+	lakb[2]._bRS485ERR=(signed short)(*((signed char*)&RXBUFF[0]));
+	lakb[2]._s_o_c=(signed short)(*((signed short*)&RXBUFF[2]));
+	lakb[2]._s_o_h=(signed short)(*((signed short*)&RXBUFF[4]));
+	lakb[2]._plazma_ss=(signed short)(*((signed short*)&RXBUFF[6]));
+	
+	}	
 	
 CAN_IN_AN1_end:
 bIN2=0;

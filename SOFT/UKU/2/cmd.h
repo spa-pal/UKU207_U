@@ -55,3 +55,9 @@
 #define PUT_LB_TM4 	0x48
 #define PUT_LB_TM5 	0x58
 #define PUT_LB_TM6 	0x68
+#define PUT_ZTT_TM1 	0xC1
+#define PUT_ZTT_TM2 	0xC2
+#define PUT_ZTT_TM3 	0xC3
+#define PUT_ZTT_TM4 	0xC4
+#define PUT_ZTT_TM5 	0xC5
+#define PUT_ZTT_TM6 	0xC6

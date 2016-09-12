@@ -1965,9 +1965,10 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 		}
 	else if(BAT_TYPE==3)
 		{
-		short numOfPacks;
-		short numOfCells, numOfTemperCells, baseOfData;
-
+		//short numOfPacks;
+		//short numOfCells, numOfTemperCells, baseOfData;
+		
+		#ifndef UKU_TELECORE2016
 		numOfCells=((ascii2halFhex(liBatteryInBuff[17]))<<4)+((ascii2halFhex(liBatteryInBuff[18])));
 		numOfTemperCells=((ascii2halFhex(liBatteryInBuff[17+(numOfCells*4)+2]))<<4)+((ascii2halFhex(liBatteryInBuff[18+(numOfCells*4)+2])));
 		numOfPacks=((ascii2halFhex(liBatteryInBuff[15]))<<4)+((ascii2halFhex(liBatteryInBuff[16])));
@@ -2013,7 +2014,8 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 							((ascii2halFhex(liBatteryInBuff[2+baseOfData+14]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[3+baseOfData+14]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[4+baseOfData+14])))
-							)/10;								  
+							)/10;
+		#endif								  
 		}
 	
 if(sacredSunSilentCnt<3) 

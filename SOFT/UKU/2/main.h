@@ -724,12 +724,12 @@ typedef enum {
 	iBat,iBat_simple,iBat_li,iBat_SacredSun,iBat_universe,iInv_set,iSet_TELECORE2015,
 	iMakb,
 	iBps,iS2,iSet_prl,iK_prl,iDnd,
-	iK,iK_3U,iK_RSTKM,iK_GLONASS,iK_KONTUR,iK_6U,iK_220,iK_220_380,iK_220_IPS_TERMOKOMPENSAT,iK_220_IPS_TERMOKOMPENSAT_IB,
+	iK,iK_3U,iK_RSTKM,iK_GLONASS,iK_KONTUR,iK_6U,iK_220,iK_220_380,iK_220_IPS_TERMOKOMPENSAT,iK_220_IPS_TERMOKOMPENSAT_IB,iK_TELECORE,
 	iSpcprl,iSpc,k,Crash_0,Crash_1,iKednd,iAv_view_avt,iAKE,iSpc_termocompensat,
 	iLoad,iSpc_prl_vz,iSpc_prl_ke,iKe,iVz,iAvz,iAVAR,
 	iStr,iStr_3U,iStr_RSTKM,iStr_GLONASS,iStr_KONTUR,iStr_6U,iStr_220_IPS_TERMOKOMPENSAT,iStr_TELECORE2015,
 	iVrs,iPrltst,iApv,
-	iK_bps,iK_bps_sel,iK_bat,iK_bat_simple,iK_bat_ips_termokompensat_ib,iK_bat_sel,iK_load,iK_net,iK_net3,
+	iK_bps,iK_bps_sel,iK_bat,iK_bat_simple,iK_bat_ips_termokompensat_ib,iK_bat_sel,iK_bat_sel_TELECORE,iK_load,iK_net,iK_net3,
 	iK_makb_sel,iK_makb,iK_out,
 	iTst,iTst_3U,iTst_RSTKM,iTst_GLONASS,iTst_KONTUR,iTst_6U,iTst_220,iTst_220_380,iTst_220_IPS_TERMOKOMPENSAT,
 	iTst_TELECORE2015,
@@ -1134,6 +1134,7 @@ typedef struct
 	char 		_plazma[8];		//переменные для отладки
 	signed short 	_isOnCnt;
 	signed short	_s_o_c_abs;		//остаточный заряд в абсолютном выражении
+	signed short	_plazma_ss;
 	} LAKB_STAT; 
 extern LAKB_STAT lakb[3];
 extern char lakb_damp[1][42];
@@ -1145,6 +1146,8 @@ extern char bLAKB_KONF_CH_EN;
 extern char bRS485ERR;
 extern short LBAT_STRUKT;
 extern char lakb_error_cnt;	//счетчик неправильного показания ннапряжения батареи
+extern short numOfPacks,numOfPacks_;
+extern short numOfCells, numOfTemperCells, baseOfData;
 
 
 
@@ -1488,6 +1491,8 @@ extern char uout_av;
 extern short plazma_numOfCells;
 extern short plazma_numOfTemperCells;
 extern short plazma_numOfPacks;
+
+extern char plazma_ztt[2];
 
 /*----------------------------------------------------------------------------
  * end of file

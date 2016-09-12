@@ -278,6 +278,8 @@ char bLAKB_KONF_CH_EN;
 //char bRS485ERR;
 short LBAT_STRUKT;
 char lakb_error_cnt;	//Ò˜ÂÚ˜ËÍ ÌÂÔ‡‚ËÎ¸ÌÓ„Ó ÔÓÍ‡Á‡ÌËˇ ÌÌ‡ÔˇÊÂÌËˇ ·‡Ú‡ÂË
+short numOfPacks,numOfPacks_;
+short numOfCells, numOfTemperCells, baseOfData;
 
 //#ifdef UKU_TELECORE2015
 //***********************************************
@@ -668,6 +670,10 @@ short plazma_numOfPacks;
 #ifdef MCP2515_CAN
 #define can1_out	mcp2515_transmit
 #endif
+
+
+char plazma_ztt[2];
+
 
 //-----------------------------------------------
 void rtc_init (void) 
@@ -1091,7 +1097,8 @@ else if(cnt_net_drv==19)
 	{
      if(!bCAN_OFF)
 		{
-		can1_out(cnt_net_drv,cnt_net_drv,GETTM,0,0,0,0,0);
+		can1_out(cnt_net_drv,cnt_net_drv,GETTM,zTTBatteryHndlCmnd,zTTBatteryHndlCmnd,0,0,0);
+		zTTBatteryHndlCmnd=0;
 		lakb[0]._cnt++;
 		if(lakb[0]._cnt>20)lakb[0]._cnt=20;
 		//lakb[1]._cnt++;
@@ -5708,11 +5715,13 @@ else if(ind==iSet_bat_sel)
 	ptrs[3]=	" ZTT                ";
 	ptrs[4]=	" ¬˚ıÓ‰              ";
 
-	gran(&BAT_TYPE,0,3);
+	//gran(&BAT_TYPE,0,3);
+	if(BAT_TYPE<0)BAT_TYPE=0;
+	if(BAT_TYPE>3)BAT_TYPE=3;
 	if(bFL2)ptrs[BAT_TYPE]=		"                    ";	
 
 	if((sub_ind-index_set)>1)index_set=sub_ind-1;
-	else if(sub_ind<index_set)index_set=sub_ind;
+	else if(sub_ind<index_set)index_set=sub_ind; /**/
 		
 	bgnd_par(	"  “»œ »—œŒÀ‹«”≈ÃŒ…  ",
 			"      ¡¿“¿–≈»       ",
@@ -5720,6 +5729,7 @@ else if(ind==iSet_bat_sel)
 			ptrs[index_set+1]);
 	
 	pointer_set(2);
+	//int2lcdyx(lc640_read_int(EE_BAT_TYPE),0,2,0);
 	}
 	
 else if(ind==iSet)
@@ -7992,6 +8002,33 @@ else if(ind==iK_220_380)
 	else sub_bgnd("¿‚.¡2",'!',-4);	 
 	}    	
 
+else if(ind==iK_TELECORE)
+	{
+	char i;
+	i=0;
+	
+	ptrs[i++]=	" —ÂÚ¸               ";
+	if(NUMBAT_TELECORE)
+    ptrs[i++]=	" ¡‡Ú‡ÂË            ";
+	if(NUMIST)
+	ptrs[i++]=	" ¡œ—                ";
+	ptrs[i++]=	" Õ‡„ÛÁÍ‡           ";
+    if(NUMDT)
+    ptrs[i++]=	" ¬ÌÂ¯ÌËÂ ‰‡Ú˜ËÍË    ";
+    ptrs[i++]=" ¬˚ıÓ‰              ";
+    ptrs[i++]="                    ";
+    ptrs[i++]="                    ";
+
+	if((sub_ind-index_set)>2)index_set=sub_ind-2;
+	else if(sub_ind<index_set)index_set=sub_ind;
+	bgnd_par("      ¿À»¡–Œ¬ ¿     ",
+			ptrs[index_set],
+			ptrs[index_set+1],
+			ptrs[index_set+2]);
+
+	pointer_set(1);	 
+	}    	
+
 else if(ind==iK_net)
 	{
 	ptrs[0]=" U =     @¬         ";
@@ -8170,6 +8207,21 @@ else if(ind==iK_bat_sel)
 	pointer_set(1);
 	
      }     
+
+else if(ind==iK_bat_sel_TELECORE)
+	{
+	ptrs[0]=						" ¡‡Ú‡Âˇ N1         ";
+    ptrs[1]=						" ¡‡Ú‡Âˇ N2         ";
+    ptrs[0+NUMBAT_TELECORE]=		" ¬˚ıÓ‰              ";
+	ptrs[1+NUMBAT_TELECORE]=		"                    ";
+	ptrs[2+NUMBAT_TELECORE]=		"                    ";
+
+	if((sub_ind-index_set)>2)index_set=sub_ind-2;
+	else if(sub_ind<index_set)index_set=sub_ind;
+	bgnd_par("  ¿À»¡–Œ¬ ¿ ¡¿“¿–≈… ",ptrs[index_set],ptrs[index_set+1],ptrs[index_set+2]);
+	pointer_set(1);
+	
+     }  
 
 else if(ind==iK_bat)
 	{
@@ -9329,7 +9381,48 @@ if(ind==iDeb)
  //    	char2lcdhyx(St,3,5);  */
 		}
 
-	else if(sub_ind==4)
+   else if(sub_ind==4)
+     	{
+     	bgnd_par("LB                  ",
+     		    "                    ",
+     		    "        !           ",
+     		    "        @           ");
+
+     	int2lcdyx(sub_ind,0,1,0);
+		
+		int2lcdyx(zTTBatteryHndlCmnd/*zTTBatteryHndlPhase*/,0,5,0);
+
+		int2lcdyx(zTTButteryCnter,0,7,0);
+
+		int2lcdyx(numOfPacks,0,9,0);
+
+		int2lcdyx(numOfTemperCells,0,12,0);
+		int2lcdyx(numOfCells,0,15,0);
+
+		int2lcdyx(bat_drv_rx_cnt,0,19,0);
+	
+		int2lcdyx(lakb[0]._tot_bat_volt,2,3,0);
+	   	int2lcdyx(lakb[1]._tot_bat_volt,3,3,0);
+	 	int2lcd_mmm(lakb[0]._ch_curr,'!',0);
+		int2lcd_mmm(lakb[1]._ch_curr,'@',0);
+		int2lcdyx(lakb[0]._max_cell_temp,2,19,0);
+	   	int2lcdyx(lakb[1]._max_cell_temp,3,19,0);
+		//int2lcdyx(lakb[0]._plazma_ss,2,13,0);
+	   	//int2lcdyx(lakb[1]._plazma_ss,3,13,0);
+		//int2lcdyx(lakb[0]._rs485_cnt,2,16,0);
+	   	//int2lcdyx(lakb[1]._rs485_cnt,3,16,0);
+		//int2lcdyx(lakb[0]._bRS485ERR,2,19,0);
+	   	//int2lcdyx(lakb[1]._bRS485ERR,3,19,0);
+
+		int2lcdyx(u_necc,1,4,0);
+		int2lcdyx(cntrl_stat,1,9,0);
+		int2lcdyx(load_U,1,19,0);
+
+		int2lcdyx(plazma_ztt[0],1,13,0);
+		int2lcdyx(plazma_ztt[1],1,17,0);
+
+		}
+/*	else if(sub_ind==4)
      	{
      	bgnd_par(" ¿¬¿–»»             ",
      	         "                    ",
@@ -9350,20 +9443,7 @@ if(ind==iDeb)
 
 
 
-	//	int2lcdyx(bat[0]._Ub,1,15,0);
-	//	int2lcdyx(bat[1]._rel_stat,2,15,0);
-
-
-/*		int2lcdyx(mat_temper,0,7,0);
-		int2lcdyx(load_U,0,11,0);  
-		int2lcdyx(cntrl_stat,0,15,0);
-		int2lcdyx(cntrl_stat_old,0,19,0); 
-		int2lcdyx(cntrl_plazma,1,3,0);
-		lcd_buffer[30]='a';
-		int2lcd_mmm(Ibmax,'a',0);
-		int2lcdyx(IZMAX,1,14,0);*/
-
-		}
+		}*/
  
     else if(sub_ind==5)
      	{
@@ -11716,7 +11796,7 @@ if(but==butUD)
      if(ind!=iDeb)
           {
 		c_ind=a_ind;
-		tree_up(iDeb,11,0,0);
+		tree_up(iDeb,4,0,0);
 		
           }
      else 
@@ -13145,14 +13225,14 @@ else if(ind==iMn_TELECORE2015)
 	if(but==butD)
 		{
 		sub_ind++;
-		gran_char(&sub_ind,0,9+NUMBAT_TELECORE+NUMIST);
+		gran_char(&sub_ind,0,7+NUMBAT_TELECORE+NUMIST);
 		//can1_init(BITRATE62_5K25MHZ);
 		}
 		
 	else if(but==butU)
 		{
 		sub_ind--;
-		gran_char(&sub_ind,0,9+NUMBAT_TELECORE+NUMIST);
+		gran_char(&sub_ind,0,7+NUMBAT_TELECORE+NUMIST);
 		//LPC_CAN1->CMR=0x00000022;
 		}	
 
@@ -14105,7 +14185,7 @@ else if((ind==iPrl_bat_in_out)||(ind==iSet_prl)||(ind==iK_prl)
 				tree_up(iK_220,0,0,0);
 				#endif
 				#ifdef UKU_TELECORE2015
-				tree_up(iK_6U,0,0,0);
+				tree_up(iK_TELECORE,0,0,0);
 				#endif
 				show_mess(	"¬ÍÎ˛˜ËÚÂ ‡‚Ú-Ú˚ —≈“‹",
  							"  ¡¿“¿–≈ﬂ,Õ¿√–”« ¿  ",
@@ -14291,6 +14371,12 @@ else if(ind==iSet_bat_sel)
 			BAT_TYPE=sub_ind;
 			lc640_write_int(EE_BAT_TYPE,BAT_TYPE);
 			}
+		}
+	else if(but==butLR)
+		{
+
+			lc640_write_int(EE_BAT_TYPE,65535);
+
 		}
 	}
 
@@ -23090,6 +23176,60 @@ else if(ind==iK_220_380)
 		}			
 	}
 
+else if(ind==iK_TELECORE)
+	{
+	ret(1000);
+	if(but==butD)
+		{
+		sub_ind++;
+		gran_char(&sub_ind,0,2+(NUMBAT_TELECORE!=0)+(NUMIST!=0)+(NUMDT!=0));
+		}
+	else if(but==butU)
+		{
+		sub_ind--;
+		gran_char(&sub_ind,0,2+(NUMBAT_TELECORE!=0)+(NUMIST!=0)+(NUMDT!=0));
+		}
+	else if(but==butD_)
+		{
+		sub_ind=2+(NUMBAT_TELECORE!=0)+(NUMIST!=0)+(NUMDT!=0);
+		}				
+	else if(but==butE)
+		{
+		if(sub_ind==0)
+			{
+			tree_up(iK_net,0,0,0);
+		    ret(1000);
+			}
+		else if((NUMBAT_TELECORE)&&(sub_ind==1))
+			{
+			tree_up(iK_bat_sel_TELECORE,0,0,0);	
+			ret(1000);
+			}
+		else if((NUMIST)&&(sub_ind==(1+(NUMBAT_TELECORE!=0))))
+			{
+			tree_up(iK_bps_sel,0,0,0);	
+			ret(1000);
+			}
+
+		else if((sub_ind==(1+(NUMBAT_TELECORE!=0)+(NUMIST!=0))))
+			{
+			tree_up(iK_load,0,0,0);	
+			ret(1000);
+			}
+          
+    	else if((NUMDT)&&(sub_ind==(2+(NUMBAT_TELECORE!=0)+(NUMIST!=0))))
+			{
+			tree_up(iK_t_ext_6U,0,0,0);	
+			ret(1000);			
+			}
+    	else if(sub_ind==(2+(NUMBAT_TELECORE!=0)+(NUMIST!=0)+(NUMDT!=0)))
+			{
+	     	tree_down(0,0);
+	        ret(0);
+            }	               			
+		}			
+	}
+
 else if(ind==iK_net)
 	{
 	ret(1000);
@@ -23561,6 +23701,51 @@ else if(ind==iK_bat_sel)
 		ret(1000);
 		}	
 	else if(sub_ind==(NUMBAT))
+		{
+		if(but==butE)
+			{
+			tree_down(0,0);
+			ret(0);
+			}
+		}				
+	}
+
+else if(ind==iK_bat_sel_TELECORE)
+	{
+	ret(1000);
+	if(but==butD)
+		{
+		sub_ind++;
+		gran_char(&sub_ind,0,NUMBAT_TELECORE);
+		phase=0;
+		}
+	else if(but==butU)
+		{
+		sub_ind--;
+		gran_char(&sub_ind,0,NUMBAT_TELECORE);
+		phase=0;
+		}
+	else if(but==butD_)
+		{
+		sub_ind=1+NUMBAT_TELECORE;
+		}	
+	else if((but==butE)&&(NUMBAT_TELECORE)&&(BAT_IS_ON[0]==bisON)&&(sub_ind==0))
+		{
+		tree_up(iK_bat,0,0,0);	
+
+		//mess_send(MESS_SRC_CONTROL,0xFFFF,0,10);
+     	//mess_send(MESS_BAT_CONTROL,0xFFFF&(~(1<<sub_ind1)),1<<(sub_ind1),10);
+
+		ret(1000);
+		}	
+	else if((but==butE)&&(NUMBAT)&&(BAT_IS_ON[1]==bisON)&&(sub_ind==((BAT_IS_ON[0]==bisON))))
+		{
+		tree_up(iK_bat,0,0,1);	
+		
+     		
+		ret(1000);
+		}	
+	else if(sub_ind==(NUMBAT_TELECORE))
 		{
 		if(but==butE)
 			{
@@ -28786,8 +28971,14 @@ while (1)
 		#ifdef UKU_TELECORE2015
 
 		if(BAT_TYPE==2)sacred_san_bat_hndl();
-		else if(BAT_TYPE==3)ztt_bat_hndl();
-
+		else if(BAT_TYPE==3)
+			{
+			#ifdef UKU_TELECORE2016 
+			ztt_bat_hndl_can();
+			#else
+			ztt_bat_hndl();
+			#endif
+			}
 		#endif
 
 		#ifdef UKU_220_IPS_TERMOKOMPENSAT
