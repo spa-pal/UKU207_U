@@ -1719,8 +1719,17 @@ else
 
 //*********************************************
 
+#ifndef TELECORE
 if((BAT_IS_ON[0]==bisON)&&(bat[0]._Ub>200)) Ibmax=bat[0]._Ib;
 if((BAT_IS_ON[1]==bisON)&&(bat[1]._Ub>200)&&(bat[1]._Ib>bat[0]._Ib)) Ibmax=bat[1]._Ib;
+#endif
+
+#ifdef TELECORE
+Ibmax=0;
+if((NUMBAT_TELECORE>0)&&(lakb[0]._bRS485ERR==0))Ibmax=lakb[0]._ch_curr/10;
+if((NUMBAT_TELECORE>1)&&(lakb[1]._bRS485ERR==0)&&(lakb[1]._ch_curr>Ibmax))Ibmax=lakb[1]._ch_curr/10;
+if((NUMBAT_TELECORE>2)&&(lakb[2]._bRS485ERR==0)&&(lakb[2]._ch_curr>Ibmax))Ibmax=lakb[2]._ch_curr/10;
+#endif
 
 //if((AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043))Ibmax=Ib_ips_termokompensat;
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
@@ -5347,6 +5356,16 @@ else if(b1Hz_unh)
 			}
 
 		gran(&DU_LI_BAT,1,30);
+
+
+		{
+		signed short i;
+
+		for(i=(NUMBAT_TELECORE-1);i>=0;i--)
+			{
+			if(lakb[i]._bRS485ERR==0)u_necc=lakb[i]._tot_bat_volt+DU_LI_BAT;
+			}
+		}
 		u_necc=lakb[sub_ind1]._tot_bat_volt+DU_LI_BAT;
 		gran(&u_necc,0,UB0);
 		gran(&u_necc,0,UB20);
