@@ -83,7 +83,7 @@ signed short KunetA;
 signed short KunetB;
 signed short KunetC;
 signed short Kubps;
-signed short Kuout;
+signed short Kuout=2;
 
 signed short MAIN_IST;
 signed short UMAX;
@@ -28883,7 +28883,12 @@ while (1)
 
 		ret_hndl();  
 		mess_hndl();
+#ifndef TELECORE
 		cntrl_hndl();
+#endif
+#ifdef TELECORE
+		cntrl_hndl_telecore();
+#endif
 		ret_hndl();
 		ext_drv();
 		avt_hndl();

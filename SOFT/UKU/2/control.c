@@ -5414,6 +5414,8 @@ gran(&num_necc,1,NUMIST);
 
 }
 
+
+#ifndef TELECORE
 //-----------------------------------------------
 void cntrl_hndl(void)
 {
@@ -5611,6 +5613,124 @@ if(iiii==0)
 gran(&cntrl_stat,10,1010); 
 b1Hz_ch=0;
 }
+#endif
+
+#ifdef TELECORE
+//-----------------------------------------------
+void cntrl_hndl_telecore(void)
+{
+
+IZMAX_=IZMAX;
+
+if(speedChIsOn)IZMAX_=speedChrgCurr;
+
+if(cntrl_stat_blok_cnt)cntrl_stat_blok_cnt--;
+if(cntrl_stat_blok_cnt_)cntrl_stat_blok_cnt_--;
+
+//if((bat[0]._temper_stat&0x03)||(bat[1]._temper_stat&0x03))IZMAX_=IZMAX/10;
+
+
+if(ch_cnt0<10)
+	{
+	ch_cnt0++;
+	if(ch_cnt0>=10)
+		{
+		ch_cnt0=0;
+		b1Hz_ch=1;
+		}
+	}
+
+
+
+
+if(mess_find_unvol(MESS2CNTRL_HNDL))
+	{
+	if(mess_data[0]==PARAM_CNTRL_STAT_PLUS)
+		{
+		cntrl_stat=cntrl_stat_old+mess_data[1];
+		}
+	else if(mess_data[0]==PARAM_CNTRL_STAT_MINUS)
+		{
+		cntrl_stat=cntrl_stat_old-mess_data[1];
+		}
+	else if(mess_data[0]==PARAM_CNTRL_STAT_STEP_DOWN)
+		{
+		cntrl_stat--;
+
+		if((cntrl_stat<=30)||(load_U<USIGN)) mess_send(MESS2KB_HNDL,PARAM_CNTRL_IS_DOWN,0,10);
+
+		}
+	else if(mess_data[0]==PARAM_CNTRL_STAT_SET)
+		{
+		cntrl_stat=mess_data[1];
+		}
+
+	else if(mess_data[0]==PARAM_CNTRL_STAT_FAST_REG)
+		{
+		}
+
+	}
+
+else if((b1Hz_ch)&&(!bIBAT_SMKLBR))
+	{
+	cntrl_stat_new=cntrl_stat_old;
+	
+	if(Ibmax>(IZMAX_*2))
+		{
+        if(cntrl_stat_blok_cnt)	cntrl_stat_new--;
+		else					cntrl_stat_new-=5;
+		}		
+	else if((Ibmax<(IZMAX_*2))&&(Ibmax>IZMAX_))
+		{
+        						cntrl_stat_new--;
+		}   
+	else if(load_U<u_necc)
+		{
+		if(load_U<(u_necc-40))
+			{
+								cntrl_stat_new+=5;
+			}
+		else if(load_U<(u_necc-20))
+			{
+								cntrl_stat_new+=2;
+			}	
+		else 
+			{
+								cntrl_stat_new++;
+			}					
+		}	
+	else if(load_U>u_necc)
+		{
+								cntrl_stat_new--;
+		}
+
+	gran(&cntrl_stat_new,10,1010);			
+	cntrl_stat_old=cntrl_stat_new;
+	cntrl_stat=cntrl_stat_new;	
+	}
+
+
+iiii=0;
+for(i=0;i<NUMIST;i++)
+     {
+     if(bps[i]._cnt<30)iiii=1;
+     }
+
+if(iiii==0)
+     {
+     cntrl_stat=600;	
+     cntrl_stat_old=600;
+     cntrl_stat_new=600;
+	#ifdef UKU_TELECORE2015
+	//cntrl_stat=0;
+	//cntrl_stat_old=0;
+	//cntrl_stat_new=0;
+	#endif
+     }
+gran(&cntrl_stat,10,1010); 
+b1Hz_ch=0;
+}
+#endif
 
 //-----------------------------------------------
 void ext_drv(void)
