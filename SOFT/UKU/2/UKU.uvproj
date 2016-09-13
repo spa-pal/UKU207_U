@@ -9917,7 +9917,7 @@
             <uThumb>0</uThumb>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>UKU_TELECORE2015</Define>
+              <Define>UKU_TELECORE2015, TELECORE</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -11371,7 +11371,7 @@
             <uThumb>0</uThumb>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>UKU_TELECORE2016</Define>
+              <Define>UKU_TELECORE2016, TELECORE</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
