@@ -1126,15 +1126,16 @@ typedef struct
 	signed short	_b_p_ser_num;
 	signed short   _flags1;
 	signed short 	_flags2;
-	signed short 	_bRS485ERR;
-	signed short	_rs485_cnt;
+	signed short 	_communication2lvlErrorStat; 	//флаг аварийности низовой связи с батареей, вычисляется в плате расширения
+	signed short	_communication2lvlErrorCnt;  	//счетчик аварийности низовой связи с батареей
 	signed short 	_cnt;
-	signed short 	_battCommState;	//0 - норма, 1 - отсутствует связь промежуточной платы и батареи(RS485), 2 - отсутствует связь с промежуточной платой (KAN) 	
+	signed short 	_communicationFullErrorStat;	//флаг аварийности всего канала связи с батареей, 0 - норма, 1 - отсутствует связь с промежуточной платой, 2 - отсутствует связь промежуточной платы и батареи  	
 	signed short   _battIsOn;		//0 - отсутствует, 1 - присутствует
 	char 		_plazma[8];		//переменные для отладки
 	signed short 	_isOnCnt;
 	signed short	_s_o_c_abs;		//остаточный заряд в абсолютном выражении
 	signed short	_plazma_ss;
+	signed short	_zar_percent;	//заряд батареи в процетах
 	} LAKB_STAT; 
 extern LAKB_STAT lakb[3];
 extern char lakb_damp[1][42];
@@ -1148,6 +1149,10 @@ extern short LBAT_STRUKT;
 extern char lakb_error_cnt;	//счетчик неправильного показания ннапряжения батареи
 extern short numOfPacks,numOfPacks_;
 extern short numOfCells, numOfTemperCells, baseOfData;
+extern short lakb_stat_comm_error;	//аварийность канала связи с литиевыми батареями. 0 означает исправность платы расширения и наличие связи со всеми литиевыми батареями
+extern short lakbNotErrorNum;		//колличество литиевых батарей с исправной связью
+extern short lakbKanErrorCnt;		//Счетчик аварийности канала связи с платой расширения
+extern short lakbKanErrorStat;		//Состояние аварийности канала связи с платой расширения
 
 
 

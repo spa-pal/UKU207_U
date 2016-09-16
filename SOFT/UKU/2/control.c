@@ -123,6 +123,7 @@ signed short cntrl_stat_new;
 signed short Ibmax;
 unsigned char unh_cnt0,unh_cnt1,b1Hz_unh;
 unsigned char	ch_cnt0,b1Hz_ch,i,iiii;
+unsigned char	ch_cnt1,b1_30Hz_ch;
 unsigned short IZMAX_;
 
 
@@ -199,7 +200,7 @@ const char sk_buff_GLONASS[4]={11,13,15,14};
 const char sk_buff_3U[4]={11,13,15,14};
 const char sk_buff_6U[4]={11,13,15,14};
 const char sk_buff_220[4]={11,13,15,14};
-const char sk_buff_TELECORE2015[4]={11,13,15,14};
+const char sk_buff_TELECORE2015[4]={10,13,15,14};
 
 char	plazma_inv[4];
 char plazma_bat;
@@ -1726,9 +1727,9 @@ if((BAT_IS_ON[1]==bisON)&&(bat[1]._Ub>200)&&(bat[1]._Ib>bat[0]._Ib)) Ibmax=bat[1
 
 #ifdef TELECORE
 Ibmax=0;
-if((NUMBAT_TELECORE>0)&&(lakb[0]._bRS485ERR==0))Ibmax=lakb[0]._ch_curr/10;
-if((NUMBAT_TELECORE>1)&&(lakb[1]._bRS485ERR==0)&&(lakb[1]._ch_curr>Ibmax))Ibmax=lakb[1]._ch_curr/10;
-if((NUMBAT_TELECORE>2)&&(lakb[2]._bRS485ERR==0)&&(lakb[2]._ch_curr>Ibmax))Ibmax=lakb[2]._ch_curr/10;
+if((NUMBAT_TELECORE>0)&&(lakb[0]._communicationFullErrorStat==0)&&(lakb[0]._ch_curr>Ibmax))Ibmax=lakb[0]._ch_curr/10;
+if((NUMBAT_TELECORE>1)&&(lakb[1]._communicationFullErrorStat==0)&&(lakb[1]._ch_curr>Ibmax))Ibmax=lakb[1]._ch_curr/10;
+if((NUMBAT_TELECORE>2)&&(lakb[2]._communicationFullErrorStat==0)&&(lakb[2]._ch_curr>Ibmax))Ibmax=lakb[2]._ch_curr/10;
 #endif
 
 //if((AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043))Ibmax=Ib_ips_termokompensat;
@@ -1760,9 +1761,15 @@ for(i=0;i<NUMIST;i++)
      }
 
 
-
+#ifdef TELECORE
+load_I=0;
+for(i=0;i<NUMBAT_TELECORE;i++)
+	{
+	load_I+=lakb[i]._ch_curr;
+	}
+#else
 load_I=-(bat[0]._Ib/10)-(bat[1]._Ib/10);
-
+#endif
 Isumm=0;
 
 for(i=0;i<NUMIST;i++)
@@ -4320,6 +4327,65 @@ else
 
 #ifdef UKU_TELECORE2015
 //-----------------------------------------------
+void lakb_hndl(void)
+{
+char i;
+char temp;
+
+//if()
+temp=0;
+for(i=0;i<3;i++)
+	{
+	if(i>=NUMBAT_TELECORE)lakb[i]._communicationFullErrorStat=0;
+	else
+		{
+		if(lakbKanErrorStat)					lakb[i]._communicationFullErrorStat=1;
+		if(lakb[i]._communication2lvlErrorStat)	lakb[i]._communicationFullErrorStat=2;
+		else
+			{
+			 									lakb[i]._communicationFullErrorStat=0;
+			temp++;
+			}
+		}
+	}
+lakbNotErrorNum=temp;
+
+
+
+
+
+for(i=0;i<3;i++)
+	{
+	if((NUMBAT_TELECORE>i)&&(lakb[i]._communicationFullErrorStat==0))
+		{
+		signed short tempSS;
+		tempSS=lakb[i]._s_o_c;
+		tempSS*=100;
+		tempSS/=lakb[i]._s_o_h;
+		gran(&tempSS,0,100);
+		lakb[i]._zar_percent=tempSS;
+		}
+	else 
+		{
+		lakb[i]._zar_percent=0;
+		}
+	}
+
+
+for(i=0;i<3;i++)
+	{
+	if((i>NUMBAT_TELECORE)||(lakb[i]._communicationFullErrorStat))
+		{
+		lakb[i]._ch_curr=0;	  
+		lakb[i]._tot_bat_volt=0;
+		lakb[i]._max_cell_temp=0;
+		lakb[i]._s_o_c=0;
+		lakb[i]._s_o_h=0;
+		}
+	}
+}
+
+//-----------------------------------------------
 void klimat_hndl_telecore2015(void)
 {
 char i;
@@ -4349,9 +4415,12 @@ else if(TELECORE2015_KLIMAT_VENT_SIGNAL==1)
 	}
 
 TELECORE2015_KLIMAT_WARM_ON_temp=TELECORE2015_KLIMAT_WARM_ON;
-if(bat[0]._zar<TELECORE2015_KLIMAT_CAP)TELECORE2015_KLIMAT_WARM_ON_temp=10;
-
-
+if(
+	(lakb_stat_comm_error)		//хотя бы у одной из литиевых батарей есть проблемы со связью 
+	|| ((NUMBAT_TELECORE>0)&&(lakb[0]._zar_percent<TELECORE2015_KLIMAT_CAP)) //есть 1 батарея и ее заряд снизился ниже установленного порога
+	|| ((NUMBAT_TELECORE>1)&&(lakb[1]._zar_percent<TELECORE2015_KLIMAT_CAP)) //есть 2-я батарея .....
+	|| ((NUMBAT_TELECORE>2)&&(lakb[2]._zar_percent<TELECORE2015_KLIMAT_CAP)) //есть 3-я батарея	.....
+  )	TELECORE2015_KLIMAT_WARM_ON_temp=10;
 
 if(t_box_warm<TELECORE2015_KLIMAT_WARM_ON_temp) t_box_warm_on_cnt++;
 else if(t_box_warm>TELECORE2015_KLIMAT_WARM_OFF) t_box_warm_on_cnt--;
@@ -5358,22 +5427,22 @@ else if(b1Hz_unh)
 		gran(&DU_LI_BAT,1,30);
 
 
-		{
-		signed short i;
-
-		for(i=(NUMBAT_TELECORE-1);i>=0;i--)
+		if(lakbNotErrorNum==0)
 			{
-			if(lakb[i]._bRS485ERR==0)u_necc=lakb[i]._tot_bat_volt+DU_LI_BAT;
+			u_necc=U0B;
 			}
-		}
-		u_necc=lakb[sub_ind1]._tot_bat_volt+DU_LI_BAT;
+		else 
+			{
+			signed short i;
+			for(i=(NUMBAT_TELECORE-1);i>=0;i--)
+				{
+				if(lakb[i]._communicationFullErrorStat==0)u_necc=lakb[i]._tot_bat_volt+DU_LI_BAT;
+				}
+			}
 		gran(&u_necc,0,UB0);
 		gran(&u_necc,0,UB20);
-		gran(&u_necc,0,540);	
-		
+		gran(&u_necc,0,540);
 		}
-	
-		 
 	}
 
 #endif 
@@ -5656,6 +5725,18 @@ if(ch_cnt0<10)
 		{
 		ch_cnt0=0;
 		b1Hz_ch=1;
+
+		if(ch_cnt1<30)
+			{
+			ch_cnt1++;
+			if(ch_cnt1>=30)
+				{
+				ch_cnt1=0;
+				b1_30Hz_ch=1;
+				}
+			}
+
+
 		}
 	}
 
@@ -5693,16 +5774,35 @@ if(mess_find_unvol(MESS2CNTRL_HNDL))
 else if((b1Hz_ch)&&(!bIBAT_SMKLBR))
 	{
 	cntrl_stat_new=cntrl_stat_old;
-	
-	if(Ibmax>(IZMAX_*2))
+
+	if(Ibmax==IZMAX_)
+		{
+								
+		}	
+	else if(Ibmax>(IZMAX_*2))
 		{
         if(cntrl_stat_blok_cnt)	cntrl_stat_new--;
 		else					cntrl_stat_new-=5;
-		}		
+		}
 	else if((Ibmax<(IZMAX_*2))&&(Ibmax>IZMAX_))
 		{
-        						cntrl_stat_new--;
-		}   
+								cntrl_stat_new--;
+		}				
+/*	else if((Ibmax<IZMAX_)&&(Ibmax>0))
+		{				
+		if(load_U<(u_necc+DU_LI_BAT))
+			{
+			if(b1_30Hz_ch)
+				{
+				b1_30Hz_ch=0;
+								cntrl_stat_new--;
+				}
+			}
+		else
+			{
+								cntrl_stat_new--;
+			}
+		} */  
 	else if(load_U<u_necc)
 		{
 		if(load_U<(u_necc-40))
@@ -5712,7 +5812,16 @@ else if((b1Hz_ch)&&(!bIBAT_SMKLBR))
 		else if(load_U<(u_necc-20))
 			{
 								cntrl_stat_new+=2;
-			}	
+			}
+		else if(load_U>(u_necc-DU_LI_BAT))
+			{
+			if(b1_30Hz_ch)
+				{
+				b1_30Hz_ch=0;
+				if(Ibmax<(IZMAX_-5))cntrl_stat_new+=5;
+				else				cntrl_stat_new++;
+				}
+			}				
 		else 
 			{
 								cntrl_stat_new++;
@@ -5787,7 +5896,7 @@ for(i=0;i<NUMSK;i++)
 	if(adc_buff_[sk_buff_220[i]]<2000)
 	#endif
 	#ifdef UKU_TELECORE2015
-	if(adc_buff_[sk_buff_TELECORE2015[i]]<2000)	 //TODO
+	if(adc_buff_[sk_buff_TELECORE2015[i]]<1000)	 //TODO
 	#endif
 
 		{
@@ -5807,7 +5916,7 @@ for(i=0;i<NUMSK;i++)
 		}
 	else
 		{
-		if(sk_cnt[i]>=0)
+		if(sk_cnt[i]>0)
 			{
 			sk_cnt[i]--;
 			if(sk_cnt[i]<=0)
