@@ -9564,10 +9564,10 @@ if(ind==iDeb)
 		int2lcdyx(t_box_warm,1,7,0);
 		int2lcdyx(t_box_vent,2,7,0);
 
-		int2lcdyx(vent_stat_k,1,18,0);
-		int2lcdyx(warm_stat_k,2,18,0);		
+	//	int2lcdyx(vent_stat_k,1,18,0);
+	//	int2lcdyx(warm_stat_k,2,18,0);		
 
-		int2lcdyx(TELECORE2015_KLIMAT_WARM_ON_temp,3,3,0);
+//		int2lcdyx(TELECORE2015_KLIMAT_WARM_ON_temp,3,3,0);
 		int2lcdyx(TELECORE2015_KLIMAT_WARM_ON,3,7,0);
 		int2lcdyx(TELECORE2015_KLIMAT_WARM_OFF,3,11,0);
 		int2lcdyx(TELECORE2015_KLIMAT_VENT_ON,3,15,0);
@@ -18808,7 +18808,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	     else if(but==butL)UMAX--;
 	     else if(but==butL_)UMAX-=10;
 
-	     gran(&UMAX,10,3000);
+	     gran(&UMAX,10,18000);
 
 	     lc640_write_int(EE_UMAX,UMAX);
 	     speed=1;
@@ -18829,7 +18829,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	     else if(but==butR_)UB0+=10;
 	     else if(but==butL)UB0--;
 	     else if(but==butL_)UB0-=10;
-		gran(&UB0,100,3000);
+		gran(&UB0,100,18000);
           lc640_write_int(EE_UB0,UB0);
 	     speed=1;
 	     }
@@ -18840,7 +18840,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	     else if(but==butR_)UB20+=10;
 	     else if(but==butL)UB20--;
 	     else if(but==butL_)UB20-=10;
-		gran(&UB20,100,3000);
+		gran(&UB20,100,18000);
 	     lc640_write_int(EE_UB20,UB20);
 	     speed=1;
 	     }	
@@ -28941,12 +28941,13 @@ while (1)
 		cntrl_hndl();
 #endif
 #ifdef TELECORE
-		cntrl_hndl_telecore();
+		cntrl_hndl_telecore(); 
+		lakb_hndl();
 #endif
 		ret_hndl();
 		ext_drv();
 		avt_hndl();
-		lakb_hndl();
+		
 		}
 
 	if(b5Hz)

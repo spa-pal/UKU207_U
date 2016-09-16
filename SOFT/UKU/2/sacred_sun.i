@@ -3,7 +3,7 @@
 
 extern char portForSacredSunBatteryIsInitiated;
 extern char sacredSunBatteryHndlPhase;
-extern char sacredSunBatteryInBuff[300];
+extern char liBatteryInBuff[300];
 extern char sacredSunRequestPhase;
 extern short sacredSunSilentCnt;
 
@@ -13,7 +13,7 @@ short ascii2halFhex(char in);
 
 char portForSacredSunBatteryIsInitiated=0;
 char sacredSunBatteryHndlPhase;
-char sacredSunBatteryInBuff[300];
+char liBatteryInBuff[300];
 char sacredSunRequestPhase;
 short sacredSunSilentCnt;
 

@@ -1765,7 +1765,7 @@ for(i=0;i<NUMIST;i++)
 load_I=0;
 for(i=0;i<NUMBAT_TELECORE;i++)
 	{
-	load_I+=lakb[i]._ch_curr;
+	load_I-=lakb[i]._ch_curr/10;
 	}
 #else
 load_I=-(bat[0]._Ib/10)-(bat[1]._Ib/10);
