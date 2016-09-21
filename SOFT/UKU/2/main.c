@@ -3448,7 +3448,7 @@ else if(ind==iMn_TELECORE2015)
     ptrs[4+NUMIST+NUMBAT_TELECORE]= 				" Сеть               "; 
     ptrs[5+NUMIST+NUMBAT_TELECORE]= 				" Нагрузка           "; 
     ptrs[6+NUMIST+NUMBAT_TELECORE]= 				" Внешние датчики    "; 
-	ptrs[6+NUMIST+NUMBAT_TELECORE]= 				" Спецфункции    	 ";
+//	ptrs[6+NUMIST+NUMBAT_TELECORE]= 				" Спецфункции    	 ";
     ptrs[7+NUMIST+NUMBAT_TELECORE]= 				" Установки          "; 
     ptrs[8+NUMIST+NUMBAT_TELECORE]= 				" Журнал событий     "; 
     ptrs[9+NUMIST+NUMBAT_TELECORE]= 				" Выход              "; 
@@ -3499,7 +3499,7 @@ else if(ind==iMn_TELECORE2015)
 	     }	
 		
 	cnt_ind_bat++;
-	if(cnt_ind_bat>=(NUMBAT*20)) cnt_ind_bat=0;
+	if(cnt_ind_bat>=(NUMBAT_TELECORE*40)) cnt_ind_bat=0;
 	
 /*	if((AUSW_MAIN==2400)||(AUSW_MAIN==4800)||(AUSW_MAIN==6000)||
 		(AUSW_MAIN==2403)||(AUSW_MAIN==4803)||(AUSW_MAIN==6003))sub_bgnd("                    ",'z',-2);
@@ -3508,8 +3508,8 @@ else if(ind==iMn_TELECORE2015)
 	if(NUMBAT_TELECORE==0)sub_bgnd(" Работа без батарей ",'z',-2);
 	else
 		{
-		int2lcd((cnt_ind_bat/20)+1/*+(!(BAT_IS_ON[0]==bisON))*/,'z',0);
-		int2lcd((cnt_ind_bat/20)+1/*+(!(BAT_IS_ON[0]==bisON))*/,'z',0);
+		int2lcd((cnt_ind_bat/40)+1/*+(!(BAT_IS_ON[0]==bisON))*/,'z',0);
+		int2lcd((cnt_ind_bat/40)+1/*+(!(BAT_IS_ON[0]==bisON))*/,'z',0);
 		if((NUMBAT_TELECORE==1)/*&&(!(BAT_IS_ON[0]==bisON))*/)
 			{
 			if(lakb[0]._communicationFullErrorStat)
@@ -3525,15 +3525,15 @@ else if(ind==iMn_TELECORE2015)
 			}
 		else
 			{
-			if(lakb[cnt_ind_bat/20]._communicationFullErrorStat)
+			if(lakb[cnt_ind_bat/40]._communicationFullErrorStat)
 				{
 				sub_bgnd("Err",']',-1);
 				sub_bgnd("Err",'@',-1);
 				}
 			else
 				{
-				int2lcd(lakb[cnt_ind_bat/20]._tot_bat_volt,']',1);
-				int2lcd_mmm(lakb[cnt_ind_bat/20]._ch_curr,'@',2);
+				int2lcd(lakb[cnt_ind_bat/40]._tot_bat_volt,']',1);
+				int2lcd_mmm(lakb[cnt_ind_bat/40]._ch_curr,'@',2);
 			 	}
 			}		
 		}
@@ -4049,7 +4049,7 @@ else if (ind==iBat_universe)
 						ptrs[sub_ind+1],
 						ptrs[sub_ind+2]);
 		     
-			int2lcd(sub_ind1+1,'@',0);
+
 		    int2lcd(lakb[sub_ind1]._tot_bat_volt,'$',1);
 			int2lcd_mmm(abs(lakb[sub_ind1]._ch_curr),'#',2);
 		    int2lcd_mmm(lakb[sub_ind1]._max_cell_temp,'?',1);
@@ -4058,6 +4058,8 @@ else if (ind==iBat_universe)
 			int2lcd(lakb[sub_ind1]._s_o_h,'>',1);
 			
 			}
+		int2lcd(sub_ind1+1,'@',0);
+
 		}
 	}
 
@@ -4717,13 +4719,12 @@ else if(ind==iExtern_KONTUR)
 else if(ind==iExtern_TELECORE2015)
 	{
 
-	ptrs[0]=			" tотсек MSAN    #°С ";
-     ptrs[1]=  	     " Датч.двери  $      ";            
-     ptrs[2]=  	     " Датч.дыма   %      ";
-	ptrs[3]=  	     " Датч.удара  ^      ";
-	ptrs[4]=  	     " Выход              ";
-	ptrs[9]=  	     "                    ";
-	ptrs[10]=  	     "                    ";
+	ptrs[0]=		" Дt1            #°С ";
+	ptrs[1]=		" Дt2            %°С ";
+    ptrs[2]=  	    " Датч.двери  $      ";            
+	ptrs[3]=  	    " Выход              ";
+	ptrs[4]=  	    "                    ";
+	ptrs[5]=  	    "                    ";
 
 	bgnd_par(		"  ВНЕШНИЕ ДАТЧИКИ   ",
 				ptrs[index_set],
@@ -4739,18 +4740,19 @@ else if(ind==iExtern_TELECORE2015)
      int2lcd_mmm(t_ext[2],'#',0);*/
 
 	if(ND_EXT[0])sub_bgnd("неиспр.",'#',-3);
-     else int2lcd_mmm(t_ext[0],'#',0);
-
+    else int2lcd_mmm(t_ext[0],'#',0);
+	if(ND_EXT[1])sub_bgnd("неиспр.",'%',-3);
+    else int2lcd_mmm(t_ext[1],'%',0);
 
 	if(sk_av_stat[0]==sasON)	sub_bgnd("ОТКР.",'$',0);
 	else                     sub_bgnd("ЗАКР.",'$',0);
 	
 
-	if(sk_av_stat[1]==sasON) sub_bgnd("АВАРИЯ",'%',0);
+/*	if(sk_av_stat[1]==sasON) sub_bgnd("АВАРИЯ",'%',0);
 	else                     sub_bgnd("НОРМА",'%',0);
 
 	if(sk_av_stat[2]==sasON) sub_bgnd("АВАРИЯ",'^',0);
-	else                     sub_bgnd("НОРМА",'^',0);
+	else                     sub_bgnd("НОРМА",'^',0);*/
 
 	//if(sk_av_stat[3]==sasON) sub_bgnd("АВАРИЯ",'&',0);
 	//else                     sub_bgnd("НОРМА",'&',0);
@@ -6444,6 +6446,14 @@ else if(ind==iSet_TELECORE2015)
 
 	long2lcd_mmm(AUSW_MAIN_NUMBER,'w',0);
 
+
+	if((FORVARDBPSCHHOUR<=0)||(FORVARDBPSCHHOUR>500)) {
+		sub_bgnd("ВЫКЛ.",'l',0);
+	} else {
+		int2lcd(FORVARDBPSCHHOUR,'l',0);	
+	}
+
+
 	//int2lcdyx(sub_ind,0,3,0);
 	//int2lcdyx(index_set,0,1,0);
 	}
@@ -7507,6 +7517,19 @@ else if (ind==iExt_set_GLONASS)
 	if(sub_ind<index_set) index_set=sub_ind;
 	else if((sub_ind-index_set)>2) index_set=sub_ind-2;
      bgnd_par("     УСТАНОВКИ      ",ptrs[index_set],ptrs[index_set+1],ptrs[index_set+2]);
+	
+	pointer_set(1);
+	}
+else if (ind==iExt_set_TELECORE2015)
+	{ 
+	ptrs[0]=	" Датчик двери       ";
+	ptrs[1]=  	" Выход              ";
+	ptrs[2]=  	"                    ";
+	ptrs[3]=  	"                    ";
+	
+	if(sub_ind<index_set) index_set=sub_ind;
+	else if((sub_ind-index_set)>2) index_set=sub_ind-2;
+    bgnd_par("     УСТАНОВКИ      ",ptrs[index_set],ptrs[index_set+1],ptrs[index_set+2]);
 	
 	pointer_set(1);
 	}
@@ -11421,8 +11444,8 @@ else if(ind==iKlimat_TELECORE2015)
 
 
 
-	int2lcdyx(t_ext[0],0,3,0);
-	int2lcdyx(t_ext[1],0,7,0);
+//	int2lcdyx(t_ext[0],0,3,0);
+//	int2lcdyx(t_ext[1],0,7,0);
 /*//	int2lcdyx(vent_stat_k,0,10,0);
 	int2lcdyx(TELECORE2015_KLIMAT_WARM_ON_temp,0,13,0);
 	
@@ -13934,16 +13957,16 @@ else if(ind==iExtern_TELECORE2015)
 	if (but==butU)
 		{      
 		sub_ind--;
-		gran_char(&sub_ind,0,4);
+		gran_char(&sub_ind,0,3);
 		}
 		
 	else if (but==butD)
 		{
 		sub_ind++;
-		gran_char(&sub_ind,0,4);		
+		gran_char(&sub_ind,0,3);		
 		}
 
-	else if((but==butE)&&(sub_ind==4))
+	else if((but==butE)&&(sub_ind==3))
 		{
 	     tree_down(0,0);
 	     ret(0);
@@ -17390,6 +17413,10 @@ else if(ind==iSet_TELECORE2015)
                {
                index_set=27;
                }
+		if(sub_ind==36)
+               {
+       		index_set=35;
+               }
           if(sub_ind==37)
                {
                sub_ind=38;
@@ -17709,7 +17736,7 @@ else if(ind==iSet_TELECORE2015)
 		{
 		if(but==butE)
 		     {
-			tree_up(iExt_set,0,0,0);
+			tree_up(iExt_set_TELECORE2015,0,0,0);
 		     ret(1000);
 		     }
 		}
@@ -21942,6 +21969,35 @@ else if (ind==iExt_set)
 	     ret(0);
 		}        	
 	}
+
+else if (ind==iExt_set_TELECORE2015)
+	{
+	ret(1000);
+	if (but==butU)
+		{      
+		sub_ind--;
+		gran_char(&sub_ind,0,1);
+		}
+		
+	else if (but==butD)
+		{
+		sub_ind++;
+		gran_char(&sub_ind,0,1);		
+		}
+
+	else if((but==butE)&&(sub_ind==0))
+		{
+	     tree_up(iExt_ddv,0,0,0);
+	     ret(0);
+		}
+
+	else if((but==butE)&&(sub_ind==1))
+		{
+	     tree_down(0,0);
+	     ret(0);
+		}        	
+	}
+
 
 else if (ind==iExt_set_3U)
 	{
@@ -27839,7 +27895,11 @@ else if(ind==iKlimat_kontur)
 	if(but==butD)
 		{
 		sub_ind++;
-		if(sub_ind==1)sub_ind++;
+		if(sub_ind==1)
+			{
+			sub_ind++;
+			index_set=1;
+			}
 		gran_char(&sub_ind,0,11);
 		if(sub_ind==3)sub_ind++;
 		gran_char(&sub_ind,0,11);	

@@ -3181,52 +3181,21 @@
 ;;;1083   
                           ENDP
 
-                  char2lcdhyx PROC
-;;;1097   //-----------------------------------------------
-;;;1098   void char2lcdhyx(char in,char y,char x)
-0017fe  b510              PUSH     {r4,lr}
-;;;1099   {
-;;;1100   char i;
-;;;1101   
-;;;1102   i=(20*y)+x;
-001800  eb010181          ADD      r1,r1,r1,LSL #2
-001804  eb020181          ADD      r1,r2,r1,LSL #2
-001808  b2c9              UXTB     r1,r1
-;;;1103   
-;;;1104   lcd_buffer[i]=ABCDEF[in%16];
-00180a  4a7f              LDR      r2,|L1.6664|
-00180c  f000030f          AND      r3,r0,#0xf
-001810  5cd4              LDRB     r4,[r2,r3]
-001812  4b7b              LDR      r3,|L1.6656|
-001814  545c              STRB     r4,[r3,r1]
-;;;1105   i--;
-001816  f1a10101          SUB      r1,r1,#1
-00181a  b2c9              UXTB     r1,r1
-;;;1106   lcd_buffer[i]=ABCDEF[in/16];
-00181c  eb021010          ADD      r0,r2,r0,LSR #4
-001820  7800              LDRB     r0,[r0,#0]
-001822  5458              STRB     r0,[r3,r1]
-;;;1107   i--;
-;;;1108   }
-001824  bd10              POP      {r4,pc}
-;;;1109   
-                          ENDP
-
                   pointer_set PROC
 ;;;1155   //-----------------------------------------------
 ;;;1156   void pointer_set(char num_of_first_row)
-001826  b530              PUSH     {r4,r5,lr}
+0017fe  b530              PUSH     {r4,r5,lr}
 ;;;1157   {
 ;;;1158   if(sub_ind==index_set)lcd_buffer[num_of_first_row*20]=1;
-001828  4978              LDR      r1,|L1.6668|
-00182a  2401              MOVS     r4,#1
-00182c  4b74              LDR      r3,|L1.6656|
-00182e  f9912001          LDRSB    r2,[r1,#1]  ; a_ind
-001832  f9911004          LDRSB    r1,[r1,#4]  ; a_ind
-001836  428a              CMP      r2,r1
-001838  d104              BNE      |L1.6212|
-00183a  eb000080          ADD      r0,r0,r0,LSL #2
-00183e  f8034020          STRB     r4,[r3,r0,LSL #2]
+001800  4982              LDR      r1,|L1.6668|
+001802  2401              MOVS     r4,#1
+001804  4b7e              LDR      r3,|L1.6656|
+001806  f9912001          LDRSB    r2,[r1,#1]  ; a_ind
+00180a  f9911004          LDRSB    r1,[r1,#4]  ; a_ind
+00180e  428a              CMP      r2,r1
+001810  d104              BNE      |L1.6172|
+001812  eb000080          ADD      r0,r0,r0,LSL #2
+001816  f8034020          STRB     r4,[r3,r0,LSL #2]
 ;;;1159   else if(sub_ind==(index_set+1))lcd_buffer[(num_of_first_row+1)*20]=1;
 ;;;1160   else if(sub_ind==(index_set+2))lcd_buffer[(num_of_first_row+2)*20]=1;
 ;;;1161   else if(sub_ind==(index_set+3))lcd_buffer[(num_of_first_row+3)*20]=1;
@@ -3235,219 +3204,219 @@
 ;;;1164   else if(sub_ind==(index_set+6))lcd_buffer[(num_of_first_row+6)*20]=1;
 ;;;1165   else if(sub_ind==(index_set+7))lcd_buffer[(num_of_first_row+7)*20]=1;
 ;;;1166   }
+00181a  bd30              POP      {r4,r5,pc}
+                  |L1.6172|
+00181c  1c4d              ADDS     r5,r1,#1              ;1159
+00181e  42aa              CMP      r2,r5                 ;1159
+001820  d106              BNE      |L1.6192|
+001822  f1000001          ADD      r0,r0,#1              ;1159
+001826  eb000080          ADD      r0,r0,r0,LSL #2       ;1159
+00182a  f8034020          STRB     r4,[r3,r0,LSL #2]     ;1159
+00182e  bd30              POP      {r4,r5,pc}
+                  |L1.6192|
+001830  1c8d              ADDS     r5,r1,#2              ;1160
+001832  42aa              CMP      r2,r5                 ;1160
+001834  d106              BNE      |L1.6212|
+001836  f1000002          ADD      r0,r0,#2              ;1160
+00183a  eb000080          ADD      r0,r0,r0,LSL #2       ;1160
+00183e  f8034020          STRB     r4,[r3,r0,LSL #2]     ;1160
 001842  bd30              POP      {r4,r5,pc}
                   |L1.6212|
-001844  1c4d              ADDS     r5,r1,#1              ;1159
-001846  42aa              CMP      r2,r5                 ;1159
+001844  1ccd              ADDS     r5,r1,#3              ;1161
+001846  42aa              CMP      r2,r5                 ;1161
 001848  d106              BNE      |L1.6232|
-00184a  f1000001          ADD      r0,r0,#1              ;1159
-00184e  eb000080          ADD      r0,r0,r0,LSL #2       ;1159
-001852  f8034020          STRB     r4,[r3,r0,LSL #2]     ;1159
+00184a  f1000003          ADD      r0,r0,#3              ;1161
+00184e  eb000080          ADD      r0,r0,r0,LSL #2       ;1161
+001852  f8034020          STRB     r4,[r3,r0,LSL #2]     ;1161
 001856  bd30              POP      {r4,r5,pc}
                   |L1.6232|
-001858  1c8d              ADDS     r5,r1,#2              ;1160
-00185a  42aa              CMP      r2,r5                 ;1160
+001858  1d0d              ADDS     r5,r1,#4              ;1162
+00185a  42aa              CMP      r2,r5                 ;1162
 00185c  d106              BNE      |L1.6252|
-00185e  f1000002          ADD      r0,r0,#2              ;1160
-001862  eb000080          ADD      r0,r0,r0,LSL #2       ;1160
-001866  f8034020          STRB     r4,[r3,r0,LSL #2]     ;1160
+00185e  f1000004          ADD      r0,r0,#4              ;1162
+001862  eb000080          ADD      r0,r0,r0,LSL #2       ;1162
+001866  f8034020          STRB     r4,[r3,r0,LSL #2]     ;1162
 00186a  bd30              POP      {r4,r5,pc}
                   |L1.6252|
-00186c  1ccd              ADDS     r5,r1,#3              ;1161
-00186e  42aa              CMP      r2,r5                 ;1161
+00186c  1d4d              ADDS     r5,r1,#5              ;1163
+00186e  42aa              CMP      r2,r5                 ;1163
 001870  d106              BNE      |L1.6272|
-001872  f1000003          ADD      r0,r0,#3              ;1161
-001876  eb000080          ADD      r0,r0,r0,LSL #2       ;1161
-00187a  f8034020          STRB     r4,[r3,r0,LSL #2]     ;1161
+001872  f1000005          ADD      r0,r0,#5              ;1163
+001876  eb000080          ADD      r0,r0,r0,LSL #2       ;1163
+00187a  f8034020          STRB     r4,[r3,r0,LSL #2]     ;1163
 00187e  bd30              POP      {r4,r5,pc}
                   |L1.6272|
-001880  1d0d              ADDS     r5,r1,#4              ;1162
-001882  42aa              CMP      r2,r5                 ;1162
+001880  1d8d              ADDS     r5,r1,#6              ;1164
+001882  42aa              CMP      r2,r5                 ;1164
 001884  d106              BNE      |L1.6292|
-001886  f1000004          ADD      r0,r0,#4              ;1162
-00188a  eb000080          ADD      r0,r0,r0,LSL #2       ;1162
-00188e  f8034020          STRB     r4,[r3,r0,LSL #2]     ;1162
+001886  f1000006          ADD      r0,r0,#6              ;1164
+00188a  eb000080          ADD      r0,r0,r0,LSL #2       ;1164
+00188e  f8034020          STRB     r4,[r3,r0,LSL #2]     ;1164
+                  |L1.6290|
 001892  bd30              POP      {r4,r5,pc}
                   |L1.6292|
-001894  1d4d              ADDS     r5,r1,#5              ;1163
-001896  42aa              CMP      r2,r5                 ;1163
-001898  d106              BNE      |L1.6312|
-00189a  f1000005          ADD      r0,r0,#5              ;1163
-00189e  eb000080          ADD      r0,r0,r0,LSL #2       ;1163
-0018a2  f8034020          STRB     r4,[r3,r0,LSL #2]     ;1163
+001894  1dc9              ADDS     r1,r1,#7              ;1165
+001896  428a              CMP      r2,r1                 ;1165
+001898  d1fb              BNE      |L1.6290|
+00189a  f1000007          ADD      r0,r0,#7              ;1165
+00189e  eb000080          ADD      r0,r0,r0,LSL #2       ;1165
+0018a2  f8034020          STRB     r4,[r3,r0,LSL #2]     ;1165
 0018a6  bd30              POP      {r4,r5,pc}
-                  |L1.6312|
-0018a8  1d8d              ADDS     r5,r1,#6              ;1164
-0018aa  42aa              CMP      r2,r5                 ;1164
-0018ac  d106              BNE      |L1.6332|
-0018ae  f1000006          ADD      r0,r0,#6              ;1164
-0018b2  eb000080          ADD      r0,r0,r0,LSL #2       ;1164
-0018b6  f8034020          STRB     r4,[r3,r0,LSL #2]     ;1164
-                  |L1.6330|
-0018ba  bd30              POP      {r4,r5,pc}
-                  |L1.6332|
-0018bc  1dc9              ADDS     r1,r1,#7              ;1165
-0018be  428a              CMP      r2,r1                 ;1165
-0018c0  d1fb              BNE      |L1.6330|
-0018c2  f1000007          ADD      r0,r0,#7              ;1165
-0018c6  eb000080          ADD      r0,r0,r0,LSL #2       ;1165
-0018ca  f8034020          STRB     r4,[r3,r0,LSL #2]     ;1165
-0018ce  bd30              POP      {r4,r5,pc}
 ;;;1167   
                           ENDP
 
                   tree_down PROC
 ;;;1169   //-----------------------------------------------
 ;;;1170   void tree_down(signed char offset_ind,signed char offset_sub_ind)
-0018d0  4b4f              LDR      r3,|L1.6672|
+0018a8  4b59              LDR      r3,|L1.6672|
 ;;;1171   {
 ;;;1172   ind_pointer--;
-0018d2  881a              LDRH     r2,[r3,#0]  ; ind_pointer
-0018d4  f1a20201          SUB      r2,r2,#1
+0018aa  881a              LDRH     r2,[r3,#0]  ; ind_pointer
+0018ac  f1a20201          SUB      r2,r2,#1
 ;;;1173   ind_pointer+=offset_ind;
-0018d8  4410              ADD      r0,r0,r2
-0018da  b200              SXTH     r0,r0
-0018dc  8018              STRH     r0,[r3,#0]
+0018b0  4410              ADD      r0,r0,r2
+0018b2  b200              SXTH     r0,r0
+0018b4  8018              STRH     r0,[r3,#0]
 ;;;1174   a_ind=b_ind[ind_pointer];
-0018de  4a4d              LDR      r2,|L1.6676|
-0018e0  eb000080          ADD      r0,r0,r0,LSL #2
-0018e4  4402              ADD      r2,r2,r0
-0018e6  4849              LDR      r0,|L1.6668|
-0018e8  6813              LDR      r3,[r2,#0]
-0018ea  6003              STR      r3,[r0,#0]  ; a_ind
-0018ec  7912              LDRB     r2,[r2,#4]
-0018ee  7102              STRB     r2,[r0,#4]
+0018b6  4a57              LDR      r2,|L1.6676|
+0018b8  eb000080          ADD      r0,r0,r0,LSL #2
+0018bc  4402              ADD      r2,r2,r0
+0018be  4853              LDR      r0,|L1.6668|
+0018c0  6813              LDR      r3,[r2,#0]
+0018c2  6003              STR      r3,[r0,#0]  ; a_ind
+0018c4  7912              LDRB     r2,[r2,#4]
+0018c6  7102              STRB     r2,[r0,#4]
 ;;;1175   
 ;;;1176   sub_ind+=offset_sub_ind;
-0018f0  7842              LDRB     r2,[r0,#1]  ; a_ind
-0018f2  4411              ADD      r1,r1,r2
-0018f4  7041              STRB     r1,[r0,#1]
+0018c8  7842              LDRB     r2,[r0,#1]  ; a_ind
+0018ca  4411              ADD      r1,r1,r2
+0018cc  7041              STRB     r1,[r0,#1]
 ;;;1177   }
-0018f6  4770              BX       lr
+0018ce  4770              BX       lr
 ;;;1178   
                           ENDP
 
                   tree_up PROC
 ;;;1179   //-----------------------------------------------
 ;;;1180   void tree_up(char tind, char tsub_ind, char tindex_set, char tsub_ind1)
-0018f8  b570              PUSH     {r4-r6,lr}
+0018d0  b570              PUSH     {r4-r6,lr}
 ;;;1181   {
 ;;;1182   b_ind[ind_pointer++]=a_ind;
-0018fa  4d45              LDR      r5,|L1.6672|
-0018fc  f9b54000          LDRSH    r4,[r5,#0]  ; ind_pointer
-001900  f1040601          ADD      r6,r4,#1
-001904  802e              STRH     r6,[r5,#0]
-001906  4d43              LDR      r5,|L1.6676|
-001908  eb040484          ADD      r4,r4,r4,LSL #2
-00190c  4425              ADD      r5,r5,r4
-00190e  4c3f              LDR      r4,|L1.6668|
-001910  6826              LDR      r6,[r4,#0]  ; a_ind
-001912  602e              STR      r6,[r5,#0]
-001914  7926              LDRB     r6,[r4,#4]  ; a_ind
-001916  712e              STRB     r6,[r5,#4]
+0018d2  4d4f              LDR      r5,|L1.6672|
+0018d4  f9b54000          LDRSH    r4,[r5,#0]  ; ind_pointer
+0018d8  f1040601          ADD      r6,r4,#1
+0018dc  802e              STRH     r6,[r5,#0]
+0018de  4d4d              LDR      r5,|L1.6676|
+0018e0  eb040484          ADD      r4,r4,r4,LSL #2
+0018e4  4425              ADD      r5,r5,r4
+0018e6  4c49              LDR      r4,|L1.6668|
+0018e8  6826              LDR      r6,[r4,#0]  ; a_ind
+0018ea  602e              STR      r6,[r5,#0]
+0018ec  7926              LDRB     r6,[r4,#4]  ; a_ind
+0018ee  712e              STRB     r6,[r5,#4]
 ;;;1183   ind=(i_enum)tind;
-001918  7020              STRB     r0,[r4,#0]
+0018f0  7020              STRB     r0,[r4,#0]
 ;;;1184   sub_ind=tsub_ind;
-00191a  7061              STRB     r1,[r4,#1]
+0018f2  7061              STRB     r1,[r4,#1]
 ;;;1185   index_set=tindex_set;
-00191c  7122              STRB     r2,[r4,#4]
+0018f4  7122              STRB     r2,[r4,#4]
 ;;;1186   sub_ind1=tsub_ind1;
-00191e  70a3              STRB     r3,[r4,#2]
+0018f6  70a3              STRB     r3,[r4,#2]
 ;;;1187   }
-001920  bd70              POP      {r4-r6,pc}
+0018f8  bd70              POP      {r4-r6,pc}
 ;;;1188   
                           ENDP
 
                   bgnd_par PROC
 ;;;1189   //-----------------------------------------------
 ;;;1190   void bgnd_par(char const *ptr0,char const *ptr1,char const *ptr2,char const *ptr3)
-001922  e92d41f0          PUSH     {r4-r8,lr}
+0018fa  e92d41f0          PUSH     {r4-r8,lr}
 ;;;1191   {
-001926  4680              MOV      r8,r0
-001928  460f              MOV      r7,r1
-00192a  4616              MOV      r6,r2
+0018fe  4680              MOV      r8,r0
+001900  460f              MOV      r7,r1
+001902  4616              MOV      r6,r2
 ;;;1192   char i,*ptr_ram;
 ;;;1193   clr_scrn();
-00192c  f7fffffe          BL       clr_scrn
+001904  f7fffffe          BL       clr_scrn
 ;;;1194   
 ;;;1195   ptr_ram=lcd_buffer;
-001930  4c33              LDR      r4,|L1.6656|
+001908  4c3d              LDR      r4,|L1.6656|
 ;;;1196   for(i=0;i<20;i++)
-001932  f04f0500          MOV      r5,#0
-                  |L1.6454|
+00190a  f04f0500          MOV      r5,#0
+                  |L1.6414|
 ;;;1197   	{
 ;;;1198   	*ptr_ram++=*ptr0++;
-001936  f8180b01          LDRB     r0,[r8],#1
-00193a  f8040b01          STRB     r0,[r4],#1
-00193e  f1050501          ADD      r5,r5,#1              ;1196
-001942  b2ed              UXTB     r5,r5                 ;1196
-001944  2d14              CMP      r5,#0x14              ;1196
-001946  d3f6              BCC      |L1.6454|
+00190e  f8180b01          LDRB     r0,[r8],#1
+001912  f8040b01          STRB     r0,[r4],#1
+001916  f1050501          ADD      r5,r5,#1              ;1196
+00191a  b2ed              UXTB     r5,r5                 ;1196
+00191c  2d14              CMP      r5,#0x14              ;1196
+00191e  d3f6              BCC      |L1.6414|
 ;;;1199   	}
 ;;;1200   for(i=0;i<20;i++)
-001948  f04f0000          MOV      r0,#0
-                  |L1.6476|
+001920  f04f0000          MOV      r0,#0
+                  |L1.6436|
 ;;;1201   	{
 ;;;1202   	*ptr_ram++=*ptr1++;
-00194c  f8171b01          LDRB     r1,[r7],#1
-001950  f8041b01          STRB     r1,[r4],#1
-001954  f1000001          ADD      r0,r0,#1              ;1200
-001958  b2c0              UXTB     r0,r0                 ;1200
-00195a  2814              CMP      r0,#0x14              ;1200
-00195c  d3f6              BCC      |L1.6476|
+001924  f8171b01          LDRB     r1,[r7],#1
+001928  f8041b01          STRB     r1,[r4],#1
+00192c  f1000001          ADD      r0,r0,#1              ;1200
+001930  b2c0              UXTB     r0,r0                 ;1200
+001932  2814              CMP      r0,#0x14              ;1200
+001934  d3f6              BCC      |L1.6436|
 ;;;1203   	}
 ;;;1204   for(i=0;i<20;i++)
-00195e  f04f0000          MOV      r0,#0
-                  |L1.6498|
+001936  f04f0000          MOV      r0,#0
+                  |L1.6458|
 ;;;1205   	{
 ;;;1206   	*ptr_ram++=*ptr2++;
-001962  f8161b01          LDRB     r1,[r6],#1
-001966  f8041b01          STRB     r1,[r4],#1
-00196a  f1000001          ADD      r0,r0,#1              ;1204
-00196e  b2c0              UXTB     r0,r0                 ;1204
-001970  2814              CMP      r0,#0x14              ;1204
-001972  d3f6              BCC      |L1.6498|
+00193a  f8161b01          LDRB     r1,[r6],#1
+00193e  f8041b01          STRB     r1,[r4],#1
+001942  f1000001          ADD      r0,r0,#1              ;1204
+001946  b2c0              UXTB     r0,r0                 ;1204
+001948  2814              CMP      r0,#0x14              ;1204
+00194a  d3f6              BCC      |L1.6458|
 ;;;1207   	}
 ;;;1208   for(i=0;i<20;i++)
-001974  f04f0000          MOV      r0,#0
-                  |L1.6520|
+00194c  f04f0000          MOV      r0,#0
+                  |L1.6480|
 ;;;1209   	{
 ;;;1210   	*ptr_ram++=*ptr3++;
-001978  f8131b01          LDRB     r1,[r3],#1
-00197c  f8041b01          STRB     r1,[r4],#1
-001980  f1000001          ADD      r0,r0,#1              ;1208
-001984  b2c0              UXTB     r0,r0                 ;1208
-001986  2814              CMP      r0,#0x14              ;1208
-001988  d3f6              BCC      |L1.6520|
+001950  f8131b01          LDRB     r1,[r3],#1
+001954  f8041b01          STRB     r1,[r4],#1
+001958  f1000001          ADD      r0,r0,#1              ;1208
+00195c  b2c0              UXTB     r0,r0                 ;1208
+00195e  2814              CMP      r0,#0x14              ;1208
+001960  d3f6              BCC      |L1.6480|
 ;;;1211   	}
 ;;;1212   
 ;;;1213   
 ;;;1214   }
-00198a  e8bd81f0          POP      {r4-r8,pc}
+001962  e8bd81f0          POP      {r4-r8,pc}
 ;;;1215   
                           ENDP
 
                   show_mess PROC
 ;;;1231   //-----------------------------------------------
 ;;;1232   void show_mess(char* p1, char* p2, char* p3, char* p4,int m_sec)
-00198e  b510              PUSH     {r4,lr}
+001966  b510              PUSH     {r4,lr}
 ;;;1233   {
-001990  9c02              LDR      r4,[sp,#8]
+001968  9c02              LDR      r4,[sp,#8]
 ;;;1234   bgnd_par(p1,p2,p3,p4);
-001992  f7fffffe          BL       bgnd_par
+00196a  f7fffffe          BL       bgnd_par
 ;;;1235   tree_up(iSM,sub_ind,sub_ind1,sub_ind2);
-001996  481d              LDR      r0,|L1.6668|
-001998  78c3              LDRB     r3,[r0,#3]  ; a_ind
-00199a  7882              LDRB     r2,[r0,#2]  ; a_ind
-00199c  7841              LDRB     r1,[r0,#1]  ; a_ind
-00199e  209b              MOVS     r0,#0x9b
-0019a0  f7fffffe          BL       tree_up
+00196e  4827              LDR      r0,|L1.6668|
+001970  78c3              LDRB     r3,[r0,#3]  ; a_ind
+001972  7882              LDRB     r2,[r0,#2]  ; a_ind
+001974  7841              LDRB     r1,[r0,#1]  ; a_ind
+001976  209e              MOVS     r0,#0x9e
+001978  f7fffffe          BL       tree_up
 ;;;1236   ret((char)(m_sec/100));
-0019a4  2064              MOVS     r0,#0x64
-0019a6  fb94f0f0          SDIV     r0,r4,r0
-0019aa  e8bd4010          POP      {r4,lr}
-0019ae  b2c0              UXTB     r0,r0
-0019b0  f7ffbffe          B.W      ||ret||
+00197c  2064              MOVS     r0,#0x64
+00197e  fb94f0f0          SDIV     r0,r4,r0
+001982  e8bd4010          POP      {r4,lr}
+001986  b2c0              UXTB     r0,r0
+001988  f7ffbffe          B.W      ||ret||
 ;;;1237   }
 ;;;1238   
                           ENDP
@@ -3455,9 +3424,9 @@
                   event_data2ind PROC
 ;;;1251   //-----------------------------------------------
 ;;;1252   void event_data2ind(char num, char simbol)
-0019b4  e92d43fe          PUSH     {r1-r9,lr}
+00198c  e92d43fe          PUSH     {r1-r9,lr}
 ;;;1253   {
-0019b8  460d              MOV      r5,r1
+001990  460d              MOV      r5,r1
 ;;;1254   char iii;
 ;;;1255   char dt[4],dt_[4],dt__[4];
 ;;;1256   unsigned int tempii;    
@@ -3466,39 +3435,56 @@
 ;;;1259   tempii=ptr_carry(tempii,64,-1*((signed)num));*/
 ;;;1260   tempii=(signed)num;
 ;;;1261   tempii*=32;
-0019ba  ea4f1040          LSL      r0,r0,#5
+001992  ea4f1040          LSL      r0,r0,#5
 ;;;1262   tempii+=EVENT_LOG;
-0019be  f5006080          ADD      r0,r0,#0x400
-0019c2  4604              MOV      r4,r0
+001996  f5006080          ADD      r0,r0,#0x400
+00199a  4604              MOV      r4,r0
 ;;;1263        
 ;;;1264   lc640_read_long_ptr(tempii,dt);
-0019c4  a902              ADD      r1,sp,#8
-0019c6  4620              MOV      r0,r4
-0019c8  f7fffffe          BL       lc640_read_long_ptr
+00199c  a902              ADD      r1,sp,#8
+00199e  4620              MOV      r0,r4
+0019a0  f7fffffe          BL       lc640_read_long_ptr
 ;;;1265   lc640_read_long_ptr(tempii+8,dt_);
-0019cc  a901              ADD      r1,sp,#4
-0019ce  f1040008          ADD      r0,r4,#8
-0019d2  f7fffffe          BL       lc640_read_long_ptr
+0019a4  a901              ADD      r1,sp,#4
+0019a6  f1040008          ADD      r0,r4,#8
+0019aa  f7fffffe          BL       lc640_read_long_ptr
 ;;;1266   lc640_read_long_ptr(tempii+12,dt__);
-0019d6  4669              MOV      r1,sp
-0019d8  f104000c          ADD      r0,r4,#0xc
-0019dc  f7fffffe          BL       lc640_read_long_ptr
+0019ae  4669              MOV      r1,sp
+0019b0  f104000c          ADD      r0,r4,#0xc
+0019b4  f7fffffe          BL       lc640_read_long_ptr
 ;;;1267   
 ;;;1268   iii=find(simbol);
-0019e0  4628              MOV      r0,r5
-0019e2  f7fffffe          BL       find
+0019b8  4628              MOV      r0,r5
+0019ba  f7fffffe          BL       find
 ;;;1269   
 ;;;1270   lcd_buffer[iii++]=' ';
-0019e6  4c06              LDR      r4,|L1.6656|
-0019e8  f04f0620          MOV      r6,#0x20
-0019ec  f1000101          ADD      r1,r0,#1
-0019f0  b2c9              UXTB     r1,r1
-0019f2  5426              STRB     r6,[r4,r0]
+0019be  4c10              LDR      r4,|L1.6656|
+0019c0  f04f0620          MOV      r6,#0x20
+0019c4  f1000101          ADD      r1,r0,#1
+0019c8  b2c9              UXTB     r1,r1
+0019ca  5426              STRB     r6,[r4,r0]
 ;;;1271   lcd_buffer[iii++]='0';
-0019f4  f1010001          ADD      r0,r1,#1
-0019f8  f04f0730          MOV      r7,#0x30
-0019fc  b2c0              UXTB     r0,r0
-0019fe  e00b              B        |L1.6680|
+0019cc  f04f0730          MOV      r7,#0x30
+0019d0  f1010001          ADD      r0,r1,#1
+0019d4  b2c0              UXTB     r0,r0
+0019d6  5467              STRB     r7,[r4,r1]
+;;;1272   lcd_buffer[iii++]='!';
+0019d8  f04f0821          MOV      r8,#0x21
+0019dc  f1000101          ADD      r1,r0,#1
+0019e0  b2c9              UXTB     r1,r1
+0019e2  f8048000          STRB     r8,[r4,r0]
+;;;1273   lcd_buffer[iii++]='@'; 
+0019e6  f04f0940          MOV      r9,#0x40
+0019ea  f1010001          ADD      r0,r1,#1
+0019ee  b2c0              UXTB     r0,r0
+0019f0  f8049001          STRB     r9,[r4,r1]
+;;;1274   lcd_buffer[iii++]=' ';
+0019f4  f1000101          ADD      r1,r0,#1
+0019f8  b2c9              UXTB     r1,r1
+0019fa  5426              STRB     r6,[r4,r0]
+;;;1275   lcd_buffer[iii++]=' ';
+0019fc  e00c              B        |L1.6680|
+0019fe  0000              DCW      0x0000
                   |L1.6656|
                           DCD      lcd_buffer
                   |L1.6660|
@@ -3512,102 +3498,87 @@
                   |L1.6676|
                           DCD      b_ind
                   |L1.6680|
-001a18  5467              STRB     r7,[r4,r1]
-;;;1272   lcd_buffer[iii++]='!';
-001a1a  f04f0821          MOV      r8,#0x21
-001a1e  f1000101          ADD      r1,r0,#1
-001a22  b2c9              UXTB     r1,r1
-001a24  f8048000          STRB     r8,[r4,r0]
-;;;1273   lcd_buffer[iii++]='@'; 
-001a28  f04f0940          MOV      r9,#0x40
-001a2c  f1010001          ADD      r0,r1,#1
-001a30  b2c0              UXTB     r0,r0
-001a32  f8049001          STRB     r9,[r4,r1]
-;;;1274   lcd_buffer[iii++]=' ';
-001a36  f1000101          ADD      r1,r0,#1
-001a3a  b2c9              UXTB     r1,r1
-001a3c  5426              STRB     r6,[r4,r0]
-;;;1275   lcd_buffer[iii++]=' ';
-001a3e  f1010001          ADD      r0,r1,#1
-001a42  b2c0              UXTB     r0,r0
-001a44  5466              STRB     r6,[r4,r1]
+001a18  f1010001          ADD      r0,r1,#1
+001a1c  b2c0              UXTB     r0,r0
+001a1e  5466              STRB     r6,[r4,r1]
 ;;;1276   lcd_buffer[iii++]='0';
-001a46  f1000101          ADD      r1,r0,#1
-001a4a  b2c9              UXTB     r1,r1
-001a4c  5427              STRB     r7,[r4,r0]
+001a20  f1000101          ADD      r1,r0,#1
+001a24  b2c9              UXTB     r1,r1
+001a26  5427              STRB     r7,[r4,r0]
 ;;;1277   lcd_buffer[iii++]='#';
-001a4e  f04f0223          MOV      r2,#0x23
-001a52  f1010001          ADD      r0,r1,#1
-001a56  b2c5              UXTB     r5,r0
-001a58  5462              STRB     r2,[r4,r1]
+001a28  f04f0223          MOV      r2,#0x23
+001a2c  f1010001          ADD      r0,r1,#1
+001a30  b2c5              UXTB     r5,r0
+001a32  5462              STRB     r2,[r4,r1]
 ;;;1278   int2lcd(dt_[2],'!',0);
-001a5a  f89d0006          LDRB     r0,[sp,#6]
-001a5e  f04f0200          MOV      r2,#0
-001a62  f04f0121          MOV      r1,#0x21
-001a66  f7fffffe          BL       int2lcd
+001a34  f89d0006          LDRB     r0,[sp,#6]
+001a38  f04f0200          MOV      r2,#0
+001a3c  f04f0121          MOV      r1,#0x21
+001a40  f7fffffe          BL       int2lcd
 ;;;1279   int2lcd(dt_[0],'#',0);   
-001a6a  f89d0004          LDRB     r0,[sp,#4]
-001a6e  2200              MOVS     r2,#0
-001a70  2123              MOVS     r1,#0x23
-001a72  f7fffffe          BL       int2lcd
+001a44  f89d0004          LDRB     r0,[sp,#4]
+001a48  2200              MOVS     r2,#0
+001a4a  2123              MOVS     r1,#0x23
+001a4c  f7fffffe          BL       int2lcd
 ;;;1280   if(!((dt_[1]>=1)&&(dt_[1]<=12)))dt_[1]=1;
-001a76  f89d0005          LDRB     r0,[sp,#5]
-001a7a  1e40              SUBS     r0,r0,#1
-001a7c  280c              CMP      r0,#0xc
-001a7e  d303              BCC      |L1.6792|
-001a80  f04f0001          MOV      r0,#1
-001a84  f88d0005          STRB     r0,[sp,#5]
-                  |L1.6792|
+001a50  f89d0005          LDRB     r0,[sp,#5]
+001a54  1e40              SUBS     r0,r0,#1
+001a56  280c              CMP      r0,#0xc
+001a58  d303              BCC      |L1.6754|
+001a5a  f04f0001          MOV      r0,#1
+001a5e  f88d0005          STRB     r0,[sp,#5]
+                  |L1.6754|
 ;;;1281   sub_bgnd(sm_mont[dt_[1]],'@',0); 
-001a88  f89d0005          LDRB     r0,[sp,#5]
-001a8c  4919              LDR      r1,|L1.6900|
-001a8e  2200              MOVS     r2,#0
-001a90  eb010080          ADD      r0,r1,r0,LSL #2
-001a94  2140              MOVS     r1,#0x40
-001a96  f7fffffe          BL       sub_bgnd
+001a62  f89d0005          LDRB     r0,[sp,#5]
+001a66  491a              LDR      r1,|L1.6864|
+001a68  2200              MOVS     r2,#0
+001a6a  eb010080          ADD      r0,r1,r0,LSL #2
+001a6e  2140              MOVS     r1,#0x40
+001a70  f7fffffe          BL       sub_bgnd
 ;;;1282   lcd_buffer[iii++]=' ';		
-001a9a  f1050001          ADD      r0,r5,#1
-001a9e  b2c0              UXTB     r0,r0
-001aa0  5566              STRB     r6,[r4,r5]
+001a74  f1050001          ADD      r0,r5,#1
+001a78  b2c0              UXTB     r0,r0
+001a7a  5566              STRB     r6,[r4,r5]
 ;;;1283   lcd_buffer[iii++]='0';
-001aa2  f1000101          ADD      r1,r0,#1
-001aa6  b2c9              UXTB     r1,r1
-001aa8  5427              STRB     r7,[r4,r0]
+001a7c  f1000101          ADD      r1,r0,#1
+001a80  b2c9              UXTB     r1,r1
+001a82  5427              STRB     r7,[r4,r0]
 ;;;1284   lcd_buffer[iii++]='!';
-001aaa  f1010001          ADD      r0,r1,#1
-001aae  b2c0              UXTB     r0,r0
-001ab0  f8048001          STRB     r8,[r4,r1]
+001a84  f1010001          ADD      r0,r1,#1
+001a88  b2c0              UXTB     r0,r0
+001a8a  f8048001          STRB     r8,[r4,r1]
 ;;;1285   lcd_buffer[iii++]=':'; 
-001ab4  f04f023a          MOV      r2,#0x3a
-001ab8  f1000101          ADD      r1,r0,#1
-001abc  b2c9              UXTB     r1,r1
-001abe  5422              STRB     r2,[r4,r0]
+001a8e  f04f023a          MOV      r2,#0x3a
+001a92  f1000101          ADD      r1,r0,#1
+001a96  b2c9              UXTB     r1,r1
+001a98  5422              STRB     r2,[r4,r0]
 ;;;1286   lcd_buffer[iii++]='0';
-001ac0  f1010001          ADD      r0,r1,#1
-001ac4  b2c0              UXTB     r0,r0
-001ac6  5467              STRB     r7,[r4,r1]
+001a9a  f1010001          ADD      r0,r1,#1
+001a9e  b2c0              UXTB     r0,r0
+001aa0  5467              STRB     r7,[r4,r1]
 ;;;1287   lcd_buffer[iii++]='@';
-001ac8  f1000101          ADD      r1,r0,#1
-001acc  b2cd              UXTB     r5,r1
-001ace  f8049000          STRB     r9,[r4,r0]
+001aa2  f1000101          ADD      r1,r0,#1
+001aa6  b2cd              UXTB     r5,r1
+001aa8  f8049000          STRB     r9,[r4,r0]
 ;;;1288   int2lcd(dt__[0],'!',0);
-001ad2  f89d0000          LDRB     r0,[sp,#0]
-001ad6  f04f0200          MOV      r2,#0
-001ada  f04f0121          MOV      r1,#0x21
-001ade  f7fffffe          BL       int2lcd
+001aac  f89d0000          LDRB     r0,[sp,#0]
+001ab0  f04f0200          MOV      r2,#0
+001ab4  f04f0121          MOV      r1,#0x21
+001ab8  f7fffffe          BL       int2lcd
 ;;;1289   int2lcd(dt__[1],'@',0);
-001ae2  f89d0001          LDRB     r0,[sp,#1]
-001ae6  2200              MOVS     r2,#0
-001ae8  2140              MOVS     r1,#0x40
-001aea  f7fffffe          BL       int2lcd
+001abc  f89d0001          LDRB     r0,[sp,#1]
+001ac0  2200              MOVS     r2,#0
+001ac2  2140              MOVS     r1,#0x40
+001ac4  f7fffffe          BL       int2lcd
 ;;;1290      		     		
 ;;;1291   lcd_buffer[iii++]=' ';
-001aee  5566              STRB     r6,[r4,r5]
+001ac8  5566              STRB     r6,[r4,r5]
 ;;;1292   }	
-001af0  e8bd83fe          POP      {r1-r9,pc}
+001aca  e8bd83fe          POP      {r1-r9,pc}
                           ENDP
 
-                  |L1.6900|
+001ace  0000              DCW      0x0000
+                  |L1.6864|
                           DCD      sm_mont
 
                           AREA ||area_number.2||, CODE, READONLY, ALIGN=2
@@ -3804,6 +3775,39 @@
                           AREA ||area_number.5||, CODE, READONLY, ALIGN=2
 
                           EXPORTAS ||area_number.5||, ||.text||
+                  char2lcdhyx PROC
+;;;11     //-----------------------------------------------
+;;;12     signed short abs(signed short in)
+000000  b510              PUSH     {r4,lr}
+;;;13     {
+;;;14     if(in<0)in=-in;
+000002  eb010181          ADD      r1,r1,r1,LSL #2
+000006  eb020181          ADD      r1,r2,r1,LSL #2
+;;;15     return in;
+;;;16     }
+00000a  b2c9              UXTB     r1,r1
+00000c  4a06              LDR      r2,|L5.40|
+00000e  f000030f          AND      r3,r0,#0xf
+000012  5cd4              LDRB     r4,[r2,r3]
+000014  4b05              LDR      r3,|L5.44|
+000016  545c              STRB     r4,[r3,r1]
+000018  f1a10101          SUB      r1,r1,#1
+00001c  b2c9              UXTB     r1,r1
+00001e  eb021010          ADD      r0,r2,r0,LSR #4
+000022  7800              LDRB     r0,[r0,#0]
+000024  5458              STRB     r0,[r3,r1]
+000026  bd10              POP      {r4,pc}
+;;;17     
+                          ENDP
+
+                  |L5.40|
+                          DCD      ABCDEF
+                  |L5.44|
+                          DCD      lcd_buffer
+
+                          AREA ||area_number.6||, CODE, READONLY, ALIGN=2
+
+                          EXPORTAS ||area_number.6||, ||.text||
                   int2lcdhyx PROC
 ;;;11     //-----------------------------------------------
 ;;;12     signed short abs(signed short in)
@@ -3815,9 +3819,9 @@
 ;;;15     return in;
 ;;;16     }
 00000a  b2c9              UXTB     r1,r1
-00000c  4b0f              LDR      r3,|L5.76|
+00000c  4b0f              LDR      r3,|L6.76|
 00000e  f000020f          AND      r2,r0,#0xf
-000012  4c0f              LDR      r4,|L5.80|
+000012  4c0f              LDR      r4,|L6.80|
 000014  5c9a              LDRB     r2,[r3,r2]
 000016  5462              STRB     r2,[r4,r1]
 000018  f1a10101          SUB      r1,r1,#1
@@ -3841,14 +3845,14 @@
 ;;;17     
                           ENDP
 
-                  |L5.76|
+                  |L6.76|
                           DCD      ABCDEF
-                  |L5.80|
+                  |L6.80|
                           DCD      lcd_buffer
 
-                          AREA ||area_number.6||, CODE, READONLY, ALIGN=2
+                          AREA ||area_number.7||, CODE, READONLY, ALIGN=2
 
-                          EXPORTAS ||area_number.6||, ||.text||
+                          EXPORTAS ||area_number.7||, ||.text||
                   char2lcdbyx PROC
 ;;;11     //-----------------------------------------------
 ;;;12     signed short abs(signed short in)
@@ -3860,12 +3864,12 @@
 ;;;15     return in;
 ;;;16     }
 00000a  b2cc              UXTB     r4,r1
-00000c  4921              LDR      r1,|L6.148|
+00000c  4921              LDR      r1,|L7.148|
 00000e  f0000201          AND      r2,r0,#1
 000012  5c8d              LDRB     r5,[r1,r2]
 000014  f1a40201          SUB      r2,r4,#1
 000018  b2d3              UXTB     r3,r2
-00001a  4a1f              LDR      r2,|L6.152|
+00001a  4a1f              LDR      r2,|L7.152|
 00001c  5515              STRB     r5,[r2,r4]
 00001e  ea4f0450          LSR      r4,r0,#1
 000022  f0040001          AND      r0,r4,#1
@@ -3910,7 +3914,7 @@
 ;;;17     
                           ENDP
 
-                  |L6.148|
+                  |L7.148|
                           DCD      ABCDEF
-                  |L6.152|
+                  |L7.152|
                           DCD      lcd_buffer

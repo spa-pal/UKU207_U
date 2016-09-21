@@ -178,7 +178,7 @@
 
                           AREA ||.bss||, DATA, NOINIT, ALIGN=0
 
-                  sacredSunBatteryInBuff
+                  liBatteryInBuff
                           %        300
 
                           AREA ||.data||, DATA, ALIGN=1

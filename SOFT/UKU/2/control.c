@@ -200,7 +200,7 @@ const char sk_buff_GLONASS[4]={11,13,15,14};
 const char sk_buff_3U[4]={11,13,15,14};
 const char sk_buff_6U[4]={11,13,15,14};
 const char sk_buff_220[4]={11,13,15,14};
-const char sk_buff_TELECORE2015[4]={10,13,15,14};
+const char sk_buff_TELECORE2015[4]={11,13,15,14};
 
 char	plazma_inv[4];
 char plazma_bat;
@@ -1727,9 +1727,9 @@ if((BAT_IS_ON[1]==bisON)&&(bat[1]._Ub>200)&&(bat[1]._Ib>bat[0]._Ib)) Ibmax=bat[1
 
 #ifdef TELECORE
 Ibmax=0;
-if((NUMBAT_TELECORE>0)&&(lakb[0]._communicationFullErrorStat==0)&&(lakb[0]._ch_curr>Ibmax))Ibmax=lakb[0]._ch_curr/10;
-if((NUMBAT_TELECORE>1)&&(lakb[1]._communicationFullErrorStat==0)&&(lakb[1]._ch_curr>Ibmax))Ibmax=lakb[1]._ch_curr/10;
-if((NUMBAT_TELECORE>2)&&(lakb[2]._communicationFullErrorStat==0)&&(lakb[2]._ch_curr>Ibmax))Ibmax=lakb[2]._ch_curr/10;
+if((NUMBAT_TELECORE>0)&&(lakb[0]._communicationFullErrorStat==0)&&(lakb[0]._ch_curr/10>Ibmax))Ibmax=lakb[0]._ch_curr/10;
+if((NUMBAT_TELECORE>1)&&(lakb[1]._communicationFullErrorStat==0)&&(lakb[1]._ch_curr/10>Ibmax))Ibmax=lakb[1]._ch_curr/10;
+if((NUMBAT_TELECORE>2)&&(lakb[2]._communicationFullErrorStat==0)&&(lakb[2]._ch_curr/10>Ibmax))Ibmax=lakb[2]._ch_curr/10;
 #endif
 
 //if((AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043))Ibmax=Ib_ips_termokompensat;
@@ -1765,7 +1765,7 @@ for(i=0;i<NUMIST;i++)
 load_I=0;
 for(i=0;i<NUMBAT_TELECORE;i++)
 	{
-	load_I+=lakb[i]._ch_curr;
+	load_I-=lakb[i]._ch_curr/10;
 	}
 #else
 load_I=-(bat[0]._Ib/10)-(bat[1]._Ib/10);
@@ -5767,6 +5767,16 @@ if(mess_find_unvol(MESS2CNTRL_HNDL))
 
 	else if(mess_data[0]==PARAM_CNTRL_STAT_FAST_REG)
 		{
+		if(load_U>u_necc)
+			{
+			if(((load_U-u_necc)>10)&&(cntrl_stat>0))cntrl_stat-=5;
+			else if((cntrl_stat)&&b1Hz_ch)cntrl_stat--;
+			}
+		else if(load_U<u_necc)
+			{	
+			if(((u_necc-load_U)>10)&&(cntrl_stat<1015))cntrl_stat+=5;
+			else	if((cntrl_stat<1020)&&b1Hz_ch)cntrl_stat++;
+			}
 		}
 
 	}
@@ -5775,66 +5785,112 @@ else if((b1Hz_ch)&&(!bIBAT_SMKLBR))
 	{
 	cntrl_stat_new=cntrl_stat_old;
 
-	if(Ibmax==IZMAX_)
+	if((NUMBAT_TELECORE==0)||(lakbNotErrorNum==0))
 		{
-								
-		}	
-	else if(Ibmax>(IZMAX_*2))
-		{
-        if(cntrl_stat_blok_cnt)	cntrl_stat_new--;
-		else					cntrl_stat_new-=5;
+		if(load_U<u_necc)
+			{
+			if((u_necc-load_U)>10)	cntrl_stat_new+=10;
+			else 					cntrl_stat_new++;
+			}
+		else if(load_U>u_necc)
+			{
+			if((load_U>u_necc)>10)	cntrl_stat_new-=10;
+			else 					cntrl_stat_new--;
+			}
 		}
-	else if((Ibmax<(IZMAX_*2))&&(Ibmax>IZMAX_))
+	else 
 		{
-								cntrl_stat_new--;
-		}				
-/*	else if((Ibmax<IZMAX_)&&(Ibmax>0))
-		{				
-		if(load_U<(u_necc+DU_LI_BAT))
+	
+		if(Ibmax==IZMAX_)
+			{
+									
+			}	
+		else if(Ibmax>(IZMAX_*2))
+			{
+	        if(cntrl_stat_blok_cnt)	cntrl_stat_new--;
+			else					cntrl_stat_new-=5;
+			}
+		else if((Ibmax<(IZMAX_*2))&&(Ibmax>IZMAX_))
 			{
 			if(b1_30Hz_ch)
 				{
 				b1_30Hz_ch=0;
-								cntrl_stat_new--;
+									cntrl_stat_new--;
 				}
 			}
-		else
-			{
-								cntrl_stat_new--;
-			}
-		} */  
-	else if(load_U<u_necc)
-		{
-		if(load_U<(u_necc-40))
-			{
-								cntrl_stat_new+=5;
-			}
-		else if(load_U<(u_necc-20))
-			{
-								cntrl_stat_new+=2;
-			}
-		else if(load_U>(u_necc-DU_LI_BAT))
-			{
-			if(b1_30Hz_ch)
+		else if((Ibmax>((IZMAX_*4)/5))&&(Ibmax<IZMAX_))
+			{				
+			if(load_U<u_necc)
 				{
-				b1_30Hz_ch=0;
-				if(Ibmax<(IZMAX_-5))cntrl_stat_new+=5;
-				else				cntrl_stat_new++;
+				if(b1_30Hz_ch)
+					{
+					b1_30Hz_ch=0;
+									cntrl_stat_new++;
+					}
 				}
-			}				
-		else 
+			else
+				{
+				if(b1_30Hz_ch)
+					{
+					b1_30Hz_ch=0;
+									cntrl_stat_new--;
+					}
+				}
+			}  		
+							
+		else if((Ibmax<((IZMAX_*4)/5)))
+			{				
+			if(load_U<u_necc)
+				{
+				if(b1_30Hz_ch)
+					{
+					b1_30Hz_ch=0;
+									cntrl_stat_new+=10;
+					}
+				}
+			else
+				{
+				if(b1_30Hz_ch)
+					{
+					b1_30Hz_ch=0;
+									cntrl_stat_new-=10;
+					}
+				}
+			}  
+		//else if() 
+		else if(load_U<u_necc)
 			{
-								cntrl_stat_new++;
-			}					
-		}	
-	else if(load_U>u_necc)
-		{
-								cntrl_stat_new--;
+			if(load_U<(u_necc-DU_LI_BAT-5))
+				{
+									cntrl_stat_new+=1;
+				}
+	/*		else if(load_U<(u_necc-20))
+				{
+									cntrl_stat_new+=2;
+				}*/
+	/*		else if(load_U>(u_necc))
+				{
+				if(b1_30Hz_ch)
+					{
+					b1_30Hz_ch=0;
+					if(Ibmax<(IZMAX_-5))cntrl_stat_new+=5;
+					else				cntrl_stat_new++;
+					}
+				}*/				
+			else 
+				{
+									cntrl_stat_new++;
+				}					
+			}	
+		else if(load_U>u_necc)
+			{
+									cntrl_stat_new--;
+			}
+	
+		gran(&cntrl_stat_new,10,1010);			
+		cntrl_stat_old=cntrl_stat_new;
+		cntrl_stat=cntrl_stat_new;	
 		}
-
-	gran(&cntrl_stat_new,10,1010);			
-	cntrl_stat_old=cntrl_stat_new;
-	cntrl_stat=cntrl_stat_new;	
 	}
 
 
@@ -5896,7 +5952,7 @@ for(i=0;i<NUMSK;i++)
 	if(adc_buff_[sk_buff_220[i]]<2000)
 	#endif
 	#ifdef UKU_TELECORE2015
-	if(adc_buff_[sk_buff_TELECORE2015[i]]<1000)	 //TODO
+	if(adc_buff_[sk_buff_TELECORE2015[i]]<2000)	 //TODO
 	#endif
 
 		{

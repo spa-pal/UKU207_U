@@ -401,55 +401,55 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 36 "main.h"
 
 
 
 
 
-#line 53 "main.h"
+#line 41 "main.h"
 
-#line 62 "main.h"
 
 
 
 
+#line 58 "main.h"
 
+#line 67 "main.h"
 
-#line 74 "main.h"
 
-#line 83 "main.h"
 
 
 
 
+#line 79 "main.h"
 
+#line 88 "main.h"
 
 
 
 
 
 
-#line 100 "main.h"
 
 
 
 
 
+#line 105 "main.h"
 
 
-#line 130 "main.h"
 
 
 
 
 
-#line 144 "main.h"
+#line 135 "main.h"
 
 
 
 
 
+#line 149 "main.h"
 
 
 
@@ -458,14 +458,14 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 175 "main.h"
 
-#line 197 "main.h"
 
 
 
 
+#line 180 "main.h"
 
+#line 202 "main.h"
 
 
 
@@ -487,12 +487,12 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 370 "main.h"
 
 
 
 
 
+#line 375 "main.h"
 
 
 
@@ -528,7 +528,12 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 438 "main.h"
+
+
+
+
+
+#line 443 "main.h"
 
 
 
@@ -547,13 +552,11 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 469 "main.h"
+#line 474 "main.h"
 
-#line 481 "main.h"
+#line 486 "main.h"
 
-#line 497 "main.h"
-
-
+#line 502 "main.h"
 
 
 
@@ -573,9 +576,11 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 531 "main.h"
 
-#line 545 "main.h"
+
+#line 536 "main.h"
+
+#line 550 "main.h"
 
 
 
@@ -588,25 +593,25 @@ extern BOOL snmp_set_community (const char *community);
  
 
 
-#line 566 "main.h"
+#line 571 "main.h"
 
-#line 576 "main.h"
+#line 581 "main.h"
 
-#line 585 "main.h"
+#line 590 "main.h"
 
-#line 594 "main.h"
+#line 599 "main.h"
 
-#line 606 "main.h"
+#line 611 "main.h"
 
-#line 616 "main.h"
+#line 621 "main.h"
 
-#line 625 "main.h"
+#line 630 "main.h"
 
-#line 633 "main.h"
+#line 638 "main.h"
 
-#line 642 "main.h"
+#line 647 "main.h"
 
-#line 654 "main.h"
+#line 659 "main.h"
 
 
 
@@ -629,7 +634,7 @@ extern char cnt_of_slave;
 typedef enum {
 
 	iMn_220_IPS_TERMOKOMPENSAT,
-#line 695 "main.h"
+#line 700 "main.h"
 	iMn,iMn_3U,iMn_RSTKM,
 
 
@@ -657,12 +662,12 @@ typedef enum {
 	iBat,iBat_simple,iBat_li,iBat_SacredSun,iBat_universe,iInv_set,iSet_TELECORE2015,
 	iMakb,
 	iBps,iS2,iSet_prl,iK_prl,iDnd,
-	iK,iK_3U,iK_RSTKM,iK_GLONASS,iK_KONTUR,iK_6U,iK_220,iK_220_380,iK_220_IPS_TERMOKOMPENSAT,iK_220_IPS_TERMOKOMPENSAT_IB,
+	iK,iK_3U,iK_RSTKM,iK_GLONASS,iK_KONTUR,iK_6U,iK_220,iK_220_380,iK_220_IPS_TERMOKOMPENSAT,iK_220_IPS_TERMOKOMPENSAT_IB,iK_TELECORE,
 	iSpcprl,iSpc,k,Crash_0,Crash_1,iKednd,iAv_view_avt,iAKE,iSpc_termocompensat,
 	iLoad,iSpc_prl_vz,iSpc_prl_ke,iKe,iVz,iAvz,iAVAR,
-	iStr,iStr_3U,iStr_RSTKM,iStr_GLONASS,iStr_KONTUR,iStr_6U,iStr_220_IPS_TERMOKOMPENSAT,
+	iStr,iStr_3U,iStr_RSTKM,iStr_GLONASS,iStr_KONTUR,iStr_6U,iStr_220_IPS_TERMOKOMPENSAT,iStr_TELECORE2015,
 	iVrs,iPrltst,iApv,
-	iK_bps,iK_bps_sel,iK_bat,iK_bat_simple,iK_bat_ips_termokompensat_ib,iK_bat_sel,iK_load,iK_net,iK_net3,
+	iK_bps,iK_bps_sel,iK_bat,iK_bat_simple,iK_bat_ips_termokompensat_ib,iK_bat_sel,iK_bat_sel_TELECORE,iK_load,iK_net,iK_net3,
 	iK_makb_sel,iK_makb,iK_out,
 	iTst,iTst_3U,iTst_RSTKM,iTst_GLONASS,iTst_KONTUR,iTst_6U,iTst_220,iTst_220_380,iTst_220_IPS_TERMOKOMPENSAT,
 	iTst_TELECORE2015,
@@ -806,10 +811,11 @@ extern signed short TBOXVENTON;
 extern signed short TBOXVENTOFF;
 extern signed short TBOXWARMON; 
 extern signed short TBOXWARMOFF;
-extern signed short BAT_TYPE;		
+extern signed short BAT_TYPE;	
 extern signed short DU_LI_BAT;	
 extern signed short FORVARDBPSCHHOUR;	
 extern signed short NUMBAT;
+extern signed short NUMBAT_TELECORE;
 extern signed short NUMIST;
 extern signed short NUMINV;
 extern signed short NUMDT;
@@ -1058,16 +1064,18 @@ typedef struct
 	signed short	_b_p_ser_num;
 	signed short   _flags1;
 	signed short 	_flags2;
-	signed short 	_bRS485ERR;
-	signed short	_rs485_cnt;
+	signed short 	_communication2lvlErrorStat; 	
+	signed short	_communication2lvlErrorCnt;  	
 	signed short 	_cnt;
-	signed short 	_battCommState;	
+	signed short 	_communicationFullErrorStat;	
 	signed short   _battIsOn;		
 	char 		_plazma[8];		
 	signed short 	_isOnCnt;
 	signed short	_s_o_c_abs;		
+	signed short	_plazma_ss;
+	signed short	_zar_percent;	
 	} LAKB_STAT; 
-extern LAKB_STAT lakb[1];
+extern LAKB_STAT lakb[3];
 extern char lakb_damp[1][42];
 extern char bLAKB_KONF_CH;
 extern char bLAKB_KONF_CH_old;
@@ -1077,6 +1085,12 @@ extern char bLAKB_KONF_CH_EN;
 extern char bRS485ERR;
 extern short LBAT_STRUKT;
 extern char lakb_error_cnt;	
+extern short numOfPacks,numOfPacks_;
+extern short numOfCells, numOfTemperCells, baseOfData;
+extern short lakb_stat_comm_error;	
+extern short lakbNotErrorNum;		
+extern short lakbKanErrorCnt;		
+extern short lakbKanErrorStat;		
 
 
 
@@ -1305,9 +1319,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1378 "main.h"
+#line 1392 "main.h"
 
-#line 1389 "main.h"
+#line 1403 "main.h"
 
 
 
@@ -1399,6 +1413,13 @@ extern signed short ipsBlckStat;
 extern signed short outVoltContrHndlCnt;		
 extern signed short outVoltContrHndlCnt_;		
 extern char uout_av;
+
+
+extern short plazma_numOfCells;
+extern short plazma_numOfTemperCells;
+extern short plazma_numOfPacks;
+
+extern char plazma_ztt[2];
 
 
 
