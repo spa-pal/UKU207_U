@@ -1718,8 +1718,11 @@ if(RXBUFF[1]==PUT_ZTT_TM1)
 	lakb[0]._communication2lvlErrorCnt=(signed short)(*((signed char*)&RXBUFF[0]));
 	lakb[0]._ch_curr=(signed short)(*((signed short*)&RXBUFF[2]));
 	lakb[0]._tot_bat_volt=(signed short)(*((signed short*)&RXBUFF[4]));
-	lakb[0]._max_cell_temp=(signed short)(*((signed short*)&RXBUFF[6]));
+	lakb[0]._cell_temp_1=(signed char)(RXBUFF[6]);
+	lakb[0]._cell_temp_2=(signed char)(RXBUFF[7]);
 	
+	//lakb[0]._cell_temp_1=37;
+	//lakb[0]._cell_temp_2=38;
 	plazma_ztt[0]++;
 
 	}
@@ -1729,11 +1732,10 @@ if(RXBUFF[1]==PUT_ZTT_TM2)
 	lakb[0]._communication2lvlErrorStat=(signed short)(*((signed char*)&RXBUFF[0]));
 	lakb[0]._s_o_c=(signed short)(*((signed short*)&RXBUFF[2]));
 	lakb[0]._s_o_h=(signed short)(*((signed short*)&RXBUFF[4]));
-
-	//RXBUFF[7]=0x68;
-	//RXBUFF[6]=0x60;
-
-	lakb[0]._plazma_ss=(signed short)(*((signed short*)&RXBUFF[6]));
+	lakb[0]._cell_temp_3=(signed char)(RXBUFF[6]);
+	lakb[0]._cell_temp_4=(signed char)(RXBUFF[7]);
+	//lakb[0]._cell_temp_3=39;
+	//lakb[0]._cell_temp_4=40;
 	
 	plazma_ztt[1]++;
 	}		
@@ -1743,7 +1745,8 @@ if(RXBUFF[1]==PUT_ZTT_TM3)
 	lakb[1]._communication2lvlErrorCnt=(signed short)(*((signed char*)&RXBUFF[0]));
 	lakb[1]._ch_curr=(signed short)(*((signed short*)&RXBUFF[2]));
 	lakb[1]._tot_bat_volt=(signed short)(*((signed short*)&RXBUFF[4]));
-	lakb[1]._max_cell_temp=(signed short)(*((signed short*)&RXBUFF[6]));
+	lakb[1]._cell_temp_1=(signed char)(RXBUFF[6]);
+	lakb[1]._cell_temp_2=(signed char)(RXBUFF[7]);
 	
 	}
 
@@ -1752,7 +1755,8 @@ if(RXBUFF[1]==PUT_ZTT_TM4)
 	lakb[1]._communication2lvlErrorStat=(signed short)(*((signed char*)&RXBUFF[0]));
 	lakb[1]._s_o_c=(signed short)(*((signed short*)&RXBUFF[2]));
 	lakb[1]._s_o_h=(signed short)(*((signed short*)&RXBUFF[4]));
-	lakb[1]._plazma_ss=(signed short)(*((signed short*)&RXBUFF[6]));
+	lakb[1]._cell_temp_3=(signed char)(RXBUFF[6]);
+	lakb[1]._cell_temp_4=(signed char)(RXBUFF[7]);
 	
 	}	
 
@@ -1761,7 +1765,8 @@ if(RXBUFF[1]==PUT_ZTT_TM5)
 	lakb[2]._communication2lvlErrorCnt=(signed short)(*((signed char*)&RXBUFF[0]));
 	lakb[2]._ch_curr=(signed short)(*((signed short*)&RXBUFF[2]));
 	lakb[2]._tot_bat_volt=(signed short)(*((signed short*)&RXBUFF[4]));
-	lakb[2]._max_cell_temp=(signed short)(*((signed short*)&RXBUFF[6]));
+	lakb[2]._cell_temp_1=(signed char)(RXBUFF[6]);
+	lakb[2]._cell_temp_2=(signed char)(RXBUFF[7]);
 	
 	}
 
@@ -1770,8 +1775,20 @@ if(RXBUFF[1]==PUT_ZTT_TM6)
 	lakb[2]._communication2lvlErrorStat=(signed short)(*((signed char*)&RXBUFF[0]));
 	lakb[2]._s_o_c=(signed short)(*((signed short*)&RXBUFF[2]));
 	lakb[2]._s_o_h=(signed short)(*((signed short*)&RXBUFF[4]));
-	lakb[2]._plazma_ss=(signed short)(*((signed short*)&RXBUFF[6]));
-	
+	lakb[2]._cell_temp_3=(signed char)(RXBUFF[6]);
+	lakb[2]._cell_temp_3=(signed char)(RXBUFF[7]);	
+	}	
+
+if(RXBUFF[1]==PUT_ZTT_TM7)
+    {
+	lakb[0]._cell_temp_ambient=(signed char)(RXBUFF[0]);
+	lakb[0]._cell_temp_power=(signed char)(RXBUFF[2]);
+	lakb[1]._cell_temp_ambient=(signed char)(RXBUFF[3]);
+	lakb[1]._cell_temp_power=(signed char)(RXBUFF[4]);
+	lakb[2]._cell_temp_ambient=(signed char)(RXBUFF[5]);
+	lakb[2]._cell_temp_power=(signed char)(RXBUFF[6]);	
+	//lakb[0]._cell_temp_ambient=41;
+	//lakb[0]._cell_temp_power=42;
 	}	
 	
 CAN_IN_AN1_end:

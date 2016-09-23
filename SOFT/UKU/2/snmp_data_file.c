@@ -208,24 +208,29 @@ signed short snmp_dt_epu;
 
 
 //Литиевые батареи
-short snmp_lakb_number[7];				//Номер ЛАКБ
-short snmp_lakb_voltage[7];				//Напряжение ЛАКБ
-short snmp_lakb_max_cell_voltage[7];		//Максимальное напряжение ячейки ЛАКБ
-short snmp_lakb_min_cell_voltage[7];		//Минимальное напряжение ячейки ЛАКБ
-short snmp_lakb_max_cell_temperature[7];	//Максимальная температура ячейки ЛАКБ
-short snmp_lakb_min_cell_temperature[7];	//Минимальная температура ячейки ЛАКБ
-short snmp_lakb_ch_curr[7];				//Ток заряда ЛАКБ
-short snmp_lakb_dsch_curr[7];				//Ток разряда ЛАКБ
-short snmp_lakb_rat_cap[7];				//Номинальная емкость ЛАКБ
-short snmp_lakb_soh[7];					//Остаточная емкость ЛАКБ
-short snmp_lakb_soc[7];					//Заряд ЛАКБ
-short snmp_lakb_cclv[7];  				//Максимальный ток заряда ЛАКБ
-short snmp_lakb_rbt[7];					//Оцениваемое время работы ЛАКБ
-short snmp_lakb_flags1[7];				//Первый флаг состояния ЛАКБ
-short snmp_lakb_flags2[7];				//Второй флаг состояния ЛАКБ
-char snmp_lakb_damp1[7][150];				//Первая строка передаваемого дампа
-char snmp_lakb_damp2[100];				//Первая строка передаваемого дампа
-
+short snmp_lakb_number[7];						//Номер ЛАКБ
+short snmp_lakb_voltage[7];						//Напряжение ЛАКБ
+short snmp_lakb_max_cell_voltage[7];			//Максимальное напряжение ячейки ЛАКБ
+short snmp_lakb_min_cell_voltage[7];			//Минимальное напряжение ячейки ЛАКБ
+short snmp_lakb_max_cell_temperature[7];		//Максимальная температура ячейки ЛАКБ
+short snmp_lakb_min_cell_temperature[7];		//Минимальная температура ячейки ЛАКБ
+short snmp_lakb_ch_curr[7];						//Ток заряда ЛАКБ
+short snmp_lakb_dsch_curr[7];					//Ток разряда ЛАКБ
+short snmp_lakb_rat_cap[7];						//Номинальная емкость ЛАКБ
+short snmp_lakb_soh[7];							//Остаточная емкость ЛАКБ
+short snmp_lakb_soc[7];							//Заряд ЛАКБ
+short snmp_lakb_cclv[7];  						//Максимальный ток заряда ЛАКБ
+short snmp_lakb_rbt[7];							//Оцениваемое время работы ЛАКБ
+short snmp_lakb_flags1[7];						//Первый флаг состояния ЛАКБ
+short snmp_lakb_flags2[7];						//Второй флаг состояния ЛАКБ
+char snmp_lakb_damp1[3][150];					//Первая строка передаваемого дампа
+char snmp_lakb_damp2[100];						//Первая строка передаваемого дампа
+signed char	snmp_lakb_cell_temperature_1[3];		//Температура 1-й ячейки ЛАКБ(ZTT)
+signed char	snmp_lakb_cell_temperature_2[3];		//Температура 2-й ячейки ЛАКБ(ZTT)
+signed char	snmp_lakb_cell_temperature_3[3];		//Температура 3-й ячейки ЛАКБ(ZTT)
+signed char	snmp_lakb_cell_temperature_4[3];		//Температура 4-й ячейки ЛАКБ(ZTT)
+signed char	snmp_lakb_cell_temperature_ambient[3];	//Температура окружающая ЛАКБ(ZTT)
+signed char	snmp_lakb_cell_temperature_power[3];	//Температура силовой части ЛАКБ(ZTT)
 
 
 
@@ -670,7 +675,7 @@ snmp_lakb_number[4]=5;								//Номер ЛАКБ
 snmp_lakb_number[5]=6;								//Номер ЛАКБ
 snmp_lakb_number[6]=7;								//Номер ЛАКБ
 
-for (i=0;i<7;i++)
+for (i=0;i<3;i++)
 	{
 	snmp_lakb_voltage[i]=lakb[i]._tot_bat_volt;				//Напряжение ЛАКБ
 	snmp_lakb_max_cell_voltage[i]=lakb[i]._max_cell_volt;		//Максимальное напряжение ячейки ЛАКБ
@@ -697,6 +702,13 @@ for (i=0;i<7;i++)
 	//snmp_lakb_flags1[1]=lakb[1]._flags1;					//Первый флаг состояния ЛАКБ
 	snmp_lakb_flags2[i]=lakb[i]._flags2;					//Второй флаг состояния ЛАКБ
 	//snmp_lakb_flags2[1]=lakb[1]._flags2;					//Второй флаг состояния ЛАКБ
+
+	snmp_lakb_cell_temperature_1[i]= lakb[i]._cell_temp_1;
+	snmp_lakb_cell_temperature_2[i]= lakb[i]._cell_temp_2;
+	snmp_lakb_cell_temperature_3[i]= lakb[i]._cell_temp_3;
+	snmp_lakb_cell_temperature_4[i]= lakb[i]._cell_temp_4;
+	snmp_lakb_cell_temperature_ambient[i]=lakb[i]._cell_temp_ambient;
+	snmp_lakb_cell_temperature_power[i]=lakb[i]._cell_temp_power;
 	}
 
 for (i=0;i<7;i++)

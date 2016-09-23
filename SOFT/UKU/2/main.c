@@ -4013,10 +4013,15 @@ else if (ind==iBat_universe)
 		     ptrs[3]=  " Iğàçğ=      #À     ";
 		     }	
 		ptrs[2]=       " Uáàò =    $Â       ";
-		ptrs[4]=		" táàò =    ?°C      ";
-		ptrs[5]=		" SOC  =    wA*÷     ";
-		ptrs[6]=		" SOH  =    >A*÷     ";
-		ptrs[7]=sm_exit;
+		ptrs[4]=		" t1   =    ?°C      ";
+		ptrs[5]=		" t2   =    (°C      ";
+		ptrs[6]=		" t3   =    )°C      ";
+		ptrs[7]=		" t4   =    +°C      ";
+		ptrs[8]=		" tîêğ.=    [°C      ";
+		ptrs[9]=		" tñèë.=    ]°C      ";
+		ptrs[10]=		" SOC  =    wA*÷     ";
+		ptrs[11]=		" SOH  =    >A*÷     ";
+		ptrs[12]=sm_exit;
 
 		if(lakb[sub_ind1]._communicationFullErrorStat==1)
 			{
@@ -4052,9 +4057,14 @@ else if (ind==iBat_universe)
 
 		    int2lcd(lakb[sub_ind1]._tot_bat_volt,'$',1);
 			int2lcd_mmm(abs(lakb[sub_ind1]._ch_curr),'#',2);
-		    int2lcd_mmm(lakb[sub_ind1]._max_cell_temp,'?',1);
+		    int2lcd_mmm(lakb[sub_ind1]._cell_temp_1,'?',0);
+			int2lcd_mmm(lakb[sub_ind1]._cell_temp_2,'(',0);
+			int2lcd_mmm(lakb[sub_ind1]._cell_temp_3,')',0);
+			int2lcd_mmm(lakb[sub_ind1]._cell_temp_4,'+',0);
+			int2lcd_mmm(lakb[sub_ind1]._cell_temp_ambient,'[',0);
+			int2lcd_mmm(lakb[sub_ind1]._cell_temp_power,']',0);
 		    int2lcd(lakb[sub_ind1]._s_o_c,'w',1);
-			if(sub_ind==8)lcd_buffer[60]=1;
+			if(sub_ind==10)lcd_buffer[60]=1;
 			int2lcd(lakb[sub_ind1]._s_o_h,'>',1);
 			
 			}
@@ -13561,14 +13571,14 @@ else if (ind==iBat_universe)
 		if(but==butD)
 			{
 			sub_ind++;
-			gran_char(&sub_ind,0,5);
+			gran_char(&sub_ind,0,10);
 			}
 		else if(but==butU)
 			{
 			sub_ind--;
-			gran_char(&sub_ind,0,5);
+			gran_char(&sub_ind,0,10);
 			}
-		else if((but==butL)||((sub_ind==5)&&(but==butE)))
+		else if((but==butL)||((sub_ind==10)&&(but==butE)))
 		     {
 		     tree_down(0,0);
 		     ret(0);

@@ -186,19 +186,27 @@
 #define DISPLAY_LAKB_MIN_CELL_TEMPERATURE	1,5
 #define DISPLAY_LAKB_VOLTAGE				1,6
 #define DISPLAY_LAKB_CH_CURR				1,7
-#define DISPLAY_LAKB_DSCH_CURR			1,8
+#define DISPLAY_LAKB_DSCH_CURR				1,8
 #define DISPLAY_LAKB_RAT_CAP				1,9
 #define DISPLAY_LAKB_SOH					1,10
 #define DISPLAY_LAKB_SOC					1,11	
-#define DISPLAY_LAKB_CCLV				1,12
+#define DISPLAY_LAKB_CCLV					1,12
 #define DISPLAY_LAKB_RBT					1,13
-#define DISPLAY_LAKB_FLAGS1				1,14
-#define DISPLAY_LAKB_FLAGS2				1,15
-#define DISPLAY_LAKB_DAMP1				1,16
-#define DISPLAY_LAKB_DAMP2				1,17
-#define DISPLAY_LAKB_DAMP3				1,18
-#define DISPLAY_LAKB_DAMP4				1,19
-#define DISPLAY_LAKB_DAMP5				1,20
+#define DISPLAY_LAKB_FLAGS1					1,14
+#define DISPLAY_LAKB_FLAGS2					1,15
+#define DISPLAY_LAKB_CELL_TEMPERATURE_1		1,16
+#define DISPLAY_LAKB_CELL_TEMPERATURE_2		1,17
+#define DISPLAY_LAKB_CELL_TEMPERATURE_3		1,18
+#define DISPLAY_LAKB_CELL_TEMPERATURE_4		1,19
+#define DISPLAY_LAKB_CELL_TEMPERATURE_AMBIENT	1,20
+#define DISPLAY_LAKB_CELL_TEMPERATURE_POWER		1,21
+
+#define DISPLAY_LAKB_DAMP1				1,22
+#define DISPLAY_LAKB_DAMP2				1,23
+#define DISPLAY_LAKB_DAMP3				1,24
+#define DISPLAY_LAKB_DAMP4				1,25
+#define DISPLAY_LAKB_DAMP5				1,26
+
 
 
 
@@ -1136,6 +1144,12 @@ typedef struct
 	signed short	_s_o_c_abs;		//остаточный заряд в абсолютном выражении
 	signed short	_plazma_ss;
 	signed short	_zar_percent;	//заряд батареи в процетах
+	signed char		_cell_temp_1;	//температура 1-го датчика батареи(ZTT)
+	signed char		_cell_temp_2;	//температура 2-го датчика батареи(ZTT)
+	signed char		_cell_temp_3;	//температура 3-го датчика батареи(ZTT)
+	signed char		_cell_temp_4;	//температура 4-го датчика батареи(ZTT)
+	signed char		_cell_temp_ambient;	//температура датчика окружающей среды батареи(ZTT)
+	signed char		_cell_temp_power;	//температура датчика силовой части батареи(ZTT)
 	} LAKB_STAT; 
 extern LAKB_STAT lakb[3];
 extern char lakb_damp[1][42];

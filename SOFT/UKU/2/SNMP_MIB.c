@@ -518,6 +518,49 @@ char* aaa_="abc";
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MIN_CELL_TEMPERATURE, 5},  	MIB_INT(snmp_lakb_min_cell_temperature[4]),  	NULL},	//Минимальная температура ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MIN_CELL_TEMPERATURE, 6},  	MIB_INT(snmp_lakb_min_cell_temperature[5]),  	NULL},	//Минимальная температура ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MIN_CELL_TEMPERATURE, 7},  	MIB_INT(snmp_lakb_min_cell_temperature[6]),  	NULL},	//Минимальная температура ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_1, 1},  	MIB_INT(snmp_lakb_cell_temperature_1[0]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_1, 2},  	MIB_INT(snmp_lakb_cell_temperature_1[1]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_1, 3},  	MIB_INT(snmp_lakb_cell_temperature_1[2]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_1, 4},  	MIB_INT(snmp_lakb_cell_temperature_1[3]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_1, 5},  	MIB_INT(snmp_lakb_cell_temperature_1[4]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_1, 6},  	MIB_INT(snmp_lakb_cell_temperature_1[5]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_1, 7},  	MIB_INT(snmp_lakb_cell_temperature_1[6]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_2, 1},  	MIB_INT(snmp_lakb_cell_temperature_2[0]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_2, 2},  	MIB_INT(snmp_lakb_cell_temperature_2[1]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_2, 3},  	MIB_INT(snmp_lakb_cell_temperature_2[2]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_2, 4},  	MIB_INT(snmp_lakb_cell_temperature_2[3]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_2, 5},  	MIB_INT(snmp_lakb_cell_temperature_2[4]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_2, 6},  	MIB_INT(snmp_lakb_cell_temperature_2[5]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_2, 7},  	MIB_INT(snmp_lakb_cell_temperature_2[6]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_3, 1},  	MIB_INT(snmp_lakb_cell_temperature_3[0]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_3, 2},  	MIB_INT(snmp_lakb_cell_temperature_3[1]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_3, 3},  	MIB_INT(snmp_lakb_cell_temperature_3[2]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_3, 4},  	MIB_INT(snmp_lakb_cell_temperature_3[3]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_3, 5},  	MIB_INT(snmp_lakb_cell_temperature_3[4]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_3, 6},  	MIB_INT(snmp_lakb_cell_temperature_3[5]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_3, 7},  	MIB_INT(snmp_lakb_cell_temperature_3[6]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_4, 1},  	MIB_INT(snmp_lakb_cell_temperature_4[0]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_4, 2},  	MIB_INT(snmp_lakb_cell_temperature_4[1]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_4, 3},  	MIB_INT(snmp_lakb_cell_temperature_4[2]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_4, 4},  	MIB_INT(snmp_lakb_cell_temperature_4[3]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_4, 5},  	MIB_INT(snmp_lakb_cell_temperature_4[4]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_4, 6},  	MIB_INT(snmp_lakb_cell_temperature_4[5]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_4, 7},  	MIB_INT(snmp_lakb_cell_temperature_4[6]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_AMBIENT, 1},  	MIB_INT(snmp_lakb_cell_temperature_ambient[0]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_AMBIENT, 2},  	MIB_INT(snmp_lakb_cell_temperature_ambient[1]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_AMBIENT, 3},  	MIB_INT(snmp_lakb_cell_temperature_ambient[2]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_AMBIENT, 4},  	MIB_INT(snmp_lakb_cell_temperature_ambient[3]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_AMBIENT, 5},  	MIB_INT(snmp_lakb_cell_temperature_ambient[4]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_AMBIENT, 6},  	MIB_INT(snmp_lakb_cell_temperature_ambient[5]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_AMBIENT, 7},  	MIB_INT(snmp_lakb_cell_temperature_ambient[6]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_POWER, 1},  	MIB_INT(snmp_lakb_cell_temperature_power[0]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_POWER, 2},  	MIB_INT(snmp_lakb_cell_temperature_power[1]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_POWER, 3},  	MIB_INT(snmp_lakb_cell_temperature_power[2]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_POWER, 4},  	MIB_INT(snmp_lakb_cell_temperature_power[3]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_POWER, 5},  	MIB_INT(snmp_lakb_cell_temperature_power[4]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_POWER, 6},  	MIB_INT(snmp_lakb_cell_temperature_power[5]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_POWER, 7},  	MIB_INT(snmp_lakb_cell_temperature_power[6]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_VOLTAGE, 1},  				MIB_INT(snmp_lakb_voltage[0]),  	NULL},	//Напряжение ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_VOLTAGE, 2},  				MIB_INT(snmp_lakb_voltage[1]),  	NULL},	//Напряжение ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_VOLTAGE, 3},  				MIB_INT(snmp_lakb_voltage[2]),  	NULL},	//Напряжение ЛАКБ

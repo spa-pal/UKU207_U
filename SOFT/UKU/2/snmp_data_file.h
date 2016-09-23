@@ -179,8 +179,15 @@ extern short snmp_lakb_cclv[7];  				//Максимальный ток заряда ЛАКБ
 extern short snmp_lakb_rbt[7];				//Оцениваемое время работы ЛАКБ
 extern short snmp_lakb_flags1[7];				//Первый флаг состояния ЛАКБ
 extern short snmp_lakb_flags2[7];				//Второй флаг состояния ЛАКБ
-extern char snmp_lakb_damp1[7][150];				//Первая строка передаваемого дампа
+extern char snmp_lakb_damp1[3][150];				//Первая строка передаваемого дампа
 extern char snmp_lakb_damp2[100];				//Первая строка передаваемого дампа
+extern signed char	snmp_lakb_cell_temperature_1[3];		//Температура 1-й ячейки ЛАКБ(ZTT)
+extern signed char	snmp_lakb_cell_temperature_2[3];		//Температура 2-й ячейки ЛАКБ(ZTT)
+extern signed char	snmp_lakb_cell_temperature_3[3];		//Температура 3-й ячейки ЛАКБ(ZTT)
+extern signed char	snmp_lakb_cell_temperature_4[3];		//Температура 4-й ячейки ЛАКБ(ZTT)
+extern signed char	snmp_lakb_cell_temperature_ambient[3];	//Температура окружающая ЛАКБ(ZTT)
+extern signed char	snmp_lakb_cell_temperature_power[3];	//Температура силовой части ЛАКБ(ZTT)
+
 
   
 //-----------------------------------------------
