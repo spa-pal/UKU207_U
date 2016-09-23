@@ -125,6 +125,7 @@ unsigned char unh_cnt0,unh_cnt1,b1Hz_unh;
 unsigned char	ch_cnt0,b1Hz_ch,i,iiii;
 unsigned char	ch_cnt1,b1_30Hz_ch;
 unsigned short IZMAX_;
+unsigned short Ubpsmax;
 
 
 //***********************************************
@@ -3651,6 +3652,7 @@ else
 void bps_hndl(void)
 {
 char ptr__,i;
+unsigned short tempUS;
 
 if(sh_cnt0<10)
 	{
@@ -3856,11 +3858,16 @@ b1Hz_sh=0;
 
 
 num_of_wrks_bps=0;
+tempUS=0;
 for(i=0;i<NUMIST;i++)
 	{
-	if(bps[i]._state==bsWRK)num_of_wrks_bps++;
+	if(bps[i]._state==bsWRK)
+		{
+		num_of_wrks_bps++;
+		if(bps[i]._Uii>tempUS)tempUS=bps[i]._Uii;
+		}
 	}
-
+Ubpsmax=tempUS;
 
 }
 
@@ -5839,8 +5846,12 @@ else if((b1Hz_ch)&&(!bIBAT_SMKLBR))
 			}  		
 							
 		else if((Ibmax<((IZMAX_*4)/5)))
-			{				
-			if(load_U<u_necc)
+			{
+			if(Ubpsmax<(u_necc-DU_LI_BAT))
+				{
+								   	cntrl_stat_new+=10;
+				}				
+			else if(load_U<u_necc)
 				{
 				if(b1_30Hz_ch)
 					{

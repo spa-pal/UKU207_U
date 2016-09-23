@@ -9468,6 +9468,7 @@ if(ind==iDeb)
 		int2lcdyx(lakb[0]._communication2lvlErrorStat,2,19,0);
 	   	int2lcdyx(lakb[1]._communication2lvlErrorStat,3,19,0);
 
+		int2lcdyx(Ubpsmax,1,3,0);
 		int2lcdyx(Ibmax,1,7,0);
 		int2lcdyx(cntrl_stat,1,11,0);
 		int2lcdyx(u_necc,1,15,0);
