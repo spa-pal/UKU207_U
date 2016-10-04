@@ -9598,14 +9598,14 @@ if(ind==iDeb)
 		int2lcdyx(t_box_warm,1,7,0);
 		int2lcdyx(t_box_vent,2,7,0);
 
-		int2lcdyx(vent_stat_k,1,18,0);
-		int2lcdyx(warm_stat_k,2,18,0);		
+//		int2lcdyx(vent_stat_k,1,18,0);
+//		int2lcdyx(warm_stat_k,2,18,0);		
 
-		int2lcdyx(TELECORE2015_KLIMAT_WARM_ON_temp,3,3,0);
-		int2lcdyx(TELECORE2015_KLIMAT_WARM_ON,3,7,0);
-		int2lcdyx(TELECORE2015_KLIMAT_WARM_OFF,3,11,0);
-		int2lcdyx(TELECORE2015_KLIMAT_VENT_ON,3,15,0);
-		int2lcdyx(TELECORE2015_KLIMAT_VENT_OFF,3,19,0);
+//		int2lcdyx(TELECORE2015_KLIMAT_WARM_ON_temp,3,3,0);
+//		int2lcdyx(TELECORE2015_KLIMAT_WARM_ON,3,7,0);
+//		int2lcdyx(TELECORE2015_KLIMAT_WARM_OFF,3,11,0);
+//		int2lcdyx(TELECORE2015_KLIMAT_VENT_ON,3,15,0);
+//		int2lcdyx(TELECORE2015_KLIMAT_VENT_OFF,3,19,0);
 		
 		
 		
@@ -29013,11 +29013,12 @@ while (1)
 #endif
 #ifdef TELECORE
 		cntrl_hndl_telecore();
+		lakb_hndl();
 #endif
 		ret_hndl();
 		ext_drv();
 		avt_hndl();
-		lakb_hndl();
+		
 		}
 
 	if(b5Hz)

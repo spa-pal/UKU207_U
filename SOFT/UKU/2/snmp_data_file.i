@@ -181,8 +181,15 @@ extern short snmp_lakb_cclv[7];
 extern short snmp_lakb_rbt[7];				
 extern short snmp_lakb_flags1[7];				
 extern short snmp_lakb_flags2[7];				
-extern char snmp_lakb_damp1[7][150];				
+extern char snmp_lakb_damp1[3][150];				
 extern char snmp_lakb_damp2[100];				
+extern signed char	snmp_lakb_cell_temperature_1[3];		
+extern signed char	snmp_lakb_cell_temperature_2[3];		
+extern signed char	snmp_lakb_cell_temperature_3[3];		
+extern signed char	snmp_lakb_cell_temperature_4[3];		
+extern signed char	snmp_lakb_cell_temperature_ambient[3];	
+extern signed char	snmp_lakb_cell_temperature_power[3];	
+
 
   
 
@@ -873,7 +880,7 @@ extern BOOL snmp_set_community (const char *community);
 
 #line 180 "main.h"
 
-#line 202 "main.h"
+#line 203 "main.h"
 
 
 
@@ -900,7 +907,6 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 375 "main.h"
 
 
 
@@ -908,6 +914,7 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
+#line 383 "main.h"
 
 
 
@@ -941,7 +948,14 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 443 "main.h"
+
+
+
+
+
+
+
+#line 451 "main.h"
 
 
 
@@ -960,13 +974,11 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 474 "main.h"
+#line 482 "main.h"
 
-#line 486 "main.h"
+#line 494 "main.h"
 
-#line 502 "main.h"
-
-
+#line 510 "main.h"
 
 
 
@@ -986,9 +998,11 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 536 "main.h"
 
-#line 550 "main.h"
+
+#line 544 "main.h"
+
+#line 558 "main.h"
 
 
 
@@ -1001,25 +1015,25 @@ extern BOOL snmp_set_community (const char *community);
  
 
 
-#line 571 "main.h"
+#line 579 "main.h"
 
-#line 581 "main.h"
+#line 589 "main.h"
 
-#line 590 "main.h"
+#line 598 "main.h"
 
-#line 599 "main.h"
+#line 607 "main.h"
 
-#line 611 "main.h"
+#line 619 "main.h"
 
-#line 621 "main.h"
-
-#line 630 "main.h"
+#line 629 "main.h"
 
 #line 638 "main.h"
 
-#line 647 "main.h"
+#line 646 "main.h"
 
-#line 659 "main.h"
+#line 655 "main.h"
+
+#line 667 "main.h"
 
 
 
@@ -1042,7 +1056,7 @@ extern char cnt_of_slave;
 typedef enum {
 
 	iMn_220_IPS_TERMOKOMPENSAT,
-#line 700 "main.h"
+#line 708 "main.h"
 	iMn,iMn_3U,iMn_RSTKM,
 
 
@@ -1090,7 +1104,7 @@ typedef enum {
 	iBatLogKe,iJ_bat_ke,iBatLogVz,iJ_bat_vz,iBatLogWrk,
 	iExtern,iExtern_3U,iExtern_GLONASS,iExtern_KONTUR,iExtern_6U,iExtern_220,
 	iK_power_net,
-	iExt_set,iExt_set_3U,iExt_set_GLONASS,
+	iExt_set,iExt_set_3U,iExt_set_GLONASS,iExt_set_TELECORE2015,
 	iExt_dt,
 	iExt_sk,iExt_sk_3U,iExt_sk_GLONASS,
 	iExt_ddv,iExt_ddi,iExt_dud,iExt_dp,iSM,iLog,iLog_,iBatLog,iKlimat,iKlimat_kontur,iKlimat_TELECORE2015,
@@ -1482,6 +1496,12 @@ typedef struct
 	signed short	_s_o_c_abs;		
 	signed short	_plazma_ss;
 	signed short	_zar_percent;	
+	signed char		_cell_temp_1;	
+	signed char		_cell_temp_2;	
+	signed char		_cell_temp_3;	
+	signed char		_cell_temp_4;	
+	signed char		_cell_temp_ambient;	
+	signed char		_cell_temp_power;	
 	} LAKB_STAT; 
 extern LAKB_STAT lakb[3];
 extern char lakb_damp[1][42];
@@ -1727,9 +1747,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1392 "main.h"
+#line 1406 "main.h"
 
-#line 1403 "main.h"
+#line 1417 "main.h"
 
 
 
@@ -2335,6 +2355,7 @@ extern unsigned char unh_cnt0,unh_cnt1,b1Hz_unh;
 extern unsigned char	ch_cnt0,b1Hz_ch,i,iiii;
 extern unsigned char	ch_cnt1,b1_30Hz_ch;
 extern unsigned short IZMAX_;
+extern unsigned short Ubpsmax;
 
 extern short plazma_sk;
 extern char	plazma_inv[4];
@@ -5088,24 +5109,29 @@ signed short snmp_dt_epu;
 
 
 
-short snmp_lakb_number[7];				
-short snmp_lakb_voltage[7];				
-short snmp_lakb_max_cell_voltage[7];		
-short snmp_lakb_min_cell_voltage[7];		
-short snmp_lakb_max_cell_temperature[7];	
-short snmp_lakb_min_cell_temperature[7];	
-short snmp_lakb_ch_curr[7];				
-short snmp_lakb_dsch_curr[7];				
-short snmp_lakb_rat_cap[7];				
-short snmp_lakb_soh[7];					
-short snmp_lakb_soc[7];					
-short snmp_lakb_cclv[7];  				
-short snmp_lakb_rbt[7];					
-short snmp_lakb_flags1[7];				
-short snmp_lakb_flags2[7];				
-char snmp_lakb_damp1[7][150];				
-char snmp_lakb_damp2[100];				
-
+short snmp_lakb_number[7];						
+short snmp_lakb_voltage[7];						
+short snmp_lakb_max_cell_voltage[7];			
+short snmp_lakb_min_cell_voltage[7];			
+short snmp_lakb_max_cell_temperature[7];		
+short snmp_lakb_min_cell_temperature[7];		
+short snmp_lakb_ch_curr[7];						
+short snmp_lakb_dsch_curr[7];					
+short snmp_lakb_rat_cap[7];						
+short snmp_lakb_soh[7];							
+short snmp_lakb_soc[7];							
+short snmp_lakb_cclv[7];  						
+short snmp_lakb_rbt[7];							
+short snmp_lakb_flags1[7];						
+short snmp_lakb_flags2[7];						
+char snmp_lakb_damp1[3][150];					
+char snmp_lakb_damp2[100];						
+signed char	snmp_lakb_cell_temperature_1[3];		
+signed char	snmp_lakb_cell_temperature_2[3];		
+signed char	snmp_lakb_cell_temperature_3[3];		
+signed char	snmp_lakb_cell_temperature_4[3];		
+signed char	snmp_lakb_cell_temperature_ambient[3];	
+signed char	snmp_lakb_cell_temperature_power[3];	
 
 
 
@@ -5550,7 +5576,7 @@ snmp_lakb_number[4]=5;
 snmp_lakb_number[5]=6;								
 snmp_lakb_number[6]=7;								
 
-for (i=0;i<7;i++)
+for (i=0;i<3;i++)
 	{
 	snmp_lakb_voltage[i]=lakb[i]._tot_bat_volt;				
 	snmp_lakb_max_cell_voltage[i]=lakb[i]._max_cell_volt;		
@@ -5577,6 +5603,13 @@ for (i=0;i<7;i++)
 	
 	snmp_lakb_flags2[i]=lakb[i]._flags2;					
 	
+
+	snmp_lakb_cell_temperature_1[i]= lakb[i]._cell_temp_1;
+	snmp_lakb_cell_temperature_2[i]= lakb[i]._cell_temp_2;
+	snmp_lakb_cell_temperature_3[i]= lakb[i]._cell_temp_3;
+	snmp_lakb_cell_temperature_4[i]= lakb[i]._cell_temp_4;
+	snmp_lakb_cell_temperature_ambient[i]=lakb[i]._cell_temp_ambient;
+	snmp_lakb_cell_temperature_power[i]=lakb[i]._cell_temp_power;
 	}
 
 for (i=0;i<7;i++)

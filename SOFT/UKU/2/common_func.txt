@@ -3409,7 +3409,7 @@
 001970  78c3              LDRB     r3,[r0,#3]  ; a_ind
 001972  7882              LDRB     r2,[r0,#2]  ; a_ind
 001974  7841              LDRB     r1,[r0,#1]  ; a_ind
-001976  209e              MOVS     r0,#0x9e
+001976  209f              MOVS     r0,#0x9f
 001978  f7fffffe          BL       tree_up
 ;;;1236   ret((char)(m_sec/100));
 00197c  2064              MOVS     r0,#0x64

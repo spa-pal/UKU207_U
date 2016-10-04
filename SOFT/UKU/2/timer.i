@@ -2563,7 +2563,7 @@ extern BOOL snmp_set_community (const char *community);
 
 #line 180 "main.h"
 
-#line 202 "main.h"
+#line 203 "main.h"
 
 
 
@@ -2590,7 +2590,6 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 375 "main.h"
 
 
 
@@ -2598,6 +2597,7 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
+#line 383 "main.h"
 
 
 
@@ -2631,7 +2631,14 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 443 "main.h"
+
+
+
+
+
+
+
+#line 451 "main.h"
 
 
 
@@ -2650,13 +2657,11 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 474 "main.h"
+#line 482 "main.h"
 
-#line 486 "main.h"
+#line 494 "main.h"
 
-#line 502 "main.h"
-
-
+#line 510 "main.h"
 
 
 
@@ -2676,9 +2681,11 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 536 "main.h"
 
-#line 550 "main.h"
+
+#line 544 "main.h"
+
+#line 558 "main.h"
 
 
 
@@ -2691,25 +2698,25 @@ extern BOOL snmp_set_community (const char *community);
  
 
 
-#line 571 "main.h"
+#line 579 "main.h"
 
-#line 581 "main.h"
+#line 589 "main.h"
 
-#line 590 "main.h"
+#line 598 "main.h"
 
-#line 599 "main.h"
+#line 607 "main.h"
 
-#line 611 "main.h"
+#line 619 "main.h"
 
-#line 621 "main.h"
-
-#line 630 "main.h"
+#line 629 "main.h"
 
 #line 638 "main.h"
 
-#line 647 "main.h"
+#line 646 "main.h"
 
-#line 659 "main.h"
+#line 655 "main.h"
+
+#line 667 "main.h"
 
 
 
@@ -2732,7 +2739,7 @@ extern char cnt_of_slave;
 typedef enum {
 
 	iMn_220_IPS_TERMOKOMPENSAT,
-#line 700 "main.h"
+#line 708 "main.h"
 	iMn,iMn_3U,iMn_RSTKM,
 
 
@@ -2780,7 +2787,7 @@ typedef enum {
 	iBatLogKe,iJ_bat_ke,iBatLogVz,iJ_bat_vz,iBatLogWrk,
 	iExtern,iExtern_3U,iExtern_GLONASS,iExtern_KONTUR,iExtern_6U,iExtern_220,
 	iK_power_net,
-	iExt_set,iExt_set_3U,iExt_set_GLONASS,
+	iExt_set,iExt_set_3U,iExt_set_GLONASS,iExt_set_TELECORE2015,
 	iExt_dt,
 	iExt_sk,iExt_sk_3U,iExt_sk_GLONASS,
 	iExt_ddv,iExt_ddi,iExt_dud,iExt_dp,iSM,iLog,iLog_,iBatLog,iKlimat,iKlimat_kontur,iKlimat_TELECORE2015,
@@ -3172,6 +3179,12 @@ typedef struct
 	signed short	_s_o_c_abs;		
 	signed short	_plazma_ss;
 	signed short	_zar_percent;	
+	signed char		_cell_temp_1;	
+	signed char		_cell_temp_2;	
+	signed char		_cell_temp_3;	
+	signed char		_cell_temp_4;	
+	signed char		_cell_temp_ambient;	
+	signed char		_cell_temp_power;	
 	} LAKB_STAT; 
 extern LAKB_STAT lakb[3];
 extern char lakb_damp[1][42];
@@ -3417,9 +3430,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1392 "main.h"
+#line 1406 "main.h"
 
-#line 1403 "main.h"
+#line 1417 "main.h"
 
 
 
@@ -3640,6 +3653,7 @@ extern unsigned char unh_cnt0,unh_cnt1,b1Hz_unh;
 extern unsigned char	ch_cnt0,b1Hz_ch,i,iiii;
 extern unsigned char	ch_cnt1,b1_30Hz_ch;
 extern unsigned short IZMAX_;
+extern unsigned short Ubpsmax;
 
 extern short plazma_sk;
 extern char	plazma_inv[4];

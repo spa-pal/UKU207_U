@@ -759,7 +759,7 @@ typedef enum {DISABLE = 0, ENABLE = !DISABLE} FunctionalState;
 
 #line 180 "main.h"
 
-#line 202 "main.h"
+#line 203 "main.h"
 
 
 
@@ -786,7 +786,6 @@ typedef enum {DISABLE = 0, ENABLE = !DISABLE} FunctionalState;
 
 
 
-#line 375 "main.h"
 
 
 
@@ -794,6 +793,7 @@ typedef enum {DISABLE = 0, ENABLE = !DISABLE} FunctionalState;
 
 
 
+#line 383 "main.h"
 
 
 
@@ -827,7 +827,14 @@ typedef enum {DISABLE = 0, ENABLE = !DISABLE} FunctionalState;
 
 
 
-#line 443 "main.h"
+
+
+
+
+
+
+
+#line 451 "main.h"
 
 
 
@@ -846,13 +853,11 @@ typedef enum {DISABLE = 0, ENABLE = !DISABLE} FunctionalState;
 
 
 
-#line 474 "main.h"
+#line 482 "main.h"
 
-#line 486 "main.h"
+#line 494 "main.h"
 
-#line 502 "main.h"
-
-
+#line 510 "main.h"
 
 
 
@@ -872,9 +877,11 @@ typedef enum {DISABLE = 0, ENABLE = !DISABLE} FunctionalState;
 
 
 
-#line 536 "main.h"
 
-#line 550 "main.h"
+
+#line 544 "main.h"
+
+#line 558 "main.h"
 
 
 
@@ -887,25 +894,25 @@ typedef enum {DISABLE = 0, ENABLE = !DISABLE} FunctionalState;
  
 
 
-#line 571 "main.h"
+#line 579 "main.h"
 
-#line 581 "main.h"
+#line 589 "main.h"
 
-#line 590 "main.h"
+#line 598 "main.h"
 
-#line 599 "main.h"
+#line 607 "main.h"
 
-#line 611 "main.h"
+#line 619 "main.h"
 
-#line 621 "main.h"
-
-#line 630 "main.h"
+#line 629 "main.h"
 
 #line 638 "main.h"
 
-#line 647 "main.h"
+#line 646 "main.h"
 
-#line 659 "main.h"
+#line 655 "main.h"
+
+#line 667 "main.h"
 
 
 
@@ -928,7 +935,7 @@ extern char cnt_of_slave;
 typedef enum {
 
 	iMn_220_IPS_TERMOKOMPENSAT,
-#line 700 "main.h"
+#line 708 "main.h"
 	iMn,iMn_3U,iMn_RSTKM,
 
 
@@ -976,7 +983,7 @@ typedef enum {
 	iBatLogKe,iJ_bat_ke,iBatLogVz,iJ_bat_vz,iBatLogWrk,
 	iExtern,iExtern_3U,iExtern_GLONASS,iExtern_KONTUR,iExtern_6U,iExtern_220,
 	iK_power_net,
-	iExt_set,iExt_set_3U,iExt_set_GLONASS,
+	iExt_set,iExt_set_3U,iExt_set_GLONASS,iExt_set_TELECORE2015,
 	iExt_dt,
 	iExt_sk,iExt_sk_3U,iExt_sk_GLONASS,
 	iExt_ddv,iExt_ddi,iExt_dud,iExt_dp,iSM,iLog,iLog_,iBatLog,iKlimat,iKlimat_kontur,iKlimat_TELECORE2015,
@@ -1368,6 +1375,12 @@ typedef struct
 	signed short	_s_o_c_abs;		
 	signed short	_plazma_ss;
 	signed short	_zar_percent;	
+	signed char		_cell_temp_1;	
+	signed char		_cell_temp_2;	
+	signed char		_cell_temp_3;	
+	signed char		_cell_temp_4;	
+	signed char		_cell_temp_ambient;	
+	signed char		_cell_temp_power;	
 	} LAKB_STAT; 
 extern LAKB_STAT lakb[3];
 extern char lakb_damp[1][42];
@@ -1613,9 +1626,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1392 "main.h"
+#line 1406 "main.h"
 
-#line 1403 "main.h"
+#line 1417 "main.h"
 
 
 
@@ -2496,6 +2509,7 @@ extern unsigned char unh_cnt0,unh_cnt1,b1Hz_unh;
 extern unsigned char	ch_cnt0,b1Hz_ch,i,iiii;
 extern unsigned char	ch_cnt1,b1_30Hz_ch;
 extern unsigned short IZMAX_;
+extern unsigned short Ubpsmax;
 
 extern short plazma_sk;
 extern char	plazma_inv[4];
@@ -2948,8 +2962,15 @@ extern short snmp_lakb_cclv[7];
 extern short snmp_lakb_rbt[7];				
 extern short snmp_lakb_flags1[7];				
 extern short snmp_lakb_flags2[7];				
-extern char snmp_lakb_damp1[7][150];				
+extern char snmp_lakb_damp1[3][150];				
 extern char snmp_lakb_damp2[100];				
+extern signed char	snmp_lakb_cell_temperature_1[3];		
+extern signed char	snmp_lakb_cell_temperature_2[3];		
+extern signed char	snmp_lakb_cell_temperature_3[3];		
+extern signed char	snmp_lakb_cell_temperature_4[3];		
+extern signed char	snmp_lakb_cell_temperature_ambient[3];	
+extern signed char	snmp_lakb_cell_temperature_power[3];	
+
 
   
 
@@ -8730,7 +8751,7 @@ else if(a_ind . i==iMn_TELECORE2015)
     ptrs[4+NUMIST+NUMBAT_TELECORE]= 				" Сеть               "; 
     ptrs[5+NUMIST+NUMBAT_TELECORE]= 				" Нагрузка           "; 
     ptrs[6+NUMIST+NUMBAT_TELECORE]= 				" Внешние датчики    "; 
-	ptrs[6+NUMIST+NUMBAT_TELECORE]= 				" Спецфункции    	 ";
+
     ptrs[7+NUMIST+NUMBAT_TELECORE]= 				" Установки          "; 
     ptrs[8+NUMIST+NUMBAT_TELECORE]= 				" Журнал событий     "; 
     ptrs[9+NUMIST+NUMBAT_TELECORE]= 				" Выход              "; 
@@ -8781,7 +8802,7 @@ else if(a_ind . i==iMn_TELECORE2015)
 	     }	
 		
 	cnt_ind_bat++;
-	if(cnt_ind_bat>=(NUMBAT*20)) cnt_ind_bat=0;
+	if(cnt_ind_bat>=(NUMBAT_TELECORE*40)) cnt_ind_bat=0;
 	
 
 
@@ -8790,8 +8811,8 @@ else if(a_ind . i==iMn_TELECORE2015)
 	if(NUMBAT_TELECORE==0)sub_bgnd(" Работа без батарей ",'z',-2);
 	else
 		{
-		int2lcd((cnt_ind_bat/20)+1 ,'z',0);
-		int2lcd((cnt_ind_bat/20)+1 ,'z',0);
+		int2lcd((cnt_ind_bat/40)+1 ,'z',0);
+		int2lcd((cnt_ind_bat/40)+1 ,'z',0);
 		if((NUMBAT_TELECORE==1) )
 			{
 			if(lakb[0]._communicationFullErrorStat)
@@ -8807,15 +8828,15 @@ else if(a_ind . i==iMn_TELECORE2015)
 			}
 		else
 			{
-			if(lakb[cnt_ind_bat/20]._communicationFullErrorStat)
+			if(lakb[cnt_ind_bat/40]._communicationFullErrorStat)
 				{
 				sub_bgnd("Err",']',-1);
 				sub_bgnd("Err",'@',-1);
 				}
 			else
 				{
-				int2lcd(lakb[cnt_ind_bat/20]._tot_bat_volt,']',1);
-				int2lcd_mmm(lakb[cnt_ind_bat/20]._ch_curr,'@',2);
+				int2lcd(lakb[cnt_ind_bat/40]._tot_bat_volt,']',1);
+				int2lcd_mmm(lakb[cnt_ind_bat/40]._ch_curr,'@',2);
 			 	}
 			}		
 		}
@@ -9295,10 +9316,15 @@ else if (a_ind . i==iBat_universe)
 		     ptrs[3]=  " Iразр=      #А     ";
 		     }	
 		ptrs[2]=       " Uбат =    $В       ";
-		ptrs[4]=		" tбат =    ?°C      ";
-		ptrs[5]=		" SOC  =    wA*ч     ";
-		ptrs[6]=		" SOH  =    >A*ч     ";
-		ptrs[7]=sm_exit;
+		ptrs[4]=		" t1   =    ?°C      ";
+		ptrs[5]=		" t2   =    (°C      ";
+		ptrs[6]=		" t3   =    )°C      ";
+		ptrs[7]=		" t4   =    +°C      ";
+		ptrs[8]=		" tокр.=    [°C      ";
+		ptrs[9]=		" tсил.=    ]°C      ";
+		ptrs[10]=		" SOC  =    wA*ч     ";
+		ptrs[11]=		" SOH  =    >A*ч     ";
+		ptrs[12]=sm_exit;
 
 		if(lakb[a_ind . s_i1]._communicationFullErrorStat==1)
 			{
@@ -9331,15 +9357,22 @@ else if (a_ind . i==iBat_universe)
 						ptrs[a_ind . s_i+1],
 						ptrs[a_ind . s_i+2]);
 		     
-			int2lcd(a_ind . s_i1+1,'@',0);
+
 		    int2lcd(lakb[a_ind . s_i1]._tot_bat_volt,'$',1);
 			int2lcd_mmm(abs(lakb[a_ind . s_i1]._ch_curr),'#',2);
-		    int2lcd_mmm(lakb[a_ind . s_i1]._max_cell_temp,'?',1);
+		    int2lcd_mmm(lakb[a_ind . s_i1]._cell_temp_1,'?',0);
+			int2lcd_mmm(lakb[a_ind . s_i1]._cell_temp_2,'(',0);
+			int2lcd_mmm(lakb[a_ind . s_i1]._cell_temp_3,')',0);
+			int2lcd_mmm(lakb[a_ind . s_i1]._cell_temp_4,'+',0);
+			int2lcd_mmm(lakb[a_ind . s_i1]._cell_temp_ambient,'[',0);
+			int2lcd_mmm(lakb[a_ind . s_i1]._cell_temp_power,']',0);
 		    int2lcd(lakb[a_ind . s_i1]._s_o_c,'w',1);
-			if(a_ind . s_i==8)lcd_buffer[60]=1;
+			if(a_ind . s_i==10)lcd_buffer[60]=1;
 			int2lcd(lakb[a_ind . s_i1]._s_o_h,'>',1);
 			
 			}
+		int2lcd(a_ind . s_i1+1,'@',0);
+
 		}
 	}
 
@@ -9999,13 +10032,12 @@ else if(a_ind . i==iExtern_KONTUR)
 else if(a_ind . i==iExtern_TELECORE2015)
 	{
 
-	ptrs[0]=			" tотсек MSAN    #°С ";
-     ptrs[1]=  	     " Датч.двери  $      ";            
-     ptrs[2]=  	     " Датч.дыма   %      ";
-	ptrs[3]=  	     " Датч.удара  ^      ";
-	ptrs[4]=  	     " Выход              ";
-	ptrs[9]=  	     "                    ";
-	ptrs[10]=  	     "                    ";
+	ptrs[0]=		" Дt1            #°С ";
+	ptrs[1]=		" Дt2            %°С ";
+    ptrs[2]=  	    " Датч.двери  $      ";            
+	ptrs[3]=  	    " Выход              ";
+	ptrs[4]=  	    "                    ";
+	ptrs[5]=  	    "                    ";
 
 	bgnd_par(		"  ВНЕШНИЕ ДАТЧИКИ   ",
 				ptrs[a_ind . i_s],
@@ -10021,18 +10053,19 @@ else if(a_ind . i==iExtern_TELECORE2015)
  
 
 	if(ND_EXT[0])sub_bgnd("неиспр.",'#',-3);
-     else int2lcd_mmm(t_ext[0],'#',0);
-
+    else int2lcd_mmm(t_ext[0],'#',0);
+	if(ND_EXT[1])sub_bgnd("неиспр.",'%',-3);
+    else int2lcd_mmm(t_ext[1],'%',0);
 
 	if(sk_av_stat[0]==sasON)	sub_bgnd("ОТКР.",'$',0);
 	else                     sub_bgnd("ЗАКР.",'$',0);
 	
 
-	if(sk_av_stat[1]==sasON) sub_bgnd("АВАРИЯ",'%',0);
-	else                     sub_bgnd("НОРМА",'%',0);
 
-	if(sk_av_stat[2]==sasON) sub_bgnd("АВАРИЯ",'^',0);
-	else                     sub_bgnd("НОРМА",'^',0);
+
+
+
+ 
 
 	
 	
@@ -11726,6 +11759,14 @@ else if(a_ind . i==iSet_TELECORE2015)
 
 	long2lcd_mmm(AUSW_MAIN_NUMBER,'w',0);
 
+
+	if((FORVARDBPSCHHOUR<=0)||(FORVARDBPSCHHOUR>500)) {
+		sub_bgnd("ВЫКЛ.",'l',0);
+	} else {
+		int2lcd(FORVARDBPSCHHOUR,'l',0);	
+	}
+
+
 	
 	
 	}
@@ -12789,6 +12830,19 @@ else if (a_ind . i==iExt_set_GLONASS)
 	if(a_ind . s_i<a_ind . i_s) a_ind . i_s=a_ind . s_i;
 	else if((a_ind . s_i-a_ind . i_s)>2) a_ind . i_s=a_ind . s_i-2;
      bgnd_par("     УСТАНОВКИ      ",ptrs[a_ind . i_s],ptrs[a_ind . i_s+1],ptrs[a_ind . i_s+2]);
+	
+	pointer_set(1);
+	}
+else if (a_ind . i==iExt_set_TELECORE2015)
+	{ 
+	ptrs[0]=	" Датчик двери       ";
+	ptrs[1]=  	" Выход              ";
+	ptrs[2]=  	"                    ";
+	ptrs[3]=  	"                    ";
+	
+	if(a_ind . s_i<a_ind . i_s) a_ind . i_s=a_ind . s_i;
+	else if((a_ind . s_i-a_ind . i_s)>2) a_ind . i_s=a_ind . s_i-2;
+    bgnd_par("     УСТАНОВКИ      ",ptrs[a_ind . i_s],ptrs[a_ind . i_s+1],ptrs[a_ind . i_s+2]);
 	
 	pointer_set(1);
 	}
@@ -14717,6 +14771,7 @@ if(a_ind . i==iDeb)
 		int2lcdyx(lakb[0]._communication2lvlErrorStat,2,19,0);
 	   	int2lcdyx(lakb[1]._communication2lvlErrorStat,3,19,0);
 
+		int2lcdyx(Ubpsmax,1,3,0);
 		int2lcdyx(Ibmax,1,7,0);
 		int2lcdyx(cntrl_stat,1,11,0);
 		int2lcdyx(u_necc,1,15,0);
@@ -14846,14 +14901,14 @@ if(a_ind . i==iDeb)
 		int2lcdyx(t_box_warm,1,7,0);
 		int2lcdyx(t_box_vent,2,7,0);
 
-		int2lcdyx(vent_stat_k,1,18,0);
-		int2lcdyx(warm_stat_k,2,18,0);		
 
-		int2lcdyx(TELECORE2015_KLIMAT_WARM_ON_temp,3,3,0);
-		int2lcdyx(TELECORE2015_KLIMAT_WARM_ON,3,7,0);
-		int2lcdyx(TELECORE2015_KLIMAT_WARM_OFF,3,11,0);
-		int2lcdyx(TELECORE2015_KLIMAT_VENT_ON,3,15,0);
-		int2lcdyx(TELECORE2015_KLIMAT_VENT_OFF,3,19,0);
+
+
+
+
+
+
+
 		
 		
 		
@@ -16703,8 +16758,8 @@ else if(a_ind . i==iKlimat_TELECORE2015)
 
 
 
-	int2lcdyx(t_ext[0],0,3,0);
-	int2lcdyx(t_ext[1],0,7,0);
+
+
 
 
 
@@ -16993,12 +17048,12 @@ else if(a_ind . i==iDop_rele_set)
 }							    
 
 
-#line 11720 "main.c"
+#line 11754 "main.c"
 
 
 
 
-#line 11743 "main.c"
+#line 11777 "main.c"
 
 
 
@@ -17321,7 +17376,7 @@ else if(a_ind . i==iMn)
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV)))
 			{
-#line 12073 "main.c"
+#line 12107 "main.c"
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV+1)))
 			{
@@ -17335,9 +17390,9 @@ else if(a_ind . i==iMn)
 		     ret(1000);
 			}
 
-#line 12093 "main.c"
+#line 12127 "main.c"
 
-#line 12101 "main.c"
+#line 12135 "main.c"
 
 		else if(a_ind . s_i==(4+NUMBAT+NUMIST+2)+(NUMAVT!=0))
 			{
@@ -18778,14 +18833,14 @@ else if (a_ind . i==iBat_universe)
 		if(but==251)
 			{
 			a_ind . s_i++;
-			gran_char(&a_ind . s_i,0,5);
+			gran_char(&a_ind . s_i,0,10);
 			}
 		else if(but==253)
 			{
 			a_ind . s_i--;
-			gran_char(&a_ind . s_i,0,5);
+			gran_char(&a_ind . s_i,0,10);
 			}
-		else if((but==247)||((a_ind . s_i==5)&&(but==254)))
+		else if((but==247)||((a_ind . s_i==10)&&(but==254)))
 		     {
 		     tree_down(0,0);
 		     ret(0);
@@ -19174,16 +19229,16 @@ else if(a_ind . i==iExtern_TELECORE2015)
 	if (but==253)
 		{      
 		a_ind . s_i--;
-		gran_char(&a_ind . s_i,0,4);
+		gran_char(&a_ind . s_i,0,3);
 		}
 		
 	else if (but==251)
 		{
 		a_ind . s_i++;
-		gran_char(&a_ind . s_i,0,4);		
+		gran_char(&a_ind . s_i,0,3);		
 		}
 
-	else if((but==254)&&(a_ind . s_i==4))
+	else if((but==254)&&(a_ind . s_i==3))
 		{
 	     tree_down(0,0);
 	     ret(0);
@@ -19388,11 +19443,11 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==184) 
 				{
 				tree_down(0,0);
-#line 14170 "main.c"
+#line 14204 "main.c"
 				tree_up(iSet_220_IPS_TERMOKOMPENSAT,0,0,0);
 
 
-#line 14179 "main.c"
+#line 14213 "main.c"
 
 				ret(1000);
 				}
@@ -19410,7 +19465,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==873) 
 				{
 				tree_down(0,0);
-#line 14227 "main.c"
+#line 14261 "main.c"
 				if(AUSW_MAIN==22033)
 					{
 					tree_up(iK_220_IPS_TERMOKOMPENSAT,0,0,0);
@@ -19487,7 +19542,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 			if(tempU==999) 
 				{
 				tree_down(0,0);
-#line 14333 "main.c"
+#line 14367 "main.c"
 				tree_up(iTst_220_IPS_TERMOKOMPENSAT,0,0,0);
 
 
@@ -20124,7 +20179,7 @@ else if(a_ind . i==iSet)
 	     {
 	     if(but==254)
 	          {
-#line 14981 "main.c"
+#line 15015 "main.c"
 	          ret(1000);
 	          default_temp=10;
 	          }
@@ -20146,7 +20201,7 @@ else if(a_ind . i==iSet)
 		{
 		if(but==254)
 		     {
-#line 15027 "main.c"
+#line 15061 "main.c"
 
 
 
@@ -22513,6 +22568,10 @@ else if(a_ind . i==iSet_TELECORE2015)
                {
                a_ind . i_s=27;
                }
+		if(a_ind . s_i==36)
+               {
+       		a_ind . i_s=35;
+               }
           if(a_ind . s_i==37)
                {
                a_ind . s_i=38;
@@ -22832,7 +22891,7 @@ else if(a_ind . i==iSet_TELECORE2015)
 		{
 		if(but==254)
 		     {
-			tree_up(iExt_set,0,0,0);
+			tree_up(iExt_set_TELECORE2015,0,0,0);
 		     ret(1000);
 		     }
 		}
@@ -27066,6 +27125,35 @@ else if (a_ind . i==iExt_set)
 		}        	
 	}
 
+else if (a_ind . i==iExt_set_TELECORE2015)
+	{
+	ret(1000);
+	if (but==253)
+		{      
+		a_ind . s_i--;
+		gran_char(&a_ind . s_i,0,1);
+		}
+		
+	else if (but==251)
+		{
+		a_ind . s_i++;
+		gran_char(&a_ind . s_i,0,1);		
+		}
+
+	else if((but==254)&&(a_ind . s_i==0))
+		{
+	     tree_up(iExt_ddv,0,0,0);
+	     ret(0);
+		}
+
+	else if((but==254)&&(a_ind . s_i==1))
+		{
+	     tree_down(0,0);
+	     ret(0);
+		}        	
+	}
+
+
 else if (a_ind . i==iExt_set_3U)
 	{
 	ret(1000);
@@ -29811,7 +29899,7 @@ else if(a_ind . i==iK_inv)
 			}
 		}			
 	}
-#line 24838 "main.c"
+#line 24905 "main.c"
 
 else if(a_ind . i==iK_byps)
 	{
@@ -32816,7 +32904,11 @@ else if(a_ind . i==iKlimat_kontur)
 	if(but==251)
 		{
 		a_ind . s_i++;
-		if(a_ind . s_i==1)a_ind . s_i++;
+		if(a_ind . s_i==1)
+			{
+			a_ind . s_i++;
+			a_ind . i_s=1;
+			}
 		gran_char(&a_ind . s_i,0,11);
 		if(a_ind . s_i==3)a_ind . s_i++;
 		gran_char(&a_ind . s_i,0,11);	
@@ -33593,9 +33685,9 @@ lcd_clear();
 rtc_init();
 
 a_ind . i=iMn;
-#line 28638 "main.c"
+#line 28709 "main.c"
 a_ind . i=iMn_220_IPS_TERMOKOMPENSAT;
-#line 28646 "main.c"
+#line 28717 "main.c"
 
 
 
@@ -33635,7 +33727,7 @@ adc_init();
 
 lc640_write_int(100,134);
 
-#line 28691 "main.c"
+#line 28762 "main.c"
 
 
 
@@ -33891,10 +33983,11 @@ while (1)
 
 
 
+
 		ret_hndl();
 		ext_drv();
 		avt_hndl();
-		lakb_hndl();
+		
 		}
 
 	if(b5Hz)
@@ -33976,7 +34069,7 @@ while (1)
 		
 		
 
-#line 29043 "main.c"
+#line 29115 "main.c"
 
 
 
