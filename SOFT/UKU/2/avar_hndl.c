@@ -383,8 +383,9 @@ if(in==1)
 
 	//beep_init(0x33333333,'A');
 
-	uout_av=1;
-	 
+	if(load_U>U_OUT_KONTR_MAX)uout_av=1;
+	if(load_U<U_OUT_KONTR_MIN)uout_av=2;
+		 
 	event_ptr=lc640_read_int(PTR_EVENT_LOG);
 	event_ptr++;	
 	if(event_ptr>63)event_ptr=0;	

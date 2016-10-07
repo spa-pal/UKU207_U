@@ -3500,6 +3500,139 @@ extern char plazma_ztt[2];
 
  
 #line 6 "modbus.c"
+#line 1 "control.h"
+
+
+
+
+
+
+
+extern char num_of_wrks_bps;
+extern char bps_all_off_cnt,bps_mask_off_cnt,bps_mask_on_off_cnt;
+extern char bps_hndl_2sec_cnt;
+extern unsigned short bps_on_mask,bps_off_mask;
+extern char num_necc_up,num_necc_down;
+extern unsigned char sh_cnt0,b1Hz_sh;
+
+
+extern short cntrl_stat_blok_cnt,cntrl_stat_blok_cnt_,cntrl_stat_blok_cnt_plus[2],cntrl_stat_blok_cnt_minus[2];
+
+
+
+extern long adc_buff[16][16];
+extern signed short adc_buff_max[12],adc_buff_min[12],unet_buff_max,unet_buff_min;
+extern short adc_buff_[16];
+extern char adc_self_ch_cnt,adc_ch_net;
+extern char adc_cnt,adc_cnt1,adc_ch,adc_ch_cnt;
+extern short zero_cnt;
+typedef enum {asCH=1,asNET_WAIT=2,asNET_RDY=3,asNET=4} enum_adc_stat;
+extern enum_adc_stat adc_stat;
+extern unsigned short net_buff[32],net_buff_,net_metr_buff_[3];
+extern char net_buff_cnt;
+extern short ADWR,period_cnt,non_zero_cnt;
+extern char rele_stat;
+extern char bRELE_OUT;
+extern short plazma_adc_cnt;
+extern signed short adc_self_ch_buff[3],adc_self_ch_disp[3];
+extern long main_power_buffer[8],main_power_buffer_;
+extern short main_power_buffer_cnt;
+extern short adc_gorb_cnt,adc_zero_cnt;
+extern char adc_window_flag;
+extern short adc_window_cnt;
+extern short adc_net_buff_cnt;
+
+
+char vz_start(char hour);
+void vz_stop(void);
+void vz_drv(void);
+void samokalibr_init(void);
+void samokalibr_hndl(void);
+void kb_init(void);
+void kb_hndl(void);
+void ubat_old_drv(void);
+void unet_drv(void);
+void matemat(void);
+void adc_init(void);
+void adc_drv5(void);
+void adc_drv_(void);
+void avg_hndl(void);
+
+
+void rele_hndl(void);
+void bps_hndl(void);
+void bps_drv(char in);
+void bat_hndl(void);
+void bat_drv(char in);
+void u_necc_hndl(void);
+void cntrl_hndl(void);
+void zar_drv(void);
+void num_necc_hndl(void);
+void ke_start(char in);
+void ke_drv(void);
+void avz_drv(void);
+void zar_drv(void);
+void vent_hndl(void);
+void avz_next_date_hndl(void);
+void klimat_hndl(void);
+void ext_drv(void);
+void adc_drv7(void);
+void avt_hndl(void);
+
+
+
+
+typedef enum {spcOFF=0,spcKE, spcVZ}enum_spc_stat;
+typedef enum {kssNOT=0,kssNOT_VZ,kssYES=100,kssNOT_BAT,kssNOT_BAT_AV,kssNOT_BAT_AV_T,kssNOT_BAT_AV_ASS,kssNOT_BAT_ZAR,kssNOT_BAT_RAZR,kssNOT_KE1,kssNOT_KE2}enum_ke_start_stat;
+extern enum_spc_stat spc_stat;
+extern enum_ke_start_stat ke_start_stat;
+extern char spc_bat;
+extern char spc_phase;
+extern unsigned short vz_cnt_s,vz_cnt_s_,vz_cnt_h,vz_cnt_h_;
+extern short cnt_end_ke;
+extern unsigned long ke_date[2];
+extern short __ee_vz_cnt;
+extern short __ee_spc_stat;
+extern short __ee_spc_bat;
+extern short __ee_spc_phase;
+
+
+
+extern signed short cntrl_stat;
+extern signed short cntrl_stat_old;
+extern signed short cntrl_stat_new;
+extern signed short Ibmax;
+extern unsigned char unh_cnt0,unh_cnt1,b1Hz_unh;
+extern unsigned char	ch_cnt0,b1Hz_ch,i,iiii;
+extern unsigned char	ch_cnt1,b1_30Hz_ch;
+extern unsigned short IZMAX_;
+extern unsigned short Ubpsmax;
+
+extern short plazma_sk;
+extern char	plazma_inv[4];
+extern char plazma_bat;
+
+
+extern signed int i_avg_max,i_avg_min,i_avg_summ,i_avg; 
+extern signed int avg;
+extern char bAVG;
+extern const char sk_buff_TELECORE2015[4];
+
+
+
+extern char numOfForvardBps;
+extern char numOfForvardBps_minCnt;
+extern short numOfForvardBps_hourCnt;
+
+
+void zar_superviser_drv(void);
+void zar_superviser_start(void);
+void vent_hndl(void);
+void speedChargeHndl(void);
+void speedChargeStartStop(void);
+
+
+#line 7 "modbus.c"
 #line 1 "C:\\Keil\\ARM\\RV31\\INC\\string.h"
  
  
@@ -3920,7 +4053,7 @@ extern __declspec(__nothrow) void _membitmovewb(void *  , const void *  , int  ,
 
 
  
-#line 7 "modbus.c"
+#line 8 "modbus.c"
 
 #line 1 "eeprom_map.h"
 
@@ -4101,7 +4234,7 @@ extern const unsigned short ADR_SK_ZVUK_EN[4];
 extern const unsigned short ADR_SK_LCD_EN[4];
 extern const unsigned short ADR_SK_RS_EN[4];
 
-#line 9 "modbus.c"
+#line 10 "modbus.c"
 
 extern int  mem_copy (void *dp, void *sp, int len);
 
@@ -4326,6 +4459,31 @@ if(crc16_calculated==crc16_incapsulated)
 				{
 				lc640_write_int(0x10+100+90,modbus_rx_arg1);
 	     		}
+			if(modbus_rx_arg0==48)		
+				{
+				lc640_write_int(0x10+100+162,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==49)		
+				{
+				lc640_write_int(0x10+100+164,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==50)		
+				{
+				lc640_write_int(0x10+100+166,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==51)		
+				{
+				lc640_write_int(0x10+100+182,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==52)		
+				{
+				lc640_write_int(0x10+100+184,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==53)		
+				{
+				lc640_write_int(0x10+100+186,modbus_rx_arg1);
+	     		}
+
 			if(modbus_rx_arg0==19)		
 				{
 	
@@ -4670,8 +4828,8 @@ for (i=0;i<15;i++)
 
 void modbus_hold_register_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr)
 {
-char modbus_registers[100];
-char modbus_tx_buff[100];
+char modbus_registers[150];
+char modbus_tx_buff[150];
 unsigned short crc_temp;
 char i;
 
@@ -4731,6 +4889,13 @@ modbus_registers[90]=(char)(TBATMAX/256);
 modbus_registers[91]=(char)(TBATMAX%256);
 modbus_registers[92]=(char)(TBATSIGN/256);				
 modbus_registers[93]=(char)(TBATSIGN%256);
+modbus_registers[94]=(char)(speedChrgCurr/256);					
+modbus_registers[95]=(char)(speedChrgCurr%256);
+modbus_registers[96]=(char)(speedChrgVolt/256);				
+modbus_registers[97]=(char)(speedChrgVolt%256);
+modbus_registers[98]=(char)(speedChrgTimeInHour/256);				
+modbus_registers[99]=(char)(speedChrgTimeInHour%256);
+
 
 modbus_tx_buff[0]=adr;
 modbus_tx_buff[1]=func;
@@ -4757,8 +4922,8 @@ for (i=0;i<8;i++)
 
 void modbus_hold_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity)
 {
-char modbus_registers[100];
-char modbus_tx_buff[100];
+char modbus_registers[150];
+char modbus_tx_buff[150];
 unsigned short crc_temp;
 char i;
 
@@ -4818,6 +4983,31 @@ modbus_registers[90]=(char)(TBATMAX/256);
 modbus_registers[91]=(char)(TBATMAX%256);
 modbus_registers[92]=(char)(TBATSIGN/256);				
 modbus_registers[93]=(char)(TBATSIGN%256);
+modbus_registers[94]=(char)(speedChrgCurr/256);					
+modbus_registers[95]=(char)(speedChrgCurr%256);
+modbus_registers[96]=(char)(speedChrgVolt/256);				
+modbus_registers[97]=(char)(speedChrgVolt%256);
+modbus_registers[98]=(char)(speedChrgTimeInHour/256);				
+modbus_registers[99]=(char)(speedChrgTimeInHour%256);
+modbus_registers[100]=(char)(U_OUT_KONTR_MAX/256);					
+modbus_registers[101]=(char)(U_OUT_KONTR_MAX%256);
+modbus_registers[102]=(char)(U_OUT_KONTR_MIN/256);					
+modbus_registers[103]=(char)(U_OUT_KONTR_MIN%256);
+modbus_registers[104]=(char)(U_OUT_KONTR_DELAY/256);				
+modbus_registers[105]=(char)(U_OUT_KONTR_DELAY%256);
+
+			if(modbus_rx_arg0==51)		
+				{
+				lc640_write_int(0x10+100+182,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==52)		
+				{
+				lc640_write_int(0x10+100+184,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==53)		
+				{
+				lc640_write_int(0x10+100+186,modbus_rx_arg1);
+	     		}
 
 
 modbus_tx_buff[0]=adr;
@@ -4874,8 +5064,8 @@ for (i=0;i<(5+(reg_quantity*2));i++)
 
 void modbus_input_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity)
 {
-char modbus_registers[450];
-char modbus_tx_buff[120];
+char modbus_registers[200];
+char modbus_tx_buff[200];
 unsigned short crc_temp;
 char i;
 short tempS;
@@ -4988,6 +5178,16 @@ modbus_registers[104]=(char)(bps[7]._av/256);
 modbus_registers[105]=(char)(bps[7]._av%256);
 modbus_registers[106]=(char)(bps_U/256);					
 modbus_registers[107]=(char)(bps_U%256);
+tempS=0;
+if(speedChIsOn) tempS=1;
+modbus_registers[108]=(char)(tempS/256);					
+modbus_registers[109]=(char)(tempS%256);
+tempS=0;
+if(spc_stat==spcVZ) tempS=1;
+modbus_registers[110]=(char)(tempS/256);					
+modbus_registers[111]=(char)(tempS%256);
+modbus_registers[112]=(char)(uout_av/256);					
+modbus_registers[113]=(char)(uout_av%256);
 
 tempS=t_ext[0];
 if(ND_EXT[0])tempS=-1000;

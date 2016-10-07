@@ -3,6 +3,7 @@
 #include "modbus.h"
 //#include "LPC17xx.H"
 #include "main.h"
+#include "control.h"
 #include <string.h>
 
 #include "eeprom_map.h"
@@ -230,6 +231,31 @@ if(crc16_calculated==crc16_incapsulated)
 				{
 				lc640_write_int(EE_TBATSIGN,modbus_rx_arg1);
 	     		}
+			if(modbus_rx_arg0==48)		//
+				{
+				lc640_write_int(EE_SPEED_CHRG_CURR,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==49)		//
+				{
+				lc640_write_int(EE_SPEED_CHRG_VOLT,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==50)		//
+				{
+				lc640_write_int(EE_SPEED_CHRG_TIME,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==51)		//
+				{
+				lc640_write_int(EE_U_OUT_KONTR_MAX,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==52)		//
+				{
+				lc640_write_int(EE_U_OUT_KONTR_MIN,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==53)		//
+				{
+				lc640_write_int(EE_U_OUT_KONTR_DELAY,modbus_rx_arg1);
+	     		}
+
 			if(modbus_rx_arg0==19)		//вкл/выкл источника напр.
 				{
 	/*			if(modbus_rx_arg1==1)
@@ -574,8 +600,8 @@ for (i=0;i<15;i++)
 //-----------------------------------------------
 void modbus_hold_register_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr)
 {
-char modbus_registers[100];
-char modbus_tx_buff[100];
+char modbus_registers[150];
+char modbus_tx_buff[150];
 unsigned short crc_temp;
 char i;
 
@@ -635,6 +661,13 @@ modbus_registers[90]=(char)(TBATMAX/256);				//Рег46  Температура батареи аварий
 modbus_registers[91]=(char)(TBATMAX%256);
 modbus_registers[92]=(char)(TBATSIGN/256);				//Рег47  Температура батареи сигнальная, 1гЦ
 modbus_registers[93]=(char)(TBATSIGN%256);
+modbus_registers[94]=(char)(speedChrgCurr/256);					//Рег48  Ток ускоренного заряда, 0.1А
+modbus_registers[95]=(char)(speedChrgCurr%256);
+modbus_registers[96]=(char)(speedChrgVolt/256);				//Рег49	 Напряжение ускоренного заряда, 0.1В 
+modbus_registers[97]=(char)(speedChrgVolt%256);
+modbus_registers[98]=(char)(speedChrgTimeInHour/256);				//Рег50	 Время ускоренного заряда, 1ч
+modbus_registers[99]=(char)(speedChrgTimeInHour%256);
+
 
 modbus_tx_buff[0]=adr;
 modbus_tx_buff[1]=func;
@@ -661,8 +694,8 @@ for (i=0;i<8;i++)
 //-----------------------------------------------
 void modbus_hold_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity)
 {
-char modbus_registers[100];
-char modbus_tx_buff[100];
+char modbus_registers[150];
+char modbus_tx_buff[150];
 unsigned short crc_temp;
 char i;
 
@@ -722,6 +755,31 @@ modbus_registers[90]=(char)(TBATMAX/256);				//Рег46  Температура батареи аварий
 modbus_registers[91]=(char)(TBATMAX%256);
 modbus_registers[92]=(char)(TBATSIGN/256);				//Рег47  Температура батареи сигнальная, 1гЦ
 modbus_registers[93]=(char)(TBATSIGN%256);
+modbus_registers[94]=(char)(speedChrgCurr/256);					//Рег48  Ток ускоренного заряда, 0.1А
+modbus_registers[95]=(char)(speedChrgCurr%256);
+modbus_registers[96]=(char)(speedChrgVolt/256);				//Рег49	 Напряжение ускоренного заряда, 0.1В 
+modbus_registers[97]=(char)(speedChrgVolt%256);
+modbus_registers[98]=(char)(speedChrgTimeInHour/256);				//Рег50	 Время ускоренного заряда, 1ч
+modbus_registers[99]=(char)(speedChrgTimeInHour%256);
+modbus_registers[100]=(char)(U_OUT_KONTR_MAX/256);					//Рег51	 Контроль выходного напряжения, Umax, 0.1В
+modbus_registers[101]=(char)(U_OUT_KONTR_MAX%256);
+modbus_registers[102]=(char)(U_OUT_KONTR_MIN/256);					//Рег52	 Контроль выходного напряжения, Umin, 0.1В
+modbus_registers[103]=(char)(U_OUT_KONTR_MIN%256);
+modbus_registers[104]=(char)(U_OUT_KONTR_DELAY/256);				//Рег53	 Контроль выходного напряжения, Tзадержки, 1сек.
+modbus_registers[105]=(char)(U_OUT_KONTR_DELAY%256);
+
+			if(modbus_rx_arg0==51)		//
+				{
+				lc640_write_int(EE_U_OUT_KONTR_MAX,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==52)		//
+				{
+				lc640_write_int(EE_U_OUT_KONTR_MIN,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==53)		//
+				{
+				lc640_write_int(EE_U_OUT_KONTR_DELAY,modbus_rx_arg1);
+	     		}
 
 
 modbus_tx_buff[0]=adr;
@@ -778,8 +836,8 @@ for (i=0;i<(5+(reg_quantity*2));i++)
 //-----------------------------------------------
 void modbus_input_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity)
 {
-char modbus_registers[450];
-char modbus_tx_buff[120];
+char modbus_registers[200];
+char modbus_tx_buff[200];
 unsigned short crc_temp;
 char i;
 short tempS;
@@ -892,6 +950,16 @@ modbus_registers[104]=(char)(bps[7]._av/256);			//Рег53	Байт флагов выпрямителя 
 modbus_registers[105]=(char)(bps[7]._av%256);
 modbus_registers[106]=(char)(bps_U/256);					//Рег54   	напряжение выпрямителей, 0.1В
 modbus_registers[107]=(char)(bps_U%256);
+tempS=0;
+if(speedChIsOn) tempS=1;
+modbus_registers[108]=(char)(tempS/256);					//Рег55   	Ускоренный заряд включенность, (1 - вкл, 0 - Выкл)
+modbus_registers[109]=(char)(tempS%256);
+tempS=0;
+if(spc_stat==spcVZ) tempS=1;
+modbus_registers[110]=(char)(tempS/256);					//Рег56   	Выравнивающий заряд включенность, (1 - вкл, 0 - Выкл)
+modbus_registers[111]=(char)(tempS%256);
+modbus_registers[112]=(char)(uout_av/256);					//Рег57   Контроль выходного напряжения, (0 - норма, 1 - завышено, 2 - занижено)
+modbus_registers[113]=(char)(uout_av%256);
 
 tempS=t_ext[0];
 if(ND_EXT[0])tempS=-1000;

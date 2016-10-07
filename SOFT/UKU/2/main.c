@@ -931,6 +931,85 @@ if(voltage==220)
 	lc640_write_int(EE_MNEMO_ON,mnOFF);
 	}
 
+if(voltage==110)
+	{
+	def_set(1350,1270,1225,99,20,1220,2,1290);
+
+	lc640_write_int(EE_NUMIST,2);
+	lc640_write_int(EE_NUMINV,0);
+//lc640_write_int(EE_NUMDT,0);
+//lc640_write_int(EE_NUMSK,0);
+	lc640_write_int(EE_MAIN_IST,0);
+	lc640_write_int(EE_PAR,1);
+	lc640_write_int(EE_TBAT,60);
+	lc640_write_int(EE_UMAX,1350);
+	lc640_write_int(EE_DU,1350/2);
+	lc640_write_int(EE_UB0,1270);
+	lc640_write_int(EE_UB20,1225);
+	lc640_write_int(EE_TSIGN,70);
+	lc640_write_int(EE_TMAX,80);
+//lc640_write_int(EE_C_BAT,180);
+	lc640_write_int(EE_USIGN,99);
+	lc640_write_int(EE_UMN,187);
+	lc640_write_int(EE_ZV_ON,0);
+	lc640_write_int(EE_IKB,20);
+//lc640_write_int(EE_KVZ,1030);
+	lc640_write_int(EE_UVZ,1290);
+	lc640_write_int(EE_IMAX,80);
+	lc640_write_int(EE_IMIN,50);
+//lc640_write_int(EE_APV_ON,apvON);
+	lc640_write_int(EE_APV_ON1,apvON);
+	lc640_write_int(EE_APV_ON2,apvON);
+	lc640_write_int(EE_APV_ON2_TIME,1);
+	lc640_write_int(EE_IZMAX,160);
+	lc640_write_int(EE_U0B,1220);
+	lc640_write_int(EE_TZAS,3);
+	lc640_write_int(EE_TBATMAX,50);  
+	lc640_write_int(EE_TBATSIGN,40);
+	lc640_write_int(EE_MNEMO_ON,mnON);
+	lc640_write_int(EE_MNEMO_TIME,30);	
+	lc640_write_int(EE_AV_OFF_AVT,1);
+//lc640_write_int(EE_APV_ON1,apvOFF);
+
+
+
+	lc640_write_int(EE_TBOXMAX,70);
+	lc640_write_int(EE_TBOXVENTMAX,60);
+	lc640_write_int(EE_TBOXREG,25);
+	lc640_write_int(EE_TLOADDISABLE,80);
+	lc640_write_int(EE_TLOADENABLE,70);
+	lc640_write_int(EE_TBATDISABLE,91);
+	lc640_write_int(EE_TBATENABLE,80);
+
+	lc640_write_int(ADR_SK_SIGN[0],0);
+	lc640_write_int(ADR_SK_REL_EN[0],0);
+	lc640_write_int(ADR_SK_LCD_EN[0],0xffff);
+
+	lc640_write_int(ADR_SK_SIGN[1],0);
+	lc640_write_int(ADR_SK_REL_EN[1],0);
+	lc640_write_int(ADR_SK_LCD_EN[1],0xffff);
+
+	lc640_write_int(ADR_SK_SIGN[2],0);
+	lc640_write_int(ADR_SK_REL_EN[2],0);
+	lc640_write_int(ADR_SK_LCD_EN[2],0xffff);
+
+	lc640_write_int(ADR_SK_SIGN[3],0);
+	lc640_write_int(ADR_SK_REL_EN[3],0);
+	lc640_write_int(ADR_SK_LCD_EN[3],0xffff);
+
+	lc640_write_int(EE_UBM_AV,10);
+
+	lc640_write_int(EE_POS_VENT,11);
+
+
+	lc640_write_int(EE_DU,1220-600);
+	lc640_write_int(EE_U_AVT,1220);
+	lc640_write_int(EE_IZMAX,20);
+	lc640_write_int(EE_AUSW_MAIN,22033);
+	lc640_write_int(EE_PAR,1);
+	lc640_write_int(EE_MNEMO_ON,mnOFF);
+	}
+
 lc640_write_int(ADR_EE_BAT_IS_ON[0],bisOFF);
 lc640_write_int(ADR_EE_BAT_DAY_OF_ON[0],LPC_RTC->DOM);
 lc640_write_int(ADR_EE_BAT_MONTH_OF_ON[0],LPC_RTC->MONTH);
@@ -944,6 +1023,19 @@ lc640_write_int(ADR_EE_BAT_MONTH_OF_ON[1],LPC_RTC->MONTH);
 lc640_write_int(ADR_EE_BAT_YEAR_OF_ON[1],LPC_RTC->YEAR);
 lc640_write_int(ADR_EE_BAT_C_NOM[1],0);
 lc640_write_int(ADR_EE_BAT_RESURS[1],0);
+
+
+lc640_write_int(EE_SPEED_CHRG_VOLT,1300);
+lc640_write_int(EE_SPEED_CHRG_CURR,20);
+lc640_write_int(EE_SPEED_CHRG_TIME,1);
+lc640_write_int(EE_SPEED_CHRG_AVT_EN,0);
+lc640_write_int(EE_SPEED_CHRG_BLOCK_SRC,0);
+lc640_write_int(EE_SPEED_CHRG_BLOCK_LOG,0);
+lc640_write_int(EE_SPEED_CHRG_D_U,40);
+lc640_write_int(EE_U_OUT_KONTR_MAX,1310);
+lc640_write_int(EE_U_OUT_KONTR_MIN,1100);
+
+
 }
 
 //-----------------------------------------------
@@ -6954,9 +7046,10 @@ else if (ind==iDef_220_IPS_TERMOKOMPENSAT)
 	{ 
 	ptrs[0]=" »œ—380/220-45¿“ »17";
 	ptrs[1]=" »œ—220/220-10¿“ »17";
-	ptrs[2]=sm_exit;
-	ptrs[3]="                    ";
+	ptrs[2]=" »œ—380/110-90¿“ »8 ";
+	ptrs[3]=sm_exit;
 	ptrs[4]="                    ";
+	ptrs[5]="                    ";
 	if(bFL5)ptrs[default_temp]=sm_;
 	
 	if(sub_ind<index_set) index_set=sub_ind;
@@ -19830,7 +19923,7 @@ else if (ind==iDef_220_V2)
      }
 
 else if (ind==iDef_220_IPS_TERMOKOMPENSAT)
-#define SIMAXIDEF 2
+#define SIMAXIDEF 3
 	{
 	ret(1000);
 	if(but==butD)
@@ -19906,6 +19999,29 @@ else if (ind==iDef_220_IPS_TERMOKOMPENSAT)
 			lc640_write_int(EE_UVZ,2440);
 			lc640_write_int(EE_UBM_AV,0);
 			lc640_write_int(EE_UMAX,2450);
+			lc640_write_int(EE_U_OUT_KONTR_MAX,2420);
+			lc640_write_int(EE_U_OUT_KONTR_MIN,2200);
+
+			}
+		else if(sub_ind==2)
+			{
+			def_ips_set(110);
+			//lc640_write_int(EE_DU,2315-1850);
+			lc640_write_int(EE_U_AVT,2200);
+			lc640_write_int(EE_IZMAX,50);
+			//lc640_write_int(EE_IMAX,12);
+			//lc640_write_int(EE_IMIN,8);
+			lc640_write_int(EE_AUSW_MAIN,22043);
+			lc640_write_int(EE_NUMIST,3);
+
+			lc640_write_int(EE_PAR,0);
+			//lc640_write_int(EE_UMAX,2550);
+			lc640_write_int(EE_DU,2315-1110);
+			lc640_write_int(EE_UB0,2397);
+			lc640_write_int(EE_UB20,2314);
+			//lc640_write_int(EE_IZMAX,20);
+			lc640_write_int(EE_UVZ,2346);
+			lc640_write_int(EE_UBM_AV,0);
 			lc640_write_int(EE_U_OUT_KONTR_MAX,2420);
 			lc640_write_int(EE_U_OUT_KONTR_MIN,2200);
 
