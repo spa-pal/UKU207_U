@@ -7046,7 +7046,7 @@ else if (ind==iDef_220_IPS_TERMOKOMPENSAT)
 	{ 
 	ptrs[0]=" »œ—380/220-45¿“ »17";
 	ptrs[1]=" »œ—220/220-10¿“ »17";
-	ptrs[2]=" »œ—380/110-90¿“ »8 ";
+	ptrs[2]=" »œ—380/110-90¿“ »9 ";
 	ptrs[3]=sm_exit;
 	ptrs[4]="                    ";
 	ptrs[5]="                    ";
@@ -9578,6 +9578,8 @@ if(ind==iDeb)
 		//int2lcdyx(numOfTemperCells,0,12,0);
 		//int2lcdyx(numOfCells,0,15,0);
 		int2lcdyx(plazma_cntrl_stat,0,19,0);
+		int2lcdyx(bat[0]._Ib,0,9,0);
+		int2lcdyx(bat[1]._Ib,0,15,0);
 		}
 /*	else if(sub_ind==4)
      	{
@@ -20007,23 +20009,23 @@ else if (ind==iDef_220_IPS_TERMOKOMPENSAT)
 			{
 			def_ips_set(110);
 			//lc640_write_int(EE_DU,2315-1850);
-			lc640_write_int(EE_U_AVT,2200);
-			lc640_write_int(EE_IZMAX,50);
+			//lc640_write_int(EE_U_AVT,2200);
+			//lc640_write_int(EE_IZMAX,50);
 			//lc640_write_int(EE_IMAX,12);
 			//lc640_write_int(EE_IMIN,8);
 			lc640_write_int(EE_AUSW_MAIN,22043);
-			lc640_write_int(EE_NUMIST,3);
+			//lc640_write_int(EE_NUMIST,3);
 
-			lc640_write_int(EE_PAR,0);
+			//lc640_write_int(EE_PAR,0);
 			//lc640_write_int(EE_UMAX,2550);
-			lc640_write_int(EE_DU,2315-1110);
-			lc640_write_int(EE_UB0,2397);
-			lc640_write_int(EE_UB20,2314);
+			//lc640_write_int(EE_DU,2315-1110);
+			//lc640_write_int(EE_UB0,2397);
+			//lc640_write_int(EE_UB20,2314);
 			//lc640_write_int(EE_IZMAX,20);
-			lc640_write_int(EE_UVZ,2346);
-			lc640_write_int(EE_UBM_AV,0);
-			lc640_write_int(EE_U_OUT_KONTR_MAX,2420);
-			lc640_write_int(EE_U_OUT_KONTR_MIN,2200);
+			//lc640_write_int(EE_UVZ,2346);
+			//lc640_write_int(EE_UBM_AV,0);
+			//lc640_write_int(EE_U_OUT_KONTR_MAX,2420);
+			//lc640_write_int(EE_U_OUT_KONTR_MIN,2200);
 
 			}
 		else if(sub_ind==SIMAXIDEF)
@@ -23965,23 +23967,23 @@ else if(ind==iK_bat_sel_TELECORE)
 	else if(but==butD_)
 		{
 		sub_ind=1+NUMBAT_TELECORE;
-		}	
-	else if((but==butE)&&(NUMBAT_TELECORE)&&(BAT_IS_ON[0]==bisON)&&(sub_ind==0))
+		}
+	else if(sub_ind==0)
 		{
-		tree_up(iK_bat,0,0,0);	
-
-		//mess_send(MESS_SRC_CONTROL,0xFFFF,0,10);
-     	//mess_send(MESS_BAT_CONTROL,0xFFFF&(~(1<<sub_ind1)),1<<(sub_ind1),10);
-
-		ret(1000);
+		if((but==butE)&&(NUMBAT_TELECORE>0))
+			{
+			tree_up(iK_bat,0,0,0);	
+			ret(1000);
+			}
 		}	
-	else if((but==butE)&&(NUMBAT)&&(BAT_IS_ON[1]==bisON)&&(sub_ind==((BAT_IS_ON[0]==bisON))))
+	else if(sub_ind==0)
 		{
-		tree_up(iK_bat,0,0,1);	
-		
-     		
-		ret(1000);
-		}	
+		if((but==butE)&&(NUMBAT_TELECORE>1))
+			{
+			tree_up(iK_bat,0,0,1);	
+			ret(1000);
+			}
+		}
 	else if(sub_ind==(NUMBAT_TELECORE))
 		{
 		if(but==butE)

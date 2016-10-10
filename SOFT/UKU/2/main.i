@@ -2514,6 +2514,7 @@ extern unsigned short Ubpsmax;
 extern short plazma_sk;
 extern char	plazma_inv[4];
 extern char plazma_bat;
+extern char plazma_cntrl_stat;
 
 
 extern signed int i_avg_max,i_avg_min,i_avg_summ,i_avg; 
@@ -12349,7 +12350,7 @@ else if (a_ind . i==iDef_220_IPS_TERMOKOMPENSAT)
 	{ 
 	ptrs[0]=" »œ—380/220-45¿“ »17";
 	ptrs[1]=" »œ—220/220-10¿“ »17";
-	ptrs[2]=" »œ—380/110-90¿“ »8 ";
+	ptrs[2]=" »œ—380/110-90¿“ »9 ";
 	ptrs[3]=sm_exit;
 	ptrs[4]="                    ";
 	ptrs[5]="                    ";
@@ -14880,7 +14881,7 @@ if(a_ind . i==iDeb)
 
 		
 		
-		
+		int2lcdyx(plazma_cntrl_stat,0,19,0);
 		}
 
 
@@ -25151,23 +25152,23 @@ else if (a_ind . i==iDef_220_IPS_TERMOKOMPENSAT)
 			{
 			def_ips_set(110);
 			
-			lc640_write_int(0x10+100+80,2200);
-			lc640_write_int(0x10+100+30,50);
+			
+			
 			
 			
 			lc640_write_int(0x10+300,22043);
-			lc640_write_int(0x10+100+36,3);
+			
 
-			lc640_write_int(0x10+100+86,0);
 			
-			lc640_write_int(0x10+100+84,2315-1110);
-			lc640_write_int(0x10+100+6,2397);
-			lc640_write_int(0x10+100+8,2314);
 			
-			lc640_write_int(0x10+100+106,2346);
-			lc640_write_int(0x10+500+96,0);
-			lc640_write_int(0x10+100+182,2420);
-			lc640_write_int(0x10+100+184,2200);
+			
+			
+			
+			
+			
+			
+			
+			
 
 			}
 		else if(a_ind . s_i==3)

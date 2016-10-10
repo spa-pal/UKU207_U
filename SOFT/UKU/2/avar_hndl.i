@@ -3930,6 +3930,7 @@ extern unsigned short Ubpsmax;
 extern short plazma_sk;
 extern char	plazma_inv[4];
 extern char plazma_bat;
+extern char plazma_cntrl_stat;
 
 
 extern signed int i_avg_max,i_avg_min,i_avg_summ,i_avg; 

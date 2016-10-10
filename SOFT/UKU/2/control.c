@@ -1729,11 +1729,17 @@ if((BAT_IS_ON[1]==bisON)&&(bat[1]._Ub>200)&&(bat[1]._Ib>bat[0]._Ib)) Ibmax=bat[1
 
 #ifdef TELECORE
 Ibmax=0;
+/*
 if((NUMBAT_TELECORE>0)&&(lakb[0]._communicationFullErrorStat==0)&&(lakb[0]._ch_curr/10>Ibmax))Ibmax=lakb[0]._ch_curr/10;
 if((NUMBAT_TELECORE>1)&&(lakb[1]._communicationFullErrorStat==0)&&(lakb[1]._ch_curr/10>Ibmax))Ibmax=lakb[1]._ch_curr/10;
 if((NUMBAT_TELECORE>2)&&(lakb[2]._communicationFullErrorStat==0)&&(lakb[2]._ch_curr/10>Ibmax))Ibmax=lakb[2]._ch_curr/10;
+*/
+if((NUMBAT_TELECORE>0)&&(bat[0]._Ib/10>Ibmax))Ibmax=bat[0]._Ib/10;
+if((NUMBAT_TELECORE>1)&&(bat[1]._Ib/10>Ibmax))Ibmax=bat[1]._Ib/10;
+//if((BAT_IS_ON[0]==bisON)&&(bat[0]._Ub>200)) Ibmax=bat[0]._Ib/1;
+//if((BAT_IS_ON[1]==bisON)&&(bat[1]._Ub>200)&&(bat[1]._Ib>bat[0]._Ib)) Ibmax=bat[1]._Ib;
 #endif
-
+//Ibmax=bat[0]._Ib;
 //if((AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043))Ibmax=Ib_ips_termokompensat;
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
 Ibmax=Ib_ips_termokompensat;
@@ -1769,6 +1775,7 @@ for(i=0;i<NUMBAT_TELECORE;i++)
 	{
 	load_I-=lakb[i]._ch_curr/10;
 	}
+load_I=-(bat[0]._Ib/10)-(bat[1]._Ib/10);
 #else
 load_I=-(bat[0]._Ib/10)-(bat[1]._Ib/10);
 #endif
@@ -1914,7 +1921,7 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 	if(BAT_TYPE==2)
 		{
 		lakb[0]._ch_curr/*temp_SS*/=((ascii2halFhex(liBatteryInBuff[113]))<<12)+
-							((ascii2halFhex(liBatteryInBuff[114]))<<8)+
+					 		((ascii2halFhex(liBatteryInBuff[114]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[115]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[116])));
 		
@@ -2040,7 +2047,7 @@ if(sacredSunSilentCnt<3)
 	{
     	bat[0]._Ub=lakb[0]._tot_bat_volt;
     	bat[0]._Tb=lakb[0]._max_cell_temp;
-   	bat[0]._Ib=lakb[0]._ch_curr/10;
+   	//bat[0]._Ib=lakb[0]._ch_curr/10;
 	}
 else 
 	{
@@ -5821,10 +5828,10 @@ if(ch_cnt0<10)
 		ch_cnt0=0;
 		b1Hz_ch=1;
 
-		if(ch_cnt1<30)
+		if(ch_cnt1<5)
 			{
 			ch_cnt1++;
-			if(ch_cnt1>=30)
+			if(ch_cnt1>=5)
 				{
 				ch_cnt1=0;
 				b1_30Hz_ch=1;
@@ -5910,10 +5917,11 @@ else if((b1Hz_ch)&&(!bIBAT_SMKLBR))
 	        if(cntrl_stat_blok_cnt)	cntrl_stat_new--;
 			else					cntrl_stat_new-=5;
 			plazma_cntrl_stat=6;
+			cntrl_stat_new=0;
 			}
 		else if((Ibmax<(IZMAX_*2))&&(Ibmax>IZMAX_))
 			{
-			plazma_cntrl_stat=7;
+			//plazma_cntrl_stat=7;
 			if(b1_30Hz_ch)
 				{
 				b1_30Hz_ch=0;
@@ -5943,12 +5951,12 @@ else if((b1Hz_ch)&&(!bIBAT_SMKLBR))
 		
 		else if(Ubpsmax<load_U)
 			{
-			/*if((load_U-Ubpsmax)>10)	*/cntrl_stat_new+=30;
+			/*if((load_U-Ubpsmax)>10)	*/cntrl_stat_new+=15;
 		/*	else 					cntrl_stat_new+=1;*/
 			plazma_cntrl_stat=9;
 			}
 
-		else if((Ibmax==0))
+/*		else if((Ibmax==0))
 			{
 			plazma_cntrl_stat=30;
 			if(b1_30Hz_ch)
@@ -5958,35 +5966,35 @@ else if((b1Hz_ch)&&(!bIBAT_SMKLBR))
 					cntrl_stat_new+=30;
 					}
 			
-			}  
+			}*/  
 							
 		else if((Ibmax<((IZMAX_*4)/5)))
 			{
 			plazma_cntrl_stat=10;
 			if(Ubpsmax<(u_necc-DU_LI_BAT))
 				{
-								   	cntrl_stat_new+=10;
+								   	cntrl_stat_new+=5;
 									plazma_cntrl_stat=11;
 				}				
 			else if(load_U<u_necc)
 				{
 				plazma_cntrl_stat=12;
-				if(b1_30Hz_ch)
-					{
-					b1_30Hz_ch=0;
-									cntrl_stat_new+=10;
+				//if(b1_30Hz_ch)
+				//	{
+				//	b1_30Hz_ch=0;
+									cntrl_stat_new+=2;
 									plazma_cntrl_stat=13;
-					}
+				//	}
 				}
 			else
 				{
 				plazma_cntrl_stat=14;
-				if(b1_30Hz_ch)
-					{
-					b1_30Hz_ch=0;
-									cntrl_stat_new-=10;
+			//	if(b1_30Hz_ch)
+			//		{
+			//		b1_30Hz_ch=0;
+									cntrl_stat_new-=2;
 									plazma_cntrl_stat=15;
-					}
+			//		}
 				}
 			}  
 		//else if() 
@@ -6004,8 +6012,7 @@ else if((b1Hz_ch)&&(!bIBAT_SMKLBR))
 				}*/
 	/*		else if(load_U>(u_necc))
 				{
-				if(b1_30Hz_ch)
-					{
+				
 					b1_30Hz_ch=0;
 					if(Ibmax<(IZMAX_-5))cntrl_stat_new+=5;
 					else				cntrl_stat_new++;
@@ -6013,8 +6020,12 @@ else if((b1Hz_ch)&&(!bIBAT_SMKLBR))
 				}*/				
 			else 
 				{
-									cntrl_stat_new++;
-									plazma_cntrl_stat=18;
+				if(b1_30Hz_ch)
+					{
+					b1_30Hz_ch=0;					
+					cntrl_stat_new++;
+					plazma_cntrl_stat=18;
+					}
 				}					
 			}	
 		else if(load_U>u_necc)
