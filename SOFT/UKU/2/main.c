@@ -9577,7 +9577,7 @@ if(ind==iDeb)
 
 		//int2lcdyx(numOfTemperCells,0,12,0);
 		//int2lcdyx(numOfCells,0,15,0);
-		//int2lcdyx(bat_drv_rx_cnt,0,19,0);
+		int2lcdyx(plazma_cntrl_stat,0,19,0);
 		}
 /*	else if(sub_ind==4)
      	{
