@@ -3846,6 +3846,11 @@ else if(b1Hz_sh)
 	     	bps[i]._flags_tu=1;
 	     	}
 		}
+
+     for(i=0;i<=NUMIST;i++)
+		{
+	    if(bps[i]._flags_tu==1) 	bps[i]._x_=-50;
+	   	}	
 		 
   	}
 
