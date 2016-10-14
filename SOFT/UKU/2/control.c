@@ -126,6 +126,7 @@ unsigned char	ch_cnt0,b1Hz_ch,i,iiii;
 unsigned char	ch_cnt1,b1_30Hz_ch;
 unsigned short IZMAX_;
 unsigned short Ubpsmax;
+unsigned short cntrl_stat_blck_cnt;
 
 
 //***********************************************
@@ -5897,6 +5898,7 @@ else if((b1Hz_ch)&&(!bIBAT_SMKLBR))
 
 	if((NUMBAT_TELECORE==0)||(lakbNotErrorNum==0))
 		{
+		cntrl_stat_blck_cnt=TZAS+2;
 		plazma_cntrl_stat=1;
 		if(load_U<u_necc)
 			{
@@ -5916,10 +5918,12 @@ else if((b1Hz_ch)&&(!bIBAT_SMKLBR))
 		plazma_cntrl_stat=4;
 		if(Ibmax==IZMAX_)
 			{
+			cntrl_stat_blck_cnt=TZAS+2;
 			plazma_cntrl_stat=5;						
 			}	
 		else if(Ibmax>(IZMAX_*2))
 			{
+			cntrl_stat_blck_cnt=TZAS+2;
 	        if(cntrl_stat_blok_cnt)	cntrl_stat_new--;
 			else					cntrl_stat_new-=5;
 			plazma_cntrl_stat=6;
@@ -5927,6 +5931,7 @@ else if((b1Hz_ch)&&(!bIBAT_SMKLBR))
 			}
 		else if((Ibmax<(IZMAX_*2))&&(Ibmax>IZMAX_))
 			{
+			cntrl_stat_blck_cnt=TZAS+2;
 			//plazma_cntrl_stat=7;
 			if(b1_30Hz_ch)
 				{
@@ -5957,9 +5962,26 @@ else if((b1Hz_ch)&&(!bIBAT_SMKLBR))
 		
 		else if(Ubpsmax<load_U)
 			{
-			/*if((load_U-Ubpsmax)>10)	*/cntrl_stat_new+=15;
+/*			if(net_U<100)
+				{
+				cntrl_stat_blck_cnt=TZAS+2;
+				}
+			else */
+				{
+				if(cntrl_stat_blck_cnt)
+					{
+					cntrl_stat_blck_cnt--;
+					plazma_cntrl_stat=99;
+					}
+				else 
+					{
+					cntrl_stat_new+=15;
+					plazma_cntrl_stat=9;
+					}
+				}
+			/*if((load_U-Ubpsmax)>10)	*/
 		/*	else 					cntrl_stat_new+=1;*/
-			plazma_cntrl_stat=9;
+			
 			}
 
 /*		else if((Ibmax==0))
@@ -5976,6 +5998,7 @@ else if((b1Hz_ch)&&(!bIBAT_SMKLBR))
 							
 		else if((Ibmax<((IZMAX_*4)/5)))
 			{
+			cntrl_stat_blck_cnt=TZAS+2;
 			plazma_cntrl_stat=10;
 			if(Ubpsmax<(u_necc-DU_LI_BAT))
 				{
@@ -6006,6 +6029,7 @@ else if((b1Hz_ch)&&(!bIBAT_SMKLBR))
 		//else if() 
 		else if(load_U<u_necc)
 			{
+			cntrl_stat_blck_cnt=TZAS+2;
 			plazma_cntrl_stat=16;
 			if(load_U<(u_necc-DU_LI_BAT-5))
 				{
@@ -6036,6 +6060,7 @@ else if((b1Hz_ch)&&(!bIBAT_SMKLBR))
 			}	
 		else if(load_U>u_necc)
 			{
+			cntrl_stat_blck_cnt=TZAS+2;
 									cntrl_stat_new--;
 									plazma_cntrl_stat=19;
 			}

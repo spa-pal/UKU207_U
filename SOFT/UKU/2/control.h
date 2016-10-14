@@ -104,6 +104,7 @@ extern unsigned char	ch_cnt0,b1Hz_ch,i,iiii;
 extern unsigned char	ch_cnt1,b1_30Hz_ch;
 extern unsigned short IZMAX_;
 extern unsigned short Ubpsmax;
+extern unsigned short cntrl_stat_blck_cnt;
 
 extern short plazma_sk;
 extern char	plazma_inv[4];

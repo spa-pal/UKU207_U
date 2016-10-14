@@ -9578,7 +9578,7 @@ if(ind==iDeb)
 		//int2lcdyx(numOfPacks,0,9,0);
 
 		//int2lcdyx(numOfTemperCells,0,12,0);
-		//int2lcdyx(numOfCells,0,15,0);
+		int2lcdyx(cntrl_stat_blck_cnt,0,6,0);
 		int2lcdyx(plazma_cntrl_stat,0,19,0); 
 		int2lcdyx(ch_cnt0,0,13,0);
 		int2lcdyx(ch_cnt1,0,16,0);
