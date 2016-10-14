@@ -898,6 +898,7 @@ extern signed short U_OUT_KONTR_MAX;
 extern signed short U_OUT_KONTR_MIN;
 extern signed short U_OUT_KONTR_DELAY;
 extern signed short DOP_RELE_FUNC;
+extern signed short CNTRL_HNDL_TIME;	//Постоянная времени регулирования источников для Телекора
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
 extern enum_apv_on APV_ON1,APV_ON2;

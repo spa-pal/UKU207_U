@@ -152,6 +152,7 @@ signed short U_OUT_KONTR_MAX;
 signed short U_OUT_KONTR_MIN;
 signed short U_OUT_KONTR_DELAY;
 signed short DOP_RELE_FUNC;
+signed short CNTRL_HNDL_TIME;	//Постоянная времени регулирования источников для Телекора
 
 enum_apv_on APV_ON1,APV_ON2;
 signed short APV_ON2_TIME;
@@ -6488,9 +6489,10 @@ else if(ind==iSet_TELECORE2015)
 	ptrs[35]=      	" Инверторы          ";
 	ptrs[36]=      	" Время ротации      ";
 	ptrs[37]=      	" источников    lчас.";
-    ptrs[38]=		" Выход              ";
-    ptrs[39]=		" Калибровки         "; 
-    ptrs[40]=		"                    ";        
+	ptrs[38]=      	" Время регулир.   L ";
+    ptrs[39]=		" Выход              ";
+    ptrs[40]=		" Калибровки         "; 
+    ptrs[41]=		"                    ";        
 	
 	if((sub_ind-index_set)>2)index_set=sub_ind-2;
 	else if(sub_ind<index_set)index_set=sub_ind;
@@ -6555,7 +6557,7 @@ else if(ind==iSet_TELECORE2015)
 		int2lcd(FORVARDBPSCHHOUR,'l',0);	
 	}
 
-
+	int2lcd(CNTRL_HNDL_TIME,'L',0);
 	//int2lcdyx(sub_ind,0,3,0);
 	//int2lcdyx(index_set,0,1,0);
 	}
@@ -9577,9 +9579,11 @@ if(ind==iDeb)
 
 		//int2lcdyx(numOfTemperCells,0,12,0);
 		//int2lcdyx(numOfCells,0,15,0);
-		int2lcdyx(plazma_cntrl_stat,0,19,0);
+		int2lcdyx(plazma_cntrl_stat,0,19,0); 
+		int2lcdyx(ch_cnt0,0,13,0);
+		int2lcdyx(ch_cnt1,0,16,0);
 		int2lcdyx(bat[0]._Ib,0,9,0);
-		int2lcdyx(bat[1]._Ib,0,15,0);
+		//int2lcdyx(bat[1]._Ib,0,15,0);
 		}
 /*	else if(sub_ind==4)
      	{
@@ -9677,21 +9681,22 @@ if(ind==iDeb)
 
   else if(sub_ind==6)
      	{
-     	bgnd_par("6                   ",
-     		    "                 В  ",
-     		    "                 Н  ",
-     		    "                    ");
+     	bgnd_par(	"6                   ",
+     		    	"    !       $       ",
+     		    	"    @       %       ",
+     		    	"            ^       ");
      		    
-		int2lcdyx(sk_stat[0],0,5,0);
-		int2lcdyx(sk_stat[1],0,8,0);
-		int2lcdyx(sk_av_stat[0],0,11,0);
-		int2lcdyx(sk_av_stat[1],0,15,0);
+		int2lcd_mmm(bat[0]._Ib,'!',2);
+		int2lcd_mmm(bat[1]._Ib,'@',2);
+		int2lcd_mmm(bps[0]._Ii,'$',1);
+		int2lcd_mmm(bps[1]._Ii,'%',1);
+		int2lcd_mmm(bps[2]._Ii,'^',1);
 
-		int2lcdyx(t_ext[0],1,3,0);
-		int2lcdyx(t_ext[1],2,3,0);
+		//int2lcdyx(t_ext[0],1,3,0);
+		//int2lcdyx(t_ext[1],2,3,0);
 		
-		int2lcdyx(t_box_warm,1,7,0);
-		int2lcdyx(t_box_vent,2,7,0);
+		int2lcdyx(load_I,0,7,0);
+		//int2lcdyx(t_box_vent,2,7,0);
 
 //		int2lcdyx(vent_stat_k,1,18,0);
 //		int2lcdyx(warm_stat_k,2,18,0);		
@@ -17529,7 +17534,7 @@ else if(ind==iSet_TELECORE2015)
                
                }
 		
-		gran_char(&sub_ind,0,39);
+		gran_char(&sub_ind,0,40);
 		}
 	else if(but==butU)
 		{
@@ -17551,11 +17556,11 @@ else if(ind==iSet_TELECORE2015)
                sub_ind=36;
 		       index_set=36;
                }
-		gran_char(&sub_ind,0,39);
+		gran_char(&sub_ind,0,40);
 		}
 	else if(but==butD_)
 		{
-		sub_ind=38;
+		sub_ind=39;
 		}
 		
 	else if(sub_ind==0)
@@ -17911,7 +17916,14 @@ else if(ind==iSet_TELECORE2015)
 	    numOfForvardBps_init();
 		speed=1;
 	    }
-     else if((sub_ind==38) || (sub_ind==3))
+  	else if(sub_ind==38)
+	 	{
+	    if(but==butR)CNTRL_HNDL_TIME++;
+	    else if(but==butL)CNTRL_HNDL_TIME--;
+	    gran(&CNTRL_HNDL_TIME,1,10);
+	    lc640_write_int(EE_CNTRL_HNDL_TIME,CNTRL_HNDL_TIME);
+	    }
+     else if((sub_ind==39) || (sub_ind==3))
 		{
 		if(but==butE)
 		     {
@@ -17920,7 +17932,7 @@ else if(ind==iSet_TELECORE2015)
 		     }
 		}
 				
-	else if(sub_ind==39)
+	else if(sub_ind==40)
 		{
 		if(but==butE)
 		     {		
@@ -23976,7 +23988,7 @@ else if(ind==iK_bat_sel_TELECORE)
 			ret(1000);
 			}
 		}	
-	else if(sub_ind==0)
+	else if((sub_ind==1)&&(NUMBAT_TELECORE>1))
 		{
 		if((but==butE)&&(NUMBAT_TELECORE>1))
 			{

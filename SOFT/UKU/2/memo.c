@@ -135,6 +135,7 @@ U_OUT_KONTR_DELAY=lc640_read_int(EE_U_OUT_KONTR_DELAY);
 DOP_RELE_FUNC=lc640_read_int(EE_DOP_RELE_FUNC);
 ipsBlckSrc=lc640_read_int(EE_IPS_BLOCK_SRC);
 ipsBlckLog=lc640_read_int(EE_IPS_BLOCK_LOG);
+CNTRL_HNDL_TIME=lc640_read_int(EE_CNTRL_HNDL_TIME);
 
 BAT_IS_ON[0]=(enum_bat_is_on)lc640_read_int(EE_BAT1_IS_ON);
 BAT_IS_ON[1]=(enum_bat_is_on)lc640_read_int(EE_BAT2_IS_ON);
