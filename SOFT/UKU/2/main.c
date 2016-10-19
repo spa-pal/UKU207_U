@@ -9695,7 +9695,7 @@ if(ind==iDeb)
 		//int2lcdyx(t_ext[0],1,3,0);
 		//int2lcdyx(t_ext[1],2,3,0);
 		
-		int2lcdyx(load_I,0,7,0);
+		int2lcdyx(load_I,3,7,0);
 		//int2lcdyx(t_box_vent,2,7,0);
 
 //		int2lcdyx(vent_stat_k,1,18,0);
@@ -9716,9 +9716,17 @@ if(ind==iDeb)
 
 //		int2lcdyx(t_box_warm_on_cnt,1,10,0);
 //		int2lcdyx(t_box_vent_on_cnt,1,15,0);
-//		int2lcdyx(warm_stat_k,2,10,0);
+//			//int2lcdyx(t_box_vent_on_cnt,0,3,0);
+	//int2lcdyx(t_box_warm_on_cnt,0,7,0);
 //		int2lcdyx(vent_stat_k,2,15,0);
-    		}
+
+		int2lcdyx(t_box_warm,0,3,0);
+		int2lcdyx(TELECORE2015_KLIMAT_WARM_ON_temp,0,9,0);
+		int2lcdyx(TELECORE2015_KLIMAT_WARM_OFF,0,13,0);
+		int2lcdyx(warm_stat_k,0,16,0);	 
+		int2lcdyx(lakb[0]._zar_percent,0,19,0);	 
+
+    	}
 
 
    else if(sub_ind==7)

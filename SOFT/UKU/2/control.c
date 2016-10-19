@@ -4381,8 +4381,8 @@ for(i=0;i<3;i++)
 		{
 		signed short tempSS;
 		tempSS=lakb[i]._s_o_c;
-		tempSS*=100;
-		tempSS/=lakb[i]._s_o_h;
+		tempSS*=10;
+		tempSS/=(lakb[i]._s_o_h/10);
 		gran(&tempSS,0,100);
 		lakb[i]._zar_percent=tempSS;
 		}
@@ -4441,7 +4441,7 @@ if(
 	|| ((NUMBAT_TELECORE>0)&&(lakb[0]._zar_percent<TELECORE2015_KLIMAT_CAP)) //есть 1 батарея и ее заряд снизился ниже установленного порога
 	|| ((NUMBAT_TELECORE>1)&&(lakb[1]._zar_percent<TELECORE2015_KLIMAT_CAP)) //есть 2-я батарея .....
 	|| ((NUMBAT_TELECORE>2)&&(lakb[2]._zar_percent<TELECORE2015_KLIMAT_CAP)) //есть 3-я батарея	.....
-  )	TELECORE2015_KLIMAT_WARM_ON_temp=10;
+  )	TELECORE2015_KLIMAT_WARM_ON_temp=0;
 
 if(t_box_warm<TELECORE2015_KLIMAT_WARM_ON_temp) t_box_warm_on_cnt++;
 else if(t_box_warm>TELECORE2015_KLIMAT_WARM_OFF) t_box_warm_on_cnt--;
