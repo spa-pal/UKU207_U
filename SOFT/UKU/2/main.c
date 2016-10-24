@@ -40,6 +40,7 @@
 #include "ztt.h"
 #include "mcp2515.h"
 //#include "sc16is7xx.h"
+#include "modbus_tcp.h"
 
 extern U8 own_hw_adr[];
 extern U8  snmp_Community[];
@@ -679,6 +680,8 @@ short plazma_numOfPacks;
 
 char plazma_ztt[2];
 
+U8 socket_tcp;
+#define PORT_NUM 8080
 
 //-----------------------------------------------
 void rtc_init (void) 
@@ -2999,7 +3002,12 @@ else if(ind==iMn_6U)
 	//int2lcdyx(lc640_read_int(ADR_EE_BAT_IS_ON[1]),0,9,0);
 	//int2lcdyx(load_U,0,14,0);
 	//int2lcdyx(cntrl_stat,0,4,0);
-	//int2lcdyx(u_necc,0,9,0);
+	int2lcdyx(plazma_modbus_tcp[0],0,2,0);
+	int2lcdyx(plazma_modbus_tcp[1],0,5,0);
+	int2lcdyx(plazma_modbus_tcp[2],0,8,0);
+	int2lcdyx(plazma_modbus_tcp[3],0,11,0);
+	int2lcdyx(plazma_modbus_tcp[4],0,14,0);
+	int2lcdyx(plazma_modbus_tcp[5],0,17,0);
 	}
 
 else if(ind==iMn_220)
@@ -9721,9 +9729,9 @@ if(ind==iDeb)
 //		int2lcdyx(vent_stat_k,2,15,0);
 
 		int2lcdyx(t_box_warm,0,3,0);
-		int2lcdyx(TELECORE2015_KLIMAT_WARM_ON_temp,0,9,0);
-		int2lcdyx(TELECORE2015_KLIMAT_WARM_OFF,0,13,0);
-		int2lcdyx(warm_stat_k,0,16,0);	 
+		//int2lcdyx(TELECORE2015_KLIMAT_WARM_ON_temp,0,9,0);
+		//int2lcdyx(TELECORE2015_KLIMAT_WARM_OFF,0,13,0);
+		//int2lcdyx(warm_stat_k,0,16,0);	 
 		int2lcdyx(lakb[0]._zar_percent,0,19,0);	 
 
     	}
@@ -28997,6 +29005,12 @@ can_mcp2515_init();
 sc16is700_init((uint32_t)(MODBUS_BAUDRATE*10UL));
 #endif
 //sc16is700_init();
+
+  /* Initialize TCP Socket and start listening */
+  socket_tcp = tcp_get_socket (TCP_TYPE_SERVER, 0, 10, tcp_callback);
+  if (socket_tcp != 0) {
+    tcp_listen (socket_tcp, PORT_NUM);
+  }
 		
 while (1)  
 	{
