@@ -22,6 +22,6 @@
 *.uvgui.*
 *.uvopt
 *.plg
-*.uvproj
 
-/SOFT/UKU/2/*.uvproj
+
+
