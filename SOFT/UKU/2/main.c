@@ -4163,6 +4163,8 @@ else if (ind==iBat_universe)
 			}
 		int2lcd(sub_ind1+1,'@',0);
 
+		if(bat[sub_ind1]._Ib>=0)int2lcdyx(bat[sub_ind1]._Ib,0,19,2);
+		else if(bat[sub_ind1]._Ib<0)int2lcdyx(-(bat[sub_ind1]._Ib),0,19,2);
 		}
 	}
 
