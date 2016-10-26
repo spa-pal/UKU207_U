@@ -9542,28 +9542,31 @@ if(ind==iDeb)
 
    else if(sub_ind==4)
      	{
-     	bgnd_par("LB                  ",
-     		    "                    ",
-     		    "        !           ",
-     		    "        @           ");
+     	bgnd_par(	"LB                  ",
+     		    	"                    ",
+     		    	"      !   #         ",
+     		    	"      @   $         ");
 
-     	int2lcdyx(sub_ind,0,1,0);
+     	int2lcdyx(NUMBAT_TELECORE,0,1,0);
+		int2lcdyx(bps[0]._Ii,0,5,0);
+		int2lcdyx(bps[1]._Ii,0,9,0);
+		int2lcdyx(IMAX,0,13,0);
+		int2lcdyx(plazma_cntrl_stat,0,19,0);
 
+		int2lcdyx(lakb[0]._tot_bat_volt,2,2,0);
+	   	int2lcdyx(lakb[1]._tot_bat_volt,3,2,0);
+	 	int2lcd_mmm(lakb[0]._ch_curr/10,'!',0);
+		int2lcd_mmm(lakb[1]._ch_curr/10,'@',0);
+	 	int2lcd_mmm(bat[0]._Ib/10,'#',0);
+		int2lcd_mmm(bat[1]._Ib/10,'$',0);
 
-		int2lcdyx(lakb[0]._tot_bat_volt,2,3,0);
-	   	int2lcdyx(lakb[1]._tot_bat_volt,3,3,0);
-	 	int2lcd_mmm(lakb[0]._ch_curr,'!',0);
-		int2lcd_mmm(lakb[1]._ch_curr,'@',0);
-		//int2lcdyx(lakb[0]._max_cell_temp,2,19,0);
-	   	//int2lcdyx(lakb[1]._max_cell_temp,3,19,0);
-		//int2lcdyx(lakb[0]._plazma_ss,2,13,0);
-	   	//int2lcdyx(lakb[1]._plazma_ss,3,13,0);
-		int2lcdyx(lakb[0]._communicationFullErrorStat,2,15,0);
-	   	int2lcdyx(lakb[1]._communicationFullErrorStat,3,15,0);
-		int2lcdyx(lakb[0]._communication2lvlErrorCnt,2,17,0);
-	   	int2lcdyx(lakb[1]._communication2lvlErrorCnt,3,17,0);
-		int2lcdyx(lakb[0]._communication2lvlErrorStat,2,19,0);
-	   	int2lcdyx(lakb[1]._communication2lvlErrorStat,3,19,0);
+		int2lcdyx(load_I,2,17,0); 
+		int2lcdyx(Isumm,3,17,0);
+
+		int2lcdyx(lakb[0]._communicationFullErrorStat,2,19,0);
+	   	int2lcdyx(lakb[1]._communicationFullErrorStat,3,19,0);
+		
+
 
 		int2lcdyx(Ubpsmax,1,3,0);
 		int2lcdyx(Ibmax,1,7,0);
@@ -9580,11 +9583,11 @@ if(ind==iDeb)
 		//int2lcdyx(numOfPacks,0,9,0);
 
 		//int2lcdyx(numOfTemperCells,0,12,0);
-		int2lcdyx(cntrl_stat_blck_cnt,0,6,0);
-		int2lcdyx(plazma_cntrl_stat,0,19,0); 
-		int2lcdyx(ch_cnt0,0,13,0);
-		int2lcdyx(ch_cnt1,0,16,0);
-		int2lcdyx(bat[0]._Ib,0,9,0);
+		//t2lcdyx(cntrl_stat_blck_cnt,0,6,0);
+		 
+		//int2lcdyx(ch_cnt0,0,13,0);
+		//int2lcdyx(ch_cnt1,0,16,0);
+		//int2lcdyx(bat[0]._Ib,0,9,0);
 		//int2lcdyx(bat[1]._Ib,0,15,0);
 		}
 /*	else if(sub_ind==4)
