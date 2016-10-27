@@ -3,7 +3,7 @@
 #include "main.h"
 #include "modbus_tcp.h"
 
-char plazma_modbus_tcp[10];
+char plazma_modbus_tcp[20];
 /*--------------------------- TCP socket ------------------------------------*/
 
 U16 tcp_callback (U8 soc, U8 evt, U8 *ptr, U16 par) {
@@ -23,11 +23,19 @@ U16 tcp_callback (U8 soc, U8 evt, U8 *ptr, U16 par) {
       /* data length is par2. Allocate buffer to send reply.   */
       //procrec(ptr);
 	  plazma_modbus_tcp[0]++;
-	  //plazma_modbus_tcp[1]=ptr[0];
-	  //plazma_modbus_tcp[2]=ptr[1];
-	  //plazma_modbus_tcp[3]=ptr[2];
+	  plazma_modbus_tcp[1]=ptr[0];
+	  plazma_modbus_tcp[2]=ptr[1];
+	  plazma_modbus_tcp[3]=ptr[2];
+	  plazma_modbus_tcp[4]=ptr[3];
+	  plazma_modbus_tcp[5]=ptr[4];
+	  plazma_modbus_tcp[6]=ptr[5];
+	  plazma_modbus_tcp[7]=ptr[6];
+	  plazma_modbus_tcp[8]=ptr[7];
+	  plazma_modbus_tcp[9]=ptr[8];
+	  plazma_modbus_tcp[10]=ptr[9];
+	  plazma_modbus_tcp[11]=ptr[10];
 	  //plazma_modbus_tcp[4]=ptr[3];
-	  plazma_modbus_tcp[5]=par;
+	  //plazma_modbus_tcp[5]=par;
 	  //plazma_modbus_tcp[6]=ptr[5];
       break;
 

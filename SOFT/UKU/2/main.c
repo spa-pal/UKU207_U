@@ -3008,6 +3008,12 @@ else if(ind==iMn_6U)
 	int2lcdyx(plazma_modbus_tcp[3],0,11,0);
 	int2lcdyx(plazma_modbus_tcp[4],0,14,0);
 	int2lcdyx(plazma_modbus_tcp[5],0,17,0);
+	int2lcdyx(plazma_modbus_tcp[6],1,2,0);
+	int2lcdyx(plazma_modbus_tcp[7],1,5,0);
+	int2lcdyx(plazma_modbus_tcp[8],1,8,0);
+	int2lcdyx(plazma_modbus_tcp[9],1,11,0);
+	int2lcdyx(plazma_modbus_tcp[10],1,14,0);
+	int2lcdyx(plazma_modbus_tcp[11],1,17,0);
 	}
 
 else if(ind==iMn_220)
