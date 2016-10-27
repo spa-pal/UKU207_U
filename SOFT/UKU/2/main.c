@@ -9726,9 +9726,9 @@ if(ind==iDeb)
 //		int2lcdyx(vent_stat_k,2,15,0);
 
 		int2lcdyx(t_box_warm,0,3,0);
-		int2lcdyx(TELECORE2015_KLIMAT_WARM_ON_temp,0,9,0);
-		int2lcdyx(TELECORE2015_KLIMAT_WARM_OFF,0,13,0);
-		int2lcdyx(warm_stat_k,0,16,0);	 
+//		int2lcdyx(TELECORE2015_KLIMAT_WARM_ON_temp,0,9,0);
+//		int2lcdyx(TELECORE2015_KLIMAT_WARM_OFF,0,13,0);
+//		int2lcdyx(warm_stat_k,0,16,0);	 
 		int2lcdyx(lakb[0]._zar_percent,0,19,0);	 
 
     	}

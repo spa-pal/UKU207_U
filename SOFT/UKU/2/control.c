@@ -1158,7 +1158,7 @@ if(!mess_find_unvol(MESS2MATEMAT))
 	else temp_SL/=1000L;
 	#ifdef UKU_TELECORE2015
 	temp_SL/=2L;
-	temp_SL=-temp_SL;
+	//temp_SL=-temp_SL;
 	#endif
 	bat[0]._Ib=(signed short)temp_SL;
 
