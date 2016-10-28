@@ -1,4 +1,6 @@
 
+#define MODBUS_RTU_PROT	0
+
 extern unsigned char modbus_buf[20];
 extern short modbus_crc16;
 extern char modbus_timeout_cnt;
@@ -25,7 +27,7 @@ void modbus_registers_transmit(unsigned char adr,unsigned char func,unsigned sho
 //-----------------------------------------------
 void modbus_register_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr);
 //-----------------------------------------------
-void modbus_hold_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity);
+void modbus_hold_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot);
 //-----------------------------------------------
 void modbus_input_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity);
 void modbus_hold_register_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr);

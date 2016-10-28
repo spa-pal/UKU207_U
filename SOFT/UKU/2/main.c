@@ -13016,7 +13016,7 @@ else if(ind==iMn_220)
 		{
 		//ind=iMn;
 		sub_ind=0;
-		modbus_hold_registers_transmit(0x35,3,4,5);
+		modbus_hold_registers_transmit(0x35,3,4,5,1);
 
 	/*putchar0(0x04);
 	putchar0(0x04);
