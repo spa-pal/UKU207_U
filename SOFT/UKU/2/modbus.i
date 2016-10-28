@@ -2056,6 +2056,7 @@ extern unsigned short modbus_rx_arg1;
 extern unsigned short modbus_rx_arg2;		
 extern unsigned short modbus_rx_arg3;		
 
+extern char modbus_registers[200];
 
 unsigned short CRC16_2(char* buf, short len);
 
@@ -2063,9 +2064,10 @@ void modbus_registers_transmit(unsigned char adr,unsigned char func,unsigned sho
 
 void modbus_register_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr);
 
-void modbus_hold_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity);
+void modbus_hold_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot);
 
-void modbus_input_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity);
+void modbus_input_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot);
+
 void modbus_hold_register_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr);
 
 
@@ -2897,6 +2899,7 @@ extern signed short U_OUT_KONTR_MAX;
 extern signed short U_OUT_KONTR_MIN;
 extern signed short U_OUT_KONTR_DELAY;
 extern signed short DOP_RELE_FUNC;
+extern signed short CNTRL_HNDL_TIME;	
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
 extern enum_apv_on APV_ON1,APV_ON2;
@@ -3394,9 +3397,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1406 "main.h"
+#line 1407 "main.h"
 
-#line 1417 "main.h"
+#line 1418 "main.h"
 
 
 
@@ -3495,6 +3498,8 @@ extern short plazma_numOfTemperCells;
 extern short plazma_numOfPacks;
 
 extern char plazma_ztt[2];
+
+extern U8 socket_tcp;
 
 
 
@@ -3607,6 +3612,7 @@ extern unsigned char	ch_cnt0,b1Hz_ch,i,iiii;
 extern unsigned char	ch_cnt1,b1_30Hz_ch;
 extern unsigned short IZMAX_;
 extern unsigned short Ubpsmax;
+extern unsigned short cntrl_stat_blck_cnt;
 
 extern short plazma_sk;
 extern char	plazma_inv[4];
@@ -4067,38 +4073,38 @@ extern __declspec(__nothrow) void _membitmovewb(void *  , const void *  , int  ,
 
 
 
-#line 134 "eeprom_map.h"
+#line 135 "eeprom_map.h"
 
 
 
-#line 151 "eeprom_map.h"
+#line 152 "eeprom_map.h"
 
 
 
-#line 163 "eeprom_map.h"
+#line 164 "eeprom_map.h"
 
 
-#line 174 "eeprom_map.h"
-
-
-
-#line 185 "eeprom_map.h"
+#line 175 "eeprom_map.h"
 
 
 
-#line 241 "eeprom_map.h"
-
-
-#line 283 "eeprom_map.h"
+#line 186 "eeprom_map.h"
 
 
 
+#line 242 "eeprom_map.h"
 
+
+#line 284 "eeprom_map.h"
 
 
 
 
-#line 305 "eeprom_map.h"
+
+
+
+
+#line 306 "eeprom_map.h"
 
 
 
@@ -4236,6 +4242,24 @@ extern const unsigned short ADR_SK_LCD_EN[4];
 extern const unsigned short ADR_SK_RS_EN[4];
 
 #line 10 "modbus.c"
+#line 11 "modbus.c"
+#line 1 "modbus_tcp.h"
+
+extern char plazma_modbus_tcp[20];
+
+U16 tcp_callback (U8 soc, U8 evt, U8 *ptr, U16 par);
+
+extern char modbus_tcp_func;
+extern char modbus_tcp_unit;
+extern short modbus_tcp_rx_arg0;
+extern short modbus_tcp_rx_arg1;
+
+
+
+extern char* modbus_tcp_out_ptr;
+#line 12 "modbus.c"
+
+
 
 extern int  mem_copy (void *dp, void *sp, int len);
 
@@ -4257,6 +4281,9 @@ unsigned short modbus_rx_arg0;
 unsigned short modbus_rx_arg1;		
 unsigned short modbus_rx_arg2;		
 unsigned short modbus_rx_arg3;		
+
+char modbus_registers[200];
+
 
 
 unsigned short CRC16_2(char* buf, short len)
@@ -4323,12 +4350,12 @@ if(crc16_calculated==crc16_incapsulated)
 		if(modbus_func==3)		
 			{
 			modbus_plazma++;
-			modbus_hold_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,modbus_rx_arg1);
+			modbus_hold_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,modbus_rx_arg1,0);
 			}
 
 		if(modbus_func==4)		
 			{
-			modbus_input_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,modbus_rx_arg1);
+			modbus_input_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,modbus_rx_arg1,0);
 			}
 
 		else if(modbus_func==6) 	
@@ -4540,7 +4567,7 @@ if(crc16_calculated==crc16_incapsulated)
 
 void modbus_register_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr)
 {
-char modbus_registers[150];
+
 char modbus_tx_buff[50];
 unsigned short crc_temp;
 char i;
@@ -4682,7 +4709,7 @@ for (i=0;i<8;i++)
 
 void modbus_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity)
 {
-char modbus_registers[100];
+
 char modbus_tx_buff[100];
 unsigned short crc_temp;
 char i;
@@ -4829,7 +4856,7 @@ for (i=0;i<15;i++)
 
 void modbus_hold_register_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr)
 {
-char modbus_registers[150];
+
 char modbus_tx_buff[150];
 unsigned short crc_temp;
 char i;
@@ -4921,9 +4948,9 @@ for (i=0;i<8;i++)
 }
 
 
-void modbus_hold_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity)
+void modbus_hold_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot)
 {
-char modbus_registers[150];
+
 char modbus_tx_buff[150];
 unsigned short crc_temp;
 char i;
@@ -5011,61 +5038,38 @@ modbus_registers[105]=(char)(U_OUT_KONTR_DELAY%256);
 	     		}
 
 
-modbus_tx_buff[0]=adr;
-modbus_tx_buff[1]=func;
-
-
-
-
-modbus_tx_buff[2]=(char)(reg_quantity*2);
-
-
-
-
-
-
-
- 
-
-
+if(prot==0)
 	{
+	modbus_tx_buff[0]=adr;
+	modbus_tx_buff[1]=func;
+	modbus_tx_buff[2]=(char)(reg_quantity*2);
 	mem_copy((char*)&modbus_tx_buff[3],(char*)&modbus_registers[(reg_adr-1)*2],reg_quantity*2);
-	}
-crc_temp=CRC16_2(modbus_tx_buff,(reg_quantity*2)+3);
-
-modbus_tx_buff[3+(reg_quantity*2)]=crc_temp%256;
-modbus_tx_buff[4+(reg_quantity*2)]=crc_temp/256;
-
-for (i=0;i<(5+(reg_quantity*2));i++)
-	{
-	putchar0(modbus_tx_buff[i]);
-	}
-
-for (i=0;i<(5+(reg_quantity*2));i++)
-	{
-	putchar_sc16is700(modbus_tx_buff[i]);
-	}
-
-
-
-
-
-
-
- 
-
 	
+	crc_temp=CRC16_2(modbus_tx_buff,(reg_quantity*2)+3);
 
+	modbus_tx_buff[3+(reg_quantity*2)]=crc_temp%256;
+	modbus_tx_buff[4+(reg_quantity*2)]=crc_temp/256;
 
+	for (i=0;i<(5+(reg_quantity*2));i++)
+		{
+		putchar0(modbus_tx_buff[i]);
+		}
 
-
-
+	for (i=0;i<(5+(reg_quantity*2));i++)
+		{
+		putchar_sc16is700(modbus_tx_buff[i]);
+		}
+	}
+else if(prot==1)
+	{
+	modbus_tcp_out_ptr=(char*)&modbus_registers[(reg_adr-1)*2];
+	}
 }
 
 
-void modbus_input_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity)
+void modbus_input_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot)
 {
-char modbus_registers[200];
+
 char modbus_tx_buff[200];
 unsigned short crc_temp;
 char i;
@@ -5228,38 +5232,32 @@ if(sk_av_stat[3]==sasON) tempS|=0x0002;
 modbus_registers[426]=(char)(tempS/256);				
 modbus_registers[427]=(char)(tempS%256);
 
-modbus_tx_buff[0]=adr;
-modbus_tx_buff[1]=func;
-
-
-
-
-modbus_tx_buff[2]=(char)(reg_quantity*2);
-
-
-
-
-
-
-
- 
-
-
+if(prot==0)
 	{
+	modbus_tx_buff[0]=adr;
+	modbus_tx_buff[1]=func;
+
+	modbus_tx_buff[2]=(char)(reg_quantity*2);
+
 	mem_copy((char*)&modbus_tx_buff[3],(char*)&modbus_registers[(reg_adr-1)*2],reg_quantity*2);
-	}
-crc_temp=CRC16_2(modbus_tx_buff,(reg_quantity*2)+3);
 
-modbus_tx_buff[3+(reg_quantity*2)]=crc_temp%256;
-modbus_tx_buff[4+(reg_quantity*2)]=crc_temp/256;
+	crc_temp=CRC16_2(modbus_tx_buff,(reg_quantity*2)+3);
 
-for (i=0;i<(5+(reg_quantity*2));i++)
-	{
-	putchar0(modbus_tx_buff[i]);
+	modbus_tx_buff[3+(reg_quantity*2)]=crc_temp%256;
+	modbus_tx_buff[4+(reg_quantity*2)]=crc_temp/256;
+
+	for (i=0;i<(5+(reg_quantity*2));i++)
+		{
+		putchar0(modbus_tx_buff[i]);
+		}
+	for (i=0;i<(5+(reg_quantity*2));i++)
+		{
+		putchar_sc16is700(modbus_tx_buff[i]);
+		}
 	}
-for (i=0;i<(5+(reg_quantity*2));i++)
+else if(prot==1)
 	{
-	putchar_sc16is700(modbus_tx_buff[i]);
+	modbus_tcp_out_ptr=(char*)&modbus_registers[(reg_adr-1)*2];
 	}
 }
 

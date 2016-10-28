@@ -3265,6 +3265,7 @@ extern signed short U_OUT_KONTR_MAX;
 extern signed short U_OUT_KONTR_MIN;
 extern signed short U_OUT_KONTR_DELAY;
 extern signed short DOP_RELE_FUNC;
+extern signed short CNTRL_HNDL_TIME;	
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
 extern enum_apv_on APV_ON1,APV_ON2;
@@ -3762,9 +3763,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1406 "main.H"
+#line 1407 "main.H"
 
-#line 1417 "main.H"
+#line 1418 "main.H"
 
 
 
@@ -3863,6 +3864,8 @@ extern short plazma_numOfTemperCells;
 extern short plazma_numOfPacks;
 
 extern char plazma_ztt[2];
+
+extern U8 socket_tcp;
 
 
 
@@ -3975,6 +3978,7 @@ extern unsigned char	ch_cnt0,b1Hz_ch,i,iiii;
 extern unsigned char	ch_cnt1,b1_30Hz_ch;
 extern unsigned short IZMAX_;
 extern unsigned short Ubpsmax;
+extern unsigned short cntrl_stat_blck_cnt;
 
 extern short plazma_sk;
 extern char	plazma_inv[4];

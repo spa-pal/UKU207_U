@@ -40,6 +40,7 @@
 #include "ztt.h"
 #include "mcp2515.h"
 //#include "sc16is7xx.h"
+#include "modbus_tcp.h"
 
 extern U8 own_hw_adr[];
 extern U8  snmp_Community[];
@@ -679,6 +680,7 @@ short plazma_numOfPacks;
 
 char plazma_ztt[2];
 
+U8 socket_tcp;
 
 //-----------------------------------------------
 void rtc_init (void) 
@@ -2999,7 +3001,7 @@ else if(ind==iMn_6U)
 	//int2lcdyx(lc640_read_int(ADR_EE_BAT_IS_ON[1]),0,9,0);
 	//int2lcdyx(load_U,0,14,0);
 	//int2lcdyx(cntrl_stat,0,4,0);
-	//int2lcdyx(u_necc,0,9,0);
+
 	}
 
 else if(ind==iMn_220)
@@ -3491,7 +3493,9 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 		//	}		}
 
 	int2lcd(vz_cnt_s_/60,'x',0);
-	int2lcd(vz_cnt_h_,'X',0); 	
+	int2lcd(vz_cnt_h_,'X',0);
+		
+		int2lcdyx(plazma_modbus_tcp[0],0,3,0); 	
 	}
 
 else if(ind==iMn_TELECORE2015)
@@ -13007,7 +13011,7 @@ else if(ind==iMn_220)
 		{
 		//ind=iMn;
 		sub_ind=0;
-		modbus_hold_registers_transmit(0x35,3,4,5);
+		modbus_hold_registers_transmit(0x35,3,4,5,0);
 
 	/*putchar0(0x04);
 	putchar0(0x04);
@@ -29002,7 +29006,13 @@ can_mcp2515_init();
 sc16is700_init((uint32_t)(MODBUS_BAUDRATE*10UL));
 #endif
 //sc16is700_init();
-		
+
+socket_tcp = tcp_get_socket (TCP_TYPE_SERVER, 0, 10, tcp_callback);
+if (socket_tcp != 0) 
+	{
+    tcp_listen (socket_tcp, 502);
+  	}
+  		
 while (1)  
 	{
 	bTPS=0; 

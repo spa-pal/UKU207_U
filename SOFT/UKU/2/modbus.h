@@ -18,6 +18,7 @@ extern unsigned short modbus_rx_arg1;		//встроенный в посылку второй аргумент
 extern unsigned short modbus_rx_arg2;		//встроенный в посылку третий аргумент
 extern unsigned short modbus_rx_arg3;		//встроенный в посылку четвертый аргумент
 
+extern char modbus_registers[200];
 //-----------------------------------------------
 unsigned short CRC16_2(char* buf, short len);
 //-----------------------------------------------
@@ -25,9 +26,10 @@ void modbus_registers_transmit(unsigned char adr,unsigned char func,unsigned sho
 //-----------------------------------------------
 void modbus_register_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr);
 //-----------------------------------------------
-void modbus_hold_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity);
+void modbus_hold_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot);
 //-----------------------------------------------
-void modbus_input_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity);
+void modbus_input_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot);
+//-----------------------------------------------
 void modbus_hold_register_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr);
 
 
