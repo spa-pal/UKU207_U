@@ -70,7 +70,7 @@ U0B=lc640_read_int(EE_U0B);
 TZAS=lc640_read_int(EE_TZAS);
 NUMIST=lc640_read_int(EE_NUMIST);
 NUMBAT_TELECORE=lc640_read_int(EE_NUMBAT_TELECORE);
-gran(&NUMIST,0,8);
+//gran(&NUMIST,0,8);
 NUMINV=lc640_read_int(EE_NUMINV);
 gran(&NUMINV,0,15);
 NUMSK=lc640_read_int(EE_NUMSK);

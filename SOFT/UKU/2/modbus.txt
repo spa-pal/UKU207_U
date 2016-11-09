@@ -1888,7 +1888,7 @@
 ;;;137    				}
 ;;;138    			if(modbus_rx_arg0==20)		//ток стабилизации для режима стабилизации тока
 ;;;139    				{
-;;;140    				if((modbus_rx_arg1>0)&&(modbus_rx_arg1<5))
+;;;140    				if((modbus_rx_arg1>0)&&(modbus_rx_arg1<=18))
 ;;;141    				lc640_write_int(EE_NUMIST,modbus_rx_arg1);  
 ;;;142    				}
 ;;;143    			if(modbus_rx_arg0==21)		//ток стабилизации для режима стабилизации тока
@@ -2092,8 +2092,8 @@
 000fb4  2c14              CMP      r4,#0x14              ;138
 000fb6  d106              BNE      |L1.4038|
 000fb8  1e68              SUBS     r0,r5,#1              ;140
-000fba  2804              CMP      r0,#4                 ;140
-000fbc  d203              BCS      |L1.4038|
+000fba  2811              CMP      r0,#0x11              ;140
+000fbc  d803              BHI      |L1.4038|
 000fbe  4629              MOV      r1,r5                 ;141
 000fc0  2098              MOVS     r0,#0x98              ;141
 000fc2  f7fffffe          BL       lc640_write_int

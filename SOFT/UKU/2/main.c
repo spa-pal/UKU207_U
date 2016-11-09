@@ -1260,7 +1260,7 @@ void net_drv_mcp2515(void)
 
 
 
-max_net_slot=MINIM_INV_ADRESS+NUMINV+8;
+max_net_slot=MINIM_INV_ADRESS+20;
 //if(NUMINV) max_net_slot=MINIM_INV_ADRESS+NUMINV;
 //gran_char(&max_net_slot,0,MAX_NET_ADRESS);
 
@@ -1276,7 +1276,7 @@ if(++cnt_net_drv>max_net_slot)
 
 
 #ifndef UKU_KONTUR
-if(cnt_net_drv<=11) // с 1 по 12 посылки адресные
+if(cnt_net_drv<=17) // с 1 по 17 посылки адресные
 #endif
 #ifdef UKU_KONTUR
 if(cnt_net_drv<=7) // с 1 по 12 посылки адресные
@@ -1296,7 +1296,7 @@ if(cnt_net_drv<=7) // с 1 по 12 посылки адресные
 			   
 	if(!bCAN_OFF)mcp2515_transmit(cnt_net_drv,cnt_net_drv,GETTM,bps[cnt_net_drv]._flags_tu,*((char*)(&bps[cnt_net_drv]._vol_u)),*((char*)((&bps[cnt_net_drv]._vol_u))+1),*((char*)(&bps[cnt_net_drv]._vol_i)),*((char*)((&bps[cnt_net_drv]._vol_i))+1));
      
-	if(cnt_net_drv<=11)
+	if(cnt_net_drv<=17)
 	     {
 	     if(bps[cnt_net_drv]._cnt<CNT_SRC_MAX)
    	 		{    
@@ -1313,47 +1313,7 @@ if(cnt_net_drv<=7) // с 1 по 12 посылки адресные
 	     }
 	}
 
-#ifdef UKU_KONTUR
-else if(cnt_net_drv==8)
-	{
-     if(!bCAN_OFF)can1_out(cnt_net_drv,cnt_net_drv,*((char*)(&Uvv[0])),*((char*)((&Uvv[0]))+1),*((char*)(&Uvv[1])),*((char*)((&Uvv[1]))+1),0,bRESET_EXT);
-     }
 
-else if(cnt_net_drv==9)
-	{
-     if(!bCAN_OFF)can1_out(cnt_net_drv,cnt_net_drv,(char)main_vent_pos,*((char*)(&POWER_CNT_ADRESS)),*((char*)((&POWER_CNT_ADRESS))+1),0,0,0);
-     }
-
-else if(cnt_net_drv==10)
-	{
-     if(!bCAN_OFF)can1_out(cnt_net_drv,cnt_net_drv,0,0,0,0,0,0);
-     }
-#endif
-else if(cnt_net_drv==12)
-	{
-     if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,MEM_KF,*((char*)(&UMAX)),*((char*)((&UMAX))+1),*((char*)(&DU)),*((char*)((&DU))+1),0);
-     } 
-     
-else if(cnt_net_drv==13)
-	{
-     if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,MEM_KF1,*((char*)(&TMAX)),*((char*)((&TMAX))+1),*((char*)(&TSIGN)),*((char*)((&TSIGN))+1),(char)TZAS);
-     byps._cnt++;
-	} 
-else if(cnt_net_drv==14)
-	{                 
-	static char makb_cnt;
-	makb_cnt++;
-	if(makb_cnt>=4)makb_cnt=0;
-     if(!bCAN_OFF)mcp2515_transmit(14,14,GET_MAKB,makb_cnt,makb_cnt,0,0,0);
-	makb[makb_cnt]._cnt++;
-	if(makb[makb_cnt]._cnt>20)makb[makb_cnt]._cnt=20;
-	}
-	
-	
-else if(cnt_net_drv==15)
-	{
-     if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,MEM_KF1,*((char*)(&TMAX)),*((char*)((&TMAX))+1),*((char*)(&TSIGN)),*((char*)((&TSIGN))+1),(char)TZAS);
-     }
 
 /*
 else if((cnt_net_drv>=MINIM_INV_ADRESS)&&(cnt_net_drv<(MINIM_INV_ADRESS+NUMINV))&&(NUMINV))
@@ -1420,6 +1380,49 @@ else if((cnt_net_drv>=MINIM_INV_ADRESS)&&(cnt_net_drv<MINIM_INV_ADRESS+15))
 		bps[cnt_net_drv]._cnt_old=bps[cnt_net_drv]._cnt;
 	     }
 	}
+
+
+#ifdef UKU_KONTUR
+else if(cnt_net_drv==MINIM_INV_ADRESS+16)
+	{
+     if(!bCAN_OFF)can1_out(cnt_net_drv,cnt_net_drv,*((char*)(&Uvv[0])),*((char*)((&Uvv[0]))+1),*((char*)(&Uvv[1])),*((char*)((&Uvv[1]))+1),0,bRESET_EXT);
+     }
+
+else if(cnt_net_drv==MINIM_INV_ADRESS+17)
+	{
+     if(!bCAN_OFF)can1_out(cnt_net_drv,cnt_net_drv,(char)main_vent_pos,*((char*)(&POWER_CNT_ADRESS)),*((char*)((&POWER_CNT_ADRESS))+1),0,0,0);
+     }
+
+else if(cnt_net_drv==MINIM_INV_ADRESS+18)
+	{
+     if(!bCAN_OFF)can1_out(cnt_net_drv,cnt_net_drv,0,0,0,0,0,0);
+     }
+#endif
+else if(cnt_net_drv==MINIM_INV_ADRESS+16)
+	{
+     if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,MEM_KF,*((char*)(&UMAX)),*((char*)((&UMAX))+1),*((char*)(&DU)),*((char*)((&DU))+1),0);
+     } 
+     
+else if(cnt_net_drv==MINIM_INV_ADRESS+17)
+	{
+     if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,MEM_KF1,*((char*)(&TMAX)),*((char*)((&TMAX))+1),*((char*)(&TSIGN)),*((char*)((&TSIGN))+1),(char)TZAS);
+     byps._cnt++;
+	} 
+else if(cnt_net_drv==MINIM_INV_ADRESS+18)
+	{                 
+	static char makb_cnt;
+	makb_cnt++;
+	if(makb_cnt>=4)makb_cnt=0;
+     if(!bCAN_OFF)mcp2515_transmit(MINIM_INV_ADRESS+18,MINIM_INV_ADRESS+18,GET_MAKB,makb_cnt,makb_cnt,0,0,0);
+	makb[makb_cnt]._cnt++;
+	if(makb[makb_cnt]._cnt>20)makb[makb_cnt]._cnt=20;
+	}
+	
+	
+else if(cnt_net_drv==MINIM_INV_ADRESS+19)
+	{
+     if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,MEM_KF1,*((char*)(&TMAX)),*((char*)((&TMAX))+1),*((char*)(&TSIGN)),*((char*)((&TSIGN))+1),(char)TZAS);
+     }
 
 
 /*
@@ -3494,8 +3497,6 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 
 	int2lcd(vz_cnt_s_/60,'x',0);
 	int2lcd(vz_cnt_h_,'X',0);
-		
-		int2lcdyx(plazma_modbus_tcp[0],0,3,0); 	
 	}
 
 else if(ind==iMn_TELECORE2015)
@@ -7055,9 +7056,10 @@ else if (ind==iDef_220_IPS_TERMOKOMPENSAT)
 	ptrs[0]=" ИПС380/220-45АТКИ17";
 	ptrs[1]=" ИПС220/220-10АТКИ17";
 	ptrs[2]=" ИПС380/110-90АТКИ9 ";
-	ptrs[3]=sm_exit;
-	ptrs[4]="                    ";
+	ptrs[3]=" ИПС380/220-ТКИ18   ";
+	ptrs[4]=sm_exit;
 	ptrs[5]="                    ";
+	ptrs[6]="                    ";
 	if(bFL5)ptrs[default_temp]=sm_;
 	
 	if(sub_ind<index_set) index_set=sub_ind;
@@ -8086,7 +8088,7 @@ else if(ind==iK_220_IPS_TERMOKOMPENSAT)
      ptrs[i++]=" Батареи            ";
 	if(NUMIST)
 	ptrs[i++]=" БПС                ";
-	ptrs[i++]=" Выход              ";
+	ptrs[i++]=" Выходные параметры ";
      if(NUMDT)
      ptrs[i++]=" Внешние датчики    ";
      ptrs[i++]=" Выход              ";
@@ -13349,7 +13351,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 		    	}*/
 		else if(sub_ind==(2+NUMIST/*+NUMINV*/))
 			{
-			if((AUSW_MAIN==22035)||(AUSW_MAIN==22033)||(AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043))
+			if((AUSW_MAIN==22035)||(AUSW_MAIN==22033)||(AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043)||(AUSW_MAIN==22018))
 				{
 				tree_up(iNet3,0,0,0);
 		     	ret(1000);
@@ -14375,7 +14377,7 @@ else if((ind==iPrl_bat_in_out)||(ind==iSet_prl)||(ind==iK_prl)
 				tree_up(iK_220,0,0,0);
 				#endif
 				#ifdef UKU_220_IPS_TERMOKOMPENSAT
-				if(AUSW_MAIN==22033)
+				if((AUSW_MAIN==22033)||(AUSW_MAIN==22018))
 					{
 					tree_up(iK_220_IPS_TERMOKOMPENSAT,0,0,0);
 		     		
@@ -19954,7 +19956,7 @@ else if (ind==iDef_220_V2)
      }
 
 else if (ind==iDef_220_IPS_TERMOKOMPENSAT)
-#define SIMAXIDEF 3
+#define SIMAXIDEF 4
 	{
 	ret(1000);
 	if(but==butD)
@@ -20055,6 +20057,43 @@ else if (ind==iDef_220_IPS_TERMOKOMPENSAT)
 			//lc640_write_int(EE_UBM_AV,0);
 			//lc640_write_int(EE_U_OUT_KONTR_MAX,2420);
 			//lc640_write_int(EE_U_OUT_KONTR_MIN,2200);
+
+			}
+		else if(sub_ind==3)
+			{
+			def_ips_set(220);
+			//lc640_write_int(EE_DU,2315-1850);
+			lc640_write_int(EE_U_AVT,2200);
+			//lc640_write_int(EE_IZMAX,50);
+			lc640_write_int(EE_AUSW_MAIN,22018);
+			lc640_write_int(EE_NUMIST,2);
+			lc640_write_int(EE_TERMOKOMP,1);
+			//lc640_write_int(EE_IMAX,30);
+		     //lc640_write_int(EE_IMIN,24);
+			//lc640_write_int(EE_UMAX,2450);
+	/*		}
+		else if(sub_ind==3)
+			{ */
+		//	def_ips_set(220);
+			//lc640_write_int(EE_DU,2315-1850);
+		//	lc640_write_int(EE_U_AVT,2200);
+			//lc640_write_int(EE_IZMAX,10);
+			//lc640_write_int(EE_IMAX,30);
+		//	lc640_write_int(EE_IMIN,24);
+			//lc640_write_int(EE_AUSW_MAIN,22023);
+			lc640_write_int(EE_NUMIST,2);
+
+			lc640_write_int(EE_PAR,0);
+			lc640_write_int(EE_UMAX,2700);
+			lc640_write_int(EE_DU,2450-1200);
+			lc640_write_int(EE_UB0,2590);
+			lc640_write_int(EE_UB20,2450);
+			lc640_write_int(EE_IZMAX,50);
+			lc640_write_int(EE_UVZ,2590);
+			lc640_write_int(EE_UBM_AV,0);
+			//lc640_write_int(EE_UMAX,2450);
+			lc640_write_int(EE_U_OUT_KONTR_MAX,2420);
+			lc640_write_int(EE_U_OUT_KONTR_MIN,2200);
 
 			}
 		else if(sub_ind==SIMAXIDEF)
@@ -20780,7 +20819,7 @@ else if(ind==iStr_220_IPS_TERMOKOMPENSAT)
 	     if((but==butR)||(but==butR_))
 	     	{
 	     	NUMIST++;
-	     	gran(&NUMIST,0,12);
+	     	gran(&NUMIST,0,18);
 	     	lc640_write_int(EE_NUMIST,NUMIST);
 			numOfForvardBps_init();
 	     	}
@@ -20788,7 +20827,7 @@ else if(ind==iStr_220_IPS_TERMOKOMPENSAT)
 	     else if((but==butL)||(but==butL_))
 	     	{
 	     	NUMIST--;
-	     	gran(&NUMIST,0,12);
+	     	gran(&NUMIST,0,18);
 	     	lc640_write_int(EE_NUMIST,NUMIST);
 			numOfForvardBps_init();
 	     	}
@@ -23190,7 +23229,7 @@ else if(ind==iK_220_IPS_TERMOKOMPENSAT)
 		{
 		if(sub_ind==0)
 			{
-			if(AUSW_MAIN==22033)
+			if((AUSW_MAIN==22033)||(AUSW_MAIN==22018))
 				{
 				tree_up(iK_net3,0,0,0);
 		     	ret(1000);
@@ -23224,7 +23263,7 @@ else if(ind==iK_220_IPS_TERMOKOMPENSAT)
 			ret(1000);			
 			}
  						
-          else if(sub_ind==(2+(NUMBAT!=0)+(NUMIST!=0)+(NUMINV!=0)))
+          else if(sub_ind==(3+(NUMBAT!=0)+(NUMIST!=0)/*+(NUMINV!=0)*/))
 			{
 	          tree_down(0,0);
 	          ret(0);
@@ -23253,7 +23292,7 @@ else if(ind==iK_220_IPS_TERMOKOMPENSAT_IB)
 		{
 		if(sub_ind==0)
 			{
-			if((AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043))
+			if((AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043)||(AUSW_MAIN==22018))
 				{
 				tree_up(iK_net3,0,0,0);
 		     	ret(1000);

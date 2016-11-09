@@ -3627,7 +3627,7 @@ extern const char sk_buff_TELECORE2015[4];
 
 
 
-extern char numOfForvardBps;
+extern char numOfForvardBps,numOfForvardBps_old;
 extern char numOfForvardBps_minCnt;
 extern short numOfForvardBps_hourCnt;
 
@@ -4386,7 +4386,7 @@ if(crc16_calculated==crc16_incapsulated)
 				}
 			if(modbus_rx_arg0==20)		
 				{
-				if((modbus_rx_arg1>0)&&(modbus_rx_arg1<5))
+				if((modbus_rx_arg1>0)&&(modbus_rx_arg1<=18))
 				lc640_write_int(0x10+100+36,modbus_rx_arg1);  
 				}
 			if(modbus_rx_arg0==21)		

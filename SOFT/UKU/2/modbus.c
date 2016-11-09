@@ -137,7 +137,7 @@ if(crc16_calculated==crc16_incapsulated)
 				}
 			if(modbus_rx_arg0==20)		//ток стабилизации для режима стабилизации тока
 				{
-				if((modbus_rx_arg1>0)&&(modbus_rx_arg1<5))
+				if((modbus_rx_arg1>0)&&(modbus_rx_arg1<=18))
 				lc640_write_int(EE_NUMIST,modbus_rx_arg1);  
 				}
 			if(modbus_rx_arg0==21)		//ток стабилизации для режима стабилизации тока

@@ -210,7 +210,7 @@ char plazma_cntrl_stat;
 
 //***********************************************
 //Ротация ведущего источника
-char numOfForvardBps;
+char numOfForvardBps,numOfForvardBps_old;
 char numOfForvardBps_minCnt;
 short numOfForvardBps_hourCnt;
 
@@ -1003,7 +1003,7 @@ else
 	if(net_Ub<net_U)net_U=net_Ub;
 	if(net_Uc<net_U)net_U=net_Uc;
 	}
-else if((AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043))
+else if((AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043)||(AUSW_MAIN==22018))
 	{
 	temp_SL=(signed long)net_buff_;
 	temp_SL*=KunetA;
@@ -1459,7 +1459,8 @@ if(bps[8]._device==dIBAT_METR)
 	}
 
 bat[0]._Ub=load_U;
-bat[0]._Ib=Ib_ips_termokompensat;
+if(AUSW_MAIN==22018) Ib_ips_termokompensat=bat[0]._Ib;
+else bat[0]._Ib=Ib_ips_termokompensat;
 
 #endif
 #endif
@@ -3384,7 +3385,7 @@ else	if(AUSW_MAIN==22043)
      	else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_AV_BPS,1);
 		} 
 	}
-else	if(AUSW_MAIN==22033)
+else	if((AUSW_MAIN==22033)||(AUSW_MAIN==22018))
 	{
 	#ifndef UKU2071x 
 	if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_NET))
@@ -3832,7 +3833,10 @@ else if(b1Hz_sh)
   	         	bps[iii]._flags_tu=0;
   	         	ptr__++;
   	         	}
+			
   	     }
+	bps[numOfForvardBps_old]._flags_tu=0;
+
 	if(main_1Hz_cnt<60)
 		{
      	for(i=0;i<=NUMIST;i++)
@@ -6435,6 +6439,9 @@ else
 //-----------------------------------------------
 void	numOfForvardBps_hndl(void)			//Программа смены первого источника для равномерного износа БПСов
 {
+
+numOfForvardBps_old=numOfForvardBps;
+
 numOfForvardBps=0;
 
 //FORVARDBPSCHHOUR=10;
@@ -6460,14 +6467,17 @@ if(numOfForvardBps_minCnt>=60)
 	lc640_write_int(EE_FORVBPSHOURCNT,numOfForvardBps_hourCnt);
 	}
 
-numOfForvardBps=numOfForvardBps_hourCnt/FORVARDBPSCHHOUR; 
+numOfForvardBps=numOfForvardBps_hourCnt/FORVARDBPSCHHOUR;
+
+//if(numOfForvardBps)
+//numOfForvardBps_old=numOfForvardBps; 
 }
 
 //-----------------------------------------------
 void	numOfForvardBps_init(void)			//Программа сброса системы смены первого источника для равномерного износа БПСов
 {									//Должна вызываться при изменении кол-ва источников в структуре
 lc640_write_int(EE_FORVBPSHOURCNT,0);
-numOfForvardBps_minCnt=0;
+numOfForvardBps_minCnt=58;
 }
 
 //-----------------------------------------------

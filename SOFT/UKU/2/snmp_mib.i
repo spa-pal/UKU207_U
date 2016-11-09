@@ -3993,7 +3993,7 @@ extern const char sk_buff_TELECORE2015[4];
 
 
 
-extern char numOfForvardBps;
+extern char numOfForvardBps,numOfForvardBps_old;
 extern char numOfForvardBps_minCnt;
 extern short numOfForvardBps_hourCnt;
 

@@ -149,7 +149,7 @@ extern const char sk_buff_TELECORE2015[4];
 
 
 
-extern char numOfForvardBps;
+extern char numOfForvardBps,numOfForvardBps_old;
 extern char numOfForvardBps_minCnt;
 extern short numOfForvardBps_hourCnt;
 
@@ -4382,7 +4382,7 @@ char plazma_cntrl_stat;
 
 
 
-char numOfForvardBps;
+char numOfForvardBps,numOfForvardBps_old;
 char numOfForvardBps_minCnt;
 short numOfForvardBps_hourCnt;
 
@@ -5018,7 +5018,7 @@ signed short temp_SS;
 	if(net_Ub<net_U)net_U=net_Ub;
 	if(net_Uc<net_U)net_U=net_Uc;
 	}
-else if((AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043))
+else if((AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043)||(AUSW_MAIN==22018))
 	{
 	temp_SL=(signed long)net_buff_;
 	temp_SL*=KunetA;
@@ -5260,13 +5260,14 @@ if(bps[8]._device==dIBAT_METR)
 	}
 
 bat[0]._Ub=load_U;
-bat[0]._Ib=Ib_ips_termokompensat;
+if(AUSW_MAIN==22018) Ib_ips_termokompensat=bat[0]._Ib;
+else bat[0]._Ib=Ib_ips_termokompensat;
 
 
 
 
 
-#line 1490 "control.c"
+#line 1491 "control.c"
 
 
 temp_SL=(signed long)adc_buff_ext_[0];
@@ -5508,7 +5509,7 @@ if((BAT_IS_ON[0]==bisON)&&(bat[0]._Ub>200)) Ibmax=bat[0]._Ib;
 if((BAT_IS_ON[1]==bisON)&&(bat[1]._Ub>200)&&(bat[1]._Ib>bat[0]._Ib)) Ibmax=bat[1]._Ib;
 
 
-#line 1743 "control.c"
+#line 1744 "control.c"
 
 
 
@@ -5539,7 +5540,7 @@ for(i=0;i<NUMIST;i++)
      }
 
 load_I=0;
-#line 1781 "control.c"
+#line 1782 "control.c"
 load_I=-(bat[0]._Ib/10)-(bat[1]._Ib/10);
 
 Isumm=0;
@@ -5569,7 +5570,7 @@ if(load_I<0)load_I=0;
 
 
 
-#line 1839 "control.c"
+#line 1840 "control.c"
 
 
 if (NUMINV)
@@ -5614,7 +5615,7 @@ if (NUMINV)
    	}
 
 
-#line 1902 "control.c"
+#line 1903 "control.c"
 
 
 
@@ -5633,10 +5634,10 @@ if (NUMINV)
 
  
 
-#line 2122 "control.c"
+#line 2123 "control.c"
 
 
-#line 2168 "control.c"
+#line 2169 "control.c"
 
 
 
@@ -5767,7 +5768,7 @@ if(adc_ch_net)
 		}
 	if((adc_net_buff_cnt&0x03ff)==0)
 		{
-#line 2304 "control.c"
+#line 2305 "control.c"
 		net_buff_=(short)((main_power_buffer[adc_net_buff_cnt>>10])>>8);
 
 
@@ -6250,7 +6251,7 @@ if(mess_find_unvol((210))&&(mess_data[0]==100))
 else ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR & ~((0xffffffff>>(32-1))<<29)) | (1 << 29) );
 
 
-#line 2797 "control.c"
+#line 2798 "control.c"
 
 if((mess_find_unvol(210))&&	(mess_data[0]==102))
 	{
@@ -6261,28 +6262,28 @@ else	if(!(avar_ind_stat&0x00000001))	((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x0
 else 					  		((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOSET & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
 
 
-#line 2843 "control.c"
+#line 2844 "control.c"
 
 
-#line 2881 "control.c"
+#line 2882 "control.c"
 
-#line 2901 "control.c"
+#line 2902 "control.c"
 
-#line 2968 "control.c"
+#line 2969 "control.c"
 
-#line 3082 "control.c"
+#line 3083 "control.c"
 
-#line 3148 "control.c"
+#line 3149 "control.c"
 
-#line 3193 "control.c"
+#line 3194 "control.c"
 
-#line 3238 "control.c"
+#line 3239 "control.c"
 
 
 
 if((AUSW_MAIN==22010)||(AUSW_MAIN==22011))
 	{
-#line 3253 "control.c"
+#line 3254 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOCLR & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6332,7 +6333,7 @@ else	if(AUSW_MAIN==22023)
 
 
 	
-#line 3312 "control.c"
+#line 3313 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6367,7 +6368,7 @@ else	if(AUSW_MAIN==22043)
      	else ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<4)) | (1 << 4) );
 		} 
 	
-#line 3356 "control.c"
+#line 3357 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6399,9 +6400,9 @@ else	if(AUSW_MAIN==22043)
      	else ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<5)) | (1 << 5) );
 		} 
 	}
-else	if(AUSW_MAIN==22033)
+else	if((AUSW_MAIN==22033)||(AUSW_MAIN==22018))
 	{
-#line 3399 "control.c"
+#line 3400 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOCLR & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6438,7 +6439,7 @@ else	if(AUSW_MAIN==22033)
 else	
 	{
 	
-#line 3445 "control.c"
+#line 3446 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6477,10 +6478,10 @@ else if(DOP_RELE_FUNC==1)
 	}	 	
 
 
-#line 3596 "control.c"
+#line 3597 "control.c"
 
 
-#line 3657 "control.c"
+#line 3658 "control.c"
 
 }
 
@@ -6659,7 +6660,10 @@ else if(b1Hz_sh)
   	         	bps[iii]._flags_tu=0;
   	         	ptr__++;
   	         	}
+			
   	     }
+	bps[numOfForvardBps_old]._flags_tu=0;
+
 	if(main_1Hz_cnt<60)
 		{
      	for(i=0;i<=NUMIST;i++)
@@ -7173,7 +7177,7 @@ else
  
 }
 
-#line 4475 "control.c"
+#line 4479 "control.c"
 
 
 
@@ -7244,7 +7248,7 @@ if(main_vent_pos<=1)mixer_vent_stat=mvsON;
 else mixer_vent_stat=mvsOFF;
 
 
-#line 4562 "control.c"
+#line 4566 "control.c"
 
 if((TBATDISABLE>=50) && (TBATDISABLE<=90))
 	{
@@ -7301,7 +7305,7 @@ else
 }
 
 
-#line 4751 "control.c"
+#line 4755 "control.c"
 
 
 void bat_drv(char in)
@@ -7789,7 +7793,7 @@ if(mess_find_unvol(190))
 
 
 
-#line 5473 "control.c"
+#line 5477 "control.c"
 
 temp_L=(signed long) u_necc;
 temp_L*=98L;
@@ -7907,7 +7911,7 @@ if(mess_find_unvol(225))
 			if(((u_necc-bps_U)>40)&&(cntrl_stat<1015))cntrl_stat+=5;
 			else	if((cntrl_stat<1020)&&b1Hz_ch)cntrl_stat++;
 			}
-#line 5625 "control.c"
+#line 5629 "control.c"
 	 	}
 	}
 
@@ -7992,7 +7996,7 @@ else if((b1Hz_ch)&&((!bIBAT_SMKLBR)||(bps[8]._cnt>40)))
 	cntrl_stat_old=cntrl_stat_new;
 	cntrl_stat=cntrl_stat_new;	
 	}
-#line 5791 "control.c"
+#line 5795 "control.c"
 
 iiii=0;
 for(i=0;i<NUMIST;i++)
@@ -8016,7 +8020,7 @@ b1Hz_ch=0;
 }
 
 
-#line 6056 "control.c"
+#line 6060 "control.c"
 
 
 void ext_drv(void)
@@ -8026,7 +8030,7 @@ char i;
 
 for(i=0;i<NUMSK;i++)
 	{
-#line 6090 "control.c"
+#line 6094 "control.c"
 	if(adc_buff_[sk_buff_220[i]]<2000)
 
 
@@ -8119,7 +8123,7 @@ for(i=0;i<NUMSK;i++)
 	 	}
 
 
-#line 6202 "control.c"
+#line 6206 "control.c"
 	sk_av_stat_old[i]=sk_av_stat[i];
 	}
 }
@@ -8356,6 +8360,9 @@ else
 
 void	numOfForvardBps_hndl(void)			
 {
+
+numOfForvardBps_old=numOfForvardBps;
+
 numOfForvardBps=0;
 
 
@@ -8381,14 +8388,17 @@ if(numOfForvardBps_minCnt>=60)
 	lc640_write_int(0x10+100+180,numOfForvardBps_hourCnt);
 	}
 
-numOfForvardBps=numOfForvardBps_hourCnt/FORVARDBPSCHHOUR; 
+numOfForvardBps=numOfForvardBps_hourCnt/FORVARDBPSCHHOUR;
+
+
+
 }
 
 
 void	numOfForvardBps_init(void)			
 {									
 lc640_write_int(0x10+100+180,0);
-numOfForvardBps_minCnt=0;
+numOfForvardBps_minCnt=58;
 }
 
 

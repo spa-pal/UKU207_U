@@ -2016,7 +2016,7 @@ extern const char sk_buff_TELECORE2015[4];
 
 
 
-extern char numOfForvardBps;
+extern char numOfForvardBps,numOfForvardBps_old;
 extern char numOfForvardBps_minCnt;
 extern short numOfForvardBps_hourCnt;
 
@@ -2095,7 +2095,7 @@ U0B=lc640_read_int(0x10+100+32);
 TZAS=lc640_read_int(0x10+100+34);
 NUMIST=lc640_read_int(0x10+100+36);
 NUMBAT_TELECORE=lc640_read_int(0x10+100+194);
-gran(&NUMIST,0,8);
+
 NUMINV=lc640_read_int(0x10+100+38);
 gran(&NUMINV,0,15);
 NUMSK=lc640_read_int(0x10+500+88);

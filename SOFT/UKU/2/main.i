@@ -2528,7 +2528,7 @@ extern const char sk_buff_TELECORE2015[4];
 
 
 
-extern char numOfForvardBps;
+extern char numOfForvardBps,numOfForvardBps_old;
 extern char numOfForvardBps_minCnt;
 extern short numOfForvardBps_hourCnt;
 
@@ -6635,7 +6635,7 @@ void net_drv_mcp2515(void)
 
 
 
-max_net_slot=20+NUMINV+8;
+max_net_slot=20+20;
 
 
 
@@ -6651,7 +6651,7 @@ if(++cnt_net_drv>max_net_slot)
 
 
 
-if(cnt_net_drv<=11) 
+if(cnt_net_drv<=17) 
 
 
 
@@ -6671,7 +6671,7 @@ if(cnt_net_drv<=11)
 			   
 	if(!bCAN_OFF)mcp2515_transmit(cnt_net_drv,cnt_net_drv,0xED,bps[cnt_net_drv]._flags_tu,*((char*)(&bps[cnt_net_drv]._vol_u)),*((char*)((&bps[cnt_net_drv]._vol_u))+1),*((char*)(&bps[cnt_net_drv]._vol_i)),*((char*)((&bps[cnt_net_drv]._vol_i))+1));
      
-	if(cnt_net_drv<=11)
+	if(cnt_net_drv<=17)
 	     {
 	     if(bps[cnt_net_drv]._cnt<60)
    	 		{    
@@ -6688,32 +6688,7 @@ if(cnt_net_drv<=11)
 	     }
 	}
 
-#line 1332 "main.c"
-else if(cnt_net_drv==12)
-	{
-     if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x62,*((char*)(&UMAX)),*((char*)((&UMAX))+1),*((char*)(&DU)),*((char*)((&DU))+1),0);
-     } 
-     
-else if(cnt_net_drv==13)
-	{
-     if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x26,*((char*)(&TMAX)),*((char*)((&TMAX))+1),*((char*)(&TSIGN)),*((char*)((&TSIGN))+1),(char)TZAS);
-     byps._cnt++;
-	} 
-else if(cnt_net_drv==14)
-	{                 
-	static char makb_cnt;
-	makb_cnt++;
-	if(makb_cnt>=4)makb_cnt=0;
-     if(!bCAN_OFF)mcp2515_transmit(14,14,0xE1,makb_cnt,makb_cnt,0,0,0);
-	makb[makb_cnt]._cnt++;
-	if(makb[makb_cnt]._cnt>20)makb[makb_cnt]._cnt=20;
-	}
-	
-	
-else if(cnt_net_drv==15)
-	{
-     if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x26,*((char*)(&TMAX)),*((char*)((&TMAX))+1),*((char*)(&TSIGN)),*((char*)((&TSIGN))+1),(char)TZAS);
-     }
+
 
 
 
@@ -6780,6 +6755,34 @@ else if((cnt_net_drv>=20)&&(cnt_net_drv<20+15))
 		bps[cnt_net_drv]._cnt_old=bps[cnt_net_drv]._cnt;
 	     }
 	}
+
+
+#line 1401 "main.c"
+else if(cnt_net_drv==20+16)
+	{
+     if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x62,*((char*)(&UMAX)),*((char*)((&UMAX))+1),*((char*)(&DU)),*((char*)((&DU))+1),0);
+     } 
+     
+else if(cnt_net_drv==20+17)
+	{
+     if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x26,*((char*)(&TMAX)),*((char*)((&TMAX))+1),*((char*)(&TSIGN)),*((char*)((&TSIGN))+1),(char)TZAS);
+     byps._cnt++;
+	} 
+else if(cnt_net_drv==20+18)
+	{                 
+	static char makb_cnt;
+	makb_cnt++;
+	if(makb_cnt>=4)makb_cnt=0;
+     if(!bCAN_OFF)mcp2515_transmit(20+18,20+18,0xE1,makb_cnt,makb_cnt,0,0,0);
+	makb[makb_cnt]._cnt++;
+	if(makb[makb_cnt]._cnt>20)makb[makb_cnt]._cnt=20;
+	}
+	
+	
+else if(cnt_net_drv==20+19)
+	{
+     if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x26,*((char*)(&TMAX)),*((char*)((&TMAX))+1),*((char*)(&TSIGN)),*((char*)((&TSIGN))+1),(char)TZAS);
+     }
 
 
 
@@ -7155,9 +7158,9 @@ if(avar_stat&(1<<(3+7)))
 	sub_cnt_max++;	
 	}
 
-#line 1817 "main.c"
+#line 1820 "main.c"
 
-#line 1837 "main.c"
+#line 1840 "main.c"
 
 
 if((sk_av_stat[0]==sasON)&&(NUMSK)&&(!SK_LCD_EN[0]))
@@ -8818,8 +8821,6 @@ else if(a_ind . i==iMn_220_IPS_TERMOKOMPENSAT)
 
 	int2lcd(vz_cnt_s_/60,'x',0);
 	int2lcd(vz_cnt_h_,'X',0);
-		
-		int2lcdyx(plazma_modbus_tcp[0],0,3,0); 	
 	}
 
 else if(a_ind . i==iMn_TELECORE2015)
@@ -12379,9 +12380,10 @@ else if (a_ind . i==iDef_220_IPS_TERMOKOMPENSAT)
 	ptrs[0]=" ÈÏÑ380/220-45ÀÒÊÈ17";
 	ptrs[1]=" ÈÏÑ220/220-10ÀÒÊÈ17";
 	ptrs[2]=" ÈÏÑ380/110-90ÀÒÊÈ9 ";
-	ptrs[3]=sm_exit;
-	ptrs[4]="                    ";
+	ptrs[3]=" ÈÏÑ380/220-ÒÊÈ18   ";
+	ptrs[4]=sm_exit;
 	ptrs[5]="                    ";
+	ptrs[6]="                    ";
 	if(bFL5)ptrs[default_temp]=sm_;
 	
 	if(a_ind . s_i<a_ind . i_s) a_ind . i_s=a_ind . s_i;
@@ -13410,7 +13412,7 @@ else if(a_ind . i==iK_220_IPS_TERMOKOMPENSAT)
      ptrs[i++]=" Áàòàðåè            ";
 	if(NUMIST)
 	ptrs[i++]=" ÁÏÑ                ";
-	ptrs[i++]=" Âûõîä              ";
+	ptrs[i++]=" Âûõîäíûå ïàðàìåòðû ";
      if(NUMDT)
      ptrs[i++]=" Âíåøíèå äàò÷èêè    ";
      ptrs[i++]=" Âûõîä              ";
@@ -17186,12 +17188,12 @@ else if(a_ind . i==iDop_rele_set)
 }							    
 
 
-#line 11871 "main.c"
+#line 11873 "main.c"
 
 
 
 
-#line 11894 "main.c"
+#line 11896 "main.c"
 
 
 
@@ -17514,7 +17516,7 @@ else if(a_ind . i==iMn)
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV)))
 			{
-#line 12224 "main.c"
+#line 12226 "main.c"
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV+1)))
 			{
@@ -17528,9 +17530,9 @@ else if(a_ind . i==iMn)
 		     ret(1000);
 			}
 
-#line 12244 "main.c"
+#line 12246 "main.c"
 
-#line 12252 "main.c"
+#line 12254 "main.c"
 
 		else if(a_ind . s_i==(4+NUMBAT+NUMIST+2)+(NUMAVT!=0))
 			{
@@ -18631,7 +18633,7 @@ else if(a_ind . i==iMn_220_IPS_TERMOKOMPENSAT)
  
 		else if(a_ind . s_i==(2+NUMIST ))
 			{
-			if((AUSW_MAIN==22035)||(AUSW_MAIN==22033)||(AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043))
+			if((AUSW_MAIN==22035)||(AUSW_MAIN==22033)||(AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043)||(AUSW_MAIN==22018))
 				{
 				tree_up(iNet3,0,0,0);
 		     	ret(1000);
@@ -19581,11 +19583,11 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==184) 
 				{
 				tree_down(0,0);
-#line 14321 "main.c"
+#line 14323 "main.c"
 				tree_up(iSet_220_IPS_TERMOKOMPENSAT,0,0,0);
 
 
-#line 14330 "main.c"
+#line 14332 "main.c"
 
 				ret(1000);
 				}
@@ -19603,8 +19605,8 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==873) 
 				{
 				tree_down(0,0);
-#line 14378 "main.c"
-				if(AUSW_MAIN==22033)
+#line 14380 "main.c"
+				if((AUSW_MAIN==22033)||(AUSW_MAIN==22018))
 					{
 					tree_up(iK_220_IPS_TERMOKOMPENSAT,0,0,0);
 		     		
@@ -19680,7 +19682,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 			if(tempU==999) 
 				{
 				tree_down(0,0);
-#line 14484 "main.c"
+#line 14486 "main.c"
 				tree_up(iTst_220_IPS_TERMOKOMPENSAT,0,0,0);
 
 
@@ -20317,7 +20319,7 @@ else if(a_ind . i==iSet)
 	     {
 	     if(but==254)
 	          {
-#line 15132 "main.c"
+#line 15134 "main.c"
 	          ret(1000);
 	          default_temp=10;
 	          }
@@ -20339,7 +20341,7 @@ else if(a_ind . i==iSet)
 		{
 		if(but==254)
 		     {
-#line 15178 "main.c"
+#line 15180 "main.c"
 
 
 
@@ -25125,16 +25127,16 @@ else if (a_ind . i==iDef_220_IPS_TERMOKOMPENSAT)
 	if(but==251)
 		{
 		a_ind . s_i++;
-		gran_char(&a_ind . s_i,0,3);
+		gran_char(&a_ind . s_i,0,4);
 		}
 	else if(but==253)
 		{
 		a_ind . s_i--;
-		gran_char(&a_ind . s_i,0,3);
+		gran_char(&a_ind . s_i,0,4);
 		}
 	else if(but==123)
 		{
-		a_ind . s_i=3;
+		a_ind . s_i=4;
 		}
 	
 	else if(but==254)
@@ -25223,6 +25225,43 @@ else if (a_ind . i==iDef_220_IPS_TERMOKOMPENSAT)
 
 			}
 		else if(a_ind . s_i==3)
+			{
+			def_ips_set(220);
+			
+			lc640_write_int(0x10+100+80,2200);
+			
+			lc640_write_int(0x10+300,22018);
+			lc640_write_int(0x10+100+36,2);
+			lc640_write_int(0x10+100+126,1);
+			
+		     
+			
+	
+
+ 
+		
+			
+		
+			
+			
+		
+			
+			lc640_write_int(0x10+100+36,2);
+
+			lc640_write_int(0x10+100+86,0);
+			lc640_write_int(0x10+100+4,2700);
+			lc640_write_int(0x10+100+84,2450-1200);
+			lc640_write_int(0x10+100+6,2590);
+			lc640_write_int(0x10+100+8,2450);
+			lc640_write_int(0x10+100+30,50);
+			lc640_write_int(0x10+100+106,2590);
+			lc640_write_int(0x10+500+96,0);
+			
+			lc640_write_int(0x10+100+182,2420);
+			lc640_write_int(0x10+100+184,2200);
+
+			}
+		else if(a_ind . s_i==4)
 			{
 			tree_down(0,0);
 			}
@@ -25945,7 +25984,7 @@ else if(a_ind . i==iStr_220_IPS_TERMOKOMPENSAT)
 	     if((but==239)||(but==111))
 	     	{
 	     	NUMIST++;
-	     	gran(&NUMIST,0,12);
+	     	gran(&NUMIST,0,18);
 	     	lc640_write_int(0x10+100+36,NUMIST);
 			numOfForvardBps_init();
 	     	}
@@ -25953,7 +25992,7 @@ else if(a_ind . i==iStr_220_IPS_TERMOKOMPENSAT)
 	     else if((but==247)||(but==119))
 	     	{
 	     	NUMIST--;
-	     	gran(&NUMIST,0,12);
+	     	gran(&NUMIST,0,18);
 	     	lc640_write_int(0x10+100+36,NUMIST);
 			numOfForvardBps_init();
 	     	}
@@ -28355,7 +28394,7 @@ else if(a_ind . i==iK_220_IPS_TERMOKOMPENSAT)
 		{
 		if(a_ind . s_i==0)
 			{
-			if(AUSW_MAIN==22033)
+			if((AUSW_MAIN==22033)||(AUSW_MAIN==22018))
 				{
 				tree_up(iK_net3,0,0,0);
 		     	ret(1000);
@@ -28389,7 +28428,7 @@ else if(a_ind . i==iK_220_IPS_TERMOKOMPENSAT)
 			ret(1000);			
 			}
  						
-          else if(a_ind . s_i==(2+(NUMBAT!=0)+(NUMIST!=0)+(NUMINV!=0)))
+          else if(a_ind . s_i==(3+(NUMBAT!=0)+(NUMIST!=0) ))
 			{
 	          tree_down(0,0);
 	          ret(0);
@@ -28418,7 +28457,7 @@ else if(a_ind . i==iK_220_IPS_TERMOKOMPENSAT_IB)
 		{
 		if(a_ind . s_i==0)
 			{
-			if((AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043))
+			if((AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043)||(AUSW_MAIN==22018))
 				{
 				tree_up(iK_net3,0,0,0);
 		     	ret(1000);
@@ -30067,7 +30106,7 @@ else if(a_ind . i==iK_inv)
 			}
 		}			
 	}
-#line 25052 "main.c"
+#line 25091 "main.c"
 
 else if(a_ind . i==iK_byps)
 	{
@@ -33853,9 +33892,9 @@ lcd_clear();
 rtc_init();
 
 a_ind . i=iMn;
-#line 28856 "main.c"
+#line 28895 "main.c"
 a_ind . i=iMn_220_IPS_TERMOKOMPENSAT;
-#line 28864 "main.c"
+#line 28903 "main.c"
 
 
 
@@ -33895,7 +33934,7 @@ adc_init();
 
 lc640_write_int(100,134);
 
-#line 28909 "main.c"
+#line 28948 "main.c"
 
 
 
@@ -34243,7 +34282,7 @@ while (1)
 		
 		
 
-#line 29268 "main.c"
+#line 29307 "main.c"
 
 
 
