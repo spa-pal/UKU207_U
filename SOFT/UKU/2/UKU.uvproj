@@ -7368,13 +7368,13 @@
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
         <TargetCommonOption>
-          <Device>LPC1769</Device>
+          <Device>LPC1768</Device>
           <Vendor>NXP (founded by Philips)</Vendor>
           <Cpu>IRAM(0x10000000-0x10007FFF) IRAM2(0x2007C000-0x20083FFF) IROM(0-0x7FFFF) CLOCK(12000000) CPUTYPE("Cortex-M3")</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile>"STARTUP\NXP\LPC17xx\startup_LPC17xx.s" ("NXP LPC17xx Startup Code")</StartupFile>
           <FlashDriverDll>UL2CM3(-O463 -S0 -C0 -FO7 -FD10000000 -FC800 -FN1 -FF0LPC_IAP_512 -FS00 -FL080000)</FlashDriverDll>
-          <DeviceId>5131</DeviceId>
+          <DeviceId>4868</DeviceId>
           <RegisterFile>LPC17xx.H</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
@@ -7456,11 +7456,11 @@
           <SimDllName>SARMCM3.DLL</SimDllName>
           <SimDllArguments>-MPU</SimDllArguments>
           <SimDlgDll>DARMP1.DLL</SimDlgDll>
-          <SimDlgDllArguments>-pLPC1769</SimDlgDllArguments>
+          <SimDlgDllArguments>-pLPC1768</SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
           <TargetDllArguments>-MPU</TargetDllArguments>
           <TargetDlgDll>TARMP1.DLL</TargetDlgDll>
-          <TargetDlgDllArguments>-pLPC1769</TargetDlgDllArguments>
+          <TargetDlgDllArguments>-pLPC1768</TargetDlgDllArguments>
         </DllOption>
         <DebugOption>
           <OPTHX>
@@ -7519,7 +7519,7 @@
             <DriverSelection>4096</DriverSelection>
           </Flash1>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3>"FM.EXE" (DEVICE($D,$X,0) ERASE(DEVICE,PROTECTISP) HEXFILE(#H,NOCHECKSUMS,NOFILL,PROTECTISP) COM(12,230400) HARDWARE(BOOTEXEC,100,50))</Flash3>
+          <Flash3></Flash3>
           <Flash4></Flash4>
         </Utilities>
         <TargetArmAds>

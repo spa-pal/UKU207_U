@@ -44,3 +44,4 @@ char sc16is700_rd_byte(char reg_num);
 void sc16is700_wr_buff(char reg_num,char num);
 void putchar_sc16is700(char out_byte);
 void sc16is700_uart_hndl(void);
+

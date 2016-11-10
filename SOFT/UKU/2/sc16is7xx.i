@@ -259,6 +259,7 @@ char sc16is700_rd_byte(char reg_num);
 void sc16is700_wr_buff(char reg_num,char num);
 void putchar_sc16is700(char out_byte);
 void sc16is700_uart_hndl(void);
+
 #line 3 "sc16is7xx.c"
 #line 1 "C:\\Keil\\ARM\\INC\\NXP\\LPC17xx\\LPC17xx.H"
 
@@ -3524,19 +3525,21 @@ extern unsigned short modbus_rx_arg1;
 extern unsigned short modbus_rx_arg2;		
 extern unsigned short modbus_rx_arg3;		
 
-extern char modbus_registers[200];
+extern char modbus_tx_buff[100];
+
+
 
 unsigned short CRC16_2(char* buf, short len);
 
-void modbus_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity);
 
-void modbus_register_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr);
+
+
 
 void modbus_hold_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot);
 
 void modbus_input_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot);
 
-void modbus_hold_register_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr);
+
 
 
 

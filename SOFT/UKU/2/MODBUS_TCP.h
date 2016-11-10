@@ -11,3 +11,4 @@ extern short modbus_tcp_rx_arg1;
 #define MODBUS_TCP_PROT	1
 
 extern char* modbus_tcp_out_ptr;
+

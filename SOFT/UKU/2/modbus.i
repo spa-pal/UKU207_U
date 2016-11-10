@@ -2056,19 +2056,21 @@ extern unsigned short modbus_rx_arg1;
 extern unsigned short modbus_rx_arg2;		
 extern unsigned short modbus_rx_arg3;		
 
-extern char modbus_registers[200];
+extern char modbus_tx_buff[100];
+
+
 
 unsigned short CRC16_2(char* buf, short len);
 
-void modbus_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity);
 
-void modbus_register_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr);
+
+
 
 void modbus_hold_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot);
 
 void modbus_input_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot);
 
-void modbus_hold_register_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr);
+
 
 
 
@@ -4257,7 +4259,133 @@ extern short modbus_tcp_rx_arg1;
 
 
 extern char* modbus_tcp_out_ptr;
+
 #line 12 "modbus.c"
+#line 1 "25lc640.h"
+
+
+
+
+
+
+
+
+
+
+
+
+char spi1(char in);
+void spi1_config(void);
+void spi1_unconfig(void);
+void lc640_wren(void);
+char lc640_rdsr(void);
+int lc640_read(int ADR);
+int lc640_read_int(int ADR);
+long lc640_read_long(int ADR);
+void lc640_read_long_ptr(int ADR,char* out_ptr);
+void lc640_read_str(int ADR, char* ram_ptr, char num);
+char lc640_write(int ADR,char in);
+char lc640_write_int(short ADR,short in);
+char lc640_write_long(int ADR,long in);
+char lc640_write_long_ptr(int ADR,char* in);
+#line 13 "modbus.c"
+#line 1 "sc16is7xx.h"
+#line 2 "sc16is7xx.h"
+
+#line 15 "sc16is7xx.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+extern char sc16is700ByteAvailable;
+extern char sc16is700TxFifoLevel;
+extern char tx_buffer_sc16is700[32]; 
+extern char tx_wr_index_sc16is700;
+extern char tx_rd_index_sc16is700;
+extern char sc16is700TxFifoEmptyCnt; 
+extern char sc16is700TxPossibleFlag;
+
+
+void sc16is700_init(uint32_t baudrate);
+void sc16is700_wr_byte(char reg_num,char data);
+char sc16is700_rd_byte(char reg_num);
+
+
+void sc16is700_wr_buff(char reg_num,char num);
+void putchar_sc16is700(char out_byte);
+void sc16is700_uart_hndl(void);
+
+#line 14 "modbus.c"
+#line 1 "uart0.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 29 "uart0.h"
+
+
+
+extern char bRXIN0;
+extern char UIB0[100];
+extern char flag0;
+extern char rx_buffer0[1024];
+extern unsigned char tx_buffer0[1024];
+extern unsigned short rx_wr_index0,rx_rd_index0,rx_counter0;
+extern unsigned short tx_wr_index0,tx_rd_index0,tx_counter0;
+extern char rx_buffer_overflow0;
+extern char plazma_uart0;
+extern char memo_out[50];
+extern char data_rs[50];
+extern char data_rs0[50];
+extern const char Table87[];
+extern const char Table95[]; 
+
+char crc_87(char* ptr,char num);
+char crc_95(char* ptr,char num);
+void putchar0(char c);
+void uart_out0 (char num,char data0,char data1,char data2,char data3,char data4,char data5);
+void uart_out_adr0 (char *ptr, char len);
+void uart0_init(void);
+char getchar0(void);
+__irq void uart0_interrupt(void);
+void uart_in_an0(void);
+signed short index_offset0 (signed short index,signed short offset);
+char control_check0(signed short index);
+void uart_in0(void);
+void uart_out_adr_block (unsigned long adress,char *ptr, char len);
+void rs232_data_out(void);
+void rs232_data_out_tki(void);
+void uart_out_buff0 (char *ptr, char len);
+void rs232_data_out_1(void);
+
+#line 15 "modbus.c"
 
 
 
@@ -4282,7 +4410,197 @@ unsigned short modbus_rx_arg1;
 unsigned short modbus_rx_arg2;		
 unsigned short modbus_rx_arg3;		
 
-char modbus_registers[200];
+char modbus_tx_buff[100];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+	
 
 
 
@@ -4317,8 +4635,8 @@ short crc16_calculated;
 short crc16_incapsulated;	
 unsigned short modbus_rx_arg0;		
 unsigned short modbus_rx_arg1;		
-unsigned short modbus_rx_arg2;		
-unsigned short modbus_rx_arg3;		
+
+
 unsigned char modbus_func;			
 
 
@@ -4328,7 +4646,7 @@ modbus_rx_counter=modbus_rx_buffer_ptr;
 modbus_rx_buffer_ptr=0;
 bMODBUS_TIMEOUT=0;
 	
-crc16_calculated  = CRC16_2(modbus_an_buffer, modbus_rx_counter-2);
+crc16_calculated  = CRC16_2((char*)modbus_an_buffer, modbus_rx_counter-2);
 crc16_incapsulated = *((short*)&modbus_an_buffer[modbus_rx_counter-2]);
 
 modbus_plazma1=modbus_rx_counter;
@@ -4338,8 +4656,8 @@ modbus_plazma3=crc16_incapsulated;
 modbus_func=modbus_an_buffer[1];
 modbus_rx_arg0=(((unsigned short)modbus_an_buffer[2])*((unsigned short)256))+((unsigned short)modbus_an_buffer[3]);
 modbus_rx_arg1=(((unsigned short)modbus_an_buffer[4])*((unsigned short)256))+((unsigned short)modbus_an_buffer[5]);
-modbus_rx_arg2=(((unsigned short)modbus_an_buffer[6])*((unsigned short)256))+((unsigned short)modbus_an_buffer[7]);
-modbus_rx_arg3=(((unsigned short)modbus_an_buffer[8])*((unsigned short)256))+((unsigned short)modbus_an_buffer[9]);
+
+
 
 
 if(crc16_calculated==crc16_incapsulated)
@@ -4406,15 +4724,15 @@ if(crc16_calculated==crc16_incapsulated)
 				}
 			if(modbus_rx_arg0==24)		
 				{
-				if((modbus_rx_arg1>=0)||(modbus_rx_arg1<=20))
+				if( (modbus_rx_arg1<=20))
 				lc640_write_int(0x10+500+96,modbus_rx_arg1);  
 				}
 
 
 			if(modbus_rx_arg0==30)		
 				{
-				if(modbus_rx_arg1<0)TBAT=0;
-				else if((modbus_rx_arg1>0)&&(modbus_rx_arg1<=5))modbus_rx_arg1=0;
+				
+ if((modbus_rx_arg1>0)&&(modbus_rx_arg1<=5))modbus_rx_arg1=0;
 				else if(modbus_rx_arg1>=60)TBAT=60;
 				else TBAT=modbus_rx_arg1;
 				lc640_write_int(0x10+100+78,TBAT);
@@ -4555,7 +4873,8 @@ if(crc16_calculated==crc16_incapsulated)
 
  
 				}
-			modbus_hold_register_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0);
+			
+			modbus_hold_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,1,0);
 			}
 		} 
 	
@@ -4565,119 +4884,268 @@ if(crc16_calculated==crc16_incapsulated)
 }
 
 
-void modbus_register_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr)
-{
-
-char modbus_tx_buff[50];
-unsigned short crc_temp;
-char i;
 
 
-modbus_registers[0]=(char)(load_U/256);					
-modbus_registers[1]=(char)(load_U%256);
-modbus_registers[2]=(char)(load_I/256);					
-modbus_registers[3]=(char)(load_I%256);
-modbus_registers[4]=(char)(Ib_ips_termokompensat/256);		
-modbus_registers[5]=(char)(Ib_ips_termokompensat%256);
-modbus_registers[6]=(char)(t_ext[0]/256);				
-modbus_registers[7]=(char)(t_ext[0]%256);
-modbus_registers[8]=(char)(net_Ua/256);					
-modbus_registers[9]=(char)(net_Ua%256);		 	
-modbus_registers[10]=(char)(net_Ub/256);				
-modbus_registers[11]=(char)(net_Ub%256);
-modbus_registers[12]=(char)(net_Uc/256);				
-modbus_registers[13]=(char)(net_Uc%256);
-modbus_registers[14]=(char)(net_F3/256);				
-modbus_registers[15]=(char)(net_F3%256);
-modbus_registers[16]=(char)(load_I/256);				
-modbus_registers[17]=(char)(load_I%256);
-modbus_registers[18]=(char)(load_I/256);				
-modbus_registers[19]=(char)(load_I%256);
-modbus_registers[20]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->YEAR)/256);			
-modbus_registers[21]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->YEAR)%256);
-modbus_registers[22]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MONTH)/256);		
-modbus_registers[23]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MONTH)%256);
-modbus_registers[24]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->DOM)/256);			
-modbus_registers[25]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->DOM)%256);
-modbus_registers[26]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->HOUR)/256);			
-modbus_registers[27]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->HOUR)%256);
-modbus_registers[28]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MIN)/256);			
-modbus_registers[29]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MIN)%256);
-modbus_registers[30]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->SEC)/256);			
-modbus_registers[31]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->SEC)%256);
-modbus_registers[32]=(char)(load_I/256);				
-modbus_registers[33]=(char)(load_I%256);
-modbus_registers[34]=(char)(load_I/256);				
-modbus_registers[35]=(char)(load_I%256);
-modbus_registers[36]=(char)(load_I/256);		
-modbus_registers[37]=(char)(load_I%256);
-modbus_registers[38]=(char)(NUMIST/256);		
-modbus_registers[39]=(char)(NUMIST%256);
-modbus_registers[40]=(char)(PAR/256);		
-modbus_registers[41]=(char)(PAR%256);
-modbus_registers[42]=(char)(ZV_ON/256);		
-modbus_registers[43]=(char)(ZV_ON%256);
-modbus_registers[44]=(char)(TERMOKOMPENS/256);		
-modbus_registers[45]=(char)(TERMOKOMPENS%256);
-modbus_registers[46]=(char)(UBM_AV/256);		
-modbus_registers[47]=(char)(UBM_AV%256);
-modbus_registers[48]=(char)(load_I/256);		
-modbus_registers[49]=(char)(load_I%256);
-modbus_registers[50]=(char)(load_I/256);		
-modbus_registers[51]=(char)(load_I%256);
-modbus_registers[52]=(char)(load_I/256);		
-modbus_registers[53]=(char)(load_I%256);
-modbus_registers[54]=(char)(load_I/256);		
-modbus_registers[55]=(char)(load_I%256);
-modbus_registers[56]=(char)(load_I/256);		
-modbus_registers[57]=(char)(load_I%256);
-modbus_registers[58]=(char)(TBAT/256);			
-modbus_registers[59]=(char)(TBAT%256);
-modbus_registers[60]=(char)(UMAX/256);			
-modbus_registers[61]=(char)(UMAX%256);
-modbus_registers[62]=(char)((UB20-DU)/256);		
-modbus_registers[63]=(char)((UB20-DU)%256);
-modbus_registers[64]=(char)(UB0/256);			
-modbus_registers[65]=(char)(UB0%256);
-modbus_registers[66]=(char)(UB20/256);			
-modbus_registers[67]=(char)(UB20%256);
-modbus_registers[68]=(char)(USIGN/256);		
-modbus_registers[69]=(char)(USIGN%256);
-modbus_registers[70]=(char)(UMN/256);		
-modbus_registers[71]=(char)(UMN%256);
-modbus_registers[72]=(char)(U0B/256);		
-modbus_registers[73]=(char)(U0B%256);
-modbus_registers[74]=(char)(IKB/256);		
-modbus_registers[75]=(char)(IKB%256);
-modbus_registers[76]=(char)(IZMAX/256);		
-modbus_registers[77]=(char)(IZMAX%256);
-modbus_registers[78]=(char)(IMAX/256);		
-modbus_registers[79]=(char)(IMAX%256);
-modbus_registers[80]=(char)(IMIN/256);		
-modbus_registers[81]=(char)(IMIN%256);
-modbus_registers[82]=(char)(UVZ/256);		
-modbus_registers[83]=(char)(UVZ%256);
-modbus_registers[84]=(char)(TZAS/256);		
-modbus_registers[85]=(char)(TZAS%256);
-modbus_registers[86]=(char)(TMAX/256);		
-modbus_registers[87]=(char)(TMAX%256);
-modbus_registers[88]=(char)(TSIGN/256);		
-modbus_registers[89]=(char)(TSIGN%256);
-modbus_registers[90]=(char)(TBATMAX/256);		
-modbus_registers[91]=(char)(TBATMAX%256);
-modbus_registers[92]=(char)(TBATSIGN/256);		
-modbus_registers[93]=(char)(TBATSIGN%256);
-modbus_registers[94]=(char)(load_I/256);		
-modbus_registers[95]=(char)(load_I%256);
-modbus_registers[96]=(char)(load_I/256);		
-modbus_registers[97]=(char)(load_I%256);
-modbus_registers[98]=(char)(load_I/256);		
-modbus_registers[99]=(char)(load_I%256);
 
-modbus_tx_buff[0]=adr;
-modbus_tx_buff[1]=func;
-modbus_tx_buff[2]=(char)(reg_adr/256);
-modbus_tx_buff[3]=(char)(reg_adr%256);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -4689,141 +5157,91 @@ modbus_tx_buff[3]=(char)(reg_adr%256);
 
  
 
-mem_copy((char*)&modbus_tx_buff[4],(char*)&modbus_registers[(reg_adr-1)*2],2);
-
-crc_temp=CRC16_2(modbus_tx_buff,6);
-
-modbus_tx_buff[6]=crc_temp%256;
-modbus_tx_buff[7]=crc_temp/256;
-
-for (i=0;i<8;i++)
-	{
-	putchar0(modbus_tx_buff[i]);
-	}
-for (i=0;i<8;i++)
-	{
-	putchar_sc16is700(modbus_tx_buff[i]);
-	}
-}
-
-
-void modbus_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity)
-{
-
-char modbus_tx_buff[100];
-unsigned short crc_temp;
-char i;
-
-
-modbus_registers[0]=(char)(load_U/256);					
-modbus_registers[1]=(char)(load_U%256);
-modbus_registers[2]=(char)(load_I/256);					
-modbus_registers[3]=(char)(load_I%256);
-modbus_registers[4]=(char)(Ib_ips_termokompensat/256);		
-modbus_registers[5]=(char)(Ib_ips_termokompensat%256);
-modbus_registers[6]=(char)(t_ext[0]/256);				
-modbus_registers[7]=(char)(t_ext[0]%256);
-modbus_registers[8]=(char)(net_Ua/256);					
-modbus_registers[9]=(char)(net_Ua%256);		 	
-modbus_registers[10]=(char)(net_Ub/256);				
-modbus_registers[11]=(char)(net_Ub%256);
-modbus_registers[12]=(char)(net_Uc/256);				
-modbus_registers[13]=(char)(net_Uc%256);
-modbus_registers[14]=(char)(net_F3/256);				
-modbus_registers[15]=(char)(net_F3%256);
-modbus_registers[16]=(char)(load_I/256);				
-modbus_registers[17]=(char)(load_I%256);
-modbus_registers[18]=(char)(load_I/256);				
-modbus_registers[19]=(char)(load_I%256);
-modbus_registers[20]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->YEAR)/256);			
-modbus_registers[21]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->YEAR)%256);
-modbus_registers[22]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MONTH)/256);		
-modbus_registers[23]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MONTH)%256);
-modbus_registers[24]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->DOM)/256);			
-modbus_registers[25]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->DOM)%256);
-modbus_registers[26]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->HOUR)/256);			
-modbus_registers[27]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->HOUR)%256);
-modbus_registers[28]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MIN)/256);			
-modbus_registers[29]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MIN)%256);
-modbus_registers[30]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->SEC)/256);			
-modbus_registers[31]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->SEC)%256);
-modbus_registers[32]=(char)(load_I/256);				
-modbus_registers[33]=(char)(load_I%256);
-modbus_registers[34]=(char)(load_I/256);				
-modbus_registers[35]=(char)(load_I%256);
-modbus_registers[36]=(char)(load_I/256);		
-modbus_registers[37]=(char)(load_I%256);
-modbus_registers[38]=(char)(NUMIST/256);		
-modbus_registers[39]=(char)(NUMIST%256);
-modbus_registers[40]=(char)(PAR/256);		
-modbus_registers[41]=(char)(PAR%256);
-modbus_registers[42]=(char)(ZV_ON/256);		
-modbus_registers[43]=(char)(ZV_ON%256);
-modbus_registers[44]=(char)(TERMOKOMPENS/256);		
-modbus_registers[45]=(char)(TERMOKOMPENS%256);
-modbus_registers[46]=(char)(UBM_AV/256);		
-modbus_registers[47]=(char)(UBM_AV%256);
-modbus_registers[48]=(char)(load_I/256);		
-modbus_registers[49]=(char)(load_I%256);
-modbus_registers[50]=(char)(load_I/256);		
-modbus_registers[51]=(char)(load_I%256);
-modbus_registers[52]=(char)(load_I/256);		
-modbus_registers[53]=(char)(load_I%256);
-modbus_registers[54]=(char)(load_I/256);		
-modbus_registers[55]=(char)(load_I%256);
-modbus_registers[56]=(char)(load_I/256);		
-modbus_registers[57]=(char)(load_I%256);
-modbus_registers[58]=(char)(TBAT/256);			
-modbus_registers[59]=(char)(TBAT%256);
-modbus_registers[60]=(char)(UMAX/256);			
-modbus_registers[61]=(char)(UMAX%256);
-modbus_registers[62]=(char)((UB20-DU)/256);		
-modbus_registers[63]=(char)((UB20-DU)%256);
-modbus_registers[64]=(char)(UB0/256);			
-modbus_registers[65]=(char)(UB0%256);
-modbus_registers[66]=(char)(UB20/256);			
-modbus_registers[67]=(char)(UB20%256);
-modbus_registers[68]=(char)(USIGN/256);		
-modbus_registers[69]=(char)(USIGN%256);
-modbus_registers[70]=(char)(UMN/256);		
-modbus_registers[71]=(char)(UMN%256);
-modbus_registers[72]=(char)(U0B/256);		
-modbus_registers[73]=(char)(U0B%256);
-modbus_registers[74]=(char)(IKB/256);		
-modbus_registers[75]=(char)(IKB%256);
-modbus_registers[76]=(char)(IZMAX/256);		
-modbus_registers[77]=(char)(IZMAX%256);
-modbus_registers[78]=(char)(IMAX/256);		
-modbus_registers[79]=(char)(IMAX%256);
-modbus_registers[80]=(char)(IMIN/256);		
-modbus_registers[81]=(char)(IMIN%256);
-modbus_registers[82]=(char)(UVZ/256);		
-modbus_registers[83]=(char)(UVZ%256);
-modbus_registers[84]=(char)(TZAS/256);		
-modbus_registers[85]=(char)(TZAS%256);
-modbus_registers[86]=(char)(TMAX/256);		
-modbus_registers[87]=(char)(TMAX%256);
-modbus_registers[88]=(char)(TSIGN/256);		
-modbus_registers[89]=(char)(TSIGN%256);
-modbus_registers[90]=(char)(TBATMAX/256);		
-modbus_registers[91]=(char)(TBATMAX%256);
-modbus_registers[92]=(char)(TBATSIGN/256);		
-modbus_registers[93]=(char)(TBATSIGN%256);
-modbus_registers[94]=(char)(load_I/256);		
-modbus_registers[95]=(char)(load_I%256);
-modbus_registers[96]=(char)(load_I/256);		
-modbus_registers[97]=(char)(load_I%256);
-modbus_registers[98]=(char)(load_I/256);		
-modbus_registers[99]=(char)(load_I%256);
 
 
 
 
-modbus_tx_buff[0]=adr;
-modbus_tx_buff[1]=func;
 
 
-modbus_tx_buff[2]=(char)(reg_quantity*2);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -4833,196 +5251,83 @@ modbus_tx_buff[2]=(char)(reg_quantity*2);
 
 
  
-
-mem_copy((char*)&modbus_tx_buff[3],(char*)&modbus_registers[(reg_adr-1)*2],reg_quantity*2);
-
-crc_temp=CRC16_2(modbus_tx_buff,(reg_quantity*2)+3);
-
-modbus_tx_buff[3+(reg_quantity*2)]=crc_temp%256;
-modbus_tx_buff[4+(reg_quantity*2)]=crc_temp/256;
-
-
-
-for (i=0;i<15 ;i++)
-	{
-	putchar0(modbus_tx_buff[i]);
-	} 
-for (i=0;i<15;i++)
-	{
-	putchar_sc16is700(modbus_tx_buff[i]);
-	}
-}
-
-
-void modbus_hold_register_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr)
-{
-
-char modbus_tx_buff[150];
-unsigned short crc_temp;
-char i;
-
-modbus_registers[20]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->YEAR)/256);			
-modbus_registers[21]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->YEAR)%256);
-modbus_registers[22]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MONTH)/256);		
-modbus_registers[23]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MONTH)%256);
-modbus_registers[24]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->DOM)/256);			
-modbus_registers[25]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->DOM)%256);
-modbus_registers[26]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->HOUR)/256);			
-modbus_registers[27]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->HOUR)%256);
-modbus_registers[28]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MIN)/256);			
-modbus_registers[29]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MIN)%256);
-modbus_registers[30]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->SEC)/256);			
-modbus_registers[31]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->SEC)%256);
-modbus_registers[38]=(char)(NUMIST/256);				
-modbus_registers[39]=(char)(NUMIST%256);
-modbus_registers[40]=(char)(PAR/256);					
-modbus_registers[41]=(char)(PAR%256);
-modbus_registers[42]=(char)(ZV_ON/256);					
-modbus_registers[43]=(char)(ZV_ON%256);
-modbus_registers[46]=(char)(UBM_AV/256);				
-modbus_registers[47]=(char)(UBM_AV%256);
-modbus_registers[58]=(char)(TBAT/256);					
-modbus_registers[59]=(char)(TBAT%256);
-modbus_registers[60]=(char)(UMAX/256);					
-modbus_registers[61]=(char)(UMAX%256);
-modbus_registers[62]=(char)((UB20-DU)/256);				
-modbus_registers[63]=(char)((UB20-DU)%256);
-modbus_registers[64]=(char)(UB0/256);					
-modbus_registers[65]=(char)(UB0%256);
-modbus_registers[66]=(char)(UB20/256);					
-modbus_registers[67]=(char)(UB20%256);
-modbus_registers[68]=(char)(USIGN/256);					
-modbus_registers[69]=(char)(USIGN%256);
-modbus_registers[70]=(char)(UMN/256);					
-modbus_registers[71]=(char)(UMN%256);
-modbus_registers[72]=(char)(U0B/256);					
-modbus_registers[73]=(char)(U0B%256);
-modbus_registers[74]=(char)(IKB/256);					
-modbus_registers[75]=(char)(IKB%256);
-modbus_registers[76]=(char)(IZMAX/256);					
-modbus_registers[77]=(char)(IZMAX%256);
-modbus_registers[78]=(char)(IMAX/256);					
-modbus_registers[79]=(char)(IMAX%256);
-modbus_registers[80]=(char)(IMIN/256);					
-modbus_registers[81]=(char)(IMIN%256);
-modbus_registers[82]=(char)(UVZ/256);					
-modbus_registers[83]=(char)(UVZ%256);
-modbus_registers[84]=(char)(TZAS/256);					
-modbus_registers[85]=(char)(TZAS%256);
-modbus_registers[86]=(char)(TMAX/256);					
-modbus_registers[87]=(char)(TMAX%256);
-modbus_registers[88]=(char)(TSIGN/256);					
-modbus_registers[89]=(char)(TSIGN%256);
-modbus_registers[90]=(char)(TBATMAX/256);				
-modbus_registers[91]=(char)(TBATMAX%256);
-modbus_registers[92]=(char)(TBATSIGN/256);				
-modbus_registers[93]=(char)(TBATSIGN%256);
-modbus_registers[94]=(char)(speedChrgCurr/256);					
-modbus_registers[95]=(char)(speedChrgCurr%256);
-modbus_registers[96]=(char)(speedChrgVolt/256);				
-modbus_registers[97]=(char)(speedChrgVolt%256);
-modbus_registers[98]=(char)(speedChrgTimeInHour/256);				
-modbus_registers[99]=(char)(speedChrgTimeInHour%256);
-
-
-modbus_tx_buff[0]=adr;
-modbus_tx_buff[1]=func;
-modbus_tx_buff[2]=(char)(reg_adr/256);
-modbus_tx_buff[3]=(char)(reg_adr%256);
-
-mem_copy((char*)&modbus_tx_buff[4],(char*)&modbus_registers[(reg_adr-1)*2],2);
-
-crc_temp=CRC16_2(modbus_tx_buff,6);
-
-modbus_tx_buff[6]=crc_temp%256;
-modbus_tx_buff[7]=crc_temp/256;
-
-for (i=0;i<8;i++)
-	{
-	putchar0(modbus_tx_buff[i]);
-	}
-for (i=0;i<8;i++)
-	{
-	putchar_sc16is700(modbus_tx_buff[i]);
-	}
-}
 
 
 void modbus_hold_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot)
 {
+signed char modbus_registers[150];
 
-char modbus_tx_buff[150];
 unsigned short crc_temp;
 char i;
 
-modbus_registers[20]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->YEAR)/256);			
-modbus_registers[21]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->YEAR)%256);
-modbus_registers[22]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MONTH)/256);		
-modbus_registers[23]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MONTH)%256);
-modbus_registers[24]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->DOM)/256);			
-modbus_registers[25]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->DOM)%256);
-modbus_registers[26]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->HOUR)/256);			
-modbus_registers[27]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->HOUR)%256);
-modbus_registers[28]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MIN)/256);			
-modbus_registers[29]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MIN)%256);
-modbus_registers[30]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->SEC)/256);			
-modbus_registers[31]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->SEC)%256);
-modbus_registers[38]=(char)(NUMIST/256);				
-modbus_registers[39]=(char)(NUMIST%256);
-modbus_registers[40]=(char)(PAR/256);					
-modbus_registers[41]=(char)(PAR%256);
-modbus_registers[42]=(char)(ZV_ON/256);					
-modbus_registers[43]=(char)(ZV_ON%256);
-modbus_registers[46]=(char)(UBM_AV/256);				
-modbus_registers[47]=(char)(UBM_AV%256);
-modbus_registers[58]=(char)(TBAT/256);					
-modbus_registers[59]=(char)(TBAT%256);
-modbus_registers[60]=(char)(UMAX/256);					
-modbus_registers[61]=(char)(UMAX%256);
-modbus_registers[62]=(char)((UB20-DU)/256);				
-modbus_registers[63]=(char)((UB20-DU)%256);
-modbus_registers[64]=(char)(UB0/256);					
-modbus_registers[65]=(char)(UB0%256);
-modbus_registers[66]=(char)(UB20/256);					
-modbus_registers[67]=(char)(UB20%256);
-modbus_registers[68]=(char)(USIGN/256);					
-modbus_registers[69]=(char)(USIGN%256);
-modbus_registers[70]=(char)(UMN/256);					
-modbus_registers[71]=(char)(UMN%256);
-modbus_registers[72]=(char)(U0B/256);					
-modbus_registers[73]=(char)(U0B%256);
-modbus_registers[74]=(char)(IKB/256);					
-modbus_registers[75]=(char)(IKB%256);
-modbus_registers[76]=(char)(IZMAX/256);					
-modbus_registers[77]=(char)(IZMAX%256);
-modbus_registers[78]=(char)(IMAX/256);					
-modbus_registers[79]=(char)(IMAX%256);
-modbus_registers[80]=(char)(IMIN/256);					
-modbus_registers[81]=(char)(IMIN%256);
-modbus_registers[82]=(char)(UVZ/256);					
-modbus_registers[83]=(char)(UVZ%256);
-modbus_registers[84]=(char)(TZAS/256);					
-modbus_registers[85]=(char)(TZAS%256);
-modbus_registers[86]=(char)(TMAX/256);					
-modbus_registers[87]=(char)(TMAX%256);
-modbus_registers[88]=(char)(TSIGN/256);					
-modbus_registers[89]=(char)(TSIGN%256);
-modbus_registers[90]=(char)(TBATMAX/256);				
-modbus_registers[91]=(char)(TBATMAX%256);
-modbus_registers[92]=(char)(TBATSIGN/256);				
-modbus_registers[93]=(char)(TBATSIGN%256);
-modbus_registers[94]=(char)(speedChrgCurr/256);					
-modbus_registers[95]=(char)(speedChrgCurr%256);
-modbus_registers[96]=(char)(speedChrgVolt/256);				
-modbus_registers[97]=(char)(speedChrgVolt%256);
-modbus_registers[98]=(char)(speedChrgTimeInHour/256);				
-modbus_registers[99]=(char)(speedChrgTimeInHour%256);
-modbus_registers[100]=(char)(U_OUT_KONTR_MAX/256);					
-modbus_registers[101]=(char)(U_OUT_KONTR_MAX%256);
-modbus_registers[102]=(char)(U_OUT_KONTR_MIN/256);					
-modbus_registers[103]=(char)(U_OUT_KONTR_MIN%256);
-modbus_registers[104]=(char)(U_OUT_KONTR_DELAY/256);				
-modbus_registers[105]=(char)(U_OUT_KONTR_DELAY%256);
+modbus_registers[20]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->YEAR)>>8);			
+modbus_registers[21]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->YEAR));
+modbus_registers[22]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MONTH)>>8);		
+modbus_registers[23]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MONTH));
+modbus_registers[24]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->DOM)>>8);			
+modbus_registers[25]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->DOM));
+modbus_registers[26]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->HOUR)>>8);			
+modbus_registers[27]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->HOUR));
+modbus_registers[28]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MIN)>>8);			
+modbus_registers[29]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MIN));
+modbus_registers[30]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->SEC)>>8);			
+modbus_registers[31]=(char)((((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->SEC));
+modbus_registers[38]=(char)(NUMIST>>8);				
+modbus_registers[39]=(char)(NUMIST);
+modbus_registers[40]=(char)(PAR>>8);					
+modbus_registers[41]=(char)(PAR);
+modbus_registers[42]=(char)(ZV_ON>>8);					
+modbus_registers[43]=(char)(ZV_ON);
+modbus_registers[46]=(char)(UBM_AV>>8);				
+modbus_registers[47]=(char)(UBM_AV);
+modbus_registers[58]=(char)(TBAT>>8);					
+modbus_registers[59]=(char)(TBAT);
+modbus_registers[60]=(char)(UMAX>>8);					
+modbus_registers[61]=(char)(UMAX);
+modbus_registers[62]=(char)((UB20-DU)>>8);				
+modbus_registers[63]=(char)((UB20-DU));
+modbus_registers[64]=(char)(UB0>>8);					
+modbus_registers[65]=(char)(UB0);
+modbus_registers[66]=(char)(UB20>>8);					
+modbus_registers[67]=(char)(UB20);
+modbus_registers[68]=(char)(USIGN>>8);					
+modbus_registers[69]=(char)(USIGN);
+modbus_registers[70]=(char)(UMN>>8);					
+modbus_registers[71]=(char)(UMN);
+modbus_registers[72]=(char)(U0B>>8);					
+modbus_registers[73]=(char)(U0B);
+modbus_registers[74]=(char)(IKB>>8);					
+modbus_registers[75]=(char)(IKB);
+modbus_registers[76]=(char)(IZMAX>>8);					
+modbus_registers[77]=(char)(IZMAX);
+modbus_registers[78]=(char)(IMAX>>8);					
+modbus_registers[79]=(char)(IMAX);
+modbus_registers[80]=(char)(IMIN>>8);					
+modbus_registers[81]=(char)(IMIN);
+modbus_registers[82]=(char)(UVZ>>8);					
+modbus_registers[83]=(char)(UVZ);
+modbus_registers[84]=(char)(TZAS>>8);					
+modbus_registers[85]=(char)(TZAS);
+modbus_registers[86]=(char)(TMAX>>8);					
+modbus_registers[87]=(char)(TMAX);
+modbus_registers[88]=(char)(TSIGN>>8);					
+modbus_registers[89]=(char)(TSIGN);
+modbus_registers[90]=(char)(TBATMAX>>8);				
+modbus_registers[91]=(char)(TBATMAX);
+modbus_registers[92]=(char)(TBATSIGN>>8);				
+modbus_registers[93]=(char)(TBATSIGN);
+modbus_registers[94]=(char)(speedChrgCurr>>8);					
+modbus_registers[95]=(char)(speedChrgCurr);
+modbus_registers[96]=(char)(speedChrgVolt>>8);				
+modbus_registers[97]=(char)(speedChrgVolt);
+modbus_registers[98]=(char)(speedChrgTimeInHour>>8);				
+modbus_registers[99]=(char)(speedChrgTimeInHour);
+modbus_registers[100]=(char)(U_OUT_KONTR_MAX>>8);					
+modbus_registers[101]=(char)(U_OUT_KONTR_MAX);
+modbus_registers[102]=(char)(U_OUT_KONTR_MIN>>8);					
+modbus_registers[103]=(char)(U_OUT_KONTR_MIN);
+modbus_registers[104]=(char)(U_OUT_KONTR_DELAY>>8);				
+modbus_registers[105]=(char)(U_OUT_KONTR_DELAY);
 
 			if(modbus_rx_arg0==51)		
 				{
@@ -5047,8 +5352,8 @@ if(prot==0)
 	
 	crc_temp=CRC16_2(modbus_tx_buff,(reg_quantity*2)+3);
 
-	modbus_tx_buff[3+(reg_quantity*2)]=crc_temp%256;
-	modbus_tx_buff[4+(reg_quantity*2)]=crc_temp/256;
+	modbus_tx_buff[3+(reg_quantity*2)]=(char)crc_temp;
+	modbus_tx_buff[4+(reg_quantity*2)]=crc_temp>>8;
 
 	for (i=0;i<(5+(reg_quantity*2));i++)
 		{
@@ -5069,168 +5374,173 @@ else if(prot==1)
 
 void modbus_input_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot)
 {
+signed char modbus_registers[500];
 
-char modbus_tx_buff[200];
 unsigned short crc_temp;
 char i;
 short tempS;
 
-modbus_registers[0]=(char)(out_U/256);					
-modbus_registers[1]=(char)(out_U%256);
-modbus_registers[2]=(char)(bps_I/256);					
-modbus_registers[3]=(char)(bps_I%256);
-modbus_registers[4]=(char)(net_U/256);					
-modbus_registers[5]=(char)(net_U%256);
-modbus_registers[6]=(char)(net_F/256);					
-modbus_registers[7]=(char)(net_F%256);
-modbus_registers[8]=(char)(net_Ua/256);					
-modbus_registers[9]=(char)(net_Ua%256);		 	
-modbus_registers[10]=(char)(net_Ub/256);				
-modbus_registers[11]=(char)(net_Ub%256);
-modbus_registers[12]=(char)(net_Uc/256);				
-modbus_registers[13]=(char)(net_Uc%256);
-modbus_registers[14]=(char)(bat[0]._Ub/256);				
-modbus_registers[15]=(char)(bat[0]._Ub%256);
-modbus_registers[16]=(char)(bat[0]._Ib/256);				
-modbus_registers[17]=(char)(bat[0]._Ib%256);
-modbus_registers[18]=(char)(bat[0]._Tb/256);				
-modbus_registers[19]=(char)(bat[0]._Tb%256);
-modbus_registers[20]=(char)(bat[0]._zar/256);			
-modbus_registers[21]=(char)(bat[0]._zar%256);
-modbus_registers[22]=(char)(bat[0]._Ubm/256);			
-modbus_registers[23]=(char)(bat[0]._Ubm%256);
-modbus_registers[24]=(char)(bat[0]._dUbm/256);			
-modbus_registers[25]=(char)(bat[0]._dUbm%256);
-modbus_registers[26]=(char)(BAT_C_REAL[0]/256);			
-modbus_registers[27]=(char)(BAT_C_REAL[0]%256);
-modbus_registers[28]=(char)(bat[1]._Ub/256);				
-modbus_registers[29]=(char)(bat[1]._Ub%256);
-modbus_registers[30]=(char)(bat[1]._Ib/256);				
-modbus_registers[31]=(char)(bat[1]._Ib%256);
-modbus_registers[32]=(char)(bat[1]._Tb/256);				
-modbus_registers[33]=(char)(bat[1]._Tb%256);
-modbus_registers[34]=(char)(bat[1]._zar/256);			
-modbus_registers[35]=(char)(bat[1]._zar%256);
-modbus_registers[36]=(char)(bat[1]._Ubm/256);			
-modbus_registers[37]=(char)(bat[1]._Ubm%256);
-modbus_registers[38]=(char)(bat[1]._dUbm/256);			
-modbus_registers[39]=(char)(bat[1]._dUbm%256);
-modbus_registers[40]=(char)(BAT_C_REAL[1]/256);			
-modbus_registers[41]=(char)(BAT_C_REAL[1]%256);
-modbus_registers[42]=(char)(bps[0]._Uii/256);			
-modbus_registers[43]=(char)(bps[0]._Uii%256);
-modbus_registers[44]=(char)(bps[0]._Ii/256);				
-modbus_registers[45]=(char)(bps[0]._Ii%256);
-modbus_registers[46]=(char)(bps[0]._Ti/256);				
-modbus_registers[47]=(char)(bps[0]._Ti%256);
-modbus_registers[48]=(char)(bps[0]._av/256);				
-modbus_registers[49]=(char)(bps[0]._av%256);
-modbus_registers[50]=(char)(bps[1]._Uii/256);			
-modbus_registers[51]=(char)(bps[1]._Uii%256);
-modbus_registers[52]=(char)(bps[1]._Ii/256);				
-modbus_registers[53]=(char)(bps[1]._Ii%256);
-modbus_registers[54]=(char)(bps[1]._Ti/256);				
-modbus_registers[55]=(char)(bps[1]._Ti%256);
-modbus_registers[56]=(char)(bps[1]._av/256);				
-modbus_registers[57]=(char)(bps[1]._av%256);
-modbus_registers[58]=(char)(bps[2]._Uii/256);			
-modbus_registers[59]=(char)(bps[2]._Uii%256);
-modbus_registers[60]=(char)(bps[2]._Ii/256);				
-modbus_registers[61]=(char)(bps[2]._Ii%256);
-modbus_registers[62]=(char)(bps[2]._Ti/256);				
-modbus_registers[63]=(char)(bps[2]._Ti%256);
-modbus_registers[64]=(char)(bps[2]._av/256);				
-modbus_registers[65]=(char)(bps[2]._av%256);
-modbus_registers[66]=(char)(bps[3]._Uii/256);			
-modbus_registers[67]=(char)(bps[3]._Uii%256);
-modbus_registers[68]=(char)(bps[3]._Ii/256);				
-modbus_registers[69]=(char)(bps[3]._Ii%256);
-modbus_registers[70]=(char)(bps[3]._Ti/256);				
-modbus_registers[71]=(char)(bps[3]._Ti%256);
-modbus_registers[72]=(char)(bps[3]._av/256);				
-modbus_registers[73]=(char)(bps[3]._av%256);
-modbus_registers[74]=(char)(bps[4]._Uii/256);			
-modbus_registers[75]=(char)(bps[4]._Uii%256);
-modbus_registers[76]=(char)(bps[4]._Ii/256);				
-modbus_registers[77]=(char)(bps[4]._Ii%256);
-modbus_registers[78]=(char)(bps[4]._Ti/256);				
-modbus_registers[79]=(char)(bps[4]._Ti%256);
-modbus_registers[80]=(char)(bps[4]._av/256);				
-modbus_registers[81]=(char)(bps[4]._av%256);
-modbus_registers[82]=(char)(bps[5]._Uii/256);			
-modbus_registers[83]=(char)(bps[5]._Uii%256);
-modbus_registers[84]=(char)(bps[5]._Ii/256);				
-modbus_registers[85]=(char)(bps[5]._Ii%256);
-modbus_registers[86]=(char)(bps[5]._Ti/256);				
-modbus_registers[87]=(char)(bps[5]._Ti%256);
-modbus_registers[88]=(char)(bps[5]._av/256);				
-modbus_registers[89]=(char)(bps[5]._av%256);
-modbus_registers[90]=(char)(bps[6]._Uii/256);			
-modbus_registers[91]=(char)(bps[6]._Uii%256);
-modbus_registers[92]=(char)(bps[6]._Ii/256);				
-modbus_registers[93]=(char)(bps[6]._Ii%256);
-modbus_registers[94]=(char)(bps[6]._Ti/256);				
-modbus_registers[95]=(char)(bps[6]._Ti%256);
-modbus_registers[96]=(char)(bps[6]._av/256);				
-modbus_registers[97]=(char)(bps[6]._av%256);
-modbus_registers[98]=(char)(bps[7]._Uii/256);			
-modbus_registers[99]=(char)(bps[7]._Uii%256);
-modbus_registers[100]=(char)(bps[7]._Ii/256);			
-modbus_registers[101]=(char)(bps[7]._Ii%256);
-modbus_registers[102]=(char)(bps[7]._Ti/256);			
-modbus_registers[103]=(char)(bps[7]._Ti%256);
-modbus_registers[104]=(char)(bps[7]._av/256);			
-modbus_registers[105]=(char)(bps[7]._av%256);
-modbus_registers[106]=(char)(bps_U/256);					
-modbus_registers[107]=(char)(bps_U%256);
+
+
+modbus_registers[0]=(signed char)(out_U>>8);					
+modbus_registers[1]=(signed char)(out_U);
+modbus_registers[2]=(signed char)(bps_I>>8);					
+modbus_registers[3]=(signed char)(bps_I);
+modbus_registers[4]=(signed char)(net_U>>8);					
+modbus_registers[5]=(signed char)(net_U);
+modbus_registers[6]=(signed char)(net_F>>8);					
+modbus_registers[7]=(signed char)(net_F);
+modbus_registers[8]=(signed char)(net_Ua>>8);					
+modbus_registers[9]=(signed char)(net_Ua);		 	
+modbus_registers[10]=(signed char)(net_Ub>>8);				
+modbus_registers[11]=(signed char)(net_Ub);
+modbus_registers[12]=(signed char)(net_Uc>>8);				
+modbus_registers[13]=(signed char)(net_Uc);
+modbus_registers[14]=(signed char)(bat[0]._Ub>>8);				
+modbus_registers[15]=(signed char)(bat[0]._Ub);
+modbus_registers[16]=(signed char)(bat[0]._Ib>>8);				
+modbus_registers[17]=(signed char)(bat[0]._Ib);
+modbus_registers[18]=(signed char)(bat[0]._Tb>>8);				
+modbus_registers[19]=(signed char)(bat[0]._Tb);
+modbus_registers[20]=(signed char)(bat[0]._zar>>8);			
+modbus_registers[21]=(signed char)(bat[0]._zar);
+modbus_registers[22]=(signed char)(bat[0]._Ubm>>8);			
+modbus_registers[23]=(signed char)(bat[0]._Ubm);
+modbus_registers[24]=(signed char)(bat[0]._dUbm>>8);			
+modbus_registers[25]=(signed char)(bat[0]._dUbm);
+modbus_registers[26]=(signed char)(BAT_C_REAL[0]>>8);			
+modbus_registers[27]=(signed char)(BAT_C_REAL[0]);
+modbus_registers[28]=(signed char)(bat[1]._Ub>>8);				
+modbus_registers[29]=(signed char)(bat[1]._Ub);
+modbus_registers[30]=(signed char)(bat[1]._Ib>>8);				
+modbus_registers[31]=(signed char)(bat[1]._Ib);
+modbus_registers[32]=(signed char)(bat[1]._Tb>>8);				
+modbus_registers[33]=(signed char)(bat[1]._Tb);
+modbus_registers[34]=(signed char)(bat[1]._zar>>8);			
+modbus_registers[35]=(signed char)(bat[1]._zar);
+modbus_registers[36]=(signed char)(bat[1]._Ubm>>8);			
+modbus_registers[37]=(signed char)(bat[1]._Ubm);
+modbus_registers[38]=(signed char)(bat[1]._dUbm>>8);			
+modbus_registers[39]=(signed char)(bat[1]._dUbm);
+modbus_registers[40]=(signed char)(BAT_C_REAL[1]>>8);			
+modbus_registers[41]=(signed char)(BAT_C_REAL[1]);
+modbus_registers[42]=(signed char)(bps[0]._Uii>>8);			
+modbus_registers[43]=(signed char)(bps[0]._Uii);
+modbus_registers[44]=(signed char)(bps[0]._Ii>>8);				
+modbus_registers[45]=(signed char)(bps[0]._Ii);
+modbus_registers[46]=(signed char)(bps[0]._Ti>>8);				
+modbus_registers[47]=(signed char)(bps[0]._Ti);
+modbus_registers[48]=(signed char)(bps[0]._av>>8);				
+modbus_registers[49]=(signed char)(bps[0]._av);
+modbus_registers[50]=(signed char)(bps[1]._Uii>>8);			
+modbus_registers[51]=(signed char)(bps[1]._Uii);
+modbus_registers[52]=(signed char)(bps[1]._Ii>>8);				
+modbus_registers[53]=(signed char)(bps[1]._Ii);
+modbus_registers[54]=(signed char)(bps[1]._Ti>>8);				
+modbus_registers[55]=(signed char)(bps[1]._Ti);
+modbus_registers[56]=(signed char)(bps[1]._av>>8);				
+modbus_registers[57]=(signed char)(bps[1]._av);
+modbus_registers[58]=(signed char)(bps[2]._Uii>>8);			
+modbus_registers[59]=(signed char)(bps[2]._Uii);
+modbus_registers[60]=(signed char)(bps[2]._Ii>>8);				
+modbus_registers[61]=(signed char)(bps[2]._Ii);
+modbus_registers[62]=(signed char)(bps[2]._Ti>>8);				
+modbus_registers[63]=(signed char)(bps[2]._Ti);
+modbus_registers[64]=(signed char)(bps[2]._av>>8);				
+modbus_registers[65]=(signed char)(bps[2]._av);
+modbus_registers[66]=(signed char)(bps[3]._Uii>>8);			
+modbus_registers[67]=(signed char)(bps[3]._Uii);
+modbus_registers[68]=(signed char)(bps[3]._Ii>>8);				
+modbus_registers[69]=(signed char)(bps[3]._Ii);
+modbus_registers[70]=(signed char)(bps[3]._Ti>>8);				
+modbus_registers[71]=(signed char)(bps[3]._Ti);
+modbus_registers[72]=(signed char)(bps[3]._av>>8);				
+modbus_registers[73]=(signed char)(bps[3]._av);
+modbus_registers[74]=(signed char)(bps[4]._Uii>>8);			
+modbus_registers[75]=(signed char)(bps[4]._Uii);
+modbus_registers[76]=(signed char)(bps[4]._Ii>>8);				
+modbus_registers[77]=(signed char)(bps[4]._Ii);
+modbus_registers[78]=(signed char)(bps[4]._Ti>>8);				
+modbus_registers[79]=(signed char)(bps[4]._Ti);
+modbus_registers[80]=(signed char)(bps[4]._av>>8);				
+modbus_registers[81]=(signed char)(bps[4]._av);
+modbus_registers[82]=(signed char)(bps[5]._Uii>>8);			
+modbus_registers[83]=(signed char)(bps[5]._Uii);
+modbus_registers[84]=(signed char)(bps[5]._Ii>>8);				
+modbus_registers[85]=(signed char)(bps[5]._Ii);
+modbus_registers[86]=(signed char)(bps[5]._Ti>>8);				
+modbus_registers[87]=(signed char)(bps[5]._Ti);
+modbus_registers[88]=(signed char)(bps[5]._av>>8);				
+modbus_registers[89]=(signed char)(bps[5]._av);
+modbus_registers[90]=(signed char)(bps[6]._Uii>>8);			
+modbus_registers[91]=(signed char)(bps[6]._Uii);
+modbus_registers[92]=(signed char)(bps[6]._Ii>>8);				
+modbus_registers[93]=(signed char)(bps[6]._Ii);
+modbus_registers[94]=(signed char)(bps[6]._Ti>>8);				
+modbus_registers[95]=(signed char)(bps[6]._Ti);
+modbus_registers[96]=(signed char)(bps[6]._av>>8);				
+modbus_registers[97]=(signed char)(bps[6]._av);
+modbus_registers[98]=(signed char)(bps[7]._Uii>>8);			
+modbus_registers[99]=(signed char)(bps[7]._Uii);
+modbus_registers[100]=(signed char)(bps[7]._Ii>>8);			
+modbus_registers[101]=(signed char)(bps[7]._Ii);
+modbus_registers[102]=(signed char)(bps[7]._Ti>>8);			
+modbus_registers[103]=(signed char)(bps[7]._Ti);
+modbus_registers[104]=(signed char)(bps[7]._av>>8);			
+modbus_registers[105]=(signed char)(bps[7]._av);
+modbus_registers[106]=(signed char)(bps_U>>8);					
+modbus_registers[107]=(signed char)(bps_U);
 tempS=0;
 if(speedChIsOn) tempS=1;
-modbus_registers[108]=(char)(tempS/256);					
-modbus_registers[109]=(char)(tempS%256);
+modbus_registers[108]=(signed char)(tempS>>8);					
+modbus_registers[109]=(signed char)(tempS);
 tempS=0;
 if(spc_stat==spcVZ) tempS=1;
-modbus_registers[110]=(char)(tempS/256);					
-modbus_registers[111]=(char)(tempS%256);
-modbus_registers[112]=(char)(uout_av/256);					
-modbus_registers[113]=(char)(uout_av%256);
+modbus_registers[110]=(signed char)(tempS>>8);					
+modbus_registers[111]=(signed char)(tempS);
+modbus_registers[112]=(signed char)(uout_av>>8);					
+modbus_registers[113]=(signed char)(uout_av);
 
 tempS=t_ext[0];
 if(ND_EXT[0])tempS=-1000;
-modbus_registers[400]=(char)(tempS/256);				
-modbus_registers[401]=(char)(tempS%256);
+modbus_registers[400]=(signed char)(tempS>>8);				
+modbus_registers[401]=(signed char)(tempS);
 tempS=t_ext[1];
 if(ND_EXT[1])tempS=-1000;
-modbus_registers[402]=(char)(tempS/256);				
-modbus_registers[403]=(char)(tempS%256);
+modbus_registers[402]=(signed char)(tempS>>8);				
+modbus_registers[403]=(signed char)(tempS);
 tempS=t_ext[2];
 if(ND_EXT[2])tempS=-1000;
-modbus_registers[404]=(char)(tempS/256);				
-modbus_registers[405]=(char)(tempS%256);
-tempS=t_ext[3];
-if(ND_EXT[3])tempS=-1000;
-modbus_registers[406]=(char)(tempS/256);				
-modbus_registers[407]=(char)(tempS%256);
+modbus_registers[404]=(signed char)(tempS>>8);				
+modbus_registers[405]=(signed char)(tempS);
+
+
+
+ 
 
 tempS=0;
 if(sk_stat[0]==ssON) tempS|=0x0001;
 if(sk_av_stat[0]==sasON) tempS|=0x0002;
-modbus_registers[420]=(char)(tempS/256);				
-modbus_registers[421]=(char)(tempS%256);
+modbus_registers[420]=(signed char)(tempS>>8);				
+modbus_registers[421]=(signed char)(tempS);
 tempS=0;
 if(sk_stat[1]==ssON) tempS|=0x0001;
 if(sk_av_stat[1]==sasON) tempS|=0x0002;
-modbus_registers[422]=(char)(tempS/256);				
-modbus_registers[423]=(char)(tempS%256);
+modbus_registers[422]=(signed char)(tempS>>8);				
+modbus_registers[423]=(signed char)(tempS);
 tempS=0;
 if(sk_stat[2]==ssON) tempS|=0x0001;
 if(sk_av_stat[2]==sasON) tempS|=0x0002;
-modbus_registers[424]=(char)(tempS/256);				
-modbus_registers[425]=(char)(tempS%256);
+modbus_registers[424]=(signed char)(tempS>>8);				
+modbus_registers[425]=(signed char)(tempS);
 tempS=0;
 if(sk_stat[3]==ssON) tempS|=0x0001;
 if(sk_av_stat[3]==sasON) tempS|=0x0002;
-modbus_registers[426]=(char)(tempS/256);				
-modbus_registers[427]=(char)(tempS%256);
+modbus_registers[426]=(signed char)(tempS>>8);				
+modbus_registers[427]=(signed char)(tempS);
+
+
+
 
 if(prot==0)
 	{
@@ -5239,12 +5549,12 @@ if(prot==0)
 
 	modbus_tx_buff[2]=(char)(reg_quantity*2);
 
-	mem_copy((char*)&modbus_tx_buff[3],(char*)&modbus_registers[(reg_adr-1)*2],reg_quantity*2);
+	mem_copy((signed char*)&modbus_tx_buff[3],(signed char*)&modbus_registers[(reg_adr-1)*2],reg_quantity*2);
 
 	crc_temp=CRC16_2(modbus_tx_buff,(reg_quantity*2)+3);
 
-	modbus_tx_buff[3+(reg_quantity*2)]=crc_temp%256;
-	modbus_tx_buff[4+(reg_quantity*2)]=crc_temp/256;
+	modbus_tx_buff[3+(reg_quantity*2)]=(char)crc_temp;
+	modbus_tx_buff[4+(reg_quantity*2)]=crc_temp>>8;
 
 	for (i=0;i<(5+(reg_quantity*2));i++)
 		{
@@ -5257,7 +5567,8 @@ if(prot==0)
 	}
 else if(prot==1)
 	{
-	modbus_tcp_out_ptr=(char*)&modbus_registers[(reg_adr-1)*2];
+	mem_copy((signed char*)modbus_tx_buff,(signed char*)&modbus_registers[(reg_adr-1)*2],reg_quantity*2);
+	modbus_tcp_out_ptr=(signed char*)modbus_tx_buff;
 	}
 }
 

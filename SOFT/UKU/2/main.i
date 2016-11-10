@@ -3507,19 +3507,21 @@ extern unsigned short modbus_rx_arg1;
 extern unsigned short modbus_rx_arg2;		
 extern unsigned short modbus_rx_arg3;		
 
-extern char modbus_registers[200];
+extern char modbus_tx_buff[100];
+
+
 
 unsigned short CRC16_2(char* buf, short len);
 
-void modbus_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity);
 
-void modbus_register_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr);
+
+
 
 void modbus_hold_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot);
 
 void modbus_input_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot);
 
-void modbus_hold_register_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr);
+
 
 
 
@@ -3631,6 +3633,7 @@ extern short modbus_tcp_rx_arg1;
 
 
 extern char* modbus_tcp_out_ptr;
+
 #line 44 "main.c"
 
 extern U8 own_hw_adr[];
@@ -6073,6 +6076,9 @@ char plazma_ztt[2];
 U8 socket_tcp;
 
 
+
+
+
 void rtc_init (void) 
 {
 ((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->CCR=0x11;
@@ -6519,7 +6525,7 @@ if(cnt_net_drv<=11)
 	     }
 	}
 
-#line 1148 "main.c"
+#line 1151 "main.c"
 else if(cnt_net_drv==12)
 	{
      if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x62,*((char*)(&UMAX)),*((char*)((&UMAX))+1),*((char*)(&DU)),*((char*)((&DU))+1),0);
@@ -6757,7 +6763,7 @@ else if((cnt_net_drv>=20)&&(cnt_net_drv<20+15))
 	}
 
 
-#line 1401 "main.c"
+#line 1404 "main.c"
 else if(cnt_net_drv==20+16)
 	{
      if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x62,*((char*)(&UMAX)),*((char*)((&UMAX))+1),*((char*)(&DU)),*((char*)((&DU))+1),0);
@@ -7158,9 +7164,9 @@ if(avar_stat&(1<<(3+7)))
 	sub_cnt_max++;	
 	}
 
-#line 1820 "main.c"
+#line 1823 "main.c"
 
-#line 1840 "main.c"
+#line 1843 "main.c"
 
 
 if((sk_av_stat[0]==sasON)&&(NUMSK)&&(!SK_LCD_EN[0]))
@@ -11817,6 +11823,7 @@ else if(a_ind . i==iSet_TELECORE2015)
 	ptrs[32]=      	" Серийный N        w";
 	ptrs[33]=      	" Тип батареи        ";
 	ptrs[34]=		" dUлит.бат.=      WВ";
+	
 	ptrs[35]=      	" Инверторы          ";
 	ptrs[36]=      	" Время ротации      ";
 	ptrs[37]=      	" источников    lчас.";
@@ -17188,12 +17195,12 @@ else if(a_ind . i==iDop_rele_set)
 }							    
 
 
-#line 11873 "main.c"
+#line 11877 "main.c"
 
 
 
 
-#line 11896 "main.c"
+#line 11900 "main.c"
 
 
 
@@ -17516,7 +17523,7 @@ else if(a_ind . i==iMn)
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV)))
 			{
-#line 12226 "main.c"
+#line 12230 "main.c"
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV+1)))
 			{
@@ -17530,9 +17537,9 @@ else if(a_ind . i==iMn)
 		     ret(1000);
 			}
 
-#line 12246 "main.c"
+#line 12250 "main.c"
 
-#line 12254 "main.c"
+#line 12258 "main.c"
 
 		else if(a_ind . s_i==(4+NUMBAT+NUMIST+2)+(NUMAVT!=0))
 			{
@@ -19583,11 +19590,11 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==184) 
 				{
 				tree_down(0,0);
-#line 14323 "main.c"
+#line 14327 "main.c"
 				tree_up(iSet_220_IPS_TERMOKOMPENSAT,0,0,0);
 
 
-#line 14332 "main.c"
+#line 14336 "main.c"
 
 				ret(1000);
 				}
@@ -19605,7 +19612,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==873) 
 				{
 				tree_down(0,0);
-#line 14380 "main.c"
+#line 14384 "main.c"
 				if((AUSW_MAIN==22033)||(AUSW_MAIN==22018))
 					{
 					tree_up(iK_220_IPS_TERMOKOMPENSAT,0,0,0);
@@ -19682,7 +19689,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 			if(tempU==999) 
 				{
 				tree_down(0,0);
-#line 14486 "main.c"
+#line 14490 "main.c"
 				tree_up(iTst_220_IPS_TERMOKOMPENSAT,0,0,0);
 
 
@@ -20319,7 +20326,7 @@ else if(a_ind . i==iSet)
 	     {
 	     if(but==254)
 	          {
-#line 15134 "main.c"
+#line 15138 "main.c"
 	          ret(1000);
 	          default_temp=10;
 	          }
@@ -20341,7 +20348,7 @@ else if(a_ind . i==iSet)
 		{
 		if(but==254)
 		     {
-#line 15180 "main.c"
+#line 15184 "main.c"
 
 
 
@@ -30106,7 +30113,7 @@ else if(a_ind . i==iK_inv)
 			}
 		}			
 	}
-#line 25091 "main.c"
+#line 25095 "main.c"
 
 else if(a_ind . i==iK_byps)
 	{
@@ -33892,9 +33899,9 @@ lcd_clear();
 rtc_init();
 
 a_ind . i=iMn;
-#line 28895 "main.c"
+#line 28899 "main.c"
 a_ind . i=iMn_220_IPS_TERMOKOMPENSAT;
-#line 28903 "main.c"
+#line 28907 "main.c"
 
 
 
@@ -33934,7 +33941,7 @@ adc_init();
 
 lc640_write_int(100,134);
 
-#line 28948 "main.c"
+#line 28952 "main.c"
 
 
 
@@ -34282,7 +34289,7 @@ while (1)
 		
 		
 
-#line 29307 "main.c"
+#line 29311 "main.c"
 
 
 
@@ -34327,5 +34334,6 @@ while (1)
 		
 		numOfForvardBps_hndl();			
 		}
+
 	}
 }
