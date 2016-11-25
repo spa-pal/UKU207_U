@@ -154,6 +154,8 @@ signed short U_OUT_KONTR_MIN;
 signed short U_OUT_KONTR_DELAY;
 signed short DOP_RELE_FUNC;
 signed short CNTRL_HNDL_TIME;	//Постоянная времени регулирования источников для Телекора
+signed short USODERG_LI_BAT;	//Напряжение содержания литиевой батареи
+signed short QSODERG_LI_BAT;	//Заряд при котором начинает действовать напряжение содержания литиевой батареи
 
 enum_apv_on APV_ON1,APV_ON2;
 signed short APV_ON2_TIME;
@@ -5881,6 +5883,31 @@ else if(ind==iSet_bat_sel)
 	pointer_set(2);
 	//int2lcdyx(lc640_read_int(EE_BAT_TYPE),0,2,0);
 	}
+
+else if(ind==iSet_li_bat)
+	{
+	ptrs[0]=		"ПАРАМЕТРЫ СОДЕРЖАНИЯ";
+    ptrs[1]=  		"  ЛИТИЕВОЙ БАТАРЕИ  ";
+    ptrs[2]=  	    " Uсодерж.макс.    !В";            
+	ptrs[3]=		" dUлит.бат.=      @В";
+	ptrs[4]=  	    " Uсодерж.         #В";
+	ptrs[5]=  	    " Qсодерж.         $%";
+	ptrs[6]=  	    " Выход              ";
+
+	bgnd_par(	ptrs[0],
+				ptrs[1],
+				ptrs[index_set+2],
+				ptrs[index_set+3]);
+
+	if(sub_ind-index_set>1)index_set=sub_ind-1;
+	else if (sub_ind<index_set)index_set=sub_ind;
+	pointer_set(2);
+
+	int2lcd(UB0,'!',1);
+    int2lcd(DU_LI_BAT,'@',1);
+    int2lcd(USODERG_LI_BAT,'#',1);
+    int2lcd(QSODERG_LI_BAT,'$',0);
+	}
 	
 else if(ind==iSet)
 	{
@@ -6495,15 +6522,15 @@ else if(ind==iSet_TELECORE2015)
 	ptrs[31]=		" Ethernet           ";
 	ptrs[32]=      	" Серийный N        w";
 	ptrs[33]=      	" Тип батареи        ";
-	ptrs[34]=		" dUлит.бат.=      WВ";
-	//ptrs[34]=		" dUлит.бат.=      WВ";
-	ptrs[35]=      	" Инверторы          ";
-	ptrs[36]=      	" Время ротации      ";
-	ptrs[37]=      	" источников    lчас.";
-	ptrs[38]=      	" Время регулир.   L ";
-    ptrs[39]=		" Выход              ";
-    ptrs[40]=		" Калибровки         "; 
-    ptrs[41]=		"                    ";        
+	ptrs[34]=		" Параметры литиевой ";
+	ptrs[35]=		" батареи            ";
+	ptrs[36]=      	" Инверторы          ";
+	ptrs[37]=      	" Время ротации      ";
+	ptrs[38]=      	" источников    lчас.";
+	ptrs[39]=      	" Время регулир.   L ";
+    ptrs[40]=		" Выход              ";
+    ptrs[41]=		" Калибровки         "; 
+    ptrs[42]=		"                    ";        
 	
 	if((sub_ind-index_set)>2)index_set=sub_ind-2;
 	else if(sub_ind<index_set)index_set=sub_ind;
@@ -6547,8 +6574,8 @@ else if(ind==iSet_TELECORE2015)
 	int2lcd(TBATSIGN,'X',0);
 	int2lcd(TVENTON,'(',0); 
 	int2lcd(TVENTOFF,')',0);
-     int2lcd(POWER_CNT_ADRESS,'+',0);
-	int2lcd(DU_LI_BAT,'W',1);
+    int2lcd(POWER_CNT_ADRESS,'+',0);
+
      if(UBM_AV)
           {
           int2lcd(UBM_AV,'Q',0);
@@ -14591,6 +14618,69 @@ else if(ind==iSet_bat_sel)
 		}
 	}
 
+else if(ind==iSet_li_bat)
+	{
+	ret(1000);
+	if(but==butU)
+		{
+		sub_ind--;
+		gran_char(&sub_ind,0,4);
+		}
+	else if (but==butD)
+		{
+		sub_ind++;
+		gran_char(&sub_ind,0,4);
+		}
+	else if(but==butE)
+		{
+		if(sub_ind==4)
+			{
+			tree_down(0,0);
+          	ret(0);
+			}
+		}
+	else if(sub_ind==0)
+	     {
+	     if(but==butR)UB0++;
+	     else if(but==butR_)UB0+=10;
+	     else if(but==butL)UB0--;
+	     else if(but==butL_)UB0-=10;
+	     gran(&UB0,50,700);
+	     lc640_write_int(EE_UB0,UB0);
+	     speed=1;
+	     }
+	else if(sub_ind==1)
+	     {
+	     if(but==butR)DU_LI_BAT++;
+	     else if(but==butR_)DU_LI_BAT++;
+	     else if(but==butL)DU_LI_BAT--;
+	     else if(but==butL_)DU_LI_BAT--;
+	     gran(&DU_LI_BAT,1,30);
+	     lc640_write_int(EE_DU_LI_BAT,DU_LI_BAT);
+	     speed=1;
+	     }
+	else if(sub_ind==2)
+	     {
+	     if(but==butR)USODERG_LI_BAT++;
+	     else if(but==butR_)USODERG_LI_BAT+=10;
+	     else if(but==butL)USODERG_LI_BAT--;
+	     else if(but==butL_)USODERG_LI_BAT-=10;
+	     gran(&USODERG_LI_BAT,50,700);
+	     lc640_write_int(EE_USODERG_LI_BAT,USODERG_LI_BAT);
+	     speed=1;
+	     }
+	else if(sub_ind==3)
+	     {
+	     if(but==butR)QSODERG_LI_BAT++;
+	     else if(but==butR_)QSODERG_LI_BAT+=10;
+	     else if(but==butL)QSODERG_LI_BAT--;
+	     else if(but==butL_)QSODERG_LI_BAT-=10;
+	     gran(&QSODERG_LI_BAT,5,100);
+	     lc640_write_int(EE_QSODERG_LI_BAT,QSODERG_LI_BAT);
+	     speed=1;
+	     }
+	}
+
 else if(ind==iPrl_bat_in_sel)
 	{
 	ret(1000);
@@ -17547,17 +17637,26 @@ else if(ind==iSet_TELECORE2015)
                {
                index_set=27;
                }
-		if(sub_ind==36)
+		if(sub_ind==34)
                {
-       		index_set=35;
+       		index_set=33;
                }
-          if(sub_ind==37)
+          if(sub_ind==35)
                {
-               sub_ind=38;
+               sub_ind=36;
+               
+               }
+		if(sub_ind==37)
+               {
+       		index_set=36;
+               }
+          if(sub_ind==38)
+               {
+               sub_ind=39;
                
                }
 		
-		gran_char(&sub_ind,0,40);
+		gran_char(&sub_ind,0,41);
 		}
 	else if(but==butU)
 		{
@@ -17574,16 +17673,21 @@ else if(ind==iSet_TELECORE2015)
                sub_ind=31;
 		       index_set=31;
                } 
+        if(sub_ind==35)
+               {
+               sub_ind=34;
+		       index_set=34;
+               }
         if(sub_ind==37)
                {
                sub_ind=36;
 		       index_set=36;
                }
-		gran_char(&sub_ind,0,40);
+		gran_char(&sub_ind,0,41);
 		}
 	else if(but==butD_)
 		{
-		sub_ind=39;
+		sub_ind=40;
 		}
 		
 	else if(sub_ind==0)
@@ -17905,8 +18009,16 @@ else if(ind==iSet_TELECORE2015)
 		     ret(1000);
 		     }
 		}
+   	else if(sub_ind==34)
+		{
+		if(but==butE)
+		     {
+		     tree_up(iSet_li_bat,0,0,0);
+		     ret(1000);
+		     }
+		}
 
-	else if(sub_ind==34)
+/*	else if(sub_ind==34)
 	     {
 	     if(but==butR)DU_LI_BAT++;
 	     else if(but==butR_)DU_LI_BAT++;
@@ -17915,9 +18027,9 @@ else if(ind==iSet_TELECORE2015)
 	     gran(&DU_LI_BAT,1,30);
 	     lc640_write_int(EE_DU_LI_BAT,DU_LI_BAT);
 	     speed=1;
-	     }
+	     } */
 
-   	else if(sub_ind==35)
+   	else if(sub_ind==36)
 		{
 		if(but==butE)
 		     {
@@ -17928,7 +18040,7 @@ else if(ind==iSet_TELECORE2015)
 				}
 		     }
 		}
-  	else if(sub_ind==36)
+  	else if(sub_ind==37)
 	 	{
 	    if(but==butR)FORVARDBPSCHHOUR++;
 	    else if(but==butR_)FORVARDBPSCHHOUR+=2;
@@ -17939,14 +18051,14 @@ else if(ind==iSet_TELECORE2015)
 	    numOfForvardBps_init();
 		speed=1;
 	    }
-  	else if(sub_ind==38)
+  	else if(sub_ind==39)
 	 	{
 	    if(but==butR)CNTRL_HNDL_TIME++;
 	    else if(but==butL)CNTRL_HNDL_TIME--;
 	    gran(&CNTRL_HNDL_TIME,1,10);
 	    lc640_write_int(EE_CNTRL_HNDL_TIME,CNTRL_HNDL_TIME);
 	    }
-     else if((sub_ind==39) || (sub_ind==3))
+     else if((sub_ind==40) || (sub_ind==3))
 		{
 		if(but==butE)
 		     {
@@ -17955,7 +18067,7 @@ else if(ind==iSet_TELECORE2015)
 		     }
 		}
 				
-	else if(sub_ind==40)
+	else if(sub_ind==41)
 		{
 		if(but==butE)
 		     {		

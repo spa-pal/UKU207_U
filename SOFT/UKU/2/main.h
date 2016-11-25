@@ -766,7 +766,7 @@ typedef enum {
 	iByps,iInv_tabl,iSet_bat_sel,
 	iBps_list,
 	iSpch_set,
-	iAvt_set_sel,iAvt_set,
+	iAvt_set_sel,iAvt_set,iSet_li_bat,
 	iOut_volt_contr,iDop_rele_set,iBlok_ips_set}i_enum;
 
 typedef struct  
@@ -899,6 +899,9 @@ extern signed short U_OUT_KONTR_MIN;
 extern signed short U_OUT_KONTR_DELAY;
 extern signed short DOP_RELE_FUNC;
 extern signed short CNTRL_HNDL_TIME;	//Постоянная времени регулирования источников для Телекора
+extern signed short USODERG_LI_BAT;	//Напряжение содержания литиевой батареи
+extern signed short QSODERG_LI_BAT;	//Заряд при котором начинает действовать напряжение содержания литиевой батареи
+
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
 extern enum_apv_on APV_ON1,APV_ON2;
@@ -1143,6 +1146,7 @@ typedef struct
 	char 		_plazma[8];		//переменные для отладки
 	signed short 	_isOnCnt;
 	signed short	_s_o_c_abs;		//остаточный заряд в абсолютном выражении
+	signed short 	_s_o_c_percent; //остаточный заряд в процентном выражении
 	signed short	_plazma_ss;
 	signed short	_zar_percent;	//заряд батареи в процетах
 	signed char		_cell_temp_1;	//температура 1-го датчика батареи(ZTT)

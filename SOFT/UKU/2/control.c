@@ -2042,6 +2042,17 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 							((ascii2halFhex(liBatteryInBuff[3+baseOfData+14]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[4+baseOfData+14])))
 							)/10;
+		#endif
+		
+		#ifdef UKU_TELECORE2016
+		{
+		char i;
+		
+		for(i=0;i<NUMBAT_TELECORE;i++)
+			{
+			lakb[i]._s_o_c_percent= (signed short)(((unsigned long)lakb[i]._s_o_c*100UL)/(unsigned long)lakb[i]._s_o_h);
+			}
+		}
 		#endif								  
 		}
 	
@@ -2659,7 +2670,7 @@ void avg_hndl(void)
 { 
 char i;
 
-#define AVGCNTMAX	5
+//#define AVGCNTMAX	5
 if(avg_main_cnt)
 	{
 	avg_main_cnt--;
@@ -5459,13 +5470,20 @@ else if(b1Hz_unh)
 		else 
 			{
 			signed short i;
+			//signed short u_necc_max;
+			//u_necc_max=0;
+			char soc_flag=0;
+
 			for(i=(NUMBAT_TELECORE-1);i>=0;i--)
 				{
 				if(lakb[i]._communicationFullErrorStat==0)u_necc=lakb[i]._tot_bat_volt+DU_LI_BAT;
+				if(lakb[i]._s_o_c_percent<QSODERG_LI_BAT)soc_flag=1;
 				}
+
+			if(soc_flag==0)u_necc=USODERG_LI_BAT;
 			}
 		gran(&u_necc,0,UB0);
-		gran(&u_necc,0,UB20);
+		//gran(&u_necc,0,UB20);
 		gran(&u_necc,0,540);
 		}
 	}
