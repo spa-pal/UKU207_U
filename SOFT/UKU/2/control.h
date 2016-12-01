@@ -75,6 +75,7 @@ void klimat_hndl(void);
 void ext_drv(void);
 void adc_drv7(void);
 void avt_hndl(void);
+void vent_resurs_hndl(void);
 
 //***********************************************
 //Спецфункции

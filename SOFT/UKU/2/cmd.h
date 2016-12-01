@@ -47,6 +47,7 @@
 #define MEM_KF 0x62 
 #define MEM_KF1 0x26
 #define ALRM_RES 0x63
+#define VENT_RES 0x64
 #define PUTTM1BYPS 0xD8
 #define PUTTM2BYPS 0xD9
 #define PUT_LB_TM1 	0x18

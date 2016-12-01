@@ -138,6 +138,7 @@ ipsBlckLog=lc640_read_int(EE_IPS_BLOCK_LOG);
 CNTRL_HNDL_TIME=lc640_read_int(EE_CNTRL_HNDL_TIME);
 USODERG_LI_BAT=lc640_read_int(EE_USODERG_LI_BAT);
 QSODERG_LI_BAT=lc640_read_int(EE_QSODERG_LI_BAT);
+TVENTMAX=lc640_read_int(EE_TVENTMAX);
 
 BAT_IS_ON[0]=(enum_bat_is_on)lc640_read_int(EE_BAT1_IS_ON);
 BAT_IS_ON[1]=(enum_bat_is_on)lc640_read_int(EE_BAT2_IS_ON);

@@ -79,8 +79,8 @@
 000032  8800              LDRH     r0,[r0,#0]  ; NUMBAT
 000034  8078              STRH     r0,[r7,#2]
 ;;;288    snmp_numofbps=NUMIST;
-000036  48fc              LDR      r0,|L1.1064|
-000038  8800              LDRH     r0,[r0,#0]  ; NUMIST
+000036  4cfc              LDR      r4,|L1.1064|
+000038  8820              LDRH     r0,[r4,#0]  ; NUMIST
 00003a  80b8              STRH     r0,[r7,#4]
 ;;;289    snmp_numofinv=NUMINV;
 00003c  48fb              LDR      r0,|L1.1068|
@@ -141,22 +141,22 @@
 ;;;309    
 ;;;310    
 ;;;311    snmp_bat_number[0]=1;
-00008a  f101051c          ADD      r5,r1,#0x1c
+00008a  f101061c          ADD      r6,r1,#0x1c
 00008e  f04f0001          MOV      r0,#1
-000092  8028              STRH     r0,[r5,#0]
+000092  8030              STRH     r0,[r6,#0]
 ;;;312    snmp_bat_voltage[0]=bat[0]._Ub;
 000094  48ed              LDR      r0,|L1.1100|
-000096  f1050c04          ADD      r12,r5,#4
+000096  f1060904          ADD      r9,r6,#4
 00009a  8841              LDRH     r1,[r0,#2]  ; bat
-00009c  f8ac1000          STRH     r1,[r12,#0]
+00009c  f8a91000          STRH     r1,[r9,#0]
 ;;;313    snmp_bat_part_voltage[0]=bat[0]._Ubm;
-0000a0  f105091c          ADD      r9,r5,#0x1c
+0000a0  f1060a1c          ADD      r10,r6,#0x1c
 0000a4  8881              LDRH     r1,[r0,#4]  ; bat
-0000a6  f8a91000          STRH     r1,[r9,#0]
+0000a6  f8aa1000          STRH     r1,[r10,#0]
 ;;;314    snmp_bat_current[0]=bat[0]._Ib;
-0000aa  f1050408          ADD      r4,r5,#8
+0000aa  f1060508          ADD      r5,r6,#8
 0000ae  8901              LDRH     r1,[r0,#8]  ; bat
-0000b0  8021              STRH     r1,[r4,#0]
+0000b0  8029              STRH     r1,[r5,#0]
 ;;;315    
 ;;;316    #ifdef UKU_220_IPS_TERMOKOMPENSAT
 ;;;317    if(((AUSW_MAIN==22063)||(AUSW_MAIN==22023))&&(bps[8]._device==dIBAT_METR))
@@ -169,14 +169,14 @@
 0000c0  d107              BNE      |L1.210|
                   |L1.194|
 0000c2  49e4              LDR      r1,|L1.1108|
-0000c4  f89112a0          LDRB     r1,[r1,#0x2a0]  ; bps
+0000c4  f89112e0          LDRB     r1,[r1,#0x2e0]  ; bps
 0000c8  2909              CMP      r1,#9
 0000ca  d102              BNE      |L1.210|
 ;;;318    	{
 ;;;319    	snmp_bat_current[0]=Ib_ips_termokompensat;
 0000cc  49e2              LDR      r1,|L1.1112|
 0000ce  8809              LDRH     r1,[r1,#0]  ; Ib_ips_termokompensat
-0000d0  8021              STRH     r1,[r4,#0]
+0000d0  8029              STRH     r1,[r5,#0]
                   |L1.210|
 ;;;320    	}
 ;;;321    #endif
@@ -187,35 +187,35 @@
 0000d6  31a8              ADDS     r1,r1,#0xa8
 0000d8  800a              STRH     r2,[r1,#0]
 ;;;324    if(BAT_C_REAL[0]==0x5555)snmp_bat_capacity[0]=BAT_C_NOM[0];
-0000da  4ee0              LDR      r6,|L1.1116|
-0000dc  4aca              LDR      r2,|L1.1032|
-0000de  f2455a55          MOV      r10,#0x5555
-0000e2  f9b61000          LDRSH    r1,[r6,#0]  ; BAT_C_REAL
-0000e6  f8dfb378          LDR      r11,|L1.1120|
-0000ea  32ac              ADDS     r2,r2,#0xac
-0000ec  4551              CMP      r1,r10
-0000ee  d103              BNE      |L1.248|
-0000f0  f8bb1000          LDRH     r1,[r11,#0]  ; BAT_C_NOM
-0000f4  8011              STRH     r1,[r2,#0]
-0000f6  e000              B        |L1.250|
-                  |L1.248|
-;;;325    else snmp_bat_capacity[0]=BAT_C_REAL[0];
-0000f8  8011              STRH     r1,[r2,#0]
+0000da  f8dfc380          LDR      r12,|L1.1116|
+0000de  4aca              LDR      r2,|L1.1032|
+0000e0  f2455b55          MOV      r11,#0x5555
+0000e4  f9bc1000          LDRSH    r1,[r12,#0]  ; BAT_C_REAL
+0000e8  f8dfe374          LDR      lr,|L1.1120|
+0000ec  32ac              ADDS     r2,r2,#0xac
+0000ee  4559              CMP      r1,r11
+0000f0  d103              BNE      |L1.250|
+0000f2  f8be1000          LDRH     r1,[lr,#0]  ; BAT_C_NOM
+0000f6  8011              STRH     r1,[r2,#0]
+0000f8  e000              B        |L1.252|
                   |L1.250|
+;;;325    else snmp_bat_capacity[0]=BAT_C_REAL[0];
+0000fa  8011              STRH     r1,[r2,#0]
+                  |L1.252|
 ;;;326    snmp_bat_charge[0]=bat[0]._zar;
-0000fa  49c3              LDR      r1,|L1.1032|
-0000fc  8a03              LDRH     r3,[r0,#0x10]  ; bat
-0000fe  31b0              ADDS     r1,r1,#0xb0
-000100  800b              STRH     r3,[r1,#0]
+0000fc  49c2              LDR      r1,|L1.1032|
+0000fe  8a03              LDRH     r3,[r0,#0x10]  ; bat
+000100  31b0              ADDS     r1,r1,#0xb0
+000102  800b              STRH     r3,[r1,#0]
 ;;;327    snmp_bat_status[0]=bat[0]._av;
-000102  4bc1              LDR      r3,|L1.1032|
-000104  f890103d          LDRB     r1,[r0,#0x3d]  ; bat
-000108  33b4              ADDS     r3,r3,#0xb4
-00010a  8019              STRH     r1,[r3,#0]
+000104  4bc0              LDR      r3,|L1.1032|
+000106  f890103d          LDRB     r1,[r0,#0x3d]  ; bat
+00010a  33b4              ADDS     r3,r3,#0xb4
+00010c  8019              STRH     r1,[r3,#0]
 ;;;328    if(BAT_IS_ON[0]!=bisON)snmp_bat_status[0]=0xff;
-00010c  f8dfe354          LDR      lr,|L1.1124|
-000110  21ff              MOVS     r1,#0xff
-000112  f89e8000          LDRB     r8,[lr,#0]  ; BAT_IS_ON
+00010e  49d5              LDR      r1,|L1.1124|
+000110  f8918000          LDRB     r8,[r1,#0]  ; BAT_IS_ON
+000114  21ff              MOVS     r1,#0xff
 000116  f1b80f55          CMP      r8,#0x55
 00011a  d000              BEQ      |L1.286|
 00011c  8019              STRH     r1,[r3,#0]
@@ -223,43 +223,44 @@
 ;;;329    
 ;;;330    snmp_bat_number[1]=2;
 00011e  f04f0802          MOV      r8,#2
-000122  f8a58002          STRH     r8,[r5,#2]
+000122  f8a68002          STRH     r8,[r6,#2]
 ;;;331    snmp_bat_voltage[1]=bat[1]._Ub;
-000126  f8305f4e          LDRH     r5,[r0,#0x4e]!  ; bat
-00012a  f8ac5002          STRH     r5,[r12,#2]
+000126  f8306f4e          LDRH     r6,[r0,#0x4e]!  ; bat
+00012a  f8a96002          STRH     r6,[r9,#2]
 ;;;332    snmp_bat_part_voltage[1]=bat[1]._Ubm;
-00012e  8845              LDRH     r5,[r0,#2]  ; bat
-000130  f8a95002          STRH     r5,[r9,#2]
+00012e  8846              LDRH     r6,[r0,#2]  ; bat
+000130  f8aa6002          STRH     r6,[r10,#2]
 ;;;333    snmp_bat_current[1]=bat[1]._Ib;
-000134  88c5              LDRH     r5,[r0,#6]  ; bat
-000136  8065              STRH     r5,[r4,#2]
+000134  88c6              LDRH     r6,[r0,#6]  ; bat
+000136  806e              STRH     r6,[r5,#2]
 ;;;334    snmp_bat_temperature[1]=bat[1]._Tb;
-000138  4cb3              LDR      r4,|L1.1032|
-00013a  8905              LDRH     r5,[r0,#8]  ; bat
-00013c  f10404a8          ADD      r4,r4,#0xa8
+000138  4db3              LDR      r5,|L1.1032|
+00013a  8906              LDRH     r6,[r0,#8]  ; bat
+00013c  f10505a8          ADD      r5,r5,#0xa8
 000140  f1a0004e          SUB      r0,r0,#0x4e
-000144  8065              STRH     r5,[r4,#2]
+000144  806e              STRH     r6,[r5,#2]
 ;;;335    if(BAT_C_REAL[1]==0x5555)snmp_bat_capacity[1]=BAT_C_NOM[1];
-000146  f9b64002          LDRSH    r4,[r6,#2]  ; BAT_C_REAL
-00014a  4554              CMP      r4,r10
+000146  f9bc5002          LDRSH    r5,[r12,#2]  ; BAT_C_REAL
+00014a  455d              CMP      r5,r11
 00014c  d103              BNE      |L1.342|
-00014e  f8bb4002          LDRH     r4,[r11,#2]  ; BAT_C_NOM
-000152  8054              STRH     r4,[r2,#2]
+00014e  f8be5002          LDRH     r5,[lr,#2]  ; BAT_C_NOM
+000152  8055              STRH     r5,[r2,#2]
 000154  e000              B        |L1.344|
                   |L1.342|
 ;;;336    else snmp_bat_capacity[1]=BAT_C_REAL[1];
-000156  8054              STRH     r4,[r2,#2]
+000156  8055              STRH     r5,[r2,#2]
                   |L1.344|
 ;;;337    snmp_bat_charge[1]=bat[1]._zar;
 000158  4aab              LDR      r2,|L1.1032|
-00015a  f8b0405c          LDRH     r4,[r0,#0x5c]  ; bat
+00015a  f8b0505c          LDRH     r5,[r0,#0x5c]  ; bat
 00015e  32b0              ADDS     r2,r2,#0xb0
-000160  8054              STRH     r4,[r2,#2]
+000160  8055              STRH     r5,[r2,#2]
 ;;;338    snmp_bat_status[1]=bat[1]._av;
 000162  f8900089          LDRB     r0,[r0,#0x89]  ; bat
 000166  8058              STRH     r0,[r3,#2]
 ;;;339    if(BAT_IS_ON[1]!=bisON)snmp_bat_status[1]=0xff;
-000168  f89e0001          LDRB     r0,[lr,#1]  ; BAT_IS_ON
+000168  48be              LDR      r0,|L1.1124|
+00016a  7840              LDRB     r0,[r0,#1]  ; BAT_IS_ON
 00016c  2855              CMP      r0,#0x55
 00016e  d000              BEQ      |L1.370|
 000170  8059              STRH     r1,[r3,#2]
@@ -268,33 +269,32 @@
 ;;;341    
 ;;;342    
 ;;;343    snmp_bps_number[0]=1;
-000172  4dbd              LDR      r5,|L1.1128|
-000174  f04f0001          MOV      r0,#1
-000178  8028              STRH     r0,[r5,#0]
+000172  f8dfb2f4          LDR      r11,|L1.1128|
+000176  f04f0001          MOV      r0,#1
+00017a  f8ab0000          STRH     r0,[r11,#0]
 ;;;344    snmp_bps_voltage[0]=bps[0]._Uii;
-00017a  4cb6              LDR      r4,|L1.1108|
-00017c  f1050610          ADD      r6,r5,#0x10
-000180  69e2              LDR      r2,[r4,#0x1c]  ; bps
-000182  8032              STRH     r2,[r6,#0]
+00017e  4db5              LDR      r5,|L1.1108|
+000180  f10b0610          ADD      r6,r11,#0x10
+000184  69ea              LDR      r2,[r5,#0x1c]  ; bps
+000186  8032              STRH     r2,[r6,#0]
 ;;;345    snmp_bps_current[0]=bps[0]._Ii;
-000184  f1050c20          ADD      r12,r5,#0x20
-000188  6a62              LDR      r2,[r4,#0x24]  ; bps
-00018a  f8ac2000          STRH     r2,[r12,#0]
+000188  f1060c10          ADD      r12,r6,#0x10
+00018c  6a6a              LDR      r2,[r5,#0x24]  ; bps
+00018e  f8ac2000          STRH     r2,[r12,#0]
 ;;;346    snmp_bps_temperature[0]=bps[0]._Ti;
-00018e  f1050a30          ADD      r10,r5,#0x30
-000192  6aa2              LDR      r2,[r4,#0x28]  ; bps
-000194  f8aa2000          STRH     r2,[r10,#0]
+000192  f1060a20          ADD      r10,r6,#0x20
+000196  6aaa              LDR      r2,[r5,#0x28]  ; bps
+000198  f8aa2000          STRH     r2,[r10,#0]
 ;;;347    snmp_bps_stat[0]=bps[0]._av;
-000198  f1050340          ADD      r3,r5,#0x40
-00019c  7862              LDRB     r2,[r4,#1]  ; bps
-00019e  801a              STRH     r2,[r3,#0]
+00019c  f1060330          ADD      r3,r6,#0x30
+0001a0  786a              LDRB     r2,[r5,#1]  ; bps
+0001a2  801a              STRH     r2,[r3,#0]
 ;;;348    if(!(NUMIST>0))snmp_bps_stat[0]=0xff;												//Байт состояния БПСа.
-0001a0  4aa1              LDR      r2,|L1.1064|
-0001a2  f9b22000          LDRSH    r2,[r2,#0]  ; NUMIST
-0001a6  2a00              CMP      r2,#0
-0001a8  dc00              BGT      |L1.428|
-0001aa  8019              STRH     r1,[r3,#0]
-                  |L1.428|
+0001a4  f9b42000          LDRSH    r2,[r4,#0]  ; NUMIST
+0001a8  2a00              CMP      r2,#0
+0001aa  dc00              BGT      |L1.430|
+0001ac  8019              STRH     r1,[r3,#0]
+                  |L1.430|
 ;;;349    
 ;;;350    /*if(St_[0]&(1<<2))snmp_bps_stat[0]=(1<<3); 							//авария по Umin
 ;;;351    else if(St_[0]&(1<<3))snmp_bps_stat[0]=(1<<2); 						//авария по Umax
@@ -304,24 +304,26 @@
 ;;;355    */
 ;;;356    
 ;;;357    snmp_bps_number[1]=2;
-0001ac  f8a58002          STRH     r8,[r5,#2]
+0001ae  f8ab8002          STRH     r8,[r11,#2]
 ;;;358    snmp_bps_voltage[1]=bps[1]._Uii;
-0001b0  f8d49070          LDR      r9,[r4,#0x70]  ; bps
-0001b4  f8a69002          STRH     r9,[r6,#2]
+0001b2  f105055c          ADD      r5,r5,#0x5c
+0001b6  69ec              LDR      r4,[r5,#0x1c]  ; bps
+0001b8  8074              STRH     r4,[r6,#2]
 ;;;359    snmp_bps_current[1]=bps[1]._Ii;
-0001b8  f8d49078          LDR      r9,[r4,#0x78]  ; bps
-0001bc  f8ac9002          STRH     r9,[r12,#2]
+0001ba  6a6c              LDR      r4,[r5,#0x24]  ; bps
+0001bc  f8ac4002          STRH     r4,[r12,#2]
 ;;;360    snmp_bps_temperature[1]=bps[1]._Ti;
-0001c0  f8d4907c          LDR      r9,[r4,#0x7c]  ; bps
-0001c4  f8aa9002          STRH     r9,[r10,#2]
+0001c0  6aac              LDR      r4,[r5,#0x28]  ; bps
+0001c2  f8aa4002          STRH     r4,[r10,#2]
 ;;;361    snmp_bps_stat[1]=bps[1]._av;
-0001c8  f8949055          LDRB     r9,[r4,#0x55]  ; bps
-0001cc  f8a39002          STRH     r9,[r3,#2]
+0001c6  786c              LDRB     r4,[r5,#1]  ; bps
+0001c8  f1a5055c          SUB      r5,r5,#0x5c
+0001cc  805c              STRH     r4,[r3,#2]
 ;;;362    if(!(NUMIST>1))snmp_bps_stat[1]=0xff;												//Байт состояния БПСа.
-0001d0  2a01              CMP      r2,#1
-0001d2  dc00              BGT      |L1.470|
-0001d4  8059              STRH     r1,[r3,#2]
-                  |L1.470|
+0001ce  2a01              CMP      r2,#1
+0001d0  dc00              BGT      |L1.468|
+0001d2  8059              STRH     r1,[r3,#2]
+                  |L1.468|
 ;;;363    /*if(St_[1]&(1<<2))snmp_bps_stat[1]=(1<<3); 							//авария по Umin
 ;;;364    else if(St_[1]&(1<<3))snmp_bps_stat[1]=(1<<2); 						//авария по Umax
 ;;;365    else if(St_[1]&(1<<4))snmp_bps_stat[1]=(1<<1); 						//авария по Tmax
@@ -330,298 +332,317 @@
 ;;;368    */
 ;;;369    
 ;;;370    snmp_bps_number[2]=3;
-0001d6  f04f0903          MOV      r9,#3
-0001da  f8a59004          STRH     r9,[r5,#4]
+0001d4  f04f0903          MOV      r9,#3
+0001d8  f8ab9004          STRH     r9,[r11,#4]
 ;;;371    snmp_bps_voltage[2]=bps[2]._Uii;
-0001de  f8d4b0c4          LDR      r11,[r4,#0xc4]  ; bps
-0001e2  f8a6b004          STRH     r11,[r6,#4]
+0001dc  f10505b8          ADD      r5,r5,#0xb8
+0001e0  69ec              LDR      r4,[r5,#0x1c]  ; bps
+0001e2  80b4              STRH     r4,[r6,#4]
 ;;;372    snmp_bps_current[2]=bps[2]._Ii;
-0001e6  f8d4b0cc          LDR      r11,[r4,#0xcc]  ; bps
-0001ea  f8acb004          STRH     r11,[r12,#4]
+0001e4  6a6c              LDR      r4,[r5,#0x24]  ; bps
+0001e6  f8ac4004          STRH     r4,[r12,#4]
 ;;;373    snmp_bps_temperature[2]=bps[2]._Ti;
-0001ee  f8d4b0d0          LDR      r11,[r4,#0xd0]  ; bps
-0001f2  f8aab004          STRH     r11,[r10,#4]
+0001ea  6aac              LDR      r4,[r5,#0x28]  ; bps
+0001ec  f8aa4004          STRH     r4,[r10,#4]
 ;;;374    snmp_bps_stat[2]=bps[2]._av;
-0001f6  f894b0a9          LDRB     r11,[r4,#0xa9]  ; bps
-0001fa  f8a3b004          STRH     r11,[r3,#4]
+0001f0  786c              LDRB     r4,[r5,#1]  ; bps
+0001f2  f1a505b8          SUB      r5,r5,#0xb8
+0001f6  809c              STRH     r4,[r3,#4]
 ;;;375    if(!(NUMIST>2))snmp_bps_stat[2]=0xff;
-0001fe  2a02              CMP      r2,#2
-000200  dc00              BGT      |L1.516|
-000202  8099              STRH     r1,[r3,#4]
-                  |L1.516|
+0001f8  2a02              CMP      r2,#2
+0001fa  dc00              BGT      |L1.510|
+0001fc  8099              STRH     r1,[r3,#4]
+                  |L1.510|
 ;;;376    
 ;;;377    snmp_bps_number[3]=4;
-000204  f04f0b04          MOV      r11,#4
-000208  f8a5b006          STRH     r11,[r5,#6]
+0001fe  f04f0404          MOV      r4,#4
+000202  f8ab4006          STRH     r4,[r11,#6]
 ;;;378    snmp_bps_voltage[3]=bps[3]._Uii;
-00020c  f8d4b118          LDR      r11,[r4,#0x118]  ; bps
-000210  f8a6b006          STRH     r11,[r6,#6]
+000206  f8d54130          LDR      r4,[r5,#0x130]  ; bps
+00020a  80f4              STRH     r4,[r6,#6]
 ;;;379    snmp_bps_current[3]=bps[3]._Ii;
-000214  f8d4b120          LDR      r11,[r4,#0x120]  ; bps
-000218  f8acb006          STRH     r11,[r12,#6]
+00020c  f8d54138          LDR      r4,[r5,#0x138]  ; bps
+000210  f8ac4006          STRH     r4,[r12,#6]
 ;;;380    snmp_bps_temperature[3]=bps[3]._Ti;
-00021c  f8d4b124          LDR      r11,[r4,#0x124]  ; bps
-000220  f8aab006          STRH     r11,[r10,#6]
+000214  f8d5413c          LDR      r4,[r5,#0x13c]  ; bps
+000218  f8aa4006          STRH     r4,[r10,#6]
 ;;;381    snmp_bps_stat[3]=bps[3]._av;
-000224  f894b0fd          LDRB     r11,[r4,#0xfd]  ; bps
-000228  f8a3b006          STRH     r11,[r3,#6]
+00021c  f8954115          LDRB     r4,[r5,#0x115]  ; bps
+000220  80dc              STRH     r4,[r3,#6]
 ;;;382    if(!(NUMIST>3))snmp_bps_stat[3]=0xff;
-00022c  2a03              CMP      r2,#3
-00022e  dc00              BGT      |L1.562|
-000230  80d9              STRH     r1,[r3,#6]
-                  |L1.562|
+000222  2a03              CMP      r2,#3
+000224  dc00              BGT      |L1.552|
+000226  80d9              STRH     r1,[r3,#6]
+                  |L1.552|
 ;;;383    
 ;;;384    snmp_bps_number[4]=5;
-000232  f04f0b05          MOV      r11,#5
-000236  f8a5b008          STRH     r11,[r5,#8]
+000228  f04f0405          MOV      r4,#5
+00022c  f8ab4008          STRH     r4,[r11,#8]
 ;;;385    snmp_bps_voltage[4]=bps[4]._Uii;
-00023a  f8d4b16c          LDR      r11,[r4,#0x16c]  ; bps
-00023e  f8a6b008          STRH     r11,[r6,#8]
+000230  f8d5418c          LDR      r4,[r5,#0x18c]  ; bps
+000234  8134              STRH     r4,[r6,#8]
 ;;;386    snmp_bps_current[4]=bps[4]._Ii;
-000242  f8d4b174          LDR      r11,[r4,#0x174]  ; bps
-000246  f8acb008          STRH     r11,[r12,#8]
+000236  f8d54194          LDR      r4,[r5,#0x194]  ; bps
+00023a  f8ac4008          STRH     r4,[r12,#8]
 ;;;387    snmp_bps_temperature[4]=bps[4]._Ti;
-00024a  f8d4b178          LDR      r11,[r4,#0x178]  ; bps
-00024e  f8aab008          STRH     r11,[r10,#8]
+00023e  f8d54198          LDR      r4,[r5,#0x198]  ; bps
+000242  f8aa4008          STRH     r4,[r10,#8]
 ;;;388    snmp_bps_stat[4]=bps[4]._av;
-000252  f894b151          LDRB     r11,[r4,#0x151]  ; bps
-000256  f8a3b008          STRH     r11,[r3,#8]
+000246  f8954171          LDRB     r4,[r5,#0x171]  ; bps
+00024a  811c              STRH     r4,[r3,#8]
 ;;;389    if(!(NUMIST>4))snmp_bps_stat[4]=0xff;
-00025a  2a04              CMP      r2,#4
-00025c  dc00              BGT      |L1.608|
-00025e  8119              STRH     r1,[r3,#8]
-                  |L1.608|
+00024c  2a04              CMP      r2,#4
+00024e  dc00              BGT      |L1.594|
+000250  8119              STRH     r1,[r3,#8]
+                  |L1.594|
 ;;;390    
 ;;;391    snmp_bps_number[5]=6;
-000260  f04f0b06          MOV      r11,#6
-000264  f8a5b00a          STRH     r11,[r5,#0xa]
+000252  f04f0406          MOV      r4,#6
+000256  f8ab400a          STRH     r4,[r11,#0xa]
 ;;;392    snmp_bps_voltage[5]=bps[5]._Uii;
-000268  f8d4b1c0          LDR      r11,[r4,#0x1c0]  ; bps
-00026c  f8a6b00a          STRH     r11,[r6,#0xa]
+00025a  f8d541e8          LDR      r4,[r5,#0x1e8]  ; bps
+00025e  8174              STRH     r4,[r6,#0xa]
 ;;;393    snmp_bps_current[5]=bps[5]._Ii;
-000270  f8d4b1c8          LDR      r11,[r4,#0x1c8]  ; bps
-000274  f8acb00a          STRH     r11,[r12,#0xa]
+000260  f8d541f0          LDR      r4,[r5,#0x1f0]  ; bps
+000264  f8ac400a          STRH     r4,[r12,#0xa]
 ;;;394    snmp_bps_temperature[5]=bps[5]._Ti;
-000278  f8d4b1cc          LDR      r11,[r4,#0x1cc]  ; bps
-00027c  f8aab00a          STRH     r11,[r10,#0xa]
+000268  f8d541f4          LDR      r4,[r5,#0x1f4]  ; bps
+00026c  f8aa400a          STRH     r4,[r10,#0xa]
 ;;;395    snmp_bps_stat[5]=bps[5]._av;
-000280  f894b1a5          LDRB     r11,[r4,#0x1a5]  ; bps
-000284  f8a3b00a          STRH     r11,[r3,#0xa]
+000270  f89541cd          LDRB     r4,[r5,#0x1cd]  ; bps
+000274  815c              STRH     r4,[r3,#0xa]
 ;;;396    if(!(NUMIST>5))snmp_bps_stat[5]=0xff;
-000288  2a05              CMP      r2,#5
-00028a  dc00              BGT      |L1.654|
-00028c  8159              STRH     r1,[r3,#0xa]
-                  |L1.654|
+000276  2a05              CMP      r2,#5
+000278  dc00              BGT      |L1.636|
+00027a  8159              STRH     r1,[r3,#0xa]
+                  |L1.636|
 ;;;397    
 ;;;398    snmp_bps_number[6]=7;
-00028e  f04f0b07          MOV      r11,#7
-000292  f8a5b00c          STRH     r11,[r5,#0xc]
+00027c  f04f0407          MOV      r4,#7
+000280  f8ab400c          STRH     r4,[r11,#0xc]
 ;;;399    snmp_bps_voltage[6]=bps[6]._Uii;
-000296  f8d4b214          LDR      r11,[r4,#0x214]  ; bps
-00029a  f8a6b00c          STRH     r11,[r6,#0xc]
+000284  f8d54244          LDR      r4,[r5,#0x244]  ; bps
+000288  81b4              STRH     r4,[r6,#0xc]
 ;;;400    snmp_bps_current[6]=bps[6]._Ii;
-00029e  f8d4b21c          LDR      r11,[r4,#0x21c]  ; bps
-0002a2  f8acb00c          STRH     r11,[r12,#0xc]
+00028a  f8d5424c          LDR      r4,[r5,#0x24c]  ; bps
+00028e  f8ac400c          STRH     r4,[r12,#0xc]
 ;;;401    snmp_bps_temperature[6]=bps[6]._Ti;
-0002a6  f8d4b220          LDR      r11,[r4,#0x220]  ; bps
-0002aa  f8aab00c          STRH     r11,[r10,#0xc]
+000292  f8d54250          LDR      r4,[r5,#0x250]  ; bps
+000296  f8aa400c          STRH     r4,[r10,#0xc]
 ;;;402    snmp_bps_stat[6]=bps[6]._av;
-0002ae  f894b1f9          LDRB     r11,[r4,#0x1f9]  ; bps
-0002b2  f8a3b00c          STRH     r11,[r3,#0xc]
+00029a  f8954229          LDRB     r4,[r5,#0x229]  ; bps
+00029e  819c              STRH     r4,[r3,#0xc]
 ;;;403    if(!(NUMIST>6))snmp_bps_stat[6]=0xff;
-0002b6  2a06              CMP      r2,#6
-0002b8  dc00              BGT      |L1.700|
-0002ba  8199              STRH     r1,[r3,#0xc]
-                  |L1.700|
+0002a0  2a06              CMP      r2,#6
+0002a2  dc00              BGT      |L1.678|
+0002a4  8199              STRH     r1,[r3,#0xc]
+                  |L1.678|
 ;;;404    
 ;;;405    snmp_bps_number[7]=8;
-0002bc  f04f0b08          MOV      r11,#8
-0002c0  f8a5b00e          STRH     r11,[r5,#0xe]
+0002a6  f04f0408          MOV      r4,#8
+0002aa  f8ab400e          STRH     r4,[r11,#0xe]
 ;;;406    snmp_bps_voltage[7]=bps[7]._Uii;
-0002c4  f5047413          ADD      r4,r4,#0x24c
-0002c8  69e5              LDR      r5,[r4,#0x1c]  ; bps
-0002ca  81f5              STRH     r5,[r6,#0xe]
+0002ae  f5057521          ADD      r5,r5,#0x284
+0002b2  69ec              LDR      r4,[r5,#0x1c]  ; bps
+0002b4  81f4              STRH     r4,[r6,#0xe]
 ;;;407    snmp_bps_current[7]=bps[7]._Ii;
-0002cc  6a65              LDR      r5,[r4,#0x24]  ; bps
-0002ce  f8ac500e          STRH     r5,[r12,#0xe]
+0002b6  6a6c              LDR      r4,[r5,#0x24]  ; bps
+0002b8  f8ac400e          STRH     r4,[r12,#0xe]
 ;;;408    snmp_bps_temperature[7]=bps[7]._Ti;
-0002d2  6aa5              LDR      r5,[r4,#0x28]  ; bps
-0002d4  f8aa500e          STRH     r5,[r10,#0xe]
+0002bc  6aac              LDR      r4,[r5,#0x28]  ; bps
+0002be  f8aa400e          STRH     r4,[r10,#0xe]
 ;;;409    snmp_bps_stat[7]=bps[7]._av;
-0002d8  7864              LDRB     r4,[r4,#1]  ; bps
-0002da  81dc              STRH     r4,[r3,#0xe]
+0002c2  786c              LDRB     r4,[r5,#1]  ; bps
+0002c4  81dc              STRH     r4,[r3,#0xe]
 ;;;410    if(!(NUMIST>7))snmp_bps_stat[7]=0xff;
-0002dc  2a07              CMP      r2,#7
-0002de  dc00              BGT      |L1.738|
-0002e0  81d9              STRH     r1,[r3,#0xe]
-                  |L1.738|
+0002c6  2a07              CMP      r2,#7
+0002c8  dc00              BGT      |L1.716|
+0002ca  81d9              STRH     r1,[r3,#0xe]
+                  |L1.716|
 ;;;411    
 ;;;412    
 ;;;413    
 ;;;414    snmp_inv_number[0]=1;
-0002e2  4a49              LDR      r2,|L1.1032|
-0002e4  32d4              ADDS     r2,r2,#0xd4
-0002e6  8010              STRH     r0,[r2,#0]
+0002cc  4a4e              LDR      r2,|L1.1032|
+0002ce  32d4              ADDS     r2,r2,#0xd4
+0002d0  8010              STRH     r0,[r2,#0]
 ;;;415    snmp_inv_voltage[0]=inv[0]._Uio;
-0002e8  4960              LDR      r1,|L1.1132|
-0002ea  1d93              ADDS     r3,r2,#6
-0002ec  698c              LDR      r4,[r1,#0x18]  ; inv
-0002ee  801c              STRH     r4,[r3,#0]
+0002d2  4966              LDR      r1,|L1.1132|
+0002d4  1d93              ADDS     r3,r2,#6
+0002d6  698c              LDR      r4,[r1,#0x18]  ; inv
+0002d8  801c              STRH     r4,[r3,#0]
 ;;;416    snmp_inv_current[0]=inv[0]._Ii;
-0002f0  1d9c              ADDS     r4,r3,#6
-0002f2  69cd              LDR      r5,[r1,#0x1c]  ; inv
-0002f4  8025              STRH     r5,[r4,#0]
+0002da  1d9c              ADDS     r4,r3,#6
+0002dc  69cd              LDR      r5,[r1,#0x1c]  ; inv
+0002de  8025              STRH     r5,[r4,#0]
 ;;;417    snmp_inv_temperature[0]=inv[0]._Ti;
-0002f6  1da5              ADDS     r5,r4,#6
-0002f8  6a0e              LDR      r6,[r1,#0x20]  ; inv
-0002fa  802e              STRH     r6,[r5,#0]
+0002e0  1da5              ADDS     r5,r4,#6
+0002e2  6a0e              LDR      r6,[r1,#0x20]  ; inv
+0002e4  802e              STRH     r6,[r5,#0]
 ;;;418    snmp_inv_stat[0]=inv[0]._flags_tm;
-0002fc  1dae              ADDS     r6,r5,#6
-0002fe  f891c046          LDRB     r12,[r1,#0x46]  ; inv
-000302  f8a6c000          STRH     r12,[r6,#0]
+0002e6  1dae              ADDS     r6,r5,#6
+0002e8  f891c046          LDRB     r12,[r1,#0x46]  ; inv
+0002ec  f8a6c000          STRH     r12,[r6,#0]
 ;;;419    
 ;;;420    snmp_inv_number[1]=2;
-000306  f8a28002          STRH     r8,[r2,#2]
+0002f0  f8a28002          STRH     r8,[r2,#2]
 ;;;421    snmp_inv_voltage[1]=inv[1]._Uio;
-00030a  f8d1c078          LDR      r12,[r1,#0x78]  ; inv
-00030e  f8a3c002          STRH     r12,[r3,#2]
+0002f4  f8d1c078          LDR      r12,[r1,#0x78]  ; inv
+0002f8  f8a3c002          STRH     r12,[r3,#2]
 ;;;422    snmp_inv_current[1]=inv[1]._Ii;
-000312  f8d1c07c          LDR      r12,[r1,#0x7c]  ; inv
-000316  f8a4c002          STRH     r12,[r4,#2]
+0002fc  f8d1c07c          LDR      r12,[r1,#0x7c]  ; inv
+000300  f8a4c002          STRH     r12,[r4,#2]
 ;;;423    snmp_inv_temperature[1]=inv[1]._Ti;
-00031a  f8d1c080          LDR      r12,[r1,#0x80]  ; inv
-00031e  f8a5c002          STRH     r12,[r5,#2]
+000304  f8d1c080          LDR      r12,[r1,#0x80]  ; inv
+000308  f8a5c002          STRH     r12,[r5,#2]
 ;;;424    snmp_inv_stat[1]=inv[1]._flags_tm;
-000322  f891c0a6          LDRB     r12,[r1,#0xa6]  ; inv
-000326  f8a6c002          STRH     r12,[r6,#2]
+00030c  f891c0a6          LDRB     r12,[r1,#0xa6]  ; inv
+000310  f8a6c002          STRH     r12,[r6,#2]
 ;;;425    
 ;;;426    snmp_inv_number[2]=3;
-00032a  f8a29004          STRH     r9,[r2,#4]
+000314  f8a29004          STRH     r9,[r2,#4]
 ;;;427    snmp_inv_voltage[2]=inv[2]._Uio;
-00032e  f8d120d8          LDR      r2,[r1,#0xd8]  ; inv
-000332  809a              STRH     r2,[r3,#4]
+000318  f8d120d8          LDR      r2,[r1,#0xd8]  ; inv
+00031c  809a              STRH     r2,[r3,#4]
 ;;;428    snmp_inv_current[2]=inv[2]._Ii;
-000334  f8d120dc          LDR      r2,[r1,#0xdc]  ; inv
-000338  80a2              STRH     r2,[r4,#4]
+00031e  f8d120dc          LDR      r2,[r1,#0xdc]  ; inv
+000322  80a2              STRH     r2,[r4,#4]
 ;;;429    snmp_inv_temperature[2]=inv[2]._Ti;
-00033a  f8d120e0          LDR      r2,[r1,#0xe0]  ; inv
-00033e  80aa              STRH     r2,[r5,#4]
+000324  f8d120e0          LDR      r2,[r1,#0xe0]  ; inv
+000328  80aa              STRH     r2,[r5,#4]
 ;;;430    snmp_inv_stat[2]=inv[2]._flags_tm;
-000340  f8911106          LDRB     r1,[r1,#0x106]  ; inv
-000344  80b1              STRH     r1,[r6,#4]
+00032a  f8911106          LDRB     r1,[r1,#0x106]  ; inv
+00032e  80b1              STRH     r1,[r6,#4]
 ;;;431    
 ;;;432    
 ;;;433    
 ;;;434    
 ;;;435    					  
 ;;;436    snmp_sk_number[0]=1;
-000346  3e2c              SUBS     r6,r6,#0x2c
-000348  7030              STRB     r0,[r6,#0]
+000330  f1a30c1a          SUB      r12,r3,#0x1a
+000334  f88c0000          STRB     r0,[r12,#0]
 ;;;437    memcpy(&snmp_sk_name[0][0],"Door",10);
-00034a  4d47              LDR      r5,|L1.1128|
-00034c  a148              ADR      r1,|L1.1136|
-00034e  359c              ADDS     r5,r5,#0x9c
-000350  680a              LDR      r2,[r1,#0]
-000352  632a              STR      r2,[r5,#0x30]  ; snmp_sk_name
-000354  684a              LDR      r2,[r1,#4]
-000356  636a              STR      r2,[r5,#0x34]  ; snmp_sk_name
-000358  8909              LDRH     r1,[r1,#8]
-00035a  8729              STRH     r1,[r5,#0x38]
+000338  4d4b              LDR      r5,|L1.1128|
+00033a  a14d              ADR      r1,|L1.1136|
+00033c  359c              ADDS     r5,r5,#0x9c
+00033e  680a              LDR      r2,[r1,#0]
+000340  632a              STR      r2,[r5,#0x30]  ; snmp_sk_name
+000342  684a              LDR      r2,[r1,#4]
+000344  636a              STR      r2,[r5,#0x34]  ; snmp_sk_name
+000346  8909              LDRH     r1,[r1,#8]
+000348  8729              STRH     r1,[r5,#0x38]
 ;;;438    if(sk_stat[0]==ssON) snmp_sk_aktiv[0]=1;
-00035c  f8dfb118          LDR      r11,|L1.1144|
-000360  1d32              ADDS     r2,r6,#4
+00034a  f8dfe12c          LDR      lr,|L1.1144|
 ;;;439    else snmp_sk_aktiv[0]=0;
-000362  2100              MOVS     r1,#0
-000364  f89b3000          LDRB     r3,[r11,#0]           ;438  ; sk_stat
-000368  2b01              CMP      r3,#1                 ;438
-00036a  d048              BEQ      |L1.1022|
-00036c  7011              STRB     r1,[r2,#0]
-                  |L1.878|
+00034e  2100              MOVS     r1,#0
+000350  f1a4021c          SUB      r2,r4,#0x1c           ;438
+000354  f89e3000          LDRB     r3,[lr,#0]            ;438  ; sk_stat
+000358  2b01              CMP      r3,#1                 ;438
+00035a  d04e              BEQ      |L1.1018|
+00035c  7011              STRB     r1,[r2,#0]
+                  |L1.862|
 ;;;440    if(!SK_SIGN[0])snmp_sk_alarm_aktiv[0]=1;
-00036e  f8dfa10c          LDR      r10,|L1.1148|
-000372  4b25              LDR      r3,|L1.1032|
-000374  f8ba4000          LDRH     r4,[r10,#0]  ; SK_SIGN
-000378  33c8              ADDS     r3,r3,#0xc8
-00037a  2c00              CMP      r4,#0
-00037c  d040              BEQ      |L1.1024|
+00035e  f8dfa11c          LDR      r10,|L1.1148|
+000362  4b29              LDR      r3,|L1.1032|
+000364  f8ba4000          LDRH     r4,[r10,#0]  ; SK_SIGN
+000368  33c8              ADDS     r3,r3,#0xc8
+00036a  2c00              CMP      r4,#0
+00036c  d047              BEQ      |L1.1022|
 ;;;441    else snmp_sk_alarm_aktiv[0]=0;
-00037e  7019              STRB     r1,[r3,#0]
-                  |L1.896|
+00036e  7019              STRB     r1,[r3,#0]
+                  |L1.880|
 ;;;442    if(sk_av_stat[0]==sasON)	snmp_sk_alarm[0]=1;
-000380  f8dfe0fc          LDR      lr,|L1.1152|
-000384  4c20              LDR      r4,|L1.1032|
-000386  f89ec000          LDRB     r12,[lr,#0]  ; sk_av_stat
-00038a  34cc              ADDS     r4,r4,#0xcc
-00038c  f1bc0f01          CMP      r12,#1
-000390  d037              BEQ      |L1.1026|
+000370  4c43              LDR      r4,|L1.1152|
+000372  7826              LDRB     r6,[r4,#0]  ; sk_av_stat
+000374  4c24              LDR      r4,|L1.1032|
+000376  34cc              ADDS     r4,r4,#0xcc
+000378  2e01              CMP      r6,#1
+00037a  d041              BEQ      |L1.1024|
 ;;;443    else                     snmp_sk_alarm[0]=0;
-000392  7021              STRB     r1,[r4,#0]
-                  |L1.916|
+00037c  7021              STRB     r1,[r4,#0]
+                  |L1.894|
 ;;;444    
 ;;;445    
 ;;;446    snmp_sk_number[1]=2;
-000394  4e1c              LDR      r6,|L1.1032|
-000396  36c0              ADDS     r6,r6,#0xc0
-000398  f8868001          STRB     r8,[r6,#1]
+00037e  f88c8001          STRB     r8,[r12,#1]
 ;;;447    memcpy(&snmp_sk_name[1][0],"Smoke",10);
-00039c  a639              ADR      r6,|L1.1156|
-00039e  f8d6c000          LDR      r12,[r6,#0]
-0003a2  f8c5c044          STR      r12,[r5,#0x44]  ; snmp_sk_name
-0003a6  f8d6c004          LDR      r12,[r6,#4]
-0003aa  f8c5c048          STR      r12,[r5,#0x48]  ; snmp_sk_name
-0003ae  8936              LDRH     r6,[r6,#8]
-0003b0  f8a5604c          STRH     r6,[r5,#0x4c]
+000382  a640              ADR      r6,|L1.1156|
+000384  f8d6b000          LDR      r11,[r6,#0]
+000388  f8c5b044          STR      r11,[r5,#0x44]  ; snmp_sk_name
+00038c  f8d6b004          LDR      r11,[r6,#4]
+000390  f8c5b048          STR      r11,[r5,#0x48]  ; snmp_sk_name
+000394  8936              LDRH     r6,[r6,#8]
+000396  f8a5604c          STRH     r6,[r5,#0x4c]
 ;;;448    if(sk_stat[1]==ssON) snmp_sk_aktiv[1]=1;
-0003b4  f89b6001          LDRB     r6,[r11,#1]  ; sk_stat
-0003b8  2e01              CMP      r6,#1
-0003ba  d06b              BEQ      |L1.1172|
+00039a  f89e6001          LDRB     r6,[lr,#1]  ; sk_stat
+00039e  2e01              CMP      r6,#1
+0003a0  d02f              BEQ      |L1.1026|
 ;;;449    else snmp_sk_aktiv[1]=0;
-0003bc  7051              STRB     r1,[r2,#1]
-                  |L1.958|
+0003a2  7051              STRB     r1,[r2,#1]
+                  |L1.932|
 ;;;450    if(!SK_SIGN[1])snmp_sk_alarm_aktiv[1]=1;
-0003be  f8ba6002          LDRH     r6,[r10,#2]  ; SK_SIGN
-0003c2  b1de              CBZ      r6,|L1.1020|
+0003a4  f8ba6002          LDRH     r6,[r10,#2]  ; SK_SIGN
+0003a8  b336              CBZ      r6,|L1.1016|
 ;;;451    else snmp_sk_alarm_aktiv[1]=0;
-0003c4  7059              STRB     r1,[r3,#1]
-                  |L1.966|
+0003aa  7059              STRB     r1,[r3,#1]
+                  |L1.940|
 ;;;452    if(sk_av_stat[1]==sasON)	snmp_sk_alarm[1]=1;
-0003c6  f89e6001          LDRB     r6,[lr,#1]  ; sk_av_stat
-0003ca  2e01              CMP      r6,#1
-0003cc  d07d              BEQ      |L1.1226|
+0003ac  f8dfb0d0          LDR      r11,|L1.1152|
+0003b0  f89b6001          LDRB     r6,[r11,#1]  ; sk_av_stat
+0003b4  2e01              CMP      r6,#1
+0003b6  d06d              BEQ      |L1.1172|
 ;;;453    else                     snmp_sk_alarm[1]=0;
-0003ce  7061              STRB     r1,[r4,#1]
-                  |L1.976|
+0003b8  7061              STRB     r1,[r4,#1]
+                  |L1.954|
 ;;;454    
 ;;;455    snmp_sk_number[2]=3;
-0003d0  4e0d              LDR      r6,|L1.1032|
-0003d2  36c0              ADDS     r6,r6,#0xc0
-0003d4  f8869002          STRB     r9,[r6,#2]
+0003ba  4e13              LDR      r6,|L1.1032|
+0003bc  36c0              ADDS     r6,r6,#0xc0
+0003be  f8869002          STRB     r9,[r6,#2]
 ;;;456    memcpy(&snmp_sk_name[2][0],"Shock",10);
-0003d8  a62c              ADR      r6,|L1.1164|
-0003da  f8d6c000          LDR      r12,[r6,#0]
-0003de  f8c5c058          STR      r12,[r5,#0x58]  ; snmp_sk_name
-0003e2  f8d6c004          LDR      r12,[r6,#4]
-0003e6  f8c5c05c          STR      r12,[r5,#0x5c]  ; snmp_sk_name
-0003ea  8936              LDRH     r6,[r6,#8]
-0003ec  f8a56060          STRH     r6,[r5,#0x60]
+0003c2  a632              ADR      r6,|L1.1164|
+0003c4  f8d6c000          LDR      r12,[r6,#0]
+0003c8  f8c5c058          STR      r12,[r5,#0x58]  ; snmp_sk_name
+0003cc  f8d6c004          LDR      r12,[r6,#4]
+0003d0  f8c5c05c          STR      r12,[r5,#0x5c]  ; snmp_sk_name
+0003d4  8936              LDRH     r6,[r6,#8]
+0003d6  f8a56060          STRH     r6,[r5,#0x60]
 ;;;457    if(sk_stat[2]==ssON) snmp_sk_aktiv[2]=1;
-0003f0  4e21              LDR      r6,|L1.1144|
-0003f2  78b6              LDRB     r6,[r6,#2]  ; sk_stat
-0003f4  2e01              CMP      r6,#1
-0003f6  d069              BEQ      |L1.1228|
+0003da  4e27              LDR      r6,|L1.1144|
+0003dc  78b6              LDRB     r6,[r6,#2]  ; sk_stat
+0003de  2e01              CMP      r6,#1
+0003e0  d07d              BEQ      |L1.1246|
 ;;;458    else snmp_sk_aktiv[2]=0;
-0003f8  7091              STRB     r1,[r2,#2]
-                  |L1.1018|
+0003e2  7091              STRB     r1,[r2,#2]
+                  |L1.996|
 ;;;459    if(!SK_SIGN[2])snmp_sk_alarm_aktiv[2]=1;
-0003fa  e04c              B        |L1.1174|
+0003e4  f8ba6004          LDRH     r6,[r10,#4]  ; SK_SIGN
+0003e8  b146              CBZ      r6,|L1.1020|
+;;;460    else snmp_sk_alarm_aktiv[2]=0;
+0003ea  7099              STRB     r1,[r3,#2]
+                  |L1.1004|
+;;;461    if(sk_av_stat[2]==sasON)	snmp_sk_alarm[2]=1;
+0003ec  f89b6002          LDRB     r6,[r11,#2]  ; sk_av_stat
+0003f0  2e01              CMP      r6,#1
+0003f2  d075              BEQ      |L1.1248|
+;;;462    else                     snmp_sk_alarm[2]=0;
+0003f4  70a1              STRB     r1,[r4,#2]
+                  |L1.1014|
+;;;463    
+;;;464    snmp_sk_number[3]=4;
+0003f6  e04e              B        |L1.1174|
+                  |L1.1016|
+0003f8  e083              B        |L1.1282|
+                  |L1.1018|
+0003fa  e07a              B        |L1.1266|
                   |L1.1020|
-0003fc  e08b              B        |L1.1302|
+0003fc  e087              B        |L1.1294|
                   |L1.1022|
-0003fe  e082              B        |L1.1286|
+0003fe  e07a              B        |L1.1270|
                   |L1.1024|
-000400  e083              B        |L1.1290|
+000400  e07b              B        |L1.1274|
                   |L1.1026|
-000402  e084              B        |L1.1294|
+000402  e07c              B        |L1.1278|
                   |L1.1028|
                           DCD      net_U
                   |L1.1032|
@@ -699,418 +720,402 @@
 000492  00                DCB      0
 000493  00                DCB      0
                   |L1.1172|
-000494  e03d              B        |L1.1298|
+000494  e037              B        |L1.1286|
                   |L1.1174|
-000496  f8ba6004          LDRH     r6,[r10,#4]  ; SK_SIGN
-00049a  b39e              CBZ      r6,|L1.1284|
-;;;460    else snmp_sk_alarm_aktiv[2]=0;
-00049c  7099              STRB     r1,[r3,#2]
-                  |L1.1182|
-;;;461    if(sk_av_stat[2]==sasON)	snmp_sk_alarm[2]=1;
-00049e  f89e6002          LDRB     r6,[lr,#2]  ; sk_av_stat
-0004a2  2e01              CMP      r6,#1
-0004a4  d03f              BEQ      |L1.1318|
-;;;462    else                     snmp_sk_alarm[2]=0;
-0004a6  70a1              STRB     r1,[r4,#2]
-                  |L1.1192|
-;;;463    
-;;;464    snmp_sk_number[3]=4;
-0004a8  f8dfc41c          LDR      r12,|L1.2248|
-0004ac  f04f0604          MOV      r6,#4
-0004b0  f88c6003          STRB     r6,[r12,#3]
+000496  f8dfc418          LDR      r12,|L1.2224|
+00049a  f04f0604          MOV      r6,#4
+00049e  f88c6003          STRB     r6,[r12,#3]
 ;;;465    memcpy(&snmp_sk_name[3][0],"     ",10);
-0004b4  f20f4c14          ADR      r12,|L1.2252|
-0004b8  f8dcb000          LDR      r11,[r12,#0]
-0004bc  f8c5b06c          STR      r11,[r5,#0x6c]  ; snmp_sk_name
-0004c0  f8dcb004          LDR      r11,[r12,#4]
-0004c4  f8c5b070          STR      r11,[r5,#0x70]  ; snmp_sk_name
-0004c8  e001              B        |L1.1230|
-                  |L1.1226|
-0004ca  e026              B        |L1.1306|
-                  |L1.1228|
-0004cc  e027              B        |L1.1310|
-                  |L1.1230|
-0004ce  f8bcc008          LDRH     r12,[r12,#8]
-0004d2  f8a5c074          STRH     r12,[r5,#0x74]
+0004a2  f20f4c10          ADR      r12,|L1.2228|
+0004a6  f8dce000          LDR      lr,[r12,#0]
+0004aa  f8c5e06c          STR      lr,[r5,#0x6c]  ; snmp_sk_name
+0004ae  f8dce004          LDR      lr,[r12,#4]
+0004b2  f8c5e070          STR      lr,[r5,#0x70]  ; snmp_sk_name
+0004b6  f8bcc008          LDRH     r12,[r12,#8]
+0004ba  f8a5c074          STRH     r12,[r5,#0x74]
 ;;;466    if(sk_stat[3]==ssON) snmp_sk_aktiv[3]=1;
-0004d6  4dff              LDR      r5,|L1.2260|
-0004d8  78ed              LDRB     r5,[r5,#3]  ; sk_stat
-0004da  2d01              CMP      r5,#1
-0004dc  d025              BEQ      |L1.1322|
+0004be  4dff              LDR      r5,|L1.2236|
+0004c0  78ed              LDRB     r5,[r5,#3]  ; sk_stat
+0004c2  2d01              CMP      r5,#1
+0004c4  d027              BEQ      |L1.1302|
 ;;;467    else snmp_sk_aktiv[3]=0;
-0004de  70d1              STRB     r1,[r2,#3]
-                  |L1.1248|
+0004c6  70d1              STRB     r1,[r2,#3]
+                  |L1.1224|
 ;;;468    if(!SK_SIGN[3])snmp_sk_alarm_aktiv[3]=1;
-0004e0  f8ba2006          LDRH     r2,[r10,#6]  ; SK_SIGN
-0004e4  b31a              CBZ      r2,|L1.1326|
+0004c8  f8ba2006          LDRH     r2,[r10,#6]  ; SK_SIGN
+0004cc  b32a              CBZ      r2,|L1.1306|
 ;;;469    else snmp_sk_alarm_aktiv[3]=0;
-0004e6  70d9              STRB     r1,[r3,#3]
-                  |L1.1256|
+0004ce  70d9              STRB     r1,[r3,#3]
+                  |L1.1232|
 ;;;470    if(sk_av_stat[3]==sasON)	snmp_sk_alarm[3]=1;
-0004e8  f89e2003          LDRB     r2,[lr,#3]  ; sk_av_stat
-0004ec  2a01              CMP      r2,#1
-0004ee  d020              BEQ      |L1.1330|
+0004d0  f89b2003          LDRB     r2,[r11,#3]  ; sk_av_stat
+0004d4  2a01              CMP      r2,#1
+0004d6  d022              BEQ      |L1.1310|
 ;;;471    else                     snmp_sk_alarm[3]=0;
-0004f0  70e1              STRB     r1,[r4,#3]
-                  |L1.1266|
+0004d8  70e1              STRB     r1,[r4,#3]
+                  |L1.1242|
 ;;;472    
 ;;;473    
 ;;;474    if(makb[0]._cnt>8) snmp_makb_connect_status[0]=1;
-0004f2  4af9              LDR      r2,|L1.2264|
-0004f4  4bf4              LDR      r3,|L1.2248|
-0004f6  f9b24028          LDRSH    r4,[r2,#0x28]  ; makb
-0004fa  3338              ADDS     r3,r3,#0x38
-0004fc  2c08              CMP      r4,#8
-0004fe  dd1a              BLE      |L1.1334|
-000500  8018              STRH     r0,[r3,#0]
-000502  e01b              B        |L1.1340|
-                  |L1.1284|
-000504  e00d              B        |L1.1314|
+0004da  4af9              LDR      r2,|L1.2240|
+0004dc  e001              B        |L1.1250|
+                  |L1.1246|
+0004de  e014              B        |L1.1290|
+                  |L1.1248|
+0004e0  e017              B        |L1.1298|
+                  |L1.1250|
+0004e2  4bf3              LDR      r3,|L1.2224|
+0004e4  f9b24028          LDRSH    r4,[r2,#0x28]  ; makb
+0004e8  3338              ADDS     r3,r3,#0x38
+0004ea  2c08              CMP      r4,#8
+0004ec  dd19              BLE      |L1.1314|
+0004ee  8018              STRH     r0,[r3,#0]
+0004f0  e01a              B        |L1.1320|
+                  |L1.1266|
+0004f2  7010              STRB     r0,[r2,#0]            ;438
+0004f4  e733              B        |L1.862|
+                  |L1.1270|
+0004f6  7018              STRB     r0,[r3,#0]            ;440
+0004f8  e73a              B        |L1.880|
+                  |L1.1274|
+0004fa  7020              STRB     r0,[r4,#0]            ;442
+0004fc  e73f              B        |L1.894|
+                  |L1.1278|
+0004fe  7050              STRB     r0,[r2,#1]            ;448
+000500  e750              B        |L1.932|
+                  |L1.1282|
+000502  7058              STRB     r0,[r3,#1]            ;450
+000504  e752              B        |L1.940|
                   |L1.1286|
-000506  7010              STRB     r0,[r2,#0]            ;438
-000508  e731              B        |L1.878|
+000506  7060              STRB     r0,[r4,#1]            ;452
+000508  e757              B        |L1.954|
                   |L1.1290|
-00050a  7018              STRB     r0,[r3,#0]            ;440
-00050c  e738              B        |L1.896|
+00050a  7090              STRB     r0,[r2,#2]            ;457
+00050c  e76a              B        |L1.996|
                   |L1.1294|
-00050e  7020              STRB     r0,[r4,#0]            ;442
-000510  e740              B        |L1.916|
+00050e  7098              STRB     r0,[r3,#2]            ;459
+000510  e76c              B        |L1.1004|
                   |L1.1298|
-000512  7050              STRB     r0,[r2,#1]            ;448
-000514  e753              B        |L1.958|
+000512  70a0              STRB     r0,[r4,#2]            ;461
+000514  e76f              B        |L1.1014|
                   |L1.1302|
-000516  7058              STRB     r0,[r3,#1]            ;450
-000518  e755              B        |L1.966|
+000516  70d0              STRB     r0,[r2,#3]            ;466
+000518  e7d6              B        |L1.1224|
                   |L1.1306|
-00051a  7060              STRB     r0,[r4,#1]            ;452
-00051c  e758              B        |L1.976|
+00051a  70d8              STRB     r0,[r3,#3]            ;468
+00051c  e7d8              B        |L1.1232|
                   |L1.1310|
-00051e  7090              STRB     r0,[r2,#2]            ;457
-000520  e76b              B        |L1.1018|
+00051e  70e0              STRB     r0,[r4,#3]            ;470
+000520  e7db              B        |L1.1242|
                   |L1.1314|
-000522  7098              STRB     r0,[r3,#2]            ;459
-000524  e7bb              B        |L1.1182|
-                  |L1.1318|
-000526  70a0              STRB     r0,[r4,#2]            ;461
-000528  e7be              B        |L1.1192|
-                  |L1.1322|
-00052a  70d0              STRB     r0,[r2,#3]            ;466
-00052c  e7d8              B        |L1.1248|
-                  |L1.1326|
-00052e  70d8              STRB     r0,[r3,#3]            ;468
-000530  e7da              B        |L1.1256|
-                  |L1.1330|
-000532  70e0              STRB     r0,[r4,#3]            ;470
-000534  e7dd              B        |L1.1266|
-                  |L1.1334|
 ;;;475    else if(makb[0]._cnt<2) snmp_makb_connect_status[0]=0;
-000536  2c02              CMP      r4,#2
-000538  da00              BGE      |L1.1340|
-00053a  8019              STRH     r1,[r3,#0]
-                  |L1.1340|
+000522  2c02              CMP      r4,#2
+000524  da00              BGE      |L1.1320|
+000526  8019              STRH     r1,[r3,#0]
+                  |L1.1320|
 ;;;476    if(makb[1]._cnt>8) snmp_makb_connect_status[1]=1;
-00053c  f9b24052          LDRSH    r4,[r2,#0x52]  ; makb
-000540  2c08              CMP      r4,#8
-000542  dd01              BLE      |L1.1352|
-000544  8058              STRH     r0,[r3,#2]
-000546  e002              B        |L1.1358|
-                  |L1.1352|
+000528  f9b24052          LDRSH    r4,[r2,#0x52]  ; makb
+00052c  2c08              CMP      r4,#8
+00052e  dd01              BLE      |L1.1332|
+000530  8058              STRH     r0,[r3,#2]
+000532  e002              B        |L1.1338|
+                  |L1.1332|
 ;;;477    else if(makb[1]._cnt<2) snmp_makb_connect_status[1]=0;
-000548  2c02              CMP      r4,#2
-00054a  da00              BGE      |L1.1358|
-00054c  8059              STRH     r1,[r3,#2]
-                  |L1.1358|
+000534  2c02              CMP      r4,#2
+000536  da00              BGE      |L1.1338|
+000538  8059              STRH     r1,[r3,#2]
+                  |L1.1338|
 ;;;478    if(makb[2]._cnt>8) snmp_makb_connect_status[2]=1;
-00054e  f9b2407c          LDRSH    r4,[r2,#0x7c]  ; makb
-000552  2c08              CMP      r4,#8
-000554  dd01              BLE      |L1.1370|
-000556  8098              STRH     r0,[r3,#4]
-000558  e002              B        |L1.1376|
-                  |L1.1370|
+00053a  f9b2407c          LDRSH    r4,[r2,#0x7c]  ; makb
+00053e  2c08              CMP      r4,#8
+000540  dd01              BLE      |L1.1350|
+000542  8098              STRH     r0,[r3,#4]
+000544  e002              B        |L1.1356|
+                  |L1.1350|
 ;;;479    else if(makb[2]._cnt<2) snmp_makb_connect_status[2]=0;
-00055a  2c02              CMP      r4,#2
-00055c  da00              BGE      |L1.1376|
-00055e  8099              STRH     r1,[r3,#4]
-                  |L1.1376|
+000546  2c02              CMP      r4,#2
+000548  da00              BGE      |L1.1356|
+00054a  8099              STRH     r1,[r3,#4]
+                  |L1.1356|
 ;;;480    if(makb[3]._cnt>8) snmp_makb_connect_status[3]=1;
-000560  f9b240a6          LDRSH    r4,[r2,#0xa6]  ; makb
-000564  2c08              CMP      r4,#8
-000566  dd01              BLE      |L1.1388|
-000568  80d8              STRH     r0,[r3,#6]
-00056a  e002              B        |L1.1394|
-                  |L1.1388|
+00054c  f9b240a6          LDRSH    r4,[r2,#0xa6]  ; makb
+000550  2c08              CMP      r4,#8
+000552  dd01              BLE      |L1.1368|
+000554  80d8              STRH     r0,[r3,#6]
+000556  e002              B        |L1.1374|
+                  |L1.1368|
 ;;;481    else if(makb[3]._cnt<2) snmp_makb_connect_status[3]=0;
-00056c  2c02              CMP      r4,#2
-00056e  da00              BGE      |L1.1394|
-000570  80d9              STRH     r1,[r3,#6]
-                  |L1.1394|
+000558  2c02              CMP      r4,#2
+00055a  da00              BGE      |L1.1374|
+00055c  80d9              STRH     r1,[r3,#6]
+                  |L1.1374|
 ;;;482    
 ;;;483    snmp_makb_voltage0[0]=makb[0]._Ub[0];
-000572  4cd5              LDR      r4,|L1.2248|
-000574  8953              LDRH     r3,[r2,#0xa]  ; makb
-000576  3440              ADDS     r4,r4,#0x40
-000578  8023              STRH     r3,[r4,#0]
+00055e  4cd4              LDR      r4,|L1.2224|
+000560  8953              LDRH     r3,[r2,#0xa]  ; makb
+000562  3440              ADDS     r4,r4,#0x40
+000564  8023              STRH     r3,[r4,#0]
 ;;;484    snmp_makb_voltage1[0]=makb[0]._Ub[1];
-00057a  3408              ADDS     r4,r4,#8
-00057c  8993              LDRH     r3,[r2,#0xc]  ; makb
-00057e  8023              STRH     r3,[r4,#0]
+000566  3408              ADDS     r4,r4,#8
+000568  8993              LDRH     r3,[r2,#0xc]  ; makb
+00056a  8023              STRH     r3,[r4,#0]
 ;;;485    snmp_makb_voltage2[0]=makb[0]._Ub[2];
-000580  3408              ADDS     r4,r4,#8
-000582  89d3              LDRH     r3,[r2,#0xe]  ; makb
-000584  8023              STRH     r3,[r4,#0]
+00056c  3408              ADDS     r4,r4,#8
+00056e  89d3              LDRH     r3,[r2,#0xe]  ; makb
+000570  8023              STRH     r3,[r4,#0]
 ;;;486    snmp_makb_voltage3[0]=makb[0]._Ub[3];
-000586  3408              ADDS     r4,r4,#8
-000588  8a13              LDRH     r3,[r2,#0x10]  ; makb
-00058a  8023              STRH     r3,[r4,#0]
+000572  3408              ADDS     r4,r4,#8
+000574  8a13              LDRH     r3,[r2,#0x10]  ; makb
+000576  8023              STRH     r3,[r4,#0]
 ;;;487    snmp_makb_voltage4[0]=makb[0]._Ub[4];
-00058c  4bce              LDR      r3,|L1.2248|
-00058e  8a54              LDRH     r4,[r2,#0x12]  ; makb
-000590  3360              ADDS     r3,r3,#0x60
-000592  801c              STRH     r4,[r3,#0]
+000578  4bcd              LDR      r3,|L1.2224|
+00057a  8a54              LDRH     r4,[r2,#0x12]  ; makb
+00057c  3360              ADDS     r3,r3,#0x60
+00057e  801c              STRH     r4,[r3,#0]
 ;;;488    snmp_makb_voltage0[1]=makb[1]._Ub[0];
-000594  f1a30520          SUB      r5,r3,#0x20
-000598  8e94              LDRH     r4,[r2,#0x34]  ; makb
-00059a  806c              STRH     r4,[r5,#2]
+000580  f1a30520          SUB      r5,r3,#0x20
+000584  8e94              LDRH     r4,[r2,#0x34]  ; makb
+000586  806c              STRH     r4,[r5,#2]
 ;;;489    snmp_makb_voltage1[1]=makb[1]._Ub[1];
-00059c  3508              ADDS     r5,r5,#8
-00059e  8ed4              LDRH     r4,[r2,#0x36]  ; makb
-0005a0  806c              STRH     r4,[r5,#2]
+000588  3508              ADDS     r5,r5,#8
+00058a  8ed4              LDRH     r4,[r2,#0x36]  ; makb
+00058c  806c              STRH     r4,[r5,#2]
 ;;;490    snmp_makb_voltage2[1]=makb[1]._Ub[2];
-0005a2  3508              ADDS     r5,r5,#8
-0005a4  8f14              LDRH     r4,[r2,#0x38]  ; makb
-0005a6  806c              STRH     r4,[r5,#2]
+00058e  3508              ADDS     r5,r5,#8
+000590  8f14              LDRH     r4,[r2,#0x38]  ; makb
+000592  806c              STRH     r4,[r5,#2]
 ;;;491    snmp_makb_voltage3[1]=makb[1]._Ub[3];
-0005a8  3508              ADDS     r5,r5,#8
-0005aa  8f54              LDRH     r4,[r2,#0x3a]  ; makb
-0005ac  806c              STRH     r4,[r5,#2]
+000594  3508              ADDS     r5,r5,#8
+000596  8f54              LDRH     r4,[r2,#0x3a]  ; makb
+000598  806c              STRH     r4,[r5,#2]
 ;;;492    snmp_makb_voltage4[1]=makb[1]._Ub[4];
-0005ae  8f94              LDRH     r4,[r2,#0x3c]  ; makb
-0005b0  805c              STRH     r4,[r3,#2]
+00059a  8f94              LDRH     r4,[r2,#0x3c]  ; makb
+00059c  805c              STRH     r4,[r3,#2]
 ;;;493    snmp_makb_voltage0[2]=makb[2]._Ub[0];
-0005b2  3d18              SUBS     r5,r5,#0x18
-0005b4  f8b2405e          LDRH     r4,[r2,#0x5e]  ; makb
-0005b8  80ac              STRH     r4,[r5,#4]
+00059e  3d18              SUBS     r5,r5,#0x18
+0005a0  f8b2405e          LDRH     r4,[r2,#0x5e]  ; makb
+0005a4  80ac              STRH     r4,[r5,#4]
 ;;;494    snmp_makb_voltage1[2]=makb[2]._Ub[1];
-0005ba  3508              ADDS     r5,r5,#8
-0005bc  f8b24060          LDRH     r4,[r2,#0x60]  ; makb
-0005c0  80ac              STRH     r4,[r5,#4]
+0005a6  3508              ADDS     r5,r5,#8
+0005a8  f8b24060          LDRH     r4,[r2,#0x60]  ; makb
+0005ac  80ac              STRH     r4,[r5,#4]
 ;;;495    snmp_makb_voltage2[2]=makb[2]._Ub[2];
-0005c2  3508              ADDS     r5,r5,#8
-0005c4  f8b24062          LDRH     r4,[r2,#0x62]  ; makb
-0005c8  80ac              STRH     r4,[r5,#4]
+0005ae  3508              ADDS     r5,r5,#8
+0005b0  f8b24062          LDRH     r4,[r2,#0x62]  ; makb
+0005b4  80ac              STRH     r4,[r5,#4]
 ;;;496    snmp_makb_voltage3[2]=makb[2]._Ub[3];
-0005ca  3508              ADDS     r5,r5,#8
-0005cc  f8b24064          LDRH     r4,[r2,#0x64]  ; makb
-0005d0  80ac              STRH     r4,[r5,#4]
+0005b6  3508              ADDS     r5,r5,#8
+0005b8  f8b24064          LDRH     r4,[r2,#0x64]  ; makb
+0005bc  80ac              STRH     r4,[r5,#4]
 ;;;497    snmp_makb_voltage4[2]=makb[2]._Ub[4];
-0005d2  f8b24066          LDRH     r4,[r2,#0x66]  ; makb
-0005d6  809c              STRH     r4,[r3,#4]
+0005be  f8b24066          LDRH     r4,[r2,#0x66]  ; makb
+0005c2  809c              STRH     r4,[r3,#4]
 ;;;498    snmp_makb_voltage0[3]=makb[3]._Ub[0];
-0005d8  3d18              SUBS     r5,r5,#0x18
-0005da  f8b24088          LDRH     r4,[r2,#0x88]  ; makb
-0005de  80ec              STRH     r4,[r5,#6]
+0005c4  3d18              SUBS     r5,r5,#0x18
+0005c6  f8b24088          LDRH     r4,[r2,#0x88]  ; makb
+0005ca  80ec              STRH     r4,[r5,#6]
 ;;;499    snmp_makb_voltage1[3]=makb[3]._Ub[1];
-0005e0  3508              ADDS     r5,r5,#8
-0005e2  f8b2408a          LDRH     r4,[r2,#0x8a]  ; makb
-0005e6  80ec              STRH     r4,[r5,#6]
+0005cc  3508              ADDS     r5,r5,#8
+0005ce  f8b2408a          LDRH     r4,[r2,#0x8a]  ; makb
+0005d2  80ec              STRH     r4,[r5,#6]
 ;;;500    snmp_makb_voltage2[3]=makb[3]._Ub[2];
-0005e8  3508              ADDS     r5,r5,#8
-0005ea  f8b2408c          LDRH     r4,[r2,#0x8c]  ; makb
-0005ee  80ec              STRH     r4,[r5,#6]
+0005d4  3508              ADDS     r5,r5,#8
+0005d6  f8b2408c          LDRH     r4,[r2,#0x8c]  ; makb
+0005da  80ec              STRH     r4,[r5,#6]
 ;;;501    snmp_makb_voltage3[3]=makb[3]._Ub[3];
-0005f0  3508              ADDS     r5,r5,#8
-0005f2  f8b2408e          LDRH     r4,[r2,#0x8e]  ; makb
-0005f6  80ec              STRH     r4,[r5,#6]
+0005dc  3508              ADDS     r5,r5,#8
+0005de  f8b2408e          LDRH     r4,[r2,#0x8e]  ; makb
+0005e2  80ec              STRH     r4,[r5,#6]
 ;;;502    snmp_makb_voltage4[3]=makb[3]._Ub[4];
-0005f8  f8b24090          LDRH     r4,[r2,#0x90]  ; makb
-0005fc  80dc              STRH     r4,[r3,#6]
+0005e4  f8b24090          LDRH     r4,[r2,#0x90]  ; makb
+0005e8  80dc              STRH     r4,[r3,#6]
 ;;;503    
 ;;;504    snmp_makb_temper0[0]=makb[0]._T[0];
-0005fe  3308              ADDS     r3,r3,#8
-000600  8a94              LDRH     r4,[r2,#0x14]  ; makb
-000602  801c              STRH     r4,[r3,#0]
+0005ea  3308              ADDS     r3,r3,#8
+0005ec  8a94              LDRH     r4,[r2,#0x14]  ; makb
+0005ee  801c              STRH     r4,[r3,#0]
 ;;;505    snmp_makb_temper1[0]=makb[0]._T[1];
-000604  f1030408          ADD      r4,r3,#8
-000608  8ad5              LDRH     r5,[r2,#0x16]  ; makb
-00060a  8025              STRH     r5,[r4,#0]
+0005f0  f1030408          ADD      r4,r3,#8
+0005f4  8ad5              LDRH     r5,[r2,#0x16]  ; makb
+0005f6  8025              STRH     r5,[r4,#0]
 ;;;506    snmp_makb_temper2[0]=makb[0]._T[2];
-00060c  f1030510          ADD      r5,r3,#0x10
-000610  f8b2c018          LDRH     r12,[r2,#0x18]  ; makb
-000614  f8a5c000          STRH     r12,[r5,#0]
+0005f8  f1030510          ADD      r5,r3,#0x10
+0005fc  f8b2c018          LDRH     r12,[r2,#0x18]  ; makb
+000600  f8a5c000          STRH     r12,[r5,#0]
 ;;;507    snmp_makb_temper3[0]=makb[0]._T[3];
-000618  f1030c18          ADD      r12,r3,#0x18
-00061c  f8b2a01a          LDRH     r10,[r2,#0x1a]  ; makb
-000620  f8aca000          STRH     r10,[r12,#0]
+000604  f1030c18          ADD      r12,r3,#0x18
+000608  f8b2a01a          LDRH     r10,[r2,#0x1a]  ; makb
+00060c  f8aca000          STRH     r10,[r12,#0]
 ;;;508    snmp_makb_temper4[0]=makb[0]._T[4];
-000624  f1030a20          ADD      r10,r3,#0x20
-000628  f8b2b01c          LDRH     r11,[r2,#0x1c]  ; makb
-00062c  f8aab000          STRH     r11,[r10,#0]
+000610  f1030a20          ADD      r10,r3,#0x20
+000614  f8b2b01c          LDRH     r11,[r2,#0x1c]  ; makb
+000618  f8aab000          STRH     r11,[r10,#0]
 ;;;509    snmp_makb_temper0[1]=makb[1]._T[0];
-000630  f8b2b03e          LDRH     r11,[r2,#0x3e]  ; makb
-000634  f8a3b002          STRH     r11,[r3,#2]
+00061c  f8b2b03e          LDRH     r11,[r2,#0x3e]  ; makb
+000620  f8a3b002          STRH     r11,[r3,#2]
 ;;;510    snmp_makb_temper1[1]=makb[1]._T[1];
-000638  f8b2b040          LDRH     r11,[r2,#0x40]  ; makb
-00063c  f8a4b002          STRH     r11,[r4,#2]
+000624  f8b2b040          LDRH     r11,[r2,#0x40]  ; makb
+000628  f8a4b002          STRH     r11,[r4,#2]
 ;;;511    snmp_makb_temper2[1]=makb[1]._T[2];
-000640  f8b2b042          LDRH     r11,[r2,#0x42]  ; makb
-000644  f8a5b002          STRH     r11,[r5,#2]
+00062c  f8b2b042          LDRH     r11,[r2,#0x42]  ; makb
+000630  f8a5b002          STRH     r11,[r5,#2]
 ;;;512    snmp_makb_temper3[1]=makb[1]._T[3];
-000648  f8b2b044          LDRH     r11,[r2,#0x44]  ; makb
-00064c  f8acb002          STRH     r11,[r12,#2]
+000634  f8b2b044          LDRH     r11,[r2,#0x44]  ; makb
+000638  f8acb002          STRH     r11,[r12,#2]
 ;;;513    snmp_makb_temper4[1]=makb[1]._T[4];
-000650  f8b2b046          LDRH     r11,[r2,#0x46]  ; makb
-000654  f8aab002          STRH     r11,[r10,#2]
+00063c  f8b2b046          LDRH     r11,[r2,#0x46]  ; makb
+000640  f8aab002          STRH     r11,[r10,#2]
 ;;;514    snmp_makb_temper0[2]=makb[2]._T[0];
-000658  f8b2b068          LDRH     r11,[r2,#0x68]  ; makb
-00065c  f8a3b004          STRH     r11,[r3,#4]
+000644  f8b2b068          LDRH     r11,[r2,#0x68]  ; makb
+000648  f8a3b004          STRH     r11,[r3,#4]
 ;;;515    snmp_makb_temper1[2]=makb[2]._T[1];
-000660  f8b2b06a          LDRH     r11,[r2,#0x6a]  ; makb
-000664  f8a4b004          STRH     r11,[r4,#4]
+00064c  f8b2b06a          LDRH     r11,[r2,#0x6a]  ; makb
+000650  f8a4b004          STRH     r11,[r4,#4]
 ;;;516    snmp_makb_temper2[2]=makb[2]._T[2];
-000668  f8b2b06c          LDRH     r11,[r2,#0x6c]  ; makb
-00066c  f8a5b004          STRH     r11,[r5,#4]
+000654  f8b2b06c          LDRH     r11,[r2,#0x6c]  ; makb
+000658  f8a5b004          STRH     r11,[r5,#4]
 ;;;517    snmp_makb_temper3[2]=makb[2]._T[3];
-000670  f8b2b06e          LDRH     r11,[r2,#0x6e]  ; makb
-000674  f8acb004          STRH     r11,[r12,#4]
+00065c  f8b2b06e          LDRH     r11,[r2,#0x6e]  ; makb
+000660  f8acb004          STRH     r11,[r12,#4]
 ;;;518    snmp_makb_temper4[2]=makb[2]._T[4];
-000678  f8b2b070          LDRH     r11,[r2,#0x70]  ; makb
-00067c  f8aab004          STRH     r11,[r10,#4]
+000664  f8b2b070          LDRH     r11,[r2,#0x70]  ; makb
+000668  f8aab004          STRH     r11,[r10,#4]
 ;;;519    snmp_makb_temper0[3]=makb[3]._T[0];
-000680  f8b2b092          LDRH     r11,[r2,#0x92]  ; makb
-000684  f8a3b006          STRH     r11,[r3,#6]
+00066c  f8b2b092          LDRH     r11,[r2,#0x92]  ; makb
+000670  f8a3b006          STRH     r11,[r3,#6]
 ;;;520    snmp_makb_temper1[3]=makb[3]._T[1];
-000688  f8b23094          LDRH     r3,[r2,#0x94]  ; makb
-00068c  80e3              STRH     r3,[r4,#6]
+000674  f8b23094          LDRH     r3,[r2,#0x94]  ; makb
+000678  80e3              STRH     r3,[r4,#6]
 ;;;521    snmp_makb_temper2[3]=makb[3]._T[2];
-00068e  f8b23096          LDRH     r3,[r2,#0x96]  ; makb
-000692  80eb              STRH     r3,[r5,#6]
+00067a  f8b23096          LDRH     r3,[r2,#0x96]  ; makb
+00067e  80eb              STRH     r3,[r5,#6]
 ;;;522    snmp_makb_temper3[3]=makb[3]._T[3];
-000694  f8b23098          LDRH     r3,[r2,#0x98]  ; makb
-000698  f8ac3006          STRH     r3,[r12,#6]
+000680  f8b23098          LDRH     r3,[r2,#0x98]  ; makb
+000684  f8ac3006          STRH     r3,[r12,#6]
 ;;;523    snmp_makb_temper4[3]=makb[3]._T[4];
-00069c  f8b2309a          LDRH     r3,[r2,#0x9a]  ; makb
-0006a0  f8aa3006          STRH     r3,[r10,#6]
+000688  f8b2309a          LDRH     r3,[r2,#0x9a]  ; makb
+00068c  f8aa3006          STRH     r3,[r10,#6]
 ;;;524    
 ;;;525    snmp_makb_temper0_stat[0]=makb[0]._T_nd[0];
-0006a4  f1050318          ADD      r3,r5,#0x18
-0006a8  8bd4              LDRH     r4,[r2,#0x1e]  ; makb
-0006aa  801c              STRH     r4,[r3,#0]
+000690  f1050318          ADD      r3,r5,#0x18
+000694  8bd4              LDRH     r4,[r2,#0x1e]  ; makb
+000696  801c              STRH     r4,[r3,#0]
 ;;;526    snmp_makb_temper1_stat[0]=makb[0]._T_nd[1];
-0006ac  f1030408          ADD      r4,r3,#8
-0006b0  8c15              LDRH     r5,[r2,#0x20]  ; makb
-0006b2  8025              STRH     r5,[r4,#0]
+000698  f1030408          ADD      r4,r3,#8
+00069c  8c15              LDRH     r5,[r2,#0x20]  ; makb
+00069e  8025              STRH     r5,[r4,#0]
 ;;;527    snmp_makb_temper2_stat[0]=makb[0]._T_nd[2];
-0006b4  f1030510          ADD      r5,r3,#0x10
-0006b8  f8b2c022          LDRH     r12,[r2,#0x22]  ; makb
-0006bc  f8a5c000          STRH     r12,[r5,#0]
+0006a0  f1030510          ADD      r5,r3,#0x10
+0006a4  f8b2c022          LDRH     r12,[r2,#0x22]  ; makb
+0006a8  f8a5c000          STRH     r12,[r5,#0]
 ;;;528    snmp_makb_temper3_stat[0]=makb[0]._T_nd[3];
-0006c0  f1030c18          ADD      r12,r3,#0x18
-0006c4  f8b2a024          LDRH     r10,[r2,#0x24]  ; makb
-0006c8  f8aca000          STRH     r10,[r12,#0]
+0006ac  f1030c18          ADD      r12,r3,#0x18
+0006b0  f8b2a024          LDRH     r10,[r2,#0x24]  ; makb
+0006b4  f8aca000          STRH     r10,[r12,#0]
 ;;;529    snmp_makb_temper4_stat[0]=makb[0]._T_nd[4];
-0006cc  f1030a20          ADD      r10,r3,#0x20
-0006d0  f8b2b026          LDRH     r11,[r2,#0x26]  ; makb
-0006d4  f8aab000          STRH     r11,[r10,#0]
+0006b8  f1030a20          ADD      r10,r3,#0x20
+0006bc  f8b2b026          LDRH     r11,[r2,#0x26]  ; makb
+0006c0  f8aab000          STRH     r11,[r10,#0]
 ;;;530    snmp_makb_temper0_stat[1]=makb[1]._T_nd[0];
-0006d8  f8b2b048          LDRH     r11,[r2,#0x48]  ; makb
-0006dc  f8a3b002          STRH     r11,[r3,#2]
+0006c4  f8b2b048          LDRH     r11,[r2,#0x48]  ; makb
+0006c8  f8a3b002          STRH     r11,[r3,#2]
 ;;;531    snmp_makb_temper1_stat[1]=makb[1]._T_nd[1];
-0006e0  f8b2b04a          LDRH     r11,[r2,#0x4a]  ; makb
-0006e4  f8a4b002          STRH     r11,[r4,#2]
+0006cc  f8b2b04a          LDRH     r11,[r2,#0x4a]  ; makb
+0006d0  f8a4b002          STRH     r11,[r4,#2]
 ;;;532    snmp_makb_temper2_stat[1]=makb[1]._T_nd[2];
-0006e8  f8b2b04c          LDRH     r11,[r2,#0x4c]  ; makb
-0006ec  f8a5b002          STRH     r11,[r5,#2]
+0006d4  f8b2b04c          LDRH     r11,[r2,#0x4c]  ; makb
+0006d8  f8a5b002          STRH     r11,[r5,#2]
 ;;;533    snmp_makb_temper3_stat[1]=makb[1]._T_nd[3];
-0006f0  f8b2b04e          LDRH     r11,[r2,#0x4e]  ; makb
-0006f4  f8acb002          STRH     r11,[r12,#2]
+0006dc  f8b2b04e          LDRH     r11,[r2,#0x4e]  ; makb
+0006e0  f8acb002          STRH     r11,[r12,#2]
 ;;;534    snmp_makb_temper4_stat[1]=makb[1]._T_nd[4];
-0006f8  f8b2b050          LDRH     r11,[r2,#0x50]  ; makb
-0006fc  f8aab002          STRH     r11,[r10,#2]
+0006e4  f8b2b050          LDRH     r11,[r2,#0x50]  ; makb
+0006e8  f8aab002          STRH     r11,[r10,#2]
 ;;;535    snmp_makb_temper0_stat[2]=makb[2]._T_nd[0];
-000700  f8b2b072          LDRH     r11,[r2,#0x72]  ; makb
-000704  f8a3b004          STRH     r11,[r3,#4]
+0006ec  f8b2b072          LDRH     r11,[r2,#0x72]  ; makb
+0006f0  f8a3b004          STRH     r11,[r3,#4]
 ;;;536    snmp_makb_temper1_stat[2]=makb[2]._T_nd[1];
-000708  f8b2b074          LDRH     r11,[r2,#0x74]  ; makb
-00070c  f8a4b004          STRH     r11,[r4,#4]
+0006f4  f8b2b074          LDRH     r11,[r2,#0x74]  ; makb
+0006f8  f8a4b004          STRH     r11,[r4,#4]
 ;;;537    snmp_makb_temper2_stat[2]=makb[2]._T_nd[2];
-000710  f8b2b076          LDRH     r11,[r2,#0x76]  ; makb
-000714  f8a5b004          STRH     r11,[r5,#4]
+0006fc  f8b2b076          LDRH     r11,[r2,#0x76]  ; makb
+000700  f8a5b004          STRH     r11,[r5,#4]
 ;;;538    snmp_makb_temper3_stat[2]=makb[2]._T_nd[3];
-000718  f8b2b078          LDRH     r11,[r2,#0x78]  ; makb
-00071c  f8acb004          STRH     r11,[r12,#4]
+000704  f8b2b078          LDRH     r11,[r2,#0x78]  ; makb
+000708  f8acb004          STRH     r11,[r12,#4]
 ;;;539    snmp_makb_temper4_stat[2]=makb[2]._T_nd[4];
-000720  f8b2b07a          LDRH     r11,[r2,#0x7a]  ; makb
-000724  f8aab004          STRH     r11,[r10,#4]
+00070c  f8b2b07a          LDRH     r11,[r2,#0x7a]  ; makb
+000710  f8aab004          STRH     r11,[r10,#4]
 ;;;540    snmp_makb_temper0_stat[3]=makb[3]._T_nd[0];
-000728  f8b2b09c          LDRH     r11,[r2,#0x9c]  ; makb
-00072c  f8a3b006          STRH     r11,[r3,#6]
+000714  f8b2b09c          LDRH     r11,[r2,#0x9c]  ; makb
+000718  f8a3b006          STRH     r11,[r3,#6]
 ;;;541    snmp_makb_temper1_stat[3]=makb[3]._T_nd[1];
-000730  f8b2309e          LDRH     r3,[r2,#0x9e]  ; makb
-000734  80e3              STRH     r3,[r4,#6]
+00071c  f8b2309e          LDRH     r3,[r2,#0x9e]  ; makb
+000720  80e3              STRH     r3,[r4,#6]
 ;;;542    snmp_makb_temper2_stat[3]=makb[3]._T_nd[2];
-000736  f8b230a0          LDRH     r3,[r2,#0xa0]  ; makb
-00073a  80eb              STRH     r3,[r5,#6]
+000722  f8b230a0          LDRH     r3,[r2,#0xa0]  ; makb
+000726  80eb              STRH     r3,[r5,#6]
 ;;;543    snmp_makb_temper3_stat[3]=makb[3]._T_nd[3];
-00073c  f8b230a2          LDRH     r3,[r2,#0xa2]  ; makb
-000740  f8ac3006          STRH     r3,[r12,#6]
+000728  f8b230a2          LDRH     r3,[r2,#0xa2]  ; makb
+00072c  f8ac3006          STRH     r3,[r12,#6]
 ;;;544    snmp_makb_temper4_stat[3]=makb[3]._T_nd[4];
-000744  f8b220a4          LDRH     r2,[r2,#0xa4]  ; makb
-000748  f8aa2006          STRH     r2,[r10,#6]
+000730  f8b220a4          LDRH     r2,[r2,#0xa4]  ; makb
+000734  f8aa2006          STRH     r2,[r10,#6]
 ;;;545    
 ;;;546    
 ;;;547    snmp_klimat_box_temper=t_box;
-00074c  4a63              LDR      r2,|L1.2268|
-00074e  8812              LDRH     r2,[r2,#0]  ; t_box
-000750  f8a72064          STRH     r2,[r7,#0x64]
+000738  4a62              LDR      r2,|L1.2244|
+00073a  8812              LDRH     r2,[r2,#0]  ; t_box
+00073c  f8a72064          STRH     r2,[r7,#0x64]
 ;;;548    snmp_klimat_settings_box_alarm=TBOXMAX;
-000754  4a62              LDR      r2,|L1.2272|
-000756  f5a473ac          SUB      r3,r4,#0x158
-00075a  8812              LDRH     r2,[r2,#0]  ; TBOXMAX
-00075c  f8a32066          STRH     r2,[r3,#0x66]
+000740  4a61              LDR      r2,|L1.2248|
+000742  f5a473ac          SUB      r3,r4,#0x158
+000746  8812              LDRH     r2,[r2,#0]  ; TBOXMAX
+000748  f8a32066          STRH     r2,[r3,#0x66]
 ;;;549    snmp_klimat_settings_vent_on=TBOXVENTON;
-000760  4a60              LDR      r2,|L1.2276|
-000762  8812              LDRH     r2,[r2,#0]  ; TBOXVENTON
-000764  f8a32068          STRH     r2,[r3,#0x68]
+00074c  4a5f              LDR      r2,|L1.2252|
+00074e  8812              LDRH     r2,[r2,#0]  ; TBOXVENTON
+000750  f8a32068          STRH     r2,[r3,#0x68]
 ;;;550    snmp_klimat_settings_vent_off=TBOXVENTOFF;
-000768  4a5f              LDR      r2,|L1.2280|
-00076a  8812              LDRH     r2,[r2,#0]  ; TBOXVENTOFF
-00076c  f8a3206a          STRH     r2,[r3,#0x6a]
+000754  4a5e              LDR      r2,|L1.2256|
+000756  8812              LDRH     r2,[r2,#0]  ; TBOXVENTOFF
+000758  f8a3206a          STRH     r2,[r3,#0x6a]
 ;;;551    snmp_klimat_settings_warm_on=TBOXWARMON;
-000770  4a5e              LDR      r2,|L1.2284|
-000772  8812              LDRH     r2,[r2,#0]  ; TBOXWARMON
-000774  f8a3206c          STRH     r2,[r3,#0x6c]
+00075c  4a5d              LDR      r2,|L1.2260|
+00075e  8812              LDRH     r2,[r2,#0]  ; TBOXWARMON
+000760  f8a3206c          STRH     r2,[r3,#0x6c]
 ;;;552    snmp_klimat_settings_warm_off=TBOXWARMOFF;
-000778  4a5d              LDR      r2,|L1.2288|
-00077a  8812              LDRH     r2,[r2,#0]  ; TBOXWARMOFF
-00077c  f8a3206e          STRH     r2,[r3,#0x6e]
+000764  4a5c              LDR      r2,|L1.2264|
+000766  8812              LDRH     r2,[r2,#0]  ; TBOXWARMOFF
+000768  f8a3206e          STRH     r2,[r3,#0x6e]
 ;;;553    snmp_klimat_settings_load_on=TLOADENABLE;
-000780  4a5c              LDR      r2,|L1.2292|
-000782  8812              LDRH     r2,[r2,#0]  ; TLOADENABLE
-000784  f8a32070          STRH     r2,[r3,#0x70]
+00076c  4a5b              LDR      r2,|L1.2268|
+00076e  8812              LDRH     r2,[r2,#0]  ; TLOADENABLE
+000770  f8a32070          STRH     r2,[r3,#0x70]
 ;;;554    snmp_klimat_settings_load_off=TLOADDISABLE;
-000788  4a5b              LDR      r2,|L1.2296|
-00078a  8812              LDRH     r2,[r2,#0]  ; TLOADDISABLE
-00078c  f8a32072          STRH     r2,[r3,#0x72]
+000774  4a5a              LDR      r2,|L1.2272|
+000776  8812              LDRH     r2,[r2,#0]  ; TLOADDISABLE
+000778  f8a32072          STRH     r2,[r3,#0x72]
 ;;;555    snmp_klimat_settings_batt_on=TBATENABLE;
-000790  4a5a              LDR      r2,|L1.2300|
-000792  8812              LDRH     r2,[r2,#0]  ; TBATENABLE
-000794  f8a32074          STRH     r2,[r3,#0x74]
+00077c  4a59              LDR      r2,|L1.2276|
+00077e  8812              LDRH     r2,[r2,#0]  ; TBATENABLE
+000780  f8a32074          STRH     r2,[r3,#0x74]
 ;;;556    snmp_klimat_settings_batt_off=TBATDISABLE;
-000798  4a59              LDR      r2,|L1.2304|
-00079a  8812              LDRH     r2,[r2,#0]  ; TBATDISABLE
-00079c  f8a32076          STRH     r2,[r3,#0x76]
+000784  4a58              LDR      r2,|L1.2280|
+000786  8812              LDRH     r2,[r2,#0]  ; TBATDISABLE
+000788  f8a32076          STRH     r2,[r3,#0x76]
 ;;;557    
 ;;;558    snmp_dt_ext=t_ext[0];
-0007a0  f8dfa160          LDR      r10,|L1.2308|
-0007a4  461a              MOV      r2,r3
-0007a6  f9ba5000          LDRSH    r5,[r10,#0]  ; t_ext
-0007aa  f8a25078          STRH     r5,[r2,#0x78]
+00078c  f8dfa15c          LDR      r10,|L1.2284|
+000790  461a              MOV      r2,r3
+000792  f9ba5000          LDRSH    r5,[r10,#0]  ; t_ext
+000796  f8a25078          STRH     r5,[r2,#0x78]
 ;;;559    snmp_dt_msan=t_ext[1];
-0007ae  f9ba7002          LDRSH    r7,[r10,#2]  ; t_ext
-0007b2  f8a2707a          STRH     r7,[r2,#0x7a]
+00079a  f9ba7002          LDRSH    r7,[r10,#2]  ; t_ext
+00079e  f8a2707a          STRH     r7,[r2,#0x7a]
 ;;;560    snmp_dt_epu=t_ext[2];
-0007b6  f9bac004          LDRSH    r12,[r10,#4]  ; t_ext
-0007ba  f8a2c07c          STRH     r12,[r2,#0x7c]
+0007a2  f9bac004          LDRSH    r12,[r10,#4]  ; t_ext
+0007a6  f8a2c07c          STRH     r12,[r2,#0x7c]
 ;;;561    
 ;;;562    /*
 ;;;563    snmp_bat_voltage=Ubat;
@@ -1138,269 +1143,267 @@
 ;;;585    snmp_main_bps=MAIN_IST+1;
 ;;;586    */
 ;;;587    snmp_zv_en=ZV_ON;
-0007be  4a52              LDR      r2,|L1.2312|
-0007c0  8812              LDRH     r2,[r2,#0]  ; ZV_ON
-0007c2  86da              STRH     r2,[r3,#0x36]
+0007aa  4a51              LDR      r2,|L1.2288|
+0007ac  8812              LDRH     r2,[r2,#0]  ; ZV_ON
+0007ae  86da              STRH     r2,[r3,#0x36]
 ;;;588    snmp_alarm_auto_disable=AV_OFF_AVT;
-0007c4  4a51              LDR      r2,|L1.2316|
-0007c6  8812              LDRH     r2,[r2,#0]  ; AV_OFF_AVT
-0007c8  871a              STRH     r2,[r3,#0x38]
+0007b0  4a50              LDR      r2,|L1.2292|
+0007b2  8812              LDRH     r2,[r2,#0]  ; AV_OFF_AVT
+0007b4  871a              STRH     r2,[r3,#0x38]
 ;;;589    snmp_bat_test_time=TBAT;
-0007ca  4a51              LDR      r2,|L1.2320|
-0007cc  8812              LDRH     r2,[r2,#0]  ; TBAT
-0007ce  875a              STRH     r2,[r3,#0x3a]
+0007b6  4a50              LDR      r2,|L1.2296|
+0007b8  8812              LDRH     r2,[r2,#0]  ; TBAT
+0007ba  875a              STRH     r2,[r3,#0x3a]
 ;;;590    snmp_u_max=UMAX;
-0007d0  4a50              LDR      r2,|L1.2324|
-0007d2  8812              LDRH     r2,[r2,#0]  ; UMAX
-0007d4  879a              STRH     r2,[r3,#0x3c]
+0007bc  4a4f              LDR      r2,|L1.2300|
+0007be  8812              LDRH     r2,[r2,#0]  ; UMAX
+0007c0  879a              STRH     r2,[r3,#0x3c]
 ;;;591    snmp_u_min=UB20-DU;
-0007d6  4a50              LDR      r2,|L1.2328|
-0007d8  4b50              LDR      r3,|L1.2332|
-0007da  f5a474ac          SUB      r4,r4,#0x158
-0007de  8812              LDRH     r2,[r2,#0]  ; UB20
-0007e0  881b              LDRH     r3,[r3,#0]  ; DU
-0007e2  eba20303          SUB      r3,r2,r3
-0007e6  87e3              STRH     r3,[r4,#0x3e]
+0007c2  4a4f              LDR      r2,|L1.2304|
+0007c4  4b4f              LDR      r3,|L1.2308|
+0007c6  f5a474ac          SUB      r4,r4,#0x158
+0007ca  8812              LDRH     r2,[r2,#0]  ; UB20
+0007cc  881b              LDRH     r3,[r3,#0]  ; DU
+0007ce  eba20303          SUB      r3,r2,r3
+0007d2  87e3              STRH     r3,[r4,#0x3e]
 ;;;592    snmp_u_0_grad=UB0;
-0007e8  4b4d              LDR      r3,|L1.2336|
-0007ea  881b              LDRH     r3,[r3,#0]  ; UB0
-0007ec  f8a43040          STRH     r3,[r4,#0x40]
+0007d4  4b4c              LDR      r3,|L1.2312|
+0007d6  881b              LDRH     r3,[r3,#0]  ; UB0
+0007d8  f8a43040          STRH     r3,[r4,#0x40]
 ;;;593    snmp_u_20_grad=UB20;
-0007f0  4623              MOV      r3,r4
-0007f2  f8a32042          STRH     r2,[r3,#0x42]
+0007dc  4623              MOV      r3,r4
+0007de  f8a32042          STRH     r2,[r3,#0x42]
 ;;;594    snmp_u_sign=USIGN;
-0007f6  4a4b              LDR      r2,|L1.2340|
-0007f8  8812              LDRH     r2,[r2,#0]  ; USIGN
-0007fa  f8a32044          STRH     r2,[r3,#0x44]
+0007e2  4a4a              LDR      r2,|L1.2316|
+0007e4  8812              LDRH     r2,[r2,#0]  ; USIGN
+0007e6  f8a32044          STRH     r2,[r3,#0x44]
 ;;;595    snmp_u_min_power=UMN;
-0007fe  4a4a              LDR      r2,|L1.2344|
-000800  8812              LDRH     r2,[r2,#0]  ; UMN
-000802  f8a32046          STRH     r2,[r3,#0x46]
+0007ea  4a49              LDR      r2,|L1.2320|
+0007ec  8812              LDRH     r2,[r2,#0]  ; UMN
+0007ee  f8a32046          STRH     r2,[r3,#0x46]
 ;;;596    snmp_u_withouth_bat=U0B;
-000806  4a49              LDR      r2,|L1.2348|
-000808  8812              LDRH     r2,[r2,#0]  ; U0B
-00080a  f8a32048          STRH     r2,[r3,#0x48]
+0007f2  4a48              LDR      r2,|L1.2324|
+0007f4  8812              LDRH     r2,[r2,#0]  ; U0B
+0007f6  f8a32048          STRH     r2,[r3,#0x48]
 ;;;597    snmp_control_current=IKB;
-00080e  4a48              LDR      r2,|L1.2352|
-000810  8812              LDRH     r2,[r2,#0]  ; IKB
-000812  f8a3204a          STRH     r2,[r3,#0x4a]
+0007fa  4a47              LDR      r2,|L1.2328|
+0007fc  8812              LDRH     r2,[r2,#0]  ; IKB
+0007fe  f8a3204a          STRH     r2,[r3,#0x4a]
 ;;;598    snmp_max_charge_current=IZMAX;
-000816  4a47              LDR      r2,|L1.2356|
-000818  8812              LDRH     r2,[r2,#0]  ; IZMAX
-00081a  f8a3204c          STRH     r2,[r3,#0x4c]
+000802  4a46              LDR      r2,|L1.2332|
+000804  8812              LDRH     r2,[r2,#0]  ; IZMAX
+000806  f8a3204c          STRH     r2,[r3,#0x4c]
 ;;;599    snmp_max_current=IMAX;
-00081e  4a46              LDR      r2,|L1.2360|
-000820  8812              LDRH     r2,[r2,#0]  ; IMAX
-000822  f8a3204e          STRH     r2,[r3,#0x4e]
+00080a  4a45              LDR      r2,|L1.2336|
+00080c  8812              LDRH     r2,[r2,#0]  ; IMAX
+00080e  f8a3204e          STRH     r2,[r3,#0x4e]
 ;;;600    snmp_min_current=IMIN;
-000826  4a45              LDR      r2,|L1.2364|
-000828  8812              LDRH     r2,[r2,#0]  ; IMIN
-00082a  f8a32050          STRH     r2,[r3,#0x50]
+000812  4a44              LDR      r2,|L1.2340|
+000814  8812              LDRH     r2,[r2,#0]  ; IMIN
+000816  f8a32050          STRH     r2,[r3,#0x50]
 ;;;601    //snmp_max_current_koef=KIMAX;
 ;;;602    snmp_uvz=UVZ;
-00082e  4a44              LDR      r2,|L1.2368|
-000830  8812              LDRH     r2,[r2,#0]  ; UVZ
-000832  f8a32052          STRH     r2,[r3,#0x52]
+00081a  4a43              LDR      r2,|L1.2344|
+00081c  8812              LDRH     r2,[r2,#0]  ; UVZ
+00081e  f8a32052          STRH     r2,[r3,#0x52]
 ;;;603    snmp_powerup_psu_timeout=TZAS;
-000836  4a43              LDR      r2,|L1.2372|
-000838  8812              LDRH     r2,[r2,#0]  ; TZAS
-00083a  f8a32054          STRH     r2,[r3,#0x54]
+000822  4a42              LDR      r2,|L1.2348|
+000824  8812              LDRH     r2,[r2,#0]  ; TZAS
+000826  f8a32054          STRH     r2,[r3,#0x54]
 ;;;604    snmp_max_temperature=TMAX;
-00083e  4a42              LDR      r2,|L1.2376|
-000840  8812              LDRH     r2,[r2,#0]  ; TMAX
-000842  f8a32056          STRH     r2,[r3,#0x56]
+00082a  4a41              LDR      r2,|L1.2352|
+00082c  8812              LDRH     r2,[r2,#0]  ; TMAX
+00082e  f8a32056          STRH     r2,[r3,#0x56]
 ;;;605    snmp_tsign_bat=TBATSIGN; 
-000846  4b41              LDR      r3,|L1.2380|
-000848  881b              LDRH     r3,[r3,#0]  ; TBATSIGN
-00084a  f8a43058          STRH     r3,[r4,#0x58]
+000832  4b40              LDR      r3,|L1.2356|
+000834  881b              LDRH     r3,[r3,#0]  ; TBATSIGN
+000836  f8a43058          STRH     r3,[r4,#0x58]
 ;;;606    snmp_tmax_bat=TBATMAX;
-00084e  4b40              LDR      r3,|L1.2384|
-000850  881b              LDRH     r3,[r3,#0]  ; TBATMAX
-000852  f8a4305a          STRH     r3,[r4,#0x5a]
+00083a  4b3f              LDR      r3,|L1.2360|
+00083c  881b              LDRH     r3,[r3,#0]  ; TBATMAX
+00083e  f8a4305a          STRH     r3,[r4,#0x5a]
 ;;;607    snmp_tsign_bps=TSIGN;
-000856  4b3f              LDR      r3,|L1.2388|
-000858  881b              LDRH     r3,[r3,#0]  ; TSIGN
-00085a  f8a4305c          STRH     r3,[r4,#0x5c]
+000842  4b3e              LDR      r3,|L1.2364|
+000844  881b              LDRH     r3,[r3,#0]  ; TSIGN
+000846  f8a4305c          STRH     r3,[r4,#0x5c]
 ;;;608    snmp_tmax_bps=TMAX;
-00085e  4623              MOV      r3,r4
-000860  f8a3205e          STRH     r2,[r3,#0x5e]
+00084a  4623              MOV      r3,r4
+00084c  f8a3205e          STRH     r2,[r3,#0x5e]
 ;;;609    snmp_bat_part_alarm=UBM_AV; 
-000864  4a3c              LDR      r2,|L1.2392|
-000866  8812              LDRH     r2,[r2,#0]  ; UBM_AV
-000868  f8a32060          STRH     r2,[r3,#0x60]
+000850  4a3b              LDR      r2,|L1.2368|
+000852  8812              LDRH     r2,[r2,#0]  ; UBM_AV
+000854  f8a32060          STRH     r2,[r3,#0x60]
 ;;;610    snmp_power_cnt_adress=POWER_CNT_ADRESS;
-00086c  4a3b              LDR      r2,|L1.2396|
-00086e  8812              LDRH     r2,[r2,#0]  ; POWER_CNT_ADRESS
-000870  f8a32062          STRH     r2,[r3,#0x62]
+000858  4a3a              LDR      r2,|L1.2372|
+00085a  8812              LDRH     r2,[r2,#0]  ; POWER_CNT_ADRESS
+00085c  f8a32062          STRH     r2,[r3,#0x62]
 ;;;611    
 ;;;612    for(i=0;i<12;i++)
-000874  f04f0200          MOV      r2,#0
+000860  f04f0200          MOV      r2,#0
 ;;;613    	{
 ;;;614    	snmp_avt_number[i]=i+1;
-000878  4b39              LDR      r3,|L1.2400|
+000864  4b38              LDR      r3,|L1.2376|
 ;;;615    	if(avt_stat[i]==avtOFF)snmp_avt_stat[i]=0;
-00087a  f8dfe0e8          LDR      lr,|L1.2404|
-00087e  f103040c          ADD      r4,r3,#0xc
-                  |L1.2178|
-000882  f1020101          ADD      r1,r2,#1              ;614
-000886  5499              STRB     r1,[r3,r2]            ;614
-000888  f81eb002          LDRB     r11,[lr,r2]
-00088c  f1bb0f00          CMP      r11,#0
-000890  d019              BEQ      |L1.2246|
+000866  f8dfe0e4          LDR      lr,|L1.2380|
+00086a  f103040c          ADD      r4,r3,#0xc
+                  |L1.2158|
+00086e  f1020101          ADD      r1,r2,#1              ;614
+000872  5499              STRB     r1,[r3,r2]            ;614
+000874  f81eb002          LDRB     r11,[lr,r2]
+000878  f1bb0f00          CMP      r11,#0
+00087c  d06a              BEQ      |L1.2388|
 ;;;616    	else snmp_avt_stat[i]=1;
-000892  54a0              STRB     r0,[r4,r2]
-                  |L1.2196|
-000894  b2ca              UXTB     r2,r1                 ;612
-000896  2a0c              CMP      r2,#0xc               ;612
-000898  d3f3              BCC      |L1.2178|
+00087e  54a0              STRB     r0,[r4,r2]
+                  |L1.2176|
+000880  b2ca              UXTB     r2,r1                 ;612
+000882  2a0c              CMP      r2,#0xc               ;612
+000884  d3f3              BCC      |L1.2158|
 ;;;617    	}
 ;;;618    
 ;;;619    snmp_dt_number[0]=1;
-00089a  490b              LDR      r1,|L1.2248|
-00089c  3942              SUBS     r1,r1,#0x42
-00089e  7008              STRB     r0,[r1,#0]
+000886  490a              LDR      r1,|L1.2224|
+000888  3942              SUBS     r1,r1,#0x42
+00088a  7008              STRB     r0,[r1,#0]
 ;;;620    snmp_dt_number[1]=2;
-0008a0  f8818001          STRB     r8,[r1,#1]
+00088c  f8818001          STRB     r8,[r1,#1]
 ;;;621    snmp_dt_number[2]=3;
-0008a4  f8819002          STRB     r9,[r1,#2]
+000890  f8819002          STRB     r9,[r1,#2]
 ;;;622    snmp_dt_number[3]=4;
 ;;;623    snmp_dt_temper[0]=t_ext[0];
-0008a8  3174              ADDS     r1,r1,#0x74
-0008aa  800d              STRH     r5,[r1,#0]
+000894  3174              ADDS     r1,r1,#0x74
+000896  800d              STRH     r5,[r1,#0]
 ;;;624    snmp_dt_temper[1]=t_ext[1];
-0008ac  804f              STRH     r7,[r1,#2]
+000898  804f              STRH     r7,[r1,#2]
 ;;;625    snmp_dt_temper[2]=t_ext[2];
-0008ae  f8a1c004          STRH     r12,[r1,#4]
+00089a  f8a1c004          STRH     r12,[r1,#4]
 ;;;626    snmp_dt_temper[3]=t_ext[3];
-0008b2  f8ba2006          LDRH     r2,[r10,#6]  ; t_ext
-0008b6  80ca              STRH     r2,[r1,#6]
+00089e  f8ba2006          LDRH     r2,[r10,#6]  ; t_ext
+0008a2  80ca              STRH     r2,[r1,#6]
 ;;;627    snmp_dt_error[0]=ND_EXT[0];
-0008b8  4c2b              LDR      r4,|L1.2408|
-0008ba  4b03              LDR      r3,|L1.2248|
-0008bc  3b3f              SUBS     r3,r3,#0x3f
-0008be  6821              LDR      r1,[r4,#0]  ; ND_EXT
-0008c0  7019              STRB     r1,[r3,#0]
+0008a4  4d2a              LDR      r5,|L1.2384|
+0008a6  4b02              LDR      r3,|L1.2224|
+0008a8  3b3f              SUBS     r3,r3,#0x3f
+0008aa  6829              LDR      r1,[r5,#0]  ; ND_EXT
+0008ac  7019              STRB     r1,[r3,#0]
 ;;;628    if(NUMDT<1)snmp_dt_error[0]=0xff;
-0008c2  492a              LDR      r1,|L1.2412|
-0008c4  e054              B        |L1.2416|
-                  |L1.2246|
-0008c6  e0f4              B        |L1.2738|
-                  |L1.2248|
+0008ae  e052              B        |L1.2390|
+                  |L1.2224|
                           DCD      ||.data||+0xc0
-                  |L1.2252|
-0008cc  20202020          DCB      "     ",0
-0008d0  2000    
-0008d2  00                DCB      0
-0008d3  00                DCB      0
-                  |L1.2260|
+                  |L1.2228|
+0008b4  20202020          DCB      "     ",0
+0008b8  2000    
+0008ba  00                DCB      0
+0008bb  00                DCB      0
+                  |L1.2236|
                           DCD      sk_stat
-                  |L1.2264|
+                  |L1.2240|
                           DCD      makb
-                  |L1.2268|
+                  |L1.2244|
                           DCD      t_box
-                  |L1.2272|
+                  |L1.2248|
                           DCD      TBOXMAX
-                  |L1.2276|
+                  |L1.2252|
                           DCD      TBOXVENTON
-                  |L1.2280|
+                  |L1.2256|
                           DCD      TBOXVENTOFF
-                  |L1.2284|
+                  |L1.2260|
                           DCD      TBOXWARMON
-                  |L1.2288|
+                  |L1.2264|
                           DCD      TBOXWARMOFF
-                  |L1.2292|
+                  |L1.2268|
                           DCD      TLOADENABLE
-                  |L1.2296|
+                  |L1.2272|
                           DCD      TLOADDISABLE
-                  |L1.2300|
+                  |L1.2276|
                           DCD      TBATENABLE
-                  |L1.2304|
+                  |L1.2280|
                           DCD      TBATDISABLE
-                  |L1.2308|
+                  |L1.2284|
                           DCD      t_ext
-                  |L1.2312|
+                  |L1.2288|
                           DCD      ZV_ON
-                  |L1.2316|
+                  |L1.2292|
                           DCD      AV_OFF_AVT
-                  |L1.2320|
+                  |L1.2296|
                           DCD      TBAT
-                  |L1.2324|
+                  |L1.2300|
                           DCD      UMAX
-                  |L1.2328|
+                  |L1.2304|
                           DCD      UB20
-                  |L1.2332|
+                  |L1.2308|
                           DCD      ||DU||
-                  |L1.2336|
+                  |L1.2312|
                           DCD      UB0
-                  |L1.2340|
+                  |L1.2316|
                           DCD      USIGN
-                  |L1.2344|
+                  |L1.2320|
                           DCD      UMN
-                  |L1.2348|
+                  |L1.2324|
                           DCD      U0B
-                  |L1.2352|
+                  |L1.2328|
                           DCD      IKB
-                  |L1.2356|
+                  |L1.2332|
                           DCD      IZMAX
-                  |L1.2360|
+                  |L1.2336|
                           DCD      IMAX
-                  |L1.2364|
+                  |L1.2340|
                           DCD      IMIN
-                  |L1.2368|
+                  |L1.2344|
                           DCD      UVZ
-                  |L1.2372|
+                  |L1.2348|
                           DCD      TZAS
-                  |L1.2376|
+                  |L1.2352|
                           DCD      TMAX
-                  |L1.2380|
+                  |L1.2356|
                           DCD      TBATSIGN
-                  |L1.2384|
+                  |L1.2360|
                           DCD      TBATMAX
-                  |L1.2388|
+                  |L1.2364|
                           DCD      TSIGN
-                  |L1.2392|
+                  |L1.2368|
                           DCD      UBM_AV
-                  |L1.2396|
+                  |L1.2372|
                           DCD      POWER_CNT_ADRESS
-                  |L1.2400|
+                  |L1.2376|
                           DCD      ||area_number.20||+0x118
-                  |L1.2404|
+                  |L1.2380|
                           DCD      avt_stat
-                  |L1.2408|
+                  |L1.2384|
                           DCD      ND_EXT
-                  |L1.2412|
-                          DCD      NUMDT
-                  |L1.2416|
-000970  f9b11000          LDRSH    r1,[r1,#0]  ; NUMDT
-000974  f04f32ff          MOV      r2,#0xffffffff
-000978  2901              CMP      r1,#1
-00097a  da00              BGE      |L1.2430|
-00097c  701a              STRB     r2,[r3,#0]
-                  |L1.2430|
+                  |L1.2388|
+000954  e0b5              B        |L1.2754|
+                  |L1.2390|
+000956  49f9              LDR      r1,|L1.3388|
+000958  f04f32ff          MOV      r2,#0xffffffff
+00095c  f9b11000          LDRSH    r1,[r1,#0]  ; NUMDT
+000960  2901              CMP      r1,#1
+000962  da00              BGE      |L1.2406|
+000964  701a              STRB     r2,[r3,#0]
+                  |L1.2406|
 ;;;629    snmp_dt_error[1]=ND_EXT[1];
-00097e  6865              LDR      r5,[r4,#4]  ; ND_EXT
-000980  705d              STRB     r5,[r3,#1]
+000966  686c              LDR      r4,[r5,#4]  ; ND_EXT
+000968  705c              STRB     r4,[r3,#1]
 ;;;630    if(NUMDT<2)snmp_dt_error[0]=0xff;
-000982  2902              CMP      r1,#2
-000984  da00              BGE      |L1.2440|
-000986  701a              STRB     r2,[r3,#0]
-                  |L1.2440|
+00096a  2902              CMP      r1,#2
+00096c  da00              BGE      |L1.2416|
+00096e  701a              STRB     r2,[r3,#0]
+                  |L1.2416|
 ;;;631    snmp_dt_error[2]=ND_EXT[2];
-000988  68a5              LDR      r5,[r4,#8]  ; ND_EXT
-00098a  709d              STRB     r5,[r3,#2]
+000970  68ac              LDR      r4,[r5,#8]  ; ND_EXT
+000972  709c              STRB     r4,[r3,#2]
 ;;;632    if(NUMDT<3)snmp_dt_error[0]=0xff;
-00098c  2903              CMP      r1,#3
-00098e  da00              BGE      |L1.2450|
-000990  701a              STRB     r2,[r3,#0]
-                  |L1.2450|
+000974  2903              CMP      r1,#3
+000976  da00              BGE      |L1.2426|
+000978  701a              STRB     r2,[r3,#0]
+                  |L1.2426|
 ;;;633    snmp_dt_error[3]=ND_EXT[3];
-000992  68e4              LDR      r4,[r4,#0xc]  ; ND_EXT
-000994  70dc              STRB     r4,[r3,#3]
+00097a  68ec              LDR      r4,[r5,#0xc]  ; ND_EXT
+00097c  70dc              STRB     r4,[r3,#3]
 ;;;634    if(NUMDT<4)snmp_dt_error[0]=0xff;
-000996  2904              CMP      r1,#4
-000998  da00              BGE      |L1.2460|
-00099a  701a              STRB     r2,[r3,#0]
-                  |L1.2460|
+00097e  2904              CMP      r1,#4
+000980  da00              BGE      |L1.2436|
+000982  701a              STRB     r2,[r3,#0]
+                  |L1.2436|
 ;;;635    
 ;;;636    /*
 ;;;637    //Литиевые батареи
@@ -1437,138 +1440,137 @@
 ;;;668    
 ;;;669    //Литиевые батареи
 ;;;670    snmp_lakb_number[0]=1;								//Номер ЛАКБ
-00099c  49fe              LDR      r1,|L1.3480|
-00099e  8008              STRH     r0,[r1,#0]
+000984  49ee              LDR      r1,|L1.3392|
+000986  8008              STRH     r0,[r1,#0]
 ;;;671    snmp_lakb_number[1]=2;								//Номер ЛАКБ
-0009a0  f8a18002          STRH     r8,[r1,#2]
+000988  f8a18002          STRH     r8,[r1,#2]
 ;;;672    snmp_lakb_number[2]=3;								//Номер ЛАКБ
-0009a4  f8a19004          STRH     r9,[r1,#4]
+00098c  f8a19004          STRH     r9,[r1,#4]
 ;;;673    snmp_lakb_number[3]=4;								//Номер ЛАКБ
-0009a8  80ce              STRH     r6,[r1,#6]
+000990  80ce              STRH     r6,[r1,#6]
 ;;;674    snmp_lakb_number[4]=5;								//Номер ЛАКБ
-0009aa  f04f0005          MOV      r0,#5
-0009ae  8108              STRH     r0,[r1,#8]
+000992  f04f0005          MOV      r0,#5
+000996  8108              STRH     r0,[r1,#8]
 ;;;675    snmp_lakb_number[5]=6;								//Номер ЛАКБ
-0009b0  f04f0006          MOV      r0,#6
-0009b4  8148              STRH     r0,[r1,#0xa]
+000998  f04f0006          MOV      r0,#6
+00099c  8148              STRH     r0,[r1,#0xa]
 ;;;676    snmp_lakb_number[6]=7;								//Номер ЛАКБ
-0009b6  f04f0007          MOV      r0,#7
-0009ba  8188              STRH     r0,[r1,#0xc]
+00099e  f04f0007          MOV      r0,#7
+0009a2  8188              STRH     r0,[r1,#0xc]
 ;;;677    
 ;;;678    for (i=0;i<3;i++)
-0009bc  f04f0000          MOV      r0,#0
+0009a4  f04f0000          MOV      r0,#0
 ;;;679    	{
 ;;;680    	snmp_lakb_voltage[i]=lakb[i]._tot_bat_volt;				//Напряжение ЛАКБ
-0009c0  4df6              LDR      r5,|L1.3484|
-0009c2  f101030e          ADD      r3,r1,#0xe
+0009a8  4ae6              LDR      r2,|L1.3396|
+0009aa  f101030e          ADD      r3,r1,#0xe
 ;;;681    	snmp_lakb_max_cell_voltage[i]=lakb[i]._max_cell_volt;		//Максимальное напряжение ячейки ЛАКБ
-0009c6  f101061c          ADD      r6,r1,#0x1c
+0009ae  f101041c          ADD      r4,r1,#0x1c
 ;;;682    	snmp_lakb_min_cell_voltage[i]=lakb[i]._min_cell_volt;		//Минимальное напряжение ячейки ЛАКБ
-0009ca  f101072a          ADD      r7,r1,#0x2a
+0009b2  f101052a          ADD      r5,r1,#0x2a
 ;;;683    	snmp_lakb_max_cell_temperature[i]=lakb[i]._max_cell_temp;	//Максимальная температура ячейки ЛАКБ
-0009ce  f1010c38          ADD      r12,r1,#0x38
+0009b6  f1010638          ADD      r6,r1,#0x38
 ;;;684    	//snmp_lakb_max_cell_temperature[1]=lakb[1]._max_cell_temp;	//Максимальная температура ячейки ЛАКБ
 ;;;685    	snmp_lakb_min_cell_temperature[i]=lakb[i]._min_cell_temp;	//Минимальная температура ячейки ЛАКБ
-0009d2  f1010846          ADD      r8,r1,#0x46
+0009ba  f1010746          ADD      r7,r1,#0x46
 ;;;686    	//snmp_lakb_min_cell_temperature[1]=lakb[1]._min_cell_temp;	//Минимальная температура ячейки ЛАКБ
 ;;;687    	snmp_lakb_ch_curr[i]=lakb[i]._ch_curr;					//Ток заряда ЛАКБ
-0009d6  f1010954          ADD      r9,r1,#0x54
+0009be  f1010c54          ADD      r12,r1,#0x54
 ;;;688    	//snmp_lakb_ch_curr[1]=lakb[1]._ch_curr;					//Ток заряда ЛАКБ
 ;;;689    	snmp_lakb_dsch_curr[i]=lakb[i]._dsch_curr;				//Ток разряда ЛАКБ
-0009da  f1010a62          ADD      r10,r1,#0x62
+0009c2  f1010862          ADD      r8,r1,#0x62
 ;;;690    	//snmp_lakb_dsch_curr[1]=lakb[1]._dsch_curr;				//Ток разряда ЛАКБ
 ;;;691    	snmp_lakb_rat_cap[i]=lakb[i]._rat_cap;					//Номинальная емкость ЛАКБ
-0009de  f1010b70          ADD      r11,r1,#0x70
+0009c6  f1010970          ADD      r9,r1,#0x70
 ;;;692    	//snmp_lakb_rat_cap[1]=lakb[1]._rat_cap;					//Номинальная емкость ЛАКБ
 ;;;693    	snmp_lakb_soh[i]=lakb[i]._s_o_h;						//Остаточная емкость ЛАКБ
-0009e2  f1010e7e          ADD      lr,r1,#0x7e
-                  |L1.2534|
-0009e6  ebc01240          RSB      r2,r0,r0,LSL #5       ;680
-0009ea  eb050142          ADD      r1,r5,r2,LSL #1       ;680
-0009ee  890c              LDRH     r4,[r1,#8]            ;680
-0009f0  f8234010          STRH     r4,[r3,r0,LSL #1]     ;680
-0009f4  f8352012          LDRH     r2,[r5,r2,LSL #1]     ;681
-0009f8  f8262010          STRH     r2,[r6,r0,LSL #1]     ;681
-0009fc  884a              LDRH     r2,[r1,#2]            ;682
-0009fe  f8272010          STRH     r2,[r7,r0,LSL #1]     ;682
-000a02  888a              LDRH     r2,[r1,#4]            ;683
-000a04  f82c2010          STRH     r2,[r12,r0,LSL #1]    ;683
-000a08  88ca              LDRH     r2,[r1,#6]            ;685
-000a0a  f8282010          STRH     r2,[r8,r0,LSL #1]     ;685
-000a0e  894a              LDRH     r2,[r1,#0xa]          ;687
-000a10  f8292010          STRH     r2,[r9,r0,LSL #1]     ;687
-000a14  898a              LDRH     r2,[r1,#0xc]          ;689
-000a16  f82a2010          STRH     r2,[r10,r0,LSL #1]    ;689
-000a1a  89ca              LDRH     r2,[r1,#0xe]          ;691
-000a1c  f82b2010          STRH     r2,[r11,r0,LSL #1]    ;691
-000a20  8a0a              LDRH     r2,[r1,#0x10]
-000a22  f82e2010          STRH     r2,[lr,r0,LSL #1]
+0009ca  f1010a7e          ADD      r10,r1,#0x7e
+                  |L1.2510|
+0009ce  eb021180          ADD      r1,r2,r0,LSL #6       ;680
+0009d2  f8b1b008          LDRH     r11,[r1,#8]           ;680
+0009d6  f823b010          STRH     r11,[r3,r0,LSL #1]    ;680
+0009da  f8b1b000          LDRH     r11,[r1,#0]           ;681
+0009de  f824b010          STRH     r11,[r4,r0,LSL #1]    ;681
+0009e2  f8b1b002          LDRH     r11,[r1,#2]           ;682
+0009e6  f825b010          STRH     r11,[r5,r0,LSL #1]    ;682
+0009ea  f8b1b004          LDRH     r11,[r1,#4]           ;683
+0009ee  f826b010          STRH     r11,[r6,r0,LSL #1]    ;683
+0009f2  f8b1b006          LDRH     r11,[r1,#6]           ;685
+0009f6  f827b010          STRH     r11,[r7,r0,LSL #1]    ;685
+0009fa  f8b1b00a          LDRH     r11,[r1,#0xa]         ;687
+0009fe  f82cb010          STRH     r11,[r12,r0,LSL #1]   ;687
+000a02  f8b1b00c          LDRH     r11,[r1,#0xc]         ;689
+000a06  f828b010          STRH     r11,[r8,r0,LSL #1]    ;689
+000a0a  f8b1b00e          LDRH     r11,[r1,#0xe]         ;691
+000a0e  f829b010          STRH     r11,[r9,r0,LSL #1]    ;691
+000a12  f8b1b010          LDRH     r11,[r1,#0x10]
+000a16  f82ab010          STRH     r11,[r10,r0,LSL #1]
 ;;;694    	//snmp_lakb_soh[1]=lakb[1]._s_o_h;						//Остаточная емкость ЛАКБ
 ;;;695    	snmp_lakb_soc[i]=lakb[i]._s_o_c;						//Заряд ЛАКБ
-000a26  4adc              LDR      r2,|L1.3480|
-000a28  8a4c              LDRH     r4,[r1,#0x12]
-000a2a  f102028c          ADD      r2,r2,#0x8c
-000a2e  f8224010          STRH     r4,[r2,r0,LSL #1]
+000a1a  f8dfb324          LDR      r11,|L1.3392|
+000a1e  f8b1e012          LDRH     lr,[r1,#0x12]
+000a22  f10b0b8c          ADD      r11,r11,#0x8c
+000a26  f82be010          STRH     lr,[r11,r0,LSL #1]
 ;;;696    	//snmp_lakb_soc[1]=lakb[1]._s_o_c;						//Заряд ЛАКБ
 ;;;697    	snmp_lakb_cclv[i]=lakb[i]._c_c_l_v;  					//Максимальный ток заряда ЛАКБ
-000a32  f102020e          ADD      r2,r2,#0xe
-000a36  8a8c              LDRH     r4,[r1,#0x14]
-000a38  f8224010          STRH     r4,[r2,r0,LSL #1]
+000a2a  f10b0b0e          ADD      r11,r11,#0xe
+000a2e  f8b1e014          LDRH     lr,[r1,#0x14]
+000a32  f82be010          STRH     lr,[r11,r0,LSL #1]
 ;;;698    	//snmp_lakb_cclv[1]=lakb[1]._c_c_l_v;  					//Максимальный ток заряда ЛАКБ
 ;;;699    	snmp_lakb_rbt[i]=lakb[i]._r_b_t;						//Оцениваемое время работы ЛАКБ
-000a3c  f102020e          ADD      r2,r2,#0xe
-000a40  8acc              LDRH     r4,[r1,#0x16]
-000a42  f8224010          STRH     r4,[r2,r0,LSL #1]
+000a36  f10b0b0e          ADD      r11,r11,#0xe
+000a3a  f8b1e016          LDRH     lr,[r1,#0x16]
+000a3e  f82be010          STRH     lr,[r11,r0,LSL #1]
 ;;;700    	//snmp_lakb_rbt[1]=lakb[1]._r_b_t;						//Оцениваемое время работы ЛАКБ
 ;;;701    	snmp_lakb_flags1[i]=lakb[i]._flags1;					//Первый флаг состояния ЛАКБ
-000a46  f102020e          ADD      r2,r2,#0xe
-000a4a  8b4c              LDRH     r4,[r1,#0x1a]
-000a4c  f8224010          STRH     r4,[r2,r0,LSL #1]
+000a42  f10b0b0e          ADD      r11,r11,#0xe
+000a46  f8b1e01a          LDRH     lr,[r1,#0x1a]
+000a4a  f82be010          STRH     lr,[r11,r0,LSL #1]
 ;;;702    	//snmp_lakb_flags1[1]=lakb[1]._flags1;					//Первый флаг состояния ЛАКБ
 ;;;703    	snmp_lakb_flags2[i]=lakb[i]._flags2;					//Второй флаг состояния ЛАКБ
-000a50  f102020e          ADD      r2,r2,#0xe
-000a54  8b8c              LDRH     r4,[r1,#0x1c]
-000a56  f8224010          STRH     r4,[r2,r0,LSL #1]
+000a4e  f10b0b0e          ADD      r11,r11,#0xe
+000a52  f8b1e01c          LDRH     lr,[r1,#0x1c]
+000a56  f82be010          STRH     lr,[r11,r0,LSL #1]
 ;;;704    	//snmp_lakb_flags2[1]=lakb[1]._flags2;					//Второй флаг состояния ЛАКБ
 ;;;705    
 ;;;706    	snmp_lakb_cell_temperature_1[i]= lakb[i]._cell_temp_1;
-000a5a  4ad1              LDR      r2,|L1.3488|
-000a5c  f8914038          LDRB     r4,[r1,#0x38]
-000a60  5414              STRB     r4,[r2,r0]
+000a5a  f8dfb2ec          LDR      r11,|L1.3400|
+000a5e  f891e03a          LDRB     lr,[r1,#0x3a]
+000a62  f80be000          STRB     lr,[r11,r0]
 ;;;707    	snmp_lakb_cell_temperature_2[i]= lakb[i]._cell_temp_2;
-000a62  4ccf              LDR      r4,|L1.3488|
-000a64  f8912039          LDRB     r2,[r1,#0x39]
-000a68  f1040403          ADD      r4,r4,#3
-000a6c  5422              STRB     r2,[r4,r0]
+000a66  f8dfe2e0          LDR      lr,|L1.3400|
+000a6a  f891b03b          LDRB     r11,[r1,#0x3b]
+000a6e  f10e0e03          ADD      lr,lr,#3
+000a72  f80eb000          STRB     r11,[lr,r0]
 ;;;708    	snmp_lakb_cell_temperature_3[i]= lakb[i]._cell_temp_3;
-000a6e  f1040403          ADD      r4,r4,#3
-000a72  f891203a          LDRB     r2,[r1,#0x3a]
-000a76  5422              STRB     r2,[r4,r0]
+000a76  f10e0e03          ADD      lr,lr,#3
+000a7a  f891b03c          LDRB     r11,[r1,#0x3c]
+000a7e  f80eb000          STRB     r11,[lr,r0]
 ;;;709    	snmp_lakb_cell_temperature_4[i]= lakb[i]._cell_temp_4;
-000a78  f1040403          ADD      r4,r4,#3
-000a7c  f891203b          LDRB     r2,[r1,#0x3b]
-000a80  5422              STRB     r2,[r4,r0]
+000a82  f10e0e03          ADD      lr,lr,#3
+000a86  f891b03d          LDRB     r11,[r1,#0x3d]
+000a8a  f80eb000          STRB     r11,[lr,r0]
 ;;;710    	snmp_lakb_cell_temperature_ambient[i]=lakb[i]._cell_temp_ambient;
-000a82  f1040403          ADD      r4,r4,#3
-000a86  f891203c          LDRB     r2,[r1,#0x3c]
-000a8a  5422              STRB     r2,[r4,r0]
+000a8e  f10e0e03          ADD      lr,lr,#3
+000a92  f891b03e          LDRB     r11,[r1,#0x3e]
+000a96  f80eb000          STRB     r11,[lr,r0]
 ;;;711    	snmp_lakb_cell_temperature_power[i]=lakb[i]._cell_temp_power;
-000a8c  f1040203          ADD      r2,r4,#3
-000a90  f891103d          LDRB     r1,[r1,#0x3d]
-000a94  5411              STRB     r1,[r2,r0]
-000a96  f1000001          ADD      r0,r0,#1              ;678
-000a9a  b2c0              UXTB     r0,r0                 ;678
-000a9c  2803              CMP      r0,#3                 ;678
-000a9e  d3a2              BCC      |L1.2534|
+000a9a  f10e0b03          ADD      r11,lr,#3
+000a9e  f891103f          LDRB     r1,[r1,#0x3f]
+000aa2  f80b1000          STRB     r1,[r11,r0]
+000aa6  f1000001          ADD      r0,r0,#1              ;678
+000aaa  b2c0              UXTB     r0,r0                 ;678
+000aac  2803              CMP      r0,#3                 ;678
+000aae  d38e              BCC      |L1.2510|
 ;;;712    	}
 ;;;713    
 ;;;714    for (i=0;i<7;i++)
-000aa0  f04f0000          MOV      r0,#0
-                  |L1.2724|
-000aa4  f1000001          ADD      r0,r0,#1
-000aa8  b2c0              UXTB     r0,r0
-000aaa  2807              CMP      r0,#7
-000aac  d3fa              BCC      |L1.2724|
+000ab0  f04f0000          MOV      r0,#0
+                  |L1.2740|
+000ab4  f1000001          ADD      r0,r0,#1
+000ab8  b2c0              UXTB     r0,r0
+000aba  2807              CMP      r0,#7
+000abc  d3fa              BCC      |L1.2740|
 ;;;715    {
 ;;;716    /*
 ;;;717    snmp_lakb_damp1[i][0]=ABCDEF[(lakb_damp[i][0])>>4];			//Дамп
@@ -1732,63 +1734,63 @@
 ;;;875    }
 ;;;876    
 ;;;877    }
-000aae  e8bd9ff0          POP      {r4-r12,pc}
-                  |L1.2738|
-000ab2  f04f0b00          MOV      r11,#0                ;615
-000ab6  f804b002          STRB     r11,[r4,r2]           ;615
-000aba  e6eb              B        |L1.2196|
+000abe  e8bd9ff0          POP      {r4-r12,pc}
+                  |L1.2754|
+000ac2  f04f0b00          MOV      r11,#0                ;615
+000ac6  f804b002          STRB     r11,[r4,r2]           ;615
+000aca  e6d9              B        |L1.2176|
 ;;;878    
                           ENDP
 
                   snmp_location_write PROC
 ;;;889    //-----------------------------------------------
 ;;;890    void snmp_location_write (int mode) 
-000abc  b570              PUSH     {r4-r6,lr}
+000acc  b570              PUSH     {r4-r6,lr}
 ;;;891    {
 ;;;892    char i;
 ;;;893    if(mode==MIB_WRITE)
-000abe  2801              CMP      r0,#1
-000ac0  d10c              BNE      |L1.2780|
+000ace  2801              CMP      r0,#1
+000ad0  d10c              BNE      |L1.2796|
 ;;;894    	{
 ;;;895    	for(i=0;i<64;i++)
-000ac2  f04f0400          MOV      r4,#0
+000ad2  f04f0400          MOV      r4,#0
 ;;;896    		{
 ;;;897    		lc640_write(EE_LOCATION+i,snmp_location[i]);
-000ac6  4db7              LDR      r5,|L1.3492|
-                  |L1.2760|
-000ac8  f5047065          ADD      r0,r4,#0x394
-000acc  5d29              LDRB     r1,[r5,r4]
-000ace  f7fffffe          BL       lc640_write
-000ad2  f1040401          ADD      r4,r4,#1              ;895
-000ad6  b2e4              UXTB     r4,r4                 ;895
-000ad8  2c40              CMP      r4,#0x40              ;895
-000ada  d3f5              BCC      |L1.2760|
-                  |L1.2780|
+000ad6  4d9d              LDR      r5,|L1.3404|
+                  |L1.2776|
+000ad8  f5047065          ADD      r0,r4,#0x394
+000adc  5d29              LDRB     r1,[r5,r4]
+000ade  f7fffffe          BL       lc640_write
+000ae2  f1040401          ADD      r4,r4,#1              ;895
+000ae6  b2e4              UXTB     r4,r4                 ;895
+000ae8  2c40              CMP      r4,#0x40              ;895
+000aea  d3f5              BCC      |L1.2776|
+                  |L1.2796|
 ;;;898    		}
 ;;;899    	}
 ;;;900    }
-000adc  bd70              POP      {r4-r6,pc}
+000aec  bd70              POP      {r4-r6,pc}
 ;;;901    
                           ENDP
 
                   snmp_alarm_aktiv_write1 PROC
 ;;;902    //-----------------------------------------------
 ;;;903    void snmp_alarm_aktiv_write1(void)
-000ade  48b0              LDR      r0,|L1.3488|
+000aee  4896              LDR      r0,|L1.3400|
 ;;;904    {
 ;;;905    if(!snmp_sk_alarm_aktiv[0])   lc640_write_int(ADR_SK_SIGN[0],0xffff);
-000ae0  3044              ADDS     r0,r0,#0x44
-000ae2  7801              LDRB     r1,[r0,#0]  ; snmp_sk_alarm_aktiv
-000ae4  48b0              LDR      r0,|L1.3496|
-000ae6  b121              CBZ      r1,|L1.2802|
+000af0  3044              ADDS     r0,r0,#0x44
+000af2  7801              LDRB     r1,[r0,#0]  ; snmp_sk_alarm_aktiv
+000af4  4896              LDR      r0,|L1.3408|
+000af6  b121              CBZ      r1,|L1.2818|
 ;;;906    else lc640_write_int(ADR_SK_SIGN[0],0);
-000ae8  f9b00000          LDRSH    r0,[r0,#0]  ; ADR_SK_SIGN
-000aec  2100              MOVS     r1,#0
-000aee  f7ffbffe          B.W      lc640_write_int
-                  |L1.2802|
-000af2  f9b00000          LDRSH    r0,[r0,#0]            ;905  ; ADR_SK_SIGN
-000af6  f04f31ff          MOV      r1,#0xffffffff        ;905
-000afa  f7ffbffe          B.W      lc640_write_int
+000af8  f9b00000          LDRSH    r0,[r0,#0]  ; ADR_SK_SIGN
+000afc  2100              MOVS     r1,#0
+000afe  f7ffbffe          B.W      lc640_write_int
+                  |L1.2818|
+000b02  f9b00000          LDRSH    r0,[r0,#0]            ;905  ; ADR_SK_SIGN
+000b06  f04f31ff          MOV      r1,#0xffffffff        ;905
+000b0a  f7ffbffe          B.W      lc640_write_int
 ;;;907    }
 ;;;908    
                           ENDP
@@ -1796,63 +1798,63 @@
                   snmp_alarm_aktiv_write2 PROC
 ;;;909    //-----------------------------------------------
 ;;;910    void snmp_alarm_aktiv_write2(void)
-000afe  48a8              LDR      r0,|L1.3488|
+000b0e  488e              LDR      r0,|L1.3400|
 ;;;911    {
 ;;;912    if(!snmp_sk_alarm_aktiv[1])   lc640_write_int(ADR_SK_SIGN[1],0xffff);
-000b00  3044              ADDS     r0,r0,#0x44
-000b02  7841              LDRB     r1,[r0,#1]  ; snmp_sk_alarm_aktiv
-000b04  48a8              LDR      r0,|L1.3496|
-000b06  b121              CBZ      r1,|L1.2834|
+000b10  3044              ADDS     r0,r0,#0x44
+000b12  7841              LDRB     r1,[r0,#1]  ; snmp_sk_alarm_aktiv
+000b14  488e              LDR      r0,|L1.3408|
+000b16  b121              CBZ      r1,|L1.2850|
 ;;;913    else lc640_write_int(ADR_SK_SIGN[1],0);
-000b08  f9b00002          LDRSH    r0,[r0,#2]  ; ADR_SK_SIGN
-000b0c  2100              MOVS     r1,#0
-000b0e  f7ffbffe          B.W      lc640_write_int
-                  |L1.2834|
-000b12  f9b00002          LDRSH    r0,[r0,#2]            ;912  ; ADR_SK_SIGN
-000b16  f04f31ff          MOV      r1,#0xffffffff        ;912
-000b1a  f7ffbffe          B.W      lc640_write_int
+000b18  f9b00002          LDRSH    r0,[r0,#2]  ; ADR_SK_SIGN
+000b1c  2100              MOVS     r1,#0
+000b1e  f7ffbffe          B.W      lc640_write_int
+                  |L1.2850|
+000b22  f9b00002          LDRSH    r0,[r0,#2]            ;912  ; ADR_SK_SIGN
+000b26  f04f31ff          MOV      r1,#0xffffffff        ;912
+000b2a  f7ffbffe          B.W      lc640_write_int
 ;;;914    }
 ;;;915    //-----------------------------------------------
                           ENDP
 
                   snmp_alarm_aktiv_write3 PROC
 ;;;916    void snmp_alarm_aktiv_write3(void)
-000b1e  48a0              LDR      r0,|L1.3488|
+000b2e  4886              LDR      r0,|L1.3400|
 ;;;917    {
 ;;;918    if(!snmp_sk_alarm_aktiv[2])   lc640_write_int(ADR_SK_SIGN[2],0xffff);
-000b20  3044              ADDS     r0,r0,#0x44
-000b22  7881              LDRB     r1,[r0,#2]  ; snmp_sk_alarm_aktiv
-000b24  48a0              LDR      r0,|L1.3496|
-000b26  b121              CBZ      r1,|L1.2866|
+000b30  3044              ADDS     r0,r0,#0x44
+000b32  7881              LDRB     r1,[r0,#2]  ; snmp_sk_alarm_aktiv
+000b34  4886              LDR      r0,|L1.3408|
+000b36  b121              CBZ      r1,|L1.2882|
 ;;;919    else lc640_write_int(ADR_SK_SIGN[2],0);
-000b28  f9b00004          LDRSH    r0,[r0,#4]  ; ADR_SK_SIGN
-000b2c  2100              MOVS     r1,#0
-000b2e  f7ffbffe          B.W      lc640_write_int
-                  |L1.2866|
-000b32  f9b00004          LDRSH    r0,[r0,#4]            ;918  ; ADR_SK_SIGN
-000b36  f04f31ff          MOV      r1,#0xffffffff        ;918
-000b3a  f7ffbffe          B.W      lc640_write_int
+000b38  f9b00004          LDRSH    r0,[r0,#4]  ; ADR_SK_SIGN
+000b3c  2100              MOVS     r1,#0
+000b3e  f7ffbffe          B.W      lc640_write_int
+                  |L1.2882|
+000b42  f9b00004          LDRSH    r0,[r0,#4]            ;918  ; ADR_SK_SIGN
+000b46  f04f31ff          MOV      r1,#0xffffffff        ;918
+000b4a  f7ffbffe          B.W      lc640_write_int
 ;;;920    }
 ;;;921    //-----------------------------------------------
                           ENDP
 
                   snmp_alarm_aktiv_write4 PROC
 ;;;922    void snmp_alarm_aktiv_write4(void)
-000b3e  4898              LDR      r0,|L1.3488|
+000b4e  487e              LDR      r0,|L1.3400|
 ;;;923    {
 ;;;924    if(!snmp_sk_alarm_aktiv[3])   lc640_write_int(ADR_SK_SIGN[3],0xffff);
-000b40  3044              ADDS     r0,r0,#0x44
-000b42  78c1              LDRB     r1,[r0,#3]  ; snmp_sk_alarm_aktiv
-000b44  4898              LDR      r0,|L1.3496|
-000b46  b121              CBZ      r1,|L1.2898|
+000b50  3044              ADDS     r0,r0,#0x44
+000b52  78c1              LDRB     r1,[r0,#3]  ; snmp_sk_alarm_aktiv
+000b54  487e              LDR      r0,|L1.3408|
+000b56  b121              CBZ      r1,|L1.2914|
 ;;;925    else lc640_write_int(ADR_SK_SIGN[3],0);
-000b48  f9b00006          LDRSH    r0,[r0,#6]  ; ADR_SK_SIGN
-000b4c  2100              MOVS     r1,#0
-000b4e  f7ffbffe          B.W      lc640_write_int
-                  |L1.2898|
-000b52  f9b00006          LDRSH    r0,[r0,#6]            ;924  ; ADR_SK_SIGN
-000b56  f04f31ff          MOV      r1,#0xffffffff        ;924
-000b5a  f7ffbffe          B.W      lc640_write_int
+000b58  f9b00006          LDRSH    r0,[r0,#6]  ; ADR_SK_SIGN
+000b5c  2100              MOVS     r1,#0
+000b5e  f7ffbffe          B.W      lc640_write_int
+                  |L1.2914|
+000b62  f9b00006          LDRSH    r0,[r0,#6]            ;924  ; ADR_SK_SIGN
+000b66  f04f31ff          MOV      r1,#0xffffffff        ;924
+000b6a  f7ffbffe          B.W      lc640_write_int
 ;;;926    }
 ;;;927    //-----------------------------------------------
                           ENDP
@@ -1860,157 +1862,157 @@
                   snmp_zv_on_write PROC
 ;;;936    //-----------------------------------------------
 ;;;937    void snmp_zv_on_write (int mode)
-000b5e  2801              CMP      r0,#1
+000b6e  2801              CMP      r0,#1
 ;;;938    {
 ;;;939    if(mode==MIB_WRITE)
-000b60  d106              BNE      |L1.2928|
+000b70  d106              BNE      |L1.2944|
 ;;;940    	{
 ;;;941    	lc640_write_int(EE_ZV_ON,snmp_zv_en);
-000b62  488f              LDR      r0,|L1.3488|
-000b64  3884              SUBS     r0,r0,#0x84
-000b66  f9b01036          LDRSH    r1,[r0,#0x36]  ; snmp_zv_en
-000b6a  2086              MOVS     r0,#0x86
-000b6c  f7ffbffe          B.W      lc640_write_int
-                  |L1.2928|
+000b72  4875              LDR      r0,|L1.3400|
+000b74  3884              SUBS     r0,r0,#0x84
+000b76  f9b01036          LDRSH    r1,[r0,#0x36]  ; snmp_zv_en
+000b7a  2086              MOVS     r0,#0x86
+000b7c  f7ffbffe          B.W      lc640_write_int
+                  |L1.2944|
 ;;;942    	}
 ;;;943    }
-000b70  4770              BX       lr
+000b80  4770              BX       lr
 ;;;944    
                           ENDP
 
                   snmp_alarm_auto_disable_write PROC
 ;;;945    //-----------------------------------------------
 ;;;946    void snmp_alarm_auto_disable_write (int mode)
-000b72  2801              CMP      r0,#1
+000b82  2801              CMP      r0,#1
 ;;;947    {
 ;;;948    if(mode==MIB_WRITE)
-000b74  d106              BNE      |L1.2948|
+000b84  d106              BNE      |L1.2964|
 ;;;949    	{
 ;;;950         lc640_write_int(EE_AV_OFF_AVT,snmp_alarm_auto_disable);
-000b76  488a              LDR      r0,|L1.3488|
-000b78  3884              SUBS     r0,r0,#0x84
-000b7a  f9b01038          LDRSH    r1,[r0,#0x38]  ; snmp_alarm_auto_disable
-000b7e  2080              MOVS     r0,#0x80
-000b80  f7ffbffe          B.W      lc640_write_int
-                  |L1.2948|
+000b86  4870              LDR      r0,|L1.3400|
+000b88  3884              SUBS     r0,r0,#0x84
+000b8a  f9b01038          LDRSH    r1,[r0,#0x38]  ; snmp_alarm_auto_disable
+000b8e  2080              MOVS     r0,#0x80
+000b90  f7ffbffe          B.W      lc640_write_int
+                  |L1.2964|
 ;;;951    	}
 ;;;952    }
-000b84  4770              BX       lr
+000b94  4770              BX       lr
 ;;;953    
                           ENDP
 
                   snmp_bat_test_time_write PROC
 ;;;954    //-----------------------------------------------
 ;;;955    void snmp_bat_test_time_write (int mode)
-000b86  2801              CMP      r0,#1
+000b96  2801              CMP      r0,#1
 ;;;956    {
 ;;;957    if(mode==MIB_WRITE)
-000b88  d106              BNE      |L1.2968|
+000b98  d106              BNE      |L1.2984|
 ;;;958    	{
 ;;;959    	lc640_write_int(EE_TBAT,snmp_bat_test_time);
-000b8a  4885              LDR      r0,|L1.3488|
-000b8c  3884              SUBS     r0,r0,#0x84
-000b8e  f9b0103a          LDRSH    r1,[r0,#0x3a]  ; snmp_bat_test_time
-000b92  20c2              MOVS     r0,#0xc2
-000b94  f7ffbffe          B.W      lc640_write_int
-                  |L1.2968|
+000b9a  486b              LDR      r0,|L1.3400|
+000b9c  3884              SUBS     r0,r0,#0x84
+000b9e  f9b0103a          LDRSH    r1,[r0,#0x3a]  ; snmp_bat_test_time
+000ba2  20c2              MOVS     r0,#0xc2
+000ba4  f7ffbffe          B.W      lc640_write_int
+                  |L1.2984|
 ;;;960    	}
 ;;;961    }
-000b98  4770              BX       lr
+000ba8  4770              BX       lr
 ;;;962    
                           ENDP
 
                   snmp_u_max_write PROC
 ;;;963    //-----------------------------------------------
 ;;;964    void snmp_u_max_write (int mode)
-000b9a  2801              CMP      r0,#1
+000baa  2801              CMP      r0,#1
 ;;;965    {
 ;;;966    if(mode==MIB_WRITE)
-000b9c  d106              BNE      |L1.2988|
+000bac  d106              BNE      |L1.3004|
 ;;;967    	{
 ;;;968         lc640_write_int(EE_UMAX,snmp_u_max);
-000b9e  4880              LDR      r0,|L1.3488|
-000ba0  3884              SUBS     r0,r0,#0x84
-000ba2  f9b0103c          LDRSH    r1,[r0,#0x3c]  ; snmp_u_max
-000ba6  2078              MOVS     r0,#0x78
-000ba8  f7ffbffe          B.W      lc640_write_int
-                  |L1.2988|
+000bae  4866              LDR      r0,|L1.3400|
+000bb0  3884              SUBS     r0,r0,#0x84
+000bb2  f9b0103c          LDRSH    r1,[r0,#0x3c]  ; snmp_u_max
+000bb6  2078              MOVS     r0,#0x78
+000bb8  f7ffbffe          B.W      lc640_write_int
+                  |L1.3004|
 ;;;969    	}
 ;;;970    }
-000bac  4770              BX       lr
+000bbc  4770              BX       lr
 ;;;971    
                           ENDP
 
                   snmp_u_min_write PROC
 ;;;973    //-----------------------------------------------
 ;;;974    void snmp_u_min_write (int mode)
-000bae  2801              CMP      r0,#1
+000bbe  2801              CMP      r0,#1
 ;;;975    {
 ;;;976    if(mode==MIB_WRITE)
-000bb0  d109              BNE      |L1.3014|
+000bc0  d109              BNE      |L1.3030|
 ;;;977    	{
 ;;;978         lc640_write_int(EE_DU,UB20-snmp_u_min);
-000bb2  497b              LDR      r1,|L1.3488|
-000bb4  487d              LDR      r0,|L1.3500|
-000bb6  3984              SUBS     r1,r1,#0x84
-000bb8  8800              LDRH     r0,[r0,#0]  ; UB20
-000bba  8fc9              LDRH     r1,[r1,#0x3e]  ; snmp_u_min
-000bbc  1a40              SUBS     r0,r0,r1
-000bbe  b201              SXTH     r1,r0
-000bc0  20c8              MOVS     r0,#0xc8
-000bc2  f7ffbffe          B.W      lc640_write_int
-                  |L1.3014|
+000bc2  4961              LDR      r1,|L1.3400|
+000bc4  4863              LDR      r0,|L1.3412|
+000bc6  3984              SUBS     r1,r1,#0x84
+000bc8  8800              LDRH     r0,[r0,#0]  ; UB20
+000bca  8fc9              LDRH     r1,[r1,#0x3e]  ; snmp_u_min
+000bcc  1a40              SUBS     r0,r0,r1
+000bce  b201              SXTH     r1,r0
+000bd0  20c8              MOVS     r0,#0xc8
+000bd2  f7ffbffe          B.W      lc640_write_int
+                  |L1.3030|
 ;;;979    	}
 ;;;980    }
-000bc6  4770              BX       lr
+000bd6  4770              BX       lr
 ;;;981    
                           ENDP
 
                   snmp_u_0_grad_write PROC
 ;;;983    //-----------------------------------------------
 ;;;984    void snmp_u_0_grad_write (int mode)
-000bc8  2801              CMP      r0,#1
+000bd8  2801              CMP      r0,#1
 ;;;985    {
 ;;;986    if(mode==MIB_WRITE)
-000bca  d106              BNE      |L1.3034|
+000bda  d106              BNE      |L1.3050|
 ;;;987    	{
 ;;;988    	lc640_write_int(EE_UB0,snmp_u_0_grad);
-000bcc  4874              LDR      r0,|L1.3488|
-000bce  3884              SUBS     r0,r0,#0x84
-000bd0  f9b01040          LDRSH    r1,[r0,#0x40]  ; snmp_u_0_grad
-000bd4  207a              MOVS     r0,#0x7a
-000bd6  f7ffbffe          B.W      lc640_write_int
-                  |L1.3034|
+000bdc  485a              LDR      r0,|L1.3400|
+000bde  3884              SUBS     r0,r0,#0x84
+000be0  f9b01040          LDRSH    r1,[r0,#0x40]  ; snmp_u_0_grad
+000be4  207a              MOVS     r0,#0x7a
+000be6  f7ffbffe          B.W      lc640_write_int
+                  |L1.3050|
 ;;;989    	}
 ;;;990    }
-000bda  4770              BX       lr
+000bea  4770              BX       lr
 ;;;991    //-----------------------------------------------
                           ENDP
 
                   snmp_u_20_grad_write PROC
 ;;;992    void snmp_u_20_grad_write (int mode)
-000bdc  2801              CMP      r0,#1
+000bec  2801              CMP      r0,#1
 ;;;993    {
 ;;;994    if(mode==MIB_WRITE)
-000bde  d106              BNE      |L1.3054|
+000bee  d106              BNE      |L1.3070|
 ;;;995    	{
 ;;;996    	lc640_write_int(EE_UB20,snmp_u_20_grad);
-000be0  486f              LDR      r0,|L1.3488|
-000be2  3884              SUBS     r0,r0,#0x84
-000be4  f9b01042          LDRSH    r1,[r0,#0x42]  ; snmp_u_20_grad
-000be8  207c              MOVS     r0,#0x7c
-000bea  f7ffbffe          B.W      lc640_write_int
-                  |L1.3054|
+000bf0  4855              LDR      r0,|L1.3400|
+000bf2  3884              SUBS     r0,r0,#0x84
+000bf4  f9b01042          LDRSH    r1,[r0,#0x42]  ; snmp_u_20_grad
+000bf8  207c              MOVS     r0,#0x7c
+000bfa  f7ffbffe          B.W      lc640_write_int
+                  |L1.3070|
 ;;;997    	}
 ;;;998    }
-000bee  4770              BX       lr
+000bfe  4770              BX       lr
 ;;;999    
                           ENDP
 
                   snmp_u_sign_write PROC
 ;;;1000   //-----------------------------------------------
 ;;;1001   void snmp_u_sign_write (int mode)
-000bf0  4770              BX       lr
+000c00  4770              BX       lr
 ;;;1002   {
 ;;;1003   if(mode==MIB_WRITE)
 ;;;1004   	{
@@ -2022,7 +2024,7 @@
 
                   snmp_u_min_power_write PROC
 ;;;1009   void snmp_u_min_power_write (int mode)
-000bf2  4770              BX       lr
+000c02  4770              BX       lr
 ;;;1010   {
 ;;;1011   if(mode==MIB_WRITE)
 ;;;1012   	{
@@ -2034,293 +2036,293 @@
 
                   snmp_u_withouth_bat_write PROC
 ;;;1017   void snmp_u_withouth_bat_write (int mode)
-000bf4  2801              CMP      r0,#1
+000c04  2801              CMP      r0,#1
 ;;;1018   {
 ;;;1019   if(mode==MIB_WRITE)
-000bf6  d106              BNE      |L1.3078|
+000c06  d106              BNE      |L1.3094|
 ;;;1020   	{
 ;;;1021   	lc640_write_int(EE_U0B,snmp_u_withouth_bat);
-000bf8  4869              LDR      r0,|L1.3488|
-000bfa  3884              SUBS     r0,r0,#0x84
-000bfc  f9b01048          LDRSH    r1,[r0,#0x48]  ; snmp_u_withouth_bat
-000c00  2094              MOVS     r0,#0x94
-000c02  f7ffbffe          B.W      lc640_write_int
-                  |L1.3078|
+000c08  484f              LDR      r0,|L1.3400|
+000c0a  3884              SUBS     r0,r0,#0x84
+000c0c  f9b01048          LDRSH    r1,[r0,#0x48]  ; snmp_u_withouth_bat
+000c10  2094              MOVS     r0,#0x94
+000c12  f7ffbffe          B.W      lc640_write_int
+                  |L1.3094|
 ;;;1022   	}
 ;;;1023   }
-000c06  4770              BX       lr
+000c16  4770              BX       lr
 ;;;1024   
                           ENDP
 
                   snmp_control_current_write PROC
 ;;;1025   //-----------------------------------------------
 ;;;1026   void snmp_control_current_write (int mode)
-000c08  2801              CMP      r0,#1
+000c18  2801              CMP      r0,#1
 ;;;1027   {
 ;;;1028   if(mode==MIB_WRITE)
-000c0a  d106              BNE      |L1.3098|
+000c1a  d106              BNE      |L1.3114|
 ;;;1029   	{
 ;;;1030   	lc640_write_int(EE_IKB,snmp_control_current);
-000c0c  4864              LDR      r0,|L1.3488|
-000c0e  3884              SUBS     r0,r0,#0x84
-000c10  f9b0104a          LDRSH    r1,[r0,#0x4a]  ; snmp_control_current
-000c14  2088              MOVS     r0,#0x88
-000c16  f7ffbffe          B.W      lc640_write_int
-                  |L1.3098|
+000c1c  484a              LDR      r0,|L1.3400|
+000c1e  3884              SUBS     r0,r0,#0x84
+000c20  f9b0104a          LDRSH    r1,[r0,#0x4a]  ; snmp_control_current
+000c24  2088              MOVS     r0,#0x88
+000c26  f7ffbffe          B.W      lc640_write_int
+                  |L1.3114|
 ;;;1031   	}
 ;;;1032   }
-000c1a  4770              BX       lr
+000c2a  4770              BX       lr
 ;;;1033   
                           ENDP
 
                   snmp_max_charge_current_write PROC
 ;;;1034   //-----------------------------------------------
 ;;;1035   void snmp_max_charge_current_write (int mode)
-000c1c  2801              CMP      r0,#1
+000c2c  2801              CMP      r0,#1
 ;;;1036   {
 ;;;1037   if(mode==MIB_WRITE)
-000c1e  d106              BNE      |L1.3118|
+000c2e  d106              BNE      |L1.3134|
 ;;;1038   	{
 ;;;1039   	lc640_write_int(EE_IZMAX,snmp_max_charge_current);
-000c20  485f              LDR      r0,|L1.3488|
-000c22  3884              SUBS     r0,r0,#0x84
-000c24  f9b0104c          LDRSH    r1,[r0,#0x4c]  ; snmp_max_charge_current
-000c28  2092              MOVS     r0,#0x92
-000c2a  f7ffbffe          B.W      lc640_write_int
-                  |L1.3118|
+000c30  4845              LDR      r0,|L1.3400|
+000c32  3884              SUBS     r0,r0,#0x84
+000c34  f9b0104c          LDRSH    r1,[r0,#0x4c]  ; snmp_max_charge_current
+000c38  2092              MOVS     r0,#0x92
+000c3a  f7ffbffe          B.W      lc640_write_int
+                  |L1.3134|
 ;;;1040   	}
 ;;;1041   }
-000c2e  4770              BX       lr
+000c3e  4770              BX       lr
 ;;;1042   
                           ENDP
 
                   snmp_max_current_write PROC
 ;;;1043   //-----------------------------------------------
 ;;;1044   void snmp_max_current_write (int mode)
-000c30  2801              CMP      r0,#1
+000c40  2801              CMP      r0,#1
 ;;;1045   {
 ;;;1046   if(mode==MIB_WRITE)
-000c32  d106              BNE      |L1.3138|
+000c42  d106              BNE      |L1.3154|
 ;;;1047   	{
 ;;;1048        lc640_write_int(EE_IMAX,snmp_max_current);
-000c34  485a              LDR      r0,|L1.3488|
-000c36  3884              SUBS     r0,r0,#0x84
-000c38  f9b0104e          LDRSH    r1,[r0,#0x4e]  ; snmp_max_current
-000c3c  208c              MOVS     r0,#0x8c
-000c3e  f7ffbffe          B.W      lc640_write_int
-                  |L1.3138|
+000c44  4840              LDR      r0,|L1.3400|
+000c46  3884              SUBS     r0,r0,#0x84
+000c48  f9b0104e          LDRSH    r1,[r0,#0x4e]  ; snmp_max_current
+000c4c  208c              MOVS     r0,#0x8c
+000c4e  f7ffbffe          B.W      lc640_write_int
+                  |L1.3154|
 ;;;1049   	}
 ;;;1050   }
-000c42  4770              BX       lr
+000c52  4770              BX       lr
 ;;;1051   
                           ENDP
 
                   snmp_min_current_write PROC
 ;;;1052   //-----------------------------------------------
 ;;;1053   void snmp_min_current_write (int mode)
-000c44  2801              CMP      r0,#1
+000c54  2801              CMP      r0,#1
 ;;;1054   {
 ;;;1055   if(mode==MIB_WRITE)
-000c46  d106              BNE      |L1.3158|
+000c56  d106              BNE      |L1.3174|
 ;;;1056   	{
 ;;;1057        lc640_write_int(EE_IMIN,snmp_min_current);
-000c48  4855              LDR      r0,|L1.3488|
-000c4a  3884              SUBS     r0,r0,#0x84
-000c4c  f9b01050          LDRSH    r1,[r0,#0x50]  ; snmp_min_current
-000c50  208e              MOVS     r0,#0x8e
-000c52  f7ffbffe          B.W      lc640_write_int
-                  |L1.3158|
+000c58  483b              LDR      r0,|L1.3400|
+000c5a  3884              SUBS     r0,r0,#0x84
+000c5c  f9b01050          LDRSH    r1,[r0,#0x50]  ; snmp_min_current
+000c60  208e              MOVS     r0,#0x8e
+000c62  f7ffbffe          B.W      lc640_write_int
+                  |L1.3174|
 ;;;1058   	}
 ;;;1059   }
-000c56  4770              BX       lr
+000c66  4770              BX       lr
 ;;;1060   
                           ENDP
 
                   snmp_powerup_psu_timeout_write PROC
 ;;;1079   //-----------------------------------------------
 ;;;1080   void snmp_powerup_psu_timeout_write (int mode)
-000c58  2801              CMP      r0,#1
+000c68  2801              CMP      r0,#1
 ;;;1081   {
 ;;;1082   if(mode==MIB_WRITE)
-000c5a  d106              BNE      |L1.3178|
+000c6a  d106              BNE      |L1.3194|
 ;;;1083   	{
 ;;;1084        lc640_write_int(EE_TZAS,snmp_powerup_psu_timeout);
-000c5c  4850              LDR      r0,|L1.3488|
-000c5e  3884              SUBS     r0,r0,#0x84
-000c60  f9b01054          LDRSH    r1,[r0,#0x54]  ; snmp_powerup_psu_timeout
-000c64  2096              MOVS     r0,#0x96
-000c66  f7ffbffe          B.W      lc640_write_int
-                  |L1.3178|
+000c6c  4836              LDR      r0,|L1.3400|
+000c6e  3884              SUBS     r0,r0,#0x84
+000c70  f9b01054          LDRSH    r1,[r0,#0x54]  ; snmp_powerup_psu_timeout
+000c74  2096              MOVS     r0,#0x96
+000c76  f7ffbffe          B.W      lc640_write_int
+                  |L1.3194|
 ;;;1085   	}
 ;;;1086   }
-000c6a  4770              BX       lr
+000c7a  4770              BX       lr
 ;;;1087   
                           ENDP
 
                   snmp_tsign_bat_write PROC
 ;;;1097   //-----------------------------------------------
 ;;;1098   void snmp_tsign_bat_write(int mode)
-000c6c  2801              CMP      r0,#1
+000c7c  2801              CMP      r0,#1
 ;;;1099   {
 ;;;1100   if(mode==MIB_WRITE)
-000c6e  d106              BNE      |L1.3198|
+000c7e  d106              BNE      |L1.3214|
 ;;;1101   	{
 ;;;1102    	lc640_write_int(EE_TBATSIGN,snmp_tsign_bat);
-000c70  484b              LDR      r0,|L1.3488|
-000c72  3884              SUBS     r0,r0,#0x84
-000c74  f9b01058          LDRSH    r1,[r0,#0x58]  ; snmp_tsign_bat
-000c78  20ce              MOVS     r0,#0xce
-000c7a  f7ffbffe          B.W      lc640_write_int
-                  |L1.3198|
+000c80  4831              LDR      r0,|L1.3400|
+000c82  3884              SUBS     r0,r0,#0x84
+000c84  f9b01058          LDRSH    r1,[r0,#0x58]  ; snmp_tsign_bat
+000c88  20ce              MOVS     r0,#0xce
+000c8a  f7ffbffe          B.W      lc640_write_int
+                  |L1.3214|
 ;;;1103   	}
 ;;;1104   }
-000c7e  4770              BX       lr
+000c8e  4770              BX       lr
 ;;;1105   //-----------------------------------------------
                           ENDP
 
                   snmp_tmax_bat_write PROC
 ;;;1106   void snmp_tmax_bat_write(int mode)
-000c80  2801              CMP      r0,#1
+000c90  2801              CMP      r0,#1
 ;;;1107   {
 ;;;1108   if(mode==MIB_WRITE)
-000c82  d106              BNE      |L1.3218|
+000c92  d106              BNE      |L1.3234|
 ;;;1109   	{
 ;;;1110    	lc640_write_int(EE_TBATMAX,snmp_tmax_bat);
-000c84  4846              LDR      r0,|L1.3488|
-000c86  3884              SUBS     r0,r0,#0x84
-000c88  f9b0105a          LDRSH    r1,[r0,#0x5a]  ; snmp_tmax_bat
-000c8c  20cc              MOVS     r0,#0xcc
-000c8e  f7ffbffe          B.W      lc640_write_int
-                  |L1.3218|
+000c94  482c              LDR      r0,|L1.3400|
+000c96  3884              SUBS     r0,r0,#0x84
+000c98  f9b0105a          LDRSH    r1,[r0,#0x5a]  ; snmp_tmax_bat
+000c9c  20cc              MOVS     r0,#0xcc
+000c9e  f7ffbffe          B.W      lc640_write_int
+                  |L1.3234|
 ;;;1111   	}
 ;;;1112   }
-000c92  4770              BX       lr
+000ca2  4770              BX       lr
 ;;;1113   //-----------------------------------------------
                           ENDP
 
                   snmp_tsign_bps_write PROC
 ;;;1114   void snmp_tsign_bps_write(int mode)
-000c94  2801              CMP      r0,#1
+000ca4  2801              CMP      r0,#1
 ;;;1115   {
 ;;;1116   if(mode==MIB_WRITE)
-000c96  d106              BNE      |L1.3238|
+000ca6  d106              BNE      |L1.3254|
 ;;;1117   	{
 ;;;1118   	lc640_write_int(EE_TSIGN,snmp_tsign_bps);
-000c98  4841              LDR      r0,|L1.3488|
-000c9a  3884              SUBS     r0,r0,#0x84
-000c9c  f9b0105c          LDRSH    r1,[r0,#0x5c]  ; snmp_tsign_bps
-000ca0  20c6              MOVS     r0,#0xc6
-000ca2  f7ffbffe          B.W      lc640_write_int
-                  |L1.3238|
+000ca8  4827              LDR      r0,|L1.3400|
+000caa  3884              SUBS     r0,r0,#0x84
+000cac  f9b0105c          LDRSH    r1,[r0,#0x5c]  ; snmp_tsign_bps
+000cb0  20c6              MOVS     r0,#0xc6
+000cb2  f7ffbffe          B.W      lc640_write_int
+                  |L1.3254|
 ;;;1119   	}
 ;;;1120   }
-000ca6  4770              BX       lr
+000cb6  4770              BX       lr
 ;;;1121   //-----------------------------------------------
                           ENDP
 
                   snmp_tmax_bps_write PROC
 ;;;1122   void snmp_tmax_bps_write(int mode)
-000ca8  2801              CMP      r0,#1
+000cb8  2801              CMP      r0,#1
 ;;;1123   {
 ;;;1124   if(mode==MIB_WRITE)
-000caa  d106              BNE      |L1.3258|
+000cba  d106              BNE      |L1.3274|
 ;;;1125   	{
 ;;;1126   	lc640_write_int(EE_TMAX,snmp_tmax_bps);
-000cac  483c              LDR      r0,|L1.3488|
-000cae  3884              SUBS     r0,r0,#0x84
-000cb0  f9b0105e          LDRSH    r1,[r0,#0x5e]  ; snmp_tmax_bps
-000cb4  207e              MOVS     r0,#0x7e
-000cb6  f7ffbffe          B.W      lc640_write_int
-                  |L1.3258|
+000cbc  4822              LDR      r0,|L1.3400|
+000cbe  3884              SUBS     r0,r0,#0x84
+000cc0  f9b0105e          LDRSH    r1,[r0,#0x5e]  ; snmp_tmax_bps
+000cc4  207e              MOVS     r0,#0x7e
+000cc6  f7ffbffe          B.W      lc640_write_int
+                  |L1.3274|
 ;;;1127   	}
 ;;;1128   }
-000cba  4770              BX       lr
+000cca  4770              BX       lr
 ;;;1129   
                           ENDP
 
                   snmp_uvz_write PROC
 ;;;1130   //-----------------------------------------------
 ;;;1131   void snmp_uvz_write(int mode)
-000cbc  2801              CMP      r0,#1
+000ccc  2801              CMP      r0,#1
 ;;;1132   {
 ;;;1133   if(mode==MIB_WRITE)
-000cbe  d106              BNE      |L1.3278|
+000cce  d106              BNE      |L1.3294|
 ;;;1134   	{
 ;;;1135   	lc640_write_int(EE_UVZ,snmp_uvz);
-000cc0  4837              LDR      r0,|L1.3488|
-000cc2  3884              SUBS     r0,r0,#0x84
-000cc4  f9b01052          LDRSH    r1,[r0,#0x52]  ; snmp_uvz
-000cc8  20de              MOVS     r0,#0xde
-000cca  f7ffbffe          B.W      lc640_write_int
-                  |L1.3278|
+000cd0  481d              LDR      r0,|L1.3400|
+000cd2  3884              SUBS     r0,r0,#0x84
+000cd4  f9b01052          LDRSH    r1,[r0,#0x52]  ; snmp_uvz
+000cd8  20de              MOVS     r0,#0xde
+000cda  f7ffbffe          B.W      lc640_write_int
+                  |L1.3294|
 ;;;1136   	}
 ;;;1137   }
-000cce  4770              BX       lr
+000cde  4770              BX       lr
 ;;;1138   //-----------------------------------------------
                           ENDP
 
                   snmp_bat_part_alarm_write PROC
 ;;;1139   void snmp_bat_part_alarm_write(int mode)
-000cd0  2801              CMP      r0,#1
+000ce0  2801              CMP      r0,#1
 ;;;1140   {
 ;;;1141   if(mode==MIB_WRITE)
-000cd2  d107              BNE      |L1.3300|
+000ce2  d107              BNE      |L1.3316|
 ;;;1142   	{
 ;;;1143   	lc640_write_int(EE_UBM_AV,snmp_bat_part_alarm);
-000cd4  4832              LDR      r0,|L1.3488|
-000cd6  3884              SUBS     r0,r0,#0x84
-000cd8  f9b01060          LDRSH    r1,[r0,#0x60]  ; snmp_bat_part_alarm
-000cdc  f44f7019          MOV      r0,#0x264
-000ce0  f7ffbffe          B.W      lc640_write_int
-                  |L1.3300|
+000ce4  4818              LDR      r0,|L1.3400|
+000ce6  3884              SUBS     r0,r0,#0x84
+000ce8  f9b01060          LDRSH    r1,[r0,#0x60]  ; snmp_bat_part_alarm
+000cec  f44f7019          MOV      r0,#0x264
+000cf0  f7ffbffe          B.W      lc640_write_int
+                  |L1.3316|
 ;;;1144   	}
 ;;;1145   }
-000ce4  4770              BX       lr
+000cf4  4770              BX       lr
 ;;;1146   //-----------------------------------------------
                           ENDP
 
                   snmp_power_cnt_adress_write PROC
 ;;;1147   void snmp_power_cnt_adress_write(int mode)
-000ce6  2801              CMP      r0,#1
+000cf6  2801              CMP      r0,#1
 ;;;1148   {
 ;;;1149   if(mode==MIB_WRITE)
-000ce8  d107              BNE      |L1.3322|
+000cf8  d107              BNE      |L1.3338|
 ;;;1150   	{
 ;;;1151   	lc640_write_int(EE_POWER_CNT_ADRESS,snmp_power_cnt_adress);
-000cea  482d              LDR      r0,|L1.3488|
-000cec  3884              SUBS     r0,r0,#0x84
-000cee  f9b01062          LDRSH    r1,[r0,#0x62]  ; snmp_power_cnt_adress
-000cf2  f2402062          MOV      r0,#0x262
-000cf6  f7ffbffe          B.W      lc640_write_int
-                  |L1.3322|
+000cfa  4813              LDR      r0,|L1.3400|
+000cfc  3884              SUBS     r0,r0,#0x84
+000cfe  f9b01062          LDRSH    r1,[r0,#0x62]  ; snmp_power_cnt_adress
+000d02  f2402062          MOV      r0,#0x262
+000d06  f7ffbffe          B.W      lc640_write_int
+                  |L1.3338|
 ;;;1152   	}
 ;;;1153   }
-000cfa  4770              BX       lr
+000d0a  4770              BX       lr
 ;;;1154   
                           ENDP
 
                   snmp_command_execute PROC
 ;;;1155   //-----------------------------------------------
 ;;;1156   void snmp_command_execute (int mode)
-000cfc  b510              PUSH     {r4,lr}
+000d0c  b510              PUSH     {r4,lr}
 ;;;1157   {
 ;;;1158   if(mode==MIB_WRITE)
-000cfe  2801              CMP      r0,#1
-000d00  d113              BNE      |L1.3370|
+000d0e  2801              CMP      r0,#1
+000d10  d113              BNE      |L1.3386|
 ;;;1159   	{
 ;;;1160   	
 ;;;1161   	//snmp_command=0x5555;
 ;;;1162   
 ;;;1163   	switch (snmp_command)
-000d02  4827              LDR      r0,|L1.3488|
+000d12  480d              LDR      r0,|L1.3400|
 ;;;1164   		{
 ;;;1165   		case SNMP_BPS_DISABLE:
 ;;;1166   			{
 ;;;1167   			snmp_command=COMMAND_OK;
-000d04  f2455255          MOV      r2,#0x5555
-000d08  3884              SUBS     r0,r0,#0x84           ;1163
-000d0a  4601              MOV      r1,r0                 ;1163
-000d0c  f9b04032          LDRSH    r4,[r0,#0x32]         ;1163  ; snmp_command
+000d14  f2455255          MOV      r2,#0x5555
+000d18  3884              SUBS     r0,r0,#0x84           ;1163
+000d1a  4601              MOV      r1,r0                 ;1163
+000d1c  f9b04032          LDRSH    r4,[r0,#0x32]         ;1163  ; snmp_command
 ;;;1168   
 ;;;1169   		/*	switch (snmp_command_parametr)
 ;;;1170   				{
@@ -2391,17 +2393,17 @@
 ;;;1235   			//	else
 ;;;1236    					{
 ;;;1237   					snmp_command=COMAND_FAIL;	
-000d10  43d3              MVNS     r3,r2
-000d12  1ee4              SUBS     r4,r4,#3              ;1163
-000d14  f9b11034          LDRSH    r1,[r1,#0x34]         ;1195
-000d18  2c06              CMP      r4,#6                 ;1163
-000d1a  d216              BCS      |L1.3402|
-000d1c  e8dff004          TBB      [pc,r4]               ;1163
-000d20  08110315          DCB      0x08,0x11,0x03,0x15
-000d24  1306              DCB      0x13,0x06
-000d26  8642              STRH     r2,[r0,#0x32]         ;1167
-000d28  2901              CMP      r1,#1                 ;1195
-                  |L1.3370|
+000d20  43d3              MVNS     r3,r2
+000d22  1ee4              SUBS     r4,r4,#3              ;1163
+000d24  f9b11034          LDRSH    r1,[r1,#0x34]         ;1195
+000d28  2c06              CMP      r4,#6                 ;1163
+000d2a  d224              BCS      |L1.3446|
+000d2c  e8dff004          TBB      [pc,r4]               ;1163
+000d30  161f0323          DCB      0x16,0x1f,0x03,0x23
+000d34  2114              DCB      0x21,0x14
+000d36  8642              STRH     r2,[r0,#0x32]         ;1167
+000d38  2901              CMP      r1,#1                 ;1195
+                  |L1.3386|
 ;;;1238    					}
 ;;;1239   				}
 ;;;1240   			else 
@@ -2478,388 +2480,393 @@
 ;;;1311   
 ;;;1312   	}
 ;;;1313   }
-000d2a  bd10              POP      {r4,pc}
-000d2c  8642              STRH     r2,[r0,#0x32]         ;1219
-000d2e  bd10              POP      {r4,pc}
-000d30  1e49              SUBS     r1,r1,#1              ;1227
-000d32  2917              CMP      r1,#0x17              ;1227
-000d34  d801              BHI      |L1.3386|
-000d36  8643              STRH     r3,[r0,#0x32]         ;1237
-000d38  bd10              POP      {r4,pc}
-                  |L1.3386|
-000d3a  f64e61ef          MOV      r1,#0xeeef            ;1242
-000d3e  8641              STRH     r1,[r0,#0x32]         ;1242
-000d40  bd10              POP      {r4,pc}
-000d42  8643              STRH     r3,[r0,#0x32]         ;1258
-000d44  bd10              POP      {r4,pc}
-000d46  8642              STRH     r2,[r0,#0x32]         ;1266
-000d48  bd10              POP      {r4,pc}
-                  |L1.3402|
-000d4a  f64e61ee          MOV      r1,#0xeeee            ;1273
-000d4e  8641              STRH     r1,[r0,#0x32]         ;1273
-000d50  bd10              POP      {r4,pc}
+000d3a  bd10              POP      {r4,pc}
+                  |L1.3388|
+                          DCD      NUMDT
+                  |L1.3392|
+                          DCD      ||area_number.20||+0x180
+                  |L1.3396|
+                          DCD      lakb
+                  |L1.3400|
+                          DCD      ||.data||+0x84
+                  |L1.3404|
+                          DCD      ||area_number.20||
+                  |L1.3408|
+                          DCD      ADR_SK_SIGN
+                  |L1.3412|
+                          DCD      UB20
+000d58  8642              STRH     r2,[r0,#0x32]         ;1219
+000d5a  e7ee              B        |L1.3386|
+000d5c  1e49              SUBS     r1,r1,#1              ;1227
+000d5e  2917              CMP      r1,#0x17              ;1227
+000d60  d801              BHI      |L1.3430|
+000d62  8643              STRH     r3,[r0,#0x32]         ;1237
+000d64  e7e9              B        |L1.3386|
+                  |L1.3430|
+000d66  f64e61ef          MOV      r1,#0xeeef            ;1242
+000d6a  8641              STRH     r1,[r0,#0x32]         ;1242
+000d6c  e7e5              B        |L1.3386|
+000d6e  8643              STRH     r3,[r0,#0x32]         ;1258
+000d70  e7e3              B        |L1.3386|
+000d72  8642              STRH     r2,[r0,#0x32]         ;1266
+000d74  e7e1              B        |L1.3386|
+                  |L1.3446|
+000d76  f64e61ee          MOV      r1,#0xeeee            ;1273
+000d7a  8641              STRH     r1,[r0,#0x32]         ;1273
+000d7c  e7dd              B        |L1.3386|
 ;;;1314   
                           ENDP
 
                   snmp_trap_send PROC
 ;;;1873   //-----------------------------------------------
 ;;;1874   void snmp_trap_send(char* str, signed short in0, signed short in1, signed short in2)
-000d52  e92d41f0          PUSH     {r4-r8,lr}
+000d7e  e92d41f0          PUSH     {r4-r8,lr}
 ;;;1875   {
 ;;;1876   for(snmp_trap_send_i=0;snmp_trap_send_i<100;snmp_trap_send_i++)
-000d56  4f12              LDR      r7,|L1.3488|
-000d58  f04f0500          MOV      r5,#0
-000d5c  f1a70784          SUB      r7,r7,#0x84
-000d60  703d              STRB     r5,[r7,#0]
+000d82  4f80              LDR      r7,|L1.3972|
+000d84  f04f0500          MOV      r5,#0
+000d88  703d              STRB     r5,[r7,#0]
 ;;;1877   	{
 ;;;1878   	snmp_spc_trap_message[snmp_trap_send_i]=0;
-000d62  4e10              LDR      r6,|L1.3492|
-000d64  f10606b4          ADD      r6,r6,#0xb4
-                  |L1.3432|
-000d68  783c              LDRB     r4,[r7,#0]  ; snmp_trap_send_i
-000d6a  5535              STRB     r5,[r6,r4]
-000d6c  f1040401          ADD      r4,r4,#1              ;1876
-000d70  b2e4              UXTB     r4,r4                 ;1876
-000d72  703c              STRB     r4,[r7,#0]            ;1876
-000d74  2c64              CMP      r4,#0x64              ;1876
-000d76  d3f7              BCC      |L1.3432|
+000d8a  4e7f              LDR      r6,|L1.3976|
+                  |L1.3468|
+000d8c  783c              LDRB     r4,[r7,#0]  ; snmp_trap_send_i
+000d8e  5535              STRB     r5,[r6,r4]
+000d90  f1040401          ADD      r4,r4,#1              ;1876
+000d94  b2e4              UXTB     r4,r4                 ;1876
+000d96  703c              STRB     r4,[r7,#0]            ;1876
+000d98  2c64              CMP      r4,#0x64              ;1876
+000d9a  d3f7              BCC      |L1.3468|
 ;;;1879   	}
 ;;;1880   
 ;;;1881   
 ;;;1882   obj[0] = 0;
-000d78  f8dfc01c          LDR      r12,|L1.3480|
-000d7c  f10c0cd2          ADD      r12,r12,#0xd2
-000d80  f8ac5000          STRH     r5,[r12,#0]
+000d9c  f8dfc1ec          LDR      r12,|L1.3980|
+000da0  f8ac5000          STRH     r5,[r12,#0]
 ;;;1883   snmp_trap_send_ii=1;
-000d84  f04f0801          MOV      r8,#1
-000d88  f8878001          STRB     r8,[r7,#1]
+000da4  f04f0801          MOV      r8,#1
+000da8  f8878001          STRB     r8,[r7,#1]
 ;;;1884   if(str!=0)
-000d8c  b310              CBZ      r0,|L1.3540|
+000dac  b1a8              CBZ      r0,|L1.3546|
 ;;;1885   	{
 ;;;1886   	obj[0]++;
-000d8e  f8ac8000          STRH     r8,[r12,#0]
+000dae  f8ac8000          STRH     r8,[r12,#0]
 ;;;1887   	for(snmp_trap_send_i=0;snmp_trap_send_i<100&&(str[snmp_trap_send_i]);snmp_trap_send_i++)
-000d92  703d              STRB     r5,[r7,#0]
-000d94  e010              B        |L1.3512|
-000d96  0000              DCW      0x0000
-                  |L1.3480|
-                          DCD      ||area_number.20||+0x180
-                  |L1.3484|
-                          DCD      lakb
-                  |L1.3488|
-                          DCD      ||.data||+0x84
-                  |L1.3492|
-                          DCD      ||area_number.20||
-                  |L1.3496|
-                          DCD      ADR_SK_SIGN
-                  |L1.3500|
-                          DCD      UB20
-                  |L1.3504|
+000db2  703d              STRB     r5,[r7,#0]
+000db4  e003              B        |L1.3518|
+                  |L1.3510|
 ;;;1888   		{
 ;;;1889   		snmp_spc_trap_message[snmp_trap_send_i]=str[snmp_trap_send_i];
-000db0  5535              STRB     r5,[r6,r4]
-000db2  f1040401          ADD      r4,r4,#1              ;1887
-000db6  703c              STRB     r4,[r7,#0]            ;1887
-                  |L1.3512|
-000db8  783c              LDRB     r4,[r7,#0]            ;1887  ; snmp_trap_send_i
-000dba  2c64              CMP      r4,#0x64              ;1887
-000dbc  d202              BCS      |L1.3524|
-000dbe  5d05              LDRB     r5,[r0,r4]            ;1887
-000dc0  2d00              CMP      r5,#0                 ;1887
-000dc2  d1f5              BNE      |L1.3504|
-                  |L1.3524|
+000db6  5535              STRB     r5,[r6,r4]
+000db8  f1040401          ADD      r4,r4,#1              ;1887
+000dbc  703c              STRB     r4,[r7,#0]            ;1887
+                  |L1.3518|
+000dbe  783c              LDRB     r4,[r7,#0]            ;1887  ; snmp_trap_send_i
+000dc0  2c64              CMP      r4,#0x64              ;1887
+000dc2  d202              BCS      |L1.3530|
+000dc4  5d05              LDRB     r5,[r0,r4]            ;1887
+000dc6  2d00              CMP      r5,#0                 ;1887
+000dc8  d1f5              BNE      |L1.3510|
+                  |L1.3530|
 ;;;1890   		}
 ;;;1891   	obj[snmp_trap_send_ii] = 7;
-000dc4  f04f0007          MOV      r0,#7
-000dc8  f82c0018          STRH     r0,[r12,r8,LSL #1]
+000dca  f04f0007          MOV      r0,#7
+000dce  f82c0018          STRH     r0,[r12,r8,LSL #1]
 ;;;1892   	snmp_trap_send_ii++;
-000dcc  f1080801          ADD      r8,r8,#1
-000dd0  f8878001          STRB     r8,[r7,#1]
-                  |L1.3540|
+000dd2  f1080801          ADD      r8,r8,#1
+000dd6  f8878001          STRB     r8,[r7,#1]
+                  |L1.3546|
 ;;;1893   	}
 ;;;1894   if(in0!=0xffff)
-000dd4  f64f74ff          MOV      r4,#0xffff
-000dd8  42a1              CMP      r1,r4
-000dda  d00e              BEQ      |L1.3578|
+000dda  f64f74ff          MOV      r4,#0xffff
+000dde  42a1              CMP      r1,r4
+000de0  d00e              BEQ      |L1.3584|
 ;;;1895   	{
 ;;;1896   	obj[0]++;
-000ddc  f8bc0000          LDRH     r0,[r12,#0]  ; obj
-000de0  f1000001          ADD      r0,r0,#1
-000de4  f8ac0000          STRH     r0,[r12,#0]
+000de2  f8bc0000          LDRH     r0,[r12,#0]  ; obj
+000de6  f1000001          ADD      r0,r0,#1
+000dea  f8ac0000          STRH     r0,[r12,#0]
 ;;;1897   	snmp_spc_trap_value_0=in0;
-000de8  83f9              STRH     r1,[r7,#0x1e]
+000dee  83f9              STRH     r1,[r7,#0x1e]
 ;;;1898   	obj[snmp_trap_send_ii] = 8;
-000dea  7878              LDRB     r0,[r7,#1]  ; snmp_trap_send_ii
-000dec  f04f0108          MOV      r1,#8
-000df0  f82c1010          STRH     r1,[r12,r0,LSL #1]
+000df0  7878              LDRB     r0,[r7,#1]  ; snmp_trap_send_ii
+000df2  f04f0108          MOV      r1,#8
+000df6  f82c1010          STRH     r1,[r12,r0,LSL #1]
 ;;;1899   	snmp_trap_send_ii++;
-000df4  f1000001          ADD      r0,r0,#1
-000df8  7078              STRB     r0,[r7,#1]
-                  |L1.3578|
+000dfa  f1000001          ADD      r0,r0,#1
+000dfe  7078              STRB     r0,[r7,#1]
+                  |L1.3584|
 ;;;1900   	}
 ;;;1901   if(in1!=0xffff)
-000dfa  42a2              CMP      r2,r4
-000dfc  d00e              BEQ      |L1.3612|
+000e00  42a2              CMP      r2,r4
+000e02  d00e              BEQ      |L1.3618|
 ;;;1902   	{
 ;;;1903   	obj[0]++;
-000dfe  f8bc0000          LDRH     r0,[r12,#0]  ; obj
-000e02  f1000001          ADD      r0,r0,#1
-000e06  f8ac0000          STRH     r0,[r12,#0]
+000e04  f8bc0000          LDRH     r0,[r12,#0]  ; obj
+000e08  f1000001          ADD      r0,r0,#1
+000e0c  f8ac0000          STRH     r0,[r12,#0]
 ;;;1904   	snmp_spc_trap_value_1=in1;
-000e0a  843a              STRH     r2,[r7,#0x20]
+000e10  843a              STRH     r2,[r7,#0x20]
 ;;;1905   	obj[snmp_trap_send_ii] = 9;
-000e0c  7878              LDRB     r0,[r7,#1]  ; snmp_trap_send_ii
-000e0e  f04f0109          MOV      r1,#9
-000e12  f82c1010          STRH     r1,[r12,r0,LSL #1]
+000e12  7878              LDRB     r0,[r7,#1]  ; snmp_trap_send_ii
+000e14  f04f0109          MOV      r1,#9
+000e18  f82c1010          STRH     r1,[r12,r0,LSL #1]
 ;;;1906   	snmp_trap_send_ii++;
-000e16  f1000001          ADD      r0,r0,#1
-000e1a  7078              STRB     r0,[r7,#1]
-                  |L1.3612|
+000e1c  f1000001          ADD      r0,r0,#1
+000e20  7078              STRB     r0,[r7,#1]
+                  |L1.3618|
 ;;;1907   	}
 ;;;1908   if(in2!=0xffff)
-000e1c  42a3              CMP      r3,r4
-000e1e  d00e              BEQ      |L1.3646|
+000e22  42a3              CMP      r3,r4
+000e24  d00e              BEQ      |L1.3652|
 ;;;1909   	{
 ;;;1910   	obj[0]++;
-000e20  f8bc0000          LDRH     r0,[r12,#0]  ; obj
-000e24  f1000001          ADD      r0,r0,#1
-000e28  f8ac0000          STRH     r0,[r12,#0]
+000e26  f8bc0000          LDRH     r0,[r12,#0]  ; obj
+000e2a  f1000001          ADD      r0,r0,#1
+000e2e  f8ac0000          STRH     r0,[r12,#0]
 ;;;1911   	snmp_spc_trap_value_2=in2;
-000e2c  847b              STRH     r3,[r7,#0x22]
+000e32  847b              STRH     r3,[r7,#0x22]
 ;;;1912   	obj[snmp_trap_send_ii] = 10;
-000e2e  7878              LDRB     r0,[r7,#1]  ; snmp_trap_send_ii
-000e30  f04f010a          MOV      r1,#0xa
-000e34  f82c1010          STRH     r1,[r12,r0,LSL #1]
+000e34  7878              LDRB     r0,[r7,#1]  ; snmp_trap_send_ii
+000e36  f04f010a          MOV      r1,#0xa
+000e3a  f82c1010          STRH     r1,[r12,r0,LSL #1]
 ;;;1913   	snmp_trap_send_ii++;
-000e38  f1000001          ADD      r0,r0,#1
-000e3c  7078              STRB     r0,[r7,#1]
-                  |L1.3646|
+000e3e  f1000001          ADD      r0,r0,#1
+000e42  7078              STRB     r0,[r7,#1]
+                  |L1.3652|
 ;;;1914   	}
 ;;;1915   
 ;;;1916   
 ;;;1917   if((ETH_TRAP1_IP_1!=255)&&(ETH_TRAP1_IP_2!=255)&&(ETH_TRAP1_IP_3!=255)&&(ETH_TRAP1_IP_4!=255))
-000e3e  484d              LDR      r0,|L1.3956|
+000e44  4852              LDR      r0,|L1.3984|
 ;;;1918   	{
 ;;;1919   	temp_ip[0]= ETH_TRAP1_IP_1;
-000e40  4c4d              LDR      r4,|L1.3960|
-000e42  f9b00000          LDRSH    r0,[r0,#0]            ;1917  ; ETH_TRAP1_IP_1
-000e46  28ff              CMP      r0,#0xff              ;1917
-000e48  d018              BEQ      |L1.3708|
-000e4a  494c              LDR      r1,|L1.3964|
-000e4c  f9b11000          LDRSH    r1,[r1,#0]            ;1917  ; ETH_TRAP1_IP_2
-000e50  29ff              CMP      r1,#0xff              ;1917
-000e52  d013              BEQ      |L1.3708|
-000e54  4a4a              LDR      r2,|L1.3968|
-000e56  f9b22000          LDRSH    r2,[r2,#0]            ;1917  ; ETH_TRAP1_IP_3
-000e5a  2aff              CMP      r2,#0xff              ;1917
-000e5c  d00e              BEQ      |L1.3708|
-000e5e  4b49              LDR      r3,|L1.3972|
-000e60  f9b33000          LDRSH    r3,[r3,#0]            ;1917  ; ETH_TRAP1_IP_4
-000e64  2bff              CMP      r3,#0xff              ;1917
-000e66  d009              BEQ      |L1.3708|
-000e68  7020              STRB     r0,[r4,#0]
+000e46  4c4f              LDR      r4,|L1.3972|
+000e48  f9b00000          LDRSH    r0,[r0,#0]            ;1917  ; ETH_TRAP1_IP_1
+000e4c  34d0              ADDS     r4,r4,#0xd0
+000e4e  28ff              CMP      r0,#0xff              ;1917
+000e50  d018              BEQ      |L1.3716|
+000e52  4950              LDR      r1,|L1.3988|
+000e54  f9b11000          LDRSH    r1,[r1,#0]            ;1917  ; ETH_TRAP1_IP_2
+000e58  29ff              CMP      r1,#0xff              ;1917
+000e5a  d013              BEQ      |L1.3716|
+000e5c  4a4e              LDR      r2,|L1.3992|
+000e5e  f9b22000          LDRSH    r2,[r2,#0]            ;1917  ; ETH_TRAP1_IP_3
+000e62  2aff              CMP      r2,#0xff              ;1917
+000e64  d00e              BEQ      |L1.3716|
+000e66  4b4d              LDR      r3,|L1.3996|
+000e68  f9b33000          LDRSH    r3,[r3,#0]            ;1917  ; ETH_TRAP1_IP_4
+000e6c  2bff              CMP      r3,#0xff              ;1917
+000e6e  d009              BEQ      |L1.3716|
+000e70  7020              STRB     r0,[r4,#0]
 ;;;1920   	temp_ip[1]= ETH_TRAP1_IP_2;
-000e6a  7061              STRB     r1,[r4,#1]
+000e72  7061              STRB     r1,[r4,#1]
 ;;;1921   	temp_ip[2]= ETH_TRAP1_IP_3;
-000e6c  70a2              STRB     r2,[r4,#2]
+000e74  70a2              STRB     r2,[r4,#2]
 ;;;1922   	temp_ip[3]= ETH_TRAP1_IP_4;
-000e6e  70e3              STRB     r3,[r4,#3]
+000e76  70e3              STRB     r3,[r4,#3]
 ;;;1923   	snmp_trap (temp_ip, 6, 3, obj);
-000e70  4b45              LDR      r3,|L1.3976|
-000e72  2203              MOVS     r2,#3
-000e74  2106              MOVS     r1,#6
-000e76  4620              MOV      r0,r4
-000e78  f7fffffe          BL       snmp_trap
-                  |L1.3708|
+000e78  4b44              LDR      r3,|L1.3980|
+000e7a  2203              MOVS     r2,#3
+000e7c  2106              MOVS     r1,#6
+000e7e  4620              MOV      r0,r4
+000e80  f7fffffe          BL       snmp_trap
+                  |L1.3716|
 ;;;1924   	}
 ;;;1925   if((ETH_TRAP2_IP_1!=255)&&(ETH_TRAP2_IP_2!=255)&&(ETH_TRAP2_IP_3!=255)&&(ETH_TRAP2_IP_4!=255))
-000e7c  4843              LDR      r0,|L1.3980|
-000e7e  f9b01000          LDRSH    r1,[r0,#0]  ; ETH_TRAP2_IP_1
-000e82  29ff              CMP      r1,#0xff
-000e84  d018              BEQ      |L1.3768|
-000e86  4842              LDR      r0,|L1.3984|
-000e88  f9b02000          LDRSH    r2,[r0,#0]  ; ETH_TRAP2_IP_2
-000e8c  2aff              CMP      r2,#0xff
-000e8e  d013              BEQ      |L1.3768|
-000e90  4840              LDR      r0,|L1.3988|
-000e92  f9b00000          LDRSH    r0,[r0,#0]  ; ETH_TRAP2_IP_3
-000e96  28ff              CMP      r0,#0xff
-000e98  d00e              BEQ      |L1.3768|
-000e9a  4b3f              LDR      r3,|L1.3992|
-000e9c  f9b33000          LDRSH    r3,[r3,#0]  ; ETH_TRAP2_IP_4
-000ea0  2bff              CMP      r3,#0xff
-000ea2  d009              BEQ      |L1.3768|
+000e84  4846              LDR      r0,|L1.4000|
+000e86  f9b01000          LDRSH    r1,[r0,#0]  ; ETH_TRAP2_IP_1
+000e8a  29ff              CMP      r1,#0xff
+000e8c  d019              BEQ      |L1.3778|
+000e8e  4845              LDR      r0,|L1.4004|
+000e90  f9b02000          LDRSH    r2,[r0,#0]  ; ETH_TRAP2_IP_2
+000e94  2aff              CMP      r2,#0xff
+000e96  d014              BEQ      |L1.3778|
+000e98  4843              LDR      r0,|L1.4008|
+000e9a  f9b00000          LDRSH    r0,[r0,#0]  ; ETH_TRAP2_IP_3
+000e9e  28ff              CMP      r0,#0xff
+000ea0  d00f              BEQ      |L1.3778|
+000ea2  4b42              LDR      r3,|L1.4012|
+000ea4  f9b33000          LDRSH    r3,[r3,#0]  ; ETH_TRAP2_IP_4
+000ea8  2bff              CMP      r3,#0xff
+000eaa  d00a              BEQ      |L1.3778|
 ;;;1926   	{
 ;;;1927   	temp_ip[0]= ETH_TRAP2_IP_1;
-000ea4  7021              STRB     r1,[r4,#0]
+000eac  7021              STRB     r1,[r4,#0]
 ;;;1928   	temp_ip[1]= ETH_TRAP2_IP_2;
-000ea6  7062              STRB     r2,[r4,#1]
+000eae  7062              STRB     r2,[r4,#1]
 ;;;1929   	temp_ip[2]= ETH_TRAP2_IP_3;
-000ea8  70a0              STRB     r0,[r4,#2]
+000eb0  70a0              STRB     r0,[r4,#2]
 ;;;1930   	temp_ip[3]= ETH_TRAP2_IP_4;
-000eaa  70e3              STRB     r3,[r4,#3]
+000eb2  70e3              STRB     r3,[r4,#3]
 ;;;1931   	snmp_trap (temp_ip, 6, 3, obj);
-000eac  4b36              LDR      r3,|L1.3976|
-000eae  2203              MOVS     r2,#3
-000eb0  2106              MOVS     r1,#6
-000eb2  4831              LDR      r0,|L1.3960|
-000eb4  f7fffffe          BL       snmp_trap
-                  |L1.3768|
+000eb4  4833              LDR      r0,|L1.3972|
+000eb6  4b35              LDR      r3,|L1.3980|
+000eb8  2203              MOVS     r2,#3
+000eba  2106              MOVS     r1,#6
+000ebc  30d0              ADDS     r0,r0,#0xd0
+000ebe  f7fffffe          BL       snmp_trap
+                  |L1.3778|
 ;;;1932   	}
 ;;;1933   
 ;;;1934   if((ETH_TRAP3_IP_1!=255)&&(ETH_TRAP3_IP_2!=255)&&(ETH_TRAP3_IP_3!=255)&&(ETH_TRAP3_IP_4!=255))
-000eb8  4838              LDR      r0,|L1.3996|
-000eba  f9b01000          LDRSH    r1,[r0,#0]  ; ETH_TRAP3_IP_1
-000ebe  29ff              CMP      r1,#0xff
-000ec0  d018              BEQ      |L1.3828|
-000ec2  4837              LDR      r0,|L1.4000|
-000ec4  f9b02000          LDRSH    r2,[r0,#0]  ; ETH_TRAP3_IP_2
-000ec8  2aff              CMP      r2,#0xff
-000eca  d013              BEQ      |L1.3828|
-000ecc  4835              LDR      r0,|L1.4004|
-000ece  f9b03000          LDRSH    r3,[r0,#0]  ; ETH_TRAP3_IP_3
-000ed2  2bff              CMP      r3,#0xff
-000ed4  d00e              BEQ      |L1.3828|
-000ed6  4834              LDR      r0,|L1.4008|
-000ed8  f9b00000          LDRSH    r0,[r0,#0]  ; ETH_TRAP3_IP_4
-000edc  28ff              CMP      r0,#0xff
-000ede  d009              BEQ      |L1.3828|
+000ec2  483b              LDR      r0,|L1.4016|
+000ec4  f9b01000          LDRSH    r1,[r0,#0]  ; ETH_TRAP3_IP_1
+000ec8  29ff              CMP      r1,#0xff
+000eca  d019              BEQ      |L1.3840|
+000ecc  4839              LDR      r0,|L1.4020|
+000ece  f9b02000          LDRSH    r2,[r0,#0]  ; ETH_TRAP3_IP_2
+000ed2  2aff              CMP      r2,#0xff
+000ed4  d014              BEQ      |L1.3840|
+000ed6  4838              LDR      r0,|L1.4024|
+000ed8  f9b03000          LDRSH    r3,[r0,#0]  ; ETH_TRAP3_IP_3
+000edc  2bff              CMP      r3,#0xff
+000ede  d00f              BEQ      |L1.3840|
+000ee0  4836              LDR      r0,|L1.4028|
+000ee2  f9b00000          LDRSH    r0,[r0,#0]  ; ETH_TRAP3_IP_4
+000ee6  28ff              CMP      r0,#0xff
+000ee8  d00a              BEQ      |L1.3840|
 ;;;1935   	{
 ;;;1936   	temp_ip[0]= ETH_TRAP3_IP_1;
-000ee0  7021              STRB     r1,[r4,#0]
+000eea  7021              STRB     r1,[r4,#0]
 ;;;1937   	temp_ip[1]= ETH_TRAP3_IP_2;
-000ee2  7062              STRB     r2,[r4,#1]
+000eec  7062              STRB     r2,[r4,#1]
 ;;;1938   	temp_ip[2]= ETH_TRAP3_IP_3;
-000ee4  70a3              STRB     r3,[r4,#2]
+000eee  70a3              STRB     r3,[r4,#2]
 ;;;1939   	temp_ip[3]= ETH_TRAP3_IP_4;
-000ee6  70e0              STRB     r0,[r4,#3]
+000ef0  70e0              STRB     r0,[r4,#3]
 ;;;1940   	snmp_trap (temp_ip, 6, 3, obj);
-000ee8  4b27              LDR      r3,|L1.3976|
-000eea  2203              MOVS     r2,#3
-000eec  2106              MOVS     r1,#6
-000eee  4822              LDR      r0,|L1.3960|
-000ef0  f7fffffe          BL       snmp_trap
-                  |L1.3828|
+000ef2  4824              LDR      r0,|L1.3972|
+000ef4  4b25              LDR      r3,|L1.3980|
+000ef6  2203              MOVS     r2,#3
+000ef8  2106              MOVS     r1,#6
+000efa  30d0              ADDS     r0,r0,#0xd0
+000efc  f7fffffe          BL       snmp_trap
+                  |L1.3840|
 ;;;1941   	}
 ;;;1942   
 ;;;1943   if((ETH_TRAP4_IP_1!=255)&&(ETH_TRAP4_IP_2!=255)&&(ETH_TRAP4_IP_3!=255)&&(ETH_TRAP4_IP_4!=255))
-000ef4  482d              LDR      r0,|L1.4012|
-000ef6  f9b03000          LDRSH    r3,[r0,#0]  ; ETH_TRAP4_IP_1
-000efa  2bff              CMP      r3,#0xff
-000efc  d018              BEQ      |L1.3888|
-000efe  482c              LDR      r0,|L1.4016|
-000f00  f9b00000          LDRSH    r0,[r0,#0]  ; ETH_TRAP4_IP_2
-000f04  28ff              CMP      r0,#0xff
-000f06  d013              BEQ      |L1.3888|
-000f08  492a              LDR      r1,|L1.4020|
-000f0a  f9b11000          LDRSH    r1,[r1,#0]  ; ETH_TRAP4_IP_3
-000f0e  29ff              CMP      r1,#0xff
-000f10  d00e              BEQ      |L1.3888|
-000f12  4a29              LDR      r2,|L1.4024|
-000f14  f9b22000          LDRSH    r2,[r2,#0]  ; ETH_TRAP4_IP_4
-000f18  2aff              CMP      r2,#0xff
-000f1a  d009              BEQ      |L1.3888|
+000f00  482f              LDR      r0,|L1.4032|
+000f02  f9b03000          LDRSH    r3,[r0,#0]  ; ETH_TRAP4_IP_1
+000f06  2bff              CMP      r3,#0xff
+000f08  d019              BEQ      |L1.3902|
+000f0a  482e              LDR      r0,|L1.4036|
+000f0c  f9b00000          LDRSH    r0,[r0,#0]  ; ETH_TRAP4_IP_2
+000f10  28ff              CMP      r0,#0xff
+000f12  d014              BEQ      |L1.3902|
+000f14  492c              LDR      r1,|L1.4040|
+000f16  f9b11000          LDRSH    r1,[r1,#0]  ; ETH_TRAP4_IP_3
+000f1a  29ff              CMP      r1,#0xff
+000f1c  d00f              BEQ      |L1.3902|
+000f1e  4a2b              LDR      r2,|L1.4044|
+000f20  f9b22000          LDRSH    r2,[r2,#0]  ; ETH_TRAP4_IP_4
+000f24  2aff              CMP      r2,#0xff
+000f26  d00a              BEQ      |L1.3902|
 ;;;1944   	{
 ;;;1945   	temp_ip[0]= ETH_TRAP4_IP_1;
-000f1c  7023              STRB     r3,[r4,#0]
+000f28  7023              STRB     r3,[r4,#0]
 ;;;1946   	temp_ip[1]= ETH_TRAP4_IP_2;
-000f1e  7060              STRB     r0,[r4,#1]
+000f2a  7060              STRB     r0,[r4,#1]
 ;;;1947   	temp_ip[2]= ETH_TRAP4_IP_3;
-000f20  70a1              STRB     r1,[r4,#2]
+000f2c  70a1              STRB     r1,[r4,#2]
 ;;;1948   	temp_ip[3]= ETH_TRAP4_IP_4;
-000f22  70e2              STRB     r2,[r4,#3]
+000f2e  70e2              STRB     r2,[r4,#3]
 ;;;1949   	snmp_trap (temp_ip, 6, 3, obj);
-000f24  4b18              LDR      r3,|L1.3976|
-000f26  2203              MOVS     r2,#3
-000f28  2106              MOVS     r1,#6
-000f2a  4813              LDR      r0,|L1.3960|
-000f2c  f7fffffe          BL       snmp_trap
-                  |L1.3888|
+000f30  4814              LDR      r0,|L1.3972|
+000f32  4b16              LDR      r3,|L1.3980|
+000f34  2203              MOVS     r2,#3
+000f36  2106              MOVS     r1,#6
+000f38  30d0              ADDS     r0,r0,#0xd0
+000f3a  f7fffffe          BL       snmp_trap
+                  |L1.3902|
 ;;;1950   	}
 ;;;1951   
 ;;;1952   if((ETH_TRAP5_IP_1!=255)&&(ETH_TRAP5_IP_2!=255)&&(ETH_TRAP5_IP_3!=255)&&(ETH_TRAP5_IP_4!=255))
-000f30  4822              LDR      r0,|L1.4028|
-000f32  f9b02000          LDRSH    r2,[r0,#0]  ; ETH_TRAP5_IP_1
-000f36  2aff              CMP      r2,#0xff
-000f38  d01a              BEQ      |L1.3952|
-000f3a  4821              LDR      r0,|L1.4032|
-000f3c  f9b01000          LDRSH    r1,[r0,#0]  ; ETH_TRAP5_IP_2
-000f40  29ff              CMP      r1,#0xff
-000f42  d015              BEQ      |L1.3952|
-000f44  481f              LDR      r0,|L1.4036|
-000f46  f9b00000          LDRSH    r0,[r0,#0]  ; ETH_TRAP5_IP_3
-000f4a  28ff              CMP      r0,#0xff
-000f4c  d010              BEQ      |L1.3952|
-000f4e  4b1e              LDR      r3,|L1.4040|
-000f50  f9b33000          LDRSH    r3,[r3,#0]  ; ETH_TRAP5_IP_4
-000f54  2bff              CMP      r3,#0xff
-000f56  d00b              BEQ      |L1.3952|
+000f3e  4824              LDR      r0,|L1.4048|
+000f40  f9b02000          LDRSH    r2,[r0,#0]  ; ETH_TRAP5_IP_1
+000f44  2aff              CMP      r2,#0xff
+000f46  d01b              BEQ      |L1.3968|
+000f48  4822              LDR      r0,|L1.4052|
+000f4a  f9b01000          LDRSH    r1,[r0,#0]  ; ETH_TRAP5_IP_2
+000f4e  29ff              CMP      r1,#0xff
+000f50  d016              BEQ      |L1.3968|
+000f52  4821              LDR      r0,|L1.4056|
+000f54  f9b00000          LDRSH    r0,[r0,#0]  ; ETH_TRAP5_IP_3
+000f58  28ff              CMP      r0,#0xff
+000f5a  d011              BEQ      |L1.3968|
+000f5c  4b1f              LDR      r3,|L1.4060|
+000f5e  f9b33000          LDRSH    r3,[r3,#0]  ; ETH_TRAP5_IP_4
+000f62  2bff              CMP      r3,#0xff
+000f64  d00c              BEQ      |L1.3968|
 ;;;1953   	{
 ;;;1954   	temp_ip[0]= ETH_TRAP5_IP_1;
-000f58  7022              STRB     r2,[r4,#0]
+000f66  7022              STRB     r2,[r4,#0]
 ;;;1955   	temp_ip[1]= ETH_TRAP5_IP_2;
-000f5a  7061              STRB     r1,[r4,#1]
+000f68  7061              STRB     r1,[r4,#1]
 ;;;1956   	temp_ip[2]= ETH_TRAP5_IP_3;
-000f5c  70a0              STRB     r0,[r4,#2]
+000f6a  70a0              STRB     r0,[r4,#2]
 ;;;1957   	temp_ip[3]= ETH_TRAP5_IP_4;
-000f5e  70e3              STRB     r3,[r4,#3]
+000f6c  70e3              STRB     r3,[r4,#3]
 ;;;1958   	snmp_trap (temp_ip, 6, 3, obj);
-000f60  e8bd41f0          POP      {r4-r8,lr}
-000f64  2203              MOVS     r2,#3
-000f66  4b08              LDR      r3,|L1.3976|
-000f68  2106              MOVS     r1,#6
-000f6a  4803              LDR      r0,|L1.3960|
-000f6c  f7ffbffe          B.W      snmp_trap
-                  |L1.3952|
+000f6e  e8bd41f0          POP      {r4-r8,lr}
+000f72  4804              LDR      r0,|L1.3972|
+000f74  2203              MOVS     r2,#3
+000f76  2106              MOVS     r1,#6
+000f78  4b04              LDR      r3,|L1.3980|
+000f7a  30d0              ADDS     r0,r0,#0xd0
+000f7c  f7ffbffe          B.W      snmp_trap
+                  |L1.3968|
 ;;;1959   	}			
 ;;;1960   }
-000f70  e8bd81f0          POP      {r4-r8,pc}
+000f80  e8bd81f0          POP      {r4-r8,pc}
 ;;;1961   
                           ENDP
 
-                  |L1.3956|
-                          DCD      ETH_TRAP1_IP_1
-                  |L1.3960|
-                          DCD      ||.data||+0xd0
-                  |L1.3964|
-                          DCD      ETH_TRAP1_IP_2
-                  |L1.3968|
-                          DCD      ETH_TRAP1_IP_3
                   |L1.3972|
-                          DCD      ETH_TRAP1_IP_4
+                          DCD      ||.data||
                   |L1.3976|
-                          DCD      ||area_number.20||+0x252
+                          DCD      ||area_number.20||+0xb4
                   |L1.3980|
-                          DCD      ETH_TRAP2_IP_1
+                          DCD      ||area_number.20||+0x252
                   |L1.3984|
-                          DCD      ETH_TRAP2_IP_2
+                          DCD      ETH_TRAP1_IP_1
                   |L1.3988|
-                          DCD      ETH_TRAP2_IP_3
+                          DCD      ETH_TRAP1_IP_2
                   |L1.3992|
-                          DCD      ETH_TRAP2_IP_4
+                          DCD      ETH_TRAP1_IP_3
                   |L1.3996|
-                          DCD      ETH_TRAP3_IP_1
+                          DCD      ETH_TRAP1_IP_4
                   |L1.4000|
-                          DCD      ETH_TRAP3_IP_2
+                          DCD      ETH_TRAP2_IP_1
                   |L1.4004|
-                          DCD      ETH_TRAP3_IP_3
+                          DCD      ETH_TRAP2_IP_2
                   |L1.4008|
-                          DCD      ETH_TRAP3_IP_4
+                          DCD      ETH_TRAP2_IP_3
                   |L1.4012|
-                          DCD      ETH_TRAP4_IP_1
+                          DCD      ETH_TRAP2_IP_4
                   |L1.4016|
-                          DCD      ETH_TRAP4_IP_2
+                          DCD      ETH_TRAP3_IP_1
                   |L1.4020|
-                          DCD      ETH_TRAP4_IP_3
+                          DCD      ETH_TRAP3_IP_2
                   |L1.4024|
-                          DCD      ETH_TRAP4_IP_4
+                          DCD      ETH_TRAP3_IP_3
                   |L1.4028|
-                          DCD      ETH_TRAP5_IP_1
+                          DCD      ETH_TRAP3_IP_4
                   |L1.4032|
-                          DCD      ETH_TRAP5_IP_2
+                          DCD      ETH_TRAP4_IP_1
                   |L1.4036|
-                          DCD      ETH_TRAP5_IP_3
+                          DCD      ETH_TRAP4_IP_2
                   |L1.4040|
+                          DCD      ETH_TRAP4_IP_3
+                  |L1.4044|
+                          DCD      ETH_TRAP4_IP_4
+                  |L1.4048|
+                          DCD      ETH_TRAP5_IP_1
+                  |L1.4052|
+                          DCD      ETH_TRAP5_IP_2
+                  |L1.4056|
+                          DCD      ETH_TRAP5_IP_3
+                  |L1.4060|
                           DCD      ETH_TRAP5_IP_4
 
                           AREA ||area_number.2||, CODE, READONLY, ALIGN=2

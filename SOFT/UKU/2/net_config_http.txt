@@ -229,7 +229,7 @@
                           AREA ||.bss||, DATA, NOINIT, ALIGN=2
 
                   Mem_Pool
-                          %        16384
+                          %        10384
 
                           AREA ||area_number.4||, DATA, NOINIT, ALIGN=0
 
@@ -278,7 +278,7 @@
 
                           EXPORTAS ||area_number.10||, ||.constdata||
                   MPool_Size
-                          DCD      0x00004000
+                          DCD      0x00002890
 
                           AREA ||area_number.11||, DATA, READONLY, ALIGN=1
 

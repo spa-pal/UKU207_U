@@ -2851,9 +2851,9 @@ typedef struct
 
 
 
-#line 79 "main.H"
+#line 80 "main.H"
 
-#line 88 "main.H"
+#line 89 "main.H"
 
 
 
@@ -2865,7 +2865,7 @@ typedef struct
 
 
 
-#line 105 "main.H"
+#line 106 "main.H"
 
 
 
@@ -2873,13 +2873,13 @@ typedef struct
 
 
 
-#line 135 "main.H"
+#line 136 "main.H"
 
 
 
 
 
-#line 149 "main.H"
+#line 150 "main.H"
 
 
 
@@ -2893,9 +2893,9 @@ typedef struct
 
 
 
-#line 180 "main.H"
+#line 181 "main.H"
 
-#line 203 "main.H"
+#line 204 "main.H"
 
 
 
@@ -2929,7 +2929,7 @@ typedef struct
 
 
 
-#line 383 "main.H"
+#line 384 "main.H"
 
 
 
@@ -2970,7 +2970,7 @@ typedef struct
 
 
 
-#line 451 "main.H"
+#line 452 "main.H"
 
 
 
@@ -2989,13 +2989,11 @@ typedef struct
 
 
 
-#line 482 "main.H"
+#line 483 "main.H"
 
-#line 494 "main.H"
+#line 495 "main.H"
 
-#line 510 "main.H"
-
-
+#line 511 "main.H"
 
 
 
@@ -3015,9 +3013,11 @@ typedef struct
 
 
 
-#line 544 "main.H"
 
-#line 558 "main.H"
+
+#line 545 "main.H"
+
+#line 559 "main.H"
 
 
 
@@ -3030,25 +3030,25 @@ typedef struct
  
 
 
-#line 579 "main.H"
+#line 580 "main.H"
 
-#line 589 "main.H"
+#line 590 "main.H"
 
-#line 598 "main.H"
+#line 599 "main.H"
 
-#line 607 "main.H"
+#line 608 "main.H"
 
-#line 619 "main.H"
+#line 620 "main.H"
 
-#line 629 "main.H"
+#line 630 "main.H"
 
-#line 638 "main.H"
+#line 639 "main.H"
 
-#line 646 "main.H"
+#line 647 "main.H"
 
-#line 655 "main.H"
+#line 656 "main.H"
 
-#line 667 "main.H"
+#line 668 "main.H"
 
 
 
@@ -3071,7 +3071,7 @@ extern char cnt_of_slave;
 typedef enum {
 
 	iMn_220_IPS_TERMOKOMPENSAT,
-#line 708 "main.H"
+#line 709 "main.H"
 	iMn,iMn_3U,iMn_RSTKM,
 
 
@@ -3098,7 +3098,7 @@ typedef enum {
 	iSet,iSet_3U,iSet_RSTKM,iSet_GLONASS,iSet_KONTUR,iSet_6U,iSet_220,iSet_220_IPS_TERMOKOMPENSAT,iSet_220_V2,iInv_set_sel,
 	iBat,iBat_simple,iBat_li,iBat_SacredSun,iBat_universe,iInv_set,iSet_TELECORE2015,
 	iMakb,
-	iBps,iS2,iSet_prl,iK_prl,iDnd,
+	iBps,iBps_elteh,iS2,iSet_prl,iK_prl,iDnd,
 	iK,iK_3U,iK_RSTKM,iK_GLONASS,iK_KONTUR,iK_6U,iK_220,iK_220_380,iK_220_IPS_TERMOKOMPENSAT,iK_220_IPS_TERMOKOMPENSAT_IB,iK_TELECORE,
 	iSpcprl,iSpc,k,Crash_0,Crash_1,iKednd,iAv_view_avt,iAKE,iSpc_termocompensat,
 	iLoad,iSpc_prl_vz,iSpc_prl_ke,iKe,iVz,iAvz,iAVAR,
@@ -3133,7 +3133,7 @@ typedef enum {
 	iByps,iInv_tabl,iSet_bat_sel,
 	iBps_list,
 	iSpch_set,
-	iAvt_set_sel,iAvt_set,
+	iAvt_set_sel,iAvt_set,iSet_li_bat,
 	iOut_volt_contr,iDop_rele_set,iBlok_ips_set}i_enum;
 
 typedef struct  
@@ -3266,6 +3266,10 @@ extern signed short U_OUT_KONTR_MIN;
 extern signed short U_OUT_KONTR_DELAY;
 extern signed short DOP_RELE_FUNC;
 extern signed short CNTRL_HNDL_TIME;	
+extern signed short USODERG_LI_BAT;		
+extern signed short QSODERG_LI_BAT;		
+extern signed short TVENTMAX;			
+
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
 extern enum_apv_on APV_ON1,APV_ON2;
@@ -3510,6 +3514,7 @@ typedef struct
 	char 		_plazma[8];		
 	signed short 	_isOnCnt;
 	signed short	_s_o_c_abs;		
+	signed short 	_s_o_c_percent; 
 	signed short	_plazma_ss;
 	signed short	_zar_percent;	
 	signed char		_cell_temp_1;	
@@ -3548,15 +3553,16 @@ extern char plazma_can_inv[3];
 
 
 typedef struct
-     {
-     enum {dSRC=3,dINV=5,dNET_METR=7,dIBAT_METR=9,dMAKB=11}_device;
+    {
+    enum {dSRC=3,dINV=5,dNET_METR=7,dIBAT_METR=9,dMAKB=11}_device;
 	char _av;
 	
 	
 	
 	
-     enum {bsAPV,bsWRK,bsRDY,bsBL,bsAV,bsOFF_AV_NET}_state;
-     char _cnt;
+	
+ 	enum {bsAPV,bsWRK,bsRDY,bsBL,bsAV,bsOFF_AV_NET}_state;
+    char _cnt;
      char _cnt_old;
      char _cnt_more2;
      char _buff[20]; 
@@ -3589,8 +3595,10 @@ typedef struct
      signed  short _x_; 
      char _adr_ee;
 	char _last_avar;
+	char _vent_resurs_temp[4];
+	unsigned short _vent_resurs;
      } BPS_STAT; 
-extern BPS_STAT bps[32];
+extern BPS_STAT bps[29];
 
 
 
@@ -3635,6 +3643,7 @@ typedef struct
 	char _net_contr_en;
 	char _pwm_en;
 	char _phase_mode;
+
      } INV_STAT; 
 
 
@@ -3763,9 +3772,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1407 "main.H"
+#line 1417 "main.H"
 
-#line 1418 "main.H"
+#line 1428 "main.H"
 
 
 
@@ -3869,6 +3878,10 @@ extern U8 socket_tcp;
 
 
 
+
+
+
+
  
 #line 15 "SNMP_MIB.c"
 #line 1 "control.H"
@@ -3949,6 +3962,7 @@ void klimat_hndl(void);
 void ext_drv(void);
 void adc_drv7(void);
 void avt_hndl(void);
+void vent_resurs_hndl(void);
 
 
 
@@ -4385,6 +4399,15 @@ char* aaa_="abc";
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 4, 1,5, 7},  			sizeof(snmp_bps_stat[6]), (void *)&snmp_bps_stat[6],  ((void *) 0)},			
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 4, 1,5, 8},  			sizeof(snmp_bps_stat[7]), (void *)&snmp_bps_stat[7],  ((void *) 0)},			
 
+	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 4, 1,6, 1},  		sizeof(bps[0]. _vent_resurs), (void *)&bps[0]. _vent_resurs,  ((void *) 0)},		
+	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 4, 1,6, 2},  		sizeof(bps[1]. _vent_resurs), (void *)&bps[1]. _vent_resurs,  ((void *) 0)},		
+	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 4, 1,6, 3},  		sizeof(bps[2]. _vent_resurs), (void *)&bps[2]. _vent_resurs,  ((void *) 0)},		
+	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 4, 1,6, 4},  		sizeof(bps[3]. _vent_resurs), (void *)&bps[3]. _vent_resurs,  ((void *) 0)},		
+	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 4, 1,6, 5},  		sizeof(bps[4]. _vent_resurs), (void *)&bps[4]. _vent_resurs,  ((void *) 0)},		
+	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 4, 1,6, 6},  		sizeof(bps[5]. _vent_resurs), (void *)&bps[5]. _vent_resurs,  ((void *) 0)},		
+	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 4, 1,6, 7},  		sizeof(bps[6]. _vent_resurs), (void *)&bps[6]. _vent_resurs,  ((void *) 0)},		
+	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 4, 1,6, 8},  		sizeof(bps[7]. _vent_resurs), (void *)&bps[7]. _vent_resurs,  ((void *) 0)},		
+ 
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 14, 1,1, 1},  			sizeof(snmp_inv_number[0]), (void *)&snmp_inv_number[0],  	((void *) 0)},	
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 14, 1,1, 2},  			sizeof(snmp_inv_number[1]), (void *)&snmp_inv_number[1],  	((void *) 0)},	
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 14, 1,1, 3},  			sizeof(snmp_inv_number[2]), (void *)&snmp_inv_number[2],  	((void *) 0)},	
@@ -4908,7 +4931,7 @@ char* aaa_="abc";
 	};
 
 
-#line 1015 "SNMP_MIB.c"
+#line 1024 "SNMP_MIB.c"
 const int snmp_mib_size = (sizeof(snmp_mib) / sizeof(MIB_ENTRY));
 
 

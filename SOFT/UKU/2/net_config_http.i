@@ -1613,7 +1613,7 @@ U8 const netif_cfg = (1<<5   | 1<<4 | 1<<3 |
                       0<<2 | 0<<1 | 1);
 
  
-U32       Mem_Pool[4096];
+U32       Mem_Pool[2596];
 U32 const MPool_Size     = sizeof (Mem_Pool);
 U16 const tick_rate      = (1000 / 10);
 U8        lhost_name[16] = "SPA-UKU202";

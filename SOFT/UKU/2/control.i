@@ -105,6 +105,7 @@ void klimat_hndl(void);
 void ext_drv(void);
 void adc_drv7(void);
 void avt_hndl(void);
+void vent_resurs_hndl(void);
 
 
 
@@ -247,38 +248,40 @@ void community2lcd(char* in,
 
 
 
-#line 135 "eeprom_map.h"
-
-
-
-#line 152 "eeprom_map.h"
-
-
-
-#line 164 "eeprom_map.h"
-
-
-#line 175 "eeprom_map.h"
-
-
-
-#line 186 "eeprom_map.h"
-
-
-
-#line 242 "eeprom_map.h"
-
-
-#line 284 "eeprom_map.h"
+#line 138 "eeprom_map.h"
 
 
 
 
 
+#line 157 "eeprom_map.h"
 
 
 
-#line 306 "eeprom_map.h"
+#line 169 "eeprom_map.h"
+
+
+#line 180 "eeprom_map.h"
+
+
+
+#line 191 "eeprom_map.h"
+
+
+
+#line 247 "eeprom_map.h"
+
+
+#line 289 "eeprom_map.h"
+
+
+
+
+
+
+
+
+#line 311 "eeprom_map.h"
 
 
 
@@ -859,9 +862,9 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 79 "main.h"
+#line 80 "main.h"
 
-#line 88 "main.h"
+#line 89 "main.h"
 
 
 
@@ -873,7 +876,7 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 105 "main.h"
+#line 106 "main.h"
 
 
 
@@ -881,13 +884,13 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 135 "main.h"
+#line 136 "main.h"
 
 
 
 
 
-#line 149 "main.h"
+#line 150 "main.h"
 
 
 
@@ -901,9 +904,9 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 180 "main.h"
+#line 181 "main.h"
 
-#line 203 "main.h"
+#line 204 "main.h"
 
 
 
@@ -937,7 +940,7 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 383 "main.h"
+#line 384 "main.h"
 
 
 
@@ -978,7 +981,7 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 451 "main.h"
+#line 452 "main.h"
 
 
 
@@ -997,13 +1000,11 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 482 "main.h"
+#line 483 "main.h"
 
-#line 494 "main.h"
+#line 495 "main.h"
 
-#line 510 "main.h"
-
-
+#line 511 "main.h"
 
 
 
@@ -1023,9 +1024,11 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 544 "main.h"
 
-#line 558 "main.h"
+
+#line 545 "main.h"
+
+#line 559 "main.h"
 
 
 
@@ -1038,25 +1041,25 @@ extern BOOL snmp_set_community (const char *community);
  
 
 
-#line 579 "main.h"
+#line 580 "main.h"
 
-#line 589 "main.h"
+#line 590 "main.h"
 
-#line 598 "main.h"
+#line 599 "main.h"
 
-#line 607 "main.h"
+#line 608 "main.h"
 
-#line 619 "main.h"
+#line 620 "main.h"
 
-#line 629 "main.h"
+#line 630 "main.h"
 
-#line 638 "main.h"
+#line 639 "main.h"
 
-#line 646 "main.h"
+#line 647 "main.h"
 
-#line 655 "main.h"
+#line 656 "main.h"
 
-#line 667 "main.h"
+#line 668 "main.h"
 
 
 
@@ -1079,7 +1082,7 @@ extern char cnt_of_slave;
 typedef enum {
 
 	iMn_220_IPS_TERMOKOMPENSAT,
-#line 708 "main.h"
+#line 709 "main.h"
 	iMn,iMn_3U,iMn_RSTKM,
 
 
@@ -1106,7 +1109,7 @@ typedef enum {
 	iSet,iSet_3U,iSet_RSTKM,iSet_GLONASS,iSet_KONTUR,iSet_6U,iSet_220,iSet_220_IPS_TERMOKOMPENSAT,iSet_220_V2,iInv_set_sel,
 	iBat,iBat_simple,iBat_li,iBat_SacredSun,iBat_universe,iInv_set,iSet_TELECORE2015,
 	iMakb,
-	iBps,iS2,iSet_prl,iK_prl,iDnd,
+	iBps,iBps_elteh,iS2,iSet_prl,iK_prl,iDnd,
 	iK,iK_3U,iK_RSTKM,iK_GLONASS,iK_KONTUR,iK_6U,iK_220,iK_220_380,iK_220_IPS_TERMOKOMPENSAT,iK_220_IPS_TERMOKOMPENSAT_IB,iK_TELECORE,
 	iSpcprl,iSpc,k,Crash_0,Crash_1,iKednd,iAv_view_avt,iAKE,iSpc_termocompensat,
 	iLoad,iSpc_prl_vz,iSpc_prl_ke,iKe,iVz,iAvz,iAVAR,
@@ -1141,7 +1144,7 @@ typedef enum {
 	iByps,iInv_tabl,iSet_bat_sel,
 	iBps_list,
 	iSpch_set,
-	iAvt_set_sel,iAvt_set,
+	iAvt_set_sel,iAvt_set,iSet_li_bat,
 	iOut_volt_contr,iDop_rele_set,iBlok_ips_set}i_enum;
 
 typedef struct  
@@ -1274,6 +1277,10 @@ extern signed short U_OUT_KONTR_MIN;
 extern signed short U_OUT_KONTR_DELAY;
 extern signed short DOP_RELE_FUNC;
 extern signed short CNTRL_HNDL_TIME;	
+extern signed short USODERG_LI_BAT;		
+extern signed short QSODERG_LI_BAT;		
+extern signed short TVENTMAX;			
+
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
 extern enum_apv_on APV_ON1,APV_ON2;
@@ -1518,6 +1525,7 @@ typedef struct
 	char 		_plazma[8];		
 	signed short 	_isOnCnt;
 	signed short	_s_o_c_abs;		
+	signed short 	_s_o_c_percent; 
 	signed short	_plazma_ss;
 	signed short	_zar_percent;	
 	signed char		_cell_temp_1;	
@@ -1556,15 +1564,16 @@ extern char plazma_can_inv[3];
 
 
 typedef struct
-     {
-     enum {dSRC=3,dINV=5,dNET_METR=7,dIBAT_METR=9,dMAKB=11}_device;
+    {
+    enum {dSRC=3,dINV=5,dNET_METR=7,dIBAT_METR=9,dMAKB=11}_device;
 	char _av;
 	
 	
 	
 	
-     enum {bsAPV,bsWRK,bsRDY,bsBL,bsAV,bsOFF_AV_NET}_state;
-     char _cnt;
+	
+ 	enum {bsAPV,bsWRK,bsRDY,bsBL,bsAV,bsOFF_AV_NET}_state;
+    char _cnt;
      char _cnt_old;
      char _cnt_more2;
      char _buff[20]; 
@@ -1597,8 +1606,10 @@ typedef struct
      signed  short _x_; 
      char _adr_ee;
 	char _last_avar;
+	char _vent_resurs_temp[4];
+	unsigned short _vent_resurs;
      } BPS_STAT; 
-extern BPS_STAT bps[32];
+extern BPS_STAT bps[29];
 
 
 
@@ -1643,6 +1654,7 @@ typedef struct
 	char _net_contr_en;
 	char _pwm_en;
 	char _phase_mode;
+
      } INV_STAT; 
 
 
@@ -1771,9 +1783,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1407 "main.h"
+#line 1417 "main.h"
 
-#line 1418 "main.h"
+#line 1428 "main.h"
 
 
 
@@ -1874,6 +1886,10 @@ extern short plazma_numOfPacks;
 extern char plazma_ztt[2];
 
 extern U8 socket_tcp;
+
+
+
+
 
 
 
@@ -5634,10 +5650,10 @@ if (NUMINV)
 
  
 
-#line 2123 "control.c"
+#line 2134 "control.c"
 
 
-#line 2169 "control.c"
+#line 2180 "control.c"
 
 
 
@@ -5768,7 +5784,7 @@ if(adc_ch_net)
 		}
 	if((adc_net_buff_cnt&0x03ff)==0)
 		{
-#line 2305 "control.c"
+#line 2316 "control.c"
 		net_buff_=(short)((main_power_buffer[adc_net_buff_cnt>>10])>>8);
 
 
@@ -6251,7 +6267,7 @@ if(mess_find_unvol((210))&&(mess_data[0]==100))
 else ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR & ~((0xffffffff>>(32-1))<<29)) | (1 << 29) );
 
 
-#line 2798 "control.c"
+#line 2809 "control.c"
 
 if((mess_find_unvol(210))&&	(mess_data[0]==102))
 	{
@@ -6262,28 +6278,28 @@ else	if(!(avar_ind_stat&0x00000001))	((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x0
 else 					  		((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOSET & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
 
 
-#line 2844 "control.c"
+#line 2855 "control.c"
 
 
-#line 2882 "control.c"
+#line 2893 "control.c"
 
-#line 2902 "control.c"
+#line 2913 "control.c"
 
-#line 2969 "control.c"
+#line 2980 "control.c"
 
-#line 3083 "control.c"
+#line 3094 "control.c"
 
-#line 3149 "control.c"
+#line 3160 "control.c"
 
-#line 3194 "control.c"
+#line 3205 "control.c"
 
-#line 3239 "control.c"
+#line 3250 "control.c"
 
 
 
 if((AUSW_MAIN==22010)||(AUSW_MAIN==22011))
 	{
-#line 3254 "control.c"
+#line 3265 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOCLR & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6333,7 +6349,7 @@ else	if(AUSW_MAIN==22023)
 
 
 	
-#line 3313 "control.c"
+#line 3324 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6368,7 +6384,7 @@ else	if(AUSW_MAIN==22043)
      	else ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<4)) | (1 << 4) );
 		} 
 	
-#line 3357 "control.c"
+#line 3368 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6402,7 +6418,7 @@ else	if(AUSW_MAIN==22043)
 	}
 else	if((AUSW_MAIN==22033)||(AUSW_MAIN==22018))
 	{
-#line 3400 "control.c"
+#line 3411 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOCLR & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6439,7 +6455,7 @@ else	if((AUSW_MAIN==22033)||(AUSW_MAIN==22018))
 else	
 	{
 	
-#line 3446 "control.c"
+#line 3457 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6478,10 +6494,10 @@ else if(DOP_RELE_FUNC==1)
 	}	 	
 
 
-#line 3597 "control.c"
+#line 3608 "control.c"
 
 
-#line 3658 "control.c"
+#line 3669 "control.c"
 
 }
 
@@ -7177,7 +7193,7 @@ else
  
 }
 
-#line 4479 "control.c"
+#line 4490 "control.c"
 
 
 
@@ -7248,7 +7264,7 @@ if(main_vent_pos<=1)mixer_vent_stat=mvsON;
 else mixer_vent_stat=mvsOFF;
 
 
-#line 4566 "control.c"
+#line 4577 "control.c"
 
 if((TBATDISABLE>=50) && (TBATDISABLE<=90))
 	{
@@ -7305,7 +7321,7 @@ else
 }
 
 
-#line 4755 "control.c"
+#line 4766 "control.c"
 
 
 void bat_drv(char in)
@@ -7793,7 +7809,7 @@ if(mess_find_unvol(190))
 
 
 
-#line 5477 "control.c"
+#line 5495 "control.c"
 
 temp_L=(signed long) u_necc;
 temp_L*=98L;
@@ -7911,7 +7927,7 @@ if(mess_find_unvol(225))
 			if(((u_necc-bps_U)>40)&&(cntrl_stat<1015))cntrl_stat+=5;
 			else	if((cntrl_stat<1020)&&b1Hz_ch)cntrl_stat++;
 			}
-#line 5629 "control.c"
+#line 5647 "control.c"
 	 	}
 	}
 
@@ -7996,7 +8012,7 @@ else if((b1Hz_ch)&&((!bIBAT_SMKLBR)||(bps[8]._cnt>40)))
 	cntrl_stat_old=cntrl_stat_new;
 	cntrl_stat=cntrl_stat_new;	
 	}
-#line 5795 "control.c"
+#line 5813 "control.c"
 
 iiii=0;
 for(i=0;i<NUMIST;i++)
@@ -8020,7 +8036,7 @@ b1Hz_ch=0;
 }
 
 
-#line 6060 "control.c"
+#line 6078 "control.c"
 
 
 void ext_drv(void)
@@ -8030,7 +8046,7 @@ char i;
 
 for(i=0;i<NUMSK;i++)
 	{
-#line 6094 "control.c"
+#line 6112 "control.c"
 	if(adc_buff_[sk_buff_220[i]]<2000)
 
 
@@ -8123,7 +8139,7 @@ for(i=0;i<NUMSK;i++)
 	 	}
 
 
-#line 6206 "control.c"
+#line 6224 "control.c"
 	sk_av_stat_old[i]=sk_av_stat[i];
 	}
 }
@@ -8443,6 +8459,65 @@ if (load_U<(USIGN*10))
 	}
 
 
+}
+
+
+void vent_resurs_hndl(void)
+{
+char i;
+char crc_in,crc_eval;
+
+for(i=0;i<NUMIST;i++)
+	{
+	if((bps[i]._buff[7]&0xc0)==0x00)
+		{
+		bps[i]._vent_resurs_temp[0]=bps[i]._buff[7];
+		}
+	else if((bps[i]._buff[7]&0xc0)==0x40)
+		{
+		bps[i]._vent_resurs_temp[1]=bps[i]._buff[7];
+		}
+	else if((bps[i]._buff[7]&0xc0)==0x80)
+		{
+		bps[i]._vent_resurs_temp[2]=bps[i]._buff[7];
+		}
+	else if((bps[i]._buff[7]&0xc0)==0xc0)
+		{
+		bps[i]._vent_resurs_temp[3]=bps[i]._buff[7];
+		}
+	crc_in=0;
+	crc_in|=(bps[i]._vent_resurs_temp[0]&0x30)>>4;
+	crc_in|=(bps[i]._vent_resurs_temp[1]&0x30)>>2;
+	crc_in|=(bps[i]._vent_resurs_temp[2]&0x30);
+	crc_in|=(bps[i]._vent_resurs_temp[3]&0x30)<<2;
+
+	crc_eval =bps[i]._vent_resurs_temp[0]&0x0f;
+	crc_eval^=bps[i]._vent_resurs_temp[1]&0x0f;
+	crc_eval^=bps[i]._vent_resurs_temp[2]&0x0f;
+	crc_eval^=bps[i]._vent_resurs_temp[3]&0x0f;
+
+	if(crc_eval==crc_in)
+		{
+		unsigned short temp_US;
+		temp_US=0;
+
+		temp_US|=(bps[i]._vent_resurs_temp[3]&0x0f);
+		temp_US<<=4;
+		temp_US|=(bps[i]._vent_resurs_temp[2]&0x0f);
+		temp_US<<=4;
+		temp_US|=(bps[i]._vent_resurs_temp[1]&0x0f);
+		temp_US<<=4;
+		temp_US|=(bps[i]._vent_resurs_temp[0]&0x0f);
+
+		if(bps[i]._vent_resurs!=temp_US)bps[i]._vent_resurs=temp_US;
+		}
+
+	if(bps[i]._vent_resurs>TVENTMAX)
+		{
+		bps[i]._av|=(1<<4);
+		}
+	else bps[i]._av&=~(1<<4);
+	}
 }
 
 

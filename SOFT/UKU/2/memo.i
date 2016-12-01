@@ -48,38 +48,40 @@ void memo_read (void);
 
 
 
-#line 135 "eeprom_map.h"
-
-
-
-#line 152 "eeprom_map.h"
-
-
-
-#line 164 "eeprom_map.h"
-
-
-#line 175 "eeprom_map.h"
-
-
-
-#line 186 "eeprom_map.h"
-
-
-
-#line 242 "eeprom_map.h"
-
-
-#line 284 "eeprom_map.h"
+#line 138 "eeprom_map.h"
 
 
 
 
 
+#line 157 "eeprom_map.h"
 
 
 
-#line 306 "eeprom_map.h"
+#line 169 "eeprom_map.h"
+
+
+#line 180 "eeprom_map.h"
+
+
+
+#line 191 "eeprom_map.h"
+
+
+
+#line 247 "eeprom_map.h"
+
+
+#line 289 "eeprom_map.h"
+
+
+
+
+
+
+
+
+#line 311 "eeprom_map.h"
 
 
 
@@ -628,9 +630,9 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 79 "main.h"
+#line 80 "main.h"
 
-#line 88 "main.h"
+#line 89 "main.h"
 
 
 
@@ -642,7 +644,7 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 105 "main.h"
+#line 106 "main.h"
 
 
 
@@ -650,13 +652,13 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 135 "main.h"
+#line 136 "main.h"
 
 
 
 
 
-#line 149 "main.h"
+#line 150 "main.h"
 
 
 
@@ -670,9 +672,9 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 180 "main.h"
+#line 181 "main.h"
 
-#line 203 "main.h"
+#line 204 "main.h"
 
 
 
@@ -706,7 +708,7 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 383 "main.h"
+#line 384 "main.h"
 
 
 
@@ -747,7 +749,7 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 451 "main.h"
+#line 452 "main.h"
 
 
 
@@ -766,13 +768,11 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 482 "main.h"
+#line 483 "main.h"
 
-#line 494 "main.h"
+#line 495 "main.h"
 
-#line 510 "main.h"
-
-
+#line 511 "main.h"
 
 
 
@@ -792,9 +792,11 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 544 "main.h"
 
-#line 558 "main.h"
+
+#line 545 "main.h"
+
+#line 559 "main.h"
 
 
 
@@ -807,25 +809,25 @@ extern BOOL snmp_set_community (const char *community);
  
 
 
-#line 579 "main.h"
+#line 580 "main.h"
 
-#line 589 "main.h"
+#line 590 "main.h"
 
-#line 598 "main.h"
+#line 599 "main.h"
 
-#line 607 "main.h"
+#line 608 "main.h"
 
-#line 619 "main.h"
+#line 620 "main.h"
 
-#line 629 "main.h"
+#line 630 "main.h"
 
-#line 638 "main.h"
+#line 639 "main.h"
 
-#line 646 "main.h"
+#line 647 "main.h"
 
-#line 655 "main.h"
+#line 656 "main.h"
 
-#line 667 "main.h"
+#line 668 "main.h"
 
 
 
@@ -848,7 +850,7 @@ extern char cnt_of_slave;
 typedef enum {
 
 	iMn_220_IPS_TERMOKOMPENSAT,
-#line 708 "main.h"
+#line 709 "main.h"
 	iMn,iMn_3U,iMn_RSTKM,
 
 
@@ -875,7 +877,7 @@ typedef enum {
 	iSet,iSet_3U,iSet_RSTKM,iSet_GLONASS,iSet_KONTUR,iSet_6U,iSet_220,iSet_220_IPS_TERMOKOMPENSAT,iSet_220_V2,iInv_set_sel,
 	iBat,iBat_simple,iBat_li,iBat_SacredSun,iBat_universe,iInv_set,iSet_TELECORE2015,
 	iMakb,
-	iBps,iS2,iSet_prl,iK_prl,iDnd,
+	iBps,iBps_elteh,iS2,iSet_prl,iK_prl,iDnd,
 	iK,iK_3U,iK_RSTKM,iK_GLONASS,iK_KONTUR,iK_6U,iK_220,iK_220_380,iK_220_IPS_TERMOKOMPENSAT,iK_220_IPS_TERMOKOMPENSAT_IB,iK_TELECORE,
 	iSpcprl,iSpc,k,Crash_0,Crash_1,iKednd,iAv_view_avt,iAKE,iSpc_termocompensat,
 	iLoad,iSpc_prl_vz,iSpc_prl_ke,iKe,iVz,iAvz,iAVAR,
@@ -910,7 +912,7 @@ typedef enum {
 	iByps,iInv_tabl,iSet_bat_sel,
 	iBps_list,
 	iSpch_set,
-	iAvt_set_sel,iAvt_set,
+	iAvt_set_sel,iAvt_set,iSet_li_bat,
 	iOut_volt_contr,iDop_rele_set,iBlok_ips_set}i_enum;
 
 typedef struct  
@@ -1043,6 +1045,10 @@ extern signed short U_OUT_KONTR_MIN;
 extern signed short U_OUT_KONTR_DELAY;
 extern signed short DOP_RELE_FUNC;
 extern signed short CNTRL_HNDL_TIME;	
+extern signed short USODERG_LI_BAT;		
+extern signed short QSODERG_LI_BAT;		
+extern signed short TVENTMAX;			
+
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
 extern enum_apv_on APV_ON1,APV_ON2;
@@ -1287,6 +1293,7 @@ typedef struct
 	char 		_plazma[8];		
 	signed short 	_isOnCnt;
 	signed short	_s_o_c_abs;		
+	signed short 	_s_o_c_percent; 
 	signed short	_plazma_ss;
 	signed short	_zar_percent;	
 	signed char		_cell_temp_1;	
@@ -1325,15 +1332,16 @@ extern char plazma_can_inv[3];
 
 
 typedef struct
-     {
-     enum {dSRC=3,dINV=5,dNET_METR=7,dIBAT_METR=9,dMAKB=11}_device;
+    {
+    enum {dSRC=3,dINV=5,dNET_METR=7,dIBAT_METR=9,dMAKB=11}_device;
 	char _av;
 	
 	
 	
 	
-     enum {bsAPV,bsWRK,bsRDY,bsBL,bsAV,bsOFF_AV_NET}_state;
-     char _cnt;
+	
+ 	enum {bsAPV,bsWRK,bsRDY,bsBL,bsAV,bsOFF_AV_NET}_state;
+    char _cnt;
      char _cnt_old;
      char _cnt_more2;
      char _buff[20]; 
@@ -1366,8 +1374,10 @@ typedef struct
      signed  short _x_; 
      char _adr_ee;
 	char _last_avar;
+	char _vent_resurs_temp[4];
+	unsigned short _vent_resurs;
      } BPS_STAT; 
-extern BPS_STAT bps[32];
+extern BPS_STAT bps[29];
 
 
 
@@ -1412,6 +1422,7 @@ typedef struct
 	char _net_contr_en;
 	char _pwm_en;
 	char _phase_mode;
+
      } INV_STAT; 
 
 
@@ -1540,9 +1551,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1407 "main.h"
+#line 1417 "main.h"
 
-#line 1418 "main.h"
+#line 1428 "main.h"
 
 
 
@@ -1643,6 +1654,10 @@ extern short plazma_numOfPacks;
 extern char plazma_ztt[2];
 
 extern U8 socket_tcp;
+
+
+
+
 
 
 
@@ -1972,6 +1987,7 @@ void klimat_hndl(void);
 void ext_drv(void);
 void adc_drv7(void);
 void avt_hndl(void);
+void vent_resurs_hndl(void);
 
 
 
@@ -2161,6 +2177,9 @@ DOP_RELE_FUNC=lc640_read_int(0x10+100+188);
 ipsBlckSrc=lc640_read_int(0x10+100+190);
 ipsBlckLog=lc640_read_int(0x10+100+192);
 CNTRL_HNDL_TIME=lc640_read_int(0x10+100+196);
+USODERG_LI_BAT=lc640_read_int(0x10+100+198);
+QSODERG_LI_BAT=lc640_read_int(0x10+100+200);
+TVENTMAX=lc640_read_int(0x10+100+202);
 
 BAT_IS_ON[0]=(enum_bat_is_on)lc640_read_int(0x10+400);
 BAT_IS_ON[1]=(enum_bat_is_on)lc640_read_int(0x10+400+30);

@@ -6543,6 +6543,65 @@ if (load_U<(USIGN*10))
 }
 
 //-----------------------------------------------
+void vent_resurs_hndl(void)
+{
+char i;
+char crc_in,crc_eval;
+
+for(i=0;i<NUMIST;i++)
+	{
+	if((bps[i]._buff[7]&0xc0)==0x00)
+		{
+		bps[i]._vent_resurs_temp[0]=bps[i]._buff[7];
+		}
+	else if((bps[i]._buff[7]&0xc0)==0x40)
+		{
+		bps[i]._vent_resurs_temp[1]=bps[i]._buff[7];
+		}
+	else if((bps[i]._buff[7]&0xc0)==0x80)
+		{
+		bps[i]._vent_resurs_temp[2]=bps[i]._buff[7];
+		}
+	else if((bps[i]._buff[7]&0xc0)==0xc0)
+		{
+		bps[i]._vent_resurs_temp[3]=bps[i]._buff[7];
+		}
+	crc_in=0;
+	crc_in|=(bps[i]._vent_resurs_temp[0]&0x30)>>4;
+	crc_in|=(bps[i]._vent_resurs_temp[1]&0x30)>>2;
+	crc_in|=(bps[i]._vent_resurs_temp[2]&0x30);
+	crc_in|=(bps[i]._vent_resurs_temp[3]&0x30)<<2;
+
+	crc_eval =bps[i]._vent_resurs_temp[0]&0x0f;
+	crc_eval^=bps[i]._vent_resurs_temp[1]&0x0f;
+	crc_eval^=bps[i]._vent_resurs_temp[2]&0x0f;
+	crc_eval^=bps[i]._vent_resurs_temp[3]&0x0f;
+
+	if(crc_eval==crc_in)
+		{
+		unsigned short temp_US;
+		temp_US=0;
+
+		temp_US|=(bps[i]._vent_resurs_temp[3]&0x0f);
+		temp_US<<=4;
+		temp_US|=(bps[i]._vent_resurs_temp[2]&0x0f);
+		temp_US<<=4;
+		temp_US|=(bps[i]._vent_resurs_temp[1]&0x0f);
+		temp_US<<=4;
+		temp_US|=(bps[i]._vent_resurs_temp[0]&0x0f);
+
+		if(bps[i]._vent_resurs!=temp_US)bps[i]._vent_resurs=temp_US;
+		}
+
+	if(bps[i]._vent_resurs>TVENTMAX)
+		{
+		bps[i]._av|=(1<<4);
+		}
+	else bps[i]._av&=~(1<<4);
+	}
+}
+
+//-----------------------------------------------
 void vent_hndl(void)
 {
 if(RELEVENTSIGN==rvsAKB)

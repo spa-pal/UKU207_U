@@ -156,6 +156,7 @@ signed short DOP_RELE_FUNC;
 signed short CNTRL_HNDL_TIME;	//Постоянная времени регулирования источников для Телекора
 signed short USODERG_LI_BAT;	//Напряжение содержания литиевой батареи
 signed short QSODERG_LI_BAT;	//Заряд при котором начинает действовать напряжение содержания литиевой батареи
+signed short TVENTMAX;			//Максимальный ресурс вентилятора
 
 enum_apv_on APV_ON1,APV_ON2;
 signed short APV_ON2_TIME;
@@ -302,7 +303,7 @@ char can_slot[12][16];
 
 //***********************************************
 //Состояние источников
-BPS_STAT bps[32];
+BPS_STAT bps[29];
 
 //***********************************************
 //Состояние инверторов
@@ -684,7 +685,9 @@ char plazma_ztt[2];
 
 U8 socket_tcp;
 
-
+//-----------------------------------------------
+//Ресурс вентиляторов
+//char vent_resurs_temp[4];
 
 
 //-----------------------------------------------
@@ -1899,6 +1902,13 @@ if(uout_av)
 	sub_cnt_max++;	
 	}
 
+if(bps[0]._av&(1<<4))
+	{
+	sub_ptrs[i++]=	"Ресурс вент. БПС1   ";
+	sub_cnt_max++;
+	sub_ptrs[i++]=	"     исчерпан       ";
+	sub_cnt_max++;		
+	}
 
 cnt_of_slave=NUMIST+NUMINV;
 
@@ -4361,7 +4371,94 @@ else if(ind==iMakb)
 //	int2lcdyx(index_set,0,4,0);
 	//int2lcdyx(u_necc,0,4,0);
 	//int2lcdyx(cntrl_stat,0,8,0);	
-     }  
+     }
+ else if(ind==iBps_elteh)
+	{
+	const char* ptr[9];
+ 
+	simax=8;
+
+	ptr[1]=			" Uист =        (В   ";
+	ptr[2]=			" Iист =        [A   ";
+	ptr[3]=			" tист =        ]°С  ";
+	ptr[4]=			" Наработка          ";
+	ptr[5]=			" вентилятора      >ч";
+	ptr[6]=			" Сброс наработки    ";
+	ptr[7]=			" Сброс аварий       ";
+	ptr[8]=			sm_exit;
+
+	if(bps[sub_ind1]._state==bsWRK)
+		{
+		ptr[0]=		"      в работе      ";
+		if((bps[sub_ind1]._flags_tm&0x08)&&(bFL2))
+		ptr[0]=		"  СИЛЬНЫЙ НАГРЕВ!!! ";	      
+		}
+ 	 else if(bps[sub_ind1]._state==bsRDY)
+	 	{
+		ptr[0]=		"      в резерве     ";	
+		}
+
+ 	 else if(bps[sub_ind1]._state==bsBL)
+	 	{
+		ptr[0]=		" заблокирован извне ";	
+		}
+
+	 else if(bps[sub_ind1]._state==bsAPV)
+	 	{
+		ptr[0]=		"    Работает АПВ    ";
+		}
+	 
+	 else if(bps[sub_ind1]._state==bsAV)
+	 	{
+		if(bps[sub_ind1]._av&(1<<0))
+		ptr[0]=		" Авария - перегрев! ";
+		else if(bps[sub_ind1]._av&(1<<1))
+		ptr[0]=		"Авария - завыш.Uвых!";
+		else if(bps[sub_ind1]._av&(1<<2))	 
+		ptr[0]=		"Авария - заниж.Uвых!";
+		else if(bps[sub_ind1]._av&(1<<3))
+			{
+			ptr[0]=	"  Авария - потеряна ";
+			ptr[1]=	"      связь!!!      ";
+			ptr[2]=	"                    ";
+			simax=0;
+			}
+		}
+
+	 else if(bps[sub_ind1]._state==bsOFF_AV_NET)
+	 	{
+		ptr[0]=		"      ВЫКЛЮЧЕН      ";
+		ptr[1]=		"     Отсутствует    ";
+		ptr[2]=		" первичное питание! ";
+		simax=0;
+		}
+
+	bgnd_par(			"       БПС N&       ",
+					ptr[index_set],
+					ptr[index_set+1],
+					ptr[index_set+2]);
+
+	if(sub_ind-index_set>2)index_set=sub_ind-2;
+	else if (sub_ind<index_set)index_set=sub_ind;
+
+	if(sub_ind>=6)	pointer_set(1);
+
+
+		
+
+	int2lcd(sub_ind1+1,'&',0);
+	int2lcd(bps[sub_ind1]._Uii,'(',1);
+    int2lcd(bps[sub_ind1]._Ii,'[',1);  
+   	int2lcd_mmm(bps[sub_ind1]._Ti,']',0); 
+	int2lcd(bps[sub_ind1]._vent_resurs,'>',0);
+   			 
+    // char2lcdhxy(bps[sub_ind1]._state,0x32);
+    
+    //	int2lcdyx(sub_ind,0,2,0);
+//	int2lcdyx(index_set,0,4,0);
+	//int2lcdyx(u_necc,0,4,0);
+	//int2lcdyx(cntrl_stat,0,8,0);	
+     }  	   
 else if(ind==iInv)
 	{
 	const char* ptr[8];
@@ -6833,9 +6930,11 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	ptrs[40]=		" MODBUS BAUDRATE    ";
 	ptrs[41]=		"                  >0";
 	ptrs[42]=		" Ethernet           ";
-    ptrs[43]=		" Выход              ";
-    ptrs[44]=		" Калибровки         "; 
-    ptrs[45]=		"                    ";        
+    ptrs[43]=		" Порог ресурса      ";
+    ptrs[44]=		" вентилятора      ^ч";
+    ptrs[45]=		" Выход              ";
+    ptrs[46]=		" Калибровки         "; 
+    ptrs[47]=		"                    ";        
 	
 	if((sub_ind-index_set)>2)index_set=sub_ind-2;
 	else if(sub_ind<index_set)index_set=sub_ind;
@@ -6903,6 +7002,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 
 	//int2lcdyx(sub_ind,0,3,0);
 	//int2lcdyx(index_set,0,1,0);
+	int2lcd(TVENTMAX*10,'^',0);
 	}
 
 
@@ -9656,6 +9756,13 @@ if(ind==iDeb)
      		    "                    ",
      		    "                    ",
      		    "                    ");
+
+		char2lcdhyx(bps[0]._vent_resurs_temp[0],0,2);
+		char2lcdhyx(bps[0]._vent_resurs_temp[1],1,2);
+		char2lcdhyx(bps[0]._vent_resurs_temp[2],2,2);
+		char2lcdhyx(bps[0]._vent_resurs_temp[3],3,2);
+
+		int2lcdyx(bps[0]._vent_resurs,0,19,0);
      		    
      	/*int2lcdyx(ad7705_buff[0][0],0,4,0);
      	int2lcdyx(ad7705_buff[0][1],0,9,0);
@@ -9674,7 +9781,7 @@ if(ind==iDeb)
      	int2lcdyx(ad7705_buff[0][14],3,14,0);
      	int2lcdyx(ad7705_buff[0][15],3,19,0);*/
 
-		int2lcdyx(adc_buff_[0],0,4,0);
+	/*	int2lcdyx(adc_buff_[0],0,4,0);
     		int2lcdyx(adc_buff_[1],0,9,0);
      	int2lcdyx(adc_buff_[2],0,14,0);
      	int2lcdyx(adc_buff_[3],0,19,0); 
@@ -9689,7 +9796,7 @@ if(ind==iDeb)
      	int2lcdyx(adc_buff_[12],3,4,0);
      	int2lcdyx(adc_buff_[13],3,9,0);
      	int2lcdyx(adc_buff_[14],3,14,0);
-     	int2lcdyx(adc_buff_[15],3,19,0);
+     	int2lcdyx(adc_buff_[15],3,19,0); */
 
 	/*	char2lcdhyx(bat_drv_rx_buff[0],0,2);
     		char2lcdhyx(bat_drv_rx_buff[1],0,5);
@@ -13374,7 +13481,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 		    	} */
 		else if((sub_ind>1)&&(sub_ind<=(NUMIST+1)))
 		    	{
-		    	tree_up(iBps,0,0,sub_ind-2);
+		    	tree_up(iBps_elteh,0,0,sub_ind-2);
 		    	}
 /*		else if((sub_ind>(NUMBAT+NUMIST))&&(sub_ind<=(NUMBAT+NUMIST)))
 		    	{
@@ -13829,7 +13936,43 @@ else if(ind==iBps)
 	     ret(0);
 		}	
 		
-	}		
+	}	
+else if(ind==iBps_elteh)
+	{
+	ret_ind(0,0,0);
+	if (but==butU)
+		{      
+		sub_ind--;
+		if(sub_ind==3)sub_ind=1;
+		else if(sub_ind==1)sub_ind=0;
+		gran_char(&sub_ind,0,simax);
+		}
+		
+	else if (but==butD)
+		{
+		sub_ind++;
+		if(sub_ind<3)sub_ind=3;
+		if(sub_ind==4)index_set=3;
+		if(sub_ind==5)sub_ind=6;
+		gran_char(&sub_ind,0,simax);
+		}
+
+	else if((but==butE_)&&(sub_ind==6))
+		{
+		can1_out(sub_ind1,sub_ind1,CMND,VENT_RES,0,0,0,0);
+		}		
+	else if((but==butE)&&(sub_ind==7))
+		{
+		can1_out(sub_ind1,sub_ind1,CMND,ALRM_RES,0,0,0,0);
+		}
+				
+	else if(((but==butE)&&(sub_ind==8))||(but))
+		{
+	     tree_down(0,0);
+	     ret(0);
+		}	
+		
+	}			
 else if(ind==iNet)
 	{
 	ret(1000);
@@ -18922,8 +19065,16 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
         if(sub_ind==41)
             {
             sub_ind=42;
-            }								
-		gran_char(&sub_ind,0,44);
+            }
+       	if(sub_ind==43)
+        	{
+            index_set=42;
+            }
+        if(sub_ind==44)
+            {
+            sub_ind=45;
+            }											
+		gran_char(&sub_ind,0,46);
 		}
 	else if(but==butU)
 		{
@@ -18962,12 +19113,15 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
             {
             sub_ind=40;
 			}
-
-		gran_char(&sub_ind,0,44);
+        if(sub_ind==44)
+            {
+            sub_ind=43;
+			}
+		gran_char(&sub_ind,0,46);
 		}
 	else if(but==butD_)
 		{
-		sub_ind=43;
+		sub_ind=45;
 		}
 
 	else if(but==butLR_)
@@ -19398,8 +19552,19 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 		     ret(1000);
 		     }
 		}
+	else if(sub_ind==43)
+		{
+	    if(but==butR)		TVENTMAX=((TVENTMAX/100)+1)*100;
+	    else if(but==butR_)	TVENTMAX=((TVENTMAX/100)+1)*100;
+	    else if(but==butL)	TVENTMAX=((TVENTMAX/100)-1)*100;
+	    else if(but==butL_)	TVENTMAX=((TVENTMAX/100)-1)*100;
+		else if(but==butE_)	TVENTMAX=1500;
+		gran(&TVENTMAX,1,2000);
+		lc640_write_int(EE_TVENTMAX,TVENTMAX);
+	    speed=1;
+	    }    
 
-    else if((sub_ind==43) || (sub_ind==3))
+    else if((sub_ind==45) || (sub_ind==3))
 		{
 		if(but==butE)
 		     {
@@ -19408,7 +19573,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 		     }
 		}
 				
-	else if(sub_ind==44)
+	else if(sub_ind==46)
 		{
 		if(but==butE)
 		     {		
@@ -29446,7 +29611,7 @@ while (1)
 		powerAntiAliasingHndl();
 
 		outVoltContrHndl();
-		
+		vent_resurs_hndl();
 		}
 	if(b1min)
 		{

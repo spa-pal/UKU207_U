@@ -76,6 +76,7 @@
 #define DISPLAY_PSU_ENTRY_CURRENT			1,3
 #define DISPLAY_PSU_ENTRY_TEMPERATURE		1,4
 #define DISPLAY_PSU_ENTRY_STATUS			1,5
+#define DISPLAY_PSU_ENTRY_VENTRESURS		1,6
 
 #define DISPLAY_BAT					5
 #define DISPLAY_BAT_NUMBER				1,1
@@ -731,7 +732,7 @@ typedef enum {
 	iSet,iSet_3U,iSet_RSTKM,iSet_GLONASS,iSet_KONTUR,iSet_6U,iSet_220,iSet_220_IPS_TERMOKOMPENSAT,iSet_220_V2,iInv_set_sel,
 	iBat,iBat_simple,iBat_li,iBat_SacredSun,iBat_universe,iInv_set,iSet_TELECORE2015,
 	iMakb,
-	iBps,iS2,iSet_prl,iK_prl,iDnd,
+	iBps,iBps_elteh,iS2,iSet_prl,iK_prl,iDnd,
 	iK,iK_3U,iK_RSTKM,iK_GLONASS,iK_KONTUR,iK_6U,iK_220,iK_220_380,iK_220_IPS_TERMOKOMPENSAT,iK_220_IPS_TERMOKOMPENSAT_IB,iK_TELECORE,
 	iSpcprl,iSpc,k,Crash_0,Crash_1,iKednd,iAv_view_avt,iAKE,iSpc_termocompensat,
 	iLoad,iSpc_prl_vz,iSpc_prl_ke,iKe,iVz,iAvz,iAVAR,
@@ -899,8 +900,9 @@ extern signed short U_OUT_KONTR_MIN;
 extern signed short U_OUT_KONTR_DELAY;
 extern signed short DOP_RELE_FUNC;
 extern signed short CNTRL_HNDL_TIME;	//Постоянная времени регулирования источников для Телекора
-extern signed short USODERG_LI_BAT;	//Напряжение содержания литиевой батареи
-extern signed short QSODERG_LI_BAT;	//Заряд при котором начинает действовать напряжение содержания литиевой батареи
+extern signed short USODERG_LI_BAT;		//Напряжение содержания литиевой батареи
+extern signed short QSODERG_LI_BAT;		//Заряд при котором начинает действовать напряжение содержания литиевой батареи
+extern signed short TVENTMAX;			//Максимальный ресурс вентилятора
 
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
@@ -1185,15 +1187,16 @@ extern char plazma_can_inv[3];
 
 
 typedef struct
-     {
-     enum {dSRC=3,dINV=5,dNET_METR=7,dIBAT_METR=9,dMAKB=11}_device;
+    {
+    enum {dSRC=3,dINV=5,dNET_METR=7,dIBAT_METR=9,dMAKB=11}_device;
 	char _av;
 	//0бит - авария по перегреву
 	//1бит - авария по завышенному Uвых
 	//2бит - авария по заниженному Uвых
-	//3бит - авария по обрыву связи	    
-     enum {bsAPV,bsWRK,bsRDY,bsBL,bsAV,bsOFF_AV_NET}_state;
-     char _cnt;
+	//3бит - авария по обрыву связи	
+	//4бит - ресурс вентилятора выработан    
+ 	enum {bsAPV,bsWRK,bsRDY,bsBL,bsAV,bsOFF_AV_NET}_state;
+    char _cnt;
      char _cnt_old;
      char _cnt_more2;
      char _buff[20]; 
@@ -1226,8 +1229,10 @@ typedef struct
      signed  short _x_; 
      char _adr_ee;
 	char _last_avar;
+	char _vent_resurs_temp[4];
+	unsigned short _vent_resurs;
      } BPS_STAT; 
-extern BPS_STAT bps[32];
+extern BPS_STAT bps[29];
 
 //***********************************************
 //Состояние инверторов
@@ -1272,6 +1277,7 @@ typedef struct
 	char _net_contr_en;
 	char _pwm_en;
 	char _phase_mode;
+
      } INV_STAT; 
 #ifdef UKU_220_V2
 extern INV_STAT inv[3];
@@ -1519,6 +1525,10 @@ extern short plazma_numOfPacks;
 extern char plazma_ztt[2];
 
 extern U8 socket_tcp;
+
+//-----------------------------------------------
+//Ресурс вентиляторов
+//extern char vent_resurs_temp[4];
 
 /*----------------------------------------------------------------------------
  * end of file
