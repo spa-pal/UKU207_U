@@ -61,4 +61,5 @@ void rs232_data_out(void);
 void rs232_data_out_tki(void);
 void uart_out_buff0 (char *ptr, char len);
 void rs232_data_out_1(void);
+uint32_t UARTInit( uint32_t PortNum, uint32_t baudrate );
 

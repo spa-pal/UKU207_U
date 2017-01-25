@@ -76,6 +76,7 @@ void ext_drv(void);
 void adc_drv7(void);
 void avt_hndl(void);
 void vent_resurs_hndl(void);
+void ips_current_average_hndl(void);
 
 //***********************************************
 //Спецфункции
@@ -130,5 +131,6 @@ void zar_superviser_start(void);
 void vent_hndl(void);
 void speedChargeHndl(void);
 void speedChargeStartStop(void);
+void	numOfForvardBps_init(void);
 
 

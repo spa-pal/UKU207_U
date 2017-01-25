@@ -1,4 +1,4 @@
-#include "uart0.h"
+
 #include "LPC17XX.H" 
 #include "main.h"
 #include "control.h"
@@ -9,6 +9,7 @@
 #include "modbus.h"
 #include "sacred_sun.h"
 #include "ztt.h"
+#include "uart0.h"
 
 char bRXIN0;
 char UIB0[100]={0,0,0,0,0,0,0,0,0,0};

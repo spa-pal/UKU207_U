@@ -14,6 +14,7 @@
 
 char spi1(char in);
 void spi1_config(void);
+void spi1_config_mcp2515(void);
 void spi1_unconfig(void);
 void lc640_wren(void);
 char lc640_rdsr(void);
@@ -48,40 +49,41 @@ void memo_read (void);
 
 
 
-#line 138 "eeprom_map.h"
+#line 136 "eeprom_map.h"
+
+
+
+
+#line 154 "eeprom_map.h"
+
+#line 166 "eeprom_map.h"
+
+
+
+#line 178 "eeprom_map.h"
+
+
+#line 189 "eeprom_map.h"
+
+
+
+#line 200 "eeprom_map.h"
+
+
+
+#line 256 "eeprom_map.h"
+
+
+#line 298 "eeprom_map.h"
 
 
 
 
 
-#line 157 "eeprom_map.h"
 
 
 
-#line 169 "eeprom_map.h"
-
-
-#line 180 "eeprom_map.h"
-
-
-
-#line 191 "eeprom_map.h"
-
-
-
-#line 247 "eeprom_map.h"
-
-
-#line 289 "eeprom_map.h"
-
-
-
-
-
-
-
-
-#line 311 "eeprom_map.h"
+#line 320 "eeprom_map.h"
 
 
 
@@ -913,7 +915,7 @@ typedef enum {
 	iBps_list,
 	iSpch_set,
 	iAvt_set_sel,iAvt_set,iSet_li_bat,
-	iOut_volt_contr,iDop_rele_set,iBlok_ips_set}i_enum;
+	iOut_volt_contr,iDop_rele_set,iBlok_ips_set,iIps_Curr_Avg_Set}i_enum;
 
 typedef struct  
 {
@@ -1048,6 +1050,11 @@ extern signed short CNTRL_HNDL_TIME;
 extern signed short USODERG_LI_BAT;		
 extern signed short QSODERG_LI_BAT;		
 extern signed short TVENTMAX;			
+extern signed short ICA_EN;				
+extern signed short ICA_CH;				
+extern signed short ICA_MODBUS_ADDRESS;
+extern signed short ICA_MODBUS_TCP_IP1,ICA_MODBUS_TCP_IP2,ICA_MODBUS_TCP_IP3,ICA_MODBUS_TCP_IP4;	
+extern signed short ICA_MODBUS_TCP_UNIT_ID;	
 
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
@@ -1551,9 +1558,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1417 "main.h"
+#line 1422 "main.h"
 
-#line 1428 "main.h"
+#line 1433 "main.h"
 
 
 
@@ -1654,6 +1661,17 @@ extern short plazma_numOfPacks;
 extern char plazma_ztt[2];
 
 extern U8 socket_tcp;
+
+
+
+extern char ica_plazma[10];
+extern char ica_timer_cnt;
+extern signed short ica_my_current;
+extern signed short ica_your_current;
+extern signed short ica_u_necc;
+extern U8 tcp_soc_avg;
+extern U8 tcp_connect_stat;
+
 
 
 
@@ -1882,10 +1900,10 @@ void snmp_powerup_psu_timeout_write (int mode);
 void snmp_max_temperature_write (int mode);
 void event2snmp(char num);
 void snmp_trap_send(char* str, signed short in0, signed short in1, signed short in2);
-void snmp_alarm_aktiv_write1(void);
-void snmp_alarm_aktiv_write2(void);
-void snmp_alarm_aktiv_write3(void);
-void snmp_alarm_aktiv_write4(void);
+void snmp_alarm_aktiv_write1(int mode);
+void snmp_alarm_aktiv_write2(int mode);
+void snmp_alarm_aktiv_write3(int mode);
+void snmp_alarm_aktiv_write4(int mode);
 void snmp_klimat_settings_box_alarm_write(int mode);
 void snmp_klimat_settings_vent_on_write(int mode);
 void snmp_klimat_settings_vent_off_write(int mode);
@@ -1988,6 +2006,7 @@ void ext_drv(void);
 void adc_drv7(void);
 void avt_hndl(void);
 void vent_resurs_hndl(void);
+void ips_current_average_hndl(void);
 
 
 
@@ -2042,9 +2061,18 @@ void zar_superviser_start(void);
 void vent_hndl(void);
 void speedChargeHndl(void);
 void speedChargeStartStop(void);
+void	numOfForvardBps_init(void);
 
 
 #line 7 "memo.c"
+#line 1 "gran.h"
+
+void gran_ring_char(signed char *adr, signed char min, signed char max) ;
+void gran_char(signed char *adr, signed char min, signed char max);
+void gran(signed short *adr, signed short min, signed short max);
+void gran_ring(signed short *adr, signed short min, signed short max);
+void gran_long(signed long *adr, signed long min, signed long max); 
+#line 8 "memo.c"
 
 
 void memo_read (void)
@@ -2178,8 +2206,16 @@ ipsBlckSrc=lc640_read_int(0x10+100+190);
 ipsBlckLog=lc640_read_int(0x10+100+192);
 CNTRL_HNDL_TIME=lc640_read_int(0x10+100+196);
 USODERG_LI_BAT=lc640_read_int(0x10+100+198);
-QSODERG_LI_BAT=lc640_read_int(0x10+100+200);
-TVENTMAX=lc640_read_int(0x10+100+202);
+QSODERG_LI_BAT=lc640_read_int(0x10+350);
+TVENTMAX=lc640_read_int(0x10+350+2);
+ICA_EN=lc640_read_int(0x10+350+6);
+ICA_CH=lc640_read_int(0x10+350+4);
+ICA_MODBUS_ADDRESS=lc640_read_int(0x10+350+8);
+ICA_MODBUS_TCP_IP1=lc640_read_int(0x10+350+10);
+ICA_MODBUS_TCP_IP2=lc640_read_int(0x10+350+12);
+ICA_MODBUS_TCP_IP3=lc640_read_int(0x10+350+14);
+ICA_MODBUS_TCP_IP4=lc640_read_int(0x10+350+16);
+ICA_MODBUS_TCP_UNIT_ID=lc640_read_int(0x10+350+18);
 
 BAT_IS_ON[0]=(enum_bat_is_on)lc640_read_int(0x10+400);
 BAT_IS_ON[1]=(enum_bat_is_on)lc640_read_int(0x10+400+30);

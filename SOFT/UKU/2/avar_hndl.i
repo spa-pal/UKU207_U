@@ -27,6 +27,7 @@ void avar_bat_as_hndl(char b, char in);
 void ke_mem_hndl(char b,unsigned short in);
 void vz_mem_hndl(unsigned short in);
 void wrk_mem_hndl(char b);
+void avar_bat_ips_hndl(char in);
 
 
 
@@ -42,40 +43,41 @@ void wrk_mem_hndl(char b);
 
 
 
-#line 138 "eeprom_map.h"
+#line 136 "eeprom_map.h"
+
+
+
+
+#line 154 "eeprom_map.h"
+
+#line 166 "eeprom_map.h"
+
+
+
+#line 178 "eeprom_map.h"
+
+
+#line 189 "eeprom_map.h"
+
+
+
+#line 200 "eeprom_map.h"
+
+
+
+#line 256 "eeprom_map.h"
+
+
+#line 298 "eeprom_map.h"
 
 
 
 
 
-#line 157 "eeprom_map.h"
 
 
 
-#line 169 "eeprom_map.h"
-
-
-#line 180 "eeprom_map.h"
-
-
-
-#line 191 "eeprom_map.h"
-
-
-
-#line 247 "eeprom_map.h"
-
-
-#line 289 "eeprom_map.h"
-
-
-
-
-
-
-
-
-#line 311 "eeprom_map.h"
+#line 320 "eeprom_map.h"
 
 
 
@@ -345,6 +347,7 @@ extern char ccc_plazma[20];
 
 char spi1(char in);
 void spi1_config(void);
+void spi1_config_mcp2515(void);
 void spi1_unconfig(void);
 void lc640_wren(void);
 char lc640_rdsr(void);
@@ -3087,7 +3090,7 @@ typedef enum {
 	iBps_list,
 	iSpch_set,
 	iAvt_set_sel,iAvt_set,iSet_li_bat,
-	iOut_volt_contr,iDop_rele_set,iBlok_ips_set}i_enum;
+	iOut_volt_contr,iDop_rele_set,iBlok_ips_set,iIps_Curr_Avg_Set}i_enum;
 
 typedef struct  
 {
@@ -3222,6 +3225,11 @@ extern signed short CNTRL_HNDL_TIME;
 extern signed short USODERG_LI_BAT;		
 extern signed short QSODERG_LI_BAT;		
 extern signed short TVENTMAX;			
+extern signed short ICA_EN;				
+extern signed short ICA_CH;				
+extern signed short ICA_MODBUS_ADDRESS;
+extern signed short ICA_MODBUS_TCP_IP1,ICA_MODBUS_TCP_IP2,ICA_MODBUS_TCP_IP3,ICA_MODBUS_TCP_IP4;	
+extern signed short ICA_MODBUS_TCP_UNIT_ID;	
 
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
@@ -3725,9 +3733,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1417 "main.h"
+#line 1422 "main.h"
 
-#line 1428 "main.h"
+#line 1433 "main.h"
 
 
 
@@ -3831,6 +3839,17 @@ extern U8 socket_tcp;
 
 
 
+extern char ica_plazma[10];
+extern char ica_timer_cnt;
+extern signed short ica_my_current;
+extern signed short ica_your_current;
+extern signed short ica_u_necc;
+extern U8 tcp_soc_avg;
+extern U8 tcp_connect_stat;
+
+
+
+
 
 
 
@@ -3916,6 +3935,7 @@ void ext_drv(void);
 void adc_drv7(void);
 void avt_hndl(void);
 void vent_resurs_hndl(void);
+void ips_current_average_hndl(void);
 
 
 
@@ -3970,9 +3990,256 @@ void zar_superviser_start(void);
 void vent_hndl(void);
 void speedChargeHndl(void);
 void speedChargeStartStop(void);
+void	numOfForvardBps_init(void);
 
 
 #line 8 "avar_hndl.c"
+#line 1 "snmp_data_file.h"
+extern char snmp_community[10];
+
+
+extern signed short snmp_device_code;
+extern signed 	   snmp_sernum;
+extern signed short snmp_sernum_lsb;
+extern signed short snmp_sernum_msb;
+extern char 	   snmp_location[100];
+extern signed short snmp_numofbat;
+extern signed short snmp_numofbps;
+extern signed short snmp_numofinv;
+extern signed short snmp_numofavt;
+extern signed short snmp_numofdt;
+extern signed short snmp_numofsk;
+extern signed short snmp_numofevents;
+
+
+extern signed short snmp_mains_power_voltage;
+extern signed short snmp_mains_power_frequency;
+extern signed short snmp_mains_power_status;
+extern signed short snmp_mains_power_alarm;
+extern signed short snmp_mains_power_voltage_phaseA;
+extern signed short snmp_mains_power_voltage_phaseB;
+extern signed short snmp_mains_power_voltage_phaseC;
+
+
+extern signed short snmp_load_voltage;
+extern signed short snmp_load_current;
+
+
+extern signed short snmp_bps_number[8];
+extern signed short snmp_bps_voltage[8];
+extern signed short snmp_bps_current[8];
+extern signed short snmp_bps_temperature[8];
+extern signed short snmp_bps_stat[8];
+
+
+extern signed short snmp_inv_number[3];
+extern signed short snmp_inv_voltage[3];
+extern signed short snmp_inv_current[3];
+extern signed short snmp_inv_temperature[3];
+extern signed short snmp_inv_stat[3];
+
+
+extern signed short snmp_bat_number[2];
+extern signed short snmp_bat_voltage[2];
+extern signed short snmp_bat_part_voltage[2];
+extern signed short snmp_bat_current[2];
+extern signed short snmp_bat_temperature[2];
+extern signed short snmp_bat_capacity[2];
+extern signed short snmp_bat_charge[2];
+extern signed short snmp_bat_status[2];
+
+
+extern signed short snmp_makb_number[4];
+extern signed short snmp_makb_connect_status[4];
+extern signed short snmp_makb_voltage0[4];
+extern signed short snmp_makb_voltage1[4];
+extern signed short snmp_makb_voltage2[4];
+extern signed short snmp_makb_voltage3[4];
+extern signed short snmp_makb_voltage4[4];
+extern signed short snmp_makb_temper0[4];
+extern signed short snmp_makb_temper1[4];
+extern signed short snmp_makb_temper2[4];
+extern signed short snmp_makb_temper3[4];
+extern signed short snmp_makb_temper4[4];
+extern signed short snmp_makb_temper0_stat[4];
+extern signed short snmp_makb_temper1_stat[4];
+extern signed short snmp_makb_temper2_stat[4];
+extern signed short snmp_makb_temper3_stat[4];
+extern signed short snmp_makb_temper4_stat[4];
+extern signed short snmp_bat_voltage[2];
+extern signed short snmp_bat_current[2];
+extern signed short snmp_bat_temperature[2];
+extern signed short snmp_bat_capacity[2];
+extern signed short snmp_bat_charge[2];
+extern signed short snmp_bat_status[2]; 
+
+
+
+extern signed short snmp_spc_stat;
+extern char snmp_spc_trap_message[100];
+extern signed short snmp_spc_trap_value_0,snmp_spc_trap_value_1,snmp_spc_trap_value_2;
+
+
+extern signed short snmp_energy_vvod_phase_a;
+extern signed short snmp_energy_vvod_phase_b;
+extern signed short snmp_energy_vvod_phase_c;
+extern signed short snmp_energy_pes_phase_a;
+extern signed short snmp_energy_pes_phase_b;
+extern signed short snmp_energy_pes_phase_c;
+
+
+extern signed long snmp_energy_total_energy;
+extern signed short snmp_energy_current_energy;
+
+
+extern signed char snmp_sk_number[4];
+extern signed char snmp_sk_aktiv[4];
+extern signed char snmp_sk_alarm_aktiv[4];
+extern signed char snmp_sk_alarm[4];
+extern char snmp_sk_name[4][20];
+
+
+extern signed char snmp_dt_number[3];
+extern signed short snmp_dt_temper[3];
+extern signed char snmp_dt_error[3];
+
+
+extern signed char snmp_avt_number[12];
+extern signed char snmp_avt_stat[12];
+
+
+extern signed short snmp_command;
+extern signed short snmp_command_parametr;
+
+
+extern char snmp_log[64][128];
+
+
+extern signed short snmp_main_bps;
+extern signed short snmp_zv_en;
+extern signed short snmp_alarm_auto_disable;
+extern signed short snmp_bat_test_time;
+extern signed short snmp_u_max;
+extern signed short snmp_u_min;
+extern signed short snmp_u_0_grad;
+extern signed short snmp_u_20_grad;
+extern signed short snmp_u_sign;
+extern signed short snmp_u_min_power;
+extern signed short snmp_u_withouth_bat;
+extern signed short snmp_control_current;
+extern signed short snmp_max_charge_current;
+extern signed short snmp_max_current;
+extern signed short snmp_min_current;
+extern signed short snmp_uvz;
+extern signed short snmp_max_current_koef;
+extern signed short snmp_max_current_koef;
+extern signed short snmp_up_charge_koef;
+extern signed short snmp_powerup_psu_timeout;
+extern signed short snmp_max_temperature;
+extern signed short snmp_tsign_bat; 
+extern signed short snmp_tmax_bat;
+extern signed short snmp_tsign_bps;
+extern signed short snmp_tmax_bps;
+extern signed short snmp_bat_part_alarm;
+extern signed short snmp_power_cnt_adress;
+
+
+extern signed short snmp_klimat_box_temper;
+extern signed short snmp_klimat_settings_box_alarm;
+extern signed short snmp_klimat_settings_vent_on;
+extern signed short snmp_klimat_settings_vent_off;
+extern signed short snmp_klimat_settings_warm_on;
+extern signed short snmp_klimat_settings_warm_off;
+extern signed short snmp_klimat_settings_load_on;
+extern signed short snmp_klimat_settings_load_off;
+extern signed short snmp_klimat_settings_batt_on;
+extern signed short snmp_klimat_settings_batt_off;
+
+
+extern signed short snmp_dt_ext;
+extern signed short snmp_dt_msan;
+extern signed short snmp_dt_epu;
+
+
+extern short snmp_lakb_number[7];				
+extern short snmp_lakb_voltage[7];				
+extern short snmp_lakb_max_cell_voltage[7];		
+extern short snmp_lakb_min_cell_voltage[7];		
+extern short snmp_lakb_max_cell_temperature[7];	
+extern short snmp_lakb_min_cell_temperature[7];	
+extern short snmp_lakb_ch_curr[7];				
+extern short snmp_lakb_dsch_curr[7];			
+extern short snmp_lakb_rat_cap[7];				
+extern short snmp_lakb_soh[7];				
+extern short snmp_lakb_soc[7];				
+extern short snmp_lakb_cclv[7];  				
+extern short snmp_lakb_rbt[7];				
+extern short snmp_lakb_flags1[7];				
+extern short snmp_lakb_flags2[7];				
+extern char snmp_lakb_damp1[3][150];				
+extern char snmp_lakb_damp2[100];				
+extern signed char	snmp_lakb_cell_temperature_1[3];		
+extern signed char	snmp_lakb_cell_temperature_2[3];		
+extern signed char	snmp_lakb_cell_temperature_3[3];		
+extern signed char	snmp_lakb_cell_temperature_4[3];		
+extern signed char	snmp_lakb_cell_temperature_ambient[3];	
+extern signed char	snmp_lakb_cell_temperature_power[3];	
+
+
+  
+
+void snmp_data (void);
+void snmp_sernum_write (int mode); 
+void snmp_location_write (int mode);
+void snmp_command_execute (int mode);
+void event2snmp(char num);
+void snmp_main_bps_write (int mode);
+void snmp_zv_on_write (int mode);
+void snmp_alarm_auto_disable_write (int mode);
+void snmp_bat_test_time_write (int mode);
+void snmp_u_max_write (int mode);
+void snmp_u_min_write (int mode);
+void snmp_u_0_grad_write (int mode);
+void snmp_u_20_grad_write (int mode);
+void snmp_u_sign_write (int mode);
+void snmp_u_min_power_write (int mode);
+void snmp_u_withouth_bat_write (int mode);
+void snmp_control_current_write (int mode);
+void snmp_max_charge_current_write (int mode);
+void snmp_max_current_write (int mode);
+void snmp_min_current_write (int mode);
+void snmp_up_charge_koef_write (int mode);
+void snmp_powerup_psu_timeout_write (int mode);
+void snmp_max_temperature_write (int mode);
+void event2snmp(char num);
+void snmp_trap_send(char* str, signed short in0, signed short in1, signed short in2);
+void snmp_alarm_aktiv_write1(int mode);
+void snmp_alarm_aktiv_write2(int mode);
+void snmp_alarm_aktiv_write3(int mode);
+void snmp_alarm_aktiv_write4(int mode);
+void snmp_klimat_settings_box_alarm_write(int mode);
+void snmp_klimat_settings_vent_on_write(int mode);
+void snmp_klimat_settings_vent_off_write(int mode);
+void snmp_klimat_settings_warm_on_write(int mode);
+void snmp_klimat_settings_warm_off_write(int mode);
+void snmp_klimat_settings_load_on_write(int mode);
+void snmp_klimat_settings_load_off_write(int mode);
+void snmp_klimat_settings_batt_on_write(int mode);
+void snmp_klimat_settings_batt_off_write(int mode);
+void snmp_tsign_bat_write(int mode);
+void snmp_tmax_bat_write(int mode);
+void snmp_tsign_bps_write(int mode);
+void snmp_tmax_bps_write(int mode);
+void snmp_bat_part_alarm_write(int mode);
+void snmp_power_cnt_adress_write(int mode);
+void snmp_uvz_write(int mode);
+
+
+
+
+
+ 
+#line 9 "avar_hndl.c"
 
      
 
@@ -4039,7 +4306,7 @@ for(i=0;i<2;i++)
 
 for(i=0;i<12;i++)
 	{
-	if(bps[i]._av)	avar_stat = ( (avar_stat & ~((0xffffffff>>(32-1))<<3+i)) | (1 << 3+i) );
+	if(bps[i]._av&0xef)	avar_stat = ( (avar_stat & ~((0xffffffff>>(32-1))<<3+i)) | (1 << 3+i) );
 	else	   		avar_stat = ( (avar_stat & ~((0xffffffff>>(32-1))<<3+i)) | (0 << 3+i) );
 	}
 

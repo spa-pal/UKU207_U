@@ -285,11 +285,24 @@ modbus_rx_arg1=(((unsigned short)modbus_an_buffer[4])*((unsigned short)256))+((u
 //modbus_rx_arg2=(((unsigned short)modbus_an_buffer[6])*((unsigned short)256))+((unsigned short)modbus_an_buffer[7]);
 //modbus_rx_arg3=(((unsigned short)modbus_an_buffer[8])*((unsigned short)256))+((unsigned short)modbus_an_buffer[9]);
 
+//#define IPS_CURR_AVG_MODBUS_ADRESS	1
 
 if(crc16_calculated==crc16_incapsulated)
 	{
-	
-	if(modbus_an_buffer[0]==MODBUS_ADRESS)
+	ica_plazma[4]++;
+	if(modbus_an_buffer[0]==ICA_MODBUS_ADDRESS)
+		{
+		ica_plazma[3]++;
+		if(modbus_func==4)		//чтение произвольного кол-ва регистров	входов
+			{
+			ica_plazma[2]++;
+			if(modbus_an_buffer[2]==2)
+				{
+				ica_your_current=(((unsigned short)modbus_an_buffer[3])*((unsigned short)256))+((unsigned short)modbus_an_buffer[4]);
+				}
+			}
+		}
+	else if(modbus_an_buffer[0]==MODBUS_ADRESS)
 		{
 		if(modbus_func==3)		//чтение произвольного кол-ва регистров хранения
 			{

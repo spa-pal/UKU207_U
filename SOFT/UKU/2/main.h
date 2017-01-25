@@ -768,7 +768,7 @@ typedef enum {
 	iBps_list,
 	iSpch_set,
 	iAvt_set_sel,iAvt_set,iSet_li_bat,
-	iOut_volt_contr,iDop_rele_set,iBlok_ips_set}i_enum;
+	iOut_volt_contr,iDop_rele_set,iBlok_ips_set,iIps_Curr_Avg_Set}i_enum;
 
 typedef struct  
 {
@@ -903,6 +903,11 @@ extern signed short CNTRL_HNDL_TIME;	//Постоянная времени регулирования источник
 extern signed short USODERG_LI_BAT;		//Напряжение содержания литиевой батареи
 extern signed short QSODERG_LI_BAT;		//Заряд при котором начинает действовать напряжение содержания литиевой батареи
 extern signed short TVENTMAX;			//Максимальный ресурс вентилятора
+extern signed short ICA_EN;				//Включенность режима выравнивания токов ИПС
+extern signed short ICA_CH;				//Канал связи для выравнивания токов, 0 - MODBUS, 1 - MODBUS-TCP
+extern signed short ICA_MODBUS_ADDRESS;//Адрес ведомого для выравнивания токов по шине MODBUS-RTU
+extern signed short ICA_MODBUS_TCP_IP1,ICA_MODBUS_TCP_IP2,ICA_MODBUS_TCP_IP3,ICA_MODBUS_TCP_IP4;	//IP ведомого для выравнивания токов по шине MODBUS-TCP
+extern signed short ICA_MODBUS_TCP_UNIT_ID;	//UNIT ID ведомого для выравнивания токов по шине MODBUS-TCP
 
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
@@ -1525,6 +1530,17 @@ extern short plazma_numOfPacks;
 extern char plazma_ztt[2];
 
 extern U8 socket_tcp;
+
+//-----------------------------------------------
+//Выравнивание токов ИПС
+extern char ica_plazma[10];
+extern char ica_timer_cnt;
+extern signed short ica_my_current;
+extern signed short ica_your_current;
+extern signed short ica_u_necc;
+extern U8 tcp_soc_avg;
+extern U8 tcp_connect_stat;
+
 
 //-----------------------------------------------
 //Ресурс вентиляторов

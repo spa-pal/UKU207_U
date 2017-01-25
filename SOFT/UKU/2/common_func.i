@@ -81,40 +81,41 @@ void ret_hndl(void);
 
 
 
-#line 138 "eeprom_map.h"
+#line 136 "eeprom_map.h"
+
+
+
+
+#line 154 "eeprom_map.h"
+
+#line 166 "eeprom_map.h"
+
+
+
+#line 178 "eeprom_map.h"
+
+
+#line 189 "eeprom_map.h"
+
+
+
+#line 200 "eeprom_map.h"
+
+
+
+#line 256 "eeprom_map.h"
+
+
+#line 298 "eeprom_map.h"
 
 
 
 
 
-#line 157 "eeprom_map.h"
 
 
 
-#line 169 "eeprom_map.h"
-
-
-#line 180 "eeprom_map.h"
-
-
-
-#line 191 "eeprom_map.h"
-
-
-
-#line 247 "eeprom_map.h"
-
-
-#line 289 "eeprom_map.h"
-
-
-
-
-
-
-
-
-#line 311 "eeprom_map.h"
+#line 320 "eeprom_map.h"
 
 
 
@@ -267,6 +268,7 @@ extern const unsigned short ADR_SK_RS_EN[4];
 
 char spi1(char in);
 void spi1_config(void);
+void spi1_config_mcp2515(void);
 void spi1_unconfig(void);
 void lc640_wren(void);
 char lc640_rdsr(void);
@@ -974,7 +976,7 @@ typedef enum {
 	iBps_list,
 	iSpch_set,
 	iAvt_set_sel,iAvt_set,iSet_li_bat,
-	iOut_volt_contr,iDop_rele_set,iBlok_ips_set}i_enum;
+	iOut_volt_contr,iDop_rele_set,iBlok_ips_set,iIps_Curr_Avg_Set}i_enum;
 
 typedef struct  
 {
@@ -1109,6 +1111,11 @@ extern signed short CNTRL_HNDL_TIME;
 extern signed short USODERG_LI_BAT;		
 extern signed short QSODERG_LI_BAT;		
 extern signed short TVENTMAX;			
+extern signed short ICA_EN;				
+extern signed short ICA_CH;				
+extern signed short ICA_MODBUS_ADDRESS;
+extern signed short ICA_MODBUS_TCP_IP1,ICA_MODBUS_TCP_IP2,ICA_MODBUS_TCP_IP3,ICA_MODBUS_TCP_IP4;	
+extern signed short ICA_MODBUS_TCP_UNIT_ID;	
 
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
@@ -1612,9 +1619,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1417 "main.h"
+#line 1422 "main.h"
 
-#line 1428 "main.h"
+#line 1433 "main.h"
 
 
 
@@ -1715,6 +1722,17 @@ extern short plazma_numOfPacks;
 extern char plazma_ztt[2];
 
 extern U8 socket_tcp;
+
+
+
+extern char ica_plazma[10];
+extern char ica_timer_cnt;
+extern signed short ica_my_current;
+extern signed short ica_your_current;
+extern signed short ica_u_necc;
+extern U8 tcp_soc_avg;
+extern U8 tcp_connect_stat;
+
 
 
 

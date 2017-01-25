@@ -5,6 +5,7 @@
 #include <LPC17xx.H>
 #include "main.h"
 #include "control.h"
+#include "snmp_data_file.h" 
 
      
 //***********************************************
@@ -71,7 +72,7 @@ for(i=0;i<2;i++)
 
 for(i=0;i<12;i++)
 	{
-	if(bps[i]._av)	SET_REG(avar_stat,1,3+i,1);
+	if(bps[i]._av&0xef)	SET_REG(avar_stat,1,3+i,1);
 	else	   		SET_REG(avar_stat,0,3+i,1);
 	}
 

@@ -9,6 +9,8 @@
 #include "beep.h"
 #include "snmp_data_file.h" 
 #include "sacred_sun.h"
+#include "sc16is7xx.h"
+#include "modbus_tcp.h"
 #include <LPC17xx.h>
 
 #define KOEFPOT  105L
@@ -774,7 +776,7 @@ void matemat(void)
 //signed short temp_SS;
 signed long temp_SL/*,temp_SL_*/;
 char /*temp,*/i;
-signed short temp_SS;
+//signed short temp_SS;
 
 #ifdef UKU_MGTS
 //напряжение сети
@@ -1324,6 +1326,15 @@ temp_SL*=Kubps;
 if(AUSW_MAIN==22010)temp_SL/=400L;
 else temp_SL/=500L;
 bps_U=(signed short)temp_SL;
+
+if(bps_U<100)
+	{
+	char i;
+	for(i=0;i<NUMIST;i++)
+		{
+		if(bps[i]._Uin>bps_U)bps_U=bps[i]._Uin;
+		}
+	}
 
 //Суммарный ток выпрямителей
 temp_SL=0;
@@ -2891,23 +2902,7 @@ else
 
 #endif
 
-#ifdef U /*
-
-
-
-/*
-//Реле аварии батарей
-if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_BAT))
-	{
-	if(mess_data[1]==0) temp&=~(1<<SHIFT_REL_AV_BAT);
-	else if(mess_data[1]==1) temp|=(1<<SHIFT_REL_AV_BAT);
-     }
-else 
-	{
-	if(!(avar_ind_stat&0x00000006)) temp&=~(1<<SHIFT_REL_AV_BAT);
-     else temp|=(1<<SHIFT_REL_AV_BAT);
-	} 
-*/
+#ifdef U 
 
 #endif
 
@@ -3831,7 +3826,7 @@ else if(b1Hz_sh)
 		char ii,iii;
 
 		ii=(char)NUMIST;
-		if(ii<0)ii=0;
+		//if(ii<0)ii=0;
 		if(ii>32)ii=32;
 		iii=numOfForvardBps;
 		if(iii<0)iii=0;
@@ -3933,11 +3928,92 @@ power_current_tempo_old=power_current_tempo;
 }
 
 //-----------------------------------------------
+void ips_current_average_hndl(void)
+{
+if(++ica_timer_cnt>=10)
+	{
+	ica_timer_cnt=0;
+	ica_plazma[0]++;
+
+	ica_my_current=bps_I;
+
+	if((ica_my_current>ica_your_current)&&((ica_my_current-ica_your_current)>=10)&&(ICA_EN==1))
+		{
+		ica_plazma[1]++;
+		ica_u_necc--;
+		}
+	else if((ica_my_current<ica_your_current)&&((ica_your_current-ica_my_current)>=10)&&(ICA_EN==1))
+		{
+		ica_plazma[1]--;
+		ica_u_necc++;
+		}
+	gran(&ica_u_necc,-20,20);
+	}
+
+if((ica_timer_cnt==8)&&(ICA_EN==1))
+	{
+	char modbus_buff[20],i;
+	short crc_temp;
+
+	modbus_buff[0] = ICA_MODBUS_ADDRESS;
+	modbus_buff[1] = 4;
+	modbus_buff[2] = 0;
+	modbus_buff[3] = 2;
+	modbus_buff[4] = 0;	
+	modbus_buff[5] = 1;
+
+	crc_temp= CRC16_2(modbus_buff,6);
+
+	modbus_buff[6]= (char)crc_temp;
+	modbus_buff[7]= (char)(crc_temp>>8);
+
+	if(ICA_CH==0)
+		{
+		for (i=0;i<8;i++)
+			{
+			putchar_sc16is700(modbus_buff[i]);
+			}
+		}
+	else if(ICA_CH==1)
+		{
+		static U8 rem_IP[4];
+		rem_IP[0]=ICA_MODBUS_TCP_IP1;
+		rem_IP[1]=ICA_MODBUS_TCP_IP2;
+		rem_IP[2]=ICA_MODBUS_TCP_IP3;
+		rem_IP[3]=ICA_MODBUS_TCP_IP4;
+  		//tcp_soc_avg = tcp_get_socket (TCP_TYPE_CLIENT, 0, 30, tcp_callback);
+  		if (tcp_soc_avg != 0) 
+			{
+    		
+			//tcp_connect_stat=0;
+    		//tcp_connect (tcp_soc_avg, rem_IP, 502, 1000);
+			/*while(!tcp_connect_stat)
+				{
+				}*/
+			//delay_us(500);
+			//tcp_close(tcp_soc_avg);
+
+			}
+		}
+	}
+
+if((ica_timer_cnt==3)&&(ICA_EN==1))
+	{
+	//if(tcp_connect_stat)
+		{
+		//tcp_close(tcp_soc_avg);
+		//tcp_connect_stat=3;
+		}
+	}
+
+}
+
+//-----------------------------------------------
 void inv_drv(char in)
 {
 char temp,temp_;
 //if (bps[in]._device!=dINV) return;
-plazma_inv[4];
+//plazma_inv[4];
 
 gran_char(&first_inv_slot,1,7);
 
@@ -5198,7 +5274,7 @@ signed long temp_L;
 signed long temp_SL;
 //signed short temp_SS;
 signed short t[2];
-char i;
+//char i;
 
 //temp_SS=0;
 
@@ -5247,6 +5323,7 @@ if(mess_find_unvol(MESS2UNECC_HNDL))
 		u_necc=mess_data[1];
 		}		
 	}
+if(ICA_EN)u_necc+=ica_u_necc;
 #endif
 
 
@@ -6593,7 +6670,7 @@ for(i=0;i<NUMIST;i++)
 		if(bps[i]._vent_resurs!=temp_US)bps[i]._vent_resurs=temp_US;
 		}
 
-	if(bps[i]._vent_resurs>TVENTMAX)
+	if(bps[i]._vent_resurs>TVENTMAX*10)
 		{
 		bps[i]._av|=(1<<4);
 		}

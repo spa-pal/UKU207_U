@@ -998,7 +998,7 @@ typedef enum {
 	iBps_list,
 	iSpch_set,
 	iAvt_set_sel,iAvt_set,iSet_li_bat,
-	iOut_volt_contr,iDop_rele_set,iBlok_ips_set}i_enum;
+	iOut_volt_contr,iDop_rele_set,iBlok_ips_set,iIps_Curr_Avg_Set}i_enum;
 
 typedef struct  
 {
@@ -1133,6 +1133,11 @@ extern signed short CNTRL_HNDL_TIME;
 extern signed short USODERG_LI_BAT;		
 extern signed short QSODERG_LI_BAT;		
 extern signed short TVENTMAX;			
+extern signed short ICA_EN;				
+extern signed short ICA_CH;				
+extern signed short ICA_MODBUS_ADDRESS;
+extern signed short ICA_MODBUS_TCP_IP1,ICA_MODBUS_TCP_IP2,ICA_MODBUS_TCP_IP3,ICA_MODBUS_TCP_IP4;	
+extern signed short ICA_MODBUS_TCP_UNIT_ID;	
 
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
@@ -1636,9 +1641,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1417 "main.h"
+#line 1422 "main.h"
 
-#line 1428 "main.h"
+#line 1433 "main.h"
 
 
 
@@ -1739,6 +1744,17 @@ extern short plazma_numOfPacks;
 extern char plazma_ztt[2];
 
 extern U8 socket_tcp;
+
+
+
+extern char ica_plazma[10];
+extern char ica_timer_cnt;
+extern signed short ica_my_current;
+extern signed short ica_your_current;
+extern signed short ica_u_necc;
+extern U8 tcp_soc_avg;
+extern U8 tcp_connect_stat;
+
 
 
 
@@ -1959,6 +1975,7 @@ const char caracter[1536]={
 
 char spi1(char in);
 void spi1_config(void);
+void spi1_config_mcp2515(void);
 void spi1_unconfig(void);
 void lc640_wren(void);
 char lc640_rdsr(void);
@@ -2067,6 +2084,7 @@ void rs232_data_out(void);
 void rs232_data_out_tki(void);
 void uart_out_buff0 (char *ptr, char len);
 void rs232_data_out_1(void);
+uint32_t UARTInit( uint32_t PortNum, uint32_t baudrate );
 
 #line 18 "main.c"
 #line 1 "uart1.h"
@@ -2207,40 +2225,41 @@ void ret_hndl(void);
 
 
 
-#line 138 "eeprom_map.h"
+#line 136 "eeprom_map.h"
+
+
+
+
+#line 154 "eeprom_map.h"
+
+#line 166 "eeprom_map.h"
+
+
+
+#line 178 "eeprom_map.h"
+
+
+#line 189 "eeprom_map.h"
+
+
+
+#line 200 "eeprom_map.h"
+
+
+
+#line 256 "eeprom_map.h"
+
+
+#line 298 "eeprom_map.h"
 
 
 
 
 
-#line 157 "eeprom_map.h"
 
 
 
-#line 169 "eeprom_map.h"
-
-
-#line 180 "eeprom_map.h"
-
-
-
-#line 191 "eeprom_map.h"
-
-
-
-#line 247 "eeprom_map.h"
-
-
-#line 289 "eeprom_map.h"
-
-
-
-
-
-
-
-
-#line 311 "eeprom_map.h"
+#line 320 "eeprom_map.h"
 
 
 
@@ -2500,6 +2519,7 @@ void ext_drv(void);
 void adc_drv7(void);
 void avt_hndl(void);
 void vent_resurs_hndl(void);
+void ips_current_average_hndl(void);
 
 
 
@@ -2554,6 +2574,7 @@ void zar_superviser_start(void);
 void vent_hndl(void);
 void speedChargeHndl(void);
 void speedChargeStartStop(void);
+void	numOfForvardBps_init(void);
 
 
 #line 25 "main.c"
@@ -2765,6 +2786,7 @@ void avar_bat_as_hndl(char b, char in);
 void ke_mem_hndl(char b,unsigned short in);
 void vz_mem_hndl(unsigned short in);
 void wrk_mem_hndl(char b);
+void avar_bat_ips_hndl(char in);
 
 
 
@@ -3020,10 +3042,10 @@ void snmp_powerup_psu_timeout_write (int mode);
 void snmp_max_temperature_write (int mode);
 void event2snmp(char num);
 void snmp_trap_send(char* str, signed short in0, signed short in1, signed short in2);
-void snmp_alarm_aktiv_write1(void);
-void snmp_alarm_aktiv_write2(void);
-void snmp_alarm_aktiv_write3(void);
-void snmp_alarm_aktiv_write4(void);
+void snmp_alarm_aktiv_write1(int mode);
+void snmp_alarm_aktiv_write2(int mode);
+void snmp_alarm_aktiv_write3(int mode);
+void snmp_alarm_aktiv_write4(int mode);
 void snmp_klimat_settings_box_alarm_write(int mode);
 void snmp_klimat_settings_vent_on_write(int mode);
 void snmp_klimat_settings_vent_off_write(int mode);
@@ -3499,6 +3521,7 @@ void rs232_data_out(void);
 void rs232_data_out_tki(void);
 void uart_out_buff0 (char *ptr, char len);
 void rs232_data_out_1(void);
+uint32_t UARTInit( uint32_t PortNum, uint32_t baudrate );
 
 #line 37 "main.c"
 #line 38 "main.c"
@@ -3650,6 +3673,8 @@ extern short modbus_tcp_rx_arg1;
 
 extern char* modbus_tcp_out_ptr;
 
+U16 tcp_callback (U8 soc, U8 evt, U8 *ptr, U16 par);
+
 #line 44 "main.c"
 
 extern U8 own_hw_adr[];
@@ -3767,6 +3792,11 @@ signed short CNTRL_HNDL_TIME;
 signed short USODERG_LI_BAT;	
 signed short QSODERG_LI_BAT;	
 signed short TVENTMAX;			
+signed short ICA_EN;			
+signed short ICA_CH;			
+signed short ICA_MODBUS_ADDRESS;
+signed short ICA_MODBUS_TCP_IP1,ICA_MODBUS_TCP_IP2,ICA_MODBUS_TCP_IP3,ICA_MODBUS_TCP_IP4;	
+signed short ICA_MODBUS_TCP_UNIT_ID;	
 
 enum_apv_on APV_ON1,APV_ON2;
 signed short APV_ON2_TIME;
@@ -3781,7 +3811,7 @@ signed short BAT_C_REAL[2];
 
 
 unsigned short AUSW_MAIN;
-unsigned long 	AUSW_MAIN_NUMBER;
+unsigned long AUSW_MAIN_NUMBER;
 unsigned short AUSW_DAY;
 unsigned short AUSW_MONTH;
 unsigned short AUSW_YEAR;
@@ -5883,7 +5913,7 @@ typedef struct
  
 #line 1031 "C:\\Keil\\ARM\\INC\\NXP\\LPC17xx\\LPC17xx.H"
 
-#line 466 "main.c"
+#line 471 "main.c"
 
 
 
@@ -5992,9 +6022,9 @@ enum_av_tbox_stat av_tbox_stat=atsOFF;
 signed short av_tbox_cnt;
 char tbatdisable_cmnd=20,tloaddisable_cmnd=22;
 short tbatdisable_cnt,tloaddisable_cnt;
-#line 580 "main.c"
+#line 585 "main.c"
 
-#line 589 "main.c"
+#line 594 "main.c"
 
 
 
@@ -6097,6 +6127,16 @@ U8 socket_tcp;
 
 
 
+
+
+
+char ica_plazma[10];
+char ica_timer_cnt;
+signed short ica_my_current;
+signed short ica_your_current;
+signed short ica_u_necc;
+U8 tcp_soc_avg;
+U8 tcp_connect_stat;
 
 
 
@@ -6546,7 +6586,7 @@ if(cnt_net_drv<=11)
 	     }
 	}
 
-#line 1156 "main.c"
+#line 1171 "main.c"
 else if(cnt_net_drv==12)
 	{
      if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x62,*((char*)(&UMAX)),*((char*)((&UMAX))+1),*((char*)(&DU)),*((char*)((&DU))+1),0);
@@ -6784,7 +6824,7 @@ else if((cnt_net_drv>=20)&&(cnt_net_drv<20+15))
 	}
 
 
-#line 1409 "main.c"
+#line 1424 "main.c"
 else if(cnt_net_drv==20+16)
 	{
      if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x62,*((char*)(&UMAX)),*((char*)((&UMAX))+1),*((char*)(&DU)),*((char*)((&DU))+1),0);
@@ -7185,9 +7225,9 @@ if(avar_stat&(1<<(3+7)))
 	sub_cnt_max++;	
 	}
 
-#line 1828 "main.c"
+#line 1843 "main.c"
 
-#line 1848 "main.c"
+#line 1863 "main.c"
 
 
 if((sk_av_stat[0]==sasON)&&(NUMSK)&&(!SK_LCD_EN[0]))
@@ -7245,6 +7285,7 @@ if(uout_av)
 	sub_cnt_max++;	
 	}
 
+
 if(bps[0]._av&(1<<4))
 	{
 	sub_ptrs[i++]=	"–ÂÒÛÒ ‚ÂÌÚ. ¡œ—1   ";
@@ -7252,6 +7293,7 @@ if(bps[0]._av&(1<<4))
 	sub_ptrs[i++]=	"     ËÒ˜ÂÔ‡Ì       ";
 	sub_cnt_max++;		
 	}
+
 
 cnt_of_slave=NUMIST+NUMINV;
 
@@ -8717,14 +8759,6 @@ else if(a_ind . i==iMn_220_IPS_TERMOKOMPENSAT)
  	
  	
 	ptrs[1]="U‚˚Ô   ]¬ I‚˚Ô  @¿";	
-
-
-
-
-
-
-
- 
 	ptrs[2]="U¯ËÌ˚   #¬ I·‡Ú   $¿";
     ptrs[3]=" 0%:0^:0& 0</>  /0{ ";
 	ptrs[4]="     T·    ?∞C      ";
@@ -8855,6 +8889,7 @@ else if(a_ind . i==iMn_220_IPS_TERMOKOMPENSAT)
 
 	int2lcd(vz_cnt_s_/60,'x',0);
 	int2lcd(vz_cnt_h_,'X',0);
+
 	}
 
 else if(a_ind . i==iMn_TELECORE2015)
@@ -10374,7 +10409,7 @@ else if(a_ind . i==iExtern_6U)
 
 else if(a_ind . i==iExtern_220)
 	{
-	char temp;
+	signed char temp;
 
 	ptrs[0]=  			" t1             !∞— ";
 	ptrs[1]=  			" t2             @∞— ";
@@ -10740,7 +10775,7 @@ else if(a_ind . i==iLog)
      event2ind(a_ind . i_s,'(');
      event2ind(a_ind . i_s+1,'[');	
      event2ind(a_ind . i_s+2,'{');	  
-     
+    
 	}
 
 
@@ -12275,9 +12310,10 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 	ptrs[42]=		" Ethernet           ";
     ptrs[43]=		" œÓÓ„ ÂÒÛÒ‡      ";
     ptrs[44]=		" ‚ÂÌÚËÎˇÚÓ‡      ^˜";
-    ptrs[45]=		" ¬˚ıÓ‰              ";
-    ptrs[46]=		"  ‡ÎË·Ó‚ÍË         "; 
-    ptrs[47]=		"                    ";        
+    ptrs[45]=		" ¬˚‡‚ÌË‚‡ÌËÂ ÚÓÍÓ‚ ";
+    ptrs[46]=		" ¬˚ıÓ‰              ";
+    ptrs[47]=		"  ‡ÎË·Ó‚ÍË         "; 
+    ptrs[48]=		"                    ";        
 	
 	if((a_ind . s_i-a_ind . i_s)>2)a_ind . i_s=a_ind . s_i-2;
 	else if(a_ind . s_i<a_ind . i_s)a_ind . i_s=a_ind . s_i;
@@ -14668,6 +14704,10 @@ if(a_ind . i==iDeb)
 	int2lcdyx(1051,0,4,0);
 	long2lcdyx_mmm(21112UL,0,11,0);
 
+	int2lcdyx(numOfForvardBps_minCnt,1,5,0);
+	int2lcdyx(numOfForvardBps_hourCnt,1,10,0);
+	int2lcdyx(numOfForvardBps,1,15,0);
+
 
 
 
@@ -14683,19 +14723,19 @@ if(a_ind . i==iDeb)
 
  
 
+ 
 
-	int2lcdyx(t_box,2,4,0);
-	int2lcdyx(t_ext_can,3,5,0);
-	
-	int2lcdyx(t_ext[1],2,10,0);
-	int2lcdyx(t_ext[2],3,10,0);
 
-	int2lcdyx(cntrl_stat,0,19,0);
 
-	
-	int2lcdyx(net_metr_buff_[0],1,5,0);
-	int2lcdyx(net_metr_buff_[1],1,11,0);
-	int2lcdyx(net_metr_buff_[2],1,17,0);
+
+
+
+
+
+
+
+
+ 
 
 	
 
@@ -15100,12 +15140,32 @@ if(a_ind . i==iDeb)
      		    "                    ",
      		    "                    ");
 
-		char2lcdhyx(bps[0]._vent_resurs_temp[0],0,2);
-		char2lcdhyx(bps[0]._vent_resurs_temp[1],1,2);
-		char2lcdhyx(bps[0]._vent_resurs_temp[2],2,2);
-		char2lcdhyx(bps[0]._vent_resurs_temp[3],3,2);
+		int2lcdyx(ica_plazma[0],0,3,0);
+     	int2lcdyx(ica_plazma[1],0,7,0);
+     	int2lcdyx(ica_plazma[2],0,11,0);
+     	int2lcdyx(ica_plazma[3],0,15,0);
+     	int2lcdyx(ica_plazma[4],0,19,0);
 
-		int2lcdyx(bps[0]._vent_resurs,0,19,0);
+		int2lcdyx(ica_my_current,1,4,0);
+     	int2lcdyx(ica_your_current,1,9,0);
+     	int2lcdyx(ica_timer_cnt,1,14,0);
+
+		int2lcdyx(ica_u_necc+50,2,5,0);
+		int2lcdyx(u_necc,2,14,0);
+
+		int2lcdyx(tcp_connect_stat,2,19,0);
+
+		int2lcdyx(ica_plazma[5],3,3,0);
+     	int2lcdyx(ica_plazma[6],3,7,0);
+     	int2lcdyx(ica_plazma[7],3,11,0);
+     	int2lcdyx(ica_plazma[8],3,15,0);
+     	int2lcdyx(ica_plazma[9],3,19,0);
+		
+
+
+
+
+ 
      		    
      	
 
@@ -17302,6 +17362,53 @@ else if(a_ind . i==iDop_rele_set)
 	
 	}
 
+else if (a_ind . i==iIps_Curr_Avg_Set)
+	{ 
+	if(ICA_EN==0)
+		{
+		ptrs[0]=		" ¬˚ÍÎ˛˜ÂÌÓ          ";
+		simax=1;
+		}
+	else 
+		{
+		ptrs[0]=		" ¬ÍÎ˛˜ÂÌÓ           ";
+		if(ICA_CH==0)
+			{
+			ptrs[1]=	"  ¿Õ¿À  MODBUS-RTU  ";
+			ptrs[2]=	" ¿ƒ–≈— ¬≈ƒŒÃŒ√Œ   ! ";
+			simax=3;
+			}
+		else
+			{
+			ptrs[1]=	"  ¿Õ¿À   MODBUS-TCP ";
+			ptrs[2]=	" IP 00@.00#.00$.00% ";
+			ptrs[3]=	" ¿ƒ–≈— ¬≈ƒŒÃŒ√Œ   ^ ";
+			simax=4;
+			}
+		} 
+	ptrs[simax]=		" ¬˚ıÓ‰              ";
+	
+	if(a_ind . s_i<a_ind . i_s) a_ind . i_s=a_ind . s_i;
+	else if((a_ind . s_i-a_ind . i_s)>1) a_ind . i_s=a_ind . s_i-1;	
+	bgnd_par(	" ¬€–¿¬Õ»¬¿Õ»≈ “Œ Œ¬ ",
+				"        »œ—         ",
+				ptrs[a_ind . i_s],
+				ptrs[a_ind . i_s+1]);
+	
+	pointer_set(2);
+	int2lcd(ICA_MODBUS_ADDRESS,'!',0);
+	if((a_ind . s_i==2)&&(a_ind . s_i1==0)&&bFL2)sub_bgnd("   ",'@',-2);
+	else int2lcd(ICA_MODBUS_TCP_IP1,'@',0);
+	if((a_ind . s_i==2)&&(a_ind . s_i1==1)&&bFL2)sub_bgnd("   ",'#',-2);
+	else int2lcd(ICA_MODBUS_TCP_IP2,'#',0);
+	if((a_ind . s_i==2)&&(a_ind . s_i1==2)&&bFL2)sub_bgnd("   ",'$',-2);
+	else int2lcd(ICA_MODBUS_TCP_IP3,'$',0);
+	if((a_ind . s_i==2)&&(a_ind . s_i1==3)&&bFL2)sub_bgnd("   ",'%',-2);
+	else int2lcd(ICA_MODBUS_TCP_IP4,'%',0);
+	int2lcd(ICA_MODBUS_TCP_UNIT_ID,'^',0);	
+     
+ 	} 
+
 
 
 
@@ -17345,12 +17452,12 @@ else if(a_ind . i==iDop_rele_set)
 }							    
 
 
-#line 12011 "main.c"
+#line 12093 "main.c"
 
 
 
 
-#line 12034 "main.c"
+#line 12116 "main.c"
 
 
 
@@ -17673,7 +17780,7 @@ else if(a_ind . i==iMn)
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV)))
 			{
-#line 12364 "main.c"
+#line 12446 "main.c"
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV+1)))
 			{
@@ -17687,9 +17794,9 @@ else if(a_ind . i==iMn)
 		     ret(1000);
 			}
 
-#line 12384 "main.c"
+#line 12466 "main.c"
 
-#line 12392 "main.c"
+#line 12474 "main.c"
 
 		else if(a_ind . s_i==(4+NUMBAT+NUMIST+2)+(NUMAVT!=0))
 			{
@@ -19776,11 +19883,11 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==184) 
 				{
 				tree_down(0,0);
-#line 14497 "main.c"
+#line 14579 "main.c"
 				tree_up(iSet_220_IPS_TERMOKOMPENSAT,0,0,0);
 
 
-#line 14506 "main.c"
+#line 14588 "main.c"
 
 				ret(1000);
 				}
@@ -19798,7 +19905,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==873) 
 				{
 				tree_down(0,0);
-#line 14554 "main.c"
+#line 14636 "main.c"
 				if((AUSW_MAIN==22033)||(AUSW_MAIN==22018))
 					{
 					tree_up(iK_220_IPS_TERMOKOMPENSAT,0,0,0);
@@ -19875,7 +19982,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 			if(tempU==999) 
 				{
 				tree_down(0,0);
-#line 14660 "main.c"
+#line 14742 "main.c"
 				tree_up(iTst_220_IPS_TERMOKOMPENSAT,0,0,0);
 
 
@@ -20038,7 +20145,7 @@ else if(a_ind . i==iSet_li_bat)
 	     else if(but==247)QSODERG_LI_BAT--;
 	     else if(but==119)QSODERG_LI_BAT-=10;
 	     gran(&QSODERG_LI_BAT,5,100);
-	     lc640_write_int(0x10+100+200,QSODERG_LI_BAT);
+	     lc640_write_int(0x10+350,QSODERG_LI_BAT);
 	     speed=1;
 	     }
 	}
@@ -20575,7 +20682,7 @@ else if(a_ind . i==iSet)
 	     {
 	     if(but==254)
 	          {
-#line 15371 "main.c"
+#line 15453 "main.c"
 	          ret(1000);
 	          default_temp=10;
 	          }
@@ -20597,7 +20704,7 @@ else if(a_ind . i==iSet)
 		{
 		if(but==254)
 		     {
-#line 15417 "main.c"
+#line 15499 "main.c"
 
 
 
@@ -24258,7 +24365,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
             {
             a_ind . s_i=45;
             }											
-		gran_char(&a_ind . s_i,0,46);
+		gran_char(&a_ind . s_i,0,47);
 		}
 	else if(but==253)
 		{
@@ -24301,11 +24408,11 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
             {
             a_ind . s_i=43;
 			}
-		gran_char(&a_ind . s_i,0,46);
+		gran_char(&a_ind . s_i,0,47);
 		}
 	else if(but==123)
 		{
-		a_ind . s_i=45;
+		a_ind . s_i=46;
 		}
 
 	else if(but==103)
@@ -24743,12 +24850,20 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 	    else if(but==247)	TVENTMAX=((TVENTMAX/100)-1)*100;
 	    else if(but==119)	TVENTMAX=((TVENTMAX/100)-1)*100;
 		else if(but==126)	TVENTMAX=1500;
-		gran(&TVENTMAX,1,2000);
-		lc640_write_int(0x10+100+202,TVENTMAX);
+		gran(&TVENTMAX,1,6000);
+		lc640_write_int(0x10+350+2,TVENTMAX);
 	    speed=1;
-	    }    
+	    }
+	else if(a_ind . s_i==45)
+	    {
+		if(but==254) 
+			{
+		    tree_up(iIps_Curr_Avg_Set,0,0,0);
+		    ret(1000);
+		    }	     
+	    }		    
 
-    else if((a_ind . s_i==45) || (a_ind . s_i==3))
+    else if((a_ind . s_i==46) || (a_ind . s_i==3))
 		{
 		if(but==254)
 		     {
@@ -24757,7 +24872,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 		     }
 		}
 				
-	else if(a_ind . s_i==46)
+	else if(a_ind . s_i==47)
 		{
 		if(but==254)
 		     {		
@@ -24853,23 +24968,22 @@ else if(a_ind . i==iDef)
      }
 
 else if(a_ind . i==iDef_RSTKM)
-
-
 	{
+	simax=2;
 	ret(1000);
 	if(but==251)
 		{
 		a_ind . s_i++;
-		gran_char(&a_ind . s_i,0,2);
+		gran_char(&a_ind . s_i,0,simax);
 		}
 	else if(but==253)
 		{
 		a_ind . s_i--;
-		gran_char(&a_ind . s_i,0,2);
+		gran_char(&a_ind . s_i,0,simax);
 		}
 	else if(but==123)
 		{
-		a_ind . s_i=2;
+		a_ind . s_i=simax;
 		}
 	
 	else if(but==254)
@@ -24896,23 +25010,22 @@ else if(a_ind . i==iDef_RSTKM)
      }
 
 else if(a_ind . i==iDef_3U)
-
-
 	{
+	simax=4;
 	ret(1000);
 	if(but==251)
 		{
 		a_ind . s_i++;
-		gran_char(&a_ind . s_i,0,4);
+		gran_char(&a_ind . s_i,0,simax);
 		}
 	else if(but==253)
 		{
 		a_ind . s_i--;
-		gran_char(&a_ind . s_i,0,4);
+		gran_char(&a_ind . s_i,0,simax);
 		}
 	else if(but==123)
 		{
-		a_ind . s_i=4;
+		a_ind . s_i=simax;
 		}
 	
 	else if(but==254)
@@ -24943,7 +25056,7 @@ else if(a_ind . i==iDef_3U)
 
 			}
 
-		else if(a_ind . s_i==4)
+		else if(a_ind . s_i==2)
 			{
 			tree_down(0,0);
 			}
@@ -24952,23 +25065,22 @@ else if(a_ind . i==iDef_3U)
      }
 
 else if(a_ind . i==iDef_GLONASS)
-
-
 	{
+	simax=4;
 	ret(1000);
 	if(but==251)
 		{
 		a_ind . s_i++;
-		gran_char(&a_ind . s_i,0,4);
+		gran_char(&a_ind . s_i,0,simax);
 		}
 	else if(but==253)
 		{
 		a_ind . s_i--;
-		gran_char(&a_ind . s_i,0,4);
+		gran_char(&a_ind . s_i,0,simax);
 		}
 	else if(but==123)
 		{
-		a_ind . s_i=4;
+		a_ind . s_i=simax;
 		}
 	
 	else if(but==254)
@@ -24999,7 +25111,7 @@ else if(a_ind . i==iDef_GLONASS)
 
 			}
 
-		else if(a_ind . s_i==4)
+		else if(a_ind . s_i==2)
 			{
 			tree_down(0,0);
 			}
@@ -25008,23 +25120,22 @@ else if(a_ind . i==iDef_GLONASS)
      }
 
 else if(a_ind . i==iDef_KONTUR)
-
-
 	{
+	simax=2;
 	ret(1000);
 	if(but==251)
 		{
 		a_ind . s_i++;
-		gran_char(&a_ind . s_i,0,2);
+		gran_char(&a_ind . s_i,0,simax);
 		}
 	else if(but==253)
 		{
 		a_ind . s_i--;
-		gran_char(&a_ind . s_i,0,2);
+		gran_char(&a_ind . s_i,0,simax);
 		}
 	else if(but==123)
 		{
-		a_ind . s_i=2;
+		a_ind . s_i=simax;
 		}
 	
 	else if(but==254)
@@ -25053,21 +25164,21 @@ else if(a_ind . i==iDef_KONTUR)
      }
 else if(a_ind . i==iDef_6U)
 	{
-
+	simax=36;
 	ret(1000);
 	if(but==251)
 		{
 		a_ind . s_i++;
-		gran_char(&a_ind . s_i,0,36);
+		gran_char(&a_ind . s_i,0,simax);
 		}
 	else if(but==253)
 		{
 		a_ind . s_i--;
-		gran_char(&a_ind . s_i,0,36);
+		gran_char(&a_ind . s_i,0,simax);
 		}
 	else if(but==123)
 		{
-		a_ind . s_i=36;
+		a_ind . s_i=simax;
 		}
 	
 	else if(but==254)
@@ -25258,7 +25369,7 @@ else if(a_ind . i==iDef_6U)
 			def_ips_set(600);
 			lc640_write_int(0x10+300,6003);
 			}
-		else if(a_ind . s_i==36)
+		else if(a_ind . s_i==simax)
 			{
 			tree_down(0,0);
 			}
@@ -25267,22 +25378,22 @@ else if(a_ind . i==iDef_6U)
      }
 
 else if (a_ind . i==iDef_220)
-
 	{
+	simax=8;
 	ret(1000);
 	if(but==251)
 		{
 		a_ind . s_i++;
-		gran_char(&a_ind . s_i,0,8);
+		gran_char(&a_ind . s_i,0,simax);
 		}
 	else if(but==253)
 		{
 		a_ind . s_i--;
-		gran_char(&a_ind . s_i,0,8);
+		gran_char(&a_ind . s_i,0,simax);
 		}
 	else if(but==123)
 		{
-		a_ind . s_i=8;
+		a_ind . s_i=simax;
 		}
 	
 	else if(but==254)
@@ -25358,7 +25469,7 @@ else if (a_ind . i==iDef_220)
 			}
 
 
-		else if(a_ind . s_i==8)
+		else if(a_ind . s_i==2)
 			{
 			tree_down(0,0);
 			}
@@ -25367,22 +25478,22 @@ else if (a_ind . i==iDef_220)
      }
 
 else if (a_ind . i==iDef_220_V2)
-
 	{
+	simax=3;
 	ret(1000);
 	if(but==251)
 		{
 		a_ind . s_i++;
-		gran_char(&a_ind . s_i,0,3);
+		gran_char(&a_ind . s_i,0,simax);
 		}
 	else if(but==253)
 		{
 		a_ind . s_i--;
-		gran_char(&a_ind . s_i,0,3);
+		gran_char(&a_ind . s_i,0,simax);
 		}
 	else if(but==123)
 		{
-		a_ind . s_i=3;
+		a_ind . s_i=simax;
 		}
 	
 	else if(but==254)
@@ -25412,7 +25523,7 @@ else if (a_ind . i==iDef_220_V2)
 			lc640_write_int(0x10+300,22033);
 			}
 
-		else if(a_ind . s_i==3)
+		else if(a_ind . s_i==2)
 			{
 			tree_down(0,0);
 			}
@@ -25421,22 +25532,22 @@ else if (a_ind . i==iDef_220_V2)
      }
 
 else if (a_ind . i==iDef_220_IPS_TERMOKOMPENSAT)
-
 	{
+	simax=4;
 	ret(1000);
 	if(but==251)
 		{
 		a_ind . s_i++;
-		gran_char(&a_ind . s_i,0,4);
+		gran_char(&a_ind . s_i,0,simax);
 		}
 	else if(but==253)
 		{
 		a_ind . s_i--;
-		gran_char(&a_ind . s_i,0,4);
+		gran_char(&a_ind . s_i,0,simax);
 		}
 	else if(but==123)
 		{
-		a_ind . s_i=4;
+		a_ind . s_i=simax;
 		}
 	
 	else if(but==254)
@@ -25561,7 +25672,7 @@ else if (a_ind . i==iDef_220_IPS_TERMOKOMPENSAT)
 			lc640_write_int(0x10+100+184,2200);
 
 			}
-		else if(a_ind . s_i==4)
+		else if(a_ind . s_i==simax)
 			{
 			tree_down(0,0);
 			}
@@ -25691,70 +25802,6 @@ else if(a_ind . i==iSet_T)
 	     }		        
 	}  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
 else if(a_ind . i==iStr)
 	{
 	ret(1000);
@@ -30406,7 +30453,7 @@ else if(a_ind . i==iK_inv)
 			}
 		}			
 	}
-#line 25372 "main.c"
+#line 25394 "main.c"
 
 else if(a_ind . i==iK_byps)
 	{
@@ -32444,6 +32491,8 @@ else if(a_ind . i==iTst_6U)
 		if(but==254)
 			{
 			bRESET=1;
+			bRESET_INT_WDT=1;
+			bRESET_EXT_WDT=1;
 			}
 		}
 
@@ -33916,6 +33965,173 @@ else if(a_ind . i==iDop_rele_set)
 		}				
 	}
 
+else if (a_ind . i==iIps_Curr_Avg_Set)
+	{
+     ret(1000);
+	if(but==251)
+		{
+		a_ind . s_i++;
+		a_ind . s_i1=0;
+		gran_char(&a_ind . s_i,0,simax);
+		}
+	else if(but==253)
+		{
+		a_ind . s_i--;
+		a_ind . s_i1=0;
+		gran_char(&a_ind . s_i,0,simax);
+		}
+	else if(but==123)
+		{
+		a_ind . s_i=simax;
+		}			
+	else if(a_ind . s_i==simax)
+		{
+		if(but==254)tree_down(0,0);
+		}
+
+	else if(a_ind . s_i==0)
+		{
+		if(but==254)
+			{
+			if(ICA_EN)ICA_EN=0;
+			else ICA_EN=1;
+			lc640_write_int(0x10+350+6,ICA_EN);
+			}
+		}
+	else if(ICA_EN)
+		{
+		if(a_ind . s_i==1)
+			{
+			if(but==254)
+				{
+				if(ICA_CH)ICA_CH=0;
+				else ICA_CH=1;
+				lc640_write_int(0x10+350+4,ICA_CH);
+				}
+			}
+		else if(ICA_CH==0)
+			{
+			if(a_ind . s_i==2)
+				{
+				if((but==239)||(but==111))
+					{
+					ICA_MODBUS_ADDRESS++;
+					gran(&ICA_MODBUS_ADDRESS,1,254);
+					lc640_write_int(0x10+350+8,ICA_MODBUS_ADDRESS);
+					speed=1;
+					}
+				if((but==247)||(but==119))
+					{
+					ICA_MODBUS_ADDRESS--;
+					gran(&ICA_MODBUS_ADDRESS,1,254);
+					lc640_write_int(0x10+350+8,ICA_MODBUS_ADDRESS);
+					speed=1;
+					}
+				}
+			}
+
+		else if(ICA_CH==1)
+			{
+			if(a_ind . s_i==2)
+				{
+				if((but==254)||(but==126))
+					{
+					a_ind . s_i1++;
+					gran_ring_char(&a_ind . s_i1,0,3);
+					}
+				else if(a_ind . s_i1==0)
+					{
+					if((but==239)||(but==111))
+						{
+						ICA_MODBUS_TCP_IP1++;
+						gran_ring(&ICA_MODBUS_TCP_IP1,0,255);
+						lc640_write_int(0x10+350+10,ICA_MODBUS_TCP_IP1);
+						speed=1;
+						}
+					if((but==247)||(but==119))
+						{
+						ICA_MODBUS_TCP_IP1--;
+						gran(&ICA_MODBUS_TCP_IP1,0,255);
+						lc640_write_int(0x10+350+10,ICA_MODBUS_TCP_IP1);
+						speed=1;
+						}
+					}
+				else if(a_ind . s_i1==1)
+					{
+					if((but==239)||(but==111))
+						{
+						ICA_MODBUS_TCP_IP2++;
+						gran_ring(&ICA_MODBUS_TCP_IP2,0,255);
+						lc640_write_int(0x10+350+12,ICA_MODBUS_TCP_IP2);
+						speed=1;
+						}
+					if((but==247)||(but==119))
+						{
+						ICA_MODBUS_TCP_IP2--;
+						gran(&ICA_MODBUS_TCP_IP2,0,255);
+						lc640_write_int(0x10+350+12,ICA_MODBUS_TCP_IP2);
+						speed=1;
+						}
+					}
+				else if(a_ind . s_i1==2)
+					{
+					if((but==239)||(but==111))
+						{
+						ICA_MODBUS_TCP_IP3++;
+						gran_ring(&ICA_MODBUS_TCP_IP3,0,255);
+						lc640_write_int(0x10+350+14,ICA_MODBUS_TCP_IP3);
+						speed=1;
+						}
+					if((but==247)||(but==119))
+						{
+						ICA_MODBUS_TCP_IP3--;
+						gran(&ICA_MODBUS_TCP_IP3,0,255);
+						lc640_write_int(0x10+350+14,ICA_MODBUS_TCP_IP3);
+						speed=1;
+						}
+					}
+				else if(a_ind . s_i1==3)
+					{
+					if((but==239)||(but==111))
+						{
+						ICA_MODBUS_TCP_IP4++;
+						gran_ring(&ICA_MODBUS_TCP_IP4,0,255);
+						lc640_write_int(0x10+350+16,ICA_MODBUS_TCP_IP4);
+						speed=1;
+						}
+					if((but==247)||(but==119))
+						{
+						ICA_MODBUS_TCP_IP4--;
+						gran(&ICA_MODBUS_TCP_IP4,0,255);
+						lc640_write_int(0x10+350+16,ICA_MODBUS_TCP_IP4);
+						speed=1;
+						}
+					}
+				}
+			if(a_ind . s_i==3)
+				{
+				if((but==239)||(but==111))
+					{
+					ICA_MODBUS_TCP_UNIT_ID++;
+					gran(&ICA_MODBUS_TCP_UNIT_ID,1,254);
+					lc640_write_int(0x10+350+18,ICA_MODBUS_TCP_UNIT_ID);
+					speed=1;
+					}
+				if((but==247)||(but==119))
+					{
+					ICA_MODBUS_TCP_UNIT_ID--;
+					gran(&ICA_MODBUS_TCP_UNIT_ID,1,254);
+					lc640_write_int(0x10+350+18,ICA_MODBUS_TCP_UNIT_ID);
+					speed=1;
+					}
+				}
+			}
+		}
+
+
+  	} 
+
+
 but_an_end:
 n_but=0;
 }
@@ -34192,9 +34408,9 @@ lcd_clear();
 rtc_init();
 
 a_ind . i=iMn;
-#line 29176 "main.c"
+#line 29367 "main.c"
 a_ind . i=iMn_220_IPS_TERMOKOMPENSAT;
-#line 29184 "main.c"
+#line 29375 "main.c"
 
 
 
@@ -34223,7 +34439,7 @@ a_ind . i=iMn_220_IPS_TERMOKOMPENSAT;
 
 
 
-reload_hndl();
+
 
 
 adc_init();
@@ -34234,7 +34450,7 @@ adc_init();
 
 lc640_write_int(100,134);
 
-#line 29229 "main.c"
+#line 29420 "main.c"
 
 
 
@@ -34335,6 +34551,8 @@ can_mcp2515_init();
 sc16is700_init((uint32_t)(MODBUS_BAUDRATE*10UL));
 
 
+
+reload_hndl();
 
 socket_tcp = tcp_get_socket (0x01, 0, 10, tcp_callback);
 if (socket_tcp != 0) 
@@ -34582,7 +34800,7 @@ while (1)
 		
 		
 
-#line 29588 "main.c"
+#line 29781 "main.c"
 
 
 
@@ -34609,7 +34827,12 @@ while (1)
 		powerAntiAliasingHndl();
 
 		outVoltContrHndl();
+
+
 		vent_resurs_hndl();
+
+
+		ips_current_average_hndl();
 		}
 	if(b1min)
 		{

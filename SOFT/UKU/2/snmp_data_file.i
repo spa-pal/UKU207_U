@@ -218,10 +218,10 @@ void snmp_powerup_psu_timeout_write (int mode);
 void snmp_max_temperature_write (int mode);
 void event2snmp(char num);
 void snmp_trap_send(char* str, signed short in0, signed short in1, signed short in2);
-void snmp_alarm_aktiv_write1(void);
-void snmp_alarm_aktiv_write2(void);
-void snmp_alarm_aktiv_write3(void);
-void snmp_alarm_aktiv_write4(void);
+void snmp_alarm_aktiv_write1(int mode);
+void snmp_alarm_aktiv_write2(int mode);
+void snmp_alarm_aktiv_write3(int mode);
+void snmp_alarm_aktiv_write4(int mode);
 void snmp_klimat_settings_box_alarm_write(int mode);
 void snmp_klimat_settings_vent_on_write(int mode);
 void snmp_klimat_settings_vent_off_write(int mode);
@@ -256,40 +256,41 @@ void snmp_uvz_write(int mode);
 
 
 
-#line 138 "eeprom_map.h"
+#line 136 "eeprom_map.h"
+
+
+
+
+#line 154 "eeprom_map.h"
+
+#line 166 "eeprom_map.h"
+
+
+
+#line 178 "eeprom_map.h"
+
+
+#line 189 "eeprom_map.h"
+
+
+
+#line 200 "eeprom_map.h"
+
+
+
+#line 256 "eeprom_map.h"
+
+
+#line 298 "eeprom_map.h"
 
 
 
 
 
-#line 157 "eeprom_map.h"
 
 
 
-#line 169 "eeprom_map.h"
-
-
-#line 180 "eeprom_map.h"
-
-
-
-#line 191 "eeprom_map.h"
-
-
-
-#line 247 "eeprom_map.h"
-
-
-#line 289 "eeprom_map.h"
-
-
-
-
-
-
-
-
-#line 311 "eeprom_map.h"
+#line 320 "eeprom_map.h"
 
 
 
@@ -1121,7 +1122,7 @@ typedef enum {
 	iBps_list,
 	iSpch_set,
 	iAvt_set_sel,iAvt_set,iSet_li_bat,
-	iOut_volt_contr,iDop_rele_set,iBlok_ips_set}i_enum;
+	iOut_volt_contr,iDop_rele_set,iBlok_ips_set,iIps_Curr_Avg_Set}i_enum;
 
 typedef struct  
 {
@@ -1256,6 +1257,11 @@ extern signed short CNTRL_HNDL_TIME;
 extern signed short USODERG_LI_BAT;		
 extern signed short QSODERG_LI_BAT;		
 extern signed short TVENTMAX;			
+extern signed short ICA_EN;				
+extern signed short ICA_CH;				
+extern signed short ICA_MODBUS_ADDRESS;
+extern signed short ICA_MODBUS_TCP_IP1,ICA_MODBUS_TCP_IP2,ICA_MODBUS_TCP_IP3,ICA_MODBUS_TCP_IP4;	
+extern signed short ICA_MODBUS_TCP_UNIT_ID;	
 
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
@@ -1759,9 +1765,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1417 "main.h"
+#line 1422 "main.h"
 
-#line 1428 "main.h"
+#line 1433 "main.h"
 
 
 
@@ -1862,6 +1868,17 @@ extern short plazma_numOfPacks;
 extern char plazma_ztt[2];
 
 extern U8 socket_tcp;
+
+
+
+extern char ica_plazma[10];
+extern char ica_timer_cnt;
+extern signed short ica_my_current;
+extern signed short ica_your_current;
+extern signed short ica_u_necc;
+extern U8 tcp_soc_avg;
+extern U8 tcp_connect_stat;
+
 
 
 
@@ -2346,6 +2363,7 @@ void ext_drv(void);
 void adc_drv7(void);
 void avt_hndl(void);
 void vent_resurs_hndl(void);
+void ips_current_average_hndl(void);
 
 
 
@@ -2400,6 +2418,7 @@ void zar_superviser_start(void);
 void vent_hndl(void);
 void speedChargeHndl(void);
 void speedChargeStartStop(void);
+void	numOfForvardBps_init(void);
 
 
 #line 7 "snmp_data_file.c"
@@ -4874,6 +4893,7 @@ extern __declspec(__nothrow) void _membitmovewb(void *  , const void *  , int  ,
 
 char spi1(char in);
 void spi1_config(void);
+void spi1_config_mcp2515(void);
 void spi1_unconfig(void);
 void lc640_wren(void);
 char lc640_rdsr(void);
@@ -5541,18 +5561,18 @@ for(i=0;i<12;i++)
 snmp_dt_number[0]=1;
 snmp_dt_number[1]=2;
 snmp_dt_number[2]=3;
-snmp_dt_number[3]=4;
+
 snmp_dt_temper[0]=t_ext[0];
 snmp_dt_temper[1]=t_ext[1];
 snmp_dt_temper[2]=t_ext[2];
-snmp_dt_temper[3]=t_ext[3];
+
 snmp_dt_error[0]=ND_EXT[0];
 if(NUMDT<1)snmp_dt_error[0]=0xff;
 snmp_dt_error[1]=ND_EXT[1];
 if(NUMDT<2)snmp_dt_error[0]=0xff;
 snmp_dt_error[2]=ND_EXT[2];
 if(NUMDT<3)snmp_dt_error[0]=0xff;
-snmp_dt_error[3]=ND_EXT[3];
+
 if(NUMDT<4)snmp_dt_error[0]=0xff;
 
 
@@ -5822,30 +5842,45 @@ if(mode==1)
 }
 
 
-void snmp_alarm_aktiv_write1(void)
+void snmp_alarm_aktiv_write1(int mode)
 {
-if(!snmp_sk_alarm_aktiv[0])   lc640_write_int(ADR_SK_SIGN[0],0xffff);
-else lc640_write_int(ADR_SK_SIGN[0],0);
+if(mode==1)
+	{
+	if(!snmp_sk_alarm_aktiv[0])   lc640_write_int(ADR_SK_SIGN[0],0xffff);
+	else lc640_write_int(ADR_SK_SIGN[0],0);
+	}
 }
 
 
-void snmp_alarm_aktiv_write2(void)
+void snmp_alarm_aktiv_write2(int mode)
 {
-if(!snmp_sk_alarm_aktiv[1])   lc640_write_int(ADR_SK_SIGN[1],0xffff);
-else lc640_write_int(ADR_SK_SIGN[1],0);
+if(mode==1)
+	{
+	if(!snmp_sk_alarm_aktiv[1])   lc640_write_int(ADR_SK_SIGN[1],0xffff);
+	else lc640_write_int(ADR_SK_SIGN[1],0);
+	}
 }
 
-void snmp_alarm_aktiv_write3(void)
+
+void snmp_alarm_aktiv_write3(int mode)
 {
-if(!snmp_sk_alarm_aktiv[2])   lc640_write_int(ADR_SK_SIGN[2],0xffff);
-else lc640_write_int(ADR_SK_SIGN[2],0);
+if(mode==1)
+	{
+	if(!snmp_sk_alarm_aktiv[2])   lc640_write_int(ADR_SK_SIGN[2],0xffff);
+	else lc640_write_int(ADR_SK_SIGN[2],0);
+	}
 }
 
-void snmp_alarm_aktiv_write4(void)
+
+void snmp_alarm_aktiv_write4(int mode)
 {
-if(!snmp_sk_alarm_aktiv[3])   lc640_write_int(ADR_SK_SIGN[3],0xffff);
-else lc640_write_int(ADR_SK_SIGN[3],0);
+if(mode==1)
+	{
+	if(!snmp_sk_alarm_aktiv[3])   lc640_write_int(ADR_SK_SIGN[3],0xffff);
+	else lc640_write_int(ADR_SK_SIGN[3],0);
+	}
 }
+
 
 void snmp_main_bps_write (int mode)
 {
@@ -6237,7 +6272,7 @@ if(mode==1)
 
 char* datatime2str(char day,char month,char year, char hour, char min, char sec)
 {
-char temp_str[20];
+static char temp_str[20];
 memcpy(temp_str,"00/џэт/00  00:00:00       ",20);
 
 temp_str[1]=(day%10)+0x30;

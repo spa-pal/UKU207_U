@@ -1,4 +1,7 @@
+#include "stdint.h"
 #include "sacred_sun.h"
+#include "uart0.h"
+#include "stdio.h"
 
 char portForSacredSunBatteryIsInitiated=0;
 char sacredSunBatteryHndlPhase;

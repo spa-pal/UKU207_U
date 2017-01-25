@@ -3134,7 +3134,7 @@ typedef enum {
 	iBps_list,
 	iSpch_set,
 	iAvt_set_sel,iAvt_set,iSet_li_bat,
-	iOut_volt_contr,iDop_rele_set,iBlok_ips_set}i_enum;
+	iOut_volt_contr,iDop_rele_set,iBlok_ips_set,iIps_Curr_Avg_Set}i_enum;
 
 typedef struct  
 {
@@ -3269,6 +3269,11 @@ extern signed short CNTRL_HNDL_TIME;
 extern signed short USODERG_LI_BAT;		
 extern signed short QSODERG_LI_BAT;		
 extern signed short TVENTMAX;			
+extern signed short ICA_EN;				
+extern signed short ICA_CH;				
+extern signed short ICA_MODBUS_ADDRESS;
+extern signed short ICA_MODBUS_TCP_IP1,ICA_MODBUS_TCP_IP2,ICA_MODBUS_TCP_IP3,ICA_MODBUS_TCP_IP4;	
+extern signed short ICA_MODBUS_TCP_UNIT_ID;	
 
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
@@ -3772,9 +3777,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1417 "main.H"
+#line 1422 "main.H"
 
-#line 1428 "main.H"
+#line 1433 "main.H"
 
 
 
@@ -3878,6 +3883,17 @@ extern U8 socket_tcp;
 
 
 
+extern char ica_plazma[10];
+extern char ica_timer_cnt;
+extern signed short ica_my_current;
+extern signed short ica_your_current;
+extern signed short ica_u_necc;
+extern U8 tcp_soc_avg;
+extern U8 tcp_connect_stat;
+
+
+
+
 
 
 
@@ -3963,6 +3979,7 @@ void ext_drv(void);
 void adc_drv7(void);
 void avt_hndl(void);
 void vent_resurs_hndl(void);
+void ips_current_average_hndl(void);
 
 
 
@@ -4017,6 +4034,7 @@ void zar_superviser_start(void);
 void vent_hndl(void);
 void speedChargeHndl(void);
 void speedChargeStartStop(void);
+void	numOfForvardBps_init(void);
 
 
 #line 16 "SNMP_MIB.c"
@@ -4239,10 +4257,10 @@ void snmp_powerup_psu_timeout_write (int mode);
 void snmp_max_temperature_write (int mode);
 void event2snmp(char num);
 void snmp_trap_send(char* str, signed short in0, signed short in1, signed short in2);
-void snmp_alarm_aktiv_write1(void);
-void snmp_alarm_aktiv_write2(void);
-void snmp_alarm_aktiv_write3(void);
-void snmp_alarm_aktiv_write4(void);
+void snmp_alarm_aktiv_write1(int mode);
+void snmp_alarm_aktiv_write2(int mode);
+void snmp_alarm_aktiv_write3(int mode);
+void snmp_alarm_aktiv_write4(int mode);
 void snmp_klimat_settings_box_alarm_write(int mode);
 void snmp_klimat_settings_vent_on_write(int mode);
 void snmp_klimat_settings_vent_off_write(int mode);
@@ -4690,10 +4708,10 @@ char* aaa_="abc";
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 15, 1,2, 3},  				sizeof(snmp_sk_aktiv[2]), (void *)&snmp_sk_aktiv[2],  	((void *) 0)},	
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 15, 1,2, 4},  				sizeof(snmp_sk_aktiv[3]), (void *)&snmp_sk_aktiv[3],  	((void *) 0)},	
 
-	{ 0x02 ,  		  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 15, 1,3, 1},  			sizeof(snmp_sk_alarm_aktiv[0]), (void *)&snmp_sk_alarm_aktiv[0],  	snmp_alarm_aktiv_write1},	
-	{ 0x02 ,			13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 15, 1,3, 2},  			sizeof(snmp_sk_alarm_aktiv[1]), (void *)&snmp_sk_alarm_aktiv[1],  	snmp_alarm_aktiv_write2},	
-	{ 0x02 ,			13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 15, 1,3, 3},  			sizeof(snmp_sk_alarm_aktiv[2]), (void *)&snmp_sk_alarm_aktiv[2],  	snmp_alarm_aktiv_write3},	
-	{ 0x02 ,			13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 15, 1,3, 4},  			sizeof(snmp_sk_alarm_aktiv[3]), (void *)&snmp_sk_alarm_aktiv[3],  	snmp_alarm_aktiv_write4},	
+	{ 0x02 ,  		  		13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 15, 1,3, 1},  		sizeof(snmp_sk_alarm_aktiv[0]), (void *)&snmp_sk_alarm_aktiv[0],  	snmp_alarm_aktiv_write1},	
+	{ 0x02 ,					13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 15, 1,3, 2},  		sizeof(snmp_sk_alarm_aktiv[1]), (void *)&snmp_sk_alarm_aktiv[1],  	snmp_alarm_aktiv_write2},	
+	{ 0x02 ,					13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 15, 1,3, 3},  		sizeof(snmp_sk_alarm_aktiv[2]), (void *)&snmp_sk_alarm_aktiv[2],  	snmp_alarm_aktiv_write3},	
+	{ 0x02 ,					13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 15, 1,3, 4},  		sizeof(snmp_sk_alarm_aktiv[3]), (void *)&snmp_sk_alarm_aktiv[3],  	snmp_alarm_aktiv_write4},	
 
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 15, 1,4, 1},  					sizeof(snmp_sk_alarm[0]), (void *)&snmp_sk_alarm[0],  ((void *) 0)},	
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 15, 1,4, 2},  					sizeof(snmp_sk_alarm[1]), (void *)&snmp_sk_alarm[1],  ((void *) 0)},	
@@ -4783,44 +4801,44 @@ char* aaa_="abc";
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,16, 2},  	sizeof(snmp_lakb_cell_temperature_1[1]), (void *)&snmp_lakb_cell_temperature_1[1],  	  	((void *) 0)},	
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,16, 3},  	sizeof(snmp_lakb_cell_temperature_1[2]), (void *)&snmp_lakb_cell_temperature_1[2],  	  	((void *) 0)},	
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,16, 4},  	sizeof(snmp_lakb_cell_temperature_1[3]), (void *)&snmp_lakb_cell_temperature_1[3],  	  	((void *) 0)},	
-	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,16, 5},  	sizeof(snmp_lakb_cell_temperature_1[4]), (void *)&snmp_lakb_cell_temperature_1[4],  	  	((void *) 0)},	
-	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,16, 6},  	sizeof(snmp_lakb_cell_temperature_1[5]), (void *)&snmp_lakb_cell_temperature_1[5],  	  	((void *) 0)},	
-	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,16, 7},  	sizeof(snmp_lakb_cell_temperature_1[6]), (void *)&snmp_lakb_cell_temperature_1[6],  	  	((void *) 0)},	
+
+
+
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,17, 1},  	sizeof(snmp_lakb_cell_temperature_2[0]), (void *)&snmp_lakb_cell_temperature_2[0],  	  	((void *) 0)},	
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,17, 2},  	sizeof(snmp_lakb_cell_temperature_2[1]), (void *)&snmp_lakb_cell_temperature_2[1],  	  	((void *) 0)},	
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,17, 3},  	sizeof(snmp_lakb_cell_temperature_2[2]), (void *)&snmp_lakb_cell_temperature_2[2],  	  	((void *) 0)},	
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,17, 4},  	sizeof(snmp_lakb_cell_temperature_2[3]), (void *)&snmp_lakb_cell_temperature_2[3],  	  	((void *) 0)},	
-	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,17, 5},  	sizeof(snmp_lakb_cell_temperature_2[4]), (void *)&snmp_lakb_cell_temperature_2[4],  	  	((void *) 0)},	
-	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,17, 6},  	sizeof(snmp_lakb_cell_temperature_2[5]), (void *)&snmp_lakb_cell_temperature_2[5],  	  	((void *) 0)},	
-	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,17, 7},  	sizeof(snmp_lakb_cell_temperature_2[6]), (void *)&snmp_lakb_cell_temperature_2[6],  	  	((void *) 0)},	
+
+
+
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,18, 1},  	sizeof(snmp_lakb_cell_temperature_3[0]), (void *)&snmp_lakb_cell_temperature_3[0],  	  	((void *) 0)},	
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,18, 2},  	sizeof(snmp_lakb_cell_temperature_3[1]), (void *)&snmp_lakb_cell_temperature_3[1],  	  	((void *) 0)},	
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,18, 3},  	sizeof(snmp_lakb_cell_temperature_3[2]), (void *)&snmp_lakb_cell_temperature_3[2],  	  	((void *) 0)},	
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,18, 4},  	sizeof(snmp_lakb_cell_temperature_3[3]), (void *)&snmp_lakb_cell_temperature_3[3],  	  	((void *) 0)},	
-	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,18, 5},  	sizeof(snmp_lakb_cell_temperature_3[4]), (void *)&snmp_lakb_cell_temperature_3[4],  	  	((void *) 0)},	
-	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,18, 6},  	sizeof(snmp_lakb_cell_temperature_3[5]), (void *)&snmp_lakb_cell_temperature_3[5],  	  	((void *) 0)},	
-	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,18, 7},  	sizeof(snmp_lakb_cell_temperature_3[6]), (void *)&snmp_lakb_cell_temperature_3[6],  	  	((void *) 0)},	
+
+
+
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,19, 1},  	sizeof(snmp_lakb_cell_temperature_4[0]), (void *)&snmp_lakb_cell_temperature_4[0],  	  	((void *) 0)},	
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,19, 2},  	sizeof(snmp_lakb_cell_temperature_4[1]), (void *)&snmp_lakb_cell_temperature_4[1],  	  	((void *) 0)},	
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,19, 3},  	sizeof(snmp_lakb_cell_temperature_4[2]), (void *)&snmp_lakb_cell_temperature_4[2],  	  	((void *) 0)},	
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,19, 4},  	sizeof(snmp_lakb_cell_temperature_4[3]), (void *)&snmp_lakb_cell_temperature_4[3],  	  	((void *) 0)},	
-	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,19, 5},  	sizeof(snmp_lakb_cell_temperature_4[4]), (void *)&snmp_lakb_cell_temperature_4[4],  	  	((void *) 0)},	
-	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,19, 6},  	sizeof(snmp_lakb_cell_temperature_4[5]), (void *)&snmp_lakb_cell_temperature_4[5],  	  	((void *) 0)},	
-	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,19, 7},  	sizeof(snmp_lakb_cell_temperature_4[6]), (void *)&snmp_lakb_cell_temperature_4[6],  	  	((void *) 0)},	
+
+
+
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,20, 1},  	sizeof(snmp_lakb_cell_temperature_ambient[0]), (void *)&snmp_lakb_cell_temperature_ambient[0],  	  	((void *) 0)},	
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,20, 2},  	sizeof(snmp_lakb_cell_temperature_ambient[1]), (void *)&snmp_lakb_cell_temperature_ambient[1],  	  	((void *) 0)},	
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,20, 3},  	sizeof(snmp_lakb_cell_temperature_ambient[2]), (void *)&snmp_lakb_cell_temperature_ambient[2],  	  	((void *) 0)},	
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,20, 4},  	sizeof(snmp_lakb_cell_temperature_ambient[3]), (void *)&snmp_lakb_cell_temperature_ambient[3],  	  	((void *) 0)},	
-	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,20, 5},  	sizeof(snmp_lakb_cell_temperature_ambient[4]), (void *)&snmp_lakb_cell_temperature_ambient[4],  	  	((void *) 0)},	
-	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,20, 6},  	sizeof(snmp_lakb_cell_temperature_ambient[5]), (void *)&snmp_lakb_cell_temperature_ambient[5],  	  	((void *) 0)},	
-	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,20, 7},  	sizeof(snmp_lakb_cell_temperature_ambient[6]), (void *)&snmp_lakb_cell_temperature_ambient[6],  	  	((void *) 0)},	
+
+
+
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,21, 1},  	sizeof(snmp_lakb_cell_temperature_power[0]), (void *)&snmp_lakb_cell_temperature_power[0],  	  	((void *) 0)},	
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,21, 2},  	sizeof(snmp_lakb_cell_temperature_power[1]), (void *)&snmp_lakb_cell_temperature_power[1],  	  	((void *) 0)},	
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,21, 3},  	sizeof(snmp_lakb_cell_temperature_power[2]), (void *)&snmp_lakb_cell_temperature_power[2],  	  	((void *) 0)},	
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,21, 4},  	sizeof(snmp_lakb_cell_temperature_power[3]), (void *)&snmp_lakb_cell_temperature_power[3],  	  	((void *) 0)},	
-	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,21, 5},  	sizeof(snmp_lakb_cell_temperature_power[4]), (void *)&snmp_lakb_cell_temperature_power[4],  	  	((void *) 0)},	
-	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,21, 6},  	sizeof(snmp_lakb_cell_temperature_power[5]), (void *)&snmp_lakb_cell_temperature_power[5],  	  	((void *) 0)},	
-	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,21, 7},  	sizeof(snmp_lakb_cell_temperature_power[6]), (void *)&snmp_lakb_cell_temperature_power[6],  	  	((void *) 0)},	
+
+
+
 
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,6, 1},  				sizeof(snmp_lakb_voltage[0]), (void *)&snmp_lakb_voltage[0],  	((void *) 0)},	
 	{ 0x02 | 0x80,  	13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,6, 2},  				sizeof(snmp_lakb_voltage[1]), (void *)&snmp_lakb_voltage[1],  	((void *) 0)},	
@@ -4896,37 +4914,37 @@ char* aaa_="abc";
 	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,22, 2},  				sizeof(snmp_lakb_damp1[1][0]), (void *)&snmp_lakb_damp1[1][0],  		((void *) 0)},	
 	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,22, 3},  				sizeof(snmp_lakb_damp1[2][0]), (void *)&snmp_lakb_damp1[2][0],  		((void *) 0)},	
 	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,22, 4},  				sizeof(snmp_lakb_damp1[3][0]), (void *)&snmp_lakb_damp1[3][0],  		((void *) 0)},	
-	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,22, 5},  				sizeof(snmp_lakb_damp1[4][0]), (void *)&snmp_lakb_damp1[4][0],  		((void *) 0)},	
-	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,22, 6},  				sizeof(snmp_lakb_damp1[5][0]), (void *)&snmp_lakb_damp1[5][0],  		((void *) 0)},	
-	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,22, 7},  				sizeof(snmp_lakb_damp1[6][0]), (void *)&snmp_lakb_damp1[6][0],  		((void *) 0)},	
+
+
+
 	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,23, 1},  				sizeof(snmp_lakb_damp1[0][30]), (void *)&snmp_lakb_damp1[0][30],  		((void *) 0)},	
 	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,23, 2},  				sizeof(snmp_lakb_damp1[1][30]), (void *)&snmp_lakb_damp1[1][30],  		((void *) 0)},	
 	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,23, 3},  				sizeof(snmp_lakb_damp1[2][30]), (void *)&snmp_lakb_damp1[2][30],  		((void *) 0)},	
-	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,23, 4},  				sizeof(snmp_lakb_damp1[3][30]), (void *)&snmp_lakb_damp1[3][30],  		((void *) 0)},	
-	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,23, 5},  				sizeof(snmp_lakb_damp1[4][30]), (void *)&snmp_lakb_damp1[4][30],  		((void *) 0)},	
-	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,23, 6},  				sizeof(snmp_lakb_damp1[5][30]), (void *)&snmp_lakb_damp1[5][30],  		((void *) 0)},	
-	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,23, 7},  				sizeof(snmp_lakb_damp1[6][30]), (void *)&snmp_lakb_damp1[6][30],  		((void *) 0)},	
+
+
+
+
 	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,24, 1},  				sizeof(snmp_lakb_damp1[0][60]), (void *)&snmp_lakb_damp1[0][60],  		((void *) 0)},	
 	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,24, 2},  				sizeof(snmp_lakb_damp1[1][60]), (void *)&snmp_lakb_damp1[1][60],  		((void *) 0)},	
 	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,24, 3},  				sizeof(snmp_lakb_damp1[2][60]), (void *)&snmp_lakb_damp1[2][60],  		((void *) 0)},	
-	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,24, 4},  				sizeof(snmp_lakb_damp1[3][60]), (void *)&snmp_lakb_damp1[3][60],  		((void *) 0)},	
-	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,24, 5},  				sizeof(snmp_lakb_damp1[4][60]), (void *)&snmp_lakb_damp1[4][60],  		((void *) 0)},	
-	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,24, 6},  				sizeof(snmp_lakb_damp1[5][60]), (void *)&snmp_lakb_damp1[5][60],  		((void *) 0)},	
-	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,24, 7},  				sizeof(snmp_lakb_damp1[6][60]), (void *)&snmp_lakb_damp1[6][60],  		((void *) 0)},	
+
+
+
+
 	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,25, 1},  				sizeof(snmp_lakb_damp1[0][90]), (void *)&snmp_lakb_damp1[0][90],  		((void *) 0)},	
 	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,25, 2},  				sizeof(snmp_lakb_damp1[1][90]), (void *)&snmp_lakb_damp1[1][90],  		((void *) 0)},	
 	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,25, 3},  				sizeof(snmp_lakb_damp1[2][90]), (void *)&snmp_lakb_damp1[2][90],  		((void *) 0)},	
-	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,25, 4},  				sizeof(snmp_lakb_damp1[3][90]), (void *)&snmp_lakb_damp1[3][90],  		((void *) 0)},	
-	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,25, 5},  				sizeof(snmp_lakb_damp1[4][90]), (void *)&snmp_lakb_damp1[4][90],  		((void *) 0)},	
-	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,25, 6},  				sizeof(snmp_lakb_damp1[5][90]), (void *)&snmp_lakb_damp1[5][90],  		((void *) 0)},	
-	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,25, 7},  				sizeof(snmp_lakb_damp1[6][90]), (void *)&snmp_lakb_damp1[6][90],  		((void *) 0)},	
+
+
+
+
 	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,26, 1},  				sizeof(snmp_lakb_damp1[0][120]), (void *)&snmp_lakb_damp1[0][120],  		((void *) 0)},	
 	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,26, 2},  				sizeof(snmp_lakb_damp1[1][120]), (void *)&snmp_lakb_damp1[1][120],  		((void *) 0)},	
 	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,26, 3},  				sizeof(snmp_lakb_damp1[2][120]), (void *)&snmp_lakb_damp1[2][120],  		((void *) 0)},	
-	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,26, 4},  				sizeof(snmp_lakb_damp1[3][120]), (void *)&snmp_lakb_damp1[3][120],  		((void *) 0)},	
-	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,26, 5},  				sizeof(snmp_lakb_damp1[4][120]), (void *)&snmp_lakb_damp1[4][120],  		((void *) 0)},	
-	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,26, 6},  				sizeof(snmp_lakb_damp1[5][120]), (void *)&snmp_lakb_damp1[5][120],  		((void *) 0)},	
-	{ 0x04 | 0x80, 13, {(1*40 + 3), 6, 1, 4, 1, 130, 131, 31, 14, 18, 1,26, 7}, 				sizeof(snmp_lakb_damp1[6][120]), (void *)&snmp_lakb_damp1[6][120],  		((void *) 0)}
+
+
+
+
 
 	};
 

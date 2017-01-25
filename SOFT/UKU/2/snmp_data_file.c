@@ -619,18 +619,18 @@ for(i=0;i<12;i++)
 snmp_dt_number[0]=1;
 snmp_dt_number[1]=2;
 snmp_dt_number[2]=3;
-snmp_dt_number[3]=4;
+//snmp_dt_number[3]=4;
 snmp_dt_temper[0]=t_ext[0];
 snmp_dt_temper[1]=t_ext[1];
 snmp_dt_temper[2]=t_ext[2];
-snmp_dt_temper[3]=t_ext[3];
+//snmp_dt_temper[3]=t_ext[3];
 snmp_dt_error[0]=ND_EXT[0];
 if(NUMDT<1)snmp_dt_error[0]=0xff;
 snmp_dt_error[1]=ND_EXT[1];
 if(NUMDT<2)snmp_dt_error[0]=0xff;
 snmp_dt_error[2]=ND_EXT[2];
 if(NUMDT<3)snmp_dt_error[0]=0xff;
-snmp_dt_error[3]=ND_EXT[3];
+//snmp_dt_error[3]=ND_EXT[3];
 if(NUMDT<4)snmp_dt_error[0]=0xff;
 
 /*
@@ -900,30 +900,45 @@ if(mode==MIB_WRITE)
 }
 
 //-----------------------------------------------
-void snmp_alarm_aktiv_write1(void)
+void snmp_alarm_aktiv_write1(int mode)
 {
-if(!snmp_sk_alarm_aktiv[0])   lc640_write_int(ADR_SK_SIGN[0],0xffff);
-else lc640_write_int(ADR_SK_SIGN[0],0);
+if(mode==MIB_WRITE)
+	{
+	if(!snmp_sk_alarm_aktiv[0])   lc640_write_int(ADR_SK_SIGN[0],0xffff);
+	else lc640_write_int(ADR_SK_SIGN[0],0);
+	}
 }
 
 //-----------------------------------------------
-void snmp_alarm_aktiv_write2(void)
+void snmp_alarm_aktiv_write2(int mode)
 {
-if(!snmp_sk_alarm_aktiv[1])   lc640_write_int(ADR_SK_SIGN[1],0xffff);
-else lc640_write_int(ADR_SK_SIGN[1],0);
+if(mode==MIB_WRITE)
+	{
+	if(!snmp_sk_alarm_aktiv[1])   lc640_write_int(ADR_SK_SIGN[1],0xffff);
+	else lc640_write_int(ADR_SK_SIGN[1],0);
+	}
 }
+
 //-----------------------------------------------
-void snmp_alarm_aktiv_write3(void)
+void snmp_alarm_aktiv_write3(int mode)
 {
-if(!snmp_sk_alarm_aktiv[2])   lc640_write_int(ADR_SK_SIGN[2],0xffff);
-else lc640_write_int(ADR_SK_SIGN[2],0);
+if(mode==MIB_WRITE)
+	{
+	if(!snmp_sk_alarm_aktiv[2])   lc640_write_int(ADR_SK_SIGN[2],0xffff);
+	else lc640_write_int(ADR_SK_SIGN[2],0);
+	}
 }
+
 //-----------------------------------------------
-void snmp_alarm_aktiv_write4(void)
+void snmp_alarm_aktiv_write4(int mode)
 {
-if(!snmp_sk_alarm_aktiv[3])   lc640_write_int(ADR_SK_SIGN[3],0xffff);
-else lc640_write_int(ADR_SK_SIGN[3],0);
+if(mode==MIB_WRITE)
+	{
+	if(!snmp_sk_alarm_aktiv[3])   lc640_write_int(ADR_SK_SIGN[3],0xffff);
+	else lc640_write_int(ADR_SK_SIGN[3],0);
+	}
 }
+
 //-----------------------------------------------
 void snmp_main_bps_write (int mode)
 {
@@ -1315,7 +1330,7 @@ if(mode==MIB_WRITE)
 //-----------------------------------------------
 char* datatime2str(char day,char month,char year, char hour, char min, char sec)
 {
-char temp_str[20];
+static char temp_str[20];
 memcpy(temp_str,"00/џэт/00  00:00:00       ",20);
 
 temp_str[1]=(day%10)+0x30;

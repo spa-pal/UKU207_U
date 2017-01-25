@@ -12,3 +12,5 @@ extern short modbus_tcp_rx_arg1;
 
 extern char* modbus_tcp_out_ptr;
 
+U16 tcp_callback (U8 soc, U8 evt, U8 *ptr, U16 par);
+

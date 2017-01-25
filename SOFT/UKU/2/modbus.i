@@ -2770,7 +2770,7 @@ typedef enum {
 	iBps_list,
 	iSpch_set,
 	iAvt_set_sel,iAvt_set,iSet_li_bat,
-	iOut_volt_contr,iDop_rele_set,iBlok_ips_set}i_enum;
+	iOut_volt_contr,iDop_rele_set,iBlok_ips_set,iIps_Curr_Avg_Set}i_enum;
 
 typedef struct  
 {
@@ -2905,6 +2905,11 @@ extern signed short CNTRL_HNDL_TIME;
 extern signed short USODERG_LI_BAT;		
 extern signed short QSODERG_LI_BAT;		
 extern signed short TVENTMAX;			
+extern signed short ICA_EN;				
+extern signed short ICA_CH;				
+extern signed short ICA_MODBUS_ADDRESS;
+extern signed short ICA_MODBUS_TCP_IP1,ICA_MODBUS_TCP_IP2,ICA_MODBUS_TCP_IP3,ICA_MODBUS_TCP_IP4;	
+extern signed short ICA_MODBUS_TCP_UNIT_ID;	
 
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
@@ -3408,9 +3413,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1417 "main.h"
+#line 1422 "main.h"
 
-#line 1428 "main.h"
+#line 1433 "main.h"
 
 
 
@@ -3514,6 +3519,17 @@ extern U8 socket_tcp;
 
 
 
+extern char ica_plazma[10];
+extern char ica_timer_cnt;
+extern signed short ica_my_current;
+extern signed short ica_your_current;
+extern signed short ica_u_necc;
+extern U8 tcp_soc_avg;
+extern U8 tcp_connect_stat;
+
+
+
+
 
 
 
@@ -3599,6 +3615,7 @@ void ext_drv(void);
 void adc_drv7(void);
 void avt_hndl(void);
 void vent_resurs_hndl(void);
+void ips_current_average_hndl(void);
 
 
 
@@ -3653,6 +3670,7 @@ void zar_superviser_start(void);
 void vent_hndl(void);
 void speedChargeHndl(void);
 void speedChargeStartStop(void);
+void	numOfForvardBps_init(void);
 
 
 #line 7 "modbus.c"
@@ -4089,40 +4107,41 @@ extern __declspec(__nothrow) void _membitmovewb(void *  , const void *  , int  ,
 
 
 
-#line 138 "eeprom_map.h"
+#line 136 "eeprom_map.h"
+
+
+
+
+#line 154 "eeprom_map.h"
+
+#line 166 "eeprom_map.h"
+
+
+
+#line 178 "eeprom_map.h"
+
+
+#line 189 "eeprom_map.h"
+
+
+
+#line 200 "eeprom_map.h"
+
+
+
+#line 256 "eeprom_map.h"
+
+
+#line 298 "eeprom_map.h"
 
 
 
 
 
-#line 157 "eeprom_map.h"
 
 
 
-#line 169 "eeprom_map.h"
-
-
-#line 180 "eeprom_map.h"
-
-
-
-#line 191 "eeprom_map.h"
-
-
-
-#line 247 "eeprom_map.h"
-
-
-#line 289 "eeprom_map.h"
-
-
-
-
-
-
-
-
-#line 311 "eeprom_map.h"
+#line 320 "eeprom_map.h"
 
 
 
@@ -4276,6 +4295,8 @@ extern short modbus_tcp_rx_arg1;
 
 extern char* modbus_tcp_out_ptr;
 
+U16 tcp_callback (U8 soc, U8 evt, U8 *ptr, U16 par);
+
 #line 12 "modbus.c"
 #line 1 "25lc640.h"
 
@@ -4292,6 +4313,7 @@ extern char* modbus_tcp_out_ptr;
 
 char spi1(char in);
 void spi1_config(void);
+void spi1_config_mcp2515(void);
 void spi1_unconfig(void);
 void lc640_wren(void);
 char lc640_rdsr(void);
@@ -4400,6 +4422,7 @@ void rs232_data_out(void);
 void rs232_data_out_tki(void);
 void uart_out_buff0 (char *ptr, char len);
 void rs232_data_out_1(void);
+uint32_t UARTInit( uint32_t PortNum, uint32_t baudrate );
 
 #line 15 "modbus.c"
 
@@ -4676,10 +4699,23 @@ modbus_rx_arg1=(((unsigned short)modbus_an_buffer[4])*((unsigned short)256))+((u
 
 
 
+
 if(crc16_calculated==crc16_incapsulated)
 	{
-	
-	if(modbus_an_buffer[0]==MODBUS_ADRESS)
+	ica_plazma[4]++;
+	if(modbus_an_buffer[0]==ICA_MODBUS_ADDRESS)
+		{
+		ica_plazma[3]++;
+		if(modbus_func==4)		
+			{
+			ica_plazma[2]++;
+			if(modbus_an_buffer[2]==2)
+				{
+				ica_your_current=(((unsigned short)modbus_an_buffer[3])*((unsigned short)256))+((unsigned short)modbus_an_buffer[4]);
+				}
+			}
+		}
+	else if(modbus_an_buffer[0]==MODBUS_ADRESS)
 		{
 		if(modbus_func==3)		
 			{

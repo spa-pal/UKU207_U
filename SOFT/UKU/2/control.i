@@ -14,6 +14,7 @@
 
 char spi1(char in);
 void spi1_config(void);
+void spi1_config_mcp2515(void);
 void spi1_unconfig(void);
 void lc640_wren(void);
 char lc640_rdsr(void);
@@ -106,6 +107,7 @@ void ext_drv(void);
 void adc_drv7(void);
 void avt_hndl(void);
 void vent_resurs_hndl(void);
+void ips_current_average_hndl(void);
 
 
 
@@ -160,6 +162,7 @@ void zar_superviser_start(void);
 void vent_hndl(void);
 void speedChargeHndl(void);
 void speedChargeStartStop(void);
+void	numOfForvardBps_init(void);
 
 
 #line 3 "control.c"
@@ -248,40 +251,41 @@ void community2lcd(char* in,
 
 
 
-#line 138 "eeprom_map.h"
+#line 136 "eeprom_map.h"
+
+
+
+
+#line 154 "eeprom_map.h"
+
+#line 166 "eeprom_map.h"
+
+
+
+#line 178 "eeprom_map.h"
+
+
+#line 189 "eeprom_map.h"
+
+
+
+#line 200 "eeprom_map.h"
+
+
+
+#line 256 "eeprom_map.h"
+
+
+#line 298 "eeprom_map.h"
 
 
 
 
 
-#line 157 "eeprom_map.h"
 
 
 
-#line 169 "eeprom_map.h"
-
-
-#line 180 "eeprom_map.h"
-
-
-
-#line 191 "eeprom_map.h"
-
-
-
-#line 247 "eeprom_map.h"
-
-
-#line 289 "eeprom_map.h"
-
-
-
-
-
-
-
-
-#line 311 "eeprom_map.h"
+#line 320 "eeprom_map.h"
 
 
 
@@ -447,6 +451,7 @@ void avar_bat_as_hndl(char b, char in);
 void ke_mem_hndl(char b,unsigned short in);
 void vz_mem_hndl(unsigned short in);
 void wrk_mem_hndl(char b);
+void avar_bat_ips_hndl(char in);
 
 
 
@@ -1145,7 +1150,7 @@ typedef enum {
 	iBps_list,
 	iSpch_set,
 	iAvt_set_sel,iAvt_set,iSet_li_bat,
-	iOut_volt_contr,iDop_rele_set,iBlok_ips_set}i_enum;
+	iOut_volt_contr,iDop_rele_set,iBlok_ips_set,iIps_Curr_Avg_Set}i_enum;
 
 typedef struct  
 {
@@ -1280,6 +1285,11 @@ extern signed short CNTRL_HNDL_TIME;
 extern signed short USODERG_LI_BAT;		
 extern signed short QSODERG_LI_BAT;		
 extern signed short TVENTMAX;			
+extern signed short ICA_EN;				
+extern signed short ICA_CH;				
+extern signed short ICA_MODBUS_ADDRESS;
+extern signed short ICA_MODBUS_TCP_IP1,ICA_MODBUS_TCP_IP2,ICA_MODBUS_TCP_IP3,ICA_MODBUS_TCP_IP4;	
+extern signed short ICA_MODBUS_TCP_UNIT_ID;	
 
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
@@ -1783,9 +1793,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1417 "main.h"
+#line 1422 "main.h"
 
-#line 1428 "main.h"
+#line 1433 "main.h"
 
 
 
@@ -1886,6 +1896,17 @@ extern short plazma_numOfPacks;
 extern char plazma_ztt[2];
 
 extern U8 socket_tcp;
+
+
+
+extern char ica_plazma[10];
+extern char ica_timer_cnt;
+extern signed short ica_my_current;
+extern signed short ica_your_current;
+extern signed short ica_u_necc;
+extern U8 tcp_soc_avg;
+extern U8 tcp_connect_stat;
+
 
 
 
@@ -2125,10 +2146,10 @@ void snmp_powerup_psu_timeout_write (int mode);
 void snmp_max_temperature_write (int mode);
 void event2snmp(char num);
 void snmp_trap_send(char* str, signed short in0, signed short in1, signed short in2);
-void snmp_alarm_aktiv_write1(void);
-void snmp_alarm_aktiv_write2(void);
-void snmp_alarm_aktiv_write3(void);
-void snmp_alarm_aktiv_write4(void);
+void snmp_alarm_aktiv_write1(int mode);
+void snmp_alarm_aktiv_write2(int mode);
+void snmp_alarm_aktiv_write3(int mode);
+void snmp_alarm_aktiv_write4(int mode);
 void snmp_klimat_settings_box_alarm_write(int mode);
 void snmp_klimat_settings_vent_on_write(int mode);
 void snmp_klimat_settings_vent_off_write(int mode);
@@ -2163,187 +2184,7 @@ extern short sacredSunSilentCnt;
 void sacred_san_bat_hndl(void);
 short ascii2halFhex(char in);
 #line 12 "control.c"
-#line 1 "C:\\Keil\\ARM\\INC\\NXP\\LPC17xx\\LPC17xx.h"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
- 
-
-typedef enum IRQn
-{
- 
-  NonMaskableInt_IRQn           = -14,       
-  MemoryManagement_IRQn         = -12,       
-  BusFault_IRQn                 = -11,       
-  UsageFault_IRQn               = -10,       
-  SVCall_IRQn                   = -5,        
-  DebugMonitor_IRQn             = -4,        
-  PendSV_IRQn                   = -2,        
-  SysTick_IRQn                  = -1,        
-
- 
-  WDT_IRQn                      = 0,         
-  TIMER0_IRQn                   = 1,         
-  TIMER1_IRQn                   = 2,         
-  TIMER2_IRQn                   = 3,         
-  TIMER3_IRQn                   = 4,         
-  UART0_IRQn                    = 5,         
-  UART1_IRQn                    = 6,         
-  UART2_IRQn                    = 7,         
-  UART3_IRQn                    = 8,         
-  PWM1_IRQn                     = 9,         
-  I2C0_IRQn                     = 10,        
-  I2C1_IRQn                     = 11,        
-  I2C2_IRQn                     = 12,        
-  SPI_IRQn                      = 13,        
-  SSP0_IRQn                     = 14,        
-  SSP1_IRQn                     = 15,        
-  PLL0_IRQn                     = 16,        
-  RTC_IRQn                      = 17,        
-  EINT0_IRQn                    = 18,        
-  EINT1_IRQn                    = 19,        
-  EINT2_IRQn                    = 20,        
-  EINT3_IRQn                    = 21,        
-  ADC_IRQn                      = 22,        
-  BOD_IRQn                      = 23,        
-  USB_IRQn                      = 24,        
-  CAN_IRQn                      = 25,        
-  DMA_IRQn                      = 26,        
-  I2S_IRQn                      = 27,        
-  ENET_IRQn                     = 28,        
-  RIT_IRQn                      = 29,        
-  MCPWM_IRQn                    = 30,        
-  QEI_IRQn                      = 31,        
-  PLL1_IRQn                     = 32,        
-  USBActivity_IRQn              = 33,        
-  CANActivity_IRQn              = 34,        
-} IRQn_Type;
-
-
-
-
-
-
- 
-
- 
-
-
-
-
-
-#line 1 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
- 
- 
- 
- 
- 
- 
- 
- 
-
-
+#line 1 "sc16is7xx.h"
 #line 1 "C:\\Keil\\ARM\\RV31\\INC\\stdint.h"
  
  
@@ -2564,6 +2405,242 @@ typedef unsigned       __int64 uintmax_t;
 
 
 
+ 
+
+
+#line 2 "sc16is7xx.h"
+
+#line 15 "sc16is7xx.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+extern char sc16is700ByteAvailable;
+extern char sc16is700TxFifoLevel;
+extern char tx_buffer_sc16is700[32]; 
+extern char tx_wr_index_sc16is700;
+extern char tx_rd_index_sc16is700;
+extern char sc16is700TxFifoEmptyCnt; 
+extern char sc16is700TxPossibleFlag;
+
+
+void sc16is700_init(uint32_t baudrate);
+void sc16is700_wr_byte(char reg_num,char data);
+char sc16is700_rd_byte(char reg_num);
+
+
+void sc16is700_wr_buff(char reg_num,char num);
+void putchar_sc16is700(char out_byte);
+void sc16is700_uart_hndl(void);
+
+#line 13 "control.c"
+#line 1 "modbus_tcp.h"
+
+extern char plazma_modbus_tcp[20];
+
+U16 tcp_callback (U8 soc, U8 evt, U8 *ptr, U16 par);
+
+extern char modbus_tcp_func;
+extern char modbus_tcp_unit;
+extern short modbus_tcp_rx_arg0;
+extern short modbus_tcp_rx_arg1;
+
+
+
+extern char* modbus_tcp_out_ptr;
+
+U16 tcp_callback (U8 soc, U8 evt, U8 *ptr, U16 par);
+
+#line 14 "control.c"
+#line 1 "C:\\Keil\\ARM\\INC\\NXP\\LPC17xx\\LPC17xx.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+ 
+
+typedef enum IRQn
+{
+ 
+  NonMaskableInt_IRQn           = -14,       
+  MemoryManagement_IRQn         = -12,       
+  BusFault_IRQn                 = -11,       
+  UsageFault_IRQn               = -10,       
+  SVCall_IRQn                   = -5,        
+  DebugMonitor_IRQn             = -4,        
+  PendSV_IRQn                   = -2,        
+  SysTick_IRQn                  = -1,        
+
+ 
+  WDT_IRQn                      = 0,         
+  TIMER0_IRQn                   = 1,         
+  TIMER1_IRQn                   = 2,         
+  TIMER2_IRQn                   = 3,         
+  TIMER3_IRQn                   = 4,         
+  UART0_IRQn                    = 5,         
+  UART1_IRQn                    = 6,         
+  UART2_IRQn                    = 7,         
+  UART3_IRQn                    = 8,         
+  PWM1_IRQn                     = 9,         
+  I2C0_IRQn                     = 10,        
+  I2C1_IRQn                     = 11,        
+  I2C2_IRQn                     = 12,        
+  SPI_IRQn                      = 13,        
+  SSP0_IRQn                     = 14,        
+  SSP1_IRQn                     = 15,        
+  PLL0_IRQn                     = 16,        
+  RTC_IRQn                      = 17,        
+  EINT0_IRQn                    = 18,        
+  EINT1_IRQn                    = 19,        
+  EINT2_IRQn                    = 20,        
+  EINT3_IRQn                    = 21,        
+  ADC_IRQn                      = 22,        
+  BOD_IRQn                      = 23,        
+  USB_IRQn                      = 24,        
+  CAN_IRQn                      = 25,        
+  DMA_IRQn                      = 26,        
+  I2S_IRQn                      = 27,        
+  ENET_IRQn                     = 28,        
+  RIT_IRQn                      = 29,        
+  MCPWM_IRQn                    = 30,        
+  QEI_IRQn                      = 31,        
+  PLL1_IRQn                     = 32,        
+  USBActivity_IRQn              = 33,        
+  CANActivity_IRQn              = 34,        
+} IRQn_Type;
+
+
+
+
+
+
+ 
+
+ 
+
+
+
+
+
+#line 1 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
 
 
@@ -4197,7 +4274,7 @@ typedef struct
  
 #line 1031 "C:\\Keil\\ARM\\INC\\NXP\\LPC17xx\\LPC17xx.h"
 
-#line 13 "control.c"
+#line 15 "control.c"
 
 
 
@@ -4962,25 +5039,25 @@ void matemat(void)
 
 signed long temp_SL ;
 char  i;
-signed short temp_SS;
-
-#line 786 "control.c"
-
-#line 794 "control.c"
-
-#line 802 "control.c"
-
-#line 864 "control.c"
-
-#line 872 "control.c"
-
-#line 880 "control.c"
 
 
-#line 914 "control.c"
+#line 788 "control.c"
+
+#line 796 "control.c"
+
+#line 804 "control.c"
+
+#line 866 "control.c"
+
+#line 874 "control.c"
+
+#line 882 "control.c"
 
 
-#line 953 "control.c"
+#line 916 "control.c"
+
+
+#line 955 "control.c"
 
 
 
@@ -5078,7 +5155,7 @@ else
 if(bps[11]._device!=dNET_METR) net_F3=net_F;
 
 
-#line 1057 "control.c"
+#line 1059 "control.c"
 
 
 temp_SL=(signed long)adc_buff_[0];
@@ -5086,33 +5163,33 @@ temp_SL*=Kubat[0];
 temp_SL/=2000L;
 bat[0]._Ub=(signed short)temp_SL;
 
-#line 1071 "control.c"
+#line 1073 "control.c"
 
-#line 1079 "control.c"
+#line 1081 "control.c"
 
 temp_SL=(signed long)adc_buff_[4];
 temp_SL*=Kubatm[0];
 temp_SL/=700L;
 bat[0]._Ubm=(signed short)temp_SL;
 
-#line 1091 "control.c"
+#line 1093 "control.c"
 
 temp_SL=(signed long)adc_buff_[12];
 temp_SL*=Kubat[1];
 temp_SL/=2000L;
 bat[1]._Ub=(signed short)temp_SL;
 
-#line 1103 "control.c"
+#line 1105 "control.c"
 
-#line 1110 "control.c"
+#line 1112 "control.c"
 
 temp_SL=(signed long)adc_buff_[1];
 temp_SL*=Kubatm[1];
 temp_SL/=700L;
 bat[1]._Ubm=(signed short)temp_SL;
-#line 1121 "control.c"
+#line 1123 "control.c"
 
-#line 1128 "control.c"
+#line 1130 "control.c"
 
 
 
@@ -5165,7 +5242,7 @@ if(!mess_find_unvol(220))
 
 
 
-#line 1189 "control.c"
+#line 1191 "control.c"
 if((adc_buff_[6]>800)&&(adc_buff_[6]<3800))bat[0]._nd=0;
 else bat[0]._nd=1;
 temp_SL=(signed long)adc_buff_[6];
@@ -5175,7 +5252,7 @@ temp_SL-=273L;
 bat[0]._Tb=(signed short)temp_SL;
 
 
-#line 1207 "control.c"
+#line 1209 "control.c"
 if((adc_buff_[7]>800)&&(adc_buff_[7]<3800))bat[1]._nd=0;
 else bat[1]._nd=1;
 temp_SL=(signed long)adc_buff_[7];
@@ -5185,7 +5262,7 @@ temp_SL-=273L;
 bat[1]._Tb=(signed short)temp_SL;
 
 
-#line 1288 "control.c"
+#line 1290 "control.c"
 
 
 
@@ -5194,9 +5271,9 @@ temp_SL*=Kuload;
 temp_SL/=2000L;
 load_U=(signed short)temp_SL;
 
-#line 1303 "control.c"
+#line 1305 "control.c"
 
-#line 1311 "control.c"
+#line 1313 "control.c"
 
 
 
@@ -5214,6 +5291,15 @@ if(AUSW_MAIN==22010)temp_SL/=400L;
 else temp_SL/=500L;
 bps_U=(signed short)temp_SL;
 
+if(bps_U<100)
+	{
+	char i;
+	for(i=0;i<NUMIST;i++)
+		{
+		if(bps[i]._Uin>bps_U)bps_U=bps[i]._Uin;
+		}
+	}
+
 
 temp_SL=0;
 for (i=0;i<NUMIST;i++)
@@ -5226,7 +5312,7 @@ bps_I=(signed short)temp_SL;
 
 
 
-#line 1350 "control.c"
+#line 1361 "control.c"
 
 if((adc_buff_[5]>800)&&(adc_buff_[5]<3800))ND_EXT[0]=0;
 else ND_EXT[0]=1;
@@ -5237,7 +5323,7 @@ temp_SL-=273L;
 t_ext[0]=(signed short)temp_SL;
 
 
-#line 1381 "control.c"
+#line 1392 "control.c"
 
 
 
@@ -5251,9 +5337,9 @@ temp_SL/=20000L;
 temp_SL-=273L;
 t_ext[0]=(signed short)temp_SL;
 
-#line 1418 "control.c"
+#line 1429 "control.c"
 
-#line 1440 "control.c"
+#line 1451 "control.c"
 
 
 
@@ -5283,7 +5369,7 @@ else bat[0]._Ib=Ib_ips_termokompensat;
 
 
 
-#line 1491 "control.c"
+#line 1502 "control.c"
 
 
 temp_SL=(signed long)adc_buff_ext_[0];
@@ -5525,7 +5611,7 @@ if((BAT_IS_ON[0]==bisON)&&(bat[0]._Ub>200)) Ibmax=bat[0]._Ib;
 if((BAT_IS_ON[1]==bisON)&&(bat[1]._Ub>200)&&(bat[1]._Ib>bat[0]._Ib)) Ibmax=bat[1]._Ib;
 
 
-#line 1744 "control.c"
+#line 1755 "control.c"
 
 
 
@@ -5556,7 +5642,7 @@ for(i=0;i<NUMIST;i++)
      }
 
 load_I=0;
-#line 1782 "control.c"
+#line 1793 "control.c"
 load_I=-(bat[0]._Ib/10)-(bat[1]._Ib/10);
 
 Isumm=0;
@@ -5586,7 +5672,7 @@ if(load_I<0)load_I=0;
 
 
 
-#line 1840 "control.c"
+#line 1851 "control.c"
 
 
 if (NUMINV)
@@ -5631,7 +5717,7 @@ if (NUMINV)
    	}
 
 
-#line 1903 "control.c"
+#line 1914 "control.c"
 
 
 
@@ -5650,10 +5736,10 @@ if (NUMINV)
 
  
 
-#line 2134 "control.c"
+#line 2145 "control.c"
 
 
-#line 2180 "control.c"
+#line 2191 "control.c"
 
 
 
@@ -5784,7 +5870,7 @@ if(adc_ch_net)
 		}
 	if((adc_net_buff_cnt&0x03ff)==0)
 		{
-#line 2316 "control.c"
+#line 2327 "control.c"
 		net_buff_=(short)((main_power_buffer[adc_net_buff_cnt>>10])>>8);
 
 
@@ -6267,7 +6353,7 @@ if(mess_find_unvol((210))&&(mess_data[0]==100))
 else ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR & ~((0xffffffff>>(32-1))<<29)) | (1 << 29) );
 
 
-#line 2809 "control.c"
+#line 2820 "control.c"
 
 if((mess_find_unvol(210))&&	(mess_data[0]==102))
 	{
@@ -6278,28 +6364,30 @@ else	if(!(avar_ind_stat&0x00000001))	((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x0
 else 					  		((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOSET & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
 
 
-#line 2855 "control.c"
+#line 2866 "control.c"
 
 
-#line 2893 "control.c"
+#line 2904 "control.c"
 
-#line 2913 "control.c"
 
-#line 2980 "control.c"
 
-#line 3094 "control.c"
 
-#line 3160 "control.c"
 
-#line 3205 "control.c"
+#line 2975 "control.c"
 
-#line 3250 "control.c"
+#line 3089 "control.c"
+
+#line 3155 "control.c"
+
+#line 3200 "control.c"
+
+#line 3245 "control.c"
 
 
 
 if((AUSW_MAIN==22010)||(AUSW_MAIN==22011))
 	{
-#line 3265 "control.c"
+#line 3260 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOCLR & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6349,7 +6437,7 @@ else	if(AUSW_MAIN==22023)
 
 
 	
-#line 3324 "control.c"
+#line 3319 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6384,7 +6472,7 @@ else	if(AUSW_MAIN==22043)
      	else ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<4)) | (1 << 4) );
 		} 
 	
-#line 3368 "control.c"
+#line 3363 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6418,7 +6506,7 @@ else	if(AUSW_MAIN==22043)
 	}
 else	if((AUSW_MAIN==22033)||(AUSW_MAIN==22018))
 	{
-#line 3411 "control.c"
+#line 3406 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00060) )->FIOCLR & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6455,7 +6543,7 @@ else	if((AUSW_MAIN==22033)||(AUSW_MAIN==22018))
 else	
 	{
 	
-#line 3457 "control.c"
+#line 3452 "control.c"
 	if((mess_find_unvol(210))&&	(mess_data[0]==102))
 		{
 		if(mess_data[1]==0) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<25)) | (1 << 25) );
@@ -6494,10 +6582,10 @@ else if(DOP_RELE_FUNC==1)
 	}	 	
 
 
-#line 3608 "control.c"
+#line 3603 "control.c"
 
 
-#line 3669 "control.c"
+#line 3664 "control.c"
 
 }
 
@@ -6663,7 +6751,7 @@ else if(b1Hz_sh)
 		char ii,iii;
 
 		ii=(char)NUMIST;
-		if(ii<0)ii=0;
+		
 		if(ii>32)ii=32;
 		iii=numOfForvardBps;
 		if(iii<0)iii=0;
@@ -6765,11 +6853,92 @@ power_current_tempo_old=power_current_tempo;
 }
 
 
+void ips_current_average_hndl(void)
+{
+if(++ica_timer_cnt>=10)
+	{
+	ica_timer_cnt=0;
+	ica_plazma[0]++;
+
+	ica_my_current=bps_I;
+
+	if((ica_my_current>ica_your_current)&&((ica_my_current-ica_your_current)>=10)&&(ICA_EN==1))
+		{
+		ica_plazma[1]++;
+		ica_u_necc--;
+		}
+	else if((ica_my_current<ica_your_current)&&((ica_your_current-ica_my_current)>=10)&&(ICA_EN==1))
+		{
+		ica_plazma[1]--;
+		ica_u_necc++;
+		}
+	gran(&ica_u_necc,-20,20);
+	}
+
+if((ica_timer_cnt==8)&&(ICA_EN==1))
+	{
+	char modbus_buff[20],i;
+	short crc_temp;
+
+	modbus_buff[0] = ICA_MODBUS_ADDRESS;
+	modbus_buff[1] = 4;
+	modbus_buff[2] = 0;
+	modbus_buff[3] = 2;
+	modbus_buff[4] = 0;	
+	modbus_buff[5] = 1;
+
+	crc_temp= CRC16_2(modbus_buff,6);
+
+	modbus_buff[6]= (char)crc_temp;
+	modbus_buff[7]= (char)(crc_temp>>8);
+
+	if(ICA_CH==0)
+		{
+		for (i=0;i<8;i++)
+			{
+			putchar_sc16is700(modbus_buff[i]);
+			}
+		}
+	else if(ICA_CH==1)
+		{
+		static U8 rem_IP[4];
+		rem_IP[0]=ICA_MODBUS_TCP_IP1;
+		rem_IP[1]=ICA_MODBUS_TCP_IP2;
+		rem_IP[2]=ICA_MODBUS_TCP_IP3;
+		rem_IP[3]=ICA_MODBUS_TCP_IP4;
+  		
+  		if (tcp_soc_avg != 0) 
+			{
+    		
+			
+    		
+			
+
+ 
+			
+			
+
+			}
+		}
+	}
+
+if((ica_timer_cnt==3)&&(ICA_EN==1))
+	{
+	
+		{
+		
+		
+		}
+	}
+
+}
+
+
 void inv_drv(char in)
 {
 char temp,temp_;
 
-plazma_inv[4];
+
 
 gran_char(&first_inv_slot,1,7);
 
@@ -7193,7 +7362,7 @@ else
  
 }
 
-#line 4490 "control.c"
+#line 4566 "control.c"
 
 
 
@@ -7264,7 +7433,7 @@ if(main_vent_pos<=1)mixer_vent_stat=mvsON;
 else mixer_vent_stat=mvsOFF;
 
 
-#line 4577 "control.c"
+#line 4653 "control.c"
 
 if((TBATDISABLE>=50) && (TBATDISABLE<=90))
 	{
@@ -7321,7 +7490,7 @@ else
 }
 
 
-#line 4766 "control.c"
+#line 4842 "control.c"
 
 
 void bat_drv(char in)
@@ -7757,7 +7926,7 @@ signed long temp_L;
 signed long temp_SL;
 
 signed short t[2];
-char i;
+
 
 
 
@@ -7806,10 +7975,11 @@ if(mess_find_unvol(190))
 		u_necc=mess_data[1];
 		}		
 	}
+if(ICA_EN)u_necc+=ica_u_necc;
 
 
 
-#line 5495 "control.c"
+#line 5572 "control.c"
 
 temp_L=(signed long) u_necc;
 temp_L*=98L;
@@ -7927,7 +8097,7 @@ if(mess_find_unvol(225))
 			if(((u_necc-bps_U)>40)&&(cntrl_stat<1015))cntrl_stat+=5;
 			else	if((cntrl_stat<1020)&&b1Hz_ch)cntrl_stat++;
 			}
-#line 5647 "control.c"
+#line 5724 "control.c"
 	 	}
 	}
 
@@ -8012,7 +8182,7 @@ else if((b1Hz_ch)&&((!bIBAT_SMKLBR)||(bps[8]._cnt>40)))
 	cntrl_stat_old=cntrl_stat_new;
 	cntrl_stat=cntrl_stat_new;	
 	}
-#line 5813 "control.c"
+#line 5890 "control.c"
 
 iiii=0;
 for(i=0;i<NUMIST;i++)
@@ -8036,7 +8206,7 @@ b1Hz_ch=0;
 }
 
 
-#line 6078 "control.c"
+#line 6155 "control.c"
 
 
 void ext_drv(void)
@@ -8046,7 +8216,7 @@ char i;
 
 for(i=0;i<NUMSK;i++)
 	{
-#line 6112 "control.c"
+#line 6189 "control.c"
 	if(adc_buff_[sk_buff_220[i]]<2000)
 
 
@@ -8139,7 +8309,7 @@ for(i=0;i<NUMSK;i++)
 	 	}
 
 
-#line 6224 "control.c"
+#line 6301 "control.c"
 	sk_av_stat_old[i]=sk_av_stat[i];
 	}
 }
@@ -8512,7 +8682,7 @@ for(i=0;i<NUMIST;i++)
 		if(bps[i]._vent_resurs!=temp_US)bps[i]._vent_resurs=temp_US;
 		}
 
-	if(bps[i]._vent_resurs>TVENTMAX)
+	if(bps[i]._vent_resurs>TVENTMAX*10)
 		{
 		bps[i]._av|=(1<<4);
 		}

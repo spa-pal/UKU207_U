@@ -4,6 +4,7 @@
 #include "main.h"
 #include "snmp_data_file.h"
 #include "control.h"
+#include "gran.h"
 
 //-----------------------------------------------
 void memo_read (void)
@@ -139,6 +140,14 @@ CNTRL_HNDL_TIME=lc640_read_int(EE_CNTRL_HNDL_TIME);
 USODERG_LI_BAT=lc640_read_int(EE_USODERG_LI_BAT);
 QSODERG_LI_BAT=lc640_read_int(EE_QSODERG_LI_BAT);
 TVENTMAX=lc640_read_int(EE_TVENTMAX);
+ICA_EN=lc640_read_int(EE_ICA_EN);
+ICA_CH=lc640_read_int(EE_ICA_CH);
+ICA_MODBUS_ADDRESS=lc640_read_int(EE_ICA_MODBUS_ADDRESS);
+ICA_MODBUS_TCP_IP1=lc640_read_int(EE_ICA_MODBUS_TCP_IP1);
+ICA_MODBUS_TCP_IP2=lc640_read_int(EE_ICA_MODBUS_TCP_IP2);
+ICA_MODBUS_TCP_IP3=lc640_read_int(EE_ICA_MODBUS_TCP_IP3);
+ICA_MODBUS_TCP_IP4=lc640_read_int(EE_ICA_MODBUS_TCP_IP4);
+ICA_MODBUS_TCP_UNIT_ID=lc640_read_int(EE_ICA_MODBUS_TCP_UNIT_ID);
 
 BAT_IS_ON[0]=(enum_bat_is_on)lc640_read_int(EE_BAT1_IS_ON);
 BAT_IS_ON[1]=(enum_bat_is_on)lc640_read_int(EE_BAT2_IS_ON);
