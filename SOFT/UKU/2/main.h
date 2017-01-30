@@ -908,7 +908,8 @@ extern signed short ICA_CH;				//Канал связи для выравнивания токов, 0 - MODBUS,
 extern signed short ICA_MODBUS_ADDRESS;//Адрес ведомого для выравнивания токов по шине MODBUS-RTU
 extern signed short ICA_MODBUS_TCP_IP1,ICA_MODBUS_TCP_IP2,ICA_MODBUS_TCP_IP3,ICA_MODBUS_TCP_IP4;	//IP ведомого для выравнивания токов по шине MODBUS-TCP
 extern signed short ICA_MODBUS_TCP_UNIT_ID;	//UNIT ID ведомого для выравнивания токов по шине MODBUS-TCP
-
+extern signed short PWM_START;			//Начальный шим для ЭЛТЕХа
+extern signed short KB_ALGORITM;		//2-х или 3-х ступеннчатый алгоритм проверки цепи батареи
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
 extern enum_apv_on APV_ON1,APV_ON2;

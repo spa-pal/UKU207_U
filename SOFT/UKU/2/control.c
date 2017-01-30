@@ -153,6 +153,7 @@ signed short 	kb_cnt_1lev;
 signed short 	kb_cnt_2lev;
 char 		kb_full_ver;
 char kb_start[2],kb_start_ips;
+signed short ibat_ips,ibat_ips_;
 
 //**********************************************
 //Работа с БПСами
@@ -502,7 +503,7 @@ main_kb_cnt=(TBAT*60)-60/*120*/;
 void kb_hndl(void)
 {
 
-static signed short ibat[2],ibat_[2],ibat_ips,ibat_ips_;
+static signed short ibat[2],ibat_[2];
 #ifdef UKU_TELECORE2015
 if(((++main_kb_cnt>=TBAT*60)&&(TBAT))&&(BAT_TYPE==0))
 #else 
@@ -580,13 +581,16 @@ if(kb_cnt_1lev)
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
 		if(( (ibat_ips+ibat_ips_) < IKB ) && (kb_start_ips==1))
 			{
-			kb_cnt_2lev=10;     
+			if(KB_ALGORITM==1)
+				{
+				avar_bat_ips_hndl(1);
+				kb_start_ips=0;
+				}
+			else
+				{
+				kb_cnt_2lev=10;     
+				}
 			}
-/*		else  if(bat[1]._Ub>200)
-			{
-			kb_start[1]=0;
-			avar_bat_hndl(1,0);
-			} */
 #endif
 		}	
 
@@ -637,7 +641,15 @@ else if(kb_cnt_2lev)
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
 		if(( (ibat_ips+ibat_ips_) < IKB )  && (kb_start_ips==1))
 			{
-			kb_full_ver=1;     
+			if(KB_ALGORITM==2)
+				{
+				avar_bat_ips_hndl(1);
+				kb_start_ips=0;
+				}
+			else
+				{
+				kb_full_ver=1;     
+				}
 			}
 #endif
 		}	

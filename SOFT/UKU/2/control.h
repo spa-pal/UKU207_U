@@ -119,6 +119,15 @@ extern signed int avg;
 extern char bAVG;
 extern const char sk_buff_TELECORE2015[4];
 
+//**********************************************
+//Контроль наличия батарей
+extern signed short 	main_kb_cnt;
+extern signed short 	kb_cnt_1lev;
+extern signed short 	kb_cnt_2lev;
+extern char 		kb_full_ver;
+extern char kb_start[2],kb_start_ips;
+extern signed short ibat_ips,ibat_ips_;
+
 //***********************************************
 //Ротация ведущего источника
 extern char numOfForvardBps,numOfForvardBps_old;

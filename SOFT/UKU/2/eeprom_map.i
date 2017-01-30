@@ -17,34 +17,34 @@
 
 #line 154 "eeprom_map.h"
 
-#line 166 "eeprom_map.h"
+#line 168 "eeprom_map.h"
 
 
 
-#line 178 "eeprom_map.h"
+#line 180 "eeprom_map.h"
 
 
-#line 189 "eeprom_map.h"
-
-
-
-#line 200 "eeprom_map.h"
+#line 191 "eeprom_map.h"
 
 
 
-#line 256 "eeprom_map.h"
-
-
-#line 298 "eeprom_map.h"
+#line 202 "eeprom_map.h"
 
 
 
+#line 258 "eeprom_map.h"
 
+
+#line 300 "eeprom_map.h"
 
 
 
 
-#line 320 "eeprom_map.h"
+
+
+
+
+#line 322 "eeprom_map.h"
 
 
 

@@ -2897,7 +2897,8 @@ extern signed short ICA_CH;
 extern signed short ICA_MODBUS_ADDRESS;
 extern signed short ICA_MODBUS_TCP_IP1,ICA_MODBUS_TCP_IP2,ICA_MODBUS_TCP_IP3,ICA_MODBUS_TCP_IP4;	
 extern signed short ICA_MODBUS_TCP_UNIT_ID;	
-
+extern signed short PWM_START;			
+extern signed short KB_ALGORITM;		
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
 extern enum_apv_on APV_ON1,APV_ON2;
@@ -3400,9 +3401,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1422 "main.h"
+#line 1423 "main.h"
 
-#line 1433 "main.h"
+#line 1434 "main.h"
 
 
 

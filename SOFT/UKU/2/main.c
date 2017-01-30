@@ -162,6 +162,8 @@ signed short ICA_CH;			//Канал связи для выравнивания токов, 0 - MODBUS, 1 - MOD
 signed short ICA_MODBUS_ADDRESS;//Адрес ведомого для выравнивания токов по шине MODBUS-RTU
 signed short ICA_MODBUS_TCP_IP1,ICA_MODBUS_TCP_IP2,ICA_MODBUS_TCP_IP3,ICA_MODBUS_TCP_IP4;	//IP ведомого для выравнивания токов по шине MODBUS-TCP
 signed short ICA_MODBUS_TCP_UNIT_ID;	//UNIT ID ведомого для выравнивания токов по шине MODBUS-TCP
+signed short PWM_START;			//Начальный шим для ЭЛТЕХа
+signed short KB_ALGORITM;		//2-х или 3-х ступеннчатый алгоритм проверки цепи батареи
 
 enum_apv_on APV_ON1,APV_ON2;
 signed short APV_ON2_TIME;
@@ -1733,7 +1735,7 @@ else
 void ind_hndl(void)
 {
 //const char* ptr;
-const char* ptrs[50];
+const char* ptrs[60];
 const char* sub_ptrs[50];
 static char sub_cnt,sub_cnt1;
 char i,sub_cnt_max;
@@ -3520,7 +3522,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 		//	}		}
 
 	int2lcd(vz_cnt_s_/60,'x',0);
-	int2lcd(vz_cnt_h_,'X',0);
+	int2lcd(vz_cnt_h_,'X',0); 
 
 	}
 
@@ -6943,9 +6945,12 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
     ptrs[43]=		" Порог ресурса      ";
     ptrs[44]=		" вентилятора      ^ч";
     ptrs[45]=		" Выравнивание токов ";
-    ptrs[46]=		" Выход              ";
-    ptrs[47]=		" Калибровки         "; 
-    ptrs[48]=		"                    ";        
+	ptrs[46]=		" Стартовый шим    (%";
+	ptrs[47]=		" Проверка цепи      ";
+	ptrs[48]=		" батареи - )        ";
+    ptrs[49]=		" Выход              ";
+    ptrs[50]=		" Калибровки         "; 
+    ptrs[51]=		"                    ";        
 	
 	if((sub_ind-index_set)>2)index_set=sub_ind-2;
 	else if(sub_ind<index_set)index_set=sub_ind;
@@ -7012,8 +7017,12 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	}
 
 	//int2lcdyx(sub_ind,0,3,0);
-	//int2lcdyx(index_set,0,1,0);
+	//int2lcdyx(index_set,0,1,0);PWM_START
+	int2lcd(PWM_START,'(',0);
 	int2lcd(TVENTMAX*10,'^',0);
+	if(KB_ALGORITM==1)	sub_bgnd("1-о ступ.",')',0);
+	else if(KB_ALGORITM==2)	sub_bgnd("2-х ступ.",')',0);
+	else 				sub_bgnd("3-х ступ.",')',0);
 	}
 
 
@@ -9340,136 +9349,10 @@ if(ind==iDeb)
 	int2lcdyx(numOfForvardBps_hourCnt,1,10,0);
 	int2lcdyx(numOfForvardBps,1,15,0);
 
-/*	int2lcdyx(a_ind.i,0,2,0);
-	int2lcdyx(a_ind.s_i,0,6,0);
-	int2lcdyx(a_ind.s_i1,0,10,0);
-	int2lcdyx(a_ind.s_i2,0,14,0);
-	int2lcdyx(a_ind.i_s,0,16,0);
+	int2lcdyx(numOfForvardBps_minCnt,2,4,0);
+	int2lcdyx(numOfForvardBps_hourCnt,2,9,0);
+	int2lcdyx(cntrl_stat,2,19,0);
 
-
-
-
-	int2lcdyx(c_ind.i,1,2,0);
-	int2lcdyx(c_ind.s_i,1,6,0);
-	int2lcdyx(c_ind.s_i1,1,10,0);
-	int2lcdyx(c_ind.s_i2,1,14,0);
-	int2lcdyx(c_ind.i_s,1,16,0);*/
-
- /*
-	int2lcdyx(t_box,2,4,0);
-	int2lcdyx(t_ext_can,3,5,0);
-	//int2lcdyx(t_ext_can_nd,3,6,0);
-	int2lcdyx(t_ext[1],2,10,0);
-	int2lcdyx(t_ext[2],3,10,0);
-
-	int2lcdyx(cntrl_stat,0,19,0);
-
-	//int2lcdyx(adc_buff_[14],3,14,0);
-	int2lcdyx(net_metr_buff_[0],1,5,0);
-	int2lcdyx(net_metr_buff_[1],1,11,0);
-	int2lcdyx(net_metr_buff_[2],1,17,0); */
-
-	/*int2lcdyx(adc_buff_[12],2,14,0);
-	
-	int2lcdyx(adc_buff_[5],2,19,0);
-	int2lcdyx(adc_buff_[6],3,19,0);*/
-
-	//int2lcdyx(tloaddisable_cmnd,2,14,0);
-	//int2lcdyx(tloaddisable_stat,3,14,0);
-
-/*		int2lcdyx(load_U,0,15,0);
-		int2lcdyx(u_necc,0,19,0);
-		
-		
-
-		int2lcdyx(sub_ind1+1,1,0,0);
-		int2lcdyx(sub_ind1+2,2,0,0);
-		int2lcdyx(sub_ind1+3,3,0,0);
-		
-		
-		int2lcdyx(bps[sub_ind1  ]._cnt,1,2,0);
-		int2lcdyx(bps[sub_ind1+1]._cnt,2,2,0);
-		int2lcdyx(bps[sub_ind1+2]._cnt,3,2,0);*/		
-		
-	/*	int2lcdyx(bps[sub_ind1  ]._ist_blok_cnt,1,5,0);
-		int2lcdyx(bps[sub_ind1+1]._ist_blok_cnt,2,5,0);
-		int2lcdyx(bps[sub_ind1+2]._ist_blok_cnt,3,5,0);*/			
-		
-	/*	char2lcdhyx(bps[sub_ind1  ]._flags_tu,1,8);
-		char2lcdhyx(bps[sub_ind1+1]._flags_tu,2,8);
-		char2lcdhyx(bps[sub_ind1+2]._flags_tu,3,8);
-
-		int2lcdyx(bps[sub_ind1  ]._vol_u,1,12,0);
-		int2lcdyx(bps[sub_ind1+1]._vol_u,2,12,0);
-		int2lcdyx(bps[sub_ind1+2]._vol_u,3,12,0);		
-
-
-		char2lcdhyx(bps[sub_ind1]._flags_tm,1,15);
-		char2lcdhyx(bps[sub_ind1+1]._flags_tm,2,15);
-		char2lcdhyx(bps[sub_ind1+2]._flags_tm,3,15);	
-
-		char2lcdhyx(bps[sub_ind1]._Ii,1,19);
-		char2lcdhyx(bps[sub_ind1+1]._Ii,2,19);
-		char2lcdhyx(bps[sub_ind1+2]._Ii,3,19);*/
-	/*
-		char2lcdhyx(bps[sub_ind1]._rotor>>8,1,15);
-		char2lcdhyx(bps[sub_ind1+1]._rotor>>8,2,15);
-		char2lcdhyx(bps[sub_ind1+2]._rotor>>8,3,15);		
-		
-		char2lcdhyx((char)bps[sub_ind1]._rotor,1,17);
-		char2lcdhyx((char)bps[sub_ind1+1]._rotor,2,17);
-		char2lcdhyx((char)bps[sub_ind1+2]._rotor,3,17);*/
-
-
-
-     	
- /*    	bgnd_par("                    ",
-     	         "                    ",
-     	         "                    ",
-     	         "%                   ");
-
-
-		int2lcdyx(main_kb_cnt,0,3,0);
-		int2lcdyx(cntrl_stat,1,3,0);
-   		
-		
-		int2lcdyx(u_necc_up,0,7,0);
-		int2lcdyx(u_necc,1,7,0);
-		int2lcdyx(u_necc_dn,2,7,0);
-		int2lcdyx(bat[0]._Ub,3,7,0);
-
-		int2lcdyx(sign_U,0,10,0);
-		int2lcdyx(sign_I,1,10,0);
-		int2lcdyx(superviser_cnt,2,10,0);	
-
-
-		int2lcdyx(bat[0]._zar,0,19,0);
-		int2lcdyx(BAT_C_REAL[0],1,19,0);
-		int2lcdyx(BAT_C_NOM[0],2,19,0);
-		int2lcdyx(lc640_read_int(EE_BAT1_ZAR_CNT),3,19,0);  */
-
-		  //bat_ver_cnt
-
-
-
-	/*	int2lcdyx(tlv_buff[1][1],0,9,0);
-		int2lcdyx(tlv_buff[1][2],0,14,0);
-		int2lcdyx(tlv_buff[1][3],0,19,0);
-
-   		int2lcdyx(tlv_buff[1][4],1,4,0);
-		int2lcdyx(tlv_buff[1][5],1,9,0);
-		int2lcdyx(tlv_buff[1][6],1,14,0);
-		int2lcdyx(tlv_buff[1][7],1,19,0);
-
-   		int2lcdyx(tlv_buff[1][8],2,4,0);
-		int2lcdyx(tlv_buff[1][9],2,9,0);
-		int2lcdyx(tlv_buff[1][10],2,14,0);
-		int2lcdyx(tlv_buff[1][11],2,19,0);
-
-   		int2lcdyx(tlv_buff[1][12],3,4,0);
-		int2lcdyx(tlv_buff[1][13],3,9,0);
-		int2lcdyx(tlv_buff[1][14],3,14,0);
-		int2lcdyx(tlv_buff[1][15],3,19,0);	*/
       
 
      	}     
@@ -9772,7 +9655,7 @@ if(ind==iDeb)
      		    "                    ",
      		    "                    ");
 
-		int2lcdyx(ica_plazma[0],0,3,0);
+/*		int2lcdyx(ica_plazma[0],0,3,0);
      	int2lcdyx(ica_plazma[1],0,7,0);
      	int2lcdyx(ica_plazma[2],0,11,0);
      	int2lcdyx(ica_plazma[3],0,15,0);
@@ -9791,75 +9674,22 @@ if(ind==iDeb)
      	int2lcdyx(ica_plazma[6],3,7,0);
      	int2lcdyx(ica_plazma[7],3,11,0);
      	int2lcdyx(ica_plazma[8],3,15,0);
-     	int2lcdyx(ica_plazma[9],3,19,0);
-		/*char2lcdhyx(bps[0]._vent_resurs_temp[0],0,2);
-		char2lcdhyx(bps[0]._vent_resurs_temp[1],1,2);
-		char2lcdhyx(bps[0]._vent_resurs_temp[2],2,2);
-		char2lcdhyx(bps[0]._vent_resurs_temp[3],3,2);
+     	int2lcdyx(ica_plazma[9],3,19,0); */
 
-		int2lcdyx(bps[0]._vent_resurs,0,19,0);*/
-     		    
-     	/*int2lcdyx(ad7705_buff[0][0],0,4,0);
-     	int2lcdyx(ad7705_buff[0][1],0,9,0);
-     	int2lcdyx(ad7705_buff[0][2],0,14,0);
-     	int2lcdyx(ad7705_buff[0][3],0,19,0);
-     	int2lcdyx(ad7705_buff[0][4],1,4,0);
-     	int2lcdyx(ad7705_buff[0][5],1,9,0);
-     	int2lcdyx(ad7705_buff[0][6],1,14,0);
-     	int2lcdyx(ad7705_buff[0][7],1,19,0);
-     	int2lcdyx(ad7705_buff[0][8],2,4,0);
-     	int2lcdyx(ad7705_buff[0][9],2,9,0);
-     	int2lcdyx(ad7705_buff[0][10],2,14,0);
-     	int2lcdyx(ad7705_buff[0][11],2,19,0);
-     	int2lcdyx(ad7705_buff[0][12],3,4,0);
-     	int2lcdyx(ad7705_buff[0][13],3,9,0);
-     	int2lcdyx(ad7705_buff[0][14],3,14,0);
-     	int2lcdyx(ad7705_buff[0][15],3,19,0);*/
+		int2lcdyx(main_kb_cnt,0,3,0);
+		int2lcdyx(cntrl_stat,1,3,0);
+		int2lcdyx(ibat_ips,2,3,0);
+		int2lcdyx(ibat_ips_,3,3,0);
 
-	/*	int2lcdyx(adc_buff_[0],0,4,0);
-    		int2lcdyx(adc_buff_[1],0,9,0);
-     	int2lcdyx(adc_buff_[2],0,14,0);
-     	int2lcdyx(adc_buff_[3],0,19,0); 
-     	int2lcdyx(adc_buff_[4],1,4,0);	
-     	int2lcdyx(adc_buff_[5],1,9,0);
-     	int2lcdyx(adc_buff_[6],1,14,0);
-     	int2lcdyx(adc_buff_[7],1,19,0); 
-     	int2lcdyx(adc_buff_[8],2,4,0);
-     	int2lcdyx(adc_buff_[9],2,9,0);
-     	int2lcdyx(adc_buff_[10],2,14,0);
-     	int2lcdyx(adc_buff_[11],2,19,0);
-     	int2lcdyx(adc_buff_[12],3,4,0);
-     	int2lcdyx(adc_buff_[13],3,9,0);
-     	int2lcdyx(adc_buff_[14],3,14,0);
-     	int2lcdyx(adc_buff_[15],3,19,0); */
+		int2lcdyx(kb_cnt_1lev,0,19,0);
+		int2lcdyx(kb_cnt_2lev,1,19,0);
+		int2lcdyx(kb_full_ver,2,19,0);
 
-	/*	char2lcdhyx(bat_drv_rx_buff[0],0,2);
-    		char2lcdhyx(bat_drv_rx_buff[1],0,5);
-     	char2lcdhyx(bat_drv_rx_buff[2],0,8);
-     	char2lcdhyx(bat_drv_rx_buff[3],0,11); 
-     	char2lcdhyx(bat_drv_rx_buff[4],0,14);	
-     	char2lcdhyx(bat_drv_rx_buff[5],0,17);
-		char2lcdhyx(bat_drv_rx_buff[6],1,2);
-    		char2lcdhyx(bat_drv_rx_buff[7],1,5);
-     	char2lcdhyx(bat_drv_rx_buff[8],1,8);
-     	char2lcdhyx(bat_drv_rx_buff[9],1,11); 
-     	char2lcdhyx(bat_drv_rx_buff[10],1,14);	
-     	char2lcdhyx(bat_drv_rx_buff[11],1,17);
-		char2lcdhyx(bat_drv_rx_buff[12],2,2);
-    		char2lcdhyx(bat_drv_rx_buff[13],2,5);
-     	char2lcdhyx(bat_drv_rx_buff[14],2,8);
-     	char2lcdhyx(bat_drv_rx_buff[15],2,11); 
-     	char2lcdhyx(bat_drv_rx_buff[16],2,14);	
-     	char2lcdhyx(bat_drv_rx_buff[17],2,17);
-     	/*int2lcdhyx(bat_drv_rx_buff[12],3,4);
-     	int2lcdhyx(bat_drv_rx_buff[13],3,9);
-     	int2lcdhyx(bat_drv_rx_buff[14],3,14);*/
-     	
-	/*	int2lcdyx(bat_drv_rx_cnt,3,15,0);
-		int2lcdyx(plazma_bat_drv0,3,4,0);
-		int2lcdyx(plazma_bat_drv1,3,10,0);
-		int2lcdyx(bat_drv_cnt_cnt,3,19,0);*/
+		int2lcdyx(kb_start[0],0,16,0);
+		int2lcdyx(kb_start[1],1,16,0);
+		int2lcdyx(kb_start_ips,2,16,0);
 
+		
     	}  		  		
 
 
@@ -19155,8 +18985,12 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
         if(sub_ind==44)
             {
             sub_ind=45;
-            }											
-		gran_char(&sub_ind,0,47);
+            }
+        if(sub_ind==48)
+        	{
+            sub_ind=49;
+		    }														
+		gran_char(&sub_ind,0,50);
 		}
 	else if(but==butU)
 		{
@@ -19199,11 +19033,15 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
             {
             sub_ind=43;
 			}
-		gran_char(&sub_ind,0,47);
+        if(sub_ind==48)
+        	{
+            sub_ind=47;
+		    }
+		gran_char(&sub_ind,0,50);
 		}
 	else if(but==butD_)
 		{
-		sub_ind=46;
+		sub_ind=49;
 		}
 
 	else if(but==butLR_)
@@ -19654,7 +19492,29 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 		    }	     
 	    }		    
 
-    else if((sub_ind==46) || (sub_ind==3))
+	else if(sub_ind==46)
+	     {
+	     if(but==butR)PWM_START++;
+	     else if(but==butR_)PWM_START+=10;
+	     else if(but==butL)PWM_START--;
+	     else if(but==butL_)PWM_START-=10;
+		gran(&PWM_START,10,100);
+	     lc640_write_int(EE_PWM_START,PWM_START);
+	     speed=1;
+	     }   
+
+	else if(sub_ind==47)
+		{
+	    if(but==butR)KB_ALGORITM++;
+	    else if(but==butR_)KB_ALGORITM++;
+	    else if(but==butL)KB_ALGORITM--;
+	    else if(but==butL_)KB_ALGORITM--;
+		gran(&KB_ALGORITM,1,3);
+	    lc640_write_int(EE_KB_ALGORITM,KB_ALGORITM);
+	    speed=1;
+	    } 
+
+    else if((sub_ind==49) || (sub_ind==3))
 		{
 		if(but==butE)
 		     {
@@ -19663,7 +19523,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 		     }
 		}
 				
-	else if(sub_ind==47)
+	else if(sub_ind==50)
 		{
 		if(but==butE)
 		     {		
@@ -29505,6 +29365,12 @@ if((AUSW_MAIN==2400)||(AUSW_MAIN==4800)||(AUSW_MAIN==6000)||(BAT_TYPE==1))
 cntrl_stat=0;
 cntrl_stat_old=0;
 #endif
+
+#ifdef UKU_220_IPS_TERMOKOMPENSAT
+cntrl_stat=10*PWM_START;
+cntrl_stat_old=10*PWM_START;
+#endif
+
 
 kb_init();
 //ind=iDeb;
