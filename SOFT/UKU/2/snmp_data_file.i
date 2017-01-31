@@ -263,34 +263,34 @@ void snmp_uvz_write(int mode);
 
 #line 154 "eeprom_map.h"
 
-#line 168 "eeprom_map.h"
+#line 169 "eeprom_map.h"
 
 
 
-#line 180 "eeprom_map.h"
+#line 181 "eeprom_map.h"
 
 
-#line 191 "eeprom_map.h"
-
-
-
-#line 202 "eeprom_map.h"
+#line 192 "eeprom_map.h"
 
 
 
-#line 258 "eeprom_map.h"
-
-
-#line 300 "eeprom_map.h"
+#line 203 "eeprom_map.h"
 
 
 
+#line 259 "eeprom_map.h"
 
+
+#line 301 "eeprom_map.h"
 
 
 
 
-#line 322 "eeprom_map.h"
+
+
+
+
+#line 323 "eeprom_map.h"
 
 
 
@@ -1264,6 +1264,7 @@ extern signed short ICA_MODBUS_TCP_IP1,ICA_MODBUS_TCP_IP2,ICA_MODBUS_TCP_IP3,ICA
 extern signed short ICA_MODBUS_TCP_UNIT_ID;	
 extern signed short PWM_START;			
 extern signed short KB_ALGORITM;		
+extern signed short REG_SPEED;			
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
 extern enum_apv_on APV_ON1,APV_ON2;
@@ -1766,9 +1767,9 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1423 "main.h"
+#line 1424 "main.h"
 
-#line 1434 "main.h"
+#line 1435 "main.h"
 
 
 
@@ -2422,6 +2423,7 @@ extern char numOfForvardBps,numOfForvardBps_old;
 extern char numOfForvardBps_minCnt;
 extern short numOfForvardBps_hourCnt;
 
+extern char cntrl_hndl_plazma;
 
 void zar_superviser_drv(void);
 void zar_superviser_start(void);

@@ -164,7 +164,7 @@ signed short ICA_MODBUS_TCP_IP1,ICA_MODBUS_TCP_IP2,ICA_MODBUS_TCP_IP3,ICA_MODBUS
 signed short ICA_MODBUS_TCP_UNIT_ID;	//UNIT ID ведомого для выравнивания токов по шине MODBUS-TCP
 signed short PWM_START;			//Начальный шим для ЭЛТЕХа
 signed short KB_ALGORITM;		//2-х или 3-х ступеннчатый алгоритм проверки цепи батареи
-
+signed short REG_SPEED;			//скорость регулирования, 1- стандартная, 2,3,4,5- замедленная в 2,3,4,5 раз
 enum_apv_on APV_ON1,APV_ON2;
 signed short APV_ON2_TIME;
 
@@ -6948,9 +6948,11 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	ptrs[46]=		" Стартовый шим    (%";
 	ptrs[47]=		" Проверка цепи      ";
 	ptrs[48]=		" батареи - )        ";
-    ptrs[49]=		" Выход              ";
-    ptrs[50]=		" Калибровки         "; 
-    ptrs[51]=		"                    ";        
+	ptrs[49]=		" Скорость регулир.  ";
+	ptrs[50]=		"    &               ";
+    ptrs[51]=		" Выход              ";
+    ptrs[52]=		" Калибровки         "; 
+    ptrs[53]=		"                    ";        
 	
 	if((sub_ind-index_set)>2)index_set=sub_ind-2;
 	else if(sub_ind<index_set)index_set=sub_ind;
@@ -7023,6 +7025,12 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	if(KB_ALGORITM==1)	sub_bgnd("1-о ступ.",')',0);
 	else if(KB_ALGORITM==2)	sub_bgnd("2-х ступ.",')',0);
 	else 				sub_bgnd("3-х ступ.",')',0);
+	if(REG_SPEED==2)	sub_bgnd("стандарт/2",'&',0);
+	else if(REG_SPEED==3)	sub_bgnd("стандарт/3",'&',0);
+	else if(REG_SPEED==4)	sub_bgnd("стандарт/4",'&',0);
+	else if(REG_SPEED==5)	sub_bgnd("стандарт/5",'&',0);
+	else 				sub_bgnd("стандарт",'&',0);
+
 	}
 
 
@@ -9685,9 +9693,9 @@ if(ind==iDeb)
 		int2lcdyx(kb_cnt_2lev,1,19,0);
 		int2lcdyx(kb_full_ver,2,19,0);
 
-		int2lcdyx(kb_start[0],0,16,0);
-		int2lcdyx(kb_start[1],1,16,0);
-		int2lcdyx(kb_start_ips,2,16,0);
+		int2lcdyx(Ibmax,0,16,0);
+		int2lcdyx(IZMAX_,1,16,0);
+		int2lcdyx(cntrl_hndl_plazma,2,16,0);
 
 		
     	}  		  		
@@ -18989,8 +18997,12 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
         if(sub_ind==48)
         	{
             sub_ind=49;
-		    }														
-		gran_char(&sub_ind,0,50);
+		    }
+        if(sub_ind==50)
+        	{
+            sub_ind=51;
+		    }																	
+		gran_char(&sub_ind,0,52);
 		}
 	else if(but==butU)
 		{
@@ -19037,11 +19049,15 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
         	{
             sub_ind=47;
 		    }
-		gran_char(&sub_ind,0,50);
+        if(sub_ind==50)
+        	{
+            sub_ind=49;
+		    }
+		gran_char(&sub_ind,0,52);
 		}
 	else if(but==butD_)
 		{
-		sub_ind=49;
+		sub_ind=51;
 		}
 
 	else if(but==butLR_)
@@ -19514,7 +19530,17 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	    speed=1;
 	    } 
 
-    else if((sub_ind==49) || (sub_ind==3))
+	else if(sub_ind==49)
+		{
+	    if(but==butR)REG_SPEED++;
+	    else if(but==butR_)REG_SPEED++;
+	    else if(but==butL)REG_SPEED--;
+	    else if(but==butL_)REG_SPEED--;
+		gran(&REG_SPEED,1,5);
+	    lc640_write_int(EE_REG_SPEED,REG_SPEED);
+	    speed=1;
+	    }
+    else if((sub_ind==51) || (sub_ind==3))
 		{
 		if(but==butE)
 		     {
@@ -19523,7 +19549,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 		     }
 		}
 				
-	else if(sub_ind==50)
+	else if(sub_ind==52)
 		{
 		if(but==butE)
 		     {		

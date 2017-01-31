@@ -910,6 +910,7 @@ extern signed short ICA_MODBUS_TCP_IP1,ICA_MODBUS_TCP_IP2,ICA_MODBUS_TCP_IP3,ICA
 extern signed short ICA_MODBUS_TCP_UNIT_ID;	//UNIT ID ведомого дл€ выравнивани€ токов по шине MODBUS-TCP
 extern signed short PWM_START;			//Ќачальный шим дл€ ЁЋ“≈’а
 extern signed short KB_ALGORITM;		//2-х или 3-х ступеннчатый алгоритм проверки цепи батареи
+extern signed short REG_SPEED;			//скорость регулировани€, 1- стандартна€, 2,3,4,5- замедленна€ в 2,3,4,5 раз
 
 typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
 extern enum_apv_on APV_ON1,APV_ON2;

@@ -150,6 +150,7 @@ ICA_MODBUS_TCP_IP4=lc640_read_int(EE_ICA_MODBUS_TCP_IP4);
 ICA_MODBUS_TCP_UNIT_ID=lc640_read_int(EE_ICA_MODBUS_TCP_UNIT_ID);
 PWM_START=lc640_read_int(EE_PWM_START);
 KB_ALGORITM=lc640_read_int(EE_KB_ALGORITM);
+REG_SPEED=lc640_read_int(EE_REG_SPEED);
 
 BAT_IS_ON[0]=(enum_bat_is_on)lc640_read_int(EE_BAT1_IS_ON);
 BAT_IS_ON[1]=(enum_bat_is_on)lc640_read_int(EE_BAT2_IS_ON);
