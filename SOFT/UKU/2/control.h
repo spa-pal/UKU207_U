@@ -134,6 +134,12 @@ extern char numOfForvardBps,numOfForvardBps_old;
 extern char numOfForvardBps_minCnt;
 extern short numOfForvardBps_hourCnt;
 
+//***********************************************
+// ѕараллельна€ работа в случае перегрева источника
+extern char bPARALLEL_NOT_ENOUG;
+extern char bPARALLEL_ENOUG;
+extern char bPARALLEL;
+
 extern char cntrl_hndl_plazma;
 
 void zar_superviser_drv(void);

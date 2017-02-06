@@ -217,6 +217,11 @@ char numOfForvardBps,numOfForvardBps_old;
 char numOfForvardBps_minCnt;
 short numOfForvardBps_hourCnt;
 
+//***********************************************
+// Параллельная работа в случае перегрева источника
+char bPARALLEL_NOT_ENOUG;
+char bPARALLEL_ENOUG;
+char bPARALLEL;
 
 char cntrl_hndl_plazma;
 
@@ -3907,6 +3912,29 @@ for(i=0;i<NUMIST;i++)
 	}
 Ubpsmax=tempUS;
 
+bPARALLEL_ENOUG=0;
+bPARALLEL_NOT_ENOUG=1;
+
+for(i=0;i<NUMIST;i++)
+	{
+	if(bps[i]._Ti>=TSIGN)
+		{
+		bPARALLEL_ENOUG=1;
+		}
+	if(bps[i]._Ti>=(TSIGN-5))
+		{
+		bPARALLEL_NOT_ENOUG=0;
+		}
+	}
+
+if(bPARALLEL_ENOUG==1)
+	{
+	bPARALLEL=1;
+	}
+else if(bPARALLEL && bPARALLEL_NOT_ENOUG)
+	{
+	bPARALLEL=0;
+	}
 }
 
 //биты аварий в приходящих сообщениях от источников и инверторов
@@ -5631,6 +5659,10 @@ else if(num_necc_down<num_necc)
 	}
 
 if(PAR) num_necc=NUMIST;
+
+#ifdef UKU_220_IPS_TERMOKOMPENSAT
+if(bPARALLEL) num_necc=NUMIST;
+#endif
 
 gran(&num_necc,1,NUMIST);
 

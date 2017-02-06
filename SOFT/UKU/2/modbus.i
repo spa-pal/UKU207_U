@@ -3675,6 +3675,12 @@ extern char numOfForvardBps,numOfForvardBps_old;
 extern char numOfForvardBps_minCnt;
 extern short numOfForvardBps_hourCnt;
 
+
+
+extern char bPARALLEL_NOT_ENOUG;
+extern char bPARALLEL_ENOUG;
+extern char bPARALLEL;
+
 extern char cntrl_hndl_plazma;
 
 void zar_superviser_drv(void);
