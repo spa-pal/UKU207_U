@@ -247,7 +247,7 @@
 
                           EXPORTAS ||area_number.6||, ||.bss||
                   tcp_socket
-                          %        352
+                          %        176
 
                           AREA ||.constdata||, DATA, READONLY, ALIGN=0
 
@@ -320,7 +320,7 @@
 
                           EXPORTAS ||area_number.17||, ||.constdata||
                   tcp_NumSocks
-000000  07                DCB      0x07
+000000  03                DCB      0x03
 
                           AREA ||area_number.18||, DATA, READONLY, ALIGN=0
 
@@ -356,7 +356,7 @@
 
                           EXPORTAS ||area_number.23||, ||.constdata||
                   tcp_DefTout
-000000  0078              DCW      0x0078
+000000  0014              DCW      0x0014
 
                           AREA ||area_number.24||, DATA, READONLY, ALIGN=0
 

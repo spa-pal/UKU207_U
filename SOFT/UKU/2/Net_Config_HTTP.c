@@ -525,7 +525,7 @@
 //   <o>Number of TCP Sockets <1-20>
 //   <i> Number of available TCP sockets
 //   <i> Default: 5
-#define TCP_NUMSOCKS   7
+#define TCP_NUMSOCKS   3
 
 //   <o>Number of Retries <0-20>
 //   <i> How many times TCP module will try to retransmit data
@@ -544,7 +544,7 @@
 //   <i> Default TCP Socket Keep Alive timeout. When it expires
 //   <i> with no TCP data frame send, TCP Connection is closed.
 //   <i> Default: 120
-#define TCP_DEFTOUT    120
+#define TCP_DEFTOUT    20
 
 /* TCP fixed timeouts */
 #define TCP_INIT_RETRY_TOUT 1     /* TCP initial Retransmit period in sec.   */

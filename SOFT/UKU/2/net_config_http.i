@@ -1631,14 +1631,14 @@ U8        lhost_name[16] = "SPA-UKU202";
  U8  const udp_NumSocks  = 5;
 
 
- TCP_INFO  tcp_socket[7+1];
- U8  const tcp_NumSocks  = 7;
+ TCP_INFO  tcp_socket[3+1];
+ U8  const tcp_NumSocks  = 3;
  U8  const tcp_MaxRetry  = 5;
  U16 const tcp_RetryTout = 4 * (1000 / 10);
  U16 const tcp_2MSSTout  = (200 + 10 - 1) / 10;
  U16 const tcp_SynRetryTout = 2 * (1000 / 10);
  U16 const tcp_InitRetryTout= 1 * (1000 / 10);
- U16 const tcp_DefTout   = 120;
+ U16 const tcp_DefTout   = 20;
  U8  const tcp_ConRetry  = 7;
 #line 174 "C:\\Keil\\ARM\\RV31\\INC\\Net_lib.c"
  U16 	 snmp_PortNum  = 161;
