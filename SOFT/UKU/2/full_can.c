@@ -49,6 +49,7 @@ char rotor_rotor_rotor[2];
 char can_tx_cnt;
 char can_rotor[10];
 
+
 const char Table87[]={
 0x00, 0x0E, 0x1C, 0x12, 0x38, 0x36, 0x24, 0x2A, 0x70, 0x7E, 0x6C, 0x62, 0x48, 0x46, 0x54, 0x5A,
 0xE0, 0xEE, 0xFC, 0xF2, 0xD8, 0xD6, 0xC4, 0xCA, 0x90, 0x9E, 0x8C, 0x82, 0xA8, 0xA6, 0xB4, 0xBA,
@@ -1789,6 +1790,58 @@ if(RXBUFF[1]==PUT_ZTT_TM7)
 	lakb[2]._cell_temp_power=(signed char)(RXBUFF[6]);	
 	//lakb[0]._cell_temp_ambient=41;
 	//lakb[0]._cell_temp_power=42;
+	}	
+
+if(RXBUFF[1]==PUT_ZTT_TM8)
+    {
+	if(RXBUFF[0]==0)
+		{
+		lakb[0]._charge_and_discharge_current_alarm_status=(signed char)(RXBUFF[2]);
+		lakb[0]._battery_total_voltage_alarm_status=(signed char)(RXBUFF[3]);
+		lakb[1]._charge_and_discharge_current_alarm_status=(signed char)(RXBUFF[4]);
+		lakb[1]._battery_total_voltage_alarm_status=(signed char)(RXBUFF[5]);
+		lakb[2]._charge_and_discharge_current_alarm_status=(signed char)(RXBUFF[6]);
+		lakb[2]._battery_total_voltage_alarm_status=(signed char)(RXBUFF[7]);
+		}
+	if(RXBUFF[0]==1)
+		{
+		lakb[0]._custom_alarm_quantity=(signed char)(RXBUFF[2]);
+		lakb[0]._balanced_event_code=(signed char)(RXBUFF[3]);
+		lakb[1]._custom_alarm_quantity=(signed char)(RXBUFF[4]);
+		lakb[1]._balanced_event_code=(signed char)(RXBUFF[5]);
+		lakb[2]._custom_alarm_quantity=(signed char)(RXBUFF[6]);
+		lakb[2]._balanced_event_code=(signed char)(RXBUFF[7]);
+		}
+	if(RXBUFF[0]==2)
+		{
+		lakb[0]._voltage_event_code=(signed char)(RXBUFF[2]);
+		lakb[0]._temperature_event_code=(signed char)(RXBUFF[3]);
+		lakb[1]._voltage_event_code=(signed char)(RXBUFF[4]);
+		lakb[1]._temperature_event_code=(signed char)(RXBUFF[5]);
+		lakb[2]._voltage_event_code=(signed char)(RXBUFF[6]);
+		lakb[2]._temperature_event_code=(signed char)(RXBUFF[7]);
+		}
+	if(RXBUFF[0]==3)
+		{
+		lakb[0]._current_event_code=(signed char)(RXBUFF[2]);
+		lakb[0]._fet_status_code=(signed char)(RXBUFF[3]);
+		lakb[1]._current_event_code=(signed char)(RXBUFF[4]);
+		lakb[1]._fet_status_code=(signed char)(RXBUFF[5]);
+		lakb[2]._current_event_code=(signed char)(RXBUFF[6]);
+		lakb[2]._fet_status_code=(signed char)(RXBUFF[7]);
+		}
+	if(RXBUFF[0]==4)
+		{
+		lakb[0]._balanced_status_code=(signed short)(RXBUFF[2])+(((signed char)(RXBUFF[3]))<<8);
+		lakb[1]._balanced_status_code=(signed short)(RXBUFF[4])+(((signed char)(RXBUFF[5]))<<8);
+		lakb[2]._balanced_status_code=(signed short)(RXBUFF[6])+(((signed char)(RXBUFF[7]))<<8);
+		}
+	if(RXBUFF[0]==5)
+		{
+		lakb[0]._system_status_code=(signed char)(RXBUFF[2]);
+		lakb[1]._system_status_code=(signed char)(RXBUFF[4]);
+		lakb[2]._system_status_code=(signed char)(RXBUFF[6]);
+		}
 	}	
 	
 CAN_IN_AN1_end:

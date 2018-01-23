@@ -2515,7 +2515,7 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 150 "main.h"
+#line 151 "main.h"
 
 
 
@@ -2529,10 +2529,11 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 181 "main.h"
+#line 182 "main.h"
 
-#line 204 "main.h"
+#line 220 "main.h"
 
+#line 240 "main.h"
 
 
 
@@ -2556,6 +2557,7 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
+#line 410 "main.h"
 
 
 
@@ -2565,7 +2567,6 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 384 "main.h"
 
 
 
@@ -2597,16 +2598,7 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-
-
-
-
-
-
-
-
-
-#line 452 "main.h"
+#line 478 "main.h"
 
 
 
@@ -2625,13 +2617,11 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 483 "main.h"
+#line 510 "main.h"
 
-#line 495 "main.h"
+#line 524 "main.h"
 
-#line 511 "main.h"
-
-
+#line 540 "main.h"
 
 
 
@@ -2651,9 +2641,11 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 545 "main.h"
 
-#line 559 "main.h"
+
+#line 574 "main.h"
+
+#line 588 "main.h"
 
 
 
@@ -2666,25 +2658,27 @@ extern BOOL snmp_set_community (const char *community);
  
 
 
-#line 580 "main.h"
+#line 609 "main.h"
 
-#line 590 "main.h"
+#line 619 "main.h"
 
-#line 599 "main.h"
+#line 628 "main.h"
 
-#line 608 "main.h"
+#line 637 "main.h"
 
-#line 620 "main.h"
+#line 649 "main.h"
 
-#line 630 "main.h"
-
-#line 639 "main.h"
-
-#line 647 "main.h"
-
-#line 656 "main.h"
+#line 659 "main.h"
 
 #line 668 "main.h"
+
+#line 676 "main.h"
+
+#line 685 "main.h"
+
+#line 697 "main.h"
+
+#line 709 "main.h"
 
 
 
@@ -2707,7 +2701,7 @@ extern char cnt_of_slave;
 typedef enum {
 
 	iMn_220_IPS_TERMOKOMPENSAT,
-#line 709 "main.h"
+#line 750 "main.h"
 	iMn,iMn_3U,iMn_RSTKM,
 
 
@@ -2730,9 +2724,12 @@ typedef enum {
 
 	iMn_TELECORE2015,
 
+
+	iMn_TELECORE2017,
+
 	iSrv_sl,iNet,iNet3,iNetEM,
 	iSet,iSet_3U,iSet_RSTKM,iSet_GLONASS,iSet_KONTUR,iSet_6U,iSet_220,iSet_220_IPS_TERMOKOMPENSAT,iSet_220_V2,iInv_set_sel,
-	iBat,iBat_simple,iBat_li,iBat_SacredSun,iBat_universe,iInv_set,iSet_TELECORE2015,
+	iBat, iBat_simple, iBat_li, iBat_SacredSun, iBat_universe, iInv_set, iSet_TELECORE2015, iSet_TELECORE2017,
 	iMakb,
 	iBps,iBps_elteh,iS2,iSet_prl,iK_prl,iDnd,
 	iK,iK_3U,iK_RSTKM,iK_GLONASS,iK_KONTUR,iK_6U,iK_220,iK_220_380,iK_220_IPS_TERMOKOMPENSAT,iK_220_IPS_TERMOKOMPENSAT_IB,iK_TELECORE,
@@ -2740,10 +2737,10 @@ typedef enum {
 	iLoad,iSpc_prl_vz,iSpc_prl_ke,iKe,iVz,iAvz,iAVAR,
 	iStr,iStr_3U,iStr_RSTKM,iStr_GLONASS,iStr_KONTUR,iStr_6U,iStr_220_IPS_TERMOKOMPENSAT,iStr_TELECORE2015,
 	iVrs,iPrltst,iApv,
-	iK_bps,iK_bps_sel,iK_bat,iK_bat_simple,iK_bat_ips_termokompensat_ib,iK_bat_sel,iK_bat_sel_TELECORE,iK_load,iK_net,iK_net3,
+	iK_bps,iK_bps_sel,iK_bat,iK_bat_simple,iK_bat_ips_termokompensat_ib,iK_bat_TELECORE,iK_bat_sel,iK_bat_sel_TELECORE,iK_load,iK_net,iK_net3,
 	iK_makb_sel,iK_makb,iK_out,
 	iTst,iTst_3U,iTst_RSTKM,iTst_GLONASS,iTst_KONTUR,iTst_6U,iTst_220,iTst_220_380,iTst_220_IPS_TERMOKOMPENSAT,
-	iTst_TELECORE2015,
+	iTst_TELECORE,
 	iTst_klbr,iTst_BPS1,iTst_BPS2,iTst_BPS12,iDebug,
 	iDef,iDef_3U,iDef_RSTKM,iDef_GLONASS,iDef_KONTUR,iDef_6U,iDef_220,iDef_220_IPS_TERMOKOMPENSAT,iDef_220_V2,
 	iSet_st_prl,iK_pdp,iSet_T,
@@ -2758,7 +2755,7 @@ typedef enum {
 	iExt_set,iExt_set_3U,iExt_set_GLONASS,iExt_set_TELECORE2015,
 	iExt_dt,
 	iExt_sk,iExt_sk_3U,iExt_sk_GLONASS,
-	iExt_ddv,iExt_ddi,iExt_dud,iExt_dp,iSM,iLog,iLog_,iBatLog,iKlimat,iKlimat_kontur,iKlimat_TELECORE2015,
+	iExt_ddv,iExt_ddi,iExt_dud,iExt_dp,iSM,iLog,iLog_,iBatLog,iKlimat,iKlimat_kontur,iKlimat_TELECORE,
 	iEnerg3,iEnerg,
 	iExtern_TELECORE2015,
 	iVent,
@@ -3166,6 +3163,20 @@ typedef struct
 	signed char		_cell_temp_4;	
 	signed char		_cell_temp_ambient;	
 	signed char		_cell_temp_power;	
+	
+	
+	
+	signed char		_charge_and_discharge_current_alarm_status;	 	
+	signed char 	_battery_total_voltage_alarm_status;			
+	signed char		_custom_alarm_quantity;							
+	signed char		_balanced_event_code;							
+	signed char 	_voltage_event_code;							
+	signed char 	_temperature_event_code;						
+	signed char		_current_event_code;							
+	signed char		_fet_status_code;								
+	signed short	_balanced_status_code;							
+	signed char 	_system_status_code;							
+
 	} LAKB_STAT; 
 extern LAKB_STAT lakb[3];
 extern char lakb_damp[1][42];
@@ -3331,13 +3342,14 @@ extern char tout_max_cnt[4],tout_min_cnt[4];
 typedef enum {tNORM,tMAX,tMIN}enum_tout_stat;
 extern enum_tout_stat tout_stat[4];
 extern signed short t_ext[3];
-extern BOOL ND_EXT[3];
+extern char ND_EXT[3];
 extern signed char sk_cnt[4],sk_av_cnt[4];
 typedef enum  {ssOFF,ssON} enum_sk_stat;
 extern enum_sk_stat sk_stat[4];
 typedef enum  {sasOFF,sasON} enum_sk_av_stat;
 extern enum_sk_av_stat sk_av_stat[4],sk_av_stat_old[4];
 extern signed short t_box,t_box_warm,t_box_vent;
+extern char TELECORE2017_EXT_VENT_PWM,TELECORE2017_INT_VENT_PWM;
 
 
 
@@ -3415,11 +3427,11 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1424 "main.h"
+#line 1483 "main.h"
 
-#line 1435 "main.h"
+#line 1494 "main.h"
 
-
+#line 1510 "main.h"
 
 extern char ext_can_cnt;
 
@@ -3462,16 +3474,26 @@ extern short can_plazma;
 
 
 
+#line 1563 "main.h"
 
-extern signed short TELECORE2015_KLIMAT_WARM_SIGNAL;
-extern signed short TELECORE2015_KLIMAT_VENT_SIGNAL;
-extern signed short TELECORE2015_KLIMAT_WARM_ON;
-extern signed short TELECORE2015_KLIMAT_WARM_OFF;
-extern signed short TELECORE2015_KLIMAT_CAP;
-extern signed short TELECORE2015_KLIMAT_VENT_ON;
-extern signed short TELECORE2015_KLIMAT_VENT_OFF;
-extern signed short TELECORE2015_KLIMAT_VVENT_ON;
-extern signed short TELECORE2015_KLIMAT_VVENT_OFF;
+
+
+#line 1587 "main.h"
+
+
+
+
+extern signed short TELECORE2017_USTART;		
+extern signed short TELECORE2017_ULINECC;		
+extern signed short TELECORE2017_ULINECC_;		
+extern signed short TELECORE2017_AVAR_CNT;				
+extern signed short TELECORE2017_Q;				
+extern signed short TELECORE2017_IZMAX1;		
+extern signed short TELECORE2017_IZMAX2;		
+extern signed short TELECORE2017_K1;			
+extern signed short TELECORE2017_K2;			
+extern signed short TELECORE2017_K3;			
+extern signed short TELECORE2017_T4;			
 
 
 
@@ -3511,6 +3533,10 @@ extern signed short outVoltContrHndlCnt_;
 extern char uout_av;
 
 
+
+extern short apsEnergiaCnt;
+extern char apsEnergiaStat; 
+
 extern short plazma_numOfCells;
 extern short plazma_numOfTemperCells;
 extern short plazma_numOfPacks;
@@ -3529,7 +3555,7 @@ extern signed short ica_u_necc;
 extern U8 tcp_soc_avg;
 extern U8 tcp_connect_stat;
 
-
+extern short pvlk;
 
 
 
@@ -3645,7 +3671,10 @@ extern signed short Ibmax;
 extern unsigned char unh_cnt0,unh_cnt1,b1Hz_unh;
 extern unsigned char	ch_cnt0,b1Hz_ch,i,iiii;
 extern unsigned char	ch_cnt1,b1_30Hz_ch;
+extern unsigned char	ch_cnt2,b1_10Hz_ch;
 extern unsigned short IZMAX_;
+extern unsigned short IZMAX_70;
+extern unsigned short IZMAX_130;
 extern unsigned short Ubpsmax;
 extern unsigned short cntrl_stat_blck_cnt;
 
@@ -3688,7 +3717,8 @@ void zar_superviser_start(void);
 void vent_hndl(void);
 void speedChargeHndl(void);
 void speedChargeStartStop(void);
-void	numOfForvardBps_init(void);
+void numOfForvardBps_init(void);
+void outVoltContrHndl(void);
 
 
 #line 7 "modbus.c"
@@ -4125,32 +4155,16 @@ extern __declspec(__nothrow) void _membitmovewb(void *  , const void *  , int  ,
 
 
 
-#line 136 "eeprom_map.h"
+#line 156 "eeprom_map.h"
+
+#line 167 "eeprom_map.h"
 
 
 
 
-#line 154 "eeprom_map.h"
-
-#line 169 "eeprom_map.h"
 
 
-
-#line 181 "eeprom_map.h"
-
-
-#line 192 "eeprom_map.h"
-
-
-
-#line 203 "eeprom_map.h"
-
-
-
-#line 259 "eeprom_map.h"
-
-
-#line 301 "eeprom_map.h"
+ 
 
 
 
@@ -4159,7 +4173,37 @@ extern __declspec(__nothrow) void _membitmovewb(void *  , const void *  , int  ,
 
 
 
-#line 323 "eeprom_map.h"
+
+ 
+
+#line 199 "eeprom_map.h"
+
+
+
+#line 211 "eeprom_map.h"
+
+
+#line 222 "eeprom_map.h"
+
+
+
+#line 233 "eeprom_map.h"
+
+
+
+#line 289 "eeprom_map.h"
+
+
+#line 331 "eeprom_map.h"
+
+
+
+
+
+
+
+
+#line 353 "eeprom_map.h"
 
 
 
@@ -4443,6 +4487,39 @@ void rs232_data_out_1(void);
 uint32_t UARTInit( uint32_t PortNum, uint32_t baudrate );
 
 #line 15 "modbus.c"
+#line 1 "avar_hndl.h"
+
+
+
+
+extern unsigned avar_stat;	 	
+extern unsigned avar_ind_stat; 	
+extern unsigned avar_stat_old;
+extern unsigned avar_stat_new,avar_stat_offed;
+
+
+
+
+
+
+
+
+
+void avar_hndl(void);
+void avar_unet_hndl(char in);
+void avar_uout_hndl(char in);
+void reload_hndl(void);
+void avar_bps_hndl(char bps, char v, char in);
+void avar_bat_hndl(char bat, char in);
+void avar_bat_as_hndl(char b, char in);
+void ke_mem_hndl(char b,unsigned short in);
+void vz_mem_hndl(unsigned short in);
+void wrk_mem_hndl(char b);
+void avar_bat_ips_hndl(char in);
+
+
+
+#line 16 "modbus.c"
 
 
 
@@ -4718,22 +4795,139 @@ modbus_rx_arg1=(((unsigned short)modbus_an_buffer[4])*((unsigned short)256))+((u
 
 
 
+
+if(modbus_an_buffer[0]=='r')
+	{
+	pvlk=1;
+	if(modbus_an_buffer[1]=='e')
+		{
+		pvlk=2;
+		if(modbus_an_buffer[2]=='a')
+			{
+			pvlk=3;
+			if(modbus_an_buffer[3]=='d')
+				{
+				pvlk=4;
+				if(modbus_an_buffer[6]==crc_87(modbus_an_buffer,6))
+					{
+					pvlk=5;
+					if(modbus_an_buffer[7]==crc_95(modbus_an_buffer,6))
+						{
+						pvlk=6;	
+
+							{
+							unsigned short ptr;
+							unsigned long data1,data2;
+							char temp_out[20];
+							pvlk++;
+							ptr=modbus_an_buffer[4]+(modbus_an_buffer[5]*256U);
+							data1=lc640_read_long(ptr);
+							data2=lc640_read_long(ptr+4);
+							temp_out[0]='r';
+							temp_out[1]='e';
+							temp_out[2]='a';
+							temp_out[3]='d';
+							temp_out[4]=*((char*)&ptr);
+							temp_out[5]=*(((char*)&ptr)+1);	
+							temp_out[6]=*((char*)&data1);
+							temp_out[7]=*(((char*)&data1)+1);		
+							temp_out[8]=*(((char*)&data1)+2);	
+							temp_out[9]=*(((char*)&data1)+3);		
+							temp_out[10]=*((char*)&data2);
+							temp_out[11]=*(((char*)&data2)+1);		
+							temp_out[12]=*(((char*)&data2)+2);	
+							temp_out[13]=*(((char*)&data2)+3);	
+							temp_out[14]=crc_87(temp_out,14);	
+							temp_out[15]=crc_95(temp_out,14);			
+							
+							temp_out[17]=0;
+							for (i=0;i<16;i++)
+								{
+								putchar_sc16is700(temp_out[i]);
+								temp_out[17]^=temp_out[i];
+								}
+							putchar_sc16is700(16);
+							putchar_sc16is700(temp_out[17]^16);
+							putchar_sc16is700(0x0a);
+							}
+						}
+					}
+				}
+			} 
+		}	 
+	} 
+
+if(modbus_an_buffer[0]=='w')
+	{
+
+	if(modbus_an_buffer[1]=='r')
+		{
+
+		if(modbus_an_buffer[2]=='i')
+			{
+
+			if(modbus_an_buffer[3]=='t')
+				{
+
+				if(modbus_an_buffer[4]=='e')
+					{
+
+					if(modbus_an_buffer[15]==crc_87(modbus_an_buffer,15))
+						{
+
+						if(modbus_an_buffer[16]==crc_95(modbus_an_buffer,15))
+
+							{
+							unsigned short ptr;
+							unsigned long data1,data2;
+							char temp_out[20];
+
+							ptr=modbus_an_buffer[5]+(modbus_an_buffer[6]*256U);
+							*((char*)&data1)=modbus_an_buffer[7];
+							*(((char*)&data1)+1)=modbus_an_buffer[8];
+							*(((char*)&data1)+2)=modbus_an_buffer[9];
+							*(((char*)&data1)+3)=modbus_an_buffer[10];
+							*((char*)&data2)=modbus_an_buffer[11];
+							*(((char*)&data2)+1)=modbus_an_buffer[12];
+							*(((char*)&data2)+2)=modbus_an_buffer[13];
+							*(((char*)&data2)+3)=modbus_an_buffer[14];	
+							lc640_write_long(ptr,data1);
+							lc640_write_long(ptr+4,data2);
+							
+							
+							
+							temp_out[0]='w';
+							temp_out[1]='r';
+							temp_out[2]='i';
+							temp_out[3]='t';
+							temp_out[4]='e';
+							temp_out[5]=*((char*)&ptr);
+							temp_out[6]=*(((char*)&ptr)+1);	
+						
+							temp_out[7]=crc_87(temp_out,7);	
+							temp_out[8]=crc_95(temp_out,7);			
+							
+							temp_out[10]=0;
+							for (i=0;i<9;i++)
+								{
+								putchar_sc16is700(temp_out[i]);
+								temp_out[10]^=temp_out[i];
+								}
+							putchar_sc16is700(9);
+							putchar_sc16is700(temp_out[10]^9);
+							putchar_sc16is700(0x0a);
+							}
+						}
+					}
+				}
+		   	}
+		}
+	}
+
 if(crc16_calculated==crc16_incapsulated)
 	{
 	ica_plazma[4]++;
-	if(modbus_an_buffer[0]==ICA_MODBUS_ADDRESS)
-		{
-		ica_plazma[3]++;
-		if(modbus_func==4)		
-			{
-			ica_plazma[2]++;
-			if(modbus_an_buffer[2]==2)
-				{
-				ica_your_current=(((unsigned short)modbus_an_buffer[3])*((unsigned short)256))+((unsigned short)modbus_an_buffer[4]);
-				}
-			}
-		}
-	else if(modbus_an_buffer[0]==MODBUS_ADRESS)
+ 	if(modbus_an_buffer[0]==MODBUS_ADRESS)
 		{
 		if(modbus_func==3)		
 			{
@@ -4806,6 +5000,8 @@ if(crc16_calculated==crc16_incapsulated)
 				else if(modbus_rx_arg1>=60)TBAT=60;
 				else TBAT=modbus_rx_arg1;
 				lc640_write_int(0x10+100+78,TBAT);
+
+				main_kb_cnt=(TBAT*60)-20;
 	     		}
 			if(modbus_rx_arg0==31)		
 				{
@@ -4947,6 +5143,18 @@ if(crc16_calculated==crc16_incapsulated)
 			modbus_hold_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,1,0);
 			}
 		} 
+	else if(modbus_an_buffer[0]==ICA_MODBUS_ADDRESS)
+		{
+		ica_plazma[3]++;
+		if(modbus_func==4)		
+			{
+			ica_plazma[2]++;
+			if(modbus_an_buffer[2]==2)
+				{
+				ica_your_current=(((unsigned short)modbus_an_buffer[3])*((unsigned short)256))+((unsigned short)modbus_an_buffer[4]);
+				}
+			}
+		}
 	
 	}
 
@@ -5399,18 +5607,7 @@ modbus_registers[103]=(char)(U_OUT_KONTR_MIN);
 modbus_registers[104]=(char)(U_OUT_KONTR_DELAY>>8);				
 modbus_registers[105]=(char)(U_OUT_KONTR_DELAY);
 
-			if(modbus_rx_arg0==51)		
-				{
-				lc640_write_int(0x10+100+182,modbus_rx_arg1);
-	     		}
-			if(modbus_rx_arg0==52)		
-				{
-				lc640_write_int(0x10+100+184,modbus_rx_arg1);
-	     		}
-			if(modbus_rx_arg0==53)		
-				{
-				lc640_write_int(0x10+100+186,modbus_rx_arg1);
-	     		}
+
 
 
 if(prot==0)
@@ -5570,6 +5767,15 @@ modbus_registers[110]=(signed char)(tempS>>8);
 modbus_registers[111]=(signed char)(tempS);
 modbus_registers[112]=(signed char)(uout_av>>8);					
 modbus_registers[113]=(signed char)(uout_av);
+
+tempS=0;													 
+if(bat_ips._av)			tempS|=(1<<0);						 
+if(avar_stat&0x0001)   	tempS|=(1<<1);						 
+if(avar_stat&(1<<(3+0)))tempS|=(1<<2);						 
+if(avar_stat&(1<<(3+1)))tempS|=(1<<3);						 
+if(avar_stat&(1<<(3+2)))tempS|=(1<<4);						 
+modbus_registers[118]=(signed char)(tempS>>8);
+modbus_registers[119]=(signed char)(tempS);
 
 tempS=t_ext[0];
 if(ND_EXT[0])tempS=-1000;

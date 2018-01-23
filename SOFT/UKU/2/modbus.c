@@ -12,6 +12,7 @@
 #include "25lc640.h"
 #include "sc16is7xx.h"
 #include "uart0.h"
+#include "avar_hndl.h"
 
 #define MODBUS_RTU_PROT	0
 
@@ -287,22 +288,139 @@ modbus_rx_arg1=(((unsigned short)modbus_an_buffer[4])*((unsigned short)256))+((u
 
 //#define IPS_CURR_AVG_MODBUS_ADRESS	1
 
+
+if(modbus_an_buffer[0]=='r')
+	{
+	pvlk=1;
+	if(modbus_an_buffer[1]=='e')
+		{
+		pvlk=2;
+		if(modbus_an_buffer[2]=='a')
+			{
+			pvlk=3;
+			if(modbus_an_buffer[3]=='d')
+				{
+				pvlk=4;
+				if(modbus_an_buffer[6]==crc_87(modbus_an_buffer,6))
+					{
+					pvlk=5;
+					if(modbus_an_buffer[7]==crc_95(modbus_an_buffer,6))
+						{
+						pvlk=6;	
+
+							{
+							unsigned short ptr;
+							unsigned long data1,data2;
+							char temp_out[20];
+							pvlk++;
+							ptr=modbus_an_buffer[4]+(modbus_an_buffer[5]*256U);
+							data1=lc640_read_long(ptr);
+							data2=lc640_read_long(ptr+4);
+							temp_out[0]='r';
+							temp_out[1]='e';
+							temp_out[2]='a';
+							temp_out[3]='d';
+							temp_out[4]=*((char*)&ptr);
+							temp_out[5]=*(((char*)&ptr)+1);	
+							temp_out[6]=*((char*)&data1);
+							temp_out[7]=*(((char*)&data1)+1);		
+							temp_out[8]=*(((char*)&data1)+2);	
+							temp_out[9]=*(((char*)&data1)+3);		
+							temp_out[10]=*((char*)&data2);
+							temp_out[11]=*(((char*)&data2)+1);		
+							temp_out[12]=*(((char*)&data2)+2);	
+							temp_out[13]=*(((char*)&data2)+3);	
+							temp_out[14]=crc_87(temp_out,14);	
+							temp_out[15]=crc_95(temp_out,14);			
+							
+							temp_out[17]=0;
+							for (i=0;i<16;i++)
+								{
+								putchar_sc16is700(temp_out[i]);
+								temp_out[17]^=temp_out[i];
+								}
+							putchar_sc16is700(16);
+							putchar_sc16is700(temp_out[17]^16);
+							putchar_sc16is700(0x0a);
+							}
+						}
+					}
+				}
+			} 
+		}	 
+	} 
+
+if(modbus_an_buffer[0]=='w')
+	{
+//	pvlk=1;
+	if(modbus_an_buffer[1]=='r')
+		{
+//		pvlk=2;
+		if(modbus_an_buffer[2]=='i')
+			{
+//			pvlk=3;
+			if(modbus_an_buffer[3]=='t')
+				{
+//				pvlk=4;
+				if(modbus_an_buffer[4]=='e')
+					{
+//					pvlk=5;
+					if(modbus_an_buffer[15]==crc_87(modbus_an_buffer,15))
+						{
+//						pvlk=6;
+						if(modbus_an_buffer[16]==crc_95(modbus_an_buffer,15))
+
+							{
+							unsigned short ptr;
+							unsigned long data1,data2;
+							char temp_out[20];
+//							pvlk=7;
+							ptr=modbus_an_buffer[5]+(modbus_an_buffer[6]*256U);
+							*((char*)&data1)=modbus_an_buffer[7];
+							*(((char*)&data1)+1)=modbus_an_buffer[8];
+							*(((char*)&data1)+2)=modbus_an_buffer[9];
+							*(((char*)&data1)+3)=modbus_an_buffer[10];
+							*((char*)&data2)=modbus_an_buffer[11];
+							*(((char*)&data2)+1)=modbus_an_buffer[12];
+							*(((char*)&data2)+2)=modbus_an_buffer[13];
+							*(((char*)&data2)+3)=modbus_an_buffer[14];	
+							lc640_write_long(ptr,data1);
+							lc640_write_long(ptr+4,data2);
+							
+							//data1=lc640_read_long(ptr);
+							//data2=lc640_read_long(ptr+4);
+							temp_out[0]='w';
+							temp_out[1]='r';
+							temp_out[2]='i';
+							temp_out[3]='t';
+							temp_out[4]='e';
+							temp_out[5]=*((char*)&ptr);
+							temp_out[6]=*(((char*)&ptr)+1);	
+						
+							temp_out[7]=crc_87(temp_out,7);	
+							temp_out[8]=crc_95(temp_out,7);			
+							
+							temp_out[10]=0;
+							for (i=0;i<9;i++)
+								{
+								putchar_sc16is700(temp_out[i]);
+								temp_out[10]^=temp_out[i];
+								}
+							putchar_sc16is700(9);
+							putchar_sc16is700(temp_out[10]^9);
+							putchar_sc16is700(0x0a);
+							}
+						}
+					}
+				}
+		   	}
+		}
+	}
+
 if(crc16_calculated==crc16_incapsulated)
 	{
 	ica_plazma[4]++;
-	if(modbus_an_buffer[0]==ICA_MODBUS_ADDRESS)
-		{
-		ica_plazma[3]++;
-		if(modbus_func==4)		//чтение произвольного кол-ва регистров	входов
-			{
-			ica_plazma[2]++;
-			if(modbus_an_buffer[2]==2)
-				{
-				ica_your_current=(((unsigned short)modbus_an_buffer[3])*((unsigned short)256))+((unsigned short)modbus_an_buffer[4]);
-				}
-			}
-		}
-	else if(modbus_an_buffer[0]==MODBUS_ADRESS)
+ 	if(modbus_an_buffer[0]==MODBUS_ADRESS)
 		{
 		if(modbus_func==3)		//чтение произвольного кол-ва регистров хранения
 			{
@@ -375,6 +493,8 @@ if(crc16_calculated==crc16_incapsulated)
 				else if(modbus_rx_arg1>=60)TBAT=60;
 				else TBAT=modbus_rx_arg1;
 				lc640_write_int(EE_TBAT,TBAT);
+
+				main_kb_cnt=(TBAT*60)-20;
 	     		}
 			if(modbus_rx_arg0==31)		//
 				{
@@ -516,7 +636,19 @@ if(crc16_calculated==crc16_incapsulated)
 			modbus_hold_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,1,MODBUS_RTU_PROT);
 			}
 		} 
-	//modbus_plazma++;
+	else if(modbus_an_buffer[0]==ICA_MODBUS_ADDRESS)
+		{
+		ica_plazma[3]++;
+		if(modbus_func==4)		//чтение произвольного кол-ва регистров	входов
+			{
+			ica_plazma[2]++;
+			if(modbus_an_buffer[2]==2)
+				{
+				ica_your_current=(((unsigned short)modbus_an_buffer[3])*((unsigned short)256))+((unsigned short)modbus_an_buffer[4]);
+				}
+			}
+		}
+	
 	}
 
 
@@ -968,18 +1100,7 @@ modbus_registers[103]=(char)(U_OUT_KONTR_MIN);
 modbus_registers[104]=(char)(U_OUT_KONTR_DELAY>>8);				//Рег53	 Контроль выходного напряжения, Tзадержки, 1сек.
 modbus_registers[105]=(char)(U_OUT_KONTR_DELAY);
 
-			if(modbus_rx_arg0==51)		//
-				{
-				lc640_write_int(EE_U_OUT_KONTR_MAX,modbus_rx_arg1);
-	     		}
-			if(modbus_rx_arg0==52)		//
-				{
-				lc640_write_int(EE_U_OUT_KONTR_MIN,modbus_rx_arg1);
-	     		}
-			if(modbus_rx_arg0==53)		//
-				{
-				lc640_write_int(EE_U_OUT_KONTR_DELAY,modbus_rx_arg1);
-	     		}
+
 
 
 if(prot==MODBUS_RTU_PROT)
@@ -1139,6 +1260,15 @@ modbus_registers[110]=(signed char)(tempS>>8);					//Рег56   	Выравнивающий заря
 modbus_registers[111]=(signed char)(tempS);
 modbus_registers[112]=(signed char)(uout_av>>8);					//Рег57   Контроль выходного напряжения, (0 - норма, 1 - завышено, 2 - занижено)
 modbus_registers[113]=(signed char)(uout_av);
+
+tempS=0;													 //Рег60	Регистр флагов состояния системы
+if(bat_ips._av)			tempS|=(1<<0);						 // Бит 0	Авария батареи
+if(avar_stat&0x0001)   	tempS|=(1<<1);						 //	Бит 1	Авария питающей сети 
+if(avar_stat&(1<<(3+0)))tempS|=(1<<2);						 //	Бит 2	Авария выпрямителя №1
+if(avar_stat&(1<<(3+1)))tempS|=(1<<3);						 //	Бит 3	Авария выпрямителя №2
+if(avar_stat&(1<<(3+2)))tempS|=(1<<4);						 //	Бит 4	Авария выпрямителя №2
+modbus_registers[118]=(signed char)(tempS>>8);
+modbus_registers[119]=(signed char)(tempS);
 
 tempS=t_ext[0];
 if(ND_EXT[0])tempS=-1000;

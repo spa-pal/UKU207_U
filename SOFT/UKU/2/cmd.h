@@ -63,3 +63,4 @@
 #define PUT_ZTT_TM5 	0xC5
 #define PUT_ZTT_TM6 	0xC6
 #define PUT_ZTT_TM7 	0xC7
+#define PUT_ZTT_TM8 	0xC8

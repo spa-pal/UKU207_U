@@ -106,55 +106,67 @@ char* aaa_="abc";
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_NUMBER, 2},  			MIB_INT(snmp_bps_number[1]),  	NULL},	//Номер БПСа
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_NUMBER, 3},  			MIB_INT(snmp_bps_number[2]),  	NULL},	//Номер БПСа
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_NUMBER, 4},  			MIB_INT(snmp_bps_number[3]),  	NULL},	//Номер БПСа
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_NUMBER, 5},  			MIB_INT(snmp_bps_number[4]),  	NULL},	//Номер БПСа
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_NUMBER, 6},  			MIB_INT(snmp_bps_number[5]),  	NULL},	//Номер БПСа
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_NUMBER, 7},  			MIB_INT(snmp_bps_number[6]),  	NULL},	//Номер БПСа
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_NUMBER, 8},  			MIB_INT(snmp_bps_number[7]),  	NULL},	//Номер БПСа
+#endif
 
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_VOLTAGE, 1},  			MIB_INT(snmp_bps_voltage[0]),  	NULL},	//Напряжение БПС1
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_VOLTAGE, 2},  			MIB_INT(snmp_bps_voltage[1]),  	NULL},	//Напряжение БПС2
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_VOLTAGE, 3},  			MIB_INT(snmp_bps_voltage[2]),  	NULL},	//Напряжение БПС3
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_VOLTAGE, 4},  			MIB_INT(snmp_bps_voltage[3]),  	NULL},	//Напряжение БПС3
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_VOLTAGE, 5},  			MIB_INT(snmp_bps_voltage[4]),  	NULL},	//Напряжение БПС4
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_VOLTAGE, 6},  			MIB_INT(snmp_bps_voltage[5]),  	NULL},	//Напряжение БПС5
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_VOLTAGE, 7},  			MIB_INT(snmp_bps_voltage[6]),  	NULL},	//Напряжение БПС6
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_VOLTAGE, 8},  			MIB_INT(snmp_bps_voltage[7]),  	NULL},	//Напряжение БПС7
+#endif
 
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_CURRENT, 1},  			MIB_INT(snmp_bps_current[0]),  	NULL},	//Ток БПС1
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_CURRENT, 2},  			MIB_INT(snmp_bps_current[1]),  	NULL},	//Ток БПС2
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_CURRENT, 3},  			MIB_INT(snmp_bps_current[2]),  	NULL},	//Ток БПС3
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_CURRENT, 4},  			MIB_INT(snmp_bps_current[3]),  	NULL},	//Ток БПС4
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_CURRENT, 5},  			MIB_INT(snmp_bps_current[4]),  	NULL},	//Ток БПС5
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_CURRENT, 6},  			MIB_INT(snmp_bps_current[5]),  	NULL},	//Ток БПС6
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_CURRENT, 7},  			MIB_INT(snmp_bps_current[6]),  	NULL},	//Ток БПС7
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_CURRENT, 8},  			MIB_INT(snmp_bps_current[7]),  	NULL},	//Ток БПС8
+#endif
 
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_TEMPERATURE, 1},  		MIB_INT(snmp_bps_temperature[0]),  NULL},	//Ток БПС1
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_TEMPERATURE, 2},  		MIB_INT(snmp_bps_temperature[1]),  NULL},	//Ток БПС2
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_TEMPERATURE, 3},  		MIB_INT(snmp_bps_temperature[2]),  NULL},	//Ток БПС3
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_TEMPERATURE, 4},  		MIB_INT(snmp_bps_temperature[3]),  NULL},	//Ток БПС4
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_TEMPERATURE, 5},  		MIB_INT(snmp_bps_temperature[4]),  NULL},	//Ток БПС5
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_TEMPERATURE, 6},  		MIB_INT(snmp_bps_temperature[5]),  NULL},	//Ток БПС6
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_TEMPERATURE, 7},  		MIB_INT(snmp_bps_temperature[6]),  NULL},	//Ток БПС7
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_TEMPERATURE, 8},  		MIB_INT(snmp_bps_temperature[7]),  NULL},	//Ток БПС8
+#endif
 
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_STATUS, 1},  			MIB_INT(snmp_bps_stat[0]),  NULL},			//Состояние БПС1
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_STATUS, 2},  			MIB_INT(snmp_bps_stat[1]),  NULL},			//Состояние БПС2
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_STATUS, 3},  			MIB_INT(snmp_bps_stat[2]),  NULL},			//Состояние БПС3
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_STATUS, 4},  			MIB_INT(snmp_bps_stat[3]),  NULL},			//Состояние БПС4
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_STATUS, 5},  			MIB_INT(snmp_bps_stat[4]),  NULL},			//Состояние БПС5
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_STATUS, 6},  			MIB_INT(snmp_bps_stat[5]),  NULL},			//Состояние БПС6
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_STATUS, 7},  			MIB_INT(snmp_bps_stat[6]),  NULL},			//Состояние БПС7
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_STATUS, 8},  			MIB_INT(snmp_bps_stat[7]),  NULL},			//Состояние БПС8
+#endif
 
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_VENTRESURS, 1},  		MIB_INT(bps[0]._vent_resurs),  NULL},		//Ресурс вентилятора БПС1
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_VENTRESURS, 2},  		MIB_INT(bps[1]._vent_resurs),  NULL},		//Ресурс вентилятора БПС2
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_VENTRESURS, 3},  		MIB_INT(bps[2]._vent_resurs),  NULL},		//Ресурс вентилятора БПС3
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_VENTRESURS, 4},  		MIB_INT(bps[3]._vent_resurs),  NULL},		//Ресурс вентилятора БПС4
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_VENTRESURS, 5},  		MIB_INT(bps[4]._vent_resurs),  NULL},		//Ресурс вентилятора БПС5
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_VENTRESURS, 6},  		MIB_INT(bps[5]._vent_resurs),  NULL},		//Ресурс вентилятора БПС6
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_VENTRESURS, 7},  		MIB_INT(bps[6]._vent_resurs),  NULL},		//Ресурс вентилятора БПС7
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_PSU, DISPLAY_PSU_ENTRY_VENTRESURS, 8},  		MIB_INT(bps[7]._vent_resurs),  NULL},		//Ресурс вентилятора БПС8
+#endif
  
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_INV, DISPLAY_INV_ENTRY_NUMBER, 1},  			MIB_INT(snmp_inv_number[0]),  	NULL},	//Номер БПСа
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_INV, DISPLAY_INV_ENTRY_NUMBER, 2},  			MIB_INT(snmp_inv_number[1]),  	NULL},	//Номер БПСа
@@ -233,6 +245,7 @@ char* aaa_="abc";
 	{ MIB_INTEGER | MIB_ATR_RO,  	12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_ENERGY, DISPLAY_ENERGY_PES_PHASE_C, 0},		MIB_INT(snmp_energy_pes_phase_c), NULL},	//напряжение фазы C ПЭСа
 	{ MIB_INTEGER | MIB_ATR_RO,  	12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_ENERGY, DISPLAY_ENERGY_TOTAL_ENERGY, 0},		MIB_INT(snmp_energy_total_energy), NULL},	//показания счетчика, потребленная энергия
 	{ MIB_INTEGER | MIB_ATR_RO,  	12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_ENERGY, DISPLAY_ENERGY_CURRENT_ENERGY, 0},		MIB_INT(snmp_energy_current_energy), NULL},	//показания счетчика, потребляемая энергия
+	{ MIB_INTEGER | MIB_ATR_RO,  	12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_ENERGY, DISPLAY_ENERGY_INPUT_VOLTAGE, 0},		MIB_INT(snmp_energy_input_voltage), NULL},	//входное напряжение при однофазном питании
 
 
 
@@ -492,55 +505,75 @@ char* aaa_="abc";
 
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_ENTRY_NUMBER, 1},  			MIB_INT(snmp_lakb_number[0]),  	NULL},	//Номер ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_ENTRY_NUMBER, 2},  			MIB_INT(snmp_lakb_number[1]),  	NULL},	//Номер ЛАКБ
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_ENTRY_NUMBER, 3},  			MIB_INT(snmp_lakb_number[2]),  	NULL},	//Номер ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_ENTRY_NUMBER, 4},  			MIB_INT(snmp_lakb_number[3]),  	NULL},	//Номер ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_ENTRY_NUMBER, 5},  			MIB_INT(snmp_lakb_number[4]),  	NULL},	//Номер ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_ENTRY_NUMBER, 6},  			MIB_INT(snmp_lakb_number[5]),  	NULL},	//Номер ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_ENTRY_NUMBER, 7},  			MIB_INT(snmp_lakb_number[6]),  	NULL},	//Номер ЛАКБ
-
+#endif
 
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MAX_CELL_VOLTAGE, 1},  		MIB_INT(snmp_lakb_max_cell_voltage[0]),  	NULL},	//Максимальное напряжение ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MAX_CELL_VOLTAGE, 2},  		MIB_INT(snmp_lakb_max_cell_voltage[1]),  	NULL},	//Максимальное напряжение ячейки ЛАКБ
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MAX_CELL_VOLTAGE, 3},  		MIB_INT(snmp_lakb_max_cell_voltage[2]),  	NULL},	//Максимальное напряжение ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MAX_CELL_VOLTAGE, 4},  		MIB_INT(snmp_lakb_max_cell_voltage[3]),  	NULL},	//Максимальное напряжение ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MAX_CELL_VOLTAGE, 5},  		MIB_INT(snmp_lakb_max_cell_voltage[4]),  	NULL},	//Максимальное напряжение ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MAX_CELL_VOLTAGE, 6},  		MIB_INT(snmp_lakb_max_cell_voltage[5]),  	NULL},	//Максимальное напряжение ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MAX_CELL_VOLTAGE, 7},  		MIB_INT(snmp_lakb_max_cell_voltage[6]),  	NULL},	//Максимальное напряжение ячейки ЛАКБ
+#endif
+
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MIN_CELL_VOLTAGE, 1},  		MIB_INT(snmp_lakb_min_cell_voltage[0]),  	NULL},	//Минимальное напряжение ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MIN_CELL_VOLTAGE, 2},  		MIB_INT(snmp_lakb_min_cell_voltage[1]),  	NULL},	//Минимальное напряжение ячейки ЛАКБ
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MIN_CELL_VOLTAGE, 3},  		MIB_INT(snmp_lakb_min_cell_voltage[2]),  	NULL},	//Минимальное напряжение ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MIN_CELL_VOLTAGE, 4},  		MIB_INT(snmp_lakb_min_cell_voltage[3]),  	NULL},	//Минимальное напряжение ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MIN_CELL_VOLTAGE, 5},  		MIB_INT(snmp_lakb_min_cell_voltage[4]),  	NULL},	//Минимальное напряжение ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MIN_CELL_VOLTAGE, 6},  		MIB_INT(snmp_lakb_min_cell_voltage[5]),  	NULL},	//Минимальное напряжение ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MIN_CELL_VOLTAGE, 7},  		MIB_INT(snmp_lakb_min_cell_voltage[6]),  	NULL},	//Минимальное напряжение ячейки ЛАКБ
+#endif
+
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MAX_CELL_TEMPERATURE, 1},  	MIB_INT(snmp_lakb_max_cell_temperature[0]),  	NULL},	//Максимальная температура ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MAX_CELL_TEMPERATURE, 2},  	MIB_INT(snmp_lakb_max_cell_temperature[1]),  	NULL},	//Максимальная температура ячейки ЛАКБ
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MAX_CELL_TEMPERATURE, 3},  	MIB_INT(snmp_lakb_max_cell_temperature[2]),  	NULL},	//Максимальная температура ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MAX_CELL_TEMPERATURE, 4},  	MIB_INT(snmp_lakb_max_cell_temperature[3]),  	NULL},	//Максимальная температура ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MAX_CELL_TEMPERATURE, 5},  	MIB_INT(snmp_lakb_max_cell_temperature[4]),  	NULL},	//Максимальная температура ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MAX_CELL_TEMPERATURE, 6},  	MIB_INT(snmp_lakb_max_cell_temperature[5]),  	NULL},	//Максимальная температура ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MAX_CELL_TEMPERATURE, 7},  	MIB_INT(snmp_lakb_max_cell_temperature[6]),  	NULL},	//Максимальная температура ячейки ЛАКБ
+#endif
+
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MIN_CELL_TEMPERATURE, 1},  	MIB_INT(snmp_lakb_min_cell_temperature[0]),  	NULL},	//Минимальная температура ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MIN_CELL_TEMPERATURE, 2},  	MIB_INT(snmp_lakb_min_cell_temperature[1]),  	NULL},	//Минимальная температура ячейки ЛАКБ
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MIN_CELL_TEMPERATURE, 3},  	MIB_INT(snmp_lakb_min_cell_temperature[2]),  	NULL},	//Минимальная температура ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MIN_CELL_TEMPERATURE, 4},  	MIB_INT(snmp_lakb_min_cell_temperature[3]),  	NULL},	//Минимальная температура ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MIN_CELL_TEMPERATURE, 5},  	MIB_INT(snmp_lakb_min_cell_temperature[4]),  	NULL},	//Минимальная температура ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MIN_CELL_TEMPERATURE, 6},  	MIB_INT(snmp_lakb_min_cell_temperature[5]),  	NULL},	//Минимальная температура ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_MIN_CELL_TEMPERATURE, 7},  	MIB_INT(snmp_lakb_min_cell_temperature[6]),  	NULL},	//Минимальная температура ячейки ЛАКБ
+#endif
+	
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_1, 1},  	MIB_INT(snmp_lakb_cell_temperature_1[0]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_1, 2},  	MIB_INT(snmp_lakb_cell_temperature_1[1]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_1, 3},  	MIB_INT(snmp_lakb_cell_temperature_1[2]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_1, 4},  	MIB_INT(snmp_lakb_cell_temperature_1[3]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 //	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_1, 5},  	MIB_INT(snmp_lakb_cell_temperature_1[4]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 //	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_1, 6},  	MIB_INT(snmp_lakb_cell_temperature_1[5]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 //	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_1, 7},  	MIB_INT(snmp_lakb_cell_temperature_1[6]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+#endif
+
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_2, 1},  	MIB_INT(snmp_lakb_cell_temperature_2[0]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_2, 2},  	MIB_INT(snmp_lakb_cell_temperature_2[1]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_2, 3},  	MIB_INT(snmp_lakb_cell_temperature_2[2]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_2, 4},  	MIB_INT(snmp_lakb_cell_temperature_2[3]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 //	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_2, 5},  	MIB_INT(snmp_lakb_cell_temperature_2[4]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 //	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_2, 6},  	MIB_INT(snmp_lakb_cell_temperature_2[5]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 //	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_2, 7},  	MIB_INT(snmp_lakb_cell_temperature_2[6]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+#endif
+
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_3, 1},  	MIB_INT(snmp_lakb_cell_temperature_3[0]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_3, 2},  	MIB_INT(snmp_lakb_cell_temperature_3[1]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_3, 3},  	MIB_INT(snmp_lakb_cell_temperature_3[2]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
@@ -548,6 +581,9 @@ char* aaa_="abc";
 //	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_3, 5},  	MIB_INT(snmp_lakb_cell_temperature_3[4]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 //	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_3, 6},  	MIB_INT(snmp_lakb_cell_temperature_3[5]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 //	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_3, 7},  	MIB_INT(snmp_lakb_cell_temperature_3[6]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+#endif
+
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_4, 1},  	MIB_INT(snmp_lakb_cell_temperature_4[0]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_4, 2},  	MIB_INT(snmp_lakb_cell_temperature_4[1]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_4, 3},  	MIB_INT(snmp_lakb_cell_temperature_4[2]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
@@ -555,91 +591,180 @@ char* aaa_="abc";
 //	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_4, 5},  	MIB_INT(snmp_lakb_cell_temperature_4[4]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 //	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_4, 6},  	MIB_INT(snmp_lakb_cell_temperature_4[5]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 //	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_4, 7},  	MIB_INT(snmp_lakb_cell_temperature_4[6]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+#endif
+
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_AMBIENT, 1},  	MIB_INT(snmp_lakb_cell_temperature_ambient[0]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_AMBIENT, 2},  	MIB_INT(snmp_lakb_cell_temperature_ambient[1]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_AMBIENT, 3},  	MIB_INT(snmp_lakb_cell_temperature_ambient[2]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_AMBIENT, 4},  	MIB_INT(snmp_lakb_cell_temperature_ambient[3]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 //	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_AMBIENT, 5},  	MIB_INT(snmp_lakb_cell_temperature_ambient[4]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 //	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_AMBIENT, 6},  	MIB_INT(snmp_lakb_cell_temperature_ambient[5]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 //	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_AMBIENT, 7},  	MIB_INT(snmp_lakb_cell_temperature_ambient[6]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+#endif
+
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_POWER, 1},  	MIB_INT(snmp_lakb_cell_temperature_power[0]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_POWER, 2},  	MIB_INT(snmp_lakb_cell_temperature_power[1]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_POWER, 3},  	MIB_INT(snmp_lakb_cell_temperature_power[2]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_POWER, 4},  	MIB_INT(snmp_lakb_cell_temperature_power[3]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 //	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_POWER, 5},  	MIB_INT(snmp_lakb_cell_temperature_power[4]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 //	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_POWER, 6},  	MIB_INT(snmp_lakb_cell_temperature_power[5]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
 //	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CELL_TEMPERATURE_POWER, 7},  	MIB_INT(snmp_lakb_cell_temperature_power[6]),  	  	NULL},	//Температура 1-й ячейки ЛАКБ
+#endif
 
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_VOLTAGE, 1},  				MIB_INT(snmp_lakb_voltage[0]),  	NULL},	//Напряжение ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_VOLTAGE, 2},  				MIB_INT(snmp_lakb_voltage[1]),  	NULL},	//Напряжение ЛАКБ
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_VOLTAGE, 3},  				MIB_INT(snmp_lakb_voltage[2]),  	NULL},	//Напряжение ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_VOLTAGE, 4},  				MIB_INT(snmp_lakb_voltage[3]),  	NULL},	//Напряжение ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_VOLTAGE, 5},  				MIB_INT(snmp_lakb_voltage[4]),  	NULL},	//Напряжение ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_VOLTAGE, 6},  				MIB_INT(snmp_lakb_voltage[5]),  	NULL},	//Напряжение ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_VOLTAGE, 7},  				MIB_INT(snmp_lakb_voltage[6]),  	NULL},	//Напряжение ЛАКБ
+#endif
+
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CH_CURR, 1},  				MIB_INT(snmp_lakb_ch_curr[0]),  	NULL},	//Ток заряда ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CH_CURR, 2},  				MIB_INT(snmp_lakb_ch_curr[1]),  	NULL},	//Ток заряда ЛАКБ
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CH_CURR, 3},  				MIB_INT(snmp_lakb_ch_curr[2]),  	NULL},	//Ток заряда ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CH_CURR, 4},  				MIB_INT(snmp_lakb_ch_curr[3]),  	NULL},	//Ток заряда ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CH_CURR, 5},  				MIB_INT(snmp_lakb_ch_curr[4]),  	NULL},	//Ток заряда ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CH_CURR, 6},  				MIB_INT(snmp_lakb_ch_curr[5]),  	NULL},	//Ток заряда ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CH_CURR, 7},  				MIB_INT(snmp_lakb_ch_curr[6]),  	NULL},	//Ток заряда ЛАКБ
+#endif
+
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_DSCH_CURR, 1},  			MIB_INT(snmp_lakb_dsch_curr[0]),  	NULL},	//Ток разряда ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_DSCH_CURR, 2},  			MIB_INT(snmp_lakb_dsch_curr[1]),  	NULL},	//Ток разряда ЛАКБ
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_DSCH_CURR, 3},  			MIB_INT(snmp_lakb_dsch_curr[2]),  	NULL},	//Ток разряда ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_DSCH_CURR, 4},  			MIB_INT(snmp_lakb_dsch_curr[3]),  	NULL},	//Ток разряда ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_DSCH_CURR, 5},  			MIB_INT(snmp_lakb_dsch_curr[4]),  	NULL},	//Ток разряда ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_DSCH_CURR, 6},  			MIB_INT(snmp_lakb_dsch_curr[5]),  	NULL},	//Ток разряда ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_DSCH_CURR, 7},  			MIB_INT(snmp_lakb_dsch_curr[6]),  	NULL},	//Ток разряда ЛАКБ
+#endif
+
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_RAT_CAP, 1},  				MIB_INT(snmp_lakb_rat_cap[0]),  	NULL},	//Номинальная емкость ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_RAT_CAP, 2},  				MIB_INT(snmp_lakb_rat_cap[1]),  	NULL},	//Номинальная емкость ЛАКБ
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_RAT_CAP, 3},  				MIB_INT(snmp_lakb_rat_cap[2]),  	NULL},	//Номинальная емкость ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_RAT_CAP, 4},  				MIB_INT(snmp_lakb_rat_cap[3]),  	NULL},	//Номинальная емкость ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_RAT_CAP, 5},  				MIB_INT(snmp_lakb_rat_cap[4]),  	NULL},	//Номинальная емкость ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_RAT_CAP, 6},  				MIB_INT(snmp_lakb_rat_cap[5]),  	NULL},	//Номинальная емкость ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_RAT_CAP, 7},  				MIB_INT(snmp_lakb_rat_cap[6]),  	NULL},	//Номинальная емкость ЛАКБ
+#endif
+
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_SOH, 1},  				MIB_INT(snmp_lakb_soh[0]),  		NULL},	//Остаточная емкость ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_SOH, 2},  				MIB_INT(snmp_lakb_soh[1]),  		NULL},	//Остаточная емкость ЛАКБ
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_SOH, 3},  				MIB_INT(snmp_lakb_soh[2]),  		NULL},	//Остаточная емкость ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_SOH, 4},  				MIB_INT(snmp_lakb_soh[3]),  		NULL},	//Остаточная емкость ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_SOH, 5},  				MIB_INT(snmp_lakb_soh[4]),  		NULL},	//Остаточная емкость ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_SOH, 6},  				MIB_INT(snmp_lakb_soh[5]),  		NULL},	//Остаточная емкость ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_SOH, 7},  				MIB_INT(snmp_lakb_soh[6]),  		NULL},	//Остаточная емкость ЛАКБ
+#endif
+
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_SOC, 1},  				MIB_INT(snmp_lakb_soc[0]),  		NULL},	//Заряд ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_SOC, 2},  				MIB_INT(snmp_lakb_soc[1]),  		NULL},	//Заряд ЛАКБ
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_SOC, 3},  				MIB_INT(snmp_lakb_soc[2]),  		NULL},	//Заряд ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_SOC, 4},  				MIB_INT(snmp_lakb_soc[3]),  		NULL},	//Заряд ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_SOC, 5},  				MIB_INT(snmp_lakb_soc[4]),  		NULL},	//Заряд ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_SOC, 6},  				MIB_INT(snmp_lakb_soc[5]),  		NULL},	//Заряд ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_SOC, 7},  				MIB_INT(snmp_lakb_soc[6]),  		NULL},	//Заряд ЛАКБ
+#endif
+
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CCLV, 1},  				MIB_INT(snmp_lakb_cclv[0]),  		NULL},	//Максимальный ток заряда ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CCLV, 2},  				MIB_INT(snmp_lakb_cclv[1]),  		NULL},	//Максимальный ток заряда ЛАКБ
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CCLV, 3},  				MIB_INT(snmp_lakb_cclv[2]),  		NULL},	//Максимальный ток заряда ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CCLV, 4},  				MIB_INT(snmp_lakb_cclv[3]),  		NULL},	//Максимальный ток заряда ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CCLV, 5},  				MIB_INT(snmp_lakb_cclv[4]),  		NULL},	//Максимальный ток заряда ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CCLV, 6},  				MIB_INT(snmp_lakb_cclv[5]),  		NULL},	//Максимальный ток заряда ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CCLV, 7},  				MIB_INT(snmp_lakb_cclv[6]),  		NULL},	//Максимальный ток заряда ЛАКБ
+#endif
+
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_RBT, 1},  				MIB_INT(snmp_lakb_rbt[0]),  		NULL},	//Оцениваемое время работы ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_RBT, 2},  				MIB_INT(snmp_lakb_rbt[1]),  		NULL},	//Оцениваемое время работы ЛАКБ
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_RBT, 3},  				MIB_INT(snmp_lakb_rbt[2]),  		NULL},	//Оцениваемое время работы ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_RBT, 4},  				MIB_INT(snmp_lakb_rbt[3]),  		NULL},	//Оцениваемое время работы ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_RBT, 5},  				MIB_INT(snmp_lakb_rbt[4]),  		NULL},	//Оцениваемое время работы ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_RBT, 6},  				MIB_INT(snmp_lakb_rbt[5]),  		NULL},	//Оцениваемое время работы ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_RBT, 7},  				MIB_INT(snmp_lakb_rbt[6]),  		NULL},	//Оцениваемое время работы ЛАКБ
+#endif
+
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_FLAGS1, 1},  				MIB_INT(snmp_lakb_flags1[0]),  		NULL},	//Первый флаг состояния ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_FLAGS1, 2},  				MIB_INT(snmp_lakb_flags1[1]),  		NULL},	//Первый флаг состояния ЛАКБ
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_FLAGS1, 3},  				MIB_INT(snmp_lakb_flags1[0]),  		NULL},	//Первый флаг состояния ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_FLAGS1, 4},  				MIB_INT(snmp_lakb_flags1[1]),  		NULL},	//Первый флаг состояния ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_FLAGS1, 5},  				MIB_INT(snmp_lakb_flags1[0]),  		NULL},	//Первый флаг состояния ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_FLAGS1, 6},  				MIB_INT(snmp_lakb_flags1[1]),  		NULL},	//Первый флаг состояния ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_FLAGS1, 7},  				MIB_INT(snmp_lakb_flags1[0]),  		NULL},	//Первый флаг состояния ЛАКБ
+#endif
+
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_FLAGS2, 1},  				MIB_INT(snmp_lakb_flags2[0]),  		NULL},	//Второй флаг состояния ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_FLAGS2, 2},  				MIB_INT(snmp_lakb_flags2[1]),  		NULL},	//Второй флаг состояния ЛАКБ
+#ifndef UKU_TELECORE2017
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_FLAGS2, 3},  				MIB_INT(snmp_lakb_flags2[0]),  		NULL},	//Второй флаг состояния ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_FLAGS2, 4},  				MIB_INT(snmp_lakb_flags2[1]),  		NULL},	//Второй флаг состояния ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_FLAGS2, 5},  				MIB_INT(snmp_lakb_flags2[0]),  		NULL},	//Второй флаг состояния ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_FLAGS2, 6},  				MIB_INT(snmp_lakb_flags2[1]),  		NULL},	//Второй флаг состояния ЛАКБ
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_FLAGS2, 7},  				MIB_INT(snmp_lakb_flags2[0]),  		NULL},	//Второй флаг состояния ЛАКБ
+#endif
+
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CHARGE_AND_DISCHARGE_CURRENT_ALARM_STATUS, 1},  				MIB_INT(lakb[0]._charge_and_discharge_current_alarm_status),  		NULL},	
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CHARGE_AND_DISCHARGE_CURRENT_ALARM_STATUS, 2},  				MIB_INT(lakb[1]._charge_and_discharge_current_alarm_status),  		NULL},	
+#ifndef UKU_TELECORE2017
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CHARGE_AND_DISCHARGE_CURRENT_ALARM_STATUS, 3},  				MIB_INT(lakb[2]._charge_and_discharge_current_alarm_status),  		NULL},	
+#endif
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_BATTERY_TOTAL_VOLTAGE_ALARM_STATUS, 1},  						MIB_INT(lakb[0]._battery_total_voltage_alarm_status),  		NULL},	
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_BATTERY_TOTAL_VOLTAGE_ALARM_STATUS, 2},  						MIB_INT(lakb[1]._battery_total_voltage_alarm_status),  		NULL},	
+#ifndef UKU_TELECORE2017
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_BATTERY_TOTAL_VOLTAGE_ALARM_STATUS, 3},  						MIB_INT(lakb[2]._battery_total_voltage_alarm_status),  		NULL},	
+#endif
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CUSTOM_ALARM_QUANTITY, 1},  									MIB_INT(lakb[0]._custom_alarm_quantity),  		NULL},	
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CUSTOM_ALARM_QUANTITY, 2},  									MIB_INT(lakb[1]._custom_alarm_quantity),  		NULL},	
+#ifndef UKU_TELECORE2017
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CUSTOM_ALARM_QUANTITY, 3},  									MIB_INT(lakb[2]._custom_alarm_quantity),  		NULL},	
+#endif
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_BALANCED_EVENT_CODE, 1},  										MIB_INT(lakb[0]._balanced_event_code),  		NULL},	
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_BALANCED_EVENT_CODE, 2},  										MIB_INT(lakb[1]._balanced_event_code),  		NULL},	
+#ifndef UKU_TELECORE2017
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_BALANCED_EVENT_CODE, 3},  										MIB_INT(lakb[2]._balanced_event_code),  		NULL},	
+#endif
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_VOLTAGE_EVENT_CODE, 1},  										MIB_INT(lakb[0]._voltage_event_code),  		NULL},	
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_VOLTAGE_EVENT_CODE, 2},  										MIB_INT(lakb[1]._voltage_event_code),  		NULL},	
+#ifndef UKU_TELECORE2017
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_VOLTAGE_EVENT_CODE, 3},  										MIB_INT(lakb[2]._voltage_event_code),  		NULL},	
+#endif
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_TEMPERATURE_EVENT_CODE, 1},  									MIB_INT(lakb[0]._temperature_event_code),  		NULL},	
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_TEMPERATURE_EVENT_CODE, 2},  									MIB_INT(lakb[1]._temperature_event_code),  		NULL},	
+#ifndef UKU_TELECORE2017
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_TEMPERATURE_EVENT_CODE, 3},  									MIB_INT(lakb[2]._temperature_event_code),  		NULL},	
+#endif
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CURRENT_EVENT_CODE, 1},  										MIB_INT(lakb[0]._current_event_code),  		NULL},	
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CURRENT_EVENT_CODE, 2},  										MIB_INT(lakb[1]._current_event_code),  		NULL},	
+#ifndef UKU_TELECORE2017
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_CURRENT_EVENT_CODE, 3},  										MIB_INT(lakb[2]._current_event_code),  		NULL},	
+#endif
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_FET_STATUS_CODE, 1},  											MIB_INT(lakb[0]._fet_status_code),  		NULL},	
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_FET_STATUS_CODE, 2},  											MIB_INT(lakb[1]._fet_status_code),  		NULL},	
+#ifndef UKU_TELECORE2017
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_FET_STATUS_CODE, 3},  											MIB_INT(lakb[2]._fet_status_code),  		NULL},	
+#endif
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_BALANCED_STATUS_CODE, 1},  										MIB_INT(lakb[0]._balanced_status_code),  		NULL},	
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_BALANCED_STATUS_CODE, 2},  										MIB_INT(lakb[1]._balanced_status_code),  		NULL},	
+#ifndef UKU_TELECORE2017
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_BALANCED_STATUS_CODE, 3},  										MIB_INT(lakb[2]._balanced_status_code),  		NULL},	
+#endif
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_SYSTEM_STATUS_CODE, 1},  										MIB_INT(lakb[0]._system_status_code),  		NULL},	
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_SYSTEM_STATUS_CODE, 2},  										MIB_INT(lakb[1]._system_status_code),  		NULL},	
+#ifndef UKU_TELECORE2017
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_SYSTEM_STATUS_CODE, 3},  										MIB_INT(lakb[2]._system_status_code),  		NULL},	
+#endif
+
+#ifndef UKU_TELECORE2017
 	{ MIB_OCTET_STR | MIB_ATR_RO, 13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_DAMP1, 1},  				MIB_INT(snmp_lakb_damp1[0][0]),  		NULL},	//Отладка
 	{ MIB_OCTET_STR | MIB_ATR_RO, 13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_DAMP1, 2},  				MIB_INT(snmp_lakb_damp1[1][0]),  		NULL},	//Отладка
 	{ MIB_OCTET_STR | MIB_ATR_RO, 13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_DAMP1, 3},  				MIB_INT(snmp_lakb_damp1[2][0]),  		NULL},	//Отладка
@@ -675,10 +800,32 @@ char* aaa_="abc";
 //	{ MIB_OCTET_STR | MIB_ATR_RO, 13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_DAMP5, 5},  				MIB_INT(snmp_lakb_damp1[4][120]),  		NULL},	//Отладка
 //	{ MIB_OCTET_STR | MIB_ATR_RO, 13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_DAMP5, 6},  				MIB_INT(snmp_lakb_damp1[5][120]),  		NULL},	//Отладка
 //	{ MIB_OCTET_STR | MIB_ATR_RO, 13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LAKB, DISPLAY_LAKB_DAMP5, 7}, 				MIB_INT(snmp_lakb_damp1[6][120]),  		NULL}
+#endif
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_KLIMAT, DISPLAY_KLIMAT_WARM_SIGNAL, 0},		MIB_INT(snmp_warm_sign),  				snmp_warm_sign_write},		//^^номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_KLIMAT, DISPLAY_KLIMAT_COOL_SIGNAL, 0},		MIB_INT(snmp_cool_sign),  				snmp_cool_sign_write},		//^^номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_KLIMAT, DISPLAY_KLIMAT_WARM_ON_TEMPER, 0},		MIB_INT(snmp_warm_on_temper),  			snmp_warm_on_temper_write},	//^^номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_KLIMAT, DISPLAY_KLIMAT_WARM_OFF_TEMPER, 0},	MIB_INT(snmp_warm_off_temper),  		snmp_warm_off_temper_write},//^^номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_KLIMAT, DISPLAY_KLIMAT_WARM_Q, 0},				MIB_INT(snmp_warm_q),  					snmp_warm_q_write},			//^^номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_KLIMAT, DISPLAY_KLIMAT_COOL_100_TEMPER, 0},	MIB_INT(snmp_cool_100_temper),  		snmp_cool_100_temper_write},//^^номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_KLIMAT, DISPLAY_KLIMAT_COOL_80_TEMPER, 0},		MIB_INT(snmp_cool_80_temper),  			snmp_cool_80_temper_write},	//^^номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_KLIMAT, DISPLAY_KLIMAT_COOL_60_TEMPER, 0},		MIB_INT(snmp_cool_60_temper),  			snmp_cool_60_temper_write},	//^^номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_KLIMAT, DISPLAY_KLIMAT_COOL_40_TEMPER, 0},		MIB_INT(snmp_cool_40_temper),  			snmp_cool_40_temper_write},	//^^номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_KLIMAT, DISPLAY_KLIMAT_COOL_20_TEMPER, 0},		MIB_INT(snmp_cool_20_temper),  			snmp_cool_20_temper_write},	//^^номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_KLIMAT, DISPLAY_KLIMAT_COOL_100_DTEMPER, 0},	MIB_INT(snmp_cool_100_dtemper),  		snmp_cool_100_dtemper_write},		//^^номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_KLIMAT, DISPLAY_KLIMAT_COOL_80_DTEMPER, 0},	MIB_INT(snmp_cool_80_dtemper),  		snmp_cool_80_dtemper_write},		//^^номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_KLIMAT, DISPLAY_KLIMAT_COOL_60_DTEMPER, 0},	MIB_INT(snmp_cool_60_dtemper),  		snmp_cool_60_dtemper_write},		//^^номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_KLIMAT, DISPLAY_KLIMAT_COOL_40_DTEMPER, 0},	MIB_INT(snmp_cool_40_dtemper),  		snmp_cool_40_dtemper_write},		//^^номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_KLIMAT, DISPLAY_KLIMAT_COOL_20_DTEMPER, 0},	MIB_INT(snmp_cool_20_dtemper),  		snmp_cool_20_dtemper_write},		//^^номер первого бпса 
+	{ MIB_INTEGER | MIB_ATR_RO,	12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_KLIMAT, DISPLAY_KLIMAT_WARM_STAT, 0},			MIB_INT(snmp_warm_stat),				NULL},		//^^номер первого бпса 
+	{ MIB_INTEGER | MIB_ATR_RO,	12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_KLIMAT, DISPLAY_KLIMAT_INT_VENT_PWM_STAT, 0},	MIB_INT(TELECORE2017_INT_VENT_PWM),  	NULL},		//^^номер первого бпса 
+	{ MIB_INTEGER | MIB_ATR_RO,	12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_KLIMAT, DISPLAY_KLIMAT_EXT_VENT_PWM_STAT, 0},	MIB_INT(TELECORE2017_EXT_VENT_PWM),		NULL},		//^^номер первого бпса 
+
+
+
 
 	};
 #endif
-
+																														  
 #ifdef UKU_KONTUR																									 
 /*----------------------------------------------------------------------------													 
  *      MIB Data Table

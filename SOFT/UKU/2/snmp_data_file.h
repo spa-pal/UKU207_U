@@ -89,6 +89,7 @@ extern signed short snmp_energy_vvod_phase_c;
 extern signed short snmp_energy_pes_phase_a;
 extern signed short snmp_energy_pes_phase_b;
 extern signed short snmp_energy_pes_phase_c;
+extern signed short snmp_energy_input_voltage;
 
 //Показания счетчика
 extern signed long snmp_energy_total_energy;
@@ -188,7 +189,23 @@ extern signed char	snmp_lakb_cell_temperature_4[3];		//Температура 4-й ячейки ЛА
 extern signed char	snmp_lakb_cell_temperature_ambient[3];	//Температура окружающая ЛАКБ(ZTT)
 extern signed char	snmp_lakb_cell_temperature_power[3];	//Температура силовой части ЛАКБ(ZTT)
 
-
+//Установки климатконтроля для TELECORE2017
+extern signed char	snmp_warm_sign;				//^^номер первого бпса 
+extern signed char	snmp_cool_sign;				//^^номер первого бпса 
+extern signed char	snmp_warm_on_temper;		//^^номер первого бпса 
+extern signed char	snmp_warm_off_temper;		//^^номер первого бпса 
+extern signed char	snmp_warm_q;				//^^номер первого бпса 
+extern signed char	snmp_cool_100_temper;		//^^номер первого бпса 
+extern signed char	snmp_cool_80_temper;		//^^номер первого бпса 
+extern signed char	snmp_cool_60_temper;		//^^номер первого бпса 
+extern signed char	snmp_cool_40_temper;		//^^номер первого бпса 
+extern signed char	snmp_cool_20_temper;		//^^номер первого бпса 
+extern signed char	snmp_cool_100_dtemper;		//^^номер первого бпса 
+extern signed char	snmp_cool_80_dtemper;		//^^номер первого бпса 
+extern signed char	snmp_cool_60_dtemper;		//^^номер первого бпса 
+extern signed char	snmp_cool_40_dtemper;		//^^номер первого бпса 
+extern signed char	snmp_cool_20_dtemper;		//^^номер первого бпса 
+extern signed char 	snmp_warm_stat;				//^^
   
 //-----------------------------------------------
 void snmp_data (void);
@@ -236,6 +253,21 @@ void snmp_tmax_bps_write(int mode);
 void snmp_bat_part_alarm_write(int mode);
 void snmp_power_cnt_adress_write(int mode);
 void snmp_uvz_write(int mode);
+void snmp_warm_sign_write(int mode);
+void snmp_cool_sign_write(int mode);
+void snmp_warm_on_temper_write(int mode);
+void snmp_warm_off_temper_write(int mode);
+void snmp_warm_q_write(int mode);
+void snmp_cool_100_temper_write(int mode);
+void snmp_cool_80_temper_write(int mode);
+void snmp_cool_60_temper_write(int mode);
+void snmp_cool_40_temper_write(int mode);
+void snmp_cool_20_temper_write(int mode);
+void snmp_cool_100_dtemper_write(int mode);
+void snmp_cool_80_dtemper_write(int mode);
+void snmp_cool_60_dtemper_write(int mode);
+void snmp_cool_40_dtemper_write(int mode);
+void snmp_cool_20_dtemper_write(int mode);
 
 
 

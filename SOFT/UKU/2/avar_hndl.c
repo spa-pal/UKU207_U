@@ -1,5 +1,5 @@
 #include "avar_hndl.h"
-#include "eeprom_map.h"
+#include "eeprom_map.h"	   
 #include "full_can.h"
 #include "25lc640.h"
 #include <LPC17xx.H>
@@ -273,7 +273,7 @@ if(in==1)
 	memo_out0[7]=crc_95(memo_out0,6);
      usart_out_adr0(memo_out0,8); 
 	*/
-	snmp_trap_send("Main power is off",2,1,0);
+	snmp_trap_send("Main power alarm",2,1,0);
 	}
 
 else if(in==0)
@@ -359,7 +359,7 @@ avar_unet_hndl_lbl1:
      memo_out0[6]=crc_87(memo_out0,6);
 	memo_out0[7]=crc_95(memo_out0,6);
      usart_out_adr0(memo_out0,8); */
-     snmp_trap_send("Main power is on",2,1,1);	
+     snmp_trap_send("Main power alarm  clear",2,1,1);	
 	}
 avar_unet_hndl_end:
 	__nop();		
@@ -823,7 +823,7 @@ unsigned short event_ptr,lc640_adr,event_ptr_find,event_cnt;
 if(in==1)
 	{
 	bat_ips._av|=1;
-    	ips_bat_av_stat=1;
+    ips_bat_av_stat=1;
 	ips_bat_av_vzvod=1;
 
 	event_ptr=lc640_read_int(PTR_EVENT_LOG);

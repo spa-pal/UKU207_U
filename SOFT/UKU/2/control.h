@@ -104,7 +104,10 @@ extern signed short Ibmax;
 extern unsigned char unh_cnt0,unh_cnt1,b1Hz_unh;
 extern unsigned char	ch_cnt0,b1Hz_ch,i,iiii;
 extern unsigned char	ch_cnt1,b1_30Hz_ch;
+extern unsigned char	ch_cnt2,b1_10Hz_ch;
 extern unsigned short IZMAX_;
+extern unsigned short IZMAX_70;
+extern unsigned short IZMAX_130;
 extern unsigned short Ubpsmax;
 extern unsigned short cntrl_stat_blck_cnt;
 
@@ -147,6 +150,7 @@ void zar_superviser_start(void);
 void vent_hndl(void);
 void speedChargeHndl(void);
 void speedChargeStartStop(void);
-void	numOfForvardBps_init(void);
+void numOfForvardBps_init(void);
+void outVoltContrHndl(void);
 
 

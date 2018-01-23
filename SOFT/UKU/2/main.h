@@ -145,8 +145,9 @@
 #define DISPLAY_ENERGY_PES_PHASE_A			4
 #define DISPLAY_ENERGY_PES_PHASE_B			5
 #define DISPLAY_ENERGY_PES_PHASE_C			6
-#define DISPLAY_ENERGY_TOTAL_ENERGY		7
+#define DISPLAY_ENERGY_TOTAL_ENERGY			7
 #define DISPLAY_ENERGY_CURRENT_ENERGY		8
+#define DISPLAY_ENERGY_INPUT_VOLTAGE		9
 
 
 #define DISPLAY_SK					15
@@ -201,16 +202,41 @@
 #define DISPLAY_LAKB_CELL_TEMPERATURE_4		1,19
 #define DISPLAY_LAKB_CELL_TEMPERATURE_AMBIENT	1,20
 #define DISPLAY_LAKB_CELL_TEMPERATURE_POWER		1,21
+#define DISPLAY_LAKB_CHARGE_AND_DISCHARGE_CURRENT_ALARM_STATUS		1,22
+#define DISPLAY_LAKB_BATTERY_TOTAL_VOLTAGE_ALARM_STATUS				1,23
+#define DISPLAY_LAKB_CUSTOM_ALARM_QUANTITY							1,24
+#define DISPLAY_LAKB_BALANCED_EVENT_CODE							1,25
+#define DISPLAY_LAKB_VOLTAGE_EVENT_CODE								1,26
+#define DISPLAY_LAKB_TEMPERATURE_EVENT_CODE							1,27
+#define DISPLAY_LAKB_CURRENT_EVENT_CODE								1,28
+#define DISPLAY_LAKB_FET_STATUS_CODE								1,29
+#define DISPLAY_LAKB_BALANCED_STATUS_CODE							1,30
+#define DISPLAY_LAKB_SYSTEM_STATUS_CODE								1,31
+#define DISPLAY_LAKB_DAMP1				1,32
+#define DISPLAY_LAKB_DAMP2				1,33
+#define DISPLAY_LAKB_DAMP3				1,34
+#define DISPLAY_LAKB_DAMP4				1,35
+#define DISPLAY_LAKB_DAMP5				1,36
 
-#define DISPLAY_LAKB_DAMP1				1,22
-#define DISPLAY_LAKB_DAMP2				1,23
-#define DISPLAY_LAKB_DAMP3				1,24
-#define DISPLAY_LAKB_DAMP4				1,25
-#define DISPLAY_LAKB_DAMP5				1,26
-
-
-
-
+#define DISPLAY_KLIMAT				20
+#define DISPLAY_KLIMAT_WARM_SIGNAL		1
+#define DISPLAY_KLIMAT_COOL_SIGNAL		2
+#define DISPLAY_KLIMAT_WARM_ON_TEMPER	3
+#define DISPLAY_KLIMAT_WARM_OFF_TEMPER	4
+#define DISPLAY_KLIMAT_WARM_Q			5
+#define DISPLAY_KLIMAT_COOL_100_TEMPER	6
+#define DISPLAY_KLIMAT_COOL_80_TEMPER	7
+#define DISPLAY_KLIMAT_COOL_60_TEMPER	8
+#define DISPLAY_KLIMAT_COOL_40_TEMPER	9
+#define DISPLAY_KLIMAT_COOL_20_TEMPER	10
+#define DISPLAY_KLIMAT_COOL_100_DTEMPER	11
+#define DISPLAY_KLIMAT_COOL_80_DTEMPER	12
+#define DISPLAY_KLIMAT_COOL_60_DTEMPER	13
+#define DISPLAY_KLIMAT_COOL_40_DTEMPER	14
+#define DISPLAY_KLIMAT_COOL_20_DTEMPER	15
+#define DISPLAY_KLIMAT_WARM_STAT		16
+#define DISPLAY_KLIMAT_INT_VENT_PWM_STAT	17
+#define DISPLAY_KLIMAT_EXT_VENT_PWM_STAT	18	
 
 
 #define COMMAND_OK		0x5555
@@ -474,7 +500,8 @@
 #define		PARAM_BPS_MASK_ON					209
 #define		PARAM_BPS_ALL_ON					210
 #define 	MESS2RELE_HNDL						210
-#define		PARAM_RELE_SAMOKALIBR			100
+#define 	MESS2KLIMAT_CNTRL					211
+#define		PARAM_RELE_SAMOKALIBR				100
 #define		PARAM_RELE_AV						101
 #define		PARAM_RELE_AV_NET					102
 #define		PARAM_RELE_AV_BAT					103
@@ -492,6 +519,8 @@
 #define 		PARAM_RELE_VVENT				112
 #define 		PARAM_RELE_EXT					113
 #define 		PARAM_RELE_BAT_IS_DISCHARGED	114
+#define		PARAM_KLIMAT_CNTRL_VENT_INT			115
+#define		PARAM_KLIMAT_CNTRL_VENT_EXT			116
 
 #define	MESS2IND_HNDL						215
 #define		PARAM_SAMOKALIBR					216
@@ -666,6 +695,18 @@
 #define SHIFT_REL_VVENT	     6
 #endif
 
+#ifdef UKU_TELECORE2017
+#define SHIFT_REL_AV_NET		5
+#define SHIFT_REL_AV_BAT	4
+#define SHIFT_REL_AV_BPS	     7
+#define SHIFT_REL_BAT1	     8
+#define SHIFT_REL_BAT2	     6
+#define SHIFT_REL_LIGHT		9
+#define SHIFT_REL_WARM		4
+#define SHIFT_REL_VENT	     7
+#define SHIFT_REL_VVENT	     6
+#endif
+
 //***********************************************
 //Таймер
 extern char b1000Hz,b100Hz,b50Hz,b10Hz,b5Hz,b2Hz,b1Hz;
@@ -727,10 +768,13 @@ typedef enum {
 	#endif 
 	#ifndef UKU_TELECORE2015
 	iMn_TELECORE2015,
+	#endif
+	#ifndef UKU_TELECORE2017
+	iMn_TELECORE2017,
 	#endif 
 	iSrv_sl,iNet,iNet3,iNetEM,
 	iSet,iSet_3U,iSet_RSTKM,iSet_GLONASS,iSet_KONTUR,iSet_6U,iSet_220,iSet_220_IPS_TERMOKOMPENSAT,iSet_220_V2,iInv_set_sel,
-	iBat,iBat_simple,iBat_li,iBat_SacredSun,iBat_universe,iInv_set,iSet_TELECORE2015,
+	iBat, iBat_simple, iBat_li, iBat_SacredSun, iBat_universe, iInv_set, iSet_TELECORE2015, iSet_TELECORE2017,
 	iMakb,
 	iBps,iBps_elteh,iS2,iSet_prl,iK_prl,iDnd,
 	iK,iK_3U,iK_RSTKM,iK_GLONASS,iK_KONTUR,iK_6U,iK_220,iK_220_380,iK_220_IPS_TERMOKOMPENSAT,iK_220_IPS_TERMOKOMPENSAT_IB,iK_TELECORE,
@@ -738,10 +782,10 @@ typedef enum {
 	iLoad,iSpc_prl_vz,iSpc_prl_ke,iKe,iVz,iAvz,iAVAR,
 	iStr,iStr_3U,iStr_RSTKM,iStr_GLONASS,iStr_KONTUR,iStr_6U,iStr_220_IPS_TERMOKOMPENSAT,iStr_TELECORE2015,
 	iVrs,iPrltst,iApv,
-	iK_bps,iK_bps_sel,iK_bat,iK_bat_simple,iK_bat_ips_termokompensat_ib,iK_bat_sel,iK_bat_sel_TELECORE,iK_load,iK_net,iK_net3,
+	iK_bps,iK_bps_sel,iK_bat,iK_bat_simple,iK_bat_ips_termokompensat_ib,iK_bat_TELECORE,iK_bat_sel,iK_bat_sel_TELECORE,iK_load,iK_net,iK_net3,
 	iK_makb_sel,iK_makb,iK_out,
 	iTst,iTst_3U,iTst_RSTKM,iTst_GLONASS,iTst_KONTUR,iTst_6U,iTst_220,iTst_220_380,iTst_220_IPS_TERMOKOMPENSAT,
-	iTst_TELECORE2015,
+	iTst_TELECORE,
 	iTst_klbr,iTst_BPS1,iTst_BPS2,iTst_BPS12,iDebug,
 	iDef,iDef_3U,iDef_RSTKM,iDef_GLONASS,iDef_KONTUR,iDef_6U,iDef_220,iDef_220_IPS_TERMOKOMPENSAT,iDef_220_V2,
 	iSet_st_prl,iK_pdp,iSet_T,
@@ -756,7 +800,7 @@ typedef enum {
 	iExt_set,iExt_set_3U,iExt_set_GLONASS,iExt_set_TELECORE2015,
 	iExt_dt,
 	iExt_sk,iExt_sk_3U,iExt_sk_GLONASS,
-	iExt_ddv,iExt_ddi,iExt_dud,iExt_dp,iSM,iLog,iLog_,iBatLog,iKlimat,iKlimat_kontur,iKlimat_TELECORE2015,
+	iExt_ddv,iExt_ddi,iExt_dud,iExt_dp,iSM,iLog,iLog_,iBatLog,iKlimat,iKlimat_kontur,iKlimat_TELECORE,
 	iEnerg3,iEnerg,
 	iExtern_TELECORE2015,
 	iVent,
@@ -1164,6 +1208,20 @@ typedef struct
 	signed char		_cell_temp_4;	//температура 4-го датчика батареи(ZTT)
 	signed char		_cell_temp_ambient;	//температура датчика окружающей среды батареи(ZTT)
 	signed char		_cell_temp_power;	//температура датчика силовой части батареи(ZTT)
+	//signed char 	_pack_volt_state;	//статус аварии по напряжениям батареи(ZTT)
+	//signed char 	_pack_temper_state;	//статус аварии по температурам батареи(ZTT)
+	//signed char 	_pack_alarm_state;	//статус аварий батареи(ZTT)
+	signed char		_charge_and_discharge_current_alarm_status;	 	//(ZTT)
+	signed char 	_battery_total_voltage_alarm_status;			//(ZTT)
+	signed char		_custom_alarm_quantity;							//(ZTT)
+	signed char		_balanced_event_code;							//(ZTT)
+	signed char 	_voltage_event_code;							//(ZTT)
+	signed char 	_temperature_event_code;						//(ZTT)
+	signed char		_current_event_code;							//(ZTT)
+	signed char		_fet_status_code;								//(ZTT)
+	signed short	_balanced_status_code;							//(ZTT)
+	signed char 	_system_status_code;							//(ZTT)
+
 	} LAKB_STAT; 
 extern LAKB_STAT lakb[3];
 extern char lakb_damp[1][42];
@@ -1329,13 +1387,14 @@ extern char tout_max_cnt[4],tout_min_cnt[4];
 typedef enum {tNORM,tMAX,tMIN}enum_tout_stat;
 extern enum_tout_stat tout_stat[4];
 extern signed short t_ext[3];
-extern BOOL ND_EXT[3];
+extern char ND_EXT[3];
 extern signed char sk_cnt[4],sk_av_cnt[4];
 typedef enum  {ssOFF,ssON} enum_sk_stat;
 extern enum_sk_stat sk_stat[4];
 typedef enum  {sasOFF,sasON} enum_sk_av_stat;
 extern enum_sk_av_stat sk_av_stat[4],sk_av_stat_old[4];
 extern signed short t_box,t_box_warm,t_box_vent;
+extern char TELECORE2017_EXT_VENT_PWM,TELECORE2017_INT_VENT_PWM;
 
 //***********************************************
 //Звуки
@@ -1433,7 +1492,21 @@ extern enum_warm_stat warm_stat_k;
 extern signed short TELECORE2015_KLIMAT_WARM_ON_temp;
 #endif
 
-
+#ifdef UKU_TELECORE2017
+extern short t_box_vent_on_cnt;
+extern short t_box_warm_on_cnt;
+extern short t_box_vvent_on_cnt;
+typedef enum {vsOFF,vsON} enum_vent_stat;
+extern enum_vent_stat vent_stat_k,vvent_stat_k;
+typedef enum {wsOFF,wsON} enum_warm_stat;
+extern enum_warm_stat warm_stat_k;
+extern signed short TELECORE2017_KLIMAT_WARM_ON_temp;
+extern signed char t_box_warm_minus20_cnt;
+extern signed char t_box_warm_plus65_cnt;
+extern signed char t_box_cool_plus70_cnt;
+#define ULAUNCH UB0
+#define ULINECC UB20
+#endif
 
 extern char ext_can_cnt;
 
@@ -1476,7 +1549,7 @@ extern short can_plazma;
 
 //-----------------------------------------------
 //Климатконтроль TELECORE2015	
-//#ifdef UKU_TELECORE2015
+#ifdef UKU_TELECORE2015
 extern signed short TELECORE2015_KLIMAT_WARM_SIGNAL;
 extern signed short TELECORE2015_KLIMAT_VENT_SIGNAL;
 extern signed short TELECORE2015_KLIMAT_WARM_ON;
@@ -1486,8 +1559,48 @@ extern signed short TELECORE2015_KLIMAT_VENT_ON;
 extern signed short TELECORE2015_KLIMAT_VENT_OFF;
 extern signed short TELECORE2015_KLIMAT_VVENT_ON;
 extern signed short TELECORE2015_KLIMAT_VVENT_OFF;
-//#endif
+#endif
 
+//-----------------------------------------------
+//Климатконтроль TELECORE2017
+#ifdef UKU_TELECORE2017
+extern signed short TELECORE2017_KLIMAT_WARM_SIGNAL;
+extern signed short TELECORE2017_KLIMAT_VENT_SIGNAL;
+extern signed short TELECORE2017_KLIMAT_WARM_ON;
+extern signed short TELECORE2017_KLIMAT_WARM_OFF;
+extern signed short TELECORE2017_KLIMAT_WARM_ON;
+extern signed short TELECORE2017_KLIMAT_WARM_OFF;
+extern signed short TELECORE2017_KLIMAT_CAP;
+extern signed short TELECORE2017_KLIMAT_VENT_ON0;
+extern signed short TELECORE2017_KLIMAT_VENT_ON20;
+extern signed short TELECORE2017_KLIMAT_VENT_ON40;
+extern signed short TELECORE2017_KLIMAT_VENT_ON60;
+extern signed short TELECORE2017_KLIMAT_VENT_ON80;
+extern signed short TELECORE2017_KLIMAT_VENT_ON100;
+extern signed short TELECORE2017_KLIMAT_DVENT_ON0;
+extern signed short TELECORE2017_KLIMAT_DVENT_ON20;
+extern signed short TELECORE2017_KLIMAT_DVENT_ON40;
+extern signed short TELECORE2017_KLIMAT_DVENT_ON60;
+extern signed short TELECORE2017_KLIMAT_DVENT_ON80;
+extern signed short TELECORE2017_KLIMAT_DVENT_ON100;
+#endif
+
+//-----------------------------------------------
+//Алгоритм содержания батареи TELECORE2017	
+//#ifdef UKU_TELECORE2017
+extern signed short TELECORE2017_USTART;		//Напряжение включения
+extern signed short TELECORE2017_ULINECC;		//Напряжение содержания	из установок
+extern signed short TELECORE2017_ULINECC_;		//Напряжение содержания мгновенное, с учетом аварий батареи
+extern signed short TELECORE2017_AVAR_CNT;				//Счетчик аварийности батареи для снижения напряжения содержания
+extern signed short TELECORE2017_Q;				//Заряд батари (%) при котором переходим с тока IZMAX1 на IZMAX2
+extern signed short TELECORE2017_IZMAX1;		//Максимальный ток заряда батареи при разряженной батарее(заряд < TELECORE2017_Q)(
+extern signed short TELECORE2017_IZMAX2;		//Максимальный ток заряда батареи при заряженной батарее(заряд >= TELECORE2017_Q)
+extern signed short TELECORE2017_K1;			//Шаг регулирования(ед/с) при Uвыпр<(Uбат-2В)
+extern signed short TELECORE2017_K2;			//Шаг регулирования(ед/с) при Uвыпр>(Uбат-2В) и отсутствии токов батарей
+extern signed short TELECORE2017_K3;			//Шаг регулирования(ед/с) при токе батарей в интервале 0-70% от Izmax
+extern signed short TELECORE2017_T4;			//Период регулирования(сек) еденичными шагами при токе батарейц в интервале 70-110%от Izmax 
+
+//#endif 
 
 
 #ifndef FALSE
@@ -1524,6 +1637,10 @@ extern signed short outVoltContrHndlCnt;		//Счетчик, считает в плюс в случае вып
 extern signed short outVoltContrHndlCnt_;		//Счетчик, считает в плюс в случае отсутствия выполнения условия аварии
 extern char uout_av;
 
+//-----------------------------------------------
+//Направление тока батареи для АПСЭнергия
+extern short apsEnergiaCnt;
+extern char apsEnergiaStat; 
 
 extern short plazma_numOfCells;
 extern short plazma_numOfTemperCells;
@@ -1543,7 +1660,7 @@ extern signed short ica_u_necc;
 extern U8 tcp_soc_avg;
 extern U8 tcp_connect_stat;
 
-
+extern short pvlk;
 //-----------------------------------------------
 //Ресурс вентиляторов
 //extern char vent_resurs_temp[4];

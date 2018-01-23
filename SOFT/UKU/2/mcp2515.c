@@ -155,7 +155,7 @@ mcp2515_write(BFPCTRL,0x00/*0b00000000*/);
 //-----------------------------------------------
 void mcp2515_transmit(char data0,char data1,char data2,char data3,char data4,char data5,char data6,char data7)
 {
-if((mcp2515_buff_wr_ptr<0)||(mcp2515_buff_wr_ptr>7))mcp2515_buff_wr_ptr=0;
+if(/*(mcp2515_buff_wr_ptr<0)||*/(mcp2515_buff_wr_ptr>7))mcp2515_buff_wr_ptr=0;
 
 mcp2515_out_buff[0][mcp2515_buff_wr_ptr]=data0;
 mcp2515_out_buff[1][mcp2515_buff_wr_ptr]=data1;
@@ -173,7 +173,7 @@ if(mcp2515_buff_wr_ptr>7)mcp2515_buff_wr_ptr=0;
 //-----------------------------------------------
 void can_mcp2515_hndl(void)
 {
-unsigned char temp,j,temp_index,c_temp;
+unsigned char /*temp,*/j,temp_index,c_temp;
 static char ch_cnt;
 //#asm("cli")
 mcp2515_can_st=mcp2515_read_status();
@@ -215,3 +215,4 @@ else if(/*(can_st1&0b10101000)&&*/(!(mcp2515_can_st&0x54/*0b01010100*/)))
 		
 //#asm("sei") 
 }
+

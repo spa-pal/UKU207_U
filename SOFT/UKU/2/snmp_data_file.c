@@ -104,6 +104,7 @@ signed short snmp_energy_vvod_phase_c;
 signed short snmp_energy_pes_phase_a;
 signed short snmp_energy_pes_phase_b;
 signed short snmp_energy_pes_phase_c;
+signed short snmp_energy_input_voltage;
 
 //Показания счетчика
 signed long snmp_energy_total_energy;
@@ -232,6 +233,23 @@ signed char	snmp_lakb_cell_temperature_4[3];		//Температура 4-й ячейки ЛАКБ(ZTT)
 signed char	snmp_lakb_cell_temperature_ambient[3];	//Температура окружающая ЛАКБ(ZTT)
 signed char	snmp_lakb_cell_temperature_power[3];	//Температура силовой части ЛАКБ(ZTT)
 
+//Установки климатконтроля для TELECORE2017
+signed char	snmp_warm_sign;				//^^номер первого бпса 
+signed char	snmp_cool_sign;				//^^номер первого бпса 
+signed char	snmp_warm_on_temper;		//^^номер первого бпса 
+signed char	snmp_warm_off_temper;		//^^номер первого бпса 
+signed char	snmp_warm_q;				//^^номер первого бпса 
+signed char	snmp_cool_100_temper;		//^^номер первого бпса 
+signed char	snmp_cool_80_temper;		//^^номер первого бпса 
+signed char	snmp_cool_60_temper;		//^^номер первого бпса 
+signed char	snmp_cool_40_temper;		//^^номер первого бпса 
+signed char	snmp_cool_20_temper;		//^^номер первого бпса 
+signed char	snmp_cool_100_dtemper;		//^^номер первого бпса 
+signed char	snmp_cool_80_dtemper;		//^^номер первого бпса 
+signed char	snmp_cool_60_dtemper;		//^^номер первого бпса 
+signed char	snmp_cool_40_dtemper;		//^^номер первого бпса 
+signed char	snmp_cool_20_dtemper;		//^^номер первого бпса 
+signed char snmp_warm_stat;				//^^
 
 
 U16 obj[10];
@@ -306,7 +324,7 @@ snmp_energy_pes_phase_a=Uvv[1];
 
 snmp_energy_total_energy=power_summary;
 snmp_energy_current_energy=power_current;
-
+snmp_energy_input_voltage=net_U;
 
 snmp_bat_number[0]=1;
 snmp_bat_voltage[0]=bat[0]._Ub;
@@ -871,11 +889,32 @@ snmp_lakb_damp1[i][146]=' ';
 snmp_lakb_damp1[i][147]=ABCDEF[(lakb_damp[i][49])>>4];			//Дамп
 snmp_lakb_damp1[i][148]=ABCDEF[(lakb_damp[i][49])&0x0f];			//Дамп
 snmp_lakb_damp1[i][149]=0;  */
-
 }
 
+#ifdef UKU_TELECORE2017
+snmp_warm_sign=0;
+if(TELECORE2017_KLIMAT_WARM_SIGNAL==0) snmp_warm_sign=2;
+else if(TELECORE2017_KLIMAT_WARM_SIGNAL==1) snmp_warm_sign=1;
+snmp_cool_sign=0;
+if(TELECORE2017_KLIMAT_VENT_SIGNAL==0) snmp_cool_sign=2;
+else if(TELECORE2017_KLIMAT_VENT_SIGNAL==1) snmp_cool_sign=1;
+snmp_warm_on_temper=(signed char)TELECORE2017_KLIMAT_WARM_ON; 
+snmp_warm_off_temper=(signed char)TELECORE2017_KLIMAT_WARM_OFF;
+snmp_warm_q=(signed char)TELECORE2017_KLIMAT_CAP;	
+snmp_cool_20_temper=(signed char)TELECORE2017_KLIMAT_VENT_ON20;
+snmp_cool_40_temper=(signed char)TELECORE2017_KLIMAT_VENT_ON40;
+snmp_cool_60_temper=(signed char)TELECORE2017_KLIMAT_VENT_ON60;
+snmp_cool_80_temper=(signed char)TELECORE2017_KLIMAT_VENT_ON80;
+snmp_cool_100_temper=(signed char)TELECORE2017_KLIMAT_VENT_ON100;
+snmp_cool_20_dtemper=(signed char)TELECORE2017_KLIMAT_DVENT_ON20;
+snmp_cool_40_dtemper=(signed char)TELECORE2017_KLIMAT_DVENT_ON40;
+snmp_cool_60_dtemper=(signed char)TELECORE2017_KLIMAT_DVENT_ON60;
+snmp_cool_80_dtemper=(signed char)TELECORE2017_KLIMAT_DVENT_ON80;
+snmp_cool_100_dtemper=(signed char)TELECORE2017_KLIMAT_DVENT_ON100;
+snmp_warm_stat=0;
+if(warm_stat_k==wsON) snmp_warm_stat=1;
+#endif
 }
-
 //-----------------------------------------------
 void snmp_sernum_write (int mode) 
 {
@@ -1017,7 +1056,7 @@ void snmp_u_sign_write (int mode)
 {
 if(mode==MIB_WRITE)
 	{
- //    lc640_write_int(EE_USIGN,snmp_u_sign);
+    lc640_write_int(EE_USIGN,snmp_u_sign);
 	}
 }
 //-----------------------------------------------
@@ -1025,7 +1064,7 @@ void snmp_u_min_power_write (int mode)
 {
 if(mode==MIB_WRITE)
 	{
-//     lc640_write_int(EE_UMN,snmp_u_min_power);
+	lc640_write_int(EE_UMN,snmp_u_min_power);
 	}
 }
 //-----------------------------------------------
@@ -1078,7 +1117,7 @@ void snmp_max_current_koef_write (int mode)
 {
 if(mode==MIB_WRITE)
 	{
- //    lc640_write_int(EE_KIMAX,snmp_max_current_koef);
+//    lc640_write_int(EE_KIMAX,snmp_max_current_koef);
 	}
 }
 
@@ -1105,7 +1144,7 @@ void snmp_max_temperature_write (int mode)
 {
 if(mode==MIB_WRITE)
 	{
- //    lc640_write_int(EE_TMAX,snmp_max_temperature);
+    lc640_write_int(EE_TMAX,snmp_max_temperature);
 	}
 }
 
@@ -2048,4 +2087,142 @@ if(mode==MIB_WRITE)
 }
 
 
+//-----------------------------------------------
+void snmp_warm_sign_write(int mode)
+{
+if(mode==MIB_WRITE)
+	{
+     if(snmp_warm_sign==1)lc640_write_int(EE_TELECORE2017_KLIMAT_WARM_SIGNAL,1);
+	 else lc640_write_int(EE_TELECORE2017_KLIMAT_WARM_SIGNAL,0);
+	}
+}
+
+//-----------------------------------------------
+void snmp_cool_sign_write(int mode)
+{
+if(mode==MIB_WRITE)
+	{
+    if(snmp_cool_sign==1)lc640_write_int(EE_TELECORE2017_KLIMAT_VENT_SIGNAL,1);
+	else lc640_write_int(EE_TELECORE2017_KLIMAT_VENT_SIGNAL,0);
+	}
+}
+
+//-----------------------------------------------
+void snmp_warm_on_temper_write(int mode)
+{
+if(mode==MIB_WRITE)
+	{
+     lc640_write_int(EE_TELECORE2017_KLIMAT_WARM_ON,snmp_warm_on_temper);
+	}
+}
+
+//-----------------------------------------------
+void snmp_warm_off_temper_write(int mode)
+{
+if(mode==MIB_WRITE)
+	{
+     lc640_write_int(EE_TELECORE2017_KLIMAT_WARM_OFF,snmp_warm_off_temper);
+	}
+}
+
+//-----------------------------------------------
+void snmp_warm_q_write(int mode)
+{
+if(mode==MIB_WRITE)
+	{
+     lc640_write_int(EE_TELECORE2017_KLIMAT_CAP,snmp_warm_q);
+	}
+}
+
+//-----------------------------------------------
+void snmp_cool_100_temper_write(int mode)
+{
+if(mode==MIB_WRITE)
+	{
+     lc640_write_int(EE_TELECORE2017_KLIMAT_VENT_ON100,snmp_cool_100_temper);
+	}
+}
+
+//-----------------------------------------------
+void snmp_cool_80_temper_write(int mode)
+{
+if(mode==MIB_WRITE)
+	{
+     lc640_write_int(EE_TELECORE2017_KLIMAT_VENT_ON80,snmp_cool_80_temper);
+	}
+}
+
+//-----------------------------------------------
+void snmp_cool_60_temper_write(int mode)
+{
+if(mode==MIB_WRITE)
+	{
+     lc640_write_int(EE_TELECORE2017_KLIMAT_VENT_ON60,snmp_cool_60_temper);
+	}
+}
+
+//-----------------------------------------------
+void snmp_cool_40_temper_write(int mode)
+{
+if(mode==MIB_WRITE)
+	{
+     lc640_write_int(EE_TELECORE2017_KLIMAT_VENT_ON40,snmp_cool_40_temper);
+	}
+}
+
+//-----------------------------------------------
+void snmp_cool_20_temper_write(int mode)
+{
+if(mode==MIB_WRITE)
+	{
+     lc640_write_int(EE_TELECORE2017_KLIMAT_VENT_ON20,snmp_cool_20_temper);
+	}
+}
+
+//-----------------------------------------------
+void snmp_cool_100_dtemper_write(int mode)
+{
+if(mode==MIB_WRITE)
+	{
+     lc640_write_int(EE_TELECORE2017_KLIMAT_DVENT_ON100,snmp_cool_100_dtemper);
+	}
+}
+
+//-----------------------------------------------
+void snmp_cool_80_dtemper_write(int mode)
+{
+if(mode==MIB_WRITE)
+	{
+     lc640_write_int(EE_TELECORE2017_KLIMAT_DVENT_ON80,snmp_cool_80_dtemper);
+	}
+}
+
+//-----------------------------------------------
+void snmp_cool_60_dtemper_write(int mode)
+{
+if(mode==MIB_WRITE)
+	{
+     lc640_write_int(EE_TELECORE2017_KLIMAT_DVENT_ON60,snmp_cool_60_dtemper);
+	}
+}
+
+//-----------------------------------------------
+void snmp_cool_40_dtemper_write(int mode)
+{
+if(mode==MIB_WRITE)
+	{
+     lc640_write_int(EE_TELECORE2017_KLIMAT_DVENT_ON40,snmp_cool_40_dtemper);
+	}
+}
+
+//-----------------------------------------------
+void snmp_cool_20_dtemper_write(int mode)
+{
+if(mode==MIB_WRITE)
+	{
+     lc640_write_int(EE_TELECORE2017_KLIMAT_DVENT_ON20,snmp_cool_20_dtemper);
+	}
+}
+
  
+

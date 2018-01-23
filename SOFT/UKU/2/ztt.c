@@ -140,4 +140,56 @@ else if(zTTBatteryHndlPhase==10)
 
 #endif
 
+#ifdef UKU_TELECORE2017 
+void ztt_bat_hndl_can(void)
+{
+zTTBatteryHndlPhase++;
 
+if(zTTBatteryHndlPhase==5)	
+	{
+	if(zTTButteryCnter==0)
+		{
+		zTTBatteryHndlCmnd=0x11;
+		zTTSilentCnt[0]=10;
+		}
+	else if(zTTButteryCnter==1)
+		{
+		zTTBatteryHndlCmnd=0x21;
+		zTTSilentCnt[1]=10;
+		}
+	else if(zTTButteryCnter==2)
+		{
+		zTTBatteryHndlCmnd=0x31;
+		zTTSilentCnt[2]=10;
+		}
+	zTTRequestPhase=0;
+	}
+else if(zTTBatteryHndlPhase==10)
+	{
+	if(zTTButteryCnter==0)
+		{
+		zTTBatteryHndlCmnd=0x12;
+		zTTSilentCnt[0]=10;
+		}
+	else if(zTTButteryCnter==1)
+		{
+		zTTBatteryHndlCmnd=0x22;
+		zTTSilentCnt[1]=10;
+		}
+	else if(zTTButteryCnter==2)
+		{
+		zTTBatteryHndlCmnd=0x32;
+		zTTSilentCnt[2]=10;
+		}
+
+	zTTRequestPhase=1;
+
+	zTTBatteryHndlPhase=0;
+	
+	zTTButteryCnter++;
+	if(zTTButteryCnter>=NUMBAT_TELECORE)zTTButteryCnter=0;
+
+	}
+
+}
+#endif

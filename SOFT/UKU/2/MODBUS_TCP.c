@@ -375,19 +375,19 @@ switch (evt)
 
     	case TCP_EVT_CONREQ:
       		/* Remote peer requested connect, accept it */
-			ica_plazma[5]++;
+			//ica_plazma[5]++;
       		return (1);
 
     	case TCP_EVT_CONNECT:
       		/* The TCP socket is connected */
 			tcp_connect_stat=1;
-			ica_plazma[6]++;
+			//ica_plazma[6]++;
       		return (1);
 
     	case TCP_EVT_CLOSE: 
       		/* The TCP socket is connected */
 			tcp_connect_stat=0;
-			ica_plazma[7]++;
+			//ica_plazma[7]++;
       		return (1);
   		}
   	return (0);

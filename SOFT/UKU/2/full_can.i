@@ -438,7 +438,7 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 150 "main.h"
+#line 151 "main.h"
 
 
 
@@ -452,10 +452,11 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 181 "main.h"
+#line 182 "main.h"
 
-#line 204 "main.h"
+#line 220 "main.h"
 
+#line 240 "main.h"
 
 
 
@@ -479,6 +480,7 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
+#line 410 "main.h"
 
 
 
@@ -488,7 +490,6 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 384 "main.h"
 
 
 
@@ -520,16 +521,7 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-
-
-
-
-
-
-
-
-
-#line 452 "main.h"
+#line 478 "main.h"
 
 
 
@@ -548,13 +540,11 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 483 "main.h"
+#line 510 "main.h"
 
-#line 495 "main.h"
+#line 524 "main.h"
 
-#line 511 "main.h"
-
-
+#line 540 "main.h"
 
 
 
@@ -574,9 +564,11 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 545 "main.h"
 
-#line 559 "main.h"
+
+#line 574 "main.h"
+
+#line 588 "main.h"
 
 
 
@@ -589,25 +581,27 @@ extern BOOL snmp_set_community (const char *community);
  
 
 
-#line 580 "main.h"
+#line 609 "main.h"
 
-#line 590 "main.h"
+#line 619 "main.h"
 
-#line 599 "main.h"
+#line 628 "main.h"
 
-#line 608 "main.h"
+#line 637 "main.h"
 
-#line 620 "main.h"
+#line 649 "main.h"
 
-#line 630 "main.h"
-
-#line 639 "main.h"
-
-#line 647 "main.h"
-
-#line 656 "main.h"
+#line 659 "main.h"
 
 #line 668 "main.h"
+
+#line 676 "main.h"
+
+#line 685 "main.h"
+
+#line 697 "main.h"
+
+#line 709 "main.h"
 
 
 
@@ -630,7 +624,7 @@ extern char cnt_of_slave;
 typedef enum {
 
 	iMn_220_IPS_TERMOKOMPENSAT,
-#line 709 "main.h"
+#line 750 "main.h"
 	iMn,iMn_3U,iMn_RSTKM,
 
 
@@ -653,9 +647,12 @@ typedef enum {
 
 	iMn_TELECORE2015,
 
+
+	iMn_TELECORE2017,
+
 	iSrv_sl,iNet,iNet3,iNetEM,
 	iSet,iSet_3U,iSet_RSTKM,iSet_GLONASS,iSet_KONTUR,iSet_6U,iSet_220,iSet_220_IPS_TERMOKOMPENSAT,iSet_220_V2,iInv_set_sel,
-	iBat,iBat_simple,iBat_li,iBat_SacredSun,iBat_universe,iInv_set,iSet_TELECORE2015,
+	iBat, iBat_simple, iBat_li, iBat_SacredSun, iBat_universe, iInv_set, iSet_TELECORE2015, iSet_TELECORE2017,
 	iMakb,
 	iBps,iBps_elteh,iS2,iSet_prl,iK_prl,iDnd,
 	iK,iK_3U,iK_RSTKM,iK_GLONASS,iK_KONTUR,iK_6U,iK_220,iK_220_380,iK_220_IPS_TERMOKOMPENSAT,iK_220_IPS_TERMOKOMPENSAT_IB,iK_TELECORE,
@@ -663,10 +660,10 @@ typedef enum {
 	iLoad,iSpc_prl_vz,iSpc_prl_ke,iKe,iVz,iAvz,iAVAR,
 	iStr,iStr_3U,iStr_RSTKM,iStr_GLONASS,iStr_KONTUR,iStr_6U,iStr_220_IPS_TERMOKOMPENSAT,iStr_TELECORE2015,
 	iVrs,iPrltst,iApv,
-	iK_bps,iK_bps_sel,iK_bat,iK_bat_simple,iK_bat_ips_termokompensat_ib,iK_bat_sel,iK_bat_sel_TELECORE,iK_load,iK_net,iK_net3,
+	iK_bps,iK_bps_sel,iK_bat,iK_bat_simple,iK_bat_ips_termokompensat_ib,iK_bat_TELECORE,iK_bat_sel,iK_bat_sel_TELECORE,iK_load,iK_net,iK_net3,
 	iK_makb_sel,iK_makb,iK_out,
 	iTst,iTst_3U,iTst_RSTKM,iTst_GLONASS,iTst_KONTUR,iTst_6U,iTst_220,iTst_220_380,iTst_220_IPS_TERMOKOMPENSAT,
-	iTst_TELECORE2015,
+	iTst_TELECORE,
 	iTst_klbr,iTst_BPS1,iTst_BPS2,iTst_BPS12,iDebug,
 	iDef,iDef_3U,iDef_RSTKM,iDef_GLONASS,iDef_KONTUR,iDef_6U,iDef_220,iDef_220_IPS_TERMOKOMPENSAT,iDef_220_V2,
 	iSet_st_prl,iK_pdp,iSet_T,
@@ -681,7 +678,7 @@ typedef enum {
 	iExt_set,iExt_set_3U,iExt_set_GLONASS,iExt_set_TELECORE2015,
 	iExt_dt,
 	iExt_sk,iExt_sk_3U,iExt_sk_GLONASS,
-	iExt_ddv,iExt_ddi,iExt_dud,iExt_dp,iSM,iLog,iLog_,iBatLog,iKlimat,iKlimat_kontur,iKlimat_TELECORE2015,
+	iExt_ddv,iExt_ddi,iExt_dud,iExt_dp,iSM,iLog,iLog_,iBatLog,iKlimat,iKlimat_kontur,iKlimat_TELECORE,
 	iEnerg3,iEnerg,
 	iExtern_TELECORE2015,
 	iVent,
@@ -1089,6 +1086,20 @@ typedef struct
 	signed char		_cell_temp_4;	
 	signed char		_cell_temp_ambient;	
 	signed char		_cell_temp_power;	
+	
+	
+	
+	signed char		_charge_and_discharge_current_alarm_status;	 	
+	signed char 	_battery_total_voltage_alarm_status;			
+	signed char		_custom_alarm_quantity;							
+	signed char		_balanced_event_code;							
+	signed char 	_voltage_event_code;							
+	signed char 	_temperature_event_code;						
+	signed char		_current_event_code;							
+	signed char		_fet_status_code;								
+	signed short	_balanced_status_code;							
+	signed char 	_system_status_code;							
+
 	} LAKB_STAT; 
 extern LAKB_STAT lakb[3];
 extern char lakb_damp[1][42];
@@ -1254,13 +1265,14 @@ extern char tout_max_cnt[4],tout_min_cnt[4];
 typedef enum {tNORM,tMAX,tMIN}enum_tout_stat;
 extern enum_tout_stat tout_stat[4];
 extern signed short t_ext[3];
-extern BOOL ND_EXT[3];
+extern char ND_EXT[3];
 extern signed char sk_cnt[4],sk_av_cnt[4];
 typedef enum  {ssOFF,ssON} enum_sk_stat;
 extern enum_sk_stat sk_stat[4];
 typedef enum  {sasOFF,sasON} enum_sk_av_stat;
 extern enum_sk_av_stat sk_av_stat[4],sk_av_stat_old[4];
 extern signed short t_box,t_box_warm,t_box_vent;
+extern char TELECORE2017_EXT_VENT_PWM,TELECORE2017_INT_VENT_PWM;
 
 
 
@@ -1338,11 +1350,11 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1424 "main.h"
+#line 1483 "main.h"
 
-#line 1435 "main.h"
+#line 1494 "main.h"
 
-
+#line 1510 "main.h"
 
 extern char ext_can_cnt;
 
@@ -1385,16 +1397,26 @@ extern short can_plazma;
 
 
 
+#line 1563 "main.h"
 
-extern signed short TELECORE2015_KLIMAT_WARM_SIGNAL;
-extern signed short TELECORE2015_KLIMAT_VENT_SIGNAL;
-extern signed short TELECORE2015_KLIMAT_WARM_ON;
-extern signed short TELECORE2015_KLIMAT_WARM_OFF;
-extern signed short TELECORE2015_KLIMAT_CAP;
-extern signed short TELECORE2015_KLIMAT_VENT_ON;
-extern signed short TELECORE2015_KLIMAT_VENT_OFF;
-extern signed short TELECORE2015_KLIMAT_VVENT_ON;
-extern signed short TELECORE2015_KLIMAT_VVENT_OFF;
+
+
+#line 1587 "main.h"
+
+
+
+
+extern signed short TELECORE2017_USTART;		
+extern signed short TELECORE2017_ULINECC;		
+extern signed short TELECORE2017_ULINECC_;		
+extern signed short TELECORE2017_AVAR_CNT;				
+extern signed short TELECORE2017_Q;				
+extern signed short TELECORE2017_IZMAX1;		
+extern signed short TELECORE2017_IZMAX2;		
+extern signed short TELECORE2017_K1;			
+extern signed short TELECORE2017_K2;			
+extern signed short TELECORE2017_K3;			
+extern signed short TELECORE2017_T4;			
 
 
 
@@ -1434,6 +1456,10 @@ extern signed short outVoltContrHndlCnt_;
 extern char uout_av;
 
 
+
+extern short apsEnergiaCnt;
+extern char apsEnergiaStat; 
+
 extern short plazma_numOfCells;
 extern short plazma_numOfTemperCells;
 extern short plazma_numOfPacks;
@@ -1452,7 +1478,7 @@ extern signed short ica_u_necc;
 extern U8 tcp_soc_avg;
 extern U8 tcp_connect_stat;
 
-
+extern short pvlk;
 
 
 
@@ -3692,32 +3718,16 @@ void avar_bat_ips_hndl(char in);
 
 
 
-#line 136 "eeprom_map.h"
+#line 156 "eeprom_map.h"
+
+#line 167 "eeprom_map.h"
 
 
 
 
-#line 154 "eeprom_map.h"
-
-#line 169 "eeprom_map.h"
 
 
-
-#line 181 "eeprom_map.h"
-
-
-#line 192 "eeprom_map.h"
-
-
-
-#line 203 "eeprom_map.h"
-
-
-
-#line 259 "eeprom_map.h"
-
-
-#line 301 "eeprom_map.h"
+ 
 
 
 
@@ -3726,7 +3736,37 @@ void avar_bat_ips_hndl(char in);
 
 
 
-#line 323 "eeprom_map.h"
+
+ 
+
+#line 199 "eeprom_map.h"
+
+
+
+#line 211 "eeprom_map.h"
+
+
+#line 222 "eeprom_map.h"
+
+
+
+#line 233 "eeprom_map.h"
+
+
+
+#line 289 "eeprom_map.h"
+
+
+#line 331 "eeprom_map.h"
+
+
+
+
+
+
+
+
+#line 353 "eeprom_map.h"
 
 
 
@@ -3971,7 +4011,10 @@ extern signed short Ibmax;
 extern unsigned char unh_cnt0,unh_cnt1,b1Hz_unh;
 extern unsigned char	ch_cnt0,b1Hz_ch,i,iiii;
 extern unsigned char	ch_cnt1,b1_30Hz_ch;
+extern unsigned char	ch_cnt2,b1_10Hz_ch;
 extern unsigned short IZMAX_;
+extern unsigned short IZMAX_70;
+extern unsigned short IZMAX_130;
 extern unsigned short Ubpsmax;
 extern unsigned short cntrl_stat_blck_cnt;
 
@@ -4014,7 +4057,8 @@ void zar_superviser_start(void);
 void vent_hndl(void);
 void speedChargeHndl(void);
 void speedChargeStartStop(void);
-void	numOfForvardBps_init(void);
+void numOfForvardBps_init(void);
+void outVoltContrHndl(void);
 
 
 #line 10 "full_can.c"
@@ -4087,6 +4131,7 @@ char bOUT_FREE2=1;
 char rotor_rotor_rotor[2];
 char can_tx_cnt;
 char can_rotor[10];
+
 
 const char Table87[]={
 0x00, 0x0E, 0x1C, 0x12, 0x38, 0x36, 0x24, 0x2A, 0x70, 0x7E, 0x6C, 0x62, 0x48, 0x46, 0x54, 0x5A,
@@ -5828,6 +5873,58 @@ if(RXBUFF[1]==0xC7)
 	lakb[2]._cell_temp_power=(signed char)(RXBUFF[6]);	
 	
 	
+	}	
+
+if(RXBUFF[1]==0xC8)
+    {
+	if(RXBUFF[0]==0)
+		{
+		lakb[0]._charge_and_discharge_current_alarm_status=(signed char)(RXBUFF[2]);
+		lakb[0]._battery_total_voltage_alarm_status=(signed char)(RXBUFF[3]);
+		lakb[1]._charge_and_discharge_current_alarm_status=(signed char)(RXBUFF[4]);
+		lakb[1]._battery_total_voltage_alarm_status=(signed char)(RXBUFF[5]);
+		lakb[2]._charge_and_discharge_current_alarm_status=(signed char)(RXBUFF[6]);
+		lakb[2]._battery_total_voltage_alarm_status=(signed char)(RXBUFF[7]);
+		}
+	if(RXBUFF[0]==1)
+		{
+		lakb[0]._custom_alarm_quantity=(signed char)(RXBUFF[2]);
+		lakb[0]._balanced_event_code=(signed char)(RXBUFF[3]);
+		lakb[1]._custom_alarm_quantity=(signed char)(RXBUFF[4]);
+		lakb[1]._balanced_event_code=(signed char)(RXBUFF[5]);
+		lakb[2]._custom_alarm_quantity=(signed char)(RXBUFF[6]);
+		lakb[2]._balanced_event_code=(signed char)(RXBUFF[7]);
+		}
+	if(RXBUFF[0]==2)
+		{
+		lakb[0]._voltage_event_code=(signed char)(RXBUFF[2]);
+		lakb[0]._temperature_event_code=(signed char)(RXBUFF[3]);
+		lakb[1]._voltage_event_code=(signed char)(RXBUFF[4]);
+		lakb[1]._temperature_event_code=(signed char)(RXBUFF[5]);
+		lakb[2]._voltage_event_code=(signed char)(RXBUFF[6]);
+		lakb[2]._temperature_event_code=(signed char)(RXBUFF[7]);
+		}
+	if(RXBUFF[0]==3)
+		{
+		lakb[0]._current_event_code=(signed char)(RXBUFF[2]);
+		lakb[0]._fet_status_code=(signed char)(RXBUFF[3]);
+		lakb[1]._current_event_code=(signed char)(RXBUFF[4]);
+		lakb[1]._fet_status_code=(signed char)(RXBUFF[5]);
+		lakb[2]._current_event_code=(signed char)(RXBUFF[6]);
+		lakb[2]._fet_status_code=(signed char)(RXBUFF[7]);
+		}
+	if(RXBUFF[0]==4)
+		{
+		lakb[0]._balanced_status_code=(signed short)(RXBUFF[2])+(((signed char)(RXBUFF[3]))<<8);
+		lakb[1]._balanced_status_code=(signed short)(RXBUFF[4])+(((signed char)(RXBUFF[5]))<<8);
+		lakb[2]._balanced_status_code=(signed short)(RXBUFF[6])+(((signed char)(RXBUFF[7]))<<8);
+		}
+	if(RXBUFF[0]==5)
+		{
+		lakb[0]._system_status_code=(signed char)(RXBUFF[2]);
+		lakb[1]._system_status_code=(signed char)(RXBUFF[4]);
+		lakb[2]._system_status_code=(signed char)(RXBUFF[6]);
+		}
 	}	
 	
 CAN_IN_AN1_end:
