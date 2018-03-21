@@ -764,6 +764,7 @@ signed short ica_your_current;
 signed short ica_u_necc;
 U8 tcp_soc_avg;
 U8 tcp_connect_stat;
+signed short cntrl_stat_plazma;
 
 
 short pvlk;
@@ -3589,7 +3590,8 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 
 	//int2lcdyx(bat[0]._max_temper_cnt,0,3,0);
 //	int2lcdyx(bat[0]._sign_temper_cnt,0,19,0);
-//	int2lcdyx(bat[0]._temper_stat,0,16,0);
+	int2lcdyx(cntrl_stat,0,16,0);
+	int2lcdyx(cntrl_stat_plazma,0,10,0);
 	}
 
 else if(ind==iMn_TELECORE2015)
@@ -13887,6 +13889,17 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 		gran_char(&sub_ind,0,9+NUMIST/*+NUMINV*/+(NUMEXT!=0));
 		}	
 
+
+	     	else if(but==butR)cntrl_stat_plazma++;
+	     	else if(but==butR_)cntrl_stat_plazma+=10;
+	     	else if(but==butL)cntrl_stat_plazma--;
+	     	else if(but==butL_)cntrl_stat_plazma-=10;
+	     	//gran(&cntrl_stat_plazma,5,1000);
+	     	//lc640_write_int(EE_TBAT,TBAT);
+	     	//speed=1;
+	     	//}
+
+/*
 	else if(but==butR)
 		{
 		//ind=iMn;
@@ -13898,7 +13911,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 		//ind=iMn;
 		sub_ind=0;
 
-		}
+		}*/
 	else if(but==butD_)
 		{
 		sub_ind=0;
@@ -13935,6 +13948,9 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 		    	if(BAT_IS_ON[0]!=bisON)tree_up(iBat,0,0,1);
 		    	else tree_up(iBat,0,0,sub_ind-1);
 		    	} */
+
+
+
 		else if((sub_ind>1)&&(sub_ind<=(NUMIST+1)))
 		    	{
 		    	tree_up(iBps_elteh,0,0,sub_ind-2);
@@ -31364,6 +31380,7 @@ cntrl_stat_old=0;
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
 cntrl_stat=10*PWM_START;
 cntrl_stat_old=10*PWM_START;
+cntrl_stat_plazma=500;
 #endif
 
 

@@ -6585,6 +6585,10 @@ if(iiii==0)
 	//cntrl_stat_new=0;
 	#endif
      }
+
+#ifdef IPS_CURR_AVG_DEBUG
+cntrl_stat=cntrl_stat_plazma;
+#endif
 gran(&cntrl_stat,10,1010); 
 b1Hz_ch=0;
 }

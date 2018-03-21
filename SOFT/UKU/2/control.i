@@ -1966,6 +1966,7 @@ extern char ica_timer_cnt;
 extern signed short ica_my_current;
 extern signed short ica_your_current;
 extern signed short ica_u_necc;
+extern signed short cntrl_stat_plazma;
 extern U8 tcp_soc_avg;
 extern U8 tcp_connect_stat;
 
@@ -8479,14 +8480,18 @@ if(iiii==0)
 
 
      }
+
+
+cntrl_stat=cntrl_stat_plazma;
+
 gran(&cntrl_stat,10,1010); 
 b1Hz_ch=0;
 }
 
 
-#line 6835 "control.c"
+#line 6839 "control.c"
 
-#line 7079 "control.c"
+#line 7083 "control.c"
 
 
 void ext_drv(void)
@@ -8496,9 +8501,9 @@ char i;
 
 for(i=0;i<NUMSK;i++)
 	{
-#line 7113 "control.c"
+#line 7117 "control.c"
 	if(adc_buff_[sk_buff_220[i]]<2000)
-#line 7121 "control.c"
+#line 7125 "control.c"
 		{
 		if(sk_cnt[i]<10)
 			{
@@ -8601,7 +8606,7 @@ for(i=0;i<NUMSK;i++)
 	 	}
 
 
-#line 7243 "control.c"
+#line 7247 "control.c"
 	sk_av_stat_old[i]=sk_av_stat[i];
 	}
 }

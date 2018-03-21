@@ -1483,6 +1483,7 @@ extern char ica_timer_cnt;
 extern signed short ica_my_current;
 extern signed short ica_your_current;
 extern signed short ica_u_necc;
+extern signed short cntrl_stat_plazma;
 extern U8 tcp_soc_avg;
 extern U8 tcp_connect_stat;
 
