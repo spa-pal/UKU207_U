@@ -363,6 +363,6 @@ spi1(temp);
 
 CS_OFF
 CS_OFF  
-spi1_unconfig();
+ spi1_unconfig();
 return temp;
 }		
