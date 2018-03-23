@@ -3589,9 +3589,9 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 	//int2lcdyx(net_av,0,19,0);
 
 	//int2lcdyx(bat[0]._max_temper_cnt,0,3,0);
-//	int2lcdyx(bat[0]._sign_temper_cnt,0,19,0);
+	int2lcdyx(cntrl_hndl_plazma,0,19,0);
 	int2lcdyx(cntrl_stat,0,16,0);
-	int2lcdyx(cntrl_stat_plazma,0,10,0);
+	if(ICA_EN)int2lcdyx(ica_u_necc+20,0,10,0);
 	}
 
 else if(ind==iMn_TELECORE2015)

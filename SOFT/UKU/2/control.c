@@ -4135,12 +4135,12 @@ if(++ica_timer_cnt>=10)
 
 	ica_my_current=bps_I;
 
-	if((ica_my_current>ica_your_current)&&((ica_my_current-ica_your_current)>=10)&&(ICA_EN==1))
+	if((ica_my_current>ica_your_current)&&((ica_my_current-ica_your_current)>=20)&&(ICA_EN==1))
 		{
 		ica_plazma[1]++;
 		ica_u_necc--;
 		}
-	else if((ica_my_current<ica_your_current)&&((ica_your_current-ica_my_current)>=10)&&(ICA_EN==1))
+	else if((ica_my_current<ica_your_current)&&((ica_your_current-ica_my_current)>=20)&&(ICA_EN==1))
 		{
 		ica_plazma[1]--;
 		ica_u_necc++;
@@ -6242,8 +6242,15 @@ gran(&num_necc,1,NUMIST);
 //-----------------------------------------------
 void cntrl_hndl(void)
 {
+static char cnt1_5Hz, b1_5Hz;
 
 IZMAX_=IZMAX;
+
+if(++cnt1_5Hz>=5)
+	{
+	cnt1_5Hz=0;
+	 b1_5Hz=1;
+	}
 
 //cntrl_hndl_plazma=10;
 
@@ -6392,7 +6399,9 @@ else if((b1Hz_ch)&&((!bIBAT_SMKLBR)||(bps[8]._cnt>40)))
 		cntrl_stat_new--;
 		}
 		
-	else if(bps_U<u_necc)
+	//else if(((ICA_EN==1)&&(bps_U<u_necc)) || ((ICA_EN==0)&&(bps_U<(u_necc-10))) )        //(bps_U<(u_necc-10))
+	//else if( (bps_U<u_necc) && ((ICA_EN==1) || ((ICA_EN==0) && (b1_5Hz) )) )
+	else if( ((ICA_EN==1)&&((bps_U<(u_necc-20)) || ( (bps_U<u_necc) && (b1_5Hz) ))/*(bps_U<u_necc)*/) || ((ICA_EN==0)&& ((bps_U<(u_necc-20)) || ( (bps_U<u_necc) && (b1_5Hz) )) ) )
 		{
 		cntrl_hndl_plazma=23;
 		if(bps_U<(u_necc-(UB0-UB20)))
@@ -6441,7 +6450,10 @@ else if((b1Hz_ch)&&((!bIBAT_SMKLBR)||(bps[8]._cnt>40)))
 				}					
 			}					
 		}	
-	else if((bps_U>u_necc)/*&&(!cntrl_blok)*/)
+//	else if(((ICA_EN==1)&&(bps_U>u_necc)) || ((ICA_EN==0)&&(bps_U>(u_necc+10))) )    ///((bps_U>(u_necc+10))/*&&(!cntrl_blok)*/)
+//	else if( (bps_U>u_necc) && ((ICA_EN==1) || ((ICA_EN==0) && (b1_5Hz) )) )    //(((ICA_EN==1)&&(bps_U>u_necc)) || ((ICA_EN==0)&&(bps_U>(u_necc+10))) )
+	else if( ((ICA_EN==1)&&((bps_U>(u_necc+20)) || ( (bps_U>u_necc) && (b1_5Hz) ))/*(bps_U>u_necc)*/) || ((ICA_EN==0)&& ((bps_U>(u_necc+20)) || ( (bps_U>u_necc) && (b1_5Hz) )) ))
+
 		{ 	
 		cntrl_hndl_plazma=33;
 		if(bps_U>(u_necc+(UB0-UB20)))
@@ -6587,10 +6599,11 @@ if(iiii==0)
      }
 
 #ifdef IPS_CURR_AVG_DEBUG
-cntrl_stat=cntrl_stat_plazma;
+//cntrl_stat=cntrl_stat_plazma;
 #endif
 gran(&cntrl_stat,10,1010); 
 b1Hz_ch=0;
+ b1_5Hz=0;
 }
 #endif
 
@@ -6834,6 +6847,7 @@ if(iiii==0)
      }
 gran(&cntrl_stat,10,1010); 
 b1Hz_ch=0;
+
 }
 #endif
 

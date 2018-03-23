@@ -7075,12 +7075,12 @@ if(++ica_timer_cnt>=10)
 
 	ica_my_current=bps_I;
 
-	if((ica_my_current>ica_your_current)&&((ica_my_current-ica_your_current)>=10)&&(ICA_EN==1))
+	if((ica_my_current>ica_your_current)&&((ica_my_current-ica_your_current)>=20)&&(ICA_EN==1))
 		{
 		ica_plazma[1]++;
 		ica_u_necc--;
 		}
-	else if((ica_my_current<ica_your_current)&&((ica_your_current-ica_my_current)>=10)&&(ICA_EN==1))
+	else if((ica_my_current<ica_your_current)&&((ica_your_current-ica_my_current)>=20)&&(ICA_EN==1))
 		{
 		ica_plazma[1]--;
 		ica_u_necc++;
@@ -8287,8 +8287,15 @@ gran(&num_necc,1,NUMIST);
 
 void cntrl_hndl(void)
 {
+static char cnt1_5Hz, b1_5Hz;
 
 IZMAX_=IZMAX;
+
+if(++cnt1_5Hz>=5)
+	{
+	cnt1_5Hz=0;
+	 b1_5Hz=1;
+	}
 
 
 
@@ -8311,7 +8318,7 @@ if(ch_cnt0<(10*REG_SPEED))
 		b1Hz_ch=1;
 		}
 	}
-#line 6281 "control.c"
+#line 6288 "control.c"
 
 
 if(mess_find_unvol(225))
@@ -8359,7 +8366,7 @@ if(mess_find_unvol(225))
 			if(((u_necc-bps_U)>40)&&(cntrl_stat<1015))cntrl_stat+=5;
 			else	if((cntrl_stat<1020)&&b1Hz_ch)cntrl_stat++;
 			}
-#line 6369 "control.c"
+#line 6376 "control.c"
 	 	}
 	}
 
@@ -8386,7 +8393,9 @@ else if((b1Hz_ch)&&((!bIBAT_SMKLBR)||(bps[8]._cnt>40)))
 		cntrl_stat_new--;
 		}
 		
-	else if(bps_U<u_necc)
+	
+	
+	else if( ((ICA_EN==1)&&((bps_U<(u_necc-20)) || ( (bps_U<u_necc) && (b1_5Hz) )) ) || ((ICA_EN==0)&& ((bps_U<(u_necc-20)) || ( (bps_U<u_necc) && (b1_5Hz) )) ) )
 		{
 		cntrl_hndl_plazma=23;
 		if(bps_U<(u_necc-(UB0-UB20)))
@@ -8435,7 +8444,10 @@ else if((b1Hz_ch)&&((!bIBAT_SMKLBR)||(bps[8]._cnt>40)))
 				}					
 			}					
 		}	
-	else if((bps_U>u_necc) )
+
+
+	else if( ((ICA_EN==1)&&((bps_U>(u_necc+20)) || ( (bps_U>u_necc) && (b1_5Hz) )) ) || ((ICA_EN==0)&& ((bps_U>(u_necc+20)) || ( (bps_U>u_necc) && (b1_5Hz) )) ))
+
 		{ 	
 		cntrl_hndl_plazma=33;
 		if(bps_U>(u_necc+(UB0-UB20)))
@@ -8461,7 +8473,7 @@ else if((b1Hz_ch)&&((!bIBAT_SMKLBR)||(bps[8]._cnt>40)))
 	cntrl_stat_old=cntrl_stat_new;
 	cntrl_stat=cntrl_stat_new;	
 	}
-#line 6570 "control.c"
+#line 6582 "control.c"
 
 iiii=0;
 for(i=0;i<NUMIST;i++)
@@ -8482,16 +8494,17 @@ if(iiii==0)
      }
 
 
-cntrl_stat=cntrl_stat_plazma;
+
 
 gran(&cntrl_stat,10,1010); 
 b1Hz_ch=0;
+ b1_5Hz=0;
 }
 
 
-#line 6839 "control.c"
+#line 6853 "control.c"
 
-#line 7083 "control.c"
+#line 7097 "control.c"
 
 
 void ext_drv(void)
@@ -8501,9 +8514,9 @@ char i;
 
 for(i=0;i<NUMSK;i++)
 	{
-#line 7117 "control.c"
+#line 7131 "control.c"
 	if(adc_buff_[sk_buff_220[i]]<2000)
-#line 7125 "control.c"
+#line 7139 "control.c"
 		{
 		if(sk_cnt[i]<10)
 			{
@@ -8606,7 +8619,7 @@ for(i=0;i<NUMSK;i++)
 	 	}
 
 
-#line 7247 "control.c"
+#line 7261 "control.c"
 	sk_av_stat_old[i]=sk_av_stat[i];
 	}
 }
