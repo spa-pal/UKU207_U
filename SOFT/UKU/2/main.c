@@ -762,6 +762,8 @@ char ica_timer_cnt;
 signed short ica_my_current;
 signed short ica_your_current;
 signed short ica_u_necc;
+signed short ica_cntrl_hndl;
+signed short ica_cntrl_hndl_cnt;
 U8 tcp_soc_avg;
 U8 tcp_connect_stat;
 
@@ -3587,8 +3589,11 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 
 	//int2lcdyx(net_av,0,19,0);
 
-	//int2lcdyx(bat[0]._max_temper_cnt,0,3,0);
-//	int2lcdyx(bat[0]._sign_temper_cnt,0,19,0);
+	//int2lcdyx(cntrl_stat_old,0,3,0);
+	int2lcdyx(ica_cntrl_hndl_cnt,0,8,0);
+	int2lcdyx(ica_cntrl_hndl,0,13,0);
+	int2lcdyx(ica_u_necc+20,0,19,0);
+	int2lcdyx(cntrl_stat,0,3,0);
 //	int2lcdyx(bat[0]._temper_stat,0,16,0);
 	}
 

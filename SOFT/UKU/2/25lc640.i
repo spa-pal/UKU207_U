@@ -3539,6 +3539,8 @@ extern char ica_timer_cnt;
 extern signed short ica_my_current;
 extern signed short ica_your_current;
 extern signed short ica_u_necc;
+extern signed short ica_cntrl_hndl;
+extern signed short ica_cntrl_hndl_cnt;
 extern U8 tcp_soc_avg;
 extern U8 tcp_connect_stat;
 
@@ -3913,6 +3915,6 @@ spi1(temp);
 
 ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIODIR|=(1UL<<20);((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET|=(1UL<<20);
 ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIODIR|=(1UL<<20);((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET|=(1UL<<20);  
-spi1_unconfig();
+ spi1_unconfig();
 return temp;
 }		

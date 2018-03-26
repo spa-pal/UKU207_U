@@ -1966,6 +1966,8 @@ extern char ica_timer_cnt;
 extern signed short ica_my_current;
 extern signed short ica_your_current;
 extern signed short ica_u_necc;
+extern signed short ica_cntrl_hndl;
+extern signed short ica_cntrl_hndl_cnt;
 extern U8 tcp_soc_avg;
 extern U8 tcp_connect_stat;
 
@@ -7074,12 +7076,12 @@ if(++ica_timer_cnt>=10)
 
 	ica_my_current=bps_I;
 
-	if((ica_my_current>ica_your_current)&&((ica_my_current-ica_your_current)>=10)&&(ICA_EN==1))
+	if((ica_my_current>ica_your_current)&&((ica_my_current-ica_your_current)>=5)&&(ICA_EN==1))
 		{
 		ica_plazma[1]++;
 		ica_u_necc--;
 		}
-	else if((ica_my_current<ica_your_current)&&((ica_your_current-ica_my_current)>=10)&&(ICA_EN==1))
+	else if((ica_my_current<ica_your_current)&&((ica_your_current-ica_my_current)>=5)&&(ICA_EN==1))
 		{
 		ica_plazma[1]--;
 		ica_u_necc++;
@@ -7087,88 +7089,87 @@ if(++ica_timer_cnt>=10)
 	gran(&ica_u_necc,-20,20);
 	}
 
-if((ica_timer_cnt==8)&&(ICA_EN==1))
+
+if(ICA_EN==1)
 	{
-	char modbus_buff[20],i;
-	short crc_temp;
-
-	modbus_buff[0] = ICA_MODBUS_ADDRESS;
-	modbus_buff[1] = 4;
-	modbus_buff[2] = 0;
-	modbus_buff[3] = 2;
-	modbus_buff[4] = 0;	
-	modbus_buff[5] = 1;
-
-	crc_temp= CRC16_2(modbus_buff,6);
-
-	modbus_buff[6]= (char)crc_temp;
-	modbus_buff[7]= (char)(crc_temp>>8);
-
-	if(ICA_CH==0)
+	if(main_kb_cnt==(TBAT*60)-21)
 		{
-		for (i=0;i<8;i++)
-			{
-			putchar_sc16is700(modbus_buff[i]);
-			}
-		}
-	else if(ICA_CH==1)
-		{
+		char modbus_buff[20],i;
+		short crc_temp;
 	
-
-
-
- 
-  		
-  		if (tcp_soc_avg != 0) 
-			{
-    		
-			
-    		
-			
-
- 
-			
-			
-
-			}
-		}
-	}
-
-if((ica_timer_cnt==3)&&(ICA_EN==1))
-	{
+		modbus_buff[0] = ICA_MODBUS_ADDRESS;
+		modbus_buff[1] = 6;
+		modbus_buff[2] = 0;
+		modbus_buff[3] = 30;
+		modbus_buff[4] = (char)(TBAT/256);	
+		modbus_buff[5] = (char)(TBAT%256);
 	
-		{
-		
-		
-		}
-	}
-
-if((main_kb_cnt==(TBAT*60)-21)&&(ICA_EN==1))
-	{
-	char modbus_buff[20],i;
-	short crc_temp;
-
-	modbus_buff[0] = ICA_MODBUS_ADDRESS;
-	modbus_buff[1] = 6;
-	modbus_buff[2] = 0;
-	modbus_buff[3] = 30;
-	modbus_buff[4] = (char)(TBAT/256);	
-	modbus_buff[5] = (char)(TBAT%256);
-
-	crc_temp= CRC16_2(modbus_buff,6);
-
-	modbus_buff[6]= (char)crc_temp;
-	modbus_buff[7]= (char)(crc_temp>>8);
-
-	if(ICA_CH==0)
-		{
-		for (i=0;i<8;i++)
+		crc_temp= CRC16_2(modbus_buff,6);
+	
+		modbus_buff[6]= (char)crc_temp;
+		modbus_buff[7]= (char)(crc_temp>>8);
+	
+		if(ICA_CH==0)
 			{
-			putchar_sc16is700(modbus_buff[i]);
+			for (i=0;i<8;i++)
+				{
+				putchar_sc16is700(modbus_buff[i]);
+				}
+			}
+		}
+	else if(ica_timer_cnt==8)
+		{
+		char modbus_buff[20],i;
+		short crc_temp;
+	
+		modbus_buff[0] = ICA_MODBUS_ADDRESS;
+		modbus_buff[1] = 4;
+		modbus_buff[2] = 0;
+		modbus_buff[3] = 2;
+		modbus_buff[4] = 0;	
+		modbus_buff[5] = 1;
+	
+		crc_temp= CRC16_2(modbus_buff,6);
+	
+		modbus_buff[6]= (char)crc_temp;
+		modbus_buff[7]= (char)(crc_temp>>8);
+	
+		if(ICA_CH==0)
+			{
+			for (i=0;i<8;i++)
+				{
+				putchar_sc16is700(modbus_buff[i]);
+				}
+			}
+		}
+	else
+		{
+		char modbus_buff[20],i;
+		short crc_temp;
+	
+		modbus_buff[0] = ICA_MODBUS_ADDRESS;
+		modbus_buff[1] = 6;
+		modbus_buff[2] = 0;
+		modbus_buff[3] = 100;
+		modbus_buff[4] = (char)(cntrl_stat_old/256);	
+		modbus_buff[5] = (char)(cntrl_stat_old%256);
+	
+		crc_temp= CRC16_2(modbus_buff,6);
+	
+		modbus_buff[6]= (char)crc_temp;
+		modbus_buff[7]= (char)(crc_temp>>8);
+	
+		crc_temp= CRC16_2(modbus_buff,6);
+	
+		if(ICA_CH==0)
+			{
+			for (i=0;i<8;i++)
+				{
+				putchar_sc16is700(modbus_buff[i]);
+				}
 			}
 		}
 	}
-
 }
 
 
@@ -7600,9 +7601,9 @@ else
  
 }
 
-#line 4851 "control.c"
+#line 4850 "control.c"
 
-#line 5024 "control.c"
+#line 5023 "control.c"
 
 
 
@@ -7672,7 +7673,7 @@ if(main_vent_pos<=1)mixer_vent_stat=mvsON;
 else mixer_vent_stat=mvsOFF;
 
 
-#line 5110 "control.c"
+#line 5109 "control.c"
 
 if((TBATDISABLE>=50) && (TBATDISABLE<=90))
 	{
@@ -7729,7 +7730,7 @@ else
 }
 
 
-#line 5299 "control.c"
+#line 5298 "control.c"
 
 
 void bat_drv(char in)
@@ -8069,7 +8070,7 @@ else
 	{
 	bat[in]._sign_temper_cnt--;
 	}
-#line 5648 "control.c"
+#line 5647 "control.c"
 gran(&bat[in]._sign_temper_cnt,0,600);
 if(bat[in]._sign_temper_cnt>=590)	bat[in]._temper_stat|=(1<<0);
 if(bat[in]._sign_temper_cnt<=10)	bat[in]._temper_stat&=~(1<<0);
@@ -8083,7 +8084,7 @@ else
 	{
 	bat[in]._max_temper_cnt--;
 	}
-#line 5671 "control.c"
+#line 5670 "control.c"
 
 gran(&bat[in]._max_temper_cnt,0,600);
 if(bat[in]._max_temper_cnt>=590)	bat[in]._temper_stat|=(1<<1);
@@ -8219,11 +8220,11 @@ if(mess_find_unvol(190))
 		u_necc=mess_data[1];
 		}		
 	}
-if(ICA_EN)u_necc+=ica_u_necc;
 
 
 
-#line 6183 "control.c"
+
+#line 6182 "control.c"
 
 temp_L=(signed long) u_necc;
 temp_L*=98L;
@@ -8310,7 +8311,7 @@ if(ch_cnt0<(10*REG_SPEED))
 		b1Hz_ch=1;
 		}
 	}
-#line 6281 "control.c"
+#line 6280 "control.c"
 
 
 if(mess_find_unvol(225))
@@ -8358,7 +8359,7 @@ if(mess_find_unvol(225))
 			if(((u_necc-bps_U)>40)&&(cntrl_stat<1015))cntrl_stat+=5;
 			else	if((cntrl_stat<1020)&&b1Hz_ch)cntrl_stat++;
 			}
-#line 6369 "control.c"
+#line 6368 "control.c"
 	 	}
 	}
 
@@ -8460,7 +8461,7 @@ else if((b1Hz_ch)&&((!bIBAT_SMKLBR)||(bps[8]._cnt>40)))
 	cntrl_stat_old=cntrl_stat_new;
 	cntrl_stat=cntrl_stat_new;	
 	}
-#line 6570 "control.c"
+#line 6569 "control.c"
 
 iiii=0;
 for(i=0;i<NUMIST;i++)
@@ -8479,14 +8480,35 @@ if(iiii==0)
 
 
      }
+
+
+if(ica_cntrl_hndl_cnt)	ica_cntrl_hndl_cnt--;
+
+if(ICA_EN==0)
+	{
+	if(ica_cntrl_hndl_cnt)
+		{
+		cntrl_stat = ica_cntrl_hndl;
+		cntrl_stat_new=10*PWM_START;
+		cntrl_stat_old=10*PWM_START;
+		}
+	}
+
+if(ICA_EN==1)
+	{
+	cntrl_stat=cntrl_stat_new+ica_u_necc;
+	}
+
+
+
 gran(&cntrl_stat,10,1010); 
 b1Hz_ch=0;
 }
 
 
-#line 6835 "control.c"
+#line 6855 "control.c"
 
-#line 7079 "control.c"
+#line 7099 "control.c"
 
 
 void ext_drv(void)
@@ -8496,9 +8518,9 @@ char i;
 
 for(i=0;i<NUMSK;i++)
 	{
-#line 7113 "control.c"
+#line 7133 "control.c"
 	if(adc_buff_[sk_buff_220[i]]<2000)
-#line 7121 "control.c"
+#line 7141 "control.c"
 		{
 		if(sk_cnt[i]<10)
 			{
@@ -8601,7 +8623,7 @@ for(i=0;i<NUMSK;i++)
 	 	}
 
 
-#line 7243 "control.c"
+#line 7263 "control.c"
 	sk_av_stat_old[i]=sk_av_stat[i];
 	}
 }

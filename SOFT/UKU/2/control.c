@@ -4135,12 +4135,12 @@ if(++ica_timer_cnt>=10)
 
 	ica_my_current=bps_I;
 
-	if((ica_my_current>ica_your_current)&&((ica_my_current-ica_your_current)>=10)&&(ICA_EN==1))
+	if((ica_my_current>ica_your_current)&&((ica_my_current-ica_your_current)>=5)&&(ICA_EN==1))
 		{
 		ica_plazma[1]++;
 		ica_u_necc--;
 		}
-	else if((ica_my_current<ica_your_current)&&((ica_your_current-ica_my_current)>=10)&&(ICA_EN==1))
+	else if((ica_my_current<ica_your_current)&&((ica_your_current-ica_my_current)>=5)&&(ICA_EN==1))
 		{
 		ica_plazma[1]--;
 		ica_u_necc++;
@@ -4148,88 +4148,87 @@ if(++ica_timer_cnt>=10)
 	gran(&ica_u_necc,-20,20);
 	}
 
-if((ica_timer_cnt==8)&&(ICA_EN==1))
+
+if(ICA_EN==1)
 	{
-	char modbus_buff[20],i;
-	short crc_temp;
-
-	modbus_buff[0] = ICA_MODBUS_ADDRESS;
-	modbus_buff[1] = 4;
-	modbus_buff[2] = 0;
-	modbus_buff[3] = 2;
-	modbus_buff[4] = 0;	
-	modbus_buff[5] = 1;
-
-	crc_temp= CRC16_2(modbus_buff,6);
-
-	modbus_buff[6]= (char)crc_temp;
-	modbus_buff[7]= (char)(crc_temp>>8);
-
-	if(ICA_CH==0)
+	if(main_kb_cnt==(TBAT*60)-21)
 		{
-		for (i=0;i<8;i++)
+		char modbus_buff[20],i;
+		short crc_temp;
+	
+		modbus_buff[0] = ICA_MODBUS_ADDRESS;
+		modbus_buff[1] = 6;
+		modbus_buff[2] = 0;
+		modbus_buff[3] = 30;
+		modbus_buff[4] = (char)(TBAT/256);	
+		modbus_buff[5] = (char)(TBAT%256);
+	
+		crc_temp= CRC16_2(modbus_buff,6);
+	
+		modbus_buff[6]= (char)crc_temp;
+		modbus_buff[7]= (char)(crc_temp>>8);
+	
+		if(ICA_CH==0)
 			{
-			putchar_sc16is700(modbus_buff[i]);
-			}
-		}
-	else if(ICA_CH==1)
-		{
-	/*	static U8 rem_IP[4];
-		rem_IP[0]=ICA_MODBUS_TCP_IP1;
-		rem_IP[1]=ICA_MODBUS_TCP_IP2;
-		rem_IP[2]=ICA_MODBUS_TCP_IP3;
-		rem_IP[3]=ICA_MODBUS_TCP_IP4;*/
-  		//tcp_soc_avg = tcp_get_socket (TCP_TYPE_CLIENT, 0, 30, tcp_callback);
-  		if (tcp_soc_avg != 0) 
-			{
-    		
-			//tcp_connect_stat=0;
-    		//tcp_connect (tcp_soc_avg, rem_IP, 502, 1000);
-			/*while(!tcp_connect_stat)
+			for (i=0;i<8;i++)
 				{
-				}*/
-			//delay_us(500);
-			//tcp_close(tcp_soc_avg);
-
+				putchar_sc16is700(modbus_buff[i]);
+				}
 			}
 		}
-	}
-
-if((ica_timer_cnt==3)&&(ICA_EN==1))
-	{
-	//if(tcp_connect_stat)
+	else if(ica_timer_cnt==8)
 		{
-		//tcp_close(tcp_soc_avg);
-		//tcp_connect_stat=3;
-		}
-	}
-
-if((main_kb_cnt==(TBAT*60)-21)&&(ICA_EN==1))
-	{
-	char modbus_buff[20],i;
-	short crc_temp;
-
-	modbus_buff[0] = ICA_MODBUS_ADDRESS;
-	modbus_buff[1] = 6;
-	modbus_buff[2] = 0;
-	modbus_buff[3] = 30;
-	modbus_buff[4] = (char)(TBAT/256);	
-	modbus_buff[5] = (char)(TBAT%256);
-
-	crc_temp= CRC16_2(modbus_buff,6);
-
-	modbus_buff[6]= (char)crc_temp;
-	modbus_buff[7]= (char)(crc_temp>>8);
-
-	if(ICA_CH==0)
-		{
-		for (i=0;i<8;i++)
+		char modbus_buff[20],i;
+		short crc_temp;
+	
+		modbus_buff[0] = ICA_MODBUS_ADDRESS;
+		modbus_buff[1] = 4;
+		modbus_buff[2] = 0;
+		modbus_buff[3] = 2;
+		modbus_buff[4] = 0;	
+		modbus_buff[5] = 1;
+	
+		crc_temp= CRC16_2(modbus_buff,6);
+	
+		modbus_buff[6]= (char)crc_temp;
+		modbus_buff[7]= (char)(crc_temp>>8);
+	
+		if(ICA_CH==0)
 			{
-			putchar_sc16is700(modbus_buff[i]);
+			for (i=0;i<8;i++)
+				{
+				putchar_sc16is700(modbus_buff[i]);
+				}
+			}
+		}
+	else
+		{
+		char modbus_buff[20],i;
+		short crc_temp;
+	
+		modbus_buff[0] = ICA_MODBUS_ADDRESS;
+		modbus_buff[1] = 6;
+		modbus_buff[2] = 0;
+		modbus_buff[3] = 100;
+		modbus_buff[4] = (char)(cntrl_stat_old/256);	
+		modbus_buff[5] = (char)(cntrl_stat_old%256);
+	
+		crc_temp= CRC16_2(modbus_buff,6);
+	
+		modbus_buff[6]= (char)crc_temp;
+		modbus_buff[7]= (char)(crc_temp>>8);
+	
+		crc_temp= CRC16_2(modbus_buff,6);
+	
+		if(ICA_CH==0)
+			{
+			for (i=0;i<8;i++)
+				{
+				putchar_sc16is700(modbus_buff[i]);
+				}
 			}
 		}
 	}
-
 }
 
 //-----------------------------------------------
@@ -5803,7 +5802,7 @@ if(mess_find_unvol(MESS2UNECC_HNDL))
 		u_necc=mess_data[1];
 		}		
 	}
-if(ICA_EN)u_necc+=ica_u_necc;
+//if(ICA_EN)u_necc+=ica_u_necc;
 #endif
 
 
@@ -6585,6 +6584,27 @@ if(iiii==0)
 	//cntrl_stat_new=0;
 	#endif
      }
+
+#ifdef UKU_220_IPS_TERMOKOMPENSAT
+if(ica_cntrl_hndl_cnt)	ica_cntrl_hndl_cnt--;
+
+if(ICA_EN==0)
+	{
+	if(ica_cntrl_hndl_cnt)
+		{
+		cntrl_stat = ica_cntrl_hndl;
+		cntrl_stat_new=10*PWM_START;
+		cntrl_stat_old=10*PWM_START;
+		}
+	}
+
+if(ICA_EN==1)
+	{
+	cntrl_stat=cntrl_stat_new+ica_u_necc;
+	}
+#endif
+
+
 gran(&cntrl_stat,10,1010); 
 b1Hz_ch=0;
 }

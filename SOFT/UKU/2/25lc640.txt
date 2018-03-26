@@ -817,7 +817,7 @@
 000502  6990              LDR      r0,[r2,#0x18]
 000504  f4401080          ORR      r0,r0,#0x100000
 000508  6190              STR      r0,[r2,#0x18]
-;;;366    spi1_unconfig();
+;;;366     spi1_unconfig();
 00050a  f7fffffe          BL       spi1_unconfig
 ;;;367    return temp;
 00050e  4618              MOV      r0,r3

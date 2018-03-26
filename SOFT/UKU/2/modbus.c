@@ -632,6 +632,11 @@ if(crc16_calculated==crc16_incapsulated)
 						}
 					}*/
 				}
+			if(modbus_rx_arg0==100)		//Передача шима для управления от ведущего ИПС
+				{
+				ica_cntrl_hndl=modbus_rx_arg1;
+				ica_cntrl_hndl_cnt=200;
+				}
 			//modbus_hold_register_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0);
 			modbus_hold_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,1,MODBUS_RTU_PROT);
 			}
