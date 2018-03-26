@@ -3589,7 +3589,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 
 	//int2lcdyx(net_av,0,19,0);
 
-	//int2lcdyx(cntrl_stat_old,0,3,0);
+	int2lcdyx(cntrl_stat_old,1,3,0);
 	int2lcdyx(ica_cntrl_hndl_cnt,0,8,0);
 	int2lcdyx(ica_cntrl_hndl,0,13,0);
 	int2lcdyx(ica_u_necc+20,0,19,0);
@@ -12374,7 +12374,7 @@ else if (ind==iIps_Curr_Avg_Set)
 		ptrs[0]=		" Выключено          ";
 		simax=1;
 		}
-	else 
+	else if(ICA_EN==1) 
 		{
 		ptrs[0]=		" Включено           ";
 		if(ICA_CH==0)
@@ -12391,6 +12391,12 @@ else if (ind==iIps_Curr_Avg_Set)
 			simax=4;
 			}
 		} 
+	else if(ICA_EN==2) 
+		{
+		ptrs[0]=		" Под внешним        ";
+		ptrs[1]=		" управлением        ";
+		simax=2;
+		}
 	ptrs[simax]=		" Выход              ";
 	
 	if(sub_ind<index_set) index_set=sub_ind;
@@ -30747,12 +30753,14 @@ else if (ind==iIps_Curr_Avg_Set)
 		{
 		sub_ind++;
 		sub_ind1=0;
+		if(ICA_EN==2)sub_ind++;
 		gran_char(&sub_ind,0,simax);
 		}
 	else if(but==butU)
 		{
 		sub_ind--;
 		sub_ind1=0;
+		if(ICA_EN==2)sub_ind--;
 		gran_char(&sub_ind,0,simax);
 		}
 	else if(but==butD_)
@@ -30766,14 +30774,20 @@ else if (ind==iIps_Curr_Avg_Set)
 
 	else if(sub_ind==0)
 		{
-		if(but==butE)
+		if((but==butE)||(but==butR))
 			{
-			if(ICA_EN)ICA_EN=0;
-			else ICA_EN=1;
+			ICA_EN++;
+			gran(&ICA_EN,0,2);
+			lc640_write_int(EE_ICA_EN,ICA_EN);
+			}
+		else if(but==butL)
+			{
+			ICA_EN--;
+			gran(&ICA_EN,0,2);
 			lc640_write_int(EE_ICA_EN,ICA_EN);
 			}
 		}
-	else if(ICA_EN)
+	else if(ICA_EN==1)
 		{
 		if(sub_ind==1)
 			{

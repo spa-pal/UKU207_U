@@ -5146,6 +5146,11 @@ if(crc16_calculated==crc16_incapsulated)
 				ica_cntrl_hndl=modbus_rx_arg1;
 				ica_cntrl_hndl_cnt=200;
 				}
+			if(modbus_rx_arg0==101)		
+				{
+				ica_your_current==modbus_rx_arg1;
+				ica_cntrl_hndl_cnt=200;
+				}
 			
 			modbus_hold_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,1,0);
 			}
@@ -5783,6 +5788,10 @@ if(avar_stat&(1<<(3+1)))tempS|=(1<<3);
 if(avar_stat&(1<<(3+2)))tempS|=(1<<4);						 
 modbus_registers[118]=(signed char)(tempS>>8);
 modbus_registers[119]=(signed char)(tempS);
+
+tempS=cntrl_stat_old;
+modbus_registers[198]=(signed char)(tempS>>8);				
+modbus_registers[199]=(signed char)(tempS);
 
 tempS=t_ext[0];
 if(ND_EXT[0])tempS=-1000;

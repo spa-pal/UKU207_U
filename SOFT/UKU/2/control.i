@@ -7076,12 +7076,12 @@ if(++ica_timer_cnt>=10)
 
 	ica_my_current=bps_I;
 
-	if((ica_my_current>ica_your_current)&&((ica_my_current-ica_your_current)>=5)&&(ICA_EN==1))
+	if((ica_my_current>ica_your_current)&&((ica_my_current-ica_your_current)>=5)&&((ICA_EN==1)||((ICA_EN==2)&&(ica_cntrl_hndl_cnt>5))))
 		{
 		ica_plazma[1]++;
 		ica_u_necc--;
 		}
-	else if((ica_my_current<ica_your_current)&&((ica_your_current-ica_my_current)>=5)&&(ICA_EN==1))
+	else if((ica_my_current<ica_your_current)&&((ica_your_current-ica_my_current)>=5)&&((ICA_EN==1)||((ICA_EN==2)&&(ica_cntrl_hndl_cnt>5))))
 		{
 		ica_plazma[1]--;
 		ica_u_necc++;
@@ -8494,7 +8494,7 @@ if(ICA_EN==0)
 		}
 	}
 
-if(ICA_EN==1)
+if((ICA_EN==1)||(ICA_EN==2))
 	{
 	cntrl_stat=cntrl_stat_new+ica_u_necc;
 	}

@@ -637,6 +637,11 @@ if(crc16_calculated==crc16_incapsulated)
 				ica_cntrl_hndl=modbus_rx_arg1;
 				ica_cntrl_hndl_cnt=200;
 				}
+			if(modbus_rx_arg0==101)		//Значение тока в ведомом ИПСе (прочитанное мастером в ведомом и переданное ведущему)
+				{
+				ica_your_current==modbus_rx_arg1;
+				ica_cntrl_hndl_cnt=200;
+				}
 			//modbus_hold_register_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0);
 			modbus_hold_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,1,MODBUS_RTU_PROT);
 			}
@@ -1274,6 +1279,10 @@ if(avar_stat&(1<<(3+1)))tempS|=(1<<3);						 //	Бит 3	Авария выпрямителя №2
 if(avar_stat&(1<<(3+2)))tempS|=(1<<4);						 //	Бит 4	Авария выпрямителя №2
 modbus_registers[118]=(signed char)(tempS>>8);
 modbus_registers[119]=(signed char)(tempS);
+
+tempS=cntrl_stat_old;
+modbus_registers[198]=(signed char)(tempS>>8);				//Рег100	состояние шим
+modbus_registers[199]=(signed char)(tempS);
 
 tempS=t_ext[0];
 if(ND_EXT[0])tempS=-1000;
