@@ -1956,6 +1956,7 @@ extern short plazma_numOfTemperCells;
 extern short plazma_numOfPacks;
 
 extern char plazma_ztt[2];
+extern short plazma1000[10];
 
 extern U8 socket_tcp;
 
@@ -7092,32 +7093,32 @@ if(++ica_timer_cnt>=10)
 
 if(ICA_EN==1)
 	{
-	if(main_kb_cnt==(TBAT*60)-21)
-		{
-		char modbus_buff[20],i;
-		short crc_temp;
-	
-		modbus_buff[0] = ICA_MODBUS_ADDRESS;
-		modbus_buff[1] = 6;
-		modbus_buff[2] = 0;
-		modbus_buff[3] = 30;
-		modbus_buff[4] = (char)(TBAT/256);	
-		modbus_buff[5] = (char)(TBAT%256);
-	
-		crc_temp= CRC16_2(modbus_buff,6);
-	
-		modbus_buff[6]= (char)crc_temp;
-		modbus_buff[7]= (char)(crc_temp>>8);
-	
-		if(ICA_CH==0)
-			{
-			for (i=0;i<8;i++)
-				{
-				putchar_sc16is700(modbus_buff[i]);
-				}
-			}
-		}
-	else if(ica_timer_cnt==8)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  if(ica_timer_cnt==8)
 		{
 		char modbus_buff[20],i;
 		short crc_temp;
@@ -7145,14 +7146,18 @@ if(ICA_EN==1)
 	else
 		{
 		char modbus_buff[20],i;
-		short crc_temp;
-	
+		short crc_temp, tempSSSS;
+
+		tempSSSS=cntrl_stat_old;
+		if(	(main_kb_cnt==(TBAT*60)-21) || (main_kb_cnt==(TBAT*60)-20) || (main_kb_cnt==(TBAT*60)-19)) tempSSSS=((short)TBAT)|0x4000;
+
+
 		modbus_buff[0] = ICA_MODBUS_ADDRESS;
 		modbus_buff[1] = 6;
 		modbus_buff[2] = 0;
 		modbus_buff[3] = 100;
-		modbus_buff[4] = (char)(cntrl_stat_old/256);	
-		modbus_buff[5] = (char)(cntrl_stat_old%256);
+		modbus_buff[4] = (char)(tempSSSS/256);	
+		modbus_buff[5] = (char)(tempSSSS%256);
 	
 		crc_temp= CRC16_2(modbus_buff,6);
 	
@@ -7601,9 +7606,9 @@ else
  
 }
 
-#line 4850 "control.c"
+#line 4854 "control.c"
 
-#line 5023 "control.c"
+#line 5027 "control.c"
 
 
 
@@ -7673,7 +7678,7 @@ if(main_vent_pos<=1)mixer_vent_stat=mvsON;
 else mixer_vent_stat=mvsOFF;
 
 
-#line 5109 "control.c"
+#line 5113 "control.c"
 
 if((TBATDISABLE>=50) && (TBATDISABLE<=90))
 	{
@@ -7730,7 +7735,7 @@ else
 }
 
 
-#line 5298 "control.c"
+#line 5302 "control.c"
 
 
 void bat_drv(char in)
@@ -8070,7 +8075,7 @@ else
 	{
 	bat[in]._sign_temper_cnt--;
 	}
-#line 5647 "control.c"
+#line 5651 "control.c"
 gran(&bat[in]._sign_temper_cnt,0,600);
 if(bat[in]._sign_temper_cnt>=590)	bat[in]._temper_stat|=(1<<0);
 if(bat[in]._sign_temper_cnt<=10)	bat[in]._temper_stat&=~(1<<0);
@@ -8084,7 +8089,7 @@ else
 	{
 	bat[in]._max_temper_cnt--;
 	}
-#line 5670 "control.c"
+#line 5674 "control.c"
 
 gran(&bat[in]._max_temper_cnt,0,600);
 if(bat[in]._max_temper_cnt>=590)	bat[in]._temper_stat|=(1<<1);
@@ -8224,7 +8229,7 @@ if(mess_find_unvol(190))
 
 
 
-#line 6182 "control.c"
+#line 6186 "control.c"
 
 temp_L=(signed long) u_necc;
 temp_L*=98L;
@@ -8311,7 +8316,7 @@ if(ch_cnt0<(10*REG_SPEED))
 		b1Hz_ch=1;
 		}
 	}
-#line 6280 "control.c"
+#line 6284 "control.c"
 
 
 if(mess_find_unvol(225))
@@ -8359,7 +8364,7 @@ if(mess_find_unvol(225))
 			if(((u_necc-bps_U)>40)&&(cntrl_stat<1015))cntrl_stat+=5;
 			else	if((cntrl_stat<1020)&&b1Hz_ch)cntrl_stat++;
 			}
-#line 6368 "control.c"
+#line 6372 "control.c"
 	 	}
 	}
 
@@ -8459,9 +8464,24 @@ else if((b1Hz_ch)&&((!bIBAT_SMKLBR)||(bps[8]._cnt>40)))
 
 	gran(&cntrl_stat_new,10,1010);			
 	cntrl_stat_old=cntrl_stat_new;
-	cntrl_stat=cntrl_stat_new;	
+	cntrl_stat=cntrl_stat_new;
+	
+	if(ICA_EN==0)
+		{
+		if(ica_cntrl_hndl_cnt)
+			{
+			cntrl_stat = ica_cntrl_hndl;
+			cntrl_stat_new=10*PWM_START;
+			cntrl_stat_old=10*PWM_START;
+			}
+		}
+	
+	if((ICA_EN==1)||(ICA_EN==2))
+		{
+		cntrl_stat=cntrl_stat_new+ica_u_necc;
+		}		
 	}
-#line 6569 "control.c"
+#line 6588 "control.c"
 
 iiii=0;
 for(i=0;i<NUMIST;i++)
@@ -8484,20 +8504,7 @@ if(iiii==0)
 
 if(ica_cntrl_hndl_cnt)	ica_cntrl_hndl_cnt--;
 
-if(ICA_EN==0)
-	{
-	if(ica_cntrl_hndl_cnt)
-		{
-		cntrl_stat = ica_cntrl_hndl;
-		cntrl_stat_new=10*PWM_START;
-		cntrl_stat_old=10*PWM_START;
-		}
-	}
 
-if((ICA_EN==1)||(ICA_EN==2))
-	{
-	cntrl_stat=cntrl_stat_new+ica_u_necc;
-	}
 
 
 
@@ -8506,9 +8513,9 @@ b1Hz_ch=0;
 }
 
 
-#line 6855 "control.c"
+#line 6861 "control.c"
 
-#line 7099 "control.c"
+#line 7105 "control.c"
 
 
 void ext_drv(void)
@@ -8518,9 +8525,9 @@ char i;
 
 for(i=0;i<NUMSK;i++)
 	{
-#line 7133 "control.c"
+#line 7139 "control.c"
 	if(adc_buff_[sk_buff_220[i]]<2000)
-#line 7141 "control.c"
+#line 7147 "control.c"
 		{
 		if(sk_cnt[i]<10)
 			{
@@ -8623,7 +8630,7 @@ for(i=0;i<NUMSK;i++)
 	 	}
 
 
-#line 7263 "control.c"
+#line 7269 "control.c"
 	sk_av_stat_old[i]=sk_av_stat[i];
 	}
 }

@@ -1496,6 +1496,7 @@ extern short plazma_numOfTemperCells;
 extern short plazma_numOfPacks;
 
 extern char plazma_ztt[2];
+extern short plazma1000[10];
 
 extern U8 socket_tcp;
 

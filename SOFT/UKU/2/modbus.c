@@ -419,9 +419,11 @@ if(modbus_an_buffer[0]=='w')
 
 if(crc16_calculated==crc16_incapsulated)
 	{
-	ica_plazma[4]++;
+	ica_plazma[4]++; //plazma1000[4]++;
+	//plazma1000[7]=modbus_an_buffer[0];
  	if(modbus_an_buffer[0]==MODBUS_ADRESS)
 		{
+		 //plazma1000[5]++;
 		if(modbus_func==3)		//чтение произвольного кол-ва регистров хранения
 			{
 			modbus_plazma++;
@@ -430,11 +432,14 @@ if(crc16_calculated==crc16_incapsulated)
 
 		if(modbus_func==4)		//чтение произвольного кол-ва регистров	входов
 			{
+			
 			modbus_input_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,modbus_rx_arg1,MODBUS_RTU_PROT);
+			//plazma1000[0]++;
 			}
 
 		else if(modbus_func==6) 	//запись регистров хранения
 			{
+			//plazma1000[6]++;
 			if(modbus_rx_arg0==11)		//Установка времени 
 				{
 				LPC_RTC->YEAR=(uint16_t)modbus_rx_arg1;
@@ -634,13 +639,30 @@ if(crc16_calculated==crc16_incapsulated)
 				}
 			if(modbus_rx_arg0==100)		//Передача шима для управления от ведущего ИПС
 				{
-				ica_cntrl_hndl=modbus_rx_arg1;
+				plazma1000[2]=modbus_rx_arg1;
+				if(modbus_rx_arg1&0x4000)
+					{
+					short tempSSSS;
+					
+					tempSSSS=modbus_rx_arg1&0x3fff;
+					plazma1000[3]=tempSSSS;
+					if((tempSSSS>0)&&(tempSSSS<5))tempSSSS=0;
+					else if(tempSSSS>=60)tempSSSS=60;
+				//	else tempSSSS=modbus_rx_arg1;
+					if(TBAT!=tempSSSS)lc640_write_int(EE_TBAT,tempSSSS);
+
+					main_kb_cnt=(tempSSSS*60)-20;
+					}
+				else ica_cntrl_hndl=modbus_rx_arg1;
 				ica_cntrl_hndl_cnt=200;
+
+				//plazma1000[1]++;
 				}
 			if(modbus_rx_arg0==101)		//Значение тока в ведомом ИПСе (прочитанное мастером в ведомом и переданное ведущему)
 				{
 				ica_your_current==modbus_rx_arg1;
 				ica_cntrl_hndl_cnt=200;
+				//plazma1000[2]++;
 				}
 			//modbus_hold_register_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0);
 			modbus_hold_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,1,MODBUS_RTU_PROT);
@@ -1281,6 +1303,8 @@ modbus_registers[118]=(signed char)(tempS>>8);
 modbus_registers[119]=(signed char)(tempS);
 
 tempS=cntrl_stat_old;
+if(	(main_kb_cnt==(TBAT*60)-21) || (main_kb_cnt==(TBAT*60)-20) || (main_kb_cnt==(TBAT*60)-19)) tempS=((short)TBAT)|0x4000;
+//tempS=0x800f;
 modbus_registers[198]=(signed char)(tempS>>8);				//Рег100	состояние шим
 modbus_registers[199]=(signed char)(tempS);
 

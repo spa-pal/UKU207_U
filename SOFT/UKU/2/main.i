@@ -1770,6 +1770,7 @@ extern short plazma_numOfTemperCells;
 extern short plazma_numOfPacks;
 
 extern char plazma_ztt[2];
+extern short plazma1000[10];
 
 extern U8 socket_tcp;
 
@@ -6237,6 +6238,7 @@ short plazma_numOfPacks;
 
 
 char plazma_ztt[2];
+short plazma1000[10];
 
 U8 socket_tcp;
 
@@ -6706,7 +6708,7 @@ if(cnt_net_drv<=11)
 	     }
 	}
 
-#line 1236 "main.c"
+#line 1237 "main.c"
 else if(cnt_net_drv==12)
 	{
      if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x62,*((char*)(&UMAX)),*((char*)((&UMAX))+1),*((char*)(&DU)),*((char*)((&DU))+1),0);
@@ -6944,7 +6946,7 @@ else if((cnt_net_drv>=20)&&(cnt_net_drv<20+15))
 	}
 
 
-#line 1489 "main.c"
+#line 1490 "main.c"
 else if(cnt_net_drv==20+16)
 	{
      if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x62,*((char*)(&UMAX)),*((char*)((&UMAX))+1),*((char*)(&DU)),*((char*)((&DU))+1),0);
@@ -7345,9 +7347,9 @@ if(avar_stat&(1<<(3+7)))
 	sub_cnt_max++;	
 	}
 
-#line 1908 "main.c"
+#line 1909 "main.c"
 
-#line 1928 "main.c"
+#line 1929 "main.c"
 
 
 if((sk_av_stat[0]==sasON)&&(NUMSK)&&(!SK_LCD_EN[0]))
@@ -8928,7 +8930,8 @@ else if(a_ind . i==iMn_220_IPS_TERMOKOMPENSAT)
 	
 	if(sub_cnt<5)bgnd_par(ptrs[0],ptrs[a_ind . i_s+1],ptrs[a_ind . i_s+2],ptrs[a_ind . i_s+3]);
 	else bgnd_par(sub_ptrs[sub_cnt-5],ptrs[a_ind . i_s+1],ptrs[a_ind . i_s+2],ptrs[a_ind . i_s+3]);
-	
+
+
 	if((ii_cnt<=80)||((spc_stat!=spcVZ)&&(spc_stat!=spcKE))) 
 		{
 	
@@ -9017,7 +9020,15 @@ else if(a_ind . i==iMn_220_IPS_TERMOKOMPENSAT)
 	int2lcdyx(ica_cntrl_hndl,0,13,0);
 	int2lcdyx(ica_u_necc+20,0,19,0);
 	int2lcdyx(cntrl_stat,0,3,0);
+	
 
+ 
+	
+	
+
+
+
+ 
 	}
 
 else if(a_ind . i==iMn_TELECORE2015)
@@ -11491,7 +11502,7 @@ else if(a_ind . i==iSet_bat_sel)
 	
 	}
 
-#line 6132 "main.c"
+#line 6142 "main.c"
 else if(a_ind . i==iSet)
 	{
      ptrs[0]=		" Ñòàíäàðòíûå        ";
@@ -12185,7 +12196,7 @@ else if(a_ind . i==iSet_TELECORE2015)
 	
 	
 	}
-#line 6941 "main.c"
+#line 6951 "main.c"
 
 else if((a_ind . i==iSet_220))
 	{
@@ -14762,7 +14773,7 @@ else if(a_ind . i==iK_bps)
           mess_send(205,208,(1<<a_ind . s_i1),10);
           mess_send(200,201,0,40);
           mess_send(190,191,U_AVT,10);
-	    	mess_send(225,230,0,10);
+	    mess_send(225,230,0,10);
 
           }
 
@@ -15256,7 +15267,7 @@ if(a_ind . i==iDeb)
      		    	"    !     $         ",
      		    	"    @     %         ",
      		    	"            ^       ");
-#line 10054 "main.c"
+#line 10064 "main.c"
     	}
 
 
@@ -16776,7 +16787,7 @@ else if(a_ind . i==iTst_220_IPS_TERMOKOMPENSAT)
 
  
 	}
-#line 11822 "main.c"
+#line 11832 "main.c"
 else if(a_ind . i==iTst_bps)
 	{
 	if(tst_state[5]==tstOFF)ptrs[0]=		" Âûêëþ÷åí           ";
@@ -16952,7 +16963,7 @@ else if(a_ind . i==iKlimat_kontur)
 	
 	int2lcdyx(t_box,0,19,0);	 
 	}
-#line 12130 "main.c"
+#line 12140 "main.c"
 
 else if(a_ind . i==iNpn_set)
 	{
@@ -17289,12 +17300,12 @@ else if (a_ind . i==iIps_Curr_Avg_Set)
 }							    
 
 
-#line 12472 "main.c"
+#line 12482 "main.c"
 
 
 
 
-#line 12495 "main.c"
+#line 12505 "main.c"
 
 
 
@@ -17617,7 +17628,7 @@ else if(a_ind . i==iMn)
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV)))
 			{
-#line 12825 "main.c"
+#line 12835 "main.c"
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV+1)))
 			{
@@ -17631,9 +17642,9 @@ else if(a_ind . i==iMn)
 		     ret(1000);
 			}
 
-#line 12845 "main.c"
+#line 12855 "main.c"
 
-#line 12853 "main.c"
+#line 12863 "main.c"
 
 		else if(a_ind . s_i==(4+NUMBAT+NUMIST+2)+(NUMAVT!=0))
 			{
@@ -19733,9 +19744,9 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==184) 
 				{
 				tree_down(0,0);
-#line 14971 "main.c"
+#line 14981 "main.c"
 				tree_up(iSet_220_IPS_TERMOKOMPENSAT,0,0,0);
-#line 14982 "main.c"
+#line 14992 "main.c"
 				ret(1000);
 				}
 			else 
@@ -19752,7 +19763,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==873) 
 				{
 				tree_down(0,0);
-#line 15029 "main.c"
+#line 15039 "main.c"
 				if((AUSW_MAIN==22033)||(AUSW_MAIN==22018))
 					{
 					tree_up(iK_220_IPS_TERMOKOMPENSAT,0,0,0);
@@ -19766,7 +19777,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 
 				else
 				tree_up(iK_220,0,0,0);
-#line 15049 "main.c"
+#line 15059 "main.c"
 				show_mess(	"Âêëþ÷èòå àâò-òû ÑÅÒÜ",
  							"  ÁÀÒÀÐÅß,ÍÀÃÐÓÇÊÀ  ",
  							"   Óñòàíîâèòå òîê   ",
@@ -19826,9 +19837,9 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 			if(tempU==999) 
 				{
 				tree_down(0,0);
-#line 15138 "main.c"
+#line 15148 "main.c"
 				tree_up(iTst_220_IPS_TERMOKOMPENSAT,0,0,0);
-#line 15146 "main.c"
+#line 15156 "main.c"
 				tst_state[0]=tstOFF;
 				tst_state[1]=tstOFF;
 				tst_state[2]=tstOFF;
@@ -19927,7 +19938,7 @@ else if(a_ind . i==iSet_bat_sel)
 
 		}
 	}
-#line 15412 "main.c"
+#line 15422 "main.c"
 else if(a_ind . i==iPrl_bat_in_sel)
 	{
 	ret(1000);
@@ -20460,7 +20471,7 @@ else if(a_ind . i==iSet)
 	     {
 	     if(but==254)
 	          {
-#line 15956 "main.c"
+#line 15966 "main.c"
 	          ret(1000);
 	          default_temp=10;
 	          }
@@ -20482,7 +20493,7 @@ else if(a_ind . i==iSet)
 		{
 		if(but==254)
 		     {
-#line 16002 "main.c"
+#line 16012 "main.c"
 
 
 
@@ -23289,7 +23300,7 @@ else if(a_ind . i==iSet_TELECORE2015)
 			}						
 		}
      }
-#line 19341 "main.c"
+#line 19351 "main.c"
 
 else if((a_ind . i==iSet_220))
 	{
@@ -30344,7 +30355,7 @@ else if(a_ind . i==iK_inv)
 			}
 		}			
 	}
-#line 26542 "main.c"
+#line 26552 "main.c"
 
 else if(a_ind . i==iK_byps)
 	{
@@ -32775,9 +32786,9 @@ else if(a_ind . i==iTst_220_IPS_TERMOKOMPENSAT)
 			}
 		}					
 	}
-#line 29218 "main.c"
+#line 29228 "main.c"
 
-#line 29428 "main.c"
+#line 29438 "main.c"
 
 else if(a_ind . i==iTst_TELECORE)
 	{
@@ -33346,7 +33357,7 @@ else if(a_ind . i==iKlimat_kontur)
 			}
 		}
 	}
-#line 30376 "main.c"
+#line 30386 "main.c"
 else if(a_ind . i==iNpn_set)
 	{
 	ret(1000);
@@ -34052,11 +34063,11 @@ __irq void timer0_interrupt(void)
 int main (void) 
 {
 char ind_reset_cnt=0;
-
+long ii;
 char mac_adr[6] = { 0x00,0x73,0x04,50,60,70 };
 
-
-
+ii=200000;
+while(--ii){};
 
 SystemInit();
 
@@ -34171,9 +34182,9 @@ lcd_clear();
 rtc_init();
 
 a_ind . i=iMn;
-#line 31219 "main.c"
+#line 31229 "main.c"
 a_ind . i=iMn_220_IPS_TERMOKOMPENSAT;
-#line 31230 "main.c"
+#line 31240 "main.c"
 
 
 
@@ -34212,7 +34223,7 @@ adc_init();
 
 lc640_write_int(100,134);
 
-#line 31274 "main.c"
+#line 31284 "main.c"
 
 
 
@@ -34303,7 +34314,7 @@ if((AUSW_MAIN==2400)||(AUSW_MAIN==4800)||(AUSW_MAIN==6000)||(BAT_TYPE==1))
 
 
 
-#line 31382 "main.c"
+#line 31392 "main.c"
 
 
 cntrl_stat=10*PWM_START;
@@ -34425,6 +34436,13 @@ while (1)
 		
 		}
 
+	if(bMODBUS_TIMEOUT)
+		{
+		bMODBUS_TIMEOUT=0;
+		
+		modbus_in();
+		}
+
 	if(b10Hz)
 		{
 		char i;
@@ -34500,7 +34518,7 @@ while (1)
 		ret_hndl();  
 		mess_hndl();
 
-#line 31585 "main.c"
+#line 31602 "main.c"
 		cntrl_hndl();
 
 
@@ -34545,6 +34563,13 @@ while (1)
 		
 		
   		}
+
+	if(bMODBUS_TIMEOUT)
+		{
+		bMODBUS_TIMEOUT=0;
+		
+		modbus_in();
+		}
 
 	if(b1Hz)
 		{
@@ -34592,9 +34617,9 @@ while (1)
 		
 		
 
-#line 31688 "main.c"
+#line 31712 "main.c"
 
-#line 31701 "main.c"
+#line 31725 "main.c"
 
 
 

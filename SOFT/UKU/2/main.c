@@ -748,6 +748,7 @@ short plazma_numOfPacks;
 
 
 char plazma_ztt[2];
+short plazma1000[10];
 
 U8 socket_tcp;
 
@@ -3505,7 +3506,8 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 	
 	if(sub_cnt<5)bgnd_par(ptrs[0],ptrs[index_set+1],ptrs[index_set+2],ptrs[index_set+3]);
 	else bgnd_par(sub_ptrs[sub_cnt-5],ptrs[index_set+1],ptrs[index_set+2],ptrs[index_set+3]);
-	
+//	bgnd_par("                    ","                    ","                    ","                    ");
+
 	if((ii_cnt<=80)||((spc_stat!=spcVZ)&&(spc_stat!=spcKE))) 
 		{
 	//if((ii_!=139)&&(/*(src_state[0]==ssWRK)||(src_state[1]==ssWRK)||(src_state[2]==ssWRK))*/num_of_wrks_bps!=0))
@@ -3594,7 +3596,15 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 	int2lcdyx(ica_cntrl_hndl,0,13,0);
 	int2lcdyx(ica_u_necc+20,0,19,0);
 	int2lcdyx(cntrl_stat,0,3,0);
-//	int2lcdyx(bat[0]._temper_stat,0,16,0);
+	//int2lcdyx(main_kb_cnt,2,3,0);
+/*	int2lcdyx(plazma1000[0],3,3,0);
+	int2lcdyx(plazma1000[1],3,8,0);*/
+	//int2lcdyx(plazma1000[2],3,13,0);
+	//int2lcdyx(plazma1000[3],3,18,0);
+/*	int2lcdyx(plazma1000[4],2,8,0);
+	int2lcdyx(plazma1000[5],2,13,0);
+	int2lcdyx(plazma1000[6],2,18,0);
+	int2lcdyx(plazma1000[7],1,18,0);*/
 	}
 
 else if(ind==iMn_TELECORE2015)
@@ -9514,7 +9524,7 @@ else if(ind==iK_bps)
           mess_send(MESS2BPS_HNDL,PARAM_BPS_MASK_ON_OFF_AFTER_2SEC,(1<<sub_ind1),10);
           mess_send(MESS2BAT_HNDL,PARAM_BAT_ALL_OFF_AFTER_2SEC,0,40);
           mess_send(MESS2UNECC_HNDL,PARAM_UNECC_SET,U_AVT,10);
-	    	mess_send(MESS2CNTRL_HNDL,PARAM_CNTRL_STAT_FAST_REG,0,10);
+	    mess_send(MESS2CNTRL_HNDL,PARAM_CNTRL_STAT_FAST_REG,0,10);
 
           }
 
@@ -31078,11 +31088,11 @@ T0IR = 0xff;*/
 int main (void) 
 {
 char ind_reset_cnt=0;
-//long i;
+long ii;
 char mac_adr[6] = { 0x00,0x73,0x04,50,60,70 };
 
-//i=200000;
-//while(--i){};
+ii=200000;
+while(--ii){};
 
 SystemInit();
 
@@ -31500,6 +31510,13 @@ while (1)
 		//#endif
 		}
 
+	if(bMODBUS_TIMEOUT)
+		{
+		bMODBUS_TIMEOUT=0;
+		//modbus_plazma++;;
+		modbus_in();
+		}
+
 	if(b10Hz)
 		{
 		char i;
@@ -31626,6 +31643,13 @@ while (1)
 		//sc16is700_wr_byte(CS16IS7xx_LCR, 0x80);
 		//can1_out(cnt_net_drv,cnt_net_drv,GETTM,bps[cnt_net_drv]._flags_tu,*((char*)(&bps[cnt_net_drv]._vol_u)),*((char*)((&bps[cnt_net_drv]._vol_u))+1),*((char*)(&bps[cnt_net_drv]._vol_i)),*((char*)((&bps[cnt_net_drv]._vol_i))+1));
   		}
+
+	if(bMODBUS_TIMEOUT)
+		{
+		bMODBUS_TIMEOUT=0;
+		//modbus_plazma++;;
+		modbus_in();
+		}
 
 	if(b1Hz)
 		{

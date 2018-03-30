@@ -4151,7 +4151,7 @@ if(++ica_timer_cnt>=10)
 
 if(ICA_EN==1)
 	{
-	if(main_kb_cnt==(TBAT*60)-21)
+/*	if(main_kb_cnt==(TBAT*60)-21)
 		{
 		char modbus_buff[20],i;
 		short crc_temp;
@@ -4176,7 +4176,7 @@ if(ICA_EN==1)
 				}
 			}
 		}
-	else if(ica_timer_cnt==8)
+	else*/ if(ica_timer_cnt==8)
 		{
 		char modbus_buff[20],i;
 		short crc_temp;
@@ -4204,14 +4204,18 @@ if(ICA_EN==1)
 	else
 		{
 		char modbus_buff[20],i;
-		short crc_temp;
-	
+		short crc_temp, tempSSSS;
+
+		tempSSSS=cntrl_stat_old;
+		if(	(main_kb_cnt==(TBAT*60)-21) || (main_kb_cnt==(TBAT*60)-20) || (main_kb_cnt==(TBAT*60)-19)) tempSSSS=((short)TBAT)|0x4000;
+
+
 		modbus_buff[0] = ICA_MODBUS_ADDRESS;
 		modbus_buff[1] = 6;
 		modbus_buff[2] = 0;
 		modbus_buff[3] = 100;
-		modbus_buff[4] = (char)(cntrl_stat_old/256);	
-		modbus_buff[5] = (char)(cntrl_stat_old%256);
+		modbus_buff[4] = (char)(tempSSSS/256);	
+		modbus_buff[5] = (char)(tempSSSS%256);
 	
 		crc_temp= CRC16_2(modbus_buff,6);
 	
@@ -6464,7 +6468,22 @@ else if((b1Hz_ch)&&((!bIBAT_SMKLBR)||(bps[8]._cnt>40)))
 
 	gran(&cntrl_stat_new,10,1010);			
 	cntrl_stat_old=cntrl_stat_new;
-	cntrl_stat=cntrl_stat_new;	
+	cntrl_stat=cntrl_stat_new;
+	
+	if(ICA_EN==0)
+		{
+		if(ica_cntrl_hndl_cnt)
+			{
+			cntrl_stat = ica_cntrl_hndl;
+			cntrl_stat_new=10*PWM_START;
+			cntrl_stat_old=10*PWM_START;
+			}
+		}
+	
+	if((ICA_EN==1)||(ICA_EN==2))
+		{
+		cntrl_stat=cntrl_stat_new+ica_u_necc;
+		}		
 	}
 #else
 else if((b1Hz_ch)&&((!bIBAT_SMKLBR)||(bps[8]._cnt>40)))
@@ -6588,20 +6607,7 @@ if(iiii==0)
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
 if(ica_cntrl_hndl_cnt)	ica_cntrl_hndl_cnt--;
 
-if(ICA_EN==0)
-	{
-	if(ica_cntrl_hndl_cnt)
-		{
-		cntrl_stat = ica_cntrl_hndl;
-		cntrl_stat_new=10*PWM_START;
-		cntrl_stat_old=10*PWM_START;
-		}
-	}
 
-if((ICA_EN==1)||(ICA_EN==2))
-	{
-	cntrl_stat=cntrl_stat_new+ica_u_necc;
-	}
 #endif
 
 
