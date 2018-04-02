@@ -20,7 +20,7 @@ char ptr_can2_tx_wr,ptr_can2_tx_rd;
 long can2_info[8];
 long can2_id[8];
 long can2_data[8];
-long can2_datb[8];
+long can2_datb[8]; 
 
 unsigned short rotor_can[6];
 
