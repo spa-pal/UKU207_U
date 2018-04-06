@@ -46,7 +46,7 @@ void lcd_off(void);
 void lcd_out(char* adr);
 
 #line 10 "main.c"
-#line 1 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
+#line 1 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
 
 
 
@@ -66,7 +66,7 @@ void lcd_out(char* adr);
  
 
 
-#line 27 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
+#line 27 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
 
 
 
@@ -88,7 +88,9 @@ typedef unsigned long long U64;
 typedef unsigned char   BIT;
 typedef unsigned int    BOOL;
 
-#line 54 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
+#line 54 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
+
+#line 66 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
 
 
 
@@ -135,7 +137,7 @@ typedef U32 OS_RESULT;
 
 
 
-#line 182 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
+#line 194 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
 
 
 
@@ -152,7 +154,7 @@ extern OS_RESULT rt_tsk_prio   (OS_TID task_id, U8 new_prio);
 extern OS_TID    rt_tsk_create (void (*task)(void), U8 priority, void *stk, void *argv);
 extern OS_RESULT rt_tsk_delete (OS_TID task_id);
 
-#line 218 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
+#line 230 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
 
 extern void      _os_sys_init(U32 p, void (*task)(void), U32 prio_stksz,
                                      void *stk)                        __svc_indirect(0);
@@ -332,10 +334,10 @@ extern int fdefrag (const char *drive);
 
 
  
-#line 403 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
+#line 415 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
 
  
-#line 416 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
+#line 428 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
 
  
 
@@ -344,7 +346,7 @@ extern int fdefrag (const char *drive);
 
 
  
-#line 430 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
+#line 442 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
 
  
 
@@ -394,6 +396,7 @@ extern void dhcp_disable (void);
 extern BOOL igmp_join (U8 *group_ip);
 extern BOOL igmp_leave (U8 *group_ip);
 extern BOOL snmp_trap (U8 *manager_ip, U8 gen_trap, U8 spec_trap, U16 *obj_list);
+extern BOOL snmp_set_community (const char *community);
 
 
 
@@ -417,7 +420,7 @@ extern BOOL snmp_trap (U8 *manager_ip, U8 gen_trap, U8 spec_trap, U16 *obj_list)
 
 
  
-#line 1 "C:\\Keil\\\\ARM\\RV31\\INC\\stdint.h"
+#line 1 "C:\\Keil\\ARM\\RV31\\INC\\stdint.h"
  
  
 
@@ -435,7 +438,7 @@ extern BOOL snmp_trap (U8 *manager_ip, U8 gen_trap, U8 spec_trap, U16 *obj_list)
 
 
 
-#line 25 "C:\\Keil\\\\ARM\\RV31\\INC\\stdint.h"
+#line 25 "C:\\Keil\\ARM\\RV31\\INC\\stdint.h"
 
 
 
@@ -600,7 +603,7 @@ typedef unsigned       __int64 uintmax_t;
 
 
 
-#line 196 "C:\\Keil\\\\ARM\\RV31\\INC\\stdint.h"
+#line 196 "C:\\Keil\\ARM\\RV31\\INC\\stdint.h"
 
      
 
@@ -633,7 +636,7 @@ typedef unsigned       __int64 uintmax_t;
 
 
 
-#line 260 "C:\\Keil\\\\ARM\\RV31\\INC\\stdint.h"
+#line 260 "C:\\Keil\\ARM\\RV31\\INC\\stdint.h"
 
 
 
@@ -2635,6 +2638,8 @@ void zar_superviser_start(void);
 void vent_hndl(void);
 void speedChargeHndl(void);
 void speedChargeStartStop(void);
+void averageChargeHndl(void);
+void averageChargeStartStop(void);
 void numOfForvardBps_init(void);
 void outVoltContrHndl(void);
 
@@ -3163,7 +3168,7 @@ void snmp_cool_20_dtemper_write(int mode);
 
  
 #line 35 "main.c"
-#line 1 "C:\\Keil\\\\ARM\\RV31\\INC\\net_config.h"
+#line 1 "C:\\Keil\\ARM\\RV31\\INC\\net_config.h"
 
 
 
@@ -3178,7 +3183,7 @@ void snmp_cool_20_dtemper_write(int mode);
 
 
 
-#line 16 "C:\\Keil\\\\ARM\\RV31\\INC\\net_config.h"
+#line 16 "C:\\Keil\\ARM\\RV31\\INC\\net_config.h"
 
  
 
@@ -3201,7 +3206,7 @@ void snmp_cool_20_dtemper_write(int mode);
 
 
  
-#line 50 "C:\\Keil\\\\ARM\\RV31\\INC\\net_config.h"
+#line 50 "C:\\Keil\\ARM\\RV31\\INC\\net_config.h"
 
  
 
@@ -3210,7 +3215,7 @@ void snmp_cool_20_dtemper_write(int mode);
 
 
  
-#line 73 "C:\\Keil\\\\ARM\\RV31\\INC\\net_config.h"
+#line 73 "C:\\Keil\\ARM\\RV31\\INC\\net_config.h"
 
  
 
@@ -3505,7 +3510,7 @@ extern U16  ftp_fread (void *file, U8 *buf, U16 len);
 extern U16  ftp_fwrite (void *file, U8 *buf, U16 len);
 extern BOOL ftp_fdelete (U8 *fname);
 extern BOOL ftp_frename (U8 *fname, U8 *newn);
-extern U16  ftp_ffind (U8 *buf, U8 *mask, U16 len);
+extern U16  ftp_ffind (U8 code, U8 *buf, U8 *mask, U16 len);
 
  
 extern void init_dhcp (void);
@@ -4295,47 +4300,7 @@ typedef enum IRQn
 
 
 
-#line 1 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#line 1 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
 
 
 
@@ -4357,6 +4322,59 @@ typedef enum IRQn
 
  
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
  
  
  
@@ -4367,25 +4385,7 @@ typedef enum IRQn
  
 
 
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-#line 91 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
+#line 86 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
 
 
 
@@ -4405,7 +4405,7 @@ typedef enum IRQn
 
  
 
-#line 117 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
+#line 112 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
 
 
 
@@ -4415,6 +4415,13 @@ typedef enum IRQn
 
 
  
+
+
+
+
+
+ 
+
 
 
 
@@ -4424,23 +4431,19 @@ typedef enum IRQn
 typedef struct
 {
   volatile uint32_t ISER[8];                       
-       uint32_t RESERVED0[24];                                   
+       uint32_t RESERVED0[24];
   volatile uint32_t ICER[8];                       
-       uint32_t RSERVED1[24];                                    
+       uint32_t RSERVED1[24];
   volatile uint32_t ISPR[8];                       
-       uint32_t RESERVED2[24];                                   
+       uint32_t RESERVED2[24];
   volatile uint32_t ICPR[8];                       
-       uint32_t RESERVED3[24];                                   
+       uint32_t RESERVED3[24];
   volatile uint32_t IABR[8];                       
-       uint32_t RESERVED4[56];                                   
+       uint32_t RESERVED4[56];
   volatile uint8_t  IP[240];                       
-       uint32_t RESERVED5[644];                                  
+       uint32_t RESERVED5[644];
   volatile  uint32_t STIR;                          
-}  NVIC_Type;                                               
-   
-
-
-
+}  NVIC_Type;
 
 
  
@@ -4465,192 +4468,7 @@ typedef struct
   volatile const  uint32_t ADR;                           
   volatile const  uint32_t MMFR[4];                       
   volatile const  uint32_t ISAR[5];                       
-} SCB_Type;                                                
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                     
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-
-
-
+} SCB_Type;
 
 
  
@@ -4662,41 +4480,6 @@ typedef struct
   volatile const  uint32_t CALIB;                         
 } SysTick_Type;
 
- 
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
-
-
-
-
-
-   
-
-
-
-
 
  
 typedef struct
@@ -4707,88 +4490,33 @@ typedef struct
     volatile  uint16_t   u16;                       
     volatile  uint32_t   u32;                       
   }  PORT [32];                                
-       uint32_t RESERVED0[864];                                 
+       uint32_t RESERVED0[864];
   volatile uint32_t TER;                           
-       uint32_t RESERVED1[15];                                  
+       uint32_t RESERVED1[15];
   volatile uint32_t TPR;                           
-       uint32_t RESERVED2[15];                                  
+       uint32_t RESERVED2[15];
   volatile uint32_t TCR;                           
-       uint32_t RESERVED3[29];                                  
+       uint32_t RESERVED3[29];
   volatile uint32_t IWR;                           
   volatile uint32_t IRR;                           
   volatile uint32_t IMCR;                          
-       uint32_t RESERVED4[43];                                  
+       uint32_t RESERVED4[43];
   volatile uint32_t LAR;                           
   volatile uint32_t LSR;                           
-       uint32_t RESERVED5[6];                                   
+       uint32_t RESERVED5[6];
   volatile const  uint32_t PID4;                          
-  volatile const  uint32_t PID5;                          
-  volatile const  uint32_t PID6;                          
-  volatile const  uint32_t PID7;                          
-  volatile const  uint32_t PID0;                          
-  volatile const  uint32_t PID1;                          
-  volatile const  uint32_t PID2;                          
-  volatile const  uint32_t PID3;                          
-  volatile const  uint32_t CID0;                          
-  volatile const  uint32_t CID1;                          
-  volatile const  uint32_t CID2;                          
-  volatile const  uint32_t CID3;                          
-} ITM_Type;                                                
-
- 
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
-
-
-
-
-
-   
-
-
-
+  volatile const  uint32_t PID5;
+  volatile const  uint32_t PID6;
+  volatile const  uint32_t PID7;
+  volatile const  uint32_t PID0;
+  volatile const  uint32_t PID1;
+  volatile const  uint32_t PID2;
+  volatile const  uint32_t PID3;
+  volatile const  uint32_t CID0;
+  volatile const  uint32_t CID1;
+  volatile const  uint32_t CID2;
+  volatile const  uint32_t CID3;
+} ITM_Type;
 
 
  
@@ -4803,27 +4531,9 @@ typedef struct
 
 } InterruptType_Type;
 
- 
-
-
 
  
 
-
-
-
-
-
-
-
-   
-
-
-
-
-
-
- 
 typedef struct
 {
   volatile const  uint32_t TYPE;                          
@@ -4837,74 +4547,7 @@ typedef struct
   volatile uint32_t RASR_A2;                       
   volatile uint32_t RBAR_A3;                       
   volatile uint32_t RASR_A3;                       
-} MPU_Type;                                                
-
- 
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
- 
-
-
-
- 
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-
-
-
+} MPU_Type;
 
 
 
@@ -4917,33 +4560,11 @@ typedef struct
   volatile uint32_t DEMCR;                         
 } CoreDebug_Type;
 
+
  
+#line 274 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#line 281 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
 
 
 
@@ -4961,70 +4582,7 @@ typedef struct
 
 
 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-
-
- 
-#line 721 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
-
-#line 728 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
-
-
-
-
-
-
-   
-
-
-
-
- 
-
-
-
-
-
-#line 758 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
+#line 311 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
 
 
  
@@ -5035,13 +4593,14 @@ typedef struct
 
 
 
-#line 783 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
+#line 336 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
 
 
  
  
  
  
+
 
 
 
@@ -5060,6 +4619,7 @@ extern uint32_t __get_PSP(void);
 
 
 
+
  
 extern void __set_PSP(uint32_t topOfProcStack);
 
@@ -5070,8 +4630,10 @@ extern void __set_PSP(uint32_t topOfProcStack);
 
 
 
+
  
 extern uint32_t __get_MSP(void);
+
 
 
 
@@ -5104,13 +4666,18 @@ extern uint32_t __REV16(uint16_t value);
 extern int32_t __REVSH(int16_t value);
 
 
-#line 933 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
+#line 502 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
+
+
+
+
 
 
 
 
 
  
+
 
 
 
@@ -5132,12 +4699,15 @@ static __inline uint32_t  __get_BASEPRI(void)
 
 
 
+
  
 static __inline void __set_BASEPRI(uint32_t basePri)
 {
   register uint32_t __regBasePri         __asm("basepri");
-  __regBasePri = (basePri & 0xff);
+  __regBasePri = (basePri & 0x1ff);
 }
+
+
 
 
 
@@ -5158,12 +4728,14 @@ static __inline uint32_t __get_PRIMASK(void)
 
 
 
+
  
 static __inline void __set_PRIMASK(uint32_t priMask)
 {
   register uint32_t __regPriMask         __asm("primask");
   __regPriMask = (priMask);
 }
+
 
 
 
@@ -5184,12 +4756,14 @@ static __inline uint32_t __get_FAULTMASK(void)
 
 
 
+
  
 static __inline void __set_FAULTMASK(uint32_t faultMask)
 {
   register uint32_t __regFaultMask       __asm("faultmask");
   __regFaultMask = (faultMask & 1);
 }
+
 
 
 
@@ -5210,6 +4784,7 @@ static __inline uint32_t __get_CONTROL(void)
 
 
 
+
  
 static __inline void __set_CONTROL(uint32_t control)
 {
@@ -5221,18 +4796,13 @@ static __inline void __set_CONTROL(uint32_t control)
 
 
 
-#line 1445 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
-
-
-
-
+#line 1044 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
 
 
 
  
- 
 
- 
+
 
 
 
@@ -5250,13 +4820,12 @@ static __inline void NVIC_SetPriorityGrouping(uint32_t PriorityGroup)
   uint32_t reg_value;
   uint32_t PriorityGroupTmp = (PriorityGroup & 0x07);                          
   
-  reg_value  =  ((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR;                                                    
-  reg_value &= ~((0xFFFFul << 16) | (7ul << 8));              
-  reg_value  =  (reg_value                       |
-                (0x5FA << 16) | 
-                (PriorityGroupTmp << 8));                                      
-  ((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR =  reg_value;
+  reg_value  = ((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR;                                                     
+  reg_value &= ~((0xFFFFU << 16) | (0x0F << 8));                               
+  reg_value  = ((reg_value | (0x5FA << 16) | (PriorityGroupTmp << 8)));   
+  ((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR = reg_value;
 }
+
 
 
 
@@ -5268,8 +4837,9 @@ static __inline void NVIC_SetPriorityGrouping(uint32_t PriorityGroup)
  
 static __inline uint32_t NVIC_GetPriorityGrouping(void)
 {
-  return ((((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR & (7ul << 8)) >> 8);    
+  return ((((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR >> 8) & 0x07);                                           
 }
+
 
 
 
@@ -5283,6 +4853,7 @@ static __inline void NVIC_EnableIRQ(IRQn_Type IRQn)
 {
   ((NVIC_Type *) ((0xE000E000) + 0x0100))->ISER[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F));  
 }
+
 
 
 
@@ -5318,11 +4889,13 @@ static __inline uint32_t NVIC_GetPendingIRQ(IRQn_Type IRQn)
 
 
 
+
  
 static __inline void NVIC_SetPendingIRQ(IRQn_Type IRQn)
 {
   ((NVIC_Type *) ((0xE000E000) + 0x0100))->ISPR[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F));  
 }
+
 
 
 
@@ -5350,6 +4923,7 @@ static __inline uint32_t NVIC_GetActive(IRQn_Type IRQn)
 {
   return((uint32_t)((((NVIC_Type *) ((0xE000E000) + 0x0100))->IABR[(uint32_t)(IRQn) >> 5] & (1 << ((uint32_t)(IRQn) & 0x1F)))?1:0));  
 }
+
 
 
 
@@ -5413,7 +4987,7 @@ static __inline uint32_t NVIC_GetPriority(IRQn_Type IRQn)
  
 static __inline uint32_t NVIC_EncodePriority (uint32_t PriorityGroup, uint32_t PreemptPriority, uint32_t SubPriority)
 {
-  uint32_t PriorityGroupTmp = (PriorityGroup & 0x07);           
+  uint32_t PriorityGroupTmp = (PriorityGroup & 0x07);                          
   uint32_t PreemptPriorityBits;
   uint32_t SubPriorityBits;
 
@@ -5441,10 +5015,11 @@ static __inline uint32_t NVIC_EncodePriority (uint32_t PriorityGroup, uint32_t P
 
 
 
+
  
 static __inline void NVIC_DecodePriority (uint32_t Priority, uint32_t PriorityGroup, uint32_t* pPreemptPriority, uint32_t* pSubPriority)
 {
-  uint32_t PriorityGroupTmp = (PriorityGroup & 0x07);           
+  uint32_t PriorityGroupTmp = (PriorityGroup & 0x07);                          
   uint32_t PreemptPriorityBits;
   uint32_t SubPriorityBits;
 
@@ -5461,6 +5036,12 @@ static __inline void NVIC_DecodePriority (uint32_t Priority, uint32_t PriorityGr
 
 
 
+ 
+
+
+
+
+
 
 
 
@@ -5473,15 +5054,13 @@ static __inline void NVIC_DecodePriority (uint32_t Priority, uint32_t PriorityGr
  
 static __inline uint32_t SysTick_Config(uint32_t ticks)
 { 
-  if (ticks > (0xFFFFFFul << 0))  return (1);             
-                                                               
-  ((SysTick_Type *) ((0xE000E000) + 0x0010))->LOAD  = (ticks & (0xFFFFFFul << 0)) - 1;       
-  NVIC_SetPriority (SysTick_IRQn, (1<<5) - 1);   
-  ((SysTick_Type *) ((0xE000E000) + 0x0010))->VAL   = 0;                                           
-  ((SysTick_Type *) ((0xE000E000) + 0x0010))->CTRL  = (1ul << 2) | 
-                   (1ul << 1)   | 
-                   (1ul << 0);                     
-  return (0);                                                   
+  if (ticks > ((1<<24) -1))  return (1);                                              
+
+  ((SysTick_Type *) ((0xE000E000) + 0x0010))->LOAD  =  (ticks & ((1<<24) -1)) - 1;                                       
+  NVIC_SetPriority (SysTick_IRQn, (1<<5) - 1);                             
+  ((SysTick_Type *) ((0xE000E000) + 0x0010))->VAL   =  (0x00);                                                               
+  ((SysTick_Type *) ((0xE000E000) + 0x0010))->CTRL = (1 << 2) | (1<<0) | (1<<1);  
+  return (0);                                                                             
 }
 
 
@@ -5489,7 +5068,11 @@ static __inline uint32_t SysTick_Config(uint32_t ticks)
 
 
 
+
  
+
+
+
 
 
 
@@ -5498,29 +5081,13 @@ static __inline uint32_t SysTick_Config(uint32_t ticks)
  
 static __inline void NVIC_SystemReset(void)
 {
-  ((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR  = ((0x5FA << 16)      | 
-                 (((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR & (7ul << 8)) | 
-                 (1ul << 2));                    
-  __dsb(0);                                                                    
-  while(1);                                                     
+  ((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR  = ((0x5FA << 16) | (((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR & (0x700)) | (1<<2));  
+  __dsb(0);                                                                                            
+  while(1);                                                                             
 }
 
-   
-
-
 
  
-
-
-
-
-
-
- 
- 
-
-extern volatile int ITM_RxBuffer;                     
-
 
 
 
@@ -5535,9 +5102,11 @@ extern volatile int ITM_RxBuffer;
  
 static __inline uint32_t ITM_SendChar (uint32_t ch)
 {
-  if ((((CoreDebug_Type *) (0xE000EDF0))->DEMCR & (1ul << 24))  &&       
-      (((ITM_Type *) (0xE0000000))->TCR & (1ul << 0))                  &&       
-      (((ITM_Type *) (0xE0000000))->TER & (1ul << 0)        )                    )      
+  if (ch == '\n') ITM_SendChar('\r');
+  
+  if ((((CoreDebug_Type *) (0xE000EDF0))->DEMCR & (1 << 24))  &&
+      (((ITM_Type *) (0xE0000000))->TCR & 1)                  &&
+      (((ITM_Type *) (0xE0000000))->TER & (1UL << 0))  ) 
   {
     while (((ITM_Type *) (0xE0000000))->PORT[0].u32 == 0);
     ((ITM_Type *) (0xE0000000))->PORT[0].u8 = (uint8_t) ch;
@@ -5548,50 +5117,6 @@ static __inline uint32_t ITM_SendChar (uint32_t ch)
 
 
 
-
-
-
-
-
-
- 
-static __inline int ITM_ReceiveChar (void) {
-  int ch = -1;                                
-
-  if (ITM_RxBuffer != 0x5AA55AA5) {
-    ch = ITM_RxBuffer;
-    ITM_RxBuffer = 0x5AA55AA5;        
-  }
-  
-  return (ch); 
-}
-
-
-
-
-
-
-
-
-
- 
-static __inline int ITM_CheckChar (void) {
-
-  if (ITM_RxBuffer == 0x5AA55AA5) {
-    return (0);                                  
-  } else {
-    return (1);                                  
-  }
-}
-
-   
-
-
-
-
-
-
-   
 
 
 
@@ -9392,7 +8917,8 @@ else if(a_ind . i==iMn_220_IPS_TERMOKOMPENSAT)
     ptrs[6+NUMIST ]= 				" Внешние датчики    ";
 	ptrs[6+NUMIST +(NUMEXT!=0)]= 	" Ускоренный заряд   ";
 	if((speedChIsOn)&&(bFL))ptrs[6+NUMIST +(NUMEXT!=0)]= 	"                     "; 
- 	ptrs[7+NUMIST +(NUMEXT!=0)]= 	" Спецфункции    	 ";
+ 	
+	ptrs[7+NUMIST +(NUMEXT!=0)]= 			" Выравнивающий заряд ";
     ptrs[8+NUMIST +(NUMEXT!=0)]= 	" Установки          "; 
     ptrs[9+NUMIST +(NUMEXT!=0)]= 	" Журнал событий     "; 
     ptrs[10+NUMIST +(NUMEXT!=0)]= 	" Выход              "; 
@@ -9492,12 +9018,12 @@ else if(a_ind . i==iMn_220_IPS_TERMOKOMPENSAT)
 
 	
 
-	int2lcdyx(cntrl_stat_old,1,3,0);
-	int2lcdyx(ica_cntrl_hndl_cnt,0,8,0);
-	int2lcdyx(ica_cntrl_hndl,0,13,0);
-	int2lcdyx(ica_u_necc+20,0,19,0);
-	int2lcdyx(cntrl_stat,0,3,0);
-	
+
+
+
+
+
+
 
  
 	
@@ -11979,7 +11505,7 @@ else if(a_ind . i==iSet_bat_sel)
 	
 	}
 
-#line 6142 "main.c"
+#line 6143 "main.c"
 else if(a_ind . i==iSet)
 	{
      ptrs[0]=		" Стандартные        ";
@@ -12673,7 +12199,7 @@ else if(a_ind . i==iSet_TELECORE2015)
 	
 	
 	}
-#line 6951 "main.c"
+#line 6952 "main.c"
 
 else if((a_ind . i==iSet_220))
 	{
@@ -12770,6 +12296,7 @@ else if((a_ind . i==iSet_220))
 
 	int2lcd(MODBUS_ADRESS,'<',0);
 	int2lcd(MODBUS_BAUDRATE,'>',0);
+
 	}
 
 else if((a_ind . i==iSet_220_V2))
@@ -12876,7 +12403,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 	ptrs[8]=		" Паралл.работа z    ";
 	ptrs[9]=		" T проверки   цепи  ";
     ptrs[10]=		" батареи     qмин.  ";
-    ptrs[11]=		" Umax=       !В     ";
+    ptrs[11]=		" Umaх=       !В     ";
     ptrs[12]=		" Umin=       ZВ     ";
     ptrs[13]=		" Uб0°=       @В     ";
     ptrs[14]=		" Uб20°=      #В     ";
@@ -12884,41 +12411,42 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
     ptrs[16]=		" Umin.сети=  &В     ";
 	ptrs[17]=		" Iбк.=       jА     ";
     ptrs[18]=		" Iз.мах.=    JА     ";
-    ptrs[19]=		" Imax =      ]A     ";
+    ptrs[19]=		" Imaх =      ]A     ";
     ptrs[20]=		" Imin =      {A     ";
     ptrs[21]=		" Uвыр.зар.=   [В    ";
-    ptrs[22]=		" Tз.вкл.а.с. !с     ";
-	ptrs[23]=		" tи.max=     $°C    ";
-	ptrs[24]=		" tи.сигн=    z°C    ";
-	ptrs[25]=		" tбат.max=   b°C    ";
-	ptrs[26]=		" tбат.сигн=  X°C    ";
-    ptrs[27]=		" Внешние датчики    ";
-    ptrs[28]=      	" Контроль выходного ";
-    ptrs[29]=      	" напряжения         ";
-	ptrs[30]=      	" Термокомпенс.     q";
-	ptrs[31]=		" Ускоренный заряд   ";
-	ptrs[32]=      	" Время ротации      ";
-	ptrs[33]=      	" источников    lчас.";
-	ptrs[34]=      	" Автономная работа  ";
-	ptrs[35]=      	" источников         ";
-	ptrs[36]=      	" Дополнительное реле";
-	ptrs[37]=      	" Блокировка ИПС     ";
-	ptrs[38]=      	" Серийный N        w";
-	ptrs[39]=		" MODBUS ADRESS     <";
-	ptrs[40]=		" MODBUS BAUDRATE    ";
-	ptrs[41]=		"                  >0";
-	ptrs[42]=		" Ethernet           ";
-    ptrs[43]=		" Порог ресурса      ";
-    ptrs[44]=		" вентилятора      ^ч";
-    ptrs[45]=		" Выравнивание токов ";
-	ptrs[46]=		" Стартовый шим    (%";
-	ptrs[47]=		" Проверка цепи      ";
-	ptrs[48]=		" батареи - )        ";
-	ptrs[49]=		" Скорость регулир.  ";
-	ptrs[50]=		"    &               ";
-    ptrs[51]=		" Выход              ";
-    ptrs[52]=		" Калибровки         "; 
-    ptrs[53]=		"                    ";        
+	ptrs[22]=		" Tвыр.зар.=   xч.   ";
+    ptrs[23]=		" Tз.вкл.а.с. !с     ";
+	ptrs[24]=		" tи.maх=     $°C    ";
+	ptrs[25]=		" tи.сигн=    z°C    ";
+	ptrs[26]=		" tбат.maх=   b°C    ";
+	ptrs[27]=		" tбат.сигн=  X°C    ";
+    ptrs[28]=		" Внешние датчики    ";
+    ptrs[29]=      	" Контроль выходного ";
+    ptrs[30]=      	" напряжения         ";
+	ptrs[31]=      	" Термокомпенс.     q";
+	ptrs[32]=		" Ускоренный заряд   ";
+	ptrs[33]=      	" Время ротации      ";
+	ptrs[34]=      	" источников    lчас.";
+	ptrs[35]=      	" Автономная работа  ";
+	ptrs[36]=      	" источников         ";
+	ptrs[37]=      	" Дополнительное реле";
+	ptrs[38]=      	" Блокировка ИПС     ";
+	ptrs[39]=      	" Серийный N        w";
+	ptrs[40]=		" MODBUS ADRESS     <";
+	ptrs[41]=		" MODBUS BAUDRATE    ";
+	ptrs[42]=		"                  >0";
+	ptrs[43]=		" Ethernet           ";
+    ptrs[44]=		" Порог ресурса      ";
+    ptrs[45]=		" вентилятора      ^ч";
+    ptrs[46]=		" Выравнивание токов ";
+	ptrs[47]=		" Стартовый шим    (%";
+	ptrs[48]=		" Проверка цепи      ";
+	ptrs[49]=		" батареи - )        ";
+	ptrs[50]=		" Скорость регулир.  ";
+	ptrs[51]=		"    &               ";
+    ptrs[52]=		" Выход              ";
+    ptrs[53]=		" Калибровки         "; 
+    ptrs[54]=		"                    ";        
 	
 	if((a_ind . s_i-a_ind . i_s)>2)a_ind . i_s=a_ind . s_i-2;
 	else if(a_ind . s_i<a_ind . i_s)a_ind . i_s=a_ind . s_i;
@@ -12996,6 +12524,8 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 	else if(REG_SPEED==4)	sub_bgnd("стандарт/4",'&',0);
 	else if(REG_SPEED==5)	sub_bgnd("стандарт/5",'&',0);
 	else 				sub_bgnd("стандарт",'&',0);
+
+	int2lcd(VZ_HR,'x',0);
 
 	}
 
@@ -15744,7 +15274,7 @@ if(a_ind . i==iDeb)
      		    	"    !     $         ",
      		    	"    @     %         ",
      		    	"            ^       ");
-#line 10064 "main.c"
+#line 10069 "main.c"
     	}
 
 
@@ -17264,7 +16794,7 @@ else if(a_ind . i==iTst_220_IPS_TERMOKOMPENSAT)
 
  
 	}
-#line 11832 "main.c"
+#line 11837 "main.c"
 else if(a_ind . i==iTst_bps)
 	{
 	if(tst_state[5]==tstOFF)ptrs[0]=		" Выключен           ";
@@ -17440,7 +16970,7 @@ else if(a_ind . i==iKlimat_kontur)
 	
 	int2lcdyx(t_box,0,19,0);	 
 	}
-#line 12140 "main.c"
+#line 12145 "main.c"
 
 else if(a_ind . i==iNpn_set)
 	{
@@ -17777,12 +17307,12 @@ else if (a_ind . i==iIps_Curr_Avg_Set)
 }							    
 
 
-#line 12482 "main.c"
+#line 12487 "main.c"
 
 
 
 
-#line 12505 "main.c"
+#line 12510 "main.c"
 
 
 
@@ -18105,7 +17635,7 @@ else if(a_ind . i==iMn)
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV)))
 			{
-#line 12835 "main.c"
+#line 12840 "main.c"
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV+1)))
 			{
@@ -18119,9 +17649,9 @@ else if(a_ind . i==iMn)
 		     ret(1000);
 			}
 
-#line 12855 "main.c"
+#line 12860 "main.c"
 
-#line 12863 "main.c"
+#line 12868 "main.c"
 
 		else if(a_ind . s_i==(4+NUMBAT+NUMIST+2)+(NUMAVT!=0))
 			{
@@ -19257,8 +18787,9 @@ else if(a_ind . i==iMn_220_IPS_TERMOKOMPENSAT)
 
 		else if(a_ind . s_i==(4+NUMBAT+NUMIST+ (NUMEXT!=0)))
 			{
-			tree_up(iSpc_termocompensat,0,0,0);
-		     ret(1000);
+			
+		     
+			averageChargeStartStop();
 			}
 
 		else if(a_ind . s_i==(5+NUMBAT+NUMIST+ (NUMEXT!=0)))
@@ -20221,9 +19752,9 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==184) 
 				{
 				tree_down(0,0);
-#line 14981 "main.c"
+#line 14987 "main.c"
 				tree_up(iSet_220_IPS_TERMOKOMPENSAT,0,0,0);
-#line 14992 "main.c"
+#line 14998 "main.c"
 				ret(1000);
 				}
 			else 
@@ -20240,7 +19771,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==873) 
 				{
 				tree_down(0,0);
-#line 15039 "main.c"
+#line 15045 "main.c"
 				if((AUSW_MAIN==22033)||(AUSW_MAIN==22018))
 					{
 					tree_up(iK_220_IPS_TERMOKOMPENSAT,0,0,0);
@@ -20254,7 +19785,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 
 				else
 				tree_up(iK_220,0,0,0);
-#line 15059 "main.c"
+#line 15065 "main.c"
 				show_mess(	"Включите авт-ты СЕТЬ",
  							"  БАТАРЕЯ,НАГРУЗКА  ",
  							"   Установите ток   ",
@@ -20314,9 +19845,9 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 			if(tempU==999) 
 				{
 				tree_down(0,0);
-#line 15148 "main.c"
+#line 15154 "main.c"
 				tree_up(iTst_220_IPS_TERMOKOMPENSAT,0,0,0);
-#line 15156 "main.c"
+#line 15162 "main.c"
 				tst_state[0]=tstOFF;
 				tst_state[1]=tstOFF;
 				tst_state[2]=tstOFF;
@@ -20415,7 +19946,7 @@ else if(a_ind . i==iSet_bat_sel)
 
 		}
 	}
-#line 15422 "main.c"
+#line 15428 "main.c"
 else if(a_ind . i==iPrl_bat_in_sel)
 	{
 	ret(1000);
@@ -20948,7 +20479,7 @@ else if(a_ind . i==iSet)
 	     {
 	     if(but==254)
 	          {
-#line 15966 "main.c"
+#line 15972 "main.c"
 	          ret(1000);
 	          default_temp=10;
 	          }
@@ -20970,7 +20501,7 @@ else if(a_ind . i==iSet)
 		{
 		if(but==254)
 		     {
-#line 16012 "main.c"
+#line 16018 "main.c"
 
 
 
@@ -23777,7 +23308,7 @@ else if(a_ind . i==iSet_TELECORE2015)
 			}						
 		}
      }
-#line 19351 "main.c"
+#line 19357 "main.c"
 
 else if((a_ind . i==iSet_220))
 	{
@@ -24592,55 +24123,55 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 		if(a_ind . s_i==6)a_ind . s_i=7;
 		if(a_ind . s_i==9)a_ind . i_s=8;
 		if(a_ind . s_i==10)a_ind . s_i=11;
-        if(a_ind . s_i==28)
+        if(a_ind . s_i==29)
         	{
-            a_ind . i_s=27;
+            a_ind . i_s=28;
             }
-		if(a_ind . s_i==29)
+		if(a_ind . s_i==30)
 			{
-			a_ind . s_i=30;
+			a_ind . s_i=31;
 			}
-		if(a_ind . s_i==32)
+		if(a_ind . s_i==33)
 			{
-			a_ind . i_s=31;
+			a_ind . i_s=32;
 			}
-        if(a_ind . s_i==33)
-        	{
-            a_ind . s_i=34;
-            }
         if(a_ind . s_i==34)
         	{
-            a_ind . i_s=33;
+            a_ind . s_i=35;
             }
         if(a_ind . s_i==35)
         	{
-            a_ind . s_i=36;
+            a_ind . i_s=34;
             }
-        if(a_ind . s_i==40)
-          	{
-			a_ind . i_s=39;
-           	} 
+        if(a_ind . s_i==36)
+        	{
+            a_ind . s_i=37;
+            }
         if(a_ind . s_i==41)
+          	{
+			a_ind . i_s=40;
+           	} 
+        if(a_ind . s_i==42)
             {
-            a_ind . s_i=42;
+            a_ind . s_i=43;
             }
-       	if(a_ind . s_i==43)
+       	if(a_ind . s_i==44)
         	{
-            a_ind . i_s=42;
+            a_ind . i_s=43;
             }
-        if(a_ind . s_i==44)
+        if(a_ind . s_i==45)
             {
-            a_ind . s_i=45;
+            a_ind . s_i=46;
             }
-        if(a_ind . s_i==48)
+        if(a_ind . s_i==49)
         	{
-            a_ind . s_i=49;
+            a_ind . s_i=50;
 		    }
-        if(a_ind . s_i==50)
+        if(a_ind . s_i==51)
         	{
-            a_ind . s_i=51;
+            a_ind . s_i=52;
 		    }																	
-		gran_char(&a_ind . s_i,0,52);
+		gran_char(&a_ind . s_i,0,53);
 		}
 	else if(but==253)
 		{
@@ -24653,45 +24184,45 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 			{
 			a_ind . s_i=7;
 			}
-        if(a_ind . s_i==29)
+        if(a_ind . s_i==30)
         	{
-            a_ind . s_i=28;
+            a_ind . s_i=29;
 		    }
         if(a_ind . s_i==37)
             {
             
 			
             }
-        if(a_ind . s_i==33)
+        if(a_ind . s_i==32)
         	{
-            a_ind . s_i=32;
+            a_ind . s_i=33;
 		    }
-        if(a_ind . s_i==35)
+        if(a_ind . s_i==36)
         	{
-            a_ind . s_i=34;
+            a_ind . s_i=35;
 		    }
        
 
 
 
  
-        if(a_ind . s_i==41)
+        if(a_ind . s_i==42)
             {
-            a_ind . s_i=40;
+            a_ind . s_i=41;
 			}
-        if(a_ind . s_i==44)
+        if(a_ind . s_i==45)
             {
-            a_ind . s_i=43;
+            a_ind . s_i=44;
 			}
-        if(a_ind . s_i==48)
+        if(a_ind . s_i==49)
         	{
-            a_ind . s_i=47;
+            a_ind . s_i=48;
 		    }
-        if(a_ind . s_i==50)
+        if(a_ind . s_i==51)
         	{
-            a_ind . s_i=49;
+            a_ind . s_i=50;
 		    }
-		gran_char(&a_ind . s_i,0,52);
+		gran_char(&a_ind . s_i,0,53);
 		}
 	else if(but==123)
 		{
@@ -24926,8 +24457,17 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 		lc640_write_int(0x10+100+106,UVZ);
 	     speed=1;
 	     }
-	     
+
 	else if(a_ind . s_i==22)
+		{
+		if ((but==239)||(but==111))VZ_HR++;
+		if ((but==247)||(but==119))VZ_HR--;
+		gran(&VZ_HR,1,24);
+		lc640_write_int(0x10+100+76,VZ_HR);
+		speed=1; 
+		}
+			     
+	else if(a_ind . s_i==23)
 		{
 		if ((but==239)||(but==111))TZAS++;
 		if ((but==247)||(but==119))TZAS--;
@@ -24935,8 +24475,8 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 		lc640_write_int(0x10+100+34,TZAS);
 		speed=1; 
 		}	
-			       	        
-	else if(a_ind . s_i==23)
+					       	        
+	else if(a_ind . s_i==24)
 	     {
 	     if(but==239)TMAX++;
 	     else if(but==111)TMAX+=2;
@@ -24947,7 +24487,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 	     speed=1;
 	     }	
 	
-	else if(a_ind . s_i==24)
+	else if(a_ind . s_i==25)
 	     {
 	     if(but==239)TSIGN++;
 	     else if(but==111)TSIGN+=2;
@@ -24957,7 +24497,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 	     lc640_write_int(0x10+100+82,TSIGN);
 	     speed=1;
 	     }	     
-	else if(a_ind . s_i==25)
+	else if(a_ind . s_i==26)
 	     {
 	     if(but==239)TBATMAX++;
 	     else if(but==111)TBATMAX+=2;
@@ -24968,7 +24508,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 	     speed=1;
 	     }	
 	
-	else if(a_ind . s_i==26)
+	else if(a_ind . s_i==27)
 	     {
 	     if(but==239)TBATSIGN++;
 	     else if(but==111)TBATSIGN+=2;
@@ -24979,7 +24519,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 	     speed=1;
 	     }	
      	     	     		     	     
-    else if(a_ind . s_i==27)
+    else if(a_ind . s_i==28)
 		{
 		if(but==254)
 		     {
@@ -24988,7 +24528,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 		     }
 		}
 
-	else if(a_ind . s_i==28)
+	else if(a_ind . s_i==29)
 	    {
 		if(but==254) 
 			{
@@ -24997,7 +24537,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 		    }	     
 	    }
 
-	else if(a_ind . s_i==30)
+	else if(a_ind . s_i==31)
 	    {
 	    if ((but==239)||(but==111))TERMOKOMPENS=1;
 		if ((but==247)||(but==119))TERMOKOMPENS=0;
@@ -25005,7 +24545,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 	    speed=0;
 	    }
 
-  	else if(a_ind . s_i==31)
+  	else if(a_ind . s_i==32)
 		{
 		if(but==254) 
 		     {
@@ -25013,7 +24553,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 		     ret(1000);
 		     }
 		} 
-  	else if(a_ind . s_i==32)
+  	else if(a_ind . s_i==33)
 	     {
 	     if(but==239)FORVARDBPSCHHOUR++;
 	     else if(but==111)FORVARDBPSCHHOUR+=2;
@@ -25026,7 +24566,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 	     }
 
 				
-	else if(a_ind . s_i==34)
+	else if(a_ind . s_i==35)
 		{
 		if(but==254)
 		    {		
@@ -25036,7 +24576,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 			}						
 		}
 
-	else if(a_ind . s_i==36)
+	else if(a_ind . s_i==37)
 		{
 		if(but==254)
 		     {		
@@ -25045,7 +24585,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 			ret(50);
 			}						
 		}
-	else if(a_ind . s_i==37)
+	else if(a_ind . s_i==38)
 		{
 		if(but==254)
 		     {		
@@ -25054,7 +24594,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 			ret(50);
 			}						
 		}
-	else if(a_ind . s_i==38)
+	else if(a_ind . s_i==39)
 		{
 	    if(but==239)AUSW_MAIN_NUMBER++;
 	    else if(but==111)AUSW_MAIN_NUMBER+=20;
@@ -25067,7 +24607,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 		lc640_write_int(0x10+100+226+2,(short)((AUSW_MAIN_NUMBER&0xffff0000UL)>>16UL));
 	    speed=1;
 	    }         
-  	else if(a_ind . s_i==39)
+  	else if(a_ind . s_i==40)
 	    {
 	     if((but==239)||(but==111))
 	     	{
@@ -25086,7 +24626,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 	     	}
           }
 
-     else if(a_ind . s_i==40)
+     else if(a_ind . s_i==41)
 	     {
 	     if((but==239)||(but==111))
 	     	{
@@ -25118,7 +24658,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 	     	lc640_write_int(0x10+500+200+74,MODBUS_BAUDRATE);
 	     	}
           }
-  	else if(a_ind . s_i==42)
+  	else if(a_ind . s_i==43)
 		{
 		if(but==254) 
 		     {
@@ -25126,7 +24666,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 		     ret(1000);
 		     }
 		}
-	else if(a_ind . s_i==43)
+	else if(a_ind . s_i==44)
 		{
 	    if(but==239)		TVENTMAX=((TVENTMAX/100)+1)*100;
 	    else if(but==111)	TVENTMAX=((TVENTMAX/100)+1)*100;
@@ -25137,7 +24677,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 		lc640_write_int(0x10+350+2,TVENTMAX);
 	    speed=1;
 	    }
-	else if(a_ind . s_i==45)
+	else if(a_ind . s_i==46)
 	    {
 		if(but==254) 
 			{
@@ -25146,7 +24686,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 		    }	     
 	    }		    
 
-	else if(a_ind . s_i==46)
+	else if(a_ind . s_i==47)
 	     {
 	     if(but==239)PWM_START++;
 	     else if(but==111)PWM_START+=10;
@@ -25157,7 +24697,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 	     speed=1;
 	     }   
 
-	else if(a_ind . s_i==47)
+	else if(a_ind . s_i==48)
 		{
 	    if(but==239)KB_ALGORITM++;
 	    else if(but==111)KB_ALGORITM++;
@@ -25168,7 +24708,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 	    speed=1;
 	    } 
 
-	else if(a_ind . s_i==49)
+	else if(a_ind . s_i==50)
 		{
 	    if(but==239)REG_SPEED++;
 	    else if(but==111)REG_SPEED++;
@@ -25178,7 +24718,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 	    lc640_write_int(0x10+350+24,REG_SPEED);
 	    speed=1;
 	    }
-    else if((a_ind . s_i==51) || (a_ind . s_i==3))
+    else if((a_ind . s_i==52) || (a_ind . s_i==3))
 		{
 		if(but==254)
 		     {
@@ -25187,7 +24727,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 		     }
 		}
 				
-	else if(a_ind . s_i==52)
+	else if(a_ind . s_i==53)
 		{
 		if(but==254)
 		     {		
@@ -30832,7 +30372,7 @@ else if(a_ind . i==iK_inv)
 			}
 		}			
 	}
-#line 26552 "main.c"
+#line 26567 "main.c"
 
 else if(a_ind . i==iK_byps)
 	{
@@ -33263,9 +32803,9 @@ else if(a_ind . i==iTst_220_IPS_TERMOKOMPENSAT)
 			}
 		}					
 	}
-#line 29228 "main.c"
+#line 29243 "main.c"
 
-#line 29438 "main.c"
+#line 29453 "main.c"
 
 else if(a_ind . i==iTst_TELECORE)
 	{
@@ -33834,7 +33374,7 @@ else if(a_ind . i==iKlimat_kontur)
 			}
 		}
 	}
-#line 30386 "main.c"
+#line 30401 "main.c"
 else if(a_ind . i==iNpn_set)
 	{
 	ret(1000);
@@ -34659,9 +34199,9 @@ lcd_clear();
 rtc_init();
 
 a_ind . i=iMn;
-#line 31229 "main.c"
+#line 31244 "main.c"
 a_ind . i=iMn_220_IPS_TERMOKOMPENSAT;
-#line 31240 "main.c"
+#line 31255 "main.c"
 
 
 
@@ -34700,7 +34240,7 @@ adc_init();
 
 lc640_write_int(100,134);
 
-#line 31284 "main.c"
+#line 31299 "main.c"
 
 
 
@@ -34791,7 +34331,7 @@ if((AUSW_MAIN==2400)||(AUSW_MAIN==4800)||(AUSW_MAIN==6000)||(BAT_TYPE==1))
 
 
 
-#line 31392 "main.c"
+#line 31407 "main.c"
 
 
 cntrl_stat=10*PWM_START;
@@ -34995,7 +34535,7 @@ while (1)
 		ret_hndl();  
 		mess_hndl();
 
-#line 31602 "main.c"
+#line 31617 "main.c"
 		cntrl_hndl();
 
 
@@ -35094,14 +34634,14 @@ while (1)
 		
 		
 
-#line 31712 "main.c"
+#line 31727 "main.c"
 
-#line 31725 "main.c"
+#line 31740 "main.c"
 
 
 
 		speedChargeHndl();
-
+		averageChargeHndl();
 
 
 		can_reset_hndl();

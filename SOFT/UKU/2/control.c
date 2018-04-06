@@ -7500,6 +7500,98 @@ else
 }
 
 //-----------------------------------------------
+void averageChargeHndl(void)
+{
+if(speedChIsOn)
+	{
+	speedChTimeCnt++;
+	if(speedChTimeCnt>=((signed long)speedChrgTimeInHour*3600L))
+		{
+		speedChIsOn=0;
+		}
+	if(speedChrgBlckStat)
+		{
+		speedChIsOn=0;
+		speedChTimeCnt=0;
+		}
+	}
+
+
+
+if(speedChrgAvtEn)
+	{
+	if(!speedChIsOn)
+		{
+		if((load_U<u_necc)&&((u_necc-load_U)>speedChrgDU)&&(abs(Ib_ips_termokompensat/10-IZMAX)<5)&&(!speedChrgBlckStat))
+			{
+			speedChIsOn=1;
+			}
+		}
+	}
+
+
+
+if((speedChrgBlckSrc!=1)&&(speedChrgBlckSrc!=2)) speedChrgBlckStat=0;
+else
+	{
+	speedChrgBlckStat=0;
+	if(speedChrgBlckSrc==1)
+		{
+		if(((speedChrgBlckLog==0)&&(adc_buff_[11]>2000)) || ((speedChrgBlckLog==1)&&(adc_buff_[11]<2000))) speedChrgBlckStat=1;
+		}
+	else if(speedChrgBlckSrc==2)
+		{
+		if(((speedChrgBlckLog==0)&&(adc_buff_[13]>2000)) || ((speedChrgBlckLog==1)&&(adc_buff_[13]<2000))) speedChrgBlckStat=1;
+		}
+	}
+
+
+if(speedChrgBlckStat==1)
+	{
+
+	//speedChargeStartStop();
+
+	speedChrgShowCnt++;
+	if(speedChrgShowCnt>=30)	
+		{
+		speedChrgShowCnt=0;
+		show_mess(	"     УСКОРЕННЫЙ     ",
+					"       ЗАРЯД        ",
+					"     ЗАПРЕЩЕН!!!    ",
+					"                    ",
+					5000);
+		}
+	}
+else speedChrgShowCnt=0;
+
+
+}
+//-----------------------------------------------
+void averageChargeStartStop(void)
+{
+if(speedChIsOn)
+	{
+	speedChIsOn=0;
+	}
+
+else
+	{
+	if(speedChrgBlckStat==0)
+		{
+		speedChIsOn=1;
+		speedChTimeCnt=0;
+		}
+	else
+		{
+		show_mess(	"     Ускоренный     ",
+	          		"       заряд        ",
+	          		"    заблокирован!   ",
+	          		"                    ",2000);	 
+		}
+	}
+}
+
+//-----------------------------------------------
 void	numOfForvardBps_hndl(void)			//Программа смены первого источника для равномерного износа БПСов
 {
 

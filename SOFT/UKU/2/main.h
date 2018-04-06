@@ -1664,6 +1664,11 @@ extern U8 tcp_soc_avg;
 extern U8 tcp_connect_stat;
 
 extern short pvlk;
+
+//-----------------------------------------------
+//Высоковольтный выравнивающий заряд
+enum_hv_vz hv_vz_stat;
+short hv_vz_stat_cnt;
 //-----------------------------------------------
 //Ресурс вентиляторов
 //extern char vent_resurs_temp[4];

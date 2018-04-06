@@ -150,6 +150,8 @@ void zar_superviser_start(void);
 void vent_hndl(void);
 void speedChargeHndl(void);
 void speedChargeStartStop(void);
+void averageChargeHndl(void);
+void averageChargeStartStop(void);
 void numOfForvardBps_init(void);
 void outVoltContrHndl(void);
 
