@@ -3593,7 +3593,7 @@ if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_EXT))
 	}
 else if(DOP_RELE_FUNC==0)	//если допреле подключено к ускоренному заряду
 	{
-	if((!speedChIsOn)&&(spc_stat!=spcVZ)) SET_REG(LPC_GPIO0->FIOCLR,1,9,1);
+	if((!speedChIsOn)&&(spc_stat!=spcVZ)&&(hv_vz_stat==hvsOFF))   SET_REG(LPC_GPIO0->FIOCLR,1,9,1);
 	else SET_REG(LPC_GPIO0->FIOSET,1,9,1);
 	}
 else if(DOP_RELE_FUNC==1)  //если допреле подключено к индиказии разряженной батареи
@@ -5798,7 +5798,10 @@ if(speedChIsOn)
 	{
 	u_necc=speedChrgVolt;
 	}
-
+if(hv_vz_stat==hvsWRK)
+	{
+	u_necc=UVZ;
+	}
 if(mess_find_unvol(MESS2UNECC_HNDL))
 	{		
 	if(mess_data[0]==PARAM_UNECC_SET)
@@ -6606,6 +6609,7 @@ if(iiii==0)
 
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
 if(ica_cntrl_hndl_cnt)	ica_cntrl_hndl_cnt--;
+
 
 
 #endif
@@ -7452,7 +7456,7 @@ else
 		}
 	}
 
-
+/*
 if(speedChrgBlckStat==1)
 	{
 
@@ -7468,8 +7472,8 @@ if(speedChrgBlckStat==1)
 					"                    ",
 					5000);
 		}
-	}
-else speedChrgShowCnt=0;
+	} 
+else speedChrgShowCnt=0;  */
 
 
 }
@@ -7502,6 +7506,113 @@ else
 //-----------------------------------------------
 void averageChargeHndl(void)
 {
+if(hv_vz_stat==hvsOFF)
+	{
+	}
+if(hv_vz_stat==hvsSTEP1)
+	{
+	if(hv_vz_stat_old!=hv_vz_stat)
+		{
+		hv_vz_stat_cnt=5;
+		}
+	if(hv_vz_stat_cnt)
+		{
+		hv_vz_stat_cnt--;
+		if(hv_vz_stat_cnt==0)
+			{
+			hv_vz_stat=hvsERR1; 	//Не включилась вентиляция;
+
+			}
+		}
+	if(sk_stat[0]==1)hv_vz_stat=hvsSTEP2;
+	}
+
+if(hv_vz_stat==hvsSTEP2)
+	{
+	if((hv_vz_stat_old!=hv_vz_stat)||(hv_vz_stat_cnt==0))
+		{
+		hv_vz_stat_cnt=10;
+		}
+	hv_vz_stat_cnt--;
+	if((hv_vz_stat_cnt==10)||(hv_vz_stat_cnt==9))
+		{
+		show_mess(	"     ВКЛЮЧИТЕ       ",
+					"      ТУМБЛЕР       ",
+					"   ВЫРАВНИВАЮЩИЙ    ",
+					"       ЗАРЯД        ",
+					5000);
+		}
+	if(sk_stat[1]==1)hv_vz_stat=hvsWRK;
+	}
+
+if(hv_vz_stat==hvsWRK)
+	{
+	if(hv_vz_stat_old!=hv_vz_stat)
+		{
+		hv_vz_wrk_cnt=100L/*3600L*/*((long)VZ_HR);
+		}
+	hv_vz_wrk_cnt--;
+	if(hv_vz_wrk_cnt==0)
+		{
+		hv_vz_stat=hvsOFF;
+		}
+	if(sk_stat[0]==0)hv_vz_stat=hvsERR2;
+	if(sk_stat[1]==0)hv_vz_stat=hvsERR3;
+	}
+
+if(hv_vz_stat==hvsERR1)		//Отсутствует вентиляция при включении
+	{
+	if((hv_vz_stat_old!=hv_vz_stat)||(hv_vz_stat_cnt==0))
+		{
+		hv_vz_stat_cnt=10;
+		}
+	hv_vz_stat_cnt--;
+	if((hv_vz_stat_cnt==10)||(hv_vz_stat_cnt==9))
+		{
+		show_mess(	"ВЫРАВНИВАЮЩИЙ ЗАРЯД ",
+					"   НЕ МОЖЕТ БЫТЬ    ",
+					"      ВКЛЮЧЕН       ",
+					"  БЕЗ ВЕНТИЛЯЦИИ!!  ",
+					5000);
+		}
+	}
+if(hv_vz_stat==hvsERR2)		//Пропала вентиляция при работе
+	{
+	if((hv_vz_stat_old!=hv_vz_stat)||(hv_vz_stat_cnt==0))
+		{
+		hv_vz_stat_cnt=10;
+		}
+	hv_vz_stat_cnt--;
+	if((hv_vz_stat_cnt==10)||(hv_vz_stat_cnt==9))
+		{
+		show_mess(	"ВЫРАВНИВАЮЩИЙ ЗАРЯД ",
+					"    ЗАБЛОКИРОВАН    ",
+					"     НЕИСПРАВНА     ",
+					"    ВЕНТИЛЯЦИЯ!!!   ",
+					5000);
+		}
+	if(sk_stat[0]==1)hv_vz_stat=hvsWRK;
+	}
+
+if(hv_vz_stat==hvsERR3)		//Отключен тумблер "Выравнивающий заряд"
+	{
+	if((hv_vz_stat_old!=hv_vz_stat)||(hv_vz_stat_cnt==0))
+		{
+		hv_vz_stat_cnt=10;
+		}
+	hv_vz_stat_cnt--;
+	if((hv_vz_stat_cnt==10)||(hv_vz_stat_cnt==9))
+		{
+		show_mess(	"ВЫРАВНИВАЮЩИЙ ЗАРЯД ",
+					"  БУДЕТ ПРОДОЛЖЕН   ",
+					"  ПОСЛЕ ВКЛЮЧЕНИЯ   ",
+					"    ТУМБЛЕРА!!!     ",
+					5000);
+		}
+	if(sk_stat[1]==1)hv_vz_stat=hvsWRK;
+	}
+hv_vz_stat_old=hv_vz_stat;
+/*
 if(speedChIsOn)
 	{
 	speedChTimeCnt++;
@@ -7564,30 +7675,19 @@ if(speedChrgBlckStat==1)
 	}
 else speedChrgShowCnt=0;
 
-
+*/
 }
 //-----------------------------------------------
 void averageChargeStartStop(void)
 {
-if(speedChIsOn)
+if(hv_vz_stat!=hvsOFF)
 	{
-	speedChIsOn=0;
+	hv_vz_stat=hvsOFF;
 	}
 
 else
 	{
-	if(speedChrgBlckStat==0)
-		{
-		speedChIsOn=1;
-		speedChTimeCnt=0;
-		}
-	else
-		{
-		show_mess(	"     Ускоренный     ",
-	          		"       заряд        ",
-	          		"    заблокирован!   ",
-	          		"                    ",2000);	 
-		}
+	hv_vz_stat=hvsSTEP1;
 	}
 }
 

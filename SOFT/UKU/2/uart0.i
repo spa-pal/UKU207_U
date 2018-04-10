@@ -3521,6 +3521,13 @@ extern short pvlk;
 
 
 
+typedef enum  {hvsOFF,hvsSTEP1,hvsSTEP2,hvsSTEP3,hvsSTEP4,hvsWRK,hvsERR1,hvsERR2,hvsERR3} enum_hv_vz_stat;
+extern enum_hv_vz_stat hv_vz_stat,hv_vz_stat_old;
+extern short hv_vz_stat_cnt;
+extern long hv_vz_wrk_cnt;
+
+
+
 
 
 

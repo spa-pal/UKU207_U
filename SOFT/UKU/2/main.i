@@ -1790,6 +1790,13 @@ extern short pvlk;
 
 
 
+typedef enum  {hvsOFF,hvsSTEP1,hvsSTEP2,hvsSTEP3,hvsSTEP4,hvsWRK,hvsERR1,hvsERR2,hvsERR3} enum_hv_vz_stat;
+extern enum_hv_vz_stat hv_vz_stat,hv_vz_stat_old;
+extern short hv_vz_stat_cnt;
+extern long hv_vz_wrk_cnt;
+
+
+
 
 
 
@@ -6264,6 +6271,14 @@ U8 tcp_connect_stat;
 short pvlk;
 char klbr_en;
 
+
+
+enum_hv_vz_stat hv_vz_stat=hvsOFF,hv_vz_stat_old;
+short hv_vz_stat_cnt;
+long hv_vz_wrk_cnt;
+
+
+
 void rtc_init (void) 
 {
 ((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->CCR=0x11;
@@ -6710,7 +6725,7 @@ if(cnt_net_drv<=11)
 	     }
 	}
 
-#line 1237 "main.c"
+#line 1245 "main.c"
 else if(cnt_net_drv==12)
 	{
      if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x62,*((char*)(&UMAX)),*((char*)((&UMAX))+1),*((char*)(&DU)),*((char*)((&DU))+1),0);
@@ -6948,7 +6963,7 @@ else if((cnt_net_drv>=20)&&(cnt_net_drv<20+15))
 	}
 
 
-#line 1490 "main.c"
+#line 1498 "main.c"
 else if(cnt_net_drv==20+16)
 	{
      if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x62,*((char*)(&UMAX)),*((char*)((&UMAX))+1),*((char*)(&DU)),*((char*)((&DU))+1),0);
@@ -7349,9 +7364,9 @@ if(avar_stat&(1<<(3+7)))
 	sub_cnt_max++;	
 	}
 
-#line 1909 "main.c"
+#line 1917 "main.c"
 
-#line 1929 "main.c"
+#line 1937 "main.c"
 
 
 if((sk_av_stat[0]==sasON)&&(NUMSK)&&(!SK_LCD_EN[0]))
@@ -9032,6 +9047,13 @@ else if(a_ind . i==iMn_220_IPS_TERMOKOMPENSAT)
 
 
  
+
+	int2lcdyx(sk_stat[0],0,0,0);
+	int2lcdyx(sk_stat[1],0,1,0);
+	int2lcdyx(hv_vz_stat,0,5,0);
+	int2lcdyx(hv_vz_stat_cnt,0,8,0);
+	int2lcdyx((short)hv_vz_wrk_cnt,0,14,0);
+	int2lcdyx(u_necc,0,19,0);
 	}
 
 else if(a_ind . i==iMn_TELECORE2015)
@@ -11505,7 +11527,7 @@ else if(a_ind . i==iSet_bat_sel)
 	
 	}
 
-#line 6143 "main.c"
+#line 6158 "main.c"
 else if(a_ind . i==iSet)
 	{
      ptrs[0]=		" Ñòàíäàğòíûå        ";
@@ -12199,7 +12221,7 @@ else if(a_ind . i==iSet_TELECORE2015)
 	
 	
 	}
-#line 6952 "main.c"
+#line 6967 "main.c"
 
 else if((a_ind . i==iSet_220))
 	{
@@ -15274,7 +15296,7 @@ if(a_ind . i==iDeb)
      		    	"    !     $         ",
      		    	"    @     %         ",
      		    	"            ^       ");
-#line 10069 "main.c"
+#line 10084 "main.c"
     	}
 
 
@@ -16794,7 +16816,7 @@ else if(a_ind . i==iTst_220_IPS_TERMOKOMPENSAT)
 
  
 	}
-#line 11837 "main.c"
+#line 11852 "main.c"
 else if(a_ind . i==iTst_bps)
 	{
 	if(tst_state[5]==tstOFF)ptrs[0]=		" Âûêëş÷åí           ";
@@ -16970,7 +16992,7 @@ else if(a_ind . i==iKlimat_kontur)
 	
 	int2lcdyx(t_box,0,19,0);	 
 	}
-#line 12145 "main.c"
+#line 12160 "main.c"
 
 else if(a_ind . i==iNpn_set)
 	{
@@ -17307,12 +17329,12 @@ else if (a_ind . i==iIps_Curr_Avg_Set)
 }							    
 
 
-#line 12487 "main.c"
+#line 12502 "main.c"
 
 
 
 
-#line 12510 "main.c"
+#line 12525 "main.c"
 
 
 
@@ -17635,7 +17657,7 @@ else if(a_ind . i==iMn)
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV)))
 			{
-#line 12840 "main.c"
+#line 12855 "main.c"
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV+1)))
 			{
@@ -17649,9 +17671,9 @@ else if(a_ind . i==iMn)
 		     ret(1000);
 			}
 
-#line 12860 "main.c"
+#line 12875 "main.c"
 
-#line 12868 "main.c"
+#line 12883 "main.c"
 
 		else if(a_ind . s_i==(4+NUMBAT+NUMIST+2)+(NUMAVT!=0))
 			{
@@ -19752,9 +19774,9 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==184) 
 				{
 				tree_down(0,0);
-#line 14987 "main.c"
+#line 15002 "main.c"
 				tree_up(iSet_220_IPS_TERMOKOMPENSAT,0,0,0);
-#line 14998 "main.c"
+#line 15013 "main.c"
 				ret(1000);
 				}
 			else 
@@ -19771,7 +19793,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==873) 
 				{
 				tree_down(0,0);
-#line 15045 "main.c"
+#line 15060 "main.c"
 				if((AUSW_MAIN==22033)||(AUSW_MAIN==22018))
 					{
 					tree_up(iK_220_IPS_TERMOKOMPENSAT,0,0,0);
@@ -19785,7 +19807,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 
 				else
 				tree_up(iK_220,0,0,0);
-#line 15065 "main.c"
+#line 15080 "main.c"
 				show_mess(	"Âêëş÷èòå àâò-òû ÑÅÒÜ",
  							"  ÁÀÒÀĞÅß,ÍÀÃĞÓÇÊÀ  ",
  							"   Óñòàíîâèòå òîê   ",
@@ -19845,9 +19867,9 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 			if(tempU==999) 
 				{
 				tree_down(0,0);
-#line 15154 "main.c"
+#line 15169 "main.c"
 				tree_up(iTst_220_IPS_TERMOKOMPENSAT,0,0,0);
-#line 15162 "main.c"
+#line 15177 "main.c"
 				tst_state[0]=tstOFF;
 				tst_state[1]=tstOFF;
 				tst_state[2]=tstOFF;
@@ -19946,7 +19968,7 @@ else if(a_ind . i==iSet_bat_sel)
 
 		}
 	}
-#line 15428 "main.c"
+#line 15443 "main.c"
 else if(a_ind . i==iPrl_bat_in_sel)
 	{
 	ret(1000);
@@ -20479,7 +20501,7 @@ else if(a_ind . i==iSet)
 	     {
 	     if(but==254)
 	          {
-#line 15972 "main.c"
+#line 15987 "main.c"
 	          ret(1000);
 	          default_temp=10;
 	          }
@@ -20501,7 +20523,7 @@ else if(a_ind . i==iSet)
 		{
 		if(but==254)
 		     {
-#line 16018 "main.c"
+#line 16033 "main.c"
 
 
 
@@ -23308,7 +23330,7 @@ else if(a_ind . i==iSet_TELECORE2015)
 			}						
 		}
      }
-#line 19357 "main.c"
+#line 19372 "main.c"
 
 else if((a_ind . i==iSet_220))
 	{
@@ -30372,7 +30394,7 @@ else if(a_ind . i==iK_inv)
 			}
 		}			
 	}
-#line 26567 "main.c"
+#line 26582 "main.c"
 
 else if(a_ind . i==iK_byps)
 	{
@@ -32803,9 +32825,9 @@ else if(a_ind . i==iTst_220_IPS_TERMOKOMPENSAT)
 			}
 		}					
 	}
-#line 29243 "main.c"
+#line 29258 "main.c"
 
-#line 29453 "main.c"
+#line 29468 "main.c"
 
 else if(a_ind . i==iTst_TELECORE)
 	{
@@ -33374,7 +33396,7 @@ else if(a_ind . i==iKlimat_kontur)
 			}
 		}
 	}
-#line 30401 "main.c"
+#line 30416 "main.c"
 else if(a_ind . i==iNpn_set)
 	{
 	ret(1000);
@@ -34199,9 +34221,9 @@ lcd_clear();
 rtc_init();
 
 a_ind . i=iMn;
-#line 31244 "main.c"
+#line 31259 "main.c"
 a_ind . i=iMn_220_IPS_TERMOKOMPENSAT;
-#line 31255 "main.c"
+#line 31270 "main.c"
 
 
 
@@ -34240,7 +34262,7 @@ adc_init();
 
 lc640_write_int(100,134);
 
-#line 31299 "main.c"
+#line 31314 "main.c"
 
 
 
@@ -34331,7 +34353,7 @@ if((AUSW_MAIN==2400)||(AUSW_MAIN==4800)||(AUSW_MAIN==6000)||(BAT_TYPE==1))
 
 
 
-#line 31407 "main.c"
+#line 31422 "main.c"
 
 
 cntrl_stat=10*PWM_START;
@@ -34535,7 +34557,7 @@ while (1)
 		ret_hndl();  
 		mess_hndl();
 
-#line 31617 "main.c"
+#line 31632 "main.c"
 		cntrl_hndl();
 
 
@@ -34634,9 +34656,9 @@ while (1)
 		
 		
 
-#line 31727 "main.c"
+#line 31742 "main.c"
 
-#line 31740 "main.c"
+#line 31755 "main.c"
 
 
 

@@ -1978,6 +1978,13 @@ extern short pvlk;
 
 
 
+typedef enum  {hvsOFF,hvsSTEP1,hvsSTEP2,hvsSTEP3,hvsSTEP4,hvsWRK,hvsERR1,hvsERR2,hvsERR3} enum_hv_vz_stat;
+extern enum_hv_vz_stat hv_vz_stat,hv_vz_stat_old;
+extern short hv_vz_stat_cnt;
+extern long hv_vz_wrk_cnt;
+
+
+
 
 
 
@@ -6765,7 +6772,7 @@ if((mess_find_unvol(210))&&	(mess_data[0]==113))
 	}
 else if(DOP_RELE_FUNC==0)	
 	{
-	if((!speedChIsOn)&&(spc_stat!=spcVZ)) ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR & ~((0xffffffff>>(32-1))<<9)) | (1 << 9) );
+	if((!speedChIsOn)&&(spc_stat!=spcVZ)&&(hv_vz_stat==hvsOFF))   ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOCLR & ~((0xffffffff>>(32-1))<<9)) | (1 << 9) );
 	else ((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET = ( (((LPC_GPIO_TypeDef *) ((0x2009C000UL) + 0x00000) )->FIOSET & ~((0xffffffff>>(32-1))<<9)) | (1 << 9) );
 	}
 else if(DOP_RELE_FUNC==1)  
@@ -8219,7 +8226,10 @@ if(speedChIsOn)
 	{
 	u_necc=speedChrgVolt;
 	}
-
+if(hv_vz_stat==hvsWRK)
+	{
+	u_necc=UVZ;
+	}
 if(mess_find_unvol(190))
 	{		
 	if(mess_data[0]==191)
@@ -8231,7 +8241,7 @@ if(mess_find_unvol(190))
 
 
 
-#line 6186 "control.c"
+#line 6189 "control.c"
 
 temp_L=(signed long) u_necc;
 temp_L*=98L;
@@ -8318,7 +8328,7 @@ if(ch_cnt0<(10*REG_SPEED))
 		b1Hz_ch=1;
 		}
 	}
-#line 6284 "control.c"
+#line 6287 "control.c"
 
 
 if(mess_find_unvol(225))
@@ -8366,7 +8376,7 @@ if(mess_find_unvol(225))
 			if(((u_necc-bps_U)>40)&&(cntrl_stat<1015))cntrl_stat+=5;
 			else	if((cntrl_stat<1020)&&b1Hz_ch)cntrl_stat++;
 			}
-#line 6372 "control.c"
+#line 6375 "control.c"
 	 	}
 	}
 
@@ -8483,7 +8493,7 @@ else if((b1Hz_ch)&&((!bIBAT_SMKLBR)||(bps[8]._cnt>40)))
 		cntrl_stat=cntrl_stat_new+ica_u_necc;
 		}		
 	}
-#line 6588 "control.c"
+#line 6591 "control.c"
 
 iiii=0;
 for(i=0;i<NUMIST;i++)
@@ -8510,14 +8520,15 @@ if(ica_cntrl_hndl_cnt)	ica_cntrl_hndl_cnt--;
 
 
 
+
 gran(&cntrl_stat,10,1010); 
 b1Hz_ch=0;
 }
 
 
-#line 6861 "control.c"
+#line 6865 "control.c"
 
-#line 7105 "control.c"
+#line 7109 "control.c"
 
 
 void ext_drv(void)
@@ -8527,9 +8538,9 @@ char i;
 
 for(i=0;i<NUMSK;i++)
 	{
-#line 7139 "control.c"
+#line 7143 "control.c"
 	if(adc_buff_[sk_buff_220[i]]<2000)
-#line 7147 "control.c"
+#line 7151 "control.c"
 		{
 		if(sk_cnt[i]<10)
 			{
@@ -8632,7 +8643,7 @@ for(i=0;i<NUMSK;i++)
 	 	}
 
 
-#line 7269 "control.c"
+#line 7273 "control.c"
 	sk_av_stat_old[i]=sk_av_stat[i];
 	}
 }
@@ -8820,23 +8831,23 @@ else
 	}
 
 
-if(speedChrgBlckStat==1)
-	{
 
-	
 
-	speedChrgShowCnt++;
-	if(speedChrgShowCnt>=30)	
-		{
-		speedChrgShowCnt=0;
-		show_mess(	"     ÓÑÊÎĞÅÍÍÛÉ     ",
-					"       ÇÀĞßÄ        ",
-					"     ÇÀÏĞÅÙÅÍ!!!    ",
-					"                    ",
-					5000);
-		}
-	}
-else speedChrgShowCnt=0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
 
 
 }
@@ -8869,92 +8880,188 @@ else
 
 void averageChargeHndl(void)
 {
-if(speedChIsOn)
+if(hv_vz_stat==hvsOFF)
 	{
-	speedChTimeCnt++;
-	if(speedChTimeCnt>=((signed long)speedChrgTimeInHour*3600L))
-		{
-		speedChIsOn=0;
-		}
-	if(speedChrgBlckStat)
-		{
-		speedChIsOn=0;
-		speedChTimeCnt=0;
-		}
 	}
-
-
-
-if(speedChrgAvtEn)
+if(hv_vz_stat==hvsSTEP1)
 	{
-	if(!speedChIsOn)
+	if(hv_vz_stat_old!=hv_vz_stat)
 		{
-		if((load_U<u_necc)&&((u_necc-load_U)>speedChrgDU)&&(abs(Ib_ips_termokompensat/10-IZMAX)<5)&&(!speedChrgBlckStat))
+		hv_vz_stat_cnt=5;
+		}
+	if(hv_vz_stat_cnt)
+		{
+		hv_vz_stat_cnt--;
+		if(hv_vz_stat_cnt==0)
 			{
-			speedChIsOn=1;
+			hv_vz_stat=hvsERR1; 	
+
 			}
 		}
+	if(sk_stat[0]==1)hv_vz_stat=hvsSTEP2;
 	}
 
-
-
-if((speedChrgBlckSrc!=1)&&(speedChrgBlckSrc!=2)) speedChrgBlckStat=0;
-else
+if(hv_vz_stat==hvsSTEP2)
 	{
-	speedChrgBlckStat=0;
-	if(speedChrgBlckSrc==1)
+	if((hv_vz_stat_old!=hv_vz_stat)||(hv_vz_stat_cnt==0))
 		{
-		if(((speedChrgBlckLog==0)&&(adc_buff_[11]>2000)) || ((speedChrgBlckLog==1)&&(adc_buff_[11]<2000))) speedChrgBlckStat=1;
+		hv_vz_stat_cnt=10;
 		}
-	else if(speedChrgBlckSrc==2)
+	hv_vz_stat_cnt--;
+	if((hv_vz_stat_cnt==10)||(hv_vz_stat_cnt==9))
 		{
-		if(((speedChrgBlckLog==0)&&(adc_buff_[13]>2000)) || ((speedChrgBlckLog==1)&&(adc_buff_[13]<2000))) speedChrgBlckStat=1;
-		}
-	}
-
-
-if(speedChrgBlckStat==1)
-	{
-
-	
-
-	speedChrgShowCnt++;
-	if(speedChrgShowCnt>=30)	
-		{
-		speedChrgShowCnt=0;
-		show_mess(	"     ÓÑÊÎĞÅÍÍÛÉ     ",
+		show_mess(	"     ÂÊËŞ×ÈÒÅ       ",
+					"      ÒÓÌÁËÅĞ       ",
+					"   ÂÛĞÀÂÍÈÂÀŞÙÈÉ    ",
 					"       ÇÀĞßÄ        ",
-					"     ÇÀÏĞÅÙÅÍ!!!    ",
-					"                    ",
+					5000);
+		}
+	if(sk_stat[1]==1)hv_vz_stat=hvsWRK;
+	}
+
+if(hv_vz_stat==hvsWRK)
+	{
+	if(hv_vz_stat_old!=hv_vz_stat)
+		{
+		hv_vz_wrk_cnt=100L *((long)VZ_HR);
+		}
+	hv_vz_wrk_cnt--;
+	if(hv_vz_wrk_cnt==0)
+		{
+		hv_vz_stat=hvsOFF;
+		}
+	if(sk_stat[0]==0)hv_vz_stat=hvsERR2;
+	if(sk_stat[1]==0)hv_vz_stat=hvsERR3;
+	}
+
+if(hv_vz_stat==hvsERR1)		
+	{
+	if((hv_vz_stat_old!=hv_vz_stat)||(hv_vz_stat_cnt==0))
+		{
+		hv_vz_stat_cnt=10;
+		}
+	hv_vz_stat_cnt--;
+	if((hv_vz_stat_cnt==10)||(hv_vz_stat_cnt==9))
+		{
+		show_mess(	"ÂÛĞÀÂÍÈÂÀŞÙÈÉ ÇÀĞßÄ ",
+					"   ÍÅ ÌÎÆÅÒ ÁÛÒÜ    ",
+					"      ÂÊËŞ×ÅÍ       ",
+					"  ÁÅÇ ÂÅÍÒÈËßÖÈÈ!!  ",
 					5000);
 		}
 	}
-else speedChrgShowCnt=0;
+if(hv_vz_stat==hvsERR2)		
+	{
+	if((hv_vz_stat_old!=hv_vz_stat)||(hv_vz_stat_cnt==0))
+		{
+		hv_vz_stat_cnt=10;
+		}
+	hv_vz_stat_cnt--;
+	if((hv_vz_stat_cnt==10)||(hv_vz_stat_cnt==9))
+		{
+		show_mess(	"ÂÛĞÀÂÍÈÂÀŞÙÈÉ ÇÀĞßÄ ",
+					"    ÇÀÁËÎÊÈĞÎÂÀÍ    ",
+					"     ÍÅÈÑÏĞÀÂÍÀ     ",
+					"    ÂÅÍÒÈËßÖÈß!!!   ",
+					5000);
+		}
+	if(sk_stat[0]==1)hv_vz_stat=hvsWRK;
+	}
+
+if(hv_vz_stat==hvsERR3)		
+	{
+	if((hv_vz_stat_old!=hv_vz_stat)||(hv_vz_stat_cnt==0))
+		{
+		hv_vz_stat_cnt=10;
+		}
+	hv_vz_stat_cnt--;
+	if((hv_vz_stat_cnt==10)||(hv_vz_stat_cnt==9))
+		{
+		show_mess(	"ÂÛĞÀÂÍÈÂÀŞÙÈÉ ÇÀĞßÄ ",
+					"  ÁÓÄÅÒ ÏĞÎÄÎËÆÅÍ   ",
+					"  ÏÎÑËÅ ÂÊËŞ×ÅÍÈß   ",
+					"    ÒÓÌÁËÅĞÀ!!!     ",
+					5000);
+		}
+	if(sk_stat[1]==1)hv_vz_stat=hvsWRK;
+	}
+hv_vz_stat_old=hv_vz_stat;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
 }
 
 void averageChargeStartStop(void)
 {
-if(speedChIsOn)
+if(hv_vz_stat!=hvsOFF)
 	{
-	speedChIsOn=0;
+	hv_vz_stat=hvsOFF;
 	}
 
 else
 	{
-	if(speedChrgBlckStat==0)
-		{
-		speedChIsOn=1;
-		speedChTimeCnt=0;
-		}
-	else
-		{
-		show_mess(	"     Óñêîğåííûé     ",
-	          		"       çàğÿä        ",
-	          		"    çàáëîêèğîâàí!   ",
-	          		"                    ",2000);	 
-		}
+	hv_vz_stat=hvsSTEP1;
 	}
 }
 

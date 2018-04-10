@@ -1667,8 +1667,10 @@ extern short pvlk;
 
 //-----------------------------------------------
 //Высоковольтный выравнивающий заряд
-enum_hv_vz hv_vz_stat;
-short hv_vz_stat_cnt;
+typedef enum  {hvsOFF,hvsSTEP1,hvsSTEP2,hvsSTEP3,hvsSTEP4,hvsWRK,hvsERR1,hvsERR2,hvsERR3} enum_hv_vz_stat;
+extern enum_hv_vz_stat hv_vz_stat,hv_vz_stat_old;
+extern short hv_vz_stat_cnt;
+extern long hv_vz_wrk_cnt;
 //-----------------------------------------------
 //Ресурс вентиляторов
 //extern char vent_resurs_temp[4];

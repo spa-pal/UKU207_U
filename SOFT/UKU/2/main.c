@@ -774,8 +774,9 @@ char klbr_en;
 
 //-----------------------------------------------
 //Высоковольтный выравнивающий заряд
-enum_hv_vz hv_vz_stat;
+enum_hv_vz_stat hv_vz_stat=hvsOFF,hv_vz_stat_old;
 short hv_vz_stat_cnt;
+long hv_vz_wrk_cnt;
 
 
 //-----------------------------------------------
@@ -3613,6 +3614,13 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 	int2lcdyx(plazma1000[5],2,13,0);
 	int2lcdyx(plazma1000[6],2,18,0);
 	int2lcdyx(plazma1000[7],1,18,0);*/
+
+	int2lcdyx(sk_stat[0],0,0,0);
+	int2lcdyx(sk_stat[1],0,1,0);
+	int2lcdyx(hv_vz_stat,0,5,0);
+	int2lcdyx(hv_vz_stat_cnt,0,8,0);
+	int2lcdyx((short)hv_vz_wrk_cnt,0,14,0);
+	int2lcdyx(u_necc,0,19,0);
 	}
 
 else if(ind==iMn_TELECORE2015)
