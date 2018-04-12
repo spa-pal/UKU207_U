@@ -7087,7 +7087,7 @@ if(++ica_timer_cnt>=10)
 		ica_plazma[1]--;
 		ica_u_necc++;
 		}
-	gran(&ica_u_necc,-20,20);
+	gran(&ica_u_necc,-100,100);
 	}
 
 
@@ -8471,8 +8471,8 @@ else if((b1Hz_ch)&&((!bIBAT_SMKLBR)||(bps[8]._cnt>40)))
 		if(ica_cntrl_hndl_cnt)
 			{
 			cntrl_stat = ica_cntrl_hndl;
-			cntrl_stat_new=10*PWM_START;
-			cntrl_stat_old=10*PWM_START;
+			cntrl_stat_new = ica_cntrl_hndl;
+			cntrl_stat_old = ica_cntrl_hndl;
 			}
 		}
 	

@@ -3594,7 +3594,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 	int2lcdyx(cntrl_stat_old,1,3,0);
 	int2lcdyx(ica_cntrl_hndl_cnt,0,8,0);
 	int2lcdyx(ica_cntrl_hndl,0,13,0);
-	int2lcdyx(ica_u_necc+20,0,19,0);
+	int2lcdyx(ica_u_necc+100,0,19,0);
 	int2lcdyx(cntrl_stat,0,3,0);
 	//int2lcdyx(main_kb_cnt,2,3,0);
 /*	int2lcdyx(plazma1000[0],3,3,0);
@@ -12406,6 +12406,14 @@ else if (ind==iIps_Curr_Avg_Set)
 		ptrs[0]=		" Под внешним        ";
 		ptrs[1]=		" управлением        ";
 		simax=2;
+		}
+	else 
+		{
+		ptrs[0]=		" Неопределенность   ";
+		ptrs[1]=		"                    ";
+		ptrs[2]=		"                    ";
+		ptrs[3]=		"                    ";
+		simax=1;
 		}
 	ptrs[simax]=		" Выход              ";
 	

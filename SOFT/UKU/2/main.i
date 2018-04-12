@@ -9018,7 +9018,7 @@ else if(a_ind . i==iMn_220_IPS_TERMOKOMPENSAT)
 	int2lcdyx(cntrl_stat_old,1,3,0);
 	int2lcdyx(ica_cntrl_hndl_cnt,0,8,0);
 	int2lcdyx(ica_cntrl_hndl,0,13,0);
-	int2lcdyx(ica_u_necc+20,0,19,0);
+	int2lcdyx(ica_u_necc+100,0,19,0);
 	int2lcdyx(cntrl_stat,0,3,0);
 	
 
@@ -17234,6 +17234,14 @@ else if (a_ind . i==iIps_Curr_Avg_Set)
 		ptrs[1]=		" управлением        ";
 		simax=2;
 		}
+	else 
+		{
+		ptrs[0]=		" Неопределенность   ";
+		ptrs[1]=		"                    ";
+		ptrs[2]=		"                    ";
+		ptrs[3]=		"                    ";
+		simax=1;
+		}
 	ptrs[simax]=		" Выход              ";
 	
 	if(a_ind . s_i<a_ind . i_s) a_ind . i_s=a_ind . s_i;
@@ -17300,12 +17308,12 @@ else if (a_ind . i==iIps_Curr_Avg_Set)
 }							    
 
 
-#line 12482 "main.c"
+#line 12490 "main.c"
 
 
 
 
-#line 12505 "main.c"
+#line 12513 "main.c"
 
 
 
@@ -17628,7 +17636,7 @@ else if(a_ind . i==iMn)
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV)))
 			{
-#line 12835 "main.c"
+#line 12843 "main.c"
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV+1)))
 			{
@@ -17642,9 +17650,9 @@ else if(a_ind . i==iMn)
 		     ret(1000);
 			}
 
-#line 12855 "main.c"
-
 #line 12863 "main.c"
+
+#line 12871 "main.c"
 
 		else if(a_ind . s_i==(4+NUMBAT+NUMIST+2)+(NUMAVT!=0))
 			{
@@ -19744,9 +19752,9 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==184) 
 				{
 				tree_down(0,0);
-#line 14981 "main.c"
+#line 14989 "main.c"
 				tree_up(iSet_220_IPS_TERMOKOMPENSAT,0,0,0);
-#line 14992 "main.c"
+#line 15000 "main.c"
 				ret(1000);
 				}
 			else 
@@ -19763,7 +19771,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==873) 
 				{
 				tree_down(0,0);
-#line 15039 "main.c"
+#line 15047 "main.c"
 				if((AUSW_MAIN==22033)||(AUSW_MAIN==22018))
 					{
 					tree_up(iK_220_IPS_TERMOKOMPENSAT,0,0,0);
@@ -19777,7 +19785,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 
 				else
 				tree_up(iK_220,0,0,0);
-#line 15059 "main.c"
+#line 15067 "main.c"
 				show_mess(	"Включите авт-ты СЕТЬ",
  							"  БАТАРЕЯ,НАГРУЗКА  ",
  							"   Установите ток   ",
@@ -19837,9 +19845,9 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 			if(tempU==999) 
 				{
 				tree_down(0,0);
-#line 15148 "main.c"
-				tree_up(iTst_220_IPS_TERMOKOMPENSAT,0,0,0);
 #line 15156 "main.c"
+				tree_up(iTst_220_IPS_TERMOKOMPENSAT,0,0,0);
+#line 15164 "main.c"
 				tst_state[0]=tstOFF;
 				tst_state[1]=tstOFF;
 				tst_state[2]=tstOFF;
@@ -19938,7 +19946,7 @@ else if(a_ind . i==iSet_bat_sel)
 
 		}
 	}
-#line 15422 "main.c"
+#line 15430 "main.c"
 else if(a_ind . i==iPrl_bat_in_sel)
 	{
 	ret(1000);
@@ -20471,7 +20479,7 @@ else if(a_ind . i==iSet)
 	     {
 	     if(but==254)
 	          {
-#line 15966 "main.c"
+#line 15974 "main.c"
 	          ret(1000);
 	          default_temp=10;
 	          }
@@ -20493,7 +20501,7 @@ else if(a_ind . i==iSet)
 		{
 		if(but==254)
 		     {
-#line 16012 "main.c"
+#line 16020 "main.c"
 
 
 
@@ -23300,7 +23308,7 @@ else if(a_ind . i==iSet_TELECORE2015)
 			}						
 		}
      }
-#line 19351 "main.c"
+#line 19359 "main.c"
 
 else if((a_ind . i==iSet_220))
 	{
@@ -30355,7 +30363,7 @@ else if(a_ind . i==iK_inv)
 			}
 		}			
 	}
-#line 26552 "main.c"
+#line 26560 "main.c"
 
 else if(a_ind . i==iK_byps)
 	{
@@ -32786,9 +32794,9 @@ else if(a_ind . i==iTst_220_IPS_TERMOKOMPENSAT)
 			}
 		}					
 	}
-#line 29228 "main.c"
+#line 29236 "main.c"
 
-#line 29438 "main.c"
+#line 29446 "main.c"
 
 else if(a_ind . i==iTst_TELECORE)
 	{
@@ -33357,7 +33365,7 @@ else if(a_ind . i==iKlimat_kontur)
 			}
 		}
 	}
-#line 30386 "main.c"
+#line 30394 "main.c"
 else if(a_ind . i==iNpn_set)
 	{
 	ret(1000);
@@ -34182,9 +34190,9 @@ lcd_clear();
 rtc_init();
 
 a_ind . i=iMn;
-#line 31229 "main.c"
+#line 31237 "main.c"
 a_ind . i=iMn_220_IPS_TERMOKOMPENSAT;
-#line 31240 "main.c"
+#line 31248 "main.c"
 
 
 
@@ -34223,7 +34231,7 @@ adc_init();
 
 lc640_write_int(100,134);
 
-#line 31284 "main.c"
+#line 31292 "main.c"
 
 
 
@@ -34314,7 +34322,7 @@ if((AUSW_MAIN==2400)||(AUSW_MAIN==4800)||(AUSW_MAIN==6000)||(BAT_TYPE==1))
 
 
 
-#line 31392 "main.c"
+#line 31400 "main.c"
 
 
 cntrl_stat=10*PWM_START;
@@ -34518,7 +34526,7 @@ while (1)
 		ret_hndl();  
 		mess_hndl();
 
-#line 31602 "main.c"
+#line 31610 "main.c"
 		cntrl_hndl();
 
 
@@ -34617,9 +34625,9 @@ while (1)
 		
 		
 
-#line 31712 "main.c"
+#line 31720 "main.c"
 
-#line 31725 "main.c"
+#line 31733 "main.c"
 
 
 
