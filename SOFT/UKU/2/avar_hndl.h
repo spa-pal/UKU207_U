@@ -14,6 +14,23 @@ extern unsigned avar_stat_new,avar_stat_offed;
 //4бита - внешние датчики температуры
 //4бита - внешние сухие контакты
 
+// oleg_start+
+//Аварии
+extern unsigned rki_avar1_stat;	 	//"Отображение" всех аварийных в данный момент устройств в одном месте
+extern unsigned rki_avar1_ind_stat; 	//"Отображение" всех не просмотренных аварийных устройств в одном месте
+extern unsigned rki_avar1_stat_old;
+extern unsigned rki_avar1_stat_new, rki_avar1_stat_offed;
+
+extern unsigned rki_avarI1_stat;	 	//"Отображение" всех аварийных в данный момент устройств в одном месте
+extern unsigned rki_avarI1_ind_stat; 	//"Отображение" всех не просмотренных аварийных устройств в одном месте
+extern unsigned rki_avarI1_stat_old;
+extern unsigned rki_avarI1_stat_new, rki_avarI1_stat_offed;
+
+extern unsigned rki_avarI2_stat;	 	//"Отображение" всех аварийных в данный момент устройств в одном месте
+extern unsigned rki_avarI2_ind_stat; 	//"Отображение" всех не просмотренных аварийных устройств в одном месте
+extern unsigned rki_avarI2_stat_old;
+extern unsigned rki_avarI2_stat_new, rki_avarI2_stat_offed;
+// oleg_end
 
 void avar_hndl(void);
 void avar_unet_hndl(char in);

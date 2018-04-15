@@ -1151,7 +1151,7 @@ char slave_num;
 //can_debug_plazma[1][2]++;
 can_rotor[1]++;
 
-// oleg_start
+// oleg_start*
 if (RXBUFF[0]==0xE7) {
 	no_rki=0;
 	if(RXBUFF[1]==0) { type_rki=1;

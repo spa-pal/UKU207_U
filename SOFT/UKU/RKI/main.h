@@ -708,7 +708,7 @@
 #endif
 
 //***********************************************
-// oleg_start
+// oleg_start*
 extern unsigned char ver_soft;
 extern unsigned short r_iz_plus, r_iz_minus, r_iz_porog_pred, r_iz_porog_error;
 extern unsigned char v_plus, v_minus, asymmetry;
@@ -769,8 +769,8 @@ extern char cnt_of_slave;
 typedef enum {
 	#ifdef UKU_220_IPS_TERMOKOMPENSAT
 	iMn_220_IPS_TERMOKOMPENSAT,
-	iRKI, iSetRKI, iK_RKI,iK_MOST,//oleg_start
-	iNET_IN, iSetNetIn, iK_Net_In,//oleg_start
+	iRKI, iSetRKI, iK_RKI,iK_MOST,//oleg_start*
+	iNET_IN, iSetNetIn, iK_Net_In,//oleg_start*
 	#endif
 	#ifdef UKU_220
 	iMn_220,

@@ -46,7 +46,7 @@ void lcd_off(void);
 void lcd_out(char* adr);
 
 #line 10 "main.c"
-#line 1 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
+#line 1 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
 
 
 
@@ -66,7 +66,7 @@ void lcd_out(char* adr);
  
 
 
-#line 27 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
+#line 27 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
 
 
 
@@ -88,9 +88,7 @@ typedef unsigned long long U64;
 typedef unsigned char   BIT;
 typedef unsigned int    BOOL;
 
-#line 54 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
-
-#line 66 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
+#line 54 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
 
 
 
@@ -137,7 +135,7 @@ typedef U32 OS_RESULT;
 
 
 
-#line 194 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
+#line 182 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
 
 
 
@@ -154,7 +152,7 @@ extern OS_RESULT rt_tsk_prio   (OS_TID task_id, U8 new_prio);
 extern OS_TID    rt_tsk_create (void (*task)(void), U8 priority, void *stk, void *argv);
 extern OS_RESULT rt_tsk_delete (OS_TID task_id);
 
-#line 230 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
+#line 218 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
 
 extern void      _os_sys_init(U32 p, void (*task)(void), U32 prio_stksz,
                                      void *stk)                        __svc_indirect(0);
@@ -334,10 +332,10 @@ extern int fdefrag (const char *drive);
 
 
  
-#line 415 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
+#line 403 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
 
  
-#line 428 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
+#line 416 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
 
  
 
@@ -346,7 +344,7 @@ extern int fdefrag (const char *drive);
 
 
  
-#line 442 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
+#line 430 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
 
  
 
@@ -396,7 +394,6 @@ extern void dhcp_disable (void);
 extern BOOL igmp_join (U8 *group_ip);
 extern BOOL igmp_leave (U8 *group_ip);
 extern BOOL snmp_trap (U8 *manager_ip, U8 gen_trap, U8 spec_trap, U16 *obj_list);
-extern BOOL snmp_set_community (const char *community);
 
 
 
@@ -420,7 +417,7 @@ extern BOOL snmp_set_community (const char *community);
 
 
  
-#line 1 "C:\\Keil\\ARM\\RV31\\INC\\stdint.h"
+#line 1 "C:\\Keil\\\\ARM\\RV31\\INC\\stdint.h"
  
  
 
@@ -438,7 +435,7 @@ extern BOOL snmp_set_community (const char *community);
 
 
 
-#line 25 "C:\\Keil\\ARM\\RV31\\INC\\stdint.h"
+#line 25 "C:\\Keil\\\\ARM\\RV31\\INC\\stdint.h"
 
 
 
@@ -603,7 +600,7 @@ typedef unsigned       __int64 uintmax_t;
 
 
 
-#line 196 "C:\\Keil\\ARM\\RV31\\INC\\stdint.h"
+#line 196 "C:\\Keil\\\\ARM\\RV31\\INC\\stdint.h"
 
      
 
@@ -636,7 +633,7 @@ typedef unsigned       __int64 uintmax_t;
 
 
 
-#line 260 "C:\\Keil\\ARM\\RV31\\INC\\stdint.h"
+#line 260 "C:\\Keil\\\\ARM\\RV31\\INC\\stdint.h"
 
 
 
@@ -929,7 +926,9 @@ extern char cnt_of_slave;
 typedef enum {
 
 	iMn_220_IPS_TERMOKOMPENSAT,
-#line 750 "main.h"
+	iRKI, iSetRKI, iK_RKI,iK_MOST,
+	iNET_IN, iSetNetIn, iK_Net_In,
+#line 752 "main.h"
 	iMn,iMn_3U,iMn_RSTKM,
 
 
@@ -1655,11 +1654,11 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1483 "main.h"
+#line 1485 "main.h"
 
-#line 1494 "main.h"
+#line 1496 "main.h"
 
-#line 1510 "main.h"
+#line 1512 "main.h"
 
 extern char ext_can_cnt;
 
@@ -1702,11 +1701,11 @@ extern short can_plazma;
 
 
 
-#line 1563 "main.h"
+#line 1565 "main.h"
 
 
 
-#line 1587 "main.h"
+#line 1589 "main.h"
 
 
 
@@ -1787,6 +1786,48 @@ extern U8 tcp_soc_avg;
 extern U8 tcp_connect_stat;
 
 extern short pvlk;
+
+
+
+extern unsigned char ver_soft;
+extern unsigned short r_iz_plus, r_iz_minus, r_iz_porog_pred, r_iz_porog_error;
+extern unsigned char v_plus, v_minus, asymmetry;
+
+extern unsigned int sk1_24;
+extern unsigned short Iddt_porog_pred, Iddt_porog_error, Iddt[24], Rddt[24];
+extern unsigned char count_Iddt; 
+extern unsigned char count_mess_rki;  
+extern unsigned char no_rki;  
+extern unsigned char num_rki; 
+extern unsigned char command_rki; 
+
+extern unsigned int ddt_error, ddt_error_temp; 
+extern unsigned short status_izm_r;	
+extern unsigned int sk_alarm, status_di1, status_di2; 
+extern unsigned char type_rki; 
+extern unsigned char asymmetry_porog;
+extern unsigned short porog_u_in;
+extern unsigned char uku_or_rki; 
+extern unsigned char u_asymmetry_porog_up, u_asymmetry_porog, u_asymmetry_porog_down;
+extern unsigned char kalibr_r_most;
+
+						
+
+extern unsigned short net_in_u1_a, net_in_u1_b, net_in_u1_c, net_in_i1_a, net_in_i1_b, net_in_i1_c;
+extern unsigned short net_in_p1_a, net_in_p1_b, net_in_p1_c, net_in_s1_a, net_in_s1_b, net_in_s1_c; 
+extern unsigned short net_in_f1; 
+extern unsigned short net_in_u2_a, net_in_u2_b, net_in_u2_c, net_in_i2_a, net_in_i2_b, net_in_i2_c;
+extern unsigned short net_in_p2_a, net_in_p2_b, net_in_p2_c, net_in_s2_a, net_in_s2_b, net_in_s2_c; 
+extern unsigned short net_in_f2;
+extern unsigned char count_mess_net_in;  
+extern unsigned char num_net_in; 
+extern unsigned char no_net_in; 
+extern unsigned char command_net_in;
+extern unsigned char priority_net_in;
+extern unsigned short u_min_net_in, u_max_net_in, i_min_net_in;
+extern unsigned char hysteresis_net_in;
+extern unsigned short t_inclusion_net_in, t_shutdown_net_in;
+
 
 
 
@@ -2256,9 +2297,13 @@ void ret_hndl(void);
 
 
 
-#line 156 "eeprom_map.h"
 
-#line 167 "eeprom_map.h"
+
+
+
+#line 160 "eeprom_map.h"
+
+#line 171 "eeprom_map.h"
 
 
 
@@ -2277,34 +2322,34 @@ void ret_hndl(void);
 
  
 
-#line 199 "eeprom_map.h"
+#line 203 "eeprom_map.h"
 
 
 
-#line 211 "eeprom_map.h"
+#line 215 "eeprom_map.h"
 
 
-#line 222 "eeprom_map.h"
-
-
-
-#line 233 "eeprom_map.h"
+#line 226 "eeprom_map.h"
 
 
 
-#line 289 "eeprom_map.h"
-
-
-#line 331 "eeprom_map.h"
+#line 237 "eeprom_map.h"
 
 
 
+#line 293 "eeprom_map.h"
 
+
+#line 335 "eeprom_map.h"
 
 
 
 
-#line 353 "eeprom_map.h"
+
+
+
+
+#line 357 "eeprom_map.h"
 
 
 
@@ -2841,6 +2886,23 @@ extern unsigned avar_stat_new,avar_stat_offed;
 
 
 
+
+extern unsigned rki_avar1_stat;	 	
+extern unsigned rki_avar1_ind_stat; 	
+extern unsigned rki_avar1_stat_old;
+extern unsigned rki_avar1_stat_new, rki_avar1_stat_offed;
+
+extern unsigned rki_avarI1_stat;	 	
+extern unsigned rki_avarI1_ind_stat; 	
+extern unsigned rki_avarI1_stat_old;
+extern unsigned rki_avarI1_stat_new, rki_avarI1_stat_offed;
+
+extern unsigned rki_avarI2_stat;	 	
+extern unsigned rki_avarI2_ind_stat; 	
+extern unsigned rki_avarI2_stat_old;
+extern unsigned rki_avarI2_stat_new, rki_avarI2_stat_offed;
+
+
 void avar_hndl(void);
 void avar_unet_hndl(char in);
 void avar_uout_hndl(char in);
@@ -3166,7 +3228,7 @@ void snmp_cool_20_dtemper_write(int mode);
 
  
 #line 35 "main.c"
-#line 1 "C:\\Keil\\ARM\\RV31\\INC\\net_config.h"
+#line 1 "C:\\Keil\\\\ARM\\RV31\\INC\\net_config.h"
 
 
 
@@ -3181,7 +3243,7 @@ void snmp_cool_20_dtemper_write(int mode);
 
 
 
-#line 16 "C:\\Keil\\ARM\\RV31\\INC\\net_config.h"
+#line 16 "C:\\Keil\\\\ARM\\RV31\\INC\\net_config.h"
 
  
 
@@ -3204,7 +3266,7 @@ void snmp_cool_20_dtemper_write(int mode);
 
 
  
-#line 50 "C:\\Keil\\ARM\\RV31\\INC\\net_config.h"
+#line 50 "C:\\Keil\\\\ARM\\RV31\\INC\\net_config.h"
 
  
 
@@ -3213,7 +3275,7 @@ void snmp_cool_20_dtemper_write(int mode);
 
 
  
-#line 73 "C:\\Keil\\ARM\\RV31\\INC\\net_config.h"
+#line 73 "C:\\Keil\\\\ARM\\RV31\\INC\\net_config.h"
 
  
 
@@ -3508,7 +3570,7 @@ extern U16  ftp_fread (void *file, U8 *buf, U16 len);
 extern U16  ftp_fwrite (void *file, U8 *buf, U16 len);
 extern BOOL ftp_fdelete (U8 *fname);
 extern BOOL ftp_frename (U8 *fname, U8 *newn);
-extern U16  ftp_ffind (U8 code, U8 *buf, U8 *mask, U16 len);
+extern U16  ftp_ffind (U8 *buf, U8 *mask, U16 len);
 
  
 extern void init_dhcp (void);
@@ -4298,7 +4360,9 @@ typedef enum IRQn
 
 
 
-#line 1 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
+#line 1 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
+ 
+
 
 
 
@@ -4356,6 +4420,39 @@ typedef enum IRQn
 
 
 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+#line 91 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
+
+
 
 
 
@@ -4373,37 +4470,7 @@ typedef enum IRQn
 
  
 
- 
- 
- 
- 
- 
- 
- 
- 
-
-
-#line 86 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-#line 112 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
+#line 117 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
 
 
 
@@ -4413,13 +4480,6 @@ typedef enum IRQn
 
 
  
-
-
-
-
-
- 
-
 
 
 
@@ -4429,19 +4489,23 @@ typedef enum IRQn
 typedef struct
 {
   volatile uint32_t ISER[8];                       
-       uint32_t RESERVED0[24];
+       uint32_t RESERVED0[24];                                   
   volatile uint32_t ICER[8];                       
-       uint32_t RSERVED1[24];
+       uint32_t RSERVED1[24];                                    
   volatile uint32_t ISPR[8];                       
-       uint32_t RESERVED2[24];
+       uint32_t RESERVED2[24];                                   
   volatile uint32_t ICPR[8];                       
-       uint32_t RESERVED3[24];
+       uint32_t RESERVED3[24];                                   
   volatile uint32_t IABR[8];                       
-       uint32_t RESERVED4[56];
+       uint32_t RESERVED4[56];                                   
   volatile uint8_t  IP[240];                       
-       uint32_t RESERVED5[644];
+       uint32_t RESERVED5[644];                                  
   volatile  uint32_t STIR;                          
-}  NVIC_Type;
+}  NVIC_Type;                                               
+   
+
+
+
 
 
  
@@ -4466,7 +4530,192 @@ typedef struct
   volatile const  uint32_t ADR;                           
   volatile const  uint32_t MMFR[4];                       
   volatile const  uint32_t ISAR[5];                       
-} SCB_Type;
+} SCB_Type;                                                
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                     
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
+
 
 
  
@@ -4478,6 +4727,41 @@ typedef struct
   volatile const  uint32_t CALIB;                         
 } SysTick_Type;
 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+
+
+
+
+
+   
+
+
+
+
 
  
 typedef struct
@@ -4488,33 +4772,88 @@ typedef struct
     volatile  uint16_t   u16;                       
     volatile  uint32_t   u32;                       
   }  PORT [32];                                
-       uint32_t RESERVED0[864];
+       uint32_t RESERVED0[864];                                 
   volatile uint32_t TER;                           
-       uint32_t RESERVED1[15];
+       uint32_t RESERVED1[15];                                  
   volatile uint32_t TPR;                           
-       uint32_t RESERVED2[15];
+       uint32_t RESERVED2[15];                                  
   volatile uint32_t TCR;                           
-       uint32_t RESERVED3[29];
+       uint32_t RESERVED3[29];                                  
   volatile uint32_t IWR;                           
   volatile uint32_t IRR;                           
   volatile uint32_t IMCR;                          
-       uint32_t RESERVED4[43];
+       uint32_t RESERVED4[43];                                  
   volatile uint32_t LAR;                           
   volatile uint32_t LSR;                           
-       uint32_t RESERVED5[6];
+       uint32_t RESERVED5[6];                                   
   volatile const  uint32_t PID4;                          
-  volatile const  uint32_t PID5;
-  volatile const  uint32_t PID6;
-  volatile const  uint32_t PID7;
-  volatile const  uint32_t PID0;
-  volatile const  uint32_t PID1;
-  volatile const  uint32_t PID2;
-  volatile const  uint32_t PID3;
-  volatile const  uint32_t CID0;
-  volatile const  uint32_t CID1;
-  volatile const  uint32_t CID2;
-  volatile const  uint32_t CID3;
-} ITM_Type;
+  volatile const  uint32_t PID5;                          
+  volatile const  uint32_t PID6;                          
+  volatile const  uint32_t PID7;                          
+  volatile const  uint32_t PID0;                          
+  volatile const  uint32_t PID1;                          
+  volatile const  uint32_t PID2;                          
+  volatile const  uint32_t PID3;                          
+  volatile const  uint32_t CID0;                          
+  volatile const  uint32_t CID1;                          
+  volatile const  uint32_t CID2;                          
+  volatile const  uint32_t CID3;                          
+} ITM_Type;                                                
+
+ 
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+
+
+
+
+
+   
+
+
+
 
 
  
@@ -4529,9 +4868,27 @@ typedef struct
 
 } InterruptType_Type;
 
+ 
+
+
 
  
 
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+ 
 typedef struct
 {
   volatile const  uint32_t TYPE;                          
@@ -4545,7 +4902,74 @@ typedef struct
   volatile uint32_t RASR_A2;                       
   volatile uint32_t RBAR_A3;                       
   volatile uint32_t RASR_A3;                       
-} MPU_Type;
+} MPU_Type;                                                
+
+ 
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
+
 
 
 
@@ -4558,21 +4982,6 @@ typedef struct
   volatile uint32_t DEMCR;                         
 } CoreDebug_Type;
 
-
- 
-#line 274 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
-
-#line 281 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
-
-
-
-
-
-
-
-
-
-
  
 
 
@@ -4580,7 +4989,107 @@ typedef struct
 
 
 
-#line 311 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
+ 
+#line 721 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
+
+#line 728 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
+
+
+
+
+
+
+   
+
+
+
+
+ 
+
+
+
+
+
+#line 758 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
 
 
  
@@ -4591,14 +5100,13 @@ typedef struct
 
 
 
-#line 336 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
+#line 783 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
 
 
  
  
  
  
-
 
 
 
@@ -4617,7 +5125,6 @@ extern uint32_t __get_PSP(void);
 
 
 
-
  
 extern void __set_PSP(uint32_t topOfProcStack);
 
@@ -4628,10 +5135,8 @@ extern void __set_PSP(uint32_t topOfProcStack);
 
 
 
-
  
 extern uint32_t __get_MSP(void);
-
 
 
 
@@ -4664,18 +5169,13 @@ extern uint32_t __REV16(uint16_t value);
 extern int32_t __REVSH(int16_t value);
 
 
-#line 502 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
-
-
-
-
+#line 933 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
 
 
 
 
 
  
-
 
 
 
@@ -4697,15 +5197,12 @@ static __inline uint32_t  __get_BASEPRI(void)
 
 
 
-
  
 static __inline void __set_BASEPRI(uint32_t basePri)
 {
   register uint32_t __regBasePri         __asm("basepri");
-  __regBasePri = (basePri & 0x1ff);
+  __regBasePri = (basePri & 0xff);
 }
-
-
 
 
 
@@ -4726,14 +5223,12 @@ static __inline uint32_t __get_PRIMASK(void)
 
 
 
-
  
 static __inline void __set_PRIMASK(uint32_t priMask)
 {
   register uint32_t __regPriMask         __asm("primask");
   __regPriMask = (priMask);
 }
-
 
 
 
@@ -4754,14 +5249,12 @@ static __inline uint32_t __get_FAULTMASK(void)
 
 
 
-
  
 static __inline void __set_FAULTMASK(uint32_t faultMask)
 {
   register uint32_t __regFaultMask       __asm("faultmask");
   __regFaultMask = (faultMask & 1);
 }
-
 
 
 
@@ -4782,7 +5275,6 @@ static __inline uint32_t __get_CONTROL(void)
 
 
 
-
  
 static __inline void __set_CONTROL(uint32_t control)
 {
@@ -4794,13 +5286,18 @@ static __inline void __set_CONTROL(uint32_t control)
 
 
 
-#line 1044 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
+#line 1445 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
+
+
+
+
 
 
 
  
+ 
 
-
+ 
 
 
 
@@ -4818,12 +5315,13 @@ static __inline void NVIC_SetPriorityGrouping(uint32_t PriorityGroup)
   uint32_t reg_value;
   uint32_t PriorityGroupTmp = (PriorityGroup & 0x07);                          
   
-  reg_value  = ((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR;                                                     
-  reg_value &= ~((0xFFFFU << 16) | (0x0F << 8));                               
-  reg_value  = ((reg_value | (0x5FA << 16) | (PriorityGroupTmp << 8)));   
-  ((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR = reg_value;
+  reg_value  =  ((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR;                                                    
+  reg_value &= ~((0xFFFFul << 16) | (7ul << 8));              
+  reg_value  =  (reg_value                       |
+                (0x5FA << 16) | 
+                (PriorityGroupTmp << 8));                                      
+  ((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR =  reg_value;
 }
-
 
 
 
@@ -4835,9 +5333,8 @@ static __inline void NVIC_SetPriorityGrouping(uint32_t PriorityGroup)
  
 static __inline uint32_t NVIC_GetPriorityGrouping(void)
 {
-  return ((((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR >> 8) & 0x07);                                           
+  return ((((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR & (7ul << 8)) >> 8);    
 }
-
 
 
 
@@ -4851,7 +5348,6 @@ static __inline void NVIC_EnableIRQ(IRQn_Type IRQn)
 {
   ((NVIC_Type *) ((0xE000E000) + 0x0100))->ISER[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F));  
 }
-
 
 
 
@@ -4887,13 +5383,11 @@ static __inline uint32_t NVIC_GetPendingIRQ(IRQn_Type IRQn)
 
 
 
-
  
 static __inline void NVIC_SetPendingIRQ(IRQn_Type IRQn)
 {
   ((NVIC_Type *) ((0xE000E000) + 0x0100))->ISPR[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F));  
 }
-
 
 
 
@@ -4921,7 +5415,6 @@ static __inline uint32_t NVIC_GetActive(IRQn_Type IRQn)
 {
   return((uint32_t)((((NVIC_Type *) ((0xE000E000) + 0x0100))->IABR[(uint32_t)(IRQn) >> 5] & (1 << ((uint32_t)(IRQn) & 0x1F)))?1:0));  
 }
-
 
 
 
@@ -4985,7 +5478,7 @@ static __inline uint32_t NVIC_GetPriority(IRQn_Type IRQn)
  
 static __inline uint32_t NVIC_EncodePriority (uint32_t PriorityGroup, uint32_t PreemptPriority, uint32_t SubPriority)
 {
-  uint32_t PriorityGroupTmp = (PriorityGroup & 0x07);                          
+  uint32_t PriorityGroupTmp = (PriorityGroup & 0x07);           
   uint32_t PreemptPriorityBits;
   uint32_t SubPriorityBits;
 
@@ -5013,11 +5506,10 @@ static __inline uint32_t NVIC_EncodePriority (uint32_t PriorityGroup, uint32_t P
 
 
 
-
  
 static __inline void NVIC_DecodePriority (uint32_t Priority, uint32_t PriorityGroup, uint32_t* pPreemptPriority, uint32_t* pSubPriority)
 {
-  uint32_t PriorityGroupTmp = (PriorityGroup & 0x07);                          
+  uint32_t PriorityGroupTmp = (PriorityGroup & 0x07);           
   uint32_t PreemptPriorityBits;
   uint32_t SubPriorityBits;
 
@@ -5034,12 +5526,6 @@ static __inline void NVIC_DecodePriority (uint32_t Priority, uint32_t PriorityGr
 
 
 
- 
-
-
-
-
-
 
 
 
@@ -5052,13 +5538,15 @@ static __inline void NVIC_DecodePriority (uint32_t Priority, uint32_t PriorityGr
  
 static __inline uint32_t SysTick_Config(uint32_t ticks)
 { 
-  if (ticks > ((1<<24) -1))  return (1);                                              
-
-  ((SysTick_Type *) ((0xE000E000) + 0x0010))->LOAD  =  (ticks & ((1<<24) -1)) - 1;                                       
-  NVIC_SetPriority (SysTick_IRQn, (1<<5) - 1);                             
-  ((SysTick_Type *) ((0xE000E000) + 0x0010))->VAL   =  (0x00);                                                               
-  ((SysTick_Type *) ((0xE000E000) + 0x0010))->CTRL = (1 << 2) | (1<<0) | (1<<1);  
-  return (0);                                                                             
+  if (ticks > (0xFFFFFFul << 0))  return (1);             
+                                                               
+  ((SysTick_Type *) ((0xE000E000) + 0x0010))->LOAD  = (ticks & (0xFFFFFFul << 0)) - 1;       
+  NVIC_SetPriority (SysTick_IRQn, (1<<5) - 1);   
+  ((SysTick_Type *) ((0xE000E000) + 0x0010))->VAL   = 0;                                           
+  ((SysTick_Type *) ((0xE000E000) + 0x0010))->CTRL  = (1ul << 2) | 
+                   (1ul << 1)   | 
+                   (1ul << 0);                     
+  return (0);                                                   
 }
 
 
@@ -5066,11 +5554,7 @@ static __inline uint32_t SysTick_Config(uint32_t ticks)
 
 
 
-
  
-
-
-
 
 
 
@@ -5079,13 +5563,29 @@ static __inline uint32_t SysTick_Config(uint32_t ticks)
  
 static __inline void NVIC_SystemReset(void)
 {
-  ((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR  = ((0x5FA << 16) | (((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR & (0x700)) | (1<<2));  
-  __dsb(0);                                                                                            
-  while(1);                                                                             
+  ((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR  = ((0x5FA << 16)      | 
+                 (((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR & (7ul << 8)) | 
+                 (1ul << 2));                    
+  __dsb(0);                                                                    
+  while(1);                                                     
 }
+
+   
+
 
 
  
+
+
+
+
+
+
+ 
+ 
+
+extern volatile int ITM_RxBuffer;                     
+
 
 
 
@@ -5100,11 +5600,9 @@ static __inline void NVIC_SystemReset(void)
  
 static __inline uint32_t ITM_SendChar (uint32_t ch)
 {
-  if (ch == '\n') ITM_SendChar('\r');
-  
-  if ((((CoreDebug_Type *) (0xE000EDF0))->DEMCR & (1 << 24))  &&
-      (((ITM_Type *) (0xE0000000))->TCR & 1)                  &&
-      (((ITM_Type *) (0xE0000000))->TER & (1UL << 0))  ) 
+  if ((((CoreDebug_Type *) (0xE000EDF0))->DEMCR & (1ul << 24))  &&       
+      (((ITM_Type *) (0xE0000000))->TCR & (1ul << 0))                  &&       
+      (((ITM_Type *) (0xE0000000))->TER & (1ul << 0)        )                    )      
   {
     while (((ITM_Type *) (0xE0000000))->PORT[0].u32 == 0);
     ((ITM_Type *) (0xE0000000))->PORT[0].u8 = (uint8_t) ch;
@@ -5115,6 +5613,50 @@ static __inline uint32_t ITM_SendChar (uint32_t ch)
 
 
 
+
+
+
+
+
+
+ 
+static __inline int ITM_ReceiveChar (void) {
+  int ch = -1;                                
+
+  if (ITM_RxBuffer != 0x5AA55AA5) {
+    ch = ITM_RxBuffer;
+    ITM_RxBuffer = 0x5AA55AA5;        
+  }
+  
+  return (ch); 
+}
+
+
+
+
+
+
+
+
+
+ 
+static __inline int ITM_CheckChar (void) {
+
+  if (ITM_RxBuffer == 0x5AA55AA5) {
+    return (0);                                  
+  } else {
+    return (1);                                  
+  }
+}
+
+   
+
+
+
+
+
+
+   
 
 
 
@@ -6262,6 +6804,46 @@ U8 tcp_connect_stat;
 short pvlk;
 char klbr_en;
 
+
+
+unsigned char ver_soft;
+unsigned short r_iz_plus, r_iz_minus, r_iz_porog_pred, r_iz_porog_error;
+unsigned char v_plus, v_minus, asymmetry;
+unsigned int sk1_24;
+unsigned short Iddt_porog_pred, Iddt_porog_error, Iddt[24], Rddt[24];
+unsigned char count_Iddt; 
+unsigned char count_mess_rki;  
+unsigned char no_rki; 
+unsigned char num_rki; 
+unsigned char command_rki; 
+unsigned int ddt_error, ddt_error_temp; 
+unsigned short status_izm_r;	
+unsigned int sk_alarm, status_di1, status_di2; 
+unsigned char type_rki; 
+unsigned char asymmetry_porog;
+unsigned short porog_u_in;
+unsigned char uku_or_rki; 
+unsigned char u_asymmetry_porog_up, u_asymmetry_porog, u_asymmetry_porog_down;
+unsigned char kalibr_r_most;
+
+						
+unsigned short net_in_u1_a, net_in_u1_b, net_in_u1_c, net_in_i1_a, net_in_i1_b, net_in_i1_c;
+unsigned short net_in_p1_a, net_in_p1_b, net_in_p1_c, net_in_s1_a, net_in_s1_b, net_in_s1_c; 
+unsigned short net_in_f1; 
+unsigned short net_in_u2_a, net_in_u2_b, net_in_u2_c, net_in_i2_a, net_in_i2_b, net_in_i2_c;
+unsigned short net_in_p2_a, net_in_p2_b, net_in_p2_c, net_in_s2_a, net_in_s2_b, net_in_s2_c; 
+unsigned short net_in_f2;
+unsigned char count_mess_net_in;  
+unsigned char num_net_in; 
+unsigned char no_net_in; 
+unsigned char command_net_in;
+unsigned char priority_net_in;
+unsigned short u_min_net_in, u_max_net_in, i_min_net_in;
+unsigned char hysteresis_net_in;
+unsigned short t_inclusion_net_in, t_shutdown_net_in;
+
+
+
 void rtc_init (void) 
 {
 ((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->CCR=0x11;
@@ -6659,7 +7241,7 @@ max_net_slot=20+NUMINV+8;
 
 if(++cnt_net_drv>max_net_slot) 
 	{
-	cnt_net_drv=0;
+	cnt_net_drv=-2;
 	
 	
 	if(bCAN_INV)bCAN_INV=0;
@@ -6708,7 +7290,7 @@ if(cnt_net_drv<=11)
 	     }
 	}
 
-#line 1237 "main.c"
+#line 1277 "main.c"
 else if(cnt_net_drv==12)
 	{
      if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x62,*((char*)(&UMAX)),*((char*)((&UMAX))+1),*((char*)(&DU)),*((char*)((&DU))+1),0);
@@ -6770,6 +7352,89 @@ else if(cnt_net_drv==19)
 		else li_bat._canError=1;
 		}
      }
+
+
+
+else if( num_net_in && cnt_net_drv==-2) 
+	{
+     if(!bCAN_OFF)
+		{
+		mcp2515_transmit(0xE6,0xE6,count_mess_net_in,command_net_in,0,0,0,0);
+		command_net_in=0;
+		++count_mess_net_in;
+		if(count_mess_net_in>5) count_mess_net_in=0;
+		if(no_net_in<10) ++no_net_in;
+		else {
+			net_in_u1_a=0;
+			net_in_u1_b=0;
+			net_in_u1_c=0;
+			net_in_i1_a=0;
+			net_in_i1_b=0;
+			net_in_i1_c=0;
+			net_in_p1_a=0;
+			net_in_p1_b=0;
+			net_in_p1_c=0;
+			net_in_s1_a=0;
+			net_in_s1_b=0;
+			net_in_s1_c=0;
+			net_in_f1=0; 
+			net_in_u2_a=0;
+			net_in_u2_b=0;
+			net_in_u2_c=0;
+			net_in_i2_a=0;
+			net_in_i2_b=0;
+			net_in_i2_c=0;
+			net_in_p2_a=0;
+			net_in_p2_b=0;
+			net_in_p2_c=0;
+			net_in_s2_a=0;
+			net_in_s2_b=0;
+			net_in_s2_c=0;
+			net_in_f2=0;
+			priority_net_in=0;
+			u_min_net_in=0; 
+			u_max_net_in=0; 
+			i_min_net_in=0;
+			hysteresis_net_in=0;
+			t_inclusion_net_in=0;
+			t_shutdown_net_in=0;
+		}
+		}
+     }
+else if( num_rki && cnt_net_drv==-1) 
+	{
+     if(!bCAN_OFF)
+		{
+		
+		mcp2515_transmit(0xE7,0xE7,count_mess_rki,command_rki,0,0,0,0);
+		command_rki=0;
+		++count_mess_rki;
+		if( (type_rki==1 && count_mess_rki>11) || (type_rki==0 && count_mess_rki>1) ) count_mess_rki=0;
+		if(no_rki<15) ++no_rki;
+		else{
+			char v;
+			r_iz_plus=0;
+			r_iz_minus=0;
+			r_iz_porog_pred=0;
+			r_iz_porog_error=0;
+			v_plus=0;
+			v_minus=0;
+			asymmetry=0;
+			Iddt_porog_pred=0;
+			Iddt_porog_error=0;
+			for(v=0;v<24;v++) {Iddt[v]=0; Rddt[v]=0;}
+			status_izm_r=0;
+			sk_alarm=0;
+			status_di1=0;
+			status_di2=0;
+		}
+		}
+     }
+		
+
+	
+
+
 	
 	
 else if((cnt_net_drv>=20)&&(cnt_net_drv<20+15))
@@ -6946,7 +7611,7 @@ else if((cnt_net_drv>=20)&&(cnt_net_drv<20+15))
 	}
 
 
-#line 1490 "main.c"
+#line 1613 "main.c"
 else if(cnt_net_drv==20+16)
 	{
      if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x62,*((char*)(&UMAX)),*((char*)((&UMAX))+1),*((char*)(&DU)),*((char*)((&DU))+1),0);
@@ -7259,8 +7924,10 @@ else
 void ind_hndl(void)
 {
 
-const char* ptrs[60];
-const char* sub_ptrs[50];
+
+
+const char* ptrs[90];		
+const char* sub_ptrs[250];	
 static char sub_cnt,sub_cnt1;
 char i,sub_cnt_max;
 char ii_;				  
@@ -7347,9 +8014,9 @@ if(avar_stat&(1<<(3+7)))
 	sub_cnt_max++;	
 	}
 
-#line 1909 "main.c"
+#line 2034 "main.c"
 
-#line 1929 "main.c"
+#line 2054 "main.c"
 
 
 if((sk_av_stat[0]==sasON)&&(NUMSK)&&(!SK_LCD_EN[0]))
@@ -7415,6 +8082,331 @@ if(bps[0]._av&(1<<4))
 	sub_ptrs[i++]=	"     èñ÷åðïàí       ";
 	sub_cnt_max++;		
 	}
+
+
+
+
+
+
+
+
+if(status_izm_r&0x02){
+	sub_ptrs[i++]=	"ÐÊÈ  Rèç+ <Ràâàðèè  ";
+	sub_cnt_max++;
+}
+else if(status_izm_r&0x01){
+	sub_ptrs[i++]=	"ÐÊÈ  Rèç+ <Rïðåäóïð.";
+	sub_cnt_max++;
+}
+
+if(status_izm_r&0x08){
+	sub_ptrs[i++]=	"ÐÊÈ  Rèç- <Ràâàðèè  ";
+	sub_cnt_max++;
+}
+else if(status_izm_r&0x04){
+	sub_ptrs[i++]=	"ÐÊÈ  Rèç- <Rïðåäóïð.";
+	sub_cnt_max++;
+}
+
+if(status_izm_r&0x0710){
+	sub_ptrs[i++]=	"ÐÊÈ  àñèììåòðèÿ     ";
+	sub_cnt_max++;
+}
+if(status_izm_r&0x20){
+	sub_ptrs[i++]=	"ÐÊÈ  Uøèíû<Uìèí     ";
+	sub_cnt_max++;
+}
+
+if(sk_alarm&0x01){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ1     ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x02){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ2     ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x04){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ3     ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x08){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ4     ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x10){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ5     ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x20){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ6     ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x40){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ7     ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x80){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ8     ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x100){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ9     ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x200){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ10    ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x400){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ11    ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x800){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ12    ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x1000){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ13    ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x2000){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ14    ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x4000){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ15    ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x8000){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ16    ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x10000){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ17    ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x20000){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ18    ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x40000){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ19    ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x80000){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ20    ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x100000){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ21    ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x200000){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ22    ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x400000){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ23    ";
+	sub_cnt_max++;
+}
+if(sk_alarm&0x800000){
+	sub_ptrs[i++]=	"ÐÊÈ  àâàðèÿ ÑÊ24    ";
+	sub_cnt_max++;
+}
+
+if(status_di2&0x01){
+	sub_ptrs[i++]=	"ÐÊÈ I1ääò > Iàâàðèè ";
+	sub_cnt_max++;
+}
+else if(status_di1&0x01){
+	sub_ptrs[i++]=	"ÐÊÈ I1ääò > Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x02){
+	sub_ptrs[i++]=	"ÐÊÈ I2ääò > Iàâàðèè ";
+	sub_cnt_max++;
+}
+else if(status_di1&0x02){
+	sub_ptrs[i++]=	"ÐÊÈ I2ääò > Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x04){
+	sub_ptrs[i++]=	"ÐÊÈ I3ääò > Iàâàðèè ";
+	sub_cnt_max++;
+}
+else if(status_di1&0x04){
+	sub_ptrs[i++]=	"ÐÊÈ I3ääò > Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x08){
+	sub_ptrs[i++]=	"ÐÊÈ I4ääò > Iàâàðèè ";
+	sub_cnt_max++;
+}
+else if(status_di1&0x08){
+	sub_ptrs[i++]=	"ÐÊÈ I4ääò > Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x10){
+	sub_ptrs[i++]=	"ÐÊÈ I5ääò > Iàâàðèè ";
+	sub_cnt_max++;
+}
+else if(status_di1&0x10){
+	sub_ptrs[i++]=	"ÐÊÈ I5ääò > Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x20){
+	sub_ptrs[i++]=	"ÐÊÈ I6ääò > Iàâàðèè ";
+	sub_cnt_max++;
+}
+else if(status_di1&0x20){
+	sub_ptrs[i++]=	"ÐÊÈ I6ääò > Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x40){
+	sub_ptrs[i++]=	"ÐÊÈ I7ääò > Iàâàðèè ";
+	sub_cnt_max++;
+}
+else if(status_di1&0x40){
+	sub_ptrs[i++]=	"ÐÊÈ I7ääò > Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x80){
+	sub_ptrs[i++]=	"ÐÊÈ I8ääò > Iàâàðèè ";
+	sub_cnt_max++;
+}
+else if(status_di1&0x80){
+	sub_ptrs[i++]=	"ÐÊÈ I8ääò > Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x100){
+	sub_ptrs[i++]=	"ÐÊÈ I9ääò > Iàâàðèè ";
+	sub_cnt_max++;
+}
+else if(status_di1&0x100){
+	sub_ptrs[i++]=	"ÐÊÈ I9ääò > Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x200){
+	sub_ptrs[i++]=	"ÐÊÈ I10ääò > Iàâàðèè";
+	sub_cnt_max++;
+}
+else if(status_di1&0x200){
+	sub_ptrs[i++]=	"ÐÊÈ I10ääò >Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x400){
+	sub_ptrs[i++]=	"ÐÊÈ I11ääò > Iàâàðèè";
+	sub_cnt_max++;
+}
+else if(status_di1&0x400){
+	sub_ptrs[i++]=	"ÐÊÈ I11ääò >Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x800){
+	sub_ptrs[i++]=	"ÐÊÈ I12ääò > Iàâàðèè";
+	sub_cnt_max++;
+}
+else if(status_di1&0x800){
+	sub_ptrs[i++]=	"ÐÊÈ I12ääò >Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x1000){
+	sub_ptrs[i++]=	"ÐÊÈ I13ääò > Iàâàðèè";
+	sub_cnt_max++;
+}
+else if(status_di1&0x1000){
+	sub_ptrs[i++]=	"ÐÊÈ I13ääò >Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x2000){
+	sub_ptrs[i++]=	"ÐÊÈ I14ääò > Iàâàðèè";
+	sub_cnt_max++;
+}
+else if(status_di1&0x2000){
+	sub_ptrs[i++]=	"ÐÊÈ I14ääò >Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x4000){
+	sub_ptrs[i++]=	"ÐÊÈ I15ääò > Iàâàðèè";
+	sub_cnt_max++;
+}
+else if(status_di1&0x4000){
+	sub_ptrs[i++]=	"ÐÊÈ I15ääò >Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x8000){
+	sub_ptrs[i++]=	"ÐÊÈ I16ääò > Iàâàðèè";
+	sub_cnt_max++;
+}
+else if(status_di1&0x8000){
+	sub_ptrs[i++]=	"ÐÊÈ I16ääò >Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x10000){
+	sub_ptrs[i++]=	"ÐÊÈ I17ääò > Iàâàðèè";
+	sub_cnt_max++;
+}
+else if(status_di1&0x10000){
+	sub_ptrs[i++]=	"ÐÊÈ I17ääò >Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x20000){
+	sub_ptrs[i++]=	"ÐÊÈ I18ääò > Iàâàðèè";
+	sub_cnt_max++;
+}
+else if(status_di1&0x20000){
+	sub_ptrs[i++]=	"ÐÊÈ I18ääò >Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x40000){
+	sub_ptrs[i++]=	"ÐÊÈ I19ääò > Iàâàðèè";
+	sub_cnt_max++;
+}
+else if(status_di1&0x40000){
+	sub_ptrs[i++]=	"ÐÊÈ I19ääò >Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x80000){
+	sub_ptrs[i++]=	"ÐÊÈ I20ääò > Iàâàðèè";
+	sub_cnt_max++;
+}
+else if(status_di1&0x80000){
+	sub_ptrs[i++]=	"ÐÊÈ I20ääò >Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x100000){
+	sub_ptrs[i++]=	"ÐÊÈ I21ääò > Iàâàðèè";
+	sub_cnt_max++;
+}
+else if(status_di1&0x100000){
+	sub_ptrs[i++]=	"ÐÊÈ I21ääò >Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x200000){
+	sub_ptrs[i++]=	"ÐÊÈ I22ääò > Iàâàðèè";
+	sub_cnt_max++;
+}
+else if(status_di1&0x200000){
+	sub_ptrs[i++]=	"ÐÊÈ I22ääò >Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x400000){
+	sub_ptrs[i++]=	"ÐÊÈ I23ääò > Iàâàðèè";
+	sub_cnt_max++;
+}
+else if(status_di1&0x400000){
+	sub_ptrs[i++]=	"ÐÊÈ I23ääò >Iïðåäóïð";
+	sub_cnt_max++;
+}
+if(status_di2&0x800000){
+	sub_ptrs[i++]=	"ÐÊÈ I24ääò > Iàâàðèè";
+	sub_cnt_max++;
+}
+else if(status_di1&0x800000){
+	sub_ptrs[i++]=	"ÐÊÈ I24ääò >Iïðåäóïð";
+	sub_cnt_max++;
+}
+
 
 
 cnt_of_slave=NUMIST+NUMINV;
@@ -8882,7 +9874,8 @@ else if(a_ind . i==iMn_220_IPS_TERMOKOMPENSAT)
  	
 	ptrs[1]="Uâûïð   ]Â Iâûïð  @À";	
 	ptrs[2]="Uøèíû   #Â Iáàò   $À";
-    ptrs[3]=" 0%:0^:0& 0</>  /0{ ";
+    
+	ptrs[3]=" 0%:0^:0& 0z/w  /0{ ";	  
 	ptrs[4]="     Tá    ?°C      ";
 
 
@@ -8912,17 +9905,24 @@ else if(a_ind . i==iMn_220_IPS_TERMOKOMPENSAT)
  
     ptrs[5+NUMIST ]= 				" Ñåòü               "; 
 
-    ptrs[6+NUMIST ]= 				" Âíåøíèå äàò÷èêè    ";
-	ptrs[6+NUMIST +(NUMEXT!=0)]= 	" Óñêîðåííûé çàðÿä   ";
+	
+	ptrs[6+NUMIST]=	" Ñåòåâûå ââîäû      ";
+	ptrs[6+NUMIST+(num_net_in!=0)]=	" Êîíòðîëü èçîëÿöèè  ";
+	
+
+
+
+    ptrs[6+NUMIST +(num_rki!=0)+(num_net_in!=0)]= 				" Âíåøíèå äàò÷èêè    ";
+	ptrs[6+NUMIST +(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)]= 	" Óñêîðåííûé çàðÿä   ";
 	if((speedChIsOn)&&(bFL))ptrs[6+NUMIST +(NUMEXT!=0)]= 	"                     "; 
- 	ptrs[7+NUMIST +(NUMEXT!=0)]= 	" Ñïåöôóíêöèè    	 ";
-    ptrs[8+NUMIST +(NUMEXT!=0)]= 	" Óñòàíîâêè          "; 
-    ptrs[9+NUMIST +(NUMEXT!=0)]= 	" Æóðíàë ñîáûòèé     "; 
-    ptrs[10+NUMIST +(NUMEXT!=0)]= 	" Âûõîä              "; 
+ 	ptrs[7+NUMIST +(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)]= 	" Ñïåöôóíêöèè    	 ";
+    ptrs[8+NUMIST +(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)]= 	" Óñòàíîâêè          "; 
+    ptrs[9+NUMIST +(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)]= 	" Æóðíàë ñîáûòèé     "; 
+    ptrs[10+NUMIST +(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)]= 	" Âûõîä              "; 
     
     
-	ptrs[11+NUMIST +(NUMEXT!=0)]=	" Òåñò               ";
-	ptrs[12+NUMIST +(NUMEXT!=0)]=	" Òàáëèöà èñòî÷íèêîâ ";
+	ptrs[11+NUMIST +(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)]=	" Òåñò               ";
+	ptrs[12+NUMIST +(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)]=	" Òàáëèöà èñòî÷íèêîâ ";
 
     if(a_ind . s_i==0)a_ind . i_s=0;
 	else if((a_ind . i_s-a_ind . s_i)>2)a_ind . i_s=a_ind . s_i+2;
@@ -8963,9 +9963,9 @@ else if(a_ind . i==iMn_220_IPS_TERMOKOMPENSAT)
 	int2lcd(((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->HOUR,'%',0);
 	int2lcd(((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MIN,'^',0);
 	int2lcd(((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->SEC,'&',0);
-	int2lcd(((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->DOM,'<',0);
+	int2lcd(((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->DOM,'z',0);   
 	int2lcd(((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->YEAR,'{',0); 
-	sub_bgnd(sm_mont[((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MONTH],'>',0);
+	sub_bgnd(sm_mont[((LPC_RTC_TypeDef *) ((0x40000000UL) + 0x24000) )->MONTH],'w',0);  
 
  	if(bFL2)
  	     {
@@ -11502,7 +12502,7 @@ else if(a_ind . i==iSet_bat_sel)
 	
 	}
 
-#line 6142 "main.c"
+#line 6600 "main.c"
 else if(a_ind . i==iSet)
 	{
      ptrs[0]=		" Ñòàíäàðòíûå        ";
@@ -12196,7 +13196,7 @@ else if(a_ind . i==iSet_TELECORE2015)
 	
 	
 	}
-#line 6951 "main.c"
+#line 7409 "main.c"
 
 else if((a_ind . i==iSet_220))
 	{
@@ -12439,9 +13439,12 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 	ptrs[48]=		" áàòàðåè - )        ";
 	ptrs[49]=		" Ñêîðîñòü ðåãóëèð.  ";
 	ptrs[50]=		"    &               ";
-    ptrs[51]=		" Âûõîä              ";
-    ptrs[52]=		" Êàëèáðîâêè         "; 
-    ptrs[53]=		"                    ";        
+    ptrs[51]=		" ÐÊÈ                "; 
+	ptrs[51+(num_rki!=0)]=						" Ñåòåâûå ââîäû      "; 
+	ptrs[51+(num_rki!=0)+(num_net_in!=0)]=		" Âûõîä              ";	
+    ptrs[52+(num_rki!=0)+(num_net_in!=0)]=		" Êàëèáðîâêè         "; 
+    ptrs[53+(num_rki!=0)+(num_net_in!=0)]=		"                    "; 
+       
 	
 	if((a_ind . s_i-a_ind . i_s)>2)a_ind . i_s=a_ind . s_i-2;
 	else if(a_ind . s_i<a_ind . i_s)a_ind . i_s=a_ind . s_i;
@@ -13739,6 +14742,10 @@ else if(a_ind . i==iK_220_IPS_TERMOKOMPENSAT)
 	ptrs[i++]=" Âûõîäíûå ïàðàìåòðû ";
      if(NUMDT)
      ptrs[i++]=" Âíåøíèå äàò÷èêè    ";
+	if(num_rki)						  
+	ptrs[i++]=" ÐÊÈ                ";
+	if(num_net_in)
+	ptrs[i++]=" Ñåòåâûå ââîäû      "; 
      ptrs[i++]=" Âûõîä              ";
      ptrs[i++]="                    ";
      ptrs[i++]="                    ";
@@ -15267,7 +16274,7 @@ if(a_ind . i==iDeb)
      		    	"    !     $         ",
      		    	"    @     %         ",
      		    	"            ^       ");
-#line 10064 "main.c"
+#line 10529 "main.c"
     	}
 
 
@@ -15447,6 +16454,7 @@ else if((a_ind . i==iAv_view)||(a_ind . i==iAv_view_avt))
 
 	
 	bgnd_par(sm_,sm_,sm_,sm_);
+if(uku_or_rki==0){	
 	if(a_ind . s_i==0)
 		{	
 		if(avar_stat&0x00000001)
@@ -15462,7 +16470,7 @@ else if((a_ind . i==iAv_view)||(a_ind . i==iAv_view_avt))
 	    				"     óñòðàíåíà      ",
 					sm_,sm_); 
 			}
-		}
+		}										
 	else if((a_ind . s_i==1)||(a_ind . s_i==2))
 		{
 		if(avar_stat&(1<<a_ind . s_i))
@@ -15497,6 +16505,7 @@ else if((a_ind . i==iAv_view)||(a_ind . i==iAv_view_avt))
 		int2lcd((a_ind . s_i-2),'+',0);
           
 		
+		  
 
 		} 
 		
@@ -15640,9 +16649,162 @@ else if((a_ind . i==iAv_view)||(a_ind . i==iAv_view_avt))
 	else if(a_ind . s_i==15)
 		{
 
+		}
+}
+
+else if(uku_or_rki==1){	
+
+	if(a_ind . s_i==0) { 
+		if( rki_avar1_stat&1){
+			bgnd_par(	"    Àâàðèÿ ÐÊÈ      ",
+				    	"    Rèç+ < Rïðåä    ",
+						"    íå óñòðàíåíà    ",
+				    	sm_); 
+			}
+    	else {
+	    		bgnd_par(	"    Àâàðèÿ ÐÊÈ      ",
+							"    Rèç+ < Rïðåä    ",
+	    				    "     óñòðàíåíà      ",
+					     	sm_);		
+		}
+	}
+	else if(a_ind . s_i==1) { 
+		if( rki_avar1_stat&0x02){
+			bgnd_par(	"    Àâàðèÿ ÐÊÈ      ",
+				    	"    Rèç+ < Ràâàðèè  ",
+						"    íå óñòðàíåíà    ",
+				    	sm_); 
+		}
+    	else {
+	    		bgnd_par(	"    Àâàðèÿ ÐÊÈ      ",
+							"    Rèç+ < Ràâàðèè  ",
+	    				    "     óñòðàíåíà      ",
+					     	sm_);		
+		}
+	}
+	else if(a_ind . s_i==2) { 
+		if( rki_avar1_stat&0x04){
+			bgnd_par(	"    Àâàðèÿ ÐÊÈ      ",
+				    	"    Rèç- < Rïðåä    ",
+						"    íå óñòðàíåíà    ",
+				    	sm_); 
+			}
+    	else {
+	    		bgnd_par(	"    Àâàðèÿ ÐÊÈ      ",
+							"    Rèç- < Rïðåä    ",
+	    				    "     óñòðàíåíà      ",
+					     	sm_);		
+		}
+	}
+	else if(a_ind . s_i==3) { 
+		if( rki_avar1_stat&0x08){
+			bgnd_par(	"    Àâàðèÿ ÐÊÈ      ",
+				    	"    Rèç- < Ràâàðèè  ",
+						"    íå óñòðàíåíà    ",
+				    	sm_); 
+			}
+    	else {
+	    		bgnd_par(	"    Àâàðèÿ ÐÊÈ      ",
+							"    Rèç- < Ràâàðèè  ",
+	    				    "     óñòðàíåíà      ",
+					     	sm_);		
+		}
+	}
+	else if(a_ind . s_i==4) { 
+		if( rki_avar1_stat&0x10){
+			bgnd_par(	"    Àâàðèÿ ÐÊÈ      ",
+				    	"    àñèììåòðèÿ      ",
+						"    íå óñòðàíåíà    ",
+				    	sm_); 
+			}
+    	else {
+	    		bgnd_par(	"    Àâàðèÿ ÐÊÈ      ",
+							"    àñèììåòðèÿ      ",
+	    				    "     óñòðàíåíà      ",
+					     	sm_);		
+		}
+	}
+	else if(a_ind . s_i==5) { 
+		if( rki_avar1_stat&0x20){
+			bgnd_par(	"    Àâàðèÿ ÐÊÈ      ",
+				    	"    Uøèíû < Uìèí    ",
+						"    íå óñòðàíåíà    ",
+				    	sm_); 
+			}
+    	else {
+	    		bgnd_par(	"    Àâàðèÿ ÐÊÈ      ",
+							"    Uøèíû < Uìèí    ",
+	    				    "     óñòðàíåíà      ",
+					     	sm_);		
+		}
+	}
+	else if(a_ind . s_i==6)
+		{
+
 		} 
-					
-	} 
+		
+	else if(a_ind . s_i==7)
+		{
+
+		}
+
+	else { 
+		if( rki_avar1_stat& (1<<(a_ind . s_i) ) ){
+			bgnd_par(	"    Àâàðèÿ ÐÊÈ      ",
+				    	"       ÑÊ !         ",
+						"    íå óñòðàíåíà    ",
+				    	sm_); 
+			}
+    	else {
+	    		bgnd_par(	"    Àâàðèÿ ÐÊÈ      ",
+							"       ÑÊ !         ",
+	    				    "     óñòðàíåíà      ",
+					     	sm_);		
+		}
+		int2lcd(a_ind . s_i-7,'!',0);
+	}
+
+  } 
+  else if(uku_or_rki==2){
+ 
+		if( status_di1& (1<<(a_ind . s_i) )){
+			bgnd_par(	"    Àâàðèÿ ÐÊÈ      ",
+				    	"    Iääò ! > Iïðåä  ",
+						"    íå óñòðàíåíà    ",
+				    	sm_); 
+		}
+    	else {
+	    	bgnd_par(	"    Àâàðèÿ ÐÊÈ      ",
+						"    Iääò ! > Iïðåä  ",
+	    				"     óñòðàíåíà      ",
+					     	sm_);		
+		}
+		int2lcd(a_ind . s_i+1,'!',0);
+
+
+  }	
+  else if(uku_or_rki==3){
+ 
+		if( status_di2& (1<<(a_ind . s_i) )){
+			bgnd_par(	"    Àâàðèÿ ÐÊÈ      ",
+				    	"    Iääò ! > Iàâàð  ",
+						"    íå óñòðàíåíà    ",
+				    	sm_); 
+		}
+    	else {
+	    	bgnd_par(	"    Àâàðèÿ ÐÊÈ      ",
+						"    Iääò ! > Iàâàð  ",
+	    				"     óñòðàíåíà      ",
+					     	sm_);		
+		}
+		int2lcd(a_ind . s_i+1,'!',0);
+
+
+  }	
+
+
+
+}
 
 else if(a_ind . i==iAvz)
 	{
@@ -16787,7 +17949,7 @@ else if(a_ind . i==iTst_220_IPS_TERMOKOMPENSAT)
 
  
 	}
-#line 11832 "main.c"
+#line 12452 "main.c"
 else if(a_ind . i==iTst_bps)
 	{
 	if(tst_state[5]==tstOFF)ptrs[0]=		" Âûêëþ÷åí           ";
@@ -16963,7 +18125,7 @@ else if(a_ind . i==iKlimat_kontur)
 	
 	int2lcdyx(t_box,0,19,0);	 
 	}
-#line 12140 "main.c"
+#line 12760 "main.c"
 
 else if(a_ind . i==iNpn_set)
 	{
@@ -17073,6 +18235,603 @@ else if(a_ind . i==iBps_list)
 	else sub_bgnd(" ",'#',0);
 
 	}
+
+
+else if(a_ind . i==iK_Net_In){
+		ptrs[0]=					" U ôàçû À         qÂ";
+		ptrs[1]=					" U ôàçû Â         wÂ";
+		ptrs[2]=					" U ôàçû Ñ         eÂ";
+		ptrs[3]=					" I ôàçû À         rÀ";
+		ptrs[4]=					" I ôàçû Â         tÀ";
+		ptrs[5]=					" I ôàçû Ñ         yÀ";
+		ptrs[6]=					" U ôàçû À         fÂ";
+		ptrs[7]=					" U ôàçû Â         gÂ";
+		ptrs[8]=					" U ôàçû Ñ         hÂ";
+		ptrs[9]=					" I ôàçû À         jÀ";
+		ptrs[10]=					" I ôàçû Â         kÀ";
+		ptrs[11]=					" I ôàçû Ñ         lÀ";
+		ptrs[12]=					" Âûõîä              ";
+
+
+
+   	if((a_ind . s_i-a_ind . i_s)>2)a_ind . i_s=a_ind . s_i-2;
+	else if(a_ind . s_i<a_ind . i_s)a_ind . i_s=a_ind . s_i;
+	
+						
+	bgnd_par(			"   ÑÅÒÅÂÎÉ ÂÂÎÄ !   ",
+						ptrs[a_ind . i_s],
+						ptrs[a_ind . i_s+1],
+						ptrs[a_ind . i_s+2]);
+	
+	if(a_ind . s_i>5) int2lcd(2,'!',0);
+	else int2lcd(1,'!',0);
+	pointer_set(1);
+	int2lcd(net_in_u1_a,'q',1);
+	int2lcd(net_in_u1_b,'w',1);
+	int2lcd(net_in_u1_c,'e',1);
+	int2lcd(net_in_i1_a,'r',2);
+	int2lcd(net_in_i1_b,'t',2);
+	int2lcd(net_in_i1_c,'y',2);
+	int2lcd(net_in_u2_a,'f',1);
+	int2lcd(net_in_u2_b,'g',1);
+	int2lcd(net_in_u2_c,'h',1);
+	int2lcd(net_in_i2_a,'j',2);
+	int2lcd(net_in_i2_b,'k',2);
+	int2lcd(net_in_i2_c,'l',2);
+
+
+}
+
+
+else if(a_ind . i==iSetNetIn){
+	ptrs[0]=						" Uìèí           #Â  ";
+    ptrs[1]=						" Uìàêñ          $Â  ";
+	ptrs[2]=						" Iìàêñ          eÀ  ";
+	if(priority_net_in!=1 && priority_net_in!=2) 
+	ptrs[3]=						" Ïðèîðèòåò ââîäà    ";
+	else 
+	ptrs[3]=			  			" Ïðèîðèòåò ââîäà  r ";
+	ptrs[4]=						" Ãèñòåðåçèñ     t%  ";
+	ptrs[5]=						" t âêë        yñåê  ";
+	ptrs[6]=						" t âûêë       uñåê  ";
+	ptrs[7]=						" Âûõîä              ";
+
+	if((a_ind . s_i-a_ind . i_s)>2)a_ind . i_s=a_ind . s_i-2;
+	else if(a_ind . s_i<a_ind . i_s)a_ind . i_s=a_ind . s_i;
+
+	bgnd_par(			"   ÓÑÒÀÍÎÂÊÈ ÑÂ     ",
+						ptrs[a_ind . i_s],
+						ptrs[a_ind . i_s+1],
+						ptrs[a_ind . i_s+2]
+						);
+	pointer_set(1);
+	int2lcd(u_min_net_in,'#',0);
+	int2lcd(u_max_net_in,'$',0);
+	int2lcd(i_min_net_in,'e',0);
+	int2lcd(priority_net_in,'r',0);
+	int2lcd(hysteresis_net_in,'t',0);
+	int2lcd(t_inclusion_net_in,'y',1);
+	int2lcd(t_shutdown_net_in,'u',1);
+
+}
+else if(a_ind . i==iK_MOST){
+	bgnd_par(			"        ÈÄÅÒ        ",
+						"     ÊÀËÈÁÐÎÂÊÀ     ",
+						"       ÌÎÑÒÀ        ",
+						"                    "
+						);
+
+	if( (status_izm_r&00040000) && kalibr_r_most==0 )  kalibr_r_most=1;
+	if( !(status_izm_r&00040000) && kalibr_r_most==1 ) {
+		 kalibr_r_most=0;
+		 a_ind . i=iK_RKI;
+		 ret(1000);
+	}
+}
+else if(a_ind . i==iK_RKI){
+		ptrs[0]=					" Uøèíû            qÂ";
+	   	ptrs[1]=					" Êàëèáðîâêà ìîñòà   ";
+		ptrs[2]=					" Âûõîä              ";
+		
+
+	bgnd_par(			"   ÊÀËÈÁÐÎÂÊÀ ÐÊÈ   ",
+						ptrs[a_ind . i_s],
+						ptrs[a_ind . i_s+1],
+						ptrs[a_ind . i_s+2]
+						);
+	pointer_set(1);
+	int2lcd(v_plus+v_minus,'q',0);
+}
+else if(a_ind . i==iSetRKI){
+	ptrs[0]=						" Rïîð.ïðåä.     #ÊÎì";
+    ptrs[1]=						" Rïîð.àâàð.     $ÊÎì";
+	ptrs[2]=						" Ïîðîã àñèììåòð.  e%";
+	ptrs[3]=						" Uàñèì.ïîð.1ÌÎì   rÂ";
+	ptrs[4]=						" Uàñèì.ïîð.       tÂ";
+	ptrs[5]=						" Uàñèì.ïîð.20ÊÎì  yÂ";
+	ptrs[6]=						" Umin øèíû      zB  ";
+	if(type_rki==1){
+		ptrs[7]=						" Iïîðîã ïðåä     qìÀ";
+		ptrs[8]=						" Iïîðîã àâàð     wìÀ";	
+		ptrs[9]=						" Âûõîä              ";
+	}
+	else if(type_rki==0){
+		ptrs[7]=						" Âûõîä              ";
+	}
+	
+	if((a_ind . s_i-a_ind . i_s)>2)a_ind . i_s=a_ind . s_i-2;
+	else if(a_ind . s_i<a_ind . i_s)a_ind . i_s=a_ind . s_i;
+	bgnd_par(			"   ÓÑÒÀÍÎÂÊÈ ÐÊÈ    ",
+						ptrs[a_ind . i_s],
+						ptrs[a_ind . i_s+1],
+						ptrs[a_ind . i_s+2]
+						);
+	pointer_set(1);
+	int2lcd(r_iz_porog_pred,'#',0);
+	int2lcd(r_iz_porog_error,'$',0);
+	int2lcd(Iddt_porog_pred,'q',2);
+	int2lcd(Iddt_porog_error,'w',2);
+	int2lcd(asymmetry_porog,'e',0);
+	int2lcd(porog_u_in,'z',0);
+	int2lcd(u_asymmetry_porog_up,'r',0);
+	int2lcd(u_asymmetry_porog,'t',0);
+	int2lcd(u_asymmetry_porog_down,'y',0);
+	    	
+}
+else if(a_ind . i==iRKI)
+	{
+
+	if(no_rki==15){
+		bgnd_par(		"                    ",
+						"    ÑÂßÇÜ Ñ ÐÊÈ     ",
+						"    ÎÒÑÓÒÑÒÂÓÅÒ     ",
+						"                    ");
+	
+	}
+	else{
+	if(r_iz_plus==1002)ptrs[0]=     	" Rèç+     Uøèíû=0   ";
+	else if(r_iz_plus==1001)ptrs[0]=	" Rèç+ >1 ÌÎì        ";
+	else ptrs[0]=						" Rèç+       !ÊÎì    ";
+	if(r_iz_minus==1002)ptrs[1]=		" Rèç-     Uøèíû=0   ";
+    else if(r_iz_minus==1001)ptrs[1]=	" Rèç- >1 ÌÎì        ";
+	else ptrs[1]=						" Rèç-       @ÊÎì    ";
+	ptrs[2]=						" Rïîð.ïðåä.     #ÊÎì";
+    ptrs[3]=						" Rïîð.àâàð.     $ÊÎì";
+	ptrs[4]=						" V+          ^Â     ";
+	ptrs[5]=						" V-          &Â     ";
+	ptrs[6]=						" Uøèíû       |Â     ";
+	ptrs[7]=						" Ïîðîã Uøèíû      _Â";
+	ptrs[8]=						" àñèììåòðèÿ     *%  ";
+	ptrs[9]=						" àñèììåòðèÿ     (Â  ";
+	ptrs[10]=						" Ïîðîã àñèì.    )%  ";
+	ptrs[11]=						" Uàñèì.ïîð.1ÌÎì   ?Â";
+	ptrs[12]=						" Uàñèì.ïîð.       /Â";
+	ptrs[13]=						" Uàñèì.ïîð.20ÊÎì  :Â";
+    if(sk1_24&0x000001UL)ptrs[14]=	" ÑÊ1  ÂÊËÞ×ÅÍ       ";
+	else ptrs[14]=					" ÑÊ1  ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x000002UL)ptrs[15]=	" ÑÊ2  ÂÊËÞ×ÅÍ       ";
+	else ptrs[15]=					" ÑÊ2  ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x000004UL)ptrs[16]=	" ÑÊ3  ÂÊËÞ×ÅÍ       ";
+	else ptrs[16]=					" ÑÊ3  ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x000008UL)ptrs[17]=	" ÑÊ4  ÂÊËÞ×ÅÍ       ";
+	else ptrs[17]=					" ÑÊ4  ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x000010UL)ptrs[18]=	" ÑÊ5  ÂÊËÞ×ÅÍ       ";
+	else ptrs[18]=					" ÑÊ5  ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x000020UL)ptrs[19]=	" ÑÊ6  ÂÊËÞ×ÅÍ       ";
+	else ptrs[19]=					" ÑÊ6  ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x000040UL)ptrs[20]=	" ÑÊ7  ÂÊËÞ×ÅÍ       ";
+	else ptrs[20]=					" ÑÊ7  ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x000080UL)ptrs[21]=	" ÑÊ8  ÂÊËÞ×ÅÍ       ";
+	else ptrs[21]=					" ÑÊ8  ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x000100UL)ptrs[22]=	" ÑÊ9  ÂÊËÞ×ÅÍ       ";
+	else ptrs[22]=					" ÑÊ9  ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x000200UL)ptrs[23]=	" ÑÊ10 ÂÊËÞ×ÅÍ       ";
+	else ptrs[23]=					" ÑÊ10 ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x000400UL)ptrs[24]=	" ÑÊ11 ÂÊËÞ×ÅÍ       ";
+	else ptrs[24]=					" ÑÊ11 ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x000800UL)ptrs[25]=	" ÑÊ12 ÂÊËÞ×ÅÍ       ";
+	else ptrs[25]=					" ÑÊ12 ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x001000UL)ptrs[26]=	" ÑÊ13 ÂÊËÞ×ÅÍ       ";
+	else ptrs[26]=					" ÑÊ13 ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x002000UL)ptrs[27]=	" ÑÊ14 ÂÊËÞ×ÅÍ       ";
+	else ptrs[27]=					" ÑÊ14 ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x004000UL)ptrs[28]=	" ÑÊ15 ÂÊËÞ×ÅÍ       ";
+	else ptrs[28]=					" ÑÊ15 ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x008000UL)ptrs[29]=	" ÑÊ16 ÂÊËÞ×ÅÍ       ";
+	else ptrs[29]=					" ÑÊ16 ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x010000UL)ptrs[30]=	" ÑÊ17 ÂÊËÞ×ÅÍ       ";
+	else ptrs[30]=					" ÑÊ17 ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x020000UL)ptrs[31]=	" ÑÊ18 ÂÊËÞ×ÅÍ       ";
+	else ptrs[31]=					" ÑÊ18 ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x040000UL)ptrs[32]=	" ÑÊ19 ÂÊËÞ×ÅÍ       ";
+	else ptrs[32]=					" ÑÊ19 ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x080000UL)ptrs[33]=	" ÑÊ20 ÂÊËÞ×ÅÍ       ";
+	else ptrs[33]=					" ÑÊ20 ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x100000UL)ptrs[34]=	" ÑÊ21 ÂÊËÞ×ÅÍ       ";
+	else ptrs[34]=					" ÑÊ21 ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x200000UL)ptrs[35]=	" ÑÊ22 ÂÊËÞ×ÅÍ       ";
+	else ptrs[35]=					" ÑÊ22 ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x400000UL)ptrs[36]=	" ÑÊ23 ÂÊËÞ×ÅÍ       ";
+	else ptrs[36]=					" ÑÊ23 ÎÒÊËÞ×ÅÍ      ";
+	if(sk1_24&0x800000UL)ptrs[37]=	" ÑÊ24 ÂÊËÞ×ÅÍ       ";
+	else ptrs[37]=					" ÑÊ24 ÎÒÊËÞ×ÅÍ      ";
+ 	ptrs[38]=						" Iïîðîã ïðåä     qìÀ";
+	ptrs[39]=						" Iïîðîã àâàð     wìÀ";
+	if(ddt_error&0x000001){
+		ptrs[40]=						" Iääò1  íåò ñâÿçè   ";
+		ptrs[41]=						" Rèç1               ";
+		}
+	else {
+		ptrs[40]=						" Iääò1=      eìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[41]=	" Rèç1=     > 1ÌÎì   ";
+		else             	ptrs[41]=	" Rèç1=       <ÊÎì   ";
+		}
+	if(ddt_error&0x000002){
+		ptrs[42]=						" Iääò2  íåò ñâÿçè   ";
+		ptrs[43]=						" Rèç2               ";
+		}
+	else {
+		ptrs[42]=						" Iääò2=      rìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[43]=	" Rèç2=     > 1ÌÎì   ";
+		else             	ptrs[43]=	" Rèç2=       BÊÎì   ";
+		}
+	if(ddt_error&0x000004){
+		ptrs[44]=						" Iääò3  íåò ñâÿçè   ";
+		ptrs[45]=						" Rèç3               ";
+		}
+	else {
+		ptrs[44]=						" Iääò3=      tìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[45]=	" Rèç3=     > 1ÌÎì   ";
+		else             	ptrs[45]=	" Rèç3=       CÊÎì   ";
+		}
+	if(ddt_error&0x000008){
+		ptrs[46]=						" Iääò4  íåò ñâÿçè   ";
+		ptrs[47]=						" Rèç4               ";
+		}
+	else {
+		ptrs[46]=						" Iääò4=      yìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[47]=	" Rèç4=     > 1ÌÎì   ";
+		else             	ptrs[47]=	" Rèç4=       DÊÎì   ";
+		}
+	if(ddt_error&0x000010){
+		ptrs[48]=						" Iääò5  íåò ñâÿçè   ";
+		ptrs[49]=						" Rèç5               ";
+		}
+	else {
+		ptrs[48]=						" Iääò5=      uìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[49]=	" Rèç5=     > 1ÌÎì   ";
+		else             	ptrs[49]=	" Rèç5=       EÊÎì   ";
+		}
+	if(ddt_error&0x000020){
+		ptrs[50]=						" Iääò6  íåò ñâÿçè   ";
+		ptrs[51]=						" Rèç6               ";
+		}
+	else {
+		ptrs[50]=						" Iääò6=      iìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[51]=	" Rèç6=     > 1ÌÎì   ";
+		else             	ptrs[51]=	" Rèç6=       FÊÎì   ";
+		}
+	if(ddt_error&0x000040){
+		ptrs[52]=						" Iääò7  íåò ñâÿçè   ";
+		ptrs[53]=						" Rèç7               ";
+		}
+	else {
+		ptrs[52]=						" Iääò7=      oìÀ    ";
+	   	if(Rddt[0]==1001) 	ptrs[53]=	" Rèç7=     > 1ÌÎì   ";
+		else             	ptrs[53]=	" Rèç7=       JÊÎì   ";
+		}
+	if(ddt_error&0x000080){
+		ptrs[54]=						" Iääò8  íåò ñâÿçè   ";
+		ptrs[55]=						" Rèç8               ";
+		}
+	else {
+		ptrs[54]=						" Iääò8=      pìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[55]=	" Rèç8=     > 1ÌÎì   ";
+		else             	ptrs[55]=	" Rèç8=       LÊÎì   ";
+		}
+	if(ddt_error&0x000100){
+		ptrs[56]=						" Iääò9  íåò ñâÿçè   ";
+		ptrs[57]=						" Rèç9               ";
+		}
+	else {
+		ptrs[56]=						" Iääò9=      aìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[57]=	" Rèç9=     > 1ÌÎì   ";
+		else             	ptrs[57]=	" Rèç9=       PÊÎì   ";
+		}
+	if(ddt_error&0x000200){
+		ptrs[58]=						" Iääò10  íåò ñâÿçè  ";
+		ptrs[59]=						" Rèç10              ";
+		}
+	else {
+		ptrs[58]=						" Iääò10=     sìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[59]=	" Rèç10=    > 1ÌÎì   ";
+		else             	ptrs[59]=	" Rèç10=      QÊÎì   ";
+		}
+	if(ddt_error&0x000400){
+		ptrs[60]=						" Iääò11  íåò ñâÿçè  ";
+		ptrs[61]=						" Rèç11              ";
+		}
+	else {
+		ptrs[60]=						" Iääò11=     dìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[61]=	" Rèç11=    > 1ÌÎì   ";
+		else             	ptrs[61]=	" Rèç11=      WÊÎì   ";
+		}
+	if(ddt_error&0x000800){
+		ptrs[62]=						" Iääò12  íåò ñâÿçè  ";
+		ptrs[63]=						" Rèç12              ";
+		}
+	else {
+		ptrs[62]=						" Iääò12=     fìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[63]=	" Rèç12=    > 1ÌÎì   ";
+		else             	ptrs[63]=	" Rèç12=      TÊÎì   ";
+		}
+	if(ddt_error&0x001000){
+		ptrs[64]=						" Iääò13  íåò ñâÿçè  ";
+		ptrs[65]=						" Rèç13              ";
+		}
+	else {
+		ptrs[64]=						" Iääò13=     gìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[65]=	" Rèç13=    > 1ÌÎì   ";
+		else             	ptrs[65]=	" Rèç13=      YÊÎì   ";
+		}
+	if(ddt_error&0x002000){
+		ptrs[66]=						" Iääò14  íåò ñâÿçè  ";
+		ptrs[67]=						" Rèç14              ";
+		}
+	else {
+		ptrs[66]=						" Iääò14=     hìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[67]=	" Rèç14=    > 1ÌÎì   ";
+		else             	ptrs[67]=	" Rèç14=      SÊÎì   ";
+		}
+	if(ddt_error&0x004000){
+		ptrs[68]=						" Iääò15  íåò ñâÿçè  ";
+		ptrs[69]=						" Rèç15              ";
+		}
+	else {
+		ptrs[68]=						" Iääò15=     jìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[69]=	" Rèç15=    > 1ÌÎì   ";
+		else             	ptrs[69]=	" Rèç15=      GÊÎì   ";
+		}
+	if(ddt_error&0x008000){
+		ptrs[70]=						" Iääò16  íåò ñâÿçè  ";
+		ptrs[71]=						" Rèç16              ";
+		}
+	else {
+		ptrs[70]=						" Iääò16=     kìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[71]=	" Rèç16=    > 1ÌÎì   ";
+		else             	ptrs[71]=	" Rèç16=      HÊÎì   ";
+		}
+	if(ddt_error&0x010000){
+		ptrs[72]=						" Iääò17  íåò ñâÿçè  ";
+		ptrs[73]=						" Rèç17              ";
+		}
+	else {
+		ptrs[72]=						" Iääò17=     lìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[73]=	" Rèç17=    > 1ÌÎì   ";
+		else             	ptrs[73]=	" Rèç17=      ZÊÎì   ";
+		}
+	if(ddt_error&0x020000){
+		ptrs[74]=						" Iääò18  íåò ñâÿçè  ";
+		ptrs[75]=						" Rèç18              ";
+		}
+	else {
+		ptrs[74]=						" Iääò18=     zìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[75]=	" Rèç18=    > 1ÌÎì   ";
+		else             	ptrs[75]=	" Rèç18=      XÊÎì   ";
+		}
+	if(ddt_error&0x040000){
+		ptrs[76]=						" Iääò19  íåò ñâÿçè  ";
+		ptrs[77]=						" Rèç19              ";
+		}
+	else {
+		ptrs[76]=						" Iääò19=     xìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[77]=	" Rèç19=    > 1ÌÎì   ";
+		else             	ptrs[77]=	" Rèç19=      ÆÊÎì   ";
+		}
+	if(ddt_error&0x080000){
+		ptrs[78]=						" Iääò20  íåò ñâÿçè  ";
+		ptrs[79]=						" Rèç20              ";
+		}
+	else {
+		ptrs[78]=						" Iääò20=     cìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[79]=	" Rèç20=    > 1ÌÎì   ";
+		else             	ptrs[79]=	" Rèç20=      NÊÎì   ";
+		}
+	if(ddt_error&0x100000){
+		ptrs[80]=						" Iääò21  íåò ñâÿçè  ";
+		ptrs[81]=						" Rèç21              ";
+		}
+	else {
+		ptrs[80]=						" Iääò21=     vìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[81]=	" Rèç21=    > 1ÌÎì   ";
+		else             	ptrs[81]=	" Rèç21=      úÊÎì   ";
+		}
+	if(ddt_error&0x200000){
+		ptrs[82]=						" Iääò22  íåò ñâÿçè  ";
+		ptrs[83]=						" Rèç22              ";
+		}
+	else {
+		ptrs[82]=						" Iääò22=     bìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[83]=	" Rèç22=    > 1ÌÎì   ";
+		else             	ptrs[83]=	" Rèç22=      ¹ÊÎì   ";
+		}
+	if(ddt_error&0x400000){
+		ptrs[84]=						" Iääò23  íåò ñâÿçè  ";
+		ptrs[85]=						" Rèç23              ";
+		}
+	else {
+		ptrs[84]=						" Iääò23=     nìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[85]=	" Rèç23=    > 1ÌÎì   ";
+		else             	ptrs[85]=	" Rèç23=      ;ÊÎì   ";
+		}
+	if(ddt_error&0x800000){
+		ptrs[86]=						" Iääò24  íåò ñâÿçè  ";
+		ptrs[87]=						" Rèç24              ";
+		}
+	else {
+		ptrs[86]=						" Iääò24=     mìÀ    ";
+		if(Rddt[0]==1001) 	ptrs[87]=	" Rèç24=    > 1ÌÎì   ";
+		else             	ptrs[87]=	" Rèç24=      ~ÊÎì   ";
+		}
+
+	a_ind . i_s=a_ind . s_i;
+	
+	bgnd_par(			"   ÄÀÍÍÛÅ ÎÒ ÐÊÈ    ",
+						ptrs[a_ind . i_s],
+						ptrs[a_ind . i_s+1],
+						ptrs[a_ind . i_s+2]);
+	
+	
+	
+	
+	int2lcd(r_iz_plus,'!',0);
+	int2lcd(r_iz_minus,'@',0);
+	int2lcd(r_iz_porog_pred,'#',0);  
+	int2lcd(r_iz_porog_error,'$',0);
+	int2lcd(v_plus,'^',0);
+	int2lcd(v_minus,'&',0);
+	int2lcd(v_plus+v_minus,'|',0);
+	int2lcd(porog_u_in,'_',0);
+	int2lcd(asymmetry,'*',0);
+	if(v_plus>v_minus) int2lcd(v_plus-v_minus,'(',0);
+	else int2lcd(v_minus-v_plus,'(',0);
+	int2lcd(asymmetry_porog,')',0);
+	int2lcd(u_asymmetry_porog_up,'?',0);
+	int2lcd(u_asymmetry_porog,'/',0);
+	int2lcd(u_asymmetry_porog_down,':',0);
+
+	int2lcd(Iddt_porog_pred,'q',2);
+	int2lcd(Iddt_porog_error,'w',2);
+	int2lcd_mmm(Iddt[0],'e',2);
+	int2lcd_mmm(Rddt[0],'<',0);
+	int2lcd_mmm(Iddt[1],'r',2);
+	int2lcd_mmm(Rddt[1],'B',0);
+	int2lcd_mmm(Iddt[2],'t',2);
+	int2lcd_mmm(Rddt[2],'C',0);
+	int2lcd_mmm(Iddt[3],'y',2);
+	int2lcd_mmm(Rddt[3],'D',0);
+	int2lcd_mmm(Iddt[4],'u',2);
+	int2lcd_mmm(Rddt[4],'E',0);
+	int2lcd_mmm(Iddt[5],'i',2);
+	int2lcd_mmm(Rddt[5],'F',0);
+	int2lcd_mmm(Iddt[6],'o',2);
+	int2lcd_mmm(Rddt[6],'J',0);
+	int2lcd_mmm(Iddt[7],'p',2);
+	int2lcd_mmm(Rddt[7],'L',0);
+	int2lcd_mmm(Iddt[8],'a',2);
+	int2lcd_mmm(Rddt[8],'P',0);
+	int2lcd_mmm(Iddt[9],'s',2);
+	int2lcd_mmm(Rddt[9],'Q',0);
+	int2lcd_mmm(Iddt[10],'d',2);
+	int2lcd_mmm(Rddt[10],'W',0);
+	int2lcd_mmm(Iddt[11],'f',2);
+	int2lcd_mmm(Rddt[11],'T',0);
+	int2lcd_mmm(Iddt[12],'g',2);
+	int2lcd_mmm(Rddt[12],'Y',0);
+	int2lcd_mmm(Iddt[13],'h',2);
+	int2lcd_mmm(Rddt[13],'S',0);
+	int2lcd_mmm(Iddt[14],'j',2);
+	int2lcd_mmm(Rddt[14],'G',0);
+	int2lcd_mmm(Iddt[15],'k',2);
+	int2lcd_mmm(Rddt[15],'H',0);
+	int2lcd_mmm(Iddt[16],'l',2);
+	int2lcd_mmm(Rddt[16],'Z',0);
+	int2lcd_mmm(Iddt[17],'z',2);
+	int2lcd_mmm(Rddt[17],'X',0);
+	int2lcd_mmm(Iddt[18],'x',2);
+	int2lcd_mmm(Rddt[18],'Æ',0);
+	int2lcd_mmm(Iddt[19],'c',2);
+	int2lcd_mmm(Rddt[19],'N',0);
+	int2lcd_mmm(Iddt[20],'v',2);
+	int2lcd_mmm(Rddt[20],'ú',0);
+	int2lcd_mmm(Iddt[21],'b',2);
+	int2lcd_mmm(Rddt[21],'¹',0);
+	int2lcd_mmm(Iddt[22],'n',2);
+	int2lcd_mmm(Rddt[22],';',0);
+	int2lcd_mmm(Iddt[23],'m',2);
+	int2lcd_mmm(Rddt[23],'~',0);
+	}
+
+}
+else if(a_ind . i==iNET_IN){
+	if(no_net_in==10){
+		bgnd_par(		"   ÑÂßÇÜ Ñ ÁËÎÊÎÌ   ",
+						"   ÑÅÒÅÂÛÅ ÂÂÎÄÛ    ",
+						"    ÎÒÑÓÒÑÒÂÓÅÒ     ",
+						"                    "); 					
+	
+	}
+	else{
+		ptrs[0]=					" U ôàçû À         qÂ";
+		ptrs[1]=					" U ôàçû Â         wÂ";
+		ptrs[2]=					" U ôàçû Ñ         eÂ";
+		ptrs[3]=					" I ôàçû À         rÀ";
+		ptrs[4]=					" I ôàçû Â         tÀ";
+		ptrs[5]=					" I ôàçû Ñ         yÀ";
+		ptrs[6]=					"P àêò.ôàçû À     uÂò";
+		ptrs[7]=					"P àêò.ôàçû Â     iÂò";
+		ptrs[8]=					"P àêò.ôàçû Ñ     oÂò";
+		ptrs[9]=					"P ïîëí.ôàçû À    pÂÀ";
+		ptrs[10]=					"P ïîëí.ôàçû Â    aÂÀ";
+		ptrs[11]=					"P ïîëí.ôàçû Ñ    sÂÀ";
+		ptrs[12]=					"   ÷àñòîòà     dÃö  ";
+		ptrs[13]=					" U ôàçû À         fÂ";
+		ptrs[14]=					" U ôàçû Â         gÂ";
+		ptrs[15]=					" U ôàçû Ñ         hÂ";
+		ptrs[16]=					" I ôàçû À         jÀ";
+		ptrs[17]=					" I ôàçû Â         kÀ";
+		ptrs[18]=					" I ôàçû Ñ         lÀ";
+		ptrs[19]=					"P àêò.ôàçû À     zÂò";
+		ptrs[20]=					"P àêò.ôàçû Â     xÂò";
+		ptrs[21]=					"P àêò.ôàçû Ñ     cÂò";
+		ptrs[22]=					"P ïîëí.ôàçû À    vÂÀ";
+		ptrs[23]=					"P ïîëí.ôàçû Â    bÂÀ";
+		ptrs[24]=					"P ïîëí.ôàçû Ñ    nÂÀ";
+		ptrs[25]=					"   ÷àñòîòà     mÃö  ";
+
+
+
+
+	a_ind . i_s=a_ind . s_i;
+	
+	bgnd_par(			"   ÑÅÒÅÂÎÉ ÂÂÎÄ !   ",
+						ptrs[a_ind . i_s],
+						ptrs[a_ind . i_s+1],
+						ptrs[a_ind . i_s+2]);
+	
+	if(a_ind . s_i>11) int2lcd(2,'!',0);
+	else int2lcd(1,'!',0);
+
+	int2lcd(net_in_u1_a/10,'q',0);
+	int2lcd(net_in_u1_b/10,'w',0);
+	int2lcd(net_in_u1_c/10,'e',0);
+	int2lcd(net_in_i1_a,'r',2);
+	int2lcd(net_in_i1_b,'t',2);
+	int2lcd(net_in_i1_c,'y',2);
+	int2lcd_mmm(net_in_p1_a,'u',0);
+	int2lcd_mmm(net_in_p1_b,'i',0);
+	int2lcd_mmm(net_in_p1_c,'o',0);
+	int2lcd_mmm(net_in_s1_a,'p',0);
+	int2lcd_mmm(net_in_s1_b,'a',0);
+	int2lcd_mmm(net_in_s1_c,'s',0);
+	int2lcd(net_in_f1,'d',1);
+	int2lcd(net_in_u2_a/10,'f',0);
+	int2lcd(net_in_u2_b/10,'g',0);
+	int2lcd(net_in_u2_c/10,'h',0);
+	int2lcd(net_in_i2_a,'j',2);
+	int2lcd(net_in_i2_b,'k',2);
+	int2lcd(net_in_i2_c,'l',2);
+	int2lcd_mmm(net_in_p2_a,'z',0);
+	int2lcd_mmm(net_in_p2_b,'x',0);
+	int2lcd_mmm(net_in_p2_c,'c',0);
+	int2lcd_mmm(net_in_s2_a,'v',0);
+	int2lcd_mmm(net_in_s2_b,'b',0);
+	int2lcd_mmm(net_in_s2_c,'n',0);
+	int2lcd_mmm(net_in_f2,'m',1);
+ }
+
+}
+
 	
 else if(a_ind . i==iAvt_set_sel)
 	{
@@ -17308,12 +19067,12 @@ else if (a_ind . i==iIps_Curr_Avg_Set)
 }							    
 
 
-#line 12490 "main.c"
+#line 13707 "main.c"
 
 
 
 
-#line 12513 "main.c"
+#line 13730 "main.c"
 
 
 
@@ -17636,7 +19395,7 @@ else if(a_ind . i==iMn)
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV)))
 			{
-#line 12843 "main.c"
+#line 14060 "main.c"
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV+1)))
 			{
@@ -17650,9 +19409,9 @@ else if(a_ind . i==iMn)
 		     ret(1000);
 			}
 
-#line 12863 "main.c"
+#line 14080 "main.c"
 
-#line 12871 "main.c"
+#line 14088 "main.c"
 
 		else if(a_ind . s_i==(4+NUMBAT+NUMIST+2)+(NUMAVT!=0))
 			{
@@ -18687,18 +20446,26 @@ else if(a_ind . i==iMn_220_V2)
 			}
 		}
     	}
+
+
 else if(a_ind . i==iMn_220_IPS_TERMOKOMPENSAT)
 	{
 	if(but==251)
 		{
 		a_ind . s_i++;
-		gran_char(&a_ind . s_i,0,9+NUMIST +(NUMEXT!=0));
+		
+		
+		gran_char(&a_ind . s_i,0,9+NUMIST +(NUMEXT!=0)+(num_rki!=0)+(num_net_in!=0));
+		
 		}
 		
 	else if(but==253)
 		{
 		a_ind . s_i--;
-		gran_char(&a_ind . s_i,0,9+NUMIST +(NUMEXT!=0));
+		
+		
+		gran_char(&a_ind . s_i,0,9+NUMIST +(NUMEXT!=0)+(num_rki!=0)+(num_net_in!=0));
+		
 		}	
 
 	else if(but==239)
@@ -18723,13 +20490,13 @@ else if(a_ind . i==iMn_220_IPS_TERMOKOMPENSAT)
 		if(klbr_en)klbr_en=0;
 		else klbr_en=1;
 		}
-				
 	else if(but==254)
-		{
+		{				
 		if(a_ind . s_i==0)
-			{
+			{ 
 			if(avar_ind_stat)
-				{
+			{	
+				uku_or_rki=0;  
 				
 				
 				tree_up(iAv_view,0,0,0);
@@ -18738,11 +20505,26 @@ else if(a_ind . i==iMn_220_IPS_TERMOKOMPENSAT)
 					a_ind . s_i++;
 					if(a_ind . s_i>=32)
 						{
-						tree_down(0,0);
+						if(!rki_avar1_ind_stat) tree_down(0,0);	
 						avar_ind_stat=0;
 						}
 					}
-				}																							
+			}
+			
+			else if(rki_avar1_ind_stat){
+					uku_or_rki=1;
+					tree_up(iAv_view,0,0,0);
+					while(!(rki_avar1_ind_stat&(1<<(a_ind . s_i) )))
+					{
+						a_ind . s_i++;
+						if(a_ind . s_i>=32)
+						{
+							if(!avar_ind_stat) tree_down(0,0);
+							rki_avar1_ind_stat=0;
+						}
+					}
+			}
+				
 			}
 
 
@@ -18775,36 +20557,55 @@ else if(a_ind . i==iMn_220_IPS_TERMOKOMPENSAT)
 
 
  
-		else if((a_ind . s_i==(3 +NUMIST ))&&(NUMEXT))
+
+			
+		else if(a_ind . s_i==(2+NUMBAT+NUMIST+(num_net_in!=0)))	
+			{
+			if(but==254)
+		     	{
+		     	tree_up(iNET_IN,0,0,0);
+				ret(1000);
+				}
+			}
+		else if(a_ind . s_i==(2+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)))  
+			{
+			if(but==254)
+		     	{
+		     	tree_up(iRKI,0,0,0);
+				ret(1000);
+				}
+			}
+			
+		else if((a_ind . s_i==(3 +NUMIST )+(num_rki!=0)+(num_net_in!=0))&&(NUMEXT))	
 			{
 			tree_up(iExtern_220,0,0,0);
 		     ret(1000);
 			}
 
-		else if(a_ind . s_i==(3+NUMBAT+NUMIST+ (NUMEXT!=0)))
+		else if(a_ind . s_i==(3+NUMBAT+NUMIST+ (NUMEXT!=0))+(num_rki!=0)+(num_net_in!=0))	 	
 			{
 			speedChargeStartStop();
 			}
 
-		else if(a_ind . s_i==(4+NUMBAT+NUMIST+ (NUMEXT!=0)))
+		else if(a_ind . s_i==(4+NUMBAT+NUMIST+ (NUMEXT!=0))+(num_rki!=0)+(num_net_in!=0))	 	
 			{
 			tree_up(iSpc_termocompensat,0,0,0);
 		     ret(1000);
 			}
 
-		else if(a_ind . s_i==(5+NUMBAT+NUMIST+ (NUMEXT!=0)))
+		else if(a_ind . s_i==(5+NUMBAT+NUMIST+ (NUMEXT!=0))+(num_rki!=0)+(num_net_in!=0))	 	
 			{
 			tree_up(iSet_prl,0,0,0);
 		     ret(50);
 		     parol_init();
 			}
-		else if(a_ind . s_i==(6+NUMBAT+NUMIST+ (NUMEXT!=0)))
+		else if(a_ind . s_i==(6+NUMBAT+NUMIST+ (NUMEXT!=0))+(num_rki!=0)+(num_net_in!=0))		
 			{
 			if(but==126)avar_uout_hndl(1);
 			tree_up(iLog,0,0,0);
 		     ret(1000);
 			}
-		else if(a_ind . s_i==(7+NUMBAT+NUMIST+ (NUMEXT!=0)))
+		else if(a_ind . s_i==(7+NUMBAT+NUMIST+ (NUMEXT!=0))+(num_rki!=0)+(num_net_in!=0))		
 			{
 			a_ind . s_i=0;
 			}
@@ -18818,7 +20619,7 @@ else if(a_ind . i==iMn_220_IPS_TERMOKOMPENSAT)
 
 
  
-		else if(a_ind . s_i==(8+NUMBAT+NUMIST+ (NUMEXT!=0)))
+		else if(a_ind . s_i==(8+NUMBAT+NUMIST+ (NUMEXT!=0))+(num_rki!=0)+(num_net_in!=0))		
 			{
 			if(but==254)
 		     	{
@@ -18826,15 +20627,18 @@ else if(a_ind . i==iMn_220_IPS_TERMOKOMPENSAT)
 		     	parol_init();
 		     	}
 			}
-		else if(a_ind . s_i==(9+NUMBAT+NUMIST+ (NUMEXT!=0)))
+		else if(a_ind . s_i==(9+NUMBAT+NUMIST+ (NUMEXT!=0))+(num_rki!=0)+(num_net_in!=0))	 	
 			{
 			if(but==254)
 		     	{
 		     	tree_up(iBps_list,0,0,0);
 		     	}
 			}
+
 		}
     	}
+
+
 else if(a_ind . i==iMn_TELECORE2015)
 	{
 	if(but==251)
@@ -19752,9 +21556,9 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==184) 
 				{
 				tree_down(0,0);
-#line 14989 "main.c"
+#line 16251 "main.c"
 				tree_up(iSet_220_IPS_TERMOKOMPENSAT,0,0,0);
-#line 15000 "main.c"
+#line 16262 "main.c"
 				ret(1000);
 				}
 			else 
@@ -19771,7 +21575,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==873) 
 				{
 				tree_down(0,0);
-#line 15047 "main.c"
+#line 16309 "main.c"
 				if((AUSW_MAIN==22033)||(AUSW_MAIN==22018))
 					{
 					tree_up(iK_220_IPS_TERMOKOMPENSAT,0,0,0);
@@ -19785,7 +21589,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 
 				else
 				tree_up(iK_220,0,0,0);
-#line 15067 "main.c"
+#line 16329 "main.c"
 				show_mess(	"Âêëþ÷èòå àâò-òû ÑÅÒÜ",
  							"  ÁÀÒÀÐÅß,ÍÀÃÐÓÇÊÀ  ",
  							"   Óñòàíîâèòå òîê   ",
@@ -19845,9 +21649,9 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 			if(tempU==999) 
 				{
 				tree_down(0,0);
-#line 15156 "main.c"
+#line 16418 "main.c"
 				tree_up(iTst_220_IPS_TERMOKOMPENSAT,0,0,0);
-#line 15164 "main.c"
+#line 16426 "main.c"
 				tst_state[0]=tstOFF;
 				tst_state[1]=tstOFF;
 				tst_state[2]=tstOFF;
@@ -19946,7 +21750,7 @@ else if(a_ind . i==iSet_bat_sel)
 
 		}
 	}
-#line 15430 "main.c"
+#line 16692 "main.c"
 else if(a_ind . i==iPrl_bat_in_sel)
 	{
 	ret(1000);
@@ -20479,7 +22283,7 @@ else if(a_ind . i==iSet)
 	     {
 	     if(but==254)
 	          {
-#line 15974 "main.c"
+#line 17236 "main.c"
 	          ret(1000);
 	          default_temp=10;
 	          }
@@ -20501,7 +22305,7 @@ else if(a_ind . i==iSet)
 		{
 		if(but==254)
 		     {
-#line 16020 "main.c"
+#line 17282 "main.c"
 
 
 
@@ -23308,7 +25112,7 @@ else if(a_ind . i==iSet_TELECORE2015)
 			}						
 		}
      }
-#line 19359 "main.c"
+#line 20621 "main.c"
 
 else if((a_ind . i==iSet_220))
 	{
@@ -24171,7 +25975,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
         	{
             a_ind . s_i=51;
 		    }																	
-		gran_char(&a_ind . s_i,0,52);
+		gran_char(&a_ind . s_i,0,52+(num_rki!=0)+(num_net_in!=0)); 
 		}
 	else if(but==253)
 		{
@@ -24222,11 +26026,13 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
         	{
             a_ind . s_i=49;
 		    }
-		gran_char(&a_ind . s_i,0,52);
+		gran_char(&a_ind . s_i,0,52+(num_rki!=0)+(num_net_in!=0)); 
+
 		}
 	else if(but==123)
 		{
-		a_ind . s_i=51;
+		a_ind . s_i=51+(num_rki!=0)+(num_net_in!=0); 
+
 		}
 
 	else if(but==103)
@@ -24270,7 +26076,10 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 		     a_ind . i_s=0;
  		     }
 		}	
-	
+	 else if(a_ind . s_i==3)  
+		{
+		if(but==254) tree_down(0,0); ret(0);			 
+		}				  
 	else if(a_ind . s_i==4)
 	     {
 		if(ZV_ON)ZV_ON=0;
@@ -24709,25 +26518,54 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 	    lc640_write_int(0x10+350+24,REG_SPEED);
 	    speed=1;
 	    }
-    else if((a_ind . s_i==51) || (a_ind . s_i==3))
-		{
-		if(but==254)
-		     {
-		     tree_down(0,0);
-		     ret(0);
-		     }
-		}
-				
+    
+	else if(a_ind . s_i==51){
+		if(but==254) 
+			{
+		    	if(num_rki) { tree_up(iSetRKI,0,0,0); ret(1000);}
+				else if(num_net_in) { tree_up(iSetNetIn,0,0,0); ret(1000);}
+				else { tree_down(0,0); ret(0);}
+		    }
+	}
+	
 	else if(a_ind . s_i==52)
 		{
 		if(but==254)
-		     {		
-			tree_up(iK_prl,0,0,0);
-			parol_init();
-			ret(50);
+		     {
+		     	if(num_rki && num_net_in) { tree_up(iSetNetIn,0,0,0); ret(1000);}
+				else if(!num_rki && num_net_in) {tree_down(0,0); ret(0);}
+				else if(num_rki && !num_net_in) {tree_down(0,0); ret(0);}
+				else {
+					tree_up(iK_prl,0,0,0);
+					parol_init();
+					ret(50);
+				}
+		     }
+		}
+				
+	else if(a_ind . s_i==53) 
+		{
+		if(but==254)
+		    {	
+				if(num_rki && num_net_in) {tree_down(0,0); ret(0);}	
+				else{
+					tree_up(iK_prl,0,0,0);
+					parol_init();
+					ret(50);
+				}
 			}						
 		}
-     }
+	else if(a_ind . s_i==54) 
+		{
+		if(but==254)
+		    {	
+					tree_up(iK_prl,0,0,0);
+					parol_init();
+					ret(50);
+
+			}						
+		}
+     } 
 
 else if(a_ind . i==iBat_link_set)
 
@@ -26168,16 +28006,16 @@ else if(a_ind . i==iStr_220_IPS_TERMOKOMPENSAT)
 	if(but==251)
 		{
 		a_ind . s_i++;
-		gran_char(&a_ind . s_i,0,4);
+		gran_char(&a_ind . s_i,0,6);
 		}
 	else if(but==253)
 		{
 		a_ind . s_i--;
-		gran_char(&a_ind . s_i,0,4);
+		gran_char(&a_ind . s_i,0,6);
 		}
 	else if(but==123)
 		{
-		a_ind . s_i=4;
+		a_ind . s_i=6;
 		}				
      else if(a_ind . s_i==0)
 	     {
@@ -26250,8 +28088,22 @@ else if(a_ind . i==iStr_220_IPS_TERMOKOMPENSAT)
 	     	gran(&NUMSK,0,4);
 	     	lc640_write_int(0x10+500+88,NUMSK);
 	     	}
-		}			  			                 
-    else if(a_ind . s_i==4)
+		}
+		
+ 
+	else if(a_ind . s_i==4)	
+	     {
+	     if(num_rki==0 && ((but==239)||(but==111))) {num_rki=1; lc640_write_int(0x10+54, num_rki);}
+		 else if((but==247)||(but==119)) {num_rki=0; lc640_write_int(0x10+54, num_rki);}
+         }
+	else if(a_ind . s_i==5)	
+	     {
+	     if(num_net_in==0 && ((but==239)||(but==111))) {num_net_in=1; lc640_write_int(0x10+56, num_net_in);}
+		 else if((but==247)||(but==119)) {num_net_in=0; lc640_write_int(0x10+56, num_net_in);}
+         }
+ 
+ 					  			                 
+    else if(a_ind . s_i==6)
 	     {
 	     if(but==254)
 	          {
@@ -28642,16 +30494,16 @@ else if(a_ind . i==iK_220_IPS_TERMOKOMPENSAT_IB)
 	if(but==251)
 		{
 		a_ind . s_i++;
-		gran_char(&a_ind . s_i,0,3+(NUMIST!=0)+(NUMDT!=0));
+		gran_char(&a_ind . s_i,0,3+(NUMIST!=0)+(NUMDT!=0)+(num_rki!=0)+(num_net_in!=0)); 
 		}
 	else if(but==253)
 		{
 		a_ind . s_i--;
-		gran_char(&a_ind . s_i,0,3+(NUMIST!=0)+(NUMDT!=0));
+		gran_char(&a_ind . s_i,0,3+(NUMIST!=0)+(NUMDT!=0)+(num_rki!=0)+(num_net_in!=0)); 
 		}
 	else if(but==123)
 		{
-		a_ind . s_i=3+(NUMIST!=0)+(NUMDT!=0);
+		a_ind . s_i=3+(NUMIST!=0)+(NUMDT!=0)+(num_rki!=0)+(num_net_in!=0);
 		}
 	else if(but==254)
 		{
@@ -28685,17 +30537,28 @@ else if(a_ind . i==iK_220_IPS_TERMOKOMPENSAT_IB)
 			ret(1000);
 			}
           
-         	else if((NUMDT)&&(a_ind . s_i==(3+(NUMIST!=0))))
+        else if((NUMDT)&&(a_ind . s_i==(3+(NUMIST!=0))))
 			{
 			tree_up(iK_t_ext_6U,0,0,0);	
 			ret(1000);			
 			}
- 						
-          else if(a_ind . s_i==(3+(NUMIST!=0)+(NUMDT!=0)))
+ 		
+		else if( num_rki && (a_ind . s_i==(3+(NUMIST!=0)+(NUMDT!=0) ) ) )
+			{
+	        tree_up(iK_RKI,0,0,0);	
+			ret(1000);
+            }
+		else if( num_net_in && (a_ind . s_i==(3+(NUMIST!=0)+(NUMDT!=0)+(num_rki!=0) ) )	)
+			{
+	        tree_up(iK_Net_In,0,0,0);	
+			ret(1000);
+            }
+		
+        else if(a_ind . s_i==(3+(NUMIST!=0)+(NUMDT!=0)+(num_rki!=0)+(num_net_in!=0))) 
 			{
 	          tree_down(0,0);
 	          ret(0);
-               }	               			
+            }	               			
 		}			
 	}
 
@@ -30363,7 +32226,7 @@ else if(a_ind . i==iK_inv)
 			}
 		}			
 	}
-#line 26560 "main.c"
+#line 27881 "main.c"
 
 else if(a_ind . i==iK_byps)
 	{
@@ -31067,26 +32930,106 @@ else if(a_ind . i==iAv_view)
 	{
 	if(but==254)
 		{
-		avar_ind_stat&=~(1L<<a_ind . s_i);
-		if(avar_ind_stat)
+		if(uku_or_rki==0){	
+			avar_ind_stat&=~(1L<<a_ind . s_i);
+			if(avar_ind_stat)
 			{
-			while(!(avar_ind_stat&(1<<a_ind . s_i)))
+				while(!(avar_ind_stat&(1<<a_ind . s_i)))
+				{
+				a_ind . s_i++;
+				if(a_ind . s_i>=32)
+					{
+					if(rki_avar1_ind_stat==0) tree_down(0,0); 
+					else {a_ind . s_i=-1; uku_or_rki=1;}	
+					avar_ind_stat=0;
+					}
+				}
+		 	}
+	 		else 
+			{
+				if(rki_avar1_ind_stat==0) {tree_down(0,0);} 
+				else {uku_or_rki=1;	a_ind . s_i=-1;}
+				avar_ind_stat=0;
+				
+			}
+
+		}
+		
+		if(uku_or_rki==1){	
+			rki_avar1_ind_stat&=~(1L<<a_ind . s_i);
+			if(rki_avar1_ind_stat)
+			{
+				while(!(rki_avar1_ind_stat&(1<<a_ind . s_i)))
+				{
+				a_ind . s_i++;
+				if(a_ind . s_i>=32)
+					{
+					if(rki_avarI1_ind_stat ) {a_ind . s_i=-1; uku_or_rki=2;}
+					else if(rki_avarI2_ind_stat ) {a_ind . s_i=-1; uku_or_rki=3;}
+					else tree_down(0,0);					
+					rki_avar1_ind_stat=0;
+					}
+				}
+		 	}
+	 		else 
+			{
+				if(rki_avarI1_ind_stat ) {a_ind . s_i=-1; uku_or_rki=2;}
+				else if(rki_avarI2_ind_stat ) {a_ind . s_i=-1; uku_or_rki=3;}
+				else tree_down(0,0);					
+				rki_avar1_ind_stat=0;				
+			}
+
+		}
+		if(uku_or_rki==2){	
+			rki_avarI1_ind_stat&=~(1L<<a_ind . s_i);
+			if(rki_avarI1_ind_stat)
+			{
+				while(!(rki_avarI1_ind_stat&(1<<a_ind . s_i)))
+				{
+				a_ind . s_i++;
+				if(a_ind . s_i>=32)
+					{
+					if(rki_avarI2_ind_stat ) {a_ind . s_i=-1; uku_or_rki=3;}
+					else tree_down(0,0);					
+					rki_avarI1_ind_stat=0;
+					}
+				}
+		 	}
+	 		else 
+			{
+				if(rki_avarI2_ind_stat ) {a_ind . s_i=-1; uku_or_rki=3;}
+				else tree_down(0,0);					
+				rki_avarI1_ind_stat=0;				
+			}
+
+		}
+		if(uku_or_rki==3){
+			rki_avarI2_ind_stat&=~(1L<<a_ind . s_i);
+			if(rki_avarI2_ind_stat)
+			{
+				while(!(rki_avarI2_ind_stat&(1<<a_ind . s_i)))
 				{
 				a_ind . s_i++;
 				if(a_ind . s_i>=32)
 					{
 					tree_down(0,0);
-					avar_ind_stat=0;
+					rki_avarI2_ind_stat=0;
 					}
 				}
 		 	}
-	 	else 
+	 		else 
 			{
-			tree_down(0,0);
-			avar_ind_stat=0;
+				tree_down(0,0);
+				rki_avarI2_ind_stat=0;
 			}
+
+		}
+
+		
+
 		}
  	}
+
 
 else if(a_ind . i==iAvz)
 	{
@@ -32794,9 +34737,9 @@ else if(a_ind . i==iTst_220_IPS_TERMOKOMPENSAT)
 			}
 		}					
 	}
-#line 29236 "main.c"
+#line 30637 "main.c"
 
-#line 29446 "main.c"
+#line 30847 "main.c"
 
 else if(a_ind . i==iTst_TELECORE)
 	{
@@ -33365,7 +35308,7 @@ else if(a_ind . i==iKlimat_kontur)
 			}
 		}
 	}
-#line 30394 "main.c"
+#line 31795 "main.c"
 else if(a_ind . i==iNpn_set)
 	{
 	ret(1000);
@@ -34190,9 +36133,9 @@ lcd_clear();
 rtc_init();
 
 a_ind . i=iMn;
-#line 31237 "main.c"
+#line 32638 "main.c"
 a_ind . i=iMn_220_IPS_TERMOKOMPENSAT;
-#line 31248 "main.c"
+#line 32649 "main.c"
 
 
 
@@ -34231,7 +36174,7 @@ adc_init();
 
 lc640_write_int(100,134);
 
-#line 31292 "main.c"
+#line 32693 "main.c"
 
 
 
@@ -34322,7 +36265,7 @@ if((AUSW_MAIN==2400)||(AUSW_MAIN==4800)||(AUSW_MAIN==6000)||(BAT_TYPE==1))
 
 
 
-#line 31400 "main.c"
+#line 32801 "main.c"
 
 
 cntrl_stat=10*PWM_START;
@@ -34526,7 +36469,7 @@ while (1)
 		ret_hndl();  
 		mess_hndl();
 
-#line 31610 "main.c"
+#line 33011 "main.c"
 		cntrl_hndl();
 
 
@@ -34625,9 +36568,9 @@ while (1)
 		
 		
 
-#line 31720 "main.c"
+#line 33121 "main.c"
 
-#line 31733 "main.c"
+#line 33134 "main.c"
 
 
 

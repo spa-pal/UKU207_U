@@ -31,7 +31,7 @@
 #define EE_KUNETC      	SECTOR_KOEF+48
 #define EE_KUBPS      	SECTOR_KOEF+50
 #define EE_KUOUT      	SECTOR_KOEF+52
-//oleg_start
+//oleg_start*
 #define EE_NUM_RKI 				SECTOR_KOEF+54
 #define EE_NUM_NET_IN			SECTOR_KOEF+56
 //oleg_end

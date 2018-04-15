@@ -728,6 +728,8 @@ extern char cnt_of_slave;
 typedef enum {
 	#ifdef UKU_220_IPS_TERMOKOMPENSAT
 	iMn_220_IPS_TERMOKOMPENSAT,
+	iRKI, iSetRKI, iK_RKI,iK_MOST,//oleg_start+
+	iNET_IN, iSetNetIn, iK_Net_In,//oleg_start+
 	#endif
 	#ifdef UKU_220
 	iMn_220,
@@ -1664,6 +1666,48 @@ extern U8 tcp_soc_avg;
 extern U8 tcp_connect_stat;
 
 extern short pvlk;
+
+//***********************************************
+// oleg_start+
+extern unsigned char ver_soft;
+extern unsigned short r_iz_plus, r_iz_minus, r_iz_porog_pred, r_iz_porog_error;
+extern unsigned char v_plus, v_minus, asymmetry;
+#define u_in_rki 	v_plus+v_minus
+extern unsigned int sk1_24;
+extern unsigned short Iddt_porog_pred, Iddt_porog_error, Iddt[24], Rddt[24];
+extern unsigned char count_Iddt; // количество датчиков тока
+extern unsigned char count_mess_rki;  // номер запроса пакетов	 РКИ
+extern unsigned char no_rki;  // нет связи с РКИ
+extern unsigned char num_rki; // количество РКИ
+extern unsigned char command_rki; //команда для РКИ
+#define NO_RKI 15 // количество посылок без ответа для отсутствия связи с РКИ
+extern unsigned int ddt_error, ddt_error_temp; // нет связи с дат тока
+extern unsigned short status_izm_r;	// аварии измерения изоляции
+extern unsigned int sk_alarm, status_di1, status_di2; // авария СК, ток пред, ток аварии
+extern unsigned char type_rki; // 0-маленькое РКИ, 1-большое РКИ
+extern unsigned char asymmetry_porog;
+extern unsigned short porog_u_in;
+extern unsigned char uku_or_rki; //индикация аварий уку или рки
+extern unsigned char u_asymmetry_porog_up, u_asymmetry_porog, u_asymmetry_porog_down;
+extern unsigned char kalibr_r_most;
+
+						// сетевые вводы
+#define NO_NET_IN  10 // количество посылок без ответа для отсутствия связи с сетевым вводом
+extern unsigned short net_in_u1_a, net_in_u1_b, net_in_u1_c, net_in_i1_a, net_in_i1_b, net_in_i1_c;
+extern unsigned short net_in_p1_a, net_in_p1_b, net_in_p1_c, net_in_s1_a, net_in_s1_b, net_in_s1_c; 
+extern unsigned short net_in_f1; 
+extern unsigned short net_in_u2_a, net_in_u2_b, net_in_u2_c, net_in_i2_a, net_in_i2_b, net_in_i2_c;
+extern unsigned short net_in_p2_a, net_in_p2_b, net_in_p2_c, net_in_s2_a, net_in_s2_b, net_in_s2_c; 
+extern unsigned short net_in_f2;
+extern unsigned char count_mess_net_in;  // номер запроса пакетов
+extern unsigned char num_net_in; // количество сетевых вводов
+extern unsigned char no_net_in; // нет связи с сетевыми вводами
+extern unsigned char command_net_in;
+extern unsigned char priority_net_in;// приоритет ввода
+extern unsigned short u_min_net_in, u_max_net_in, i_min_net_in;// установки сетевых вводов
+extern unsigned char hysteresis_net_in;
+extern unsigned short t_inclusion_net_in, t_shutdown_net_in;
+// oleg_end
 //-----------------------------------------------
 //Ресурс вентиляторов
 //extern char vent_resurs_temp[4];

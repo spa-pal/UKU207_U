@@ -16,9 +16,13 @@ void rs485_bat_driver_init(void);
 
 
 
-#line 156 "eeprom_map.h"
 
-#line 167 "eeprom_map.h"
+
+
+
+#line 160 "eeprom_map.h"
+
+#line 171 "eeprom_map.h"
 
 
 
@@ -37,34 +41,34 @@ void rs485_bat_driver_init(void);
 
  
 
-#line 199 "eeprom_map.h"
+#line 203 "eeprom_map.h"
 
 
 
-#line 211 "eeprom_map.h"
+#line 215 "eeprom_map.h"
 
 
-#line 222 "eeprom_map.h"
-
-
-
-#line 233 "eeprom_map.h"
+#line 226 "eeprom_map.h"
 
 
 
-#line 289 "eeprom_map.h"
-
-
-#line 331 "eeprom_map.h"
+#line 237 "eeprom_map.h"
 
 
 
+#line 293 "eeprom_map.h"
 
+
+#line 335 "eeprom_map.h"
 
 
 
 
-#line 353 "eeprom_map.h"
+
+
+
+
+#line 357 "eeprom_map.h"
 
 
 

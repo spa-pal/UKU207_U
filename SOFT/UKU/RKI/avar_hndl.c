@@ -22,7 +22,7 @@ unsigned avar_stat_new,avar_stat_offed;
 //4бита - внешние датчики температуры
 //4бита - внешние сухие контакты
 
-// oleg_start
+// oleg_start*
 //Аварии
 unsigned rki_avar1_stat;	 	//"Отображение" всех аварийных в данный момент устройств в одном месте
 unsigned rki_avar1_ind_stat; 	//"Отображение" всех не просмотренных аварийных устройств в одном месте
@@ -133,7 +133,7 @@ avar_ind_stat&=avar_stat_offed;
 
 avar_stat_old=avar_stat;
 
-//oleg_start
+//oleg_start*
 
 
 

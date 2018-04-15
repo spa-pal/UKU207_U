@@ -325,6 +325,12 @@ __ee_vz_cnt=lc640_read_int(EE_VZ_CNT);
 __ee_spc_stat=lc640_read_int(EE_SPC_STAT);
 __ee_spc_bat=lc640_read_int(EE_SPC_BAT);
 __ee_spc_phase=lc640_read_int(EE_SPC_PHASE);
+
+//oleg_start+
+num_rki=(char)lc640_read_int(EE_NUM_RKI);
+//if(num_rki>1) {num_rki=0; lc640_write_int(EE_NUM_RKI, num_rki);}
+num_net_in=(char)lc640_read_int(EE_NUM_NET_IN);
+//oleg_end
 }
 
 

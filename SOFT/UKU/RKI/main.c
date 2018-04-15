@@ -49,7 +49,7 @@ extern LOCALM localm[];
 #define MY_IP localm[NETIF_ETH].IpAdr
 #define DHCP_TOUT   50
 //***********************************************
-// oleg_start
+// oleg_start*
 unsigned char ver_soft;
 unsigned short r_iz_plus, r_iz_minus, r_iz_porog_pred, r_iz_porog_error;
 unsigned char v_plus, v_minus, asymmetry;
@@ -1308,7 +1308,7 @@ else if((cnt_net_drv>=MINIM_INV_ADRESS)&&(cnt_net_drv<(MINIM_INV_ADRESS+NUMINV))
 	} 
 */	
 
-//oleg_start
+//oleg_start*
 else if( num_net_in && cnt_net_drv==18) // запрос для сетевого ввода
 	{
      if(!bCAN_OFF)
@@ -1905,8 +1905,8 @@ else
 void ind_hndl(void)
 {
 //const char* ptr;
-const char* ptrs[90];		//oleg_start было 60
-const char* sub_ptrs[250];	//oleg_start было 50
+const char* ptrs[90];		//oleg_start* было 60
+const char* sub_ptrs[250];	//oleg_start* было 50
 static char sub_cnt,sub_cnt1;
 char i,sub_cnt_max;
 char ii_;				  
@@ -2098,7 +2098,7 @@ if(bps[0]._av&(1<<4))
 	sub_cnt_max++;		
 	}
 
-// oleg_start
+// oleg_start*
 //status_izm_r=0xff;
 //sk_alarm=0xFFffff;
 //status_di1=0xFFffff;
@@ -3890,7 +3890,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
  	//ptrs[1]="Uбz=   ]В Iбz=    @А";
 	ptrs[1]="Uвыпр   ]В Iвыпр  @А";	
 	ptrs[2]="Uшины   #В Iбат   $А";
-    ptrs[3]=" 0%:0^:0& 0z/w  /0{ ";	  //oleg_start заменил < на z, > на w.
+    ptrs[3]=" 0%:0^:0& 0z/w  /0{ ";	  //oleg_start* заменил < на z, > на w.
 	ptrs[4]="     Tб    ?°C      ";
 /*     
  	ptrs[4]=										" Батарея N1         ";
@@ -3921,7 +3921,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
     ptrs[5+NUMIST/*+NUMBAT+NUMINV*/]= 				" Сеть               "; 
 //    ptrs[5+NUMIST/*+NUMBAT+NUMINV*/]= 				" Нагрузка           "; 
 
-	//oleg_start
+	//oleg_start*
 	ptrs[6+NUMIST]=	" Сетевые вводы      ";
 	ptrs[6+NUMIST+(num_net_in!=0)]=	" Контроль изоляции  ";
 	//oleg_end далее во всех ptrs добавил +(num_rki!=0)+(num_net_in!=0)
@@ -3976,9 +3976,9 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 	int2lcd(LPC_RTC->HOUR,'%',0);
 	int2lcd(LPC_RTC->MIN,'^',0);
 	int2lcd(LPC_RTC->SEC,'&',0);
-	int2lcd(LPC_RTC->DOM,'z',0);   //oleg_start заменил < на z
+	int2lcd(LPC_RTC->DOM,'z',0);   //oleg_start* заменил < на z
 	int2lcd(LPC_RTC->YEAR,'{',0); 
-	sub_bgnd(sm_mont[LPC_RTC->MONTH],'w',0);  //oleg_start заменил > на w
+	sub_bgnd(sm_mont[LPC_RTC->MONTH],'w',0);  //oleg_start* заменил > на w
 
  	if(bFL2)
  	     {
@@ -7617,11 +7617,11 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	ptrs[48]=		" батареи - )        ";
 	ptrs[49]=		" Скорость регулир.  ";
 	ptrs[50]=		"    &               ";
-    ptrs[51]=		" РКИ                "; // oleg_start вставлена строка
-	ptrs[51+(num_rki!=0)]=						" Сетевые вводы      "; // oleg_start вставлена строка
-	ptrs[51+(num_rki!=0)+(num_net_in!=0)]=		" Выход              ";	// oleg_start добавил +(num_rki!=0)
-    ptrs[52+(num_rki!=0)+(num_net_in!=0)]=		" Калибровки         "; // oleg_start добавил +(num_rki!=0)
-    ptrs[53+(num_rki!=0)+(num_net_in!=0)]=		"                    "; // oleg_start добавил +(num_rki!=0)       
+    ptrs[51]=		" РКИ                "; // oleg_start* вставлена строка
+	ptrs[51+(num_rki!=0)]=						" Сетевые вводы      "; // oleg_start* вставлена строка
+	ptrs[51+(num_rki!=0)+(num_net_in!=0)]=		" Выход              ";	// oleg_start* добавил +(num_rki!=0)
+    ptrs[52+(num_rki!=0)+(num_net_in!=0)]=		" Калибровки         "; // oleg_start* добавил +(num_rki!=0)
+    ptrs[53+(num_rki!=0)+(num_net_in!=0)]=		"                    "; // oleg_start* добавил +(num_rki!=0)       
 	
 	if((sub_ind-index_set)>2)index_set=sub_ind-2;
 	else if(sub_ind<index_set)index_set=sub_ind;
@@ -8951,7 +8951,7 @@ else if(ind==iK_220_IPS_TERMOKOMPENSAT_IB)
 	ptrs[i++]=" Выходные параметры ";
     if(NUMDT)
     ptrs[i++]=" Внешние датчики    ";
-	if(num_rki)						  //oleg_start
+	if(num_rki)						  //oleg_start*
 	ptrs[i++]=" РКИ                ";
 	if(num_net_in)
 	ptrs[i++]=" Сетевые вводы      "; //oleg_end
@@ -10679,7 +10679,7 @@ else if((ind==iAv_view)||(ind==iAv_view_avt))
 	
 	bgnd_par(sm_,sm_,sm_,sm_);
 	
-if(uku_or_rki==0){	//oleg_start	
+if(uku_or_rki==0){	//oleg_start*	
 	if(sub_ind==0)
 		{	
 		if(avar_stat&0x00000001)
@@ -10875,9 +10875,9 @@ if(uku_or_rki==0){	//oleg_start
 		{
 
 		}
-}// end if(uku_or_rki==0){	//oleg_start
-//oleg_start
-else if(uku_or_rki==1){	//oleg_start		
+}// end if(uku_or_rki==0){	//oleg_start*
+//oleg_start*
+else if(uku_or_rki==1){	//oleg_start*		
 
 	if(sub_ind==0) { 
 		if( rki_avar1_stat&1){
@@ -12841,7 +12841,7 @@ else if(ind==iBps_list)
 	else sub_bgnd(" ",'#',0);
 
 	}
-// oleg_start
+// oleg_start*
 else if(ind==iK_Net_In){
 		ptrs[0]=					" U фазы А         qВ";
 		ptrs[1]=					" U фазы В         wВ";
@@ -15083,7 +15083,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 	if(but==butD)
 		{
 		sub_ind++;
-		//oleg_start  было без (num_rki!=0)
+		//oleg_start*  было без (num_rki!=0)
 		gran_char(&sub_ind,0,9+NUMIST/*+NUMINV*/+(NUMEXT!=0)+(num_rki!=0)+(num_net_in!=0));
 		//oleg_end  
 		}
@@ -15091,7 +15091,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 	else if(but==butU)
 		{
 		sub_ind--;
-		//oleg_start  было без (num_rki!=0)
+		//oleg_start*  было без (num_rki!=0)
 		gran_char(&sub_ind,0,9+NUMIST/*+NUMINV*/+(NUMEXT!=0)+(num_rki!=0)+(num_net_in!=0));
 		//oleg_end 
 		}	
@@ -15125,7 +15125,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 			{ 
 			if(avar_ind_stat)
 			{	
-				uku_or_rki=0;  //oleg_start
+				uku_or_rki=0;  //oleg_start*
 				//ind=iAv_view;
 				//sub_ind=0;
 				tree_up(iAv_view,0,0,0);
@@ -15134,12 +15134,12 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 					sub_ind++;
 					if(sub_ind>=32)
 						{
-						if(!rki_avar1_ind_stat) tree_down(0,0);	//oleg_start добавил if(!rki_avar1_ind_stat)
+						if(!rki_avar1_ind_stat) tree_down(0,0);	//oleg_start* добавил if(!rki_avar1_ind_stat)
 						avar_ind_stat=0;
 						}
 					}
 			}
-			//oleg_start
+			//oleg_start*
 			else if(rki_avar1_ind_stat){
 					uku_or_rki=1;
 					tree_up(iAv_view,0,0,0);
@@ -15187,7 +15187,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 		     ret(1000);
 			} */
 
-			// oleg_start
+			// oleg_start*
 		else if(sub_ind==(2+NUMBAT+NUMIST+(num_net_in!=0)))	// вход в подменю сетевые вводы
 			{
 			if(but==butE)
@@ -15206,36 +15206,36 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 			}
 			// oleg_end
 
-		else if((sub_ind==(3/*+NUMBAT*/+NUMIST/*+NUMINV*/)+(num_rki!=0)+(num_net_in!=0))&&(NUMEXT))	//oleg_start добавил +(num_rki!=0)
+		else if((sub_ind==(3/*+NUMBAT*/+NUMIST/*+NUMINV*/)+(num_rki!=0)+(num_net_in!=0))&&(NUMEXT))	//oleg_start* добавил +(num_rki!=0)
 			{
 			tree_up(iExtern_220,0,0,0);
 		     ret(1000);
 			}
 
-		else if(sub_ind==(3+NUMBAT+NUMIST+/*NUMINV+*/(NUMEXT!=0))+(num_rki!=0)+(num_net_in!=0))	 	//oleg_start добавил +(num_rki!=0)
+		else if(sub_ind==(3+NUMBAT+NUMIST+/*NUMINV+*/(NUMEXT!=0))+(num_rki!=0)+(num_net_in!=0))	 	//oleg_start* добавил +(num_rki!=0)
 			{
 			speedChargeStartStop();
 			}
 
-		else if(sub_ind==(4+NUMBAT+NUMIST+/*NUMINV+*/(NUMEXT!=0))+(num_rki!=0)+(num_net_in!=0))	 	//oleg_start добавил +(num_rki!=0)
+		else if(sub_ind==(4+NUMBAT+NUMIST+/*NUMINV+*/(NUMEXT!=0))+(num_rki!=0)+(num_net_in!=0))	 	//oleg_start* добавил +(num_rki!=0)
 			{
 			tree_up(iSpc_termocompensat,0,0,0);
 		     ret(1000);
 			}
 
-		else if(sub_ind==(5+NUMBAT+NUMIST+/*NUMINV+*/(NUMEXT!=0))+(num_rki!=0)+(num_net_in!=0))	 	//oleg_start добавил +(num_rki!=0)
+		else if(sub_ind==(5+NUMBAT+NUMIST+/*NUMINV+*/(NUMEXT!=0))+(num_rki!=0)+(num_net_in!=0))	 	//oleg_start* добавил +(num_rki!=0)
 			{
 			tree_up(iSet_prl,0,0,0);
 		     ret(50);
 		     parol_init();
 			}
-		else if(sub_ind==(6+NUMBAT+NUMIST+/*NUMINV+*/(NUMEXT!=0))+(num_rki!=0)+(num_net_in!=0))		//oleg_start добавил +(num_rki!=0)
+		else if(sub_ind==(6+NUMBAT+NUMIST+/*NUMINV+*/(NUMEXT!=0))+(num_rki!=0)+(num_net_in!=0))		//oleg_start* добавил +(num_rki!=0)
 			{
 			if(but==butE_)avar_uout_hndl(1);
 			tree_up(iLog,0,0,0);
 		     ret(1000);
 			}
-		else if(sub_ind==(7+NUMBAT+NUMIST+/*NUMINV+*/(NUMEXT!=0))+(num_rki!=0)+(num_net_in!=0))		//oleg_start добавил +(num_rki!=0)
+		else if(sub_ind==(7+NUMBAT+NUMIST+/*NUMINV+*/(NUMEXT!=0))+(num_rki!=0)+(num_net_in!=0))		//oleg_start* добавил +(num_rki!=0)
 			{
 			sub_ind=0;
 			}
@@ -15249,7 +15249,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 			tree_up(iBatLog,0,0,1);
 		     ret(1000);
 			}*/
-		else if(sub_ind==(8+NUMBAT+NUMIST+/*NUMINV+*/(NUMEXT!=0))+(num_rki!=0)+(num_net_in!=0))		//oleg_start добавил +(num_rki!=0)
+		else if(sub_ind==(8+NUMBAT+NUMIST+/*NUMINV+*/(NUMEXT!=0))+(num_rki!=0)+(num_net_in!=0))		//oleg_start* добавил +(num_rki!=0)
 			{
 			if(but==butE)
 		     	{
@@ -15257,7 +15257,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 		     	parol_init();
 		     	}
 			}
-		else if(sub_ind==(9+NUMBAT+NUMIST+/*NUMINV+*/(NUMEXT!=0))+(num_rki!=0)+(num_net_in!=0))	 	//oleg_start добавил +(num_rki!=0)
+		else if(sub_ind==(9+NUMBAT+NUMIST+/*NUMINV+*/(NUMEXT!=0))+(num_rki!=0)+(num_net_in!=0))	 	//oleg_start* добавил +(num_rki!=0)
 			{
 			if(but==butE)
 		     	{
@@ -21705,7 +21705,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
         	{
             sub_ind=51;
 		    }																	
-		gran_char(&sub_ind,0,52+(num_rki!=0)+(num_net_in!=0)); //oleg_start было	 gran_char(&sub_ind,0,52);
+		gran_char(&sub_ind,0,52+(num_rki!=0)+(num_net_in!=0)); //oleg_start* было	 gran_char(&sub_ind,0,52);
 		
 		}
 	else if(but==butU)
@@ -21757,12 +21757,12 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
         	{
             sub_ind=49;
 		    }
-		gran_char(&sub_ind,0,52+(num_rki!=0)+(num_net_in!=0)); //oleg_start было	 gran_char(&sub_ind,0,52);
+		gran_char(&sub_ind,0,52+(num_rki!=0)+(num_net_in!=0)); //oleg_start* было	 gran_char(&sub_ind,0,52);
 
 		}
 	else if(but==butD_)
 		{
-		sub_ind=51+(num_rki!=0)+(num_net_in!=0); // oleg_start было 51
+		sub_ind=51+(num_rki!=0)+(num_net_in!=0); // oleg_start* было 51
 
 		}
 
@@ -21807,10 +21807,10 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 		     index_set=0;
  		     }
 		}	
-	 else if(sub_ind==3)  // oleg_start
+	 else if(sub_ind==3)  // oleg_start*
 		{
 		if(but==butE) tree_down(0,0); ret(0);			 
-		}				  // oleg_end
+		}				  // oleg_end*
 	else if(sub_ind==4)
 	     {
 		if(ZV_ON)ZV_ON=0;
@@ -22249,7 +22249,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	    lc640_write_int(EE_REG_SPEED,REG_SPEED);
 	    speed=1;
 	    }
-    // oleg_start 
+    // oleg_start* 
 	else if(sub_ind==51){
 		if(but==butE) 
 			{
@@ -22259,7 +22259,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 		    }
 	}
 	// oleg_end	
-	else if(sub_ind==52)// oleg_start было 51
+	else if(sub_ind==52)// oleg_start* было 51
 		{
 		if(but==butE)
 		     {
@@ -22274,7 +22274,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 		     }
 		}
 				
-	else if(sub_ind==53) // oleg_start было 52
+	else if(sub_ind==53) // oleg_start* было 52
 		{
 		if(but==butE)
 		    {	
@@ -22286,7 +22286,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 				}
 			}						
 		}
-	else if(sub_ind==54) // oleg_start
+	else if(sub_ind==54) // oleg_start*
 		{
 		if(but==butE)
 		    {	
@@ -23737,16 +23737,16 @@ else if(ind==iStr_220_IPS_TERMOKOMPENSAT)
 	if(but==butD)
 		{
 		sub_ind++;
-		gran_char(&sub_ind,0,6); // oleg_start было 4
+		gran_char(&sub_ind,0,6); // oleg_start* было 4
 		}
 	else if(but==butU)
 		{
 		sub_ind--;
-		gran_char(&sub_ind,0,6); // oleg_start было 4
+		gran_char(&sub_ind,0,6); // oleg_start* было 4
 		}
 	else if(but==butD_)
 		{
-		sub_ind=6;	// oleg_start было 4
+		sub_ind=6;	// oleg_start* было 4
 		}				
      else if(sub_ind==0)
 	     {
@@ -23820,7 +23820,7 @@ else if(ind==iStr_220_IPS_TERMOKOMPENSAT)
 	     	lc640_write_int(EE_NUMSK,NUMSK);
 	     	}
 		}
- // oleg_start
+ // oleg_start*
 	else if(sub_ind==4)	
 	     {
 	     if(num_rki==0 && ((but==butR)||(but==butR_))) {num_rki=1; lc640_write_int(EE_NUM_RKI, num_rki);}
@@ -23832,7 +23832,7 @@ else if(ind==iStr_220_IPS_TERMOKOMPENSAT)
 		 else if((but==butL)||(but==butL_)) {num_net_in=0; lc640_write_int(EE_NUM_NET_IN, num_net_in);}
          }
  // oleg_end		  			  			                 
-    else if(sub_ind==6)	 // oleg_start было 4
+    else if(sub_ind==6)	 // oleg_start* было 4
 	     {
 	     if(but==butE)
 	          {
@@ -26223,12 +26223,12 @@ else if(ind==iK_220_IPS_TERMOKOMPENSAT_IB)
 	if(but==butD)
 		{
 		sub_ind++;
-		gran_char(&sub_ind,0,3+(NUMIST!=0)+(NUMDT!=0)+(num_rki!=0)+(num_net_in!=0)); //oleg_start
+		gran_char(&sub_ind,0,3+(NUMIST!=0)+(NUMDT!=0)+(num_rki!=0)+(num_net_in!=0)); //oleg_start*
 		}
 	else if(but==butU)
 		{
 		sub_ind--;
-		gran_char(&sub_ind,0,3+(NUMIST!=0)+(NUMDT!=0)+(num_rki!=0)+(num_net_in!=0)); //oleg_start
+		gran_char(&sub_ind,0,3+(NUMIST!=0)+(NUMDT!=0)+(num_rki!=0)+(num_net_in!=0)); //oleg_start*
 		}
 	else if(but==butD_)
 		{
@@ -26271,7 +26271,7 @@ else if(ind==iK_220_IPS_TERMOKOMPENSAT_IB)
 			tree_up(iK_t_ext_6U,0,0,0);	
 			ret(1000);			
 			}
- 		//oleg_start
+ 		//oleg_start*
 		else if( num_rki && (sub_ind==(3+(NUMIST!=0)+(NUMDT!=0) ) ) )
 			{
 	        tree_up(iK_RKI,0,0,0);	
@@ -26283,7 +26283,7 @@ else if(ind==iK_220_IPS_TERMOKOMPENSAT_IB)
 			ret(1000);
             }
 		//oleg_end				
-        else if(sub_ind==(3+(NUMIST!=0)+(NUMDT!=0)+(num_rki!=0)+(num_net_in!=0))) // oleg_start добавил +(num_rki!=0)+(num_net_in!=0)
+        else if(sub_ind==(3+(NUMIST!=0)+(NUMDT!=0)+(num_rki!=0)+(num_net_in!=0))) // oleg_start* добавил +(num_rki!=0)+(num_net_in!=0)
 			{
 	          tree_down(0,0);
 	          ret(0);
@@ -28805,7 +28805,7 @@ else if(ind==iAv_view)
 	{
 	if(but==butE)
 		{
-		if(uku_or_rki==0){	//oleg_start
+		if(uku_or_rki==0){	//oleg_start*
 			avar_ind_stat&=~(1L<<sub_ind);
 			if(avar_ind_stat)
 			{
@@ -28814,22 +28814,22 @@ else if(ind==iAv_view)
 				sub_ind++;
 				if(sub_ind>=32)
 					{
-					if(rki_avar1_ind_stat==0) tree_down(0,0); //oleg_start		tree_down(0,0);
-					else {sub_ind=-1; uku_or_rki=1;}	//oleg_start
+					if(rki_avar1_ind_stat==0) tree_down(0,0); //oleg_start*		tree_down(0,0);
+					else {sub_ind=-1; uku_or_rki=1;}	//oleg_start*
 					avar_ind_stat=0;
 					}
 				}
 		 	}
 	 		else 
 			{
-				if(rki_avar1_ind_stat==0) {tree_down(0,0);} //oleg_start		tree_down(0,0);
-				else {uku_or_rki=1;	sub_ind=-1;}//oleg_start
+				if(rki_avar1_ind_stat==0) {tree_down(0,0);} //oleg_start*		tree_down(0,0);
+				else {uku_or_rki=1;	sub_ind=-1;}//oleg_start*
 				avar_ind_stat=0;
 				
 			}
 
 		}
-		//oleg_start
+		//oleg_start*
 		if(uku_or_rki==1){	
 			rki_avar1_ind_stat&=~(1L<<sub_ind);
 			if(rki_avar1_ind_stat)
