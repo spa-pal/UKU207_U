@@ -1573,7 +1573,7 @@ extern signed short t_ext[3];
 extern char ND_EXT[3];
 extern signed char sk_cnt[4],sk_av_cnt[4];
 typedef enum  {ssOFF,ssON} enum_sk_stat;
-extern enum_sk_stat sk_stat[4];
+extern enum_sk_stat sk_stat[4],sk_stat_old[4];
 typedef enum  {sasOFF,sasON} enum_sk_av_stat;
 extern enum_sk_av_stat sk_av_stat[4],sk_av_stat_old[4];
 extern signed short t_box,t_box_warm,t_box_vent;
@@ -1790,7 +1790,7 @@ extern short pvlk;
 
 
 
-typedef enum  {hvsOFF,hvsSTEP1,hvsSTEP2,hvsSTEP3,hvsSTEP4,hvsWRK,hvsERR1,hvsERR2,hvsERR3} enum_hv_vz_stat;
+typedef enum  {hvsOFF,hvsSTEP1,hvsSTEP2,hvsSTEP3,hvsSTEP4,hvsWRK,hvsERR1,hvsERR2,hvsERR3,hvsERR4} enum_hv_vz_stat;
 extern enum_hv_vz_stat hv_vz_stat,hv_vz_stat_old;
 extern short hv_vz_stat_cnt;
 extern long hv_vz_wrk_cnt;
@@ -4116,7 +4116,7 @@ enum_tout_stat tout_stat[4];
 signed short t_ext[3];
 
 signed char sk_cnt_dumm[4],sk_cnt[4],sk_av_cnt[4];
-enum_sk_stat sk_stat[4]={ssOFF,ssOFF,ssOFF,ssOFF};
+enum_sk_stat sk_stat[4]={ssOFF,ssOFF,ssOFF,ssOFF},sk_stat_old[4]={ssOFF,ssOFF,ssOFF,ssOFF};
 enum_sk_av_stat sk_av_stat[4]={sasOFF,sasOFF,sasOFF,sasOFF},sk_av_stat_old[4];
 signed short t_box,t_box_warm,t_box_vent;
 char TELECORE2017_EXT_VENT_PWM,TELECORE2017_INT_VENT_PWM;
@@ -8931,10 +8931,11 @@ else if(a_ind . i==iMn_220_IPS_TERMOKOMPENSAT)
 
     ptrs[6+NUMIST ]= 				" Внешние датчики    ";
 	ptrs[6+NUMIST +(NUMEXT!=0)]= 	" Ускоренный заряд   ";
-	if((speedChIsOn)&&(bFL))ptrs[6+NUMIST +(NUMEXT!=0)]= 	"                     "; 
+	if((speedChIsOn)&&(bFL))ptrs[6+NUMIST+(NUMEXT!=0)]= 	"                     "; 
  	
-	ptrs[7+NUMIST +(NUMEXT!=0)]= 			" Выравнивающий заряд ";
-    ptrs[8+NUMIST +(NUMEXT!=0)]= 	" Установки          "; 
+	ptrs[7+NUMIST +(NUMEXT!=0)]= 	" Выравнивающий заряд ";
+    if((hv_vz_stat!=hvsOFF)&&(bFL))	ptrs[7+NUMIST+(NUMEXT!=0)]= "                     ";
+	ptrs[8+NUMIST +(NUMEXT!=0)]= 	" Установки          "; 
     ptrs[9+NUMIST +(NUMEXT!=0)]= 	" Журнал событий     "; 
     ptrs[10+NUMIST +(NUMEXT!=0)]= 	" Выход              "; 
     
@@ -11527,7 +11528,7 @@ else if(a_ind . i==iSet_bat_sel)
 	
 	}
 
-#line 6158 "main.c"
+#line 6159 "main.c"
 else if(a_ind . i==iSet)
 	{
      ptrs[0]=		" Стандартные        ";
@@ -12221,7 +12222,7 @@ else if(a_ind . i==iSet_TELECORE2015)
 	
 	
 	}
-#line 6967 "main.c"
+#line 6968 "main.c"
 
 else if((a_ind . i==iSet_220))
 	{
@@ -15296,7 +15297,7 @@ if(a_ind . i==iDeb)
      		    	"    !     $         ",
      		    	"    @     %         ",
      		    	"            ^       ");
-#line 10084 "main.c"
+#line 10085 "main.c"
     	}
 
 
@@ -16816,7 +16817,7 @@ else if(a_ind . i==iTst_220_IPS_TERMOKOMPENSAT)
 
  
 	}
-#line 11852 "main.c"
+#line 11853 "main.c"
 else if(a_ind . i==iTst_bps)
 	{
 	if(tst_state[5]==tstOFF)ptrs[0]=		" Выключен           ";
@@ -16992,7 +16993,7 @@ else if(a_ind . i==iKlimat_kontur)
 	
 	int2lcdyx(t_box,0,19,0);	 
 	}
-#line 12160 "main.c"
+#line 12161 "main.c"
 
 else if(a_ind . i==iNpn_set)
 	{
@@ -17329,12 +17330,12 @@ else if (a_ind . i==iIps_Curr_Avg_Set)
 }							    
 
 
-#line 12502 "main.c"
+#line 12503 "main.c"
 
 
 
 
-#line 12525 "main.c"
+#line 12526 "main.c"
 
 
 
@@ -17657,7 +17658,7 @@ else if(a_ind . i==iMn)
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV)))
 			{
-#line 12855 "main.c"
+#line 12856 "main.c"
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV+1)))
 			{
@@ -17671,9 +17672,9 @@ else if(a_ind . i==iMn)
 		     ret(1000);
 			}
 
-#line 12875 "main.c"
+#line 12876 "main.c"
 
-#line 12883 "main.c"
+#line 12884 "main.c"
 
 		else if(a_ind . s_i==(4+NUMBAT+NUMIST+2)+(NUMAVT!=0))
 			{
@@ -19774,9 +19775,9 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==184) 
 				{
 				tree_down(0,0);
-#line 15002 "main.c"
+#line 15003 "main.c"
 				tree_up(iSet_220_IPS_TERMOKOMPENSAT,0,0,0);
-#line 15013 "main.c"
+#line 15014 "main.c"
 				ret(1000);
 				}
 			else 
@@ -19793,7 +19794,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==873) 
 				{
 				tree_down(0,0);
-#line 15060 "main.c"
+#line 15061 "main.c"
 				if((AUSW_MAIN==22033)||(AUSW_MAIN==22018))
 					{
 					tree_up(iK_220_IPS_TERMOKOMPENSAT,0,0,0);
@@ -19807,7 +19808,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 
 				else
 				tree_up(iK_220,0,0,0);
-#line 15080 "main.c"
+#line 15081 "main.c"
 				show_mess(	"Включите авт-ты СЕТЬ",
  							"  БАТАРЕЯ,НАГРУЗКА  ",
  							"   Установите ток   ",
@@ -19867,9 +19868,9 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 			if(tempU==999) 
 				{
 				tree_down(0,0);
-#line 15169 "main.c"
+#line 15170 "main.c"
 				tree_up(iTst_220_IPS_TERMOKOMPENSAT,0,0,0);
-#line 15177 "main.c"
+#line 15178 "main.c"
 				tst_state[0]=tstOFF;
 				tst_state[1]=tstOFF;
 				tst_state[2]=tstOFF;
@@ -19968,7 +19969,7 @@ else if(a_ind . i==iSet_bat_sel)
 
 		}
 	}
-#line 15443 "main.c"
+#line 15444 "main.c"
 else if(a_ind . i==iPrl_bat_in_sel)
 	{
 	ret(1000);
@@ -20501,7 +20502,7 @@ else if(a_ind . i==iSet)
 	     {
 	     if(but==254)
 	          {
-#line 15987 "main.c"
+#line 15988 "main.c"
 	          ret(1000);
 	          default_temp=10;
 	          }
@@ -20523,7 +20524,7 @@ else if(a_ind . i==iSet)
 		{
 		if(but==254)
 		     {
-#line 16033 "main.c"
+#line 16034 "main.c"
 
 
 
@@ -23330,7 +23331,7 @@ else if(a_ind . i==iSet_TELECORE2015)
 			}						
 		}
      }
-#line 19372 "main.c"
+#line 19373 "main.c"
 
 else if((a_ind . i==iSet_220))
 	{
@@ -24135,7 +24136,7 @@ else if((a_ind . i==iSet_220_V2))
 			}						
 		}
      }
-else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
+else if(a_ind . i==iSet_220_IPS_TERMOKOMPENSAT)
 	{
 	ret(1000);
 	if(but==251)
@@ -24217,6 +24218,10 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
             }
         if(a_ind . s_i==32)
         	{
+            a_ind . s_i=31;
+		    }
+        if(a_ind . s_i==34)
+        	{
             a_ind . s_i=33;
 		    }
         if(a_ind . s_i==36)
@@ -24248,7 +24253,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 		}
 	else if(but==123)
 		{
-		a_ind . s_i=51;
+		a_ind . s_i=52;
 		}
 
 	else if(but==103)
@@ -30394,7 +30399,7 @@ else if(a_ind . i==iK_inv)
 			}
 		}			
 	}
-#line 26582 "main.c"
+#line 26587 "main.c"
 
 else if(a_ind . i==iK_byps)
 	{
@@ -32825,9 +32830,9 @@ else if(a_ind . i==iTst_220_IPS_TERMOKOMPENSAT)
 			}
 		}					
 	}
-#line 29258 "main.c"
+#line 29263 "main.c"
 
-#line 29468 "main.c"
+#line 29473 "main.c"
 
 else if(a_ind . i==iTst_TELECORE)
 	{
@@ -33396,7 +33401,7 @@ else if(a_ind . i==iKlimat_kontur)
 			}
 		}
 	}
-#line 30416 "main.c"
+#line 30421 "main.c"
 else if(a_ind . i==iNpn_set)
 	{
 	ret(1000);
@@ -34221,9 +34226,9 @@ lcd_clear();
 rtc_init();
 
 a_ind . i=iMn;
-#line 31259 "main.c"
+#line 31264 "main.c"
 a_ind . i=iMn_220_IPS_TERMOKOMPENSAT;
-#line 31270 "main.c"
+#line 31275 "main.c"
 
 
 
@@ -34262,7 +34267,7 @@ adc_init();
 
 lc640_write_int(100,134);
 
-#line 31314 "main.c"
+#line 31319 "main.c"
 
 
 
@@ -34353,7 +34358,7 @@ if((AUSW_MAIN==2400)||(AUSW_MAIN==4800)||(AUSW_MAIN==6000)||(BAT_TYPE==1))
 
 
 
-#line 31422 "main.c"
+#line 31427 "main.c"
 
 
 cntrl_stat=10*PWM_START;
@@ -34557,7 +34562,7 @@ while (1)
 		ret_hndl();  
 		mess_hndl();
 
-#line 31632 "main.c"
+#line 31637 "main.c"
 		cntrl_hndl();
 
 
@@ -34656,9 +34661,9 @@ while (1)
 		
 		
 
-#line 31742 "main.c"
+#line 31747 "main.c"
 
-#line 31755 "main.c"
+#line 31760 "main.c"
 
 
 

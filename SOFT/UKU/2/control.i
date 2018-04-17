@@ -1761,7 +1761,7 @@ extern signed short t_ext[3];
 extern char ND_EXT[3];
 extern signed char sk_cnt[4],sk_av_cnt[4];
 typedef enum  {ssOFF,ssON} enum_sk_stat;
-extern enum_sk_stat sk_stat[4];
+extern enum_sk_stat sk_stat[4],sk_stat_old[4];
 typedef enum  {sasOFF,sasON} enum_sk_av_stat;
 extern enum_sk_av_stat sk_av_stat[4],sk_av_stat_old[4];
 extern signed short t_box,t_box_warm,t_box_vent;
@@ -1978,7 +1978,7 @@ extern short pvlk;
 
 
 
-typedef enum  {hvsOFF,hvsSTEP1,hvsSTEP2,hvsSTEP3,hvsSTEP4,hvsWRK,hvsERR1,hvsERR2,hvsERR3} enum_hv_vz_stat;
+typedef enum  {hvsOFF,hvsSTEP1,hvsSTEP2,hvsSTEP3,hvsSTEP4,hvsWRK,hvsERR1,hvsERR2,hvsERR3,hvsERR4} enum_hv_vz_stat;
 extern enum_hv_vz_stat hv_vz_stat,hv_vz_stat_old;
 extern short hv_vz_stat_cnt;
 extern long hv_vz_wrk_cnt;
@@ -8474,6 +8474,11 @@ else if((b1Hz_ch)&&((!bIBAT_SMKLBR)||(bps[8]._cnt>40)))
 			}					
 		}
 
+	if(hv_vz_stat==hvsOFF)
+		{
+		if((sk_stat[1]==1)&&(sk_stat_old[1]=0))cntrl_stat_new=50;
+		}
+
 	gran(&cntrl_stat_new,10,1010);			
 	cntrl_stat_old=cntrl_stat_new;
 	cntrl_stat=cntrl_stat_new;
@@ -8493,7 +8498,7 @@ else if((b1Hz_ch)&&((!bIBAT_SMKLBR)||(bps[8]._cnt>40)))
 		cntrl_stat=cntrl_stat_new+ica_u_necc;
 		}		
 	}
-#line 6591 "control.c"
+#line 6596 "control.c"
 
 iiii=0;
 for(i=0;i<NUMIST;i++)
@@ -8526,9 +8531,9 @@ b1Hz_ch=0;
 }
 
 
-#line 6865 "control.c"
+#line 6870 "control.c"
 
-#line 7109 "control.c"
+#line 7114 "control.c"
 
 
 void ext_drv(void)
@@ -8538,9 +8543,9 @@ char i;
 
 for(i=0;i<NUMSK;i++)
 	{
-#line 7143 "control.c"
+#line 7148 "control.c"
 	if(adc_buff_[sk_buff_220[i]]<2000)
-#line 7151 "control.c"
+#line 7156 "control.c"
 		{
 		if(sk_cnt[i]<10)
 			{
@@ -8643,9 +8648,12 @@ for(i=0;i<NUMSK;i++)
 	 	}
 
 
-#line 7273 "control.c"
+#line 7278 "control.c"
 	sk_av_stat_old[i]=sk_av_stat[i];
 	}
+
+for(i=0;i<NUMSK;i++) sk_stat_old[4]=sk_stat[4];
+
 }
 
 
@@ -8880,9 +8888,11 @@ else
 
 void averageChargeHndl(void)
 {
-if(hv_vz_stat==hvsOFF)
-	{
-	}
+
+
+
+
+ 
 if(hv_vz_stat==hvsSTEP1)
 	{
 	if(hv_vz_stat_old!=hv_vz_stat)
@@ -8928,7 +8938,7 @@ if(hv_vz_stat==hvsWRK)
 	hv_vz_wrk_cnt--;
 	if(hv_vz_wrk_cnt==0)
 		{
-		hv_vz_stat=hvsOFF;
+		hv_vz_stat=hvsERR4;
 		}
 	if(sk_stat[0]==0)hv_vz_stat=hvsERR2;
 	if(sk_stat[1]==0)hv_vz_stat=hvsERR3;
@@ -8984,6 +8994,23 @@ if(hv_vz_stat==hvsERR3)
 					5000);
 		}
 	if(sk_stat[1]==1)hv_vz_stat=hvsWRK;
+	}
+if(hv_vz_stat==hvsERR4)		
+	{
+	if((hv_vz_stat_old!=hv_vz_stat)||(hv_vz_stat_cnt==0))
+		{
+		hv_vz_stat_cnt=10;
+		}
+	hv_vz_stat_cnt--;
+	if((hv_vz_stat_cnt==10)||(hv_vz_stat_cnt==9))
+		{
+		show_mess(	"     ÂÛÊËŞ×ÈÒÅ      ",
+					"      ÒÓÌÁËÅĞ       ",
+					"   ÂÛĞÀÂÍÈÂÀŞÙÈÉ    ",
+					"       ÇÀĞßÄ        ",
+					5000);
+		}
+	if(sk_stat[1]==0)hv_vz_stat=hvsOFF;
 	}
 hv_vz_stat_old=hv_vz_stat;
 

@@ -1743,7 +1743,7 @@ extern signed short t_ext[3];
 extern char ND_EXT[3];
 extern signed char sk_cnt[4],sk_av_cnt[4];
 typedef enum  {ssOFF,ssON} enum_sk_stat;
-extern enum_sk_stat sk_stat[4];
+extern enum_sk_stat sk_stat[4],sk_stat_old[4];
 typedef enum  {sasOFF,sasON} enum_sk_av_stat;
 extern enum_sk_av_stat sk_av_stat[4],sk_av_stat_old[4];
 extern signed short t_box,t_box_warm,t_box_vent;
@@ -1960,7 +1960,7 @@ extern short pvlk;
 
 
 
-typedef enum  {hvsOFF,hvsSTEP1,hvsSTEP2,hvsSTEP3,hvsSTEP4,hvsWRK,hvsERR1,hvsERR2,hvsERR3} enum_hv_vz_stat;
+typedef enum  {hvsOFF,hvsSTEP1,hvsSTEP2,hvsSTEP3,hvsSTEP4,hvsWRK,hvsERR1,hvsERR2,hvsERR3,hvsERR4} enum_hv_vz_stat;
 extern enum_hv_vz_stat hv_vz_stat,hv_vz_stat_old;
 extern short hv_vz_stat_cnt;
 extern long hv_vz_wrk_cnt;

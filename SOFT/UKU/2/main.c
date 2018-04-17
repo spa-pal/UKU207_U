@@ -375,7 +375,7 @@ enum_tout_stat tout_stat[4];
 signed short t_ext[3];
 
 signed char sk_cnt_dumm[4],sk_cnt[4],sk_av_cnt[4];
-enum_sk_stat sk_stat[4]={ssOFF,ssOFF,ssOFF,ssOFF};
+enum_sk_stat sk_stat[4]={ssOFF,ssOFF,ssOFF,ssOFF},sk_stat_old[4]={ssOFF,ssOFF,ssOFF,ssOFF};
 enum_sk_av_stat sk_av_stat[4]={sasOFF,sasOFF,sasOFF,sasOFF},sk_av_stat_old[4];
 signed short t_box,t_box_warm,t_box_vent;
 char TELECORE2017_EXT_VENT_PWM,TELECORE2017_INT_VENT_PWM;
@@ -3498,10 +3498,11 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 //    ptrs[5+NUMIST/*+NUMBAT+NUMINV*/]= 				" Нагрузка           "; 
     ptrs[6+NUMIST/*+NUMBAT+NUMINV*/]= 				" Внешние датчики    ";
 	ptrs[6+NUMIST/*+NUMBAT+NUMINV*/+(NUMEXT!=0)]= 	" Ускоренный заряд   ";
-	if((speedChIsOn)&&(bFL))ptrs[6+NUMIST/*+NUMBAT+NUMINV*/+(NUMEXT!=0)]= 	"                     "; 
+	if((speedChIsOn)&&(bFL))ptrs[6+NUMIST+(NUMEXT!=0)]= 	"                     "; 
  	//ptrs[7+NUMIST/*+NUMBAT+NUMINV*/+(NUMEXT!=0)]= 	" Спецфункции    	 ";
-	ptrs[7+NUMIST/*+NUMBAT+NUMINV*/+(NUMEXT!=0)]= 			" Выравнивающий заряд ";
-    ptrs[8+NUMIST/*+NUMBAT+NUMINV*/+(NUMEXT!=0)]= 	" Установки          "; 
+	ptrs[7+NUMIST/*+NUMBAT+NUMINV*/+(NUMEXT!=0)]= 	" Выравнивающий заряд ";
+    if((hv_vz_stat!=hvsOFF)&&(bFL))	ptrs[7+NUMIST+(NUMEXT!=0)]= "                     ";
+	ptrs[8+NUMIST/*+NUMBAT+NUMINV*/+(NUMEXT!=0)]= 	" Установки          "; 
     ptrs[9+NUMIST/*+NUMBAT+NUMINV*/+(NUMEXT!=0)]= 	" Журнал событий     "; 
     ptrs[10+NUMIST/*+NUMBAT+NUMINV*/+(NUMEXT!=0)]= 	" Выход              "; 
     //ptrs[11+NUMIST/*+NUMBAT+NUMINV*/+(NUMEXT!=0)]= 	" Журнал батареи     "; 
@@ -20173,7 +20174,7 @@ else if((ind==iSet_220_V2))
 			}						
 		}
      }
-else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
+else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	{
 	ret(1000);
 	if(but==butD)
@@ -20255,6 +20256,10 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
             }
         if(sub_ind==32)
         	{
+            sub_ind=31;
+		    }
+        if(sub_ind==34)
+        	{
             sub_ind=33;
 		    }
         if(sub_ind==36)
@@ -20286,7 +20291,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 		}
 	else if(but==butD_)
 		{
-		sub_ind=51;
+		sub_ind=52;
 		}
 
 	else if(but==butLR_)
