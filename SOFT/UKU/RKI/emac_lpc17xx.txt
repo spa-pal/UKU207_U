@@ -976,29 +976,3 @@
 000000  00000000          DCB      0x00,0x00,0x00,0x00
                   iap_entry
                           DCD      0x1fff1ff1
-
-;*** Start embedded assembler ***
-
-#line 1 "C:\\Keil\\ARM\\Boards\\Keil\\MCB1700\\RL\\TCPnet\\Library\\EMAC_LPC17xx.c"
-	AREA ||.emb_text||, CODE, READONLY
-	THUMB
-	EXPORT |__asm___14_EMAC_LPC17xx_c_f63b8310____REV16|
-#line 112 "C:\\Keil\\ARM\\CMSIS\\Include\\core_cmInstr.h"
-|__asm___14_EMAC_LPC17xx_c_f63b8310____REV16| PROC
-#line 113
-
- rev16 r0, r0
- bx lr
-	ENDP
-	AREA ||.emb_text||, CODE, READONLY
-	THUMB
-	EXPORT |__asm___14_EMAC_LPC17xx_c_f63b8310____REVSH|
-#line 130
-|__asm___14_EMAC_LPC17xx_c_f63b8310____REVSH| PROC
-#line 131
-
- revsh r0, r0
- bx lr
-	ENDP
-
-;*** End   embedded assembler ***

@@ -4135,17 +4135,17 @@ if(++ica_timer_cnt>=10)
 
 	ica_my_current=bps_I;
 
-	if((ica_my_current>ica_your_current)&&((ica_my_current-ica_your_current)>=5)&&((ICA_EN==1)||((ICA_EN==2)&&(ica_cntrl_hndl_cnt>5))))
+	if((ica_my_current>ica_your_current)&&((ica_my_current-ica_your_current)>=5)&&((ICA_EN==1)||((ICA_EN==2)&&(ica_cntrl_hndl_cnt>5))) && (num_of_wrks_bps))
 		{
 		ica_plazma[1]++;
 		ica_u_necc--;
 		}
-	else if((ica_my_current<ica_your_current)&&((ica_your_current-ica_my_current)>=5)&&((ICA_EN==1)||((ICA_EN==2)&&(ica_cntrl_hndl_cnt>5))))
+	else if((ica_my_current<ica_your_current)&&((ica_your_current-ica_my_current)>=5)&&((ICA_EN==1)||((ICA_EN==2)&&(ica_cntrl_hndl_cnt>5))) && (num_of_wrks_bps))
 		{
 		ica_plazma[1]--;
 		ica_u_necc++;
 		}
-	gran(&ica_u_necc,-100,100);
+	gran(&ica_u_necc,-20,20);
 	}
 
 

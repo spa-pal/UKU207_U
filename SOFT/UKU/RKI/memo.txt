@@ -1533,7 +1533,7 @@
 000c5a  f7fffffe          BL       lc640_read_int
 000c5e  492d              LDR      r1,|L1.3348|
 000c60  8008              STRH     r0,[r1,#0]
-;;;328    //oleg_start
+;;;328    //oleg_start*
 ;;;329    num_rki=(char)lc640_read_int(EE_NUM_RKI);
 000c62  2046              MOVS     r0,#0x46
 000c64  f7fffffe          BL       lc640_read_int

@@ -46,7 +46,7 @@ void lcd_off(void);
 void lcd_out(char* adr);
 
 #line 10 "main.c"
-#line 1 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
+#line 1 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
 
 
 
@@ -66,7 +66,7 @@ void lcd_out(char* adr);
  
 
 
-#line 27 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
+#line 27 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
 
 
 
@@ -88,7 +88,9 @@ typedef unsigned long long U64;
 typedef unsigned char   BIT;
 typedef unsigned int    BOOL;
 
-#line 54 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
+#line 54 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
+
+#line 66 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
 
 
 
@@ -135,7 +137,7 @@ typedef U32 OS_RESULT;
 
 
 
-#line 182 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
+#line 194 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
 
 
 
@@ -152,7 +154,7 @@ extern OS_RESULT rt_tsk_prio   (OS_TID task_id, U8 new_prio);
 extern OS_TID    rt_tsk_create (void (*task)(void), U8 priority, void *stk, void *argv);
 extern OS_RESULT rt_tsk_delete (OS_TID task_id);
 
-#line 218 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
+#line 230 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
 
 extern void      _os_sys_init(U32 p, void (*task)(void), U32 prio_stksz,
                                      void *stk)                        __svc_indirect(0);
@@ -332,10 +334,10 @@ extern int fdefrag (const char *drive);
 
 
  
-#line 403 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
+#line 415 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
 
  
-#line 416 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
+#line 428 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
 
  
 
@@ -344,7 +346,7 @@ extern int fdefrag (const char *drive);
 
 
  
-#line 430 "C:\\Keil\\\\ARM\\RV31\\INC\\rtl.h"
+#line 442 "C:\\Keil\\ARM\\RV31\\INC\\rtl.h"
 
  
 
@@ -394,6 +396,7 @@ extern void dhcp_disable (void);
 extern BOOL igmp_join (U8 *group_ip);
 extern BOOL igmp_leave (U8 *group_ip);
 extern BOOL snmp_trap (U8 *manager_ip, U8 gen_trap, U8 spec_trap, U16 *obj_list);
+extern BOOL snmp_set_community (const char *community);
 
 
 
@@ -417,7 +420,7 @@ extern BOOL snmp_trap (U8 *manager_ip, U8 gen_trap, U8 spec_trap, U16 *obj_list)
 
 
  
-#line 1 "C:\\Keil\\\\ARM\\RV31\\INC\\stdint.h"
+#line 1 "C:\\Keil\\ARM\\RV31\\INC\\stdint.h"
  
  
 
@@ -435,7 +438,7 @@ extern BOOL snmp_trap (U8 *manager_ip, U8 gen_trap, U8 spec_trap, U16 *obj_list)
 
 
 
-#line 25 "C:\\Keil\\\\ARM\\RV31\\INC\\stdint.h"
+#line 25 "C:\\Keil\\ARM\\RV31\\INC\\stdint.h"
 
 
 
@@ -600,7 +603,7 @@ typedef unsigned       __int64 uintmax_t;
 
 
 
-#line 196 "C:\\Keil\\\\ARM\\RV31\\INC\\stdint.h"
+#line 196 "C:\\Keil\\ARM\\RV31\\INC\\stdint.h"
 
      
 
@@ -633,7 +636,7 @@ typedef unsigned       __int64 uintmax_t;
 
 
 
-#line 260 "C:\\Keil\\\\ARM\\RV31\\INC\\stdint.h"
+#line 260 "C:\\Keil\\ARM\\RV31\\INC\\stdint.h"
 
 
 
@@ -3228,7 +3231,7 @@ void snmp_cool_20_dtemper_write(int mode);
 
  
 #line 35 "main.c"
-#line 1 "C:\\Keil\\\\ARM\\RV31\\INC\\net_config.h"
+#line 1 "C:\\Keil\\ARM\\RV31\\INC\\net_config.h"
 
 
 
@@ -3243,7 +3246,7 @@ void snmp_cool_20_dtemper_write(int mode);
 
 
 
-#line 16 "C:\\Keil\\\\ARM\\RV31\\INC\\net_config.h"
+#line 16 "C:\\Keil\\ARM\\RV31\\INC\\net_config.h"
 
  
 
@@ -3266,7 +3269,7 @@ void snmp_cool_20_dtemper_write(int mode);
 
 
  
-#line 50 "C:\\Keil\\\\ARM\\RV31\\INC\\net_config.h"
+#line 50 "C:\\Keil\\ARM\\RV31\\INC\\net_config.h"
 
  
 
@@ -3275,7 +3278,7 @@ void snmp_cool_20_dtemper_write(int mode);
 
 
  
-#line 73 "C:\\Keil\\\\ARM\\RV31\\INC\\net_config.h"
+#line 73 "C:\\Keil\\ARM\\RV31\\INC\\net_config.h"
 
  
 
@@ -3570,7 +3573,7 @@ extern U16  ftp_fread (void *file, U8 *buf, U16 len);
 extern U16  ftp_fwrite (void *file, U8 *buf, U16 len);
 extern BOOL ftp_fdelete (U8 *fname);
 extern BOOL ftp_frename (U8 *fname, U8 *newn);
-extern U16  ftp_ffind (U8 *buf, U8 *mask, U16 len);
+extern U16  ftp_ffind (U8 code, U8 *buf, U8 *mask, U16 len);
 
  
 extern void init_dhcp (void);
@@ -4360,47 +4363,7 @@ typedef enum IRQn
 
 
 
-#line 1 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#line 1 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
 
 
 
@@ -4422,6 +4385,59 @@ typedef enum IRQn
 
  
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
  
  
  
@@ -4432,25 +4448,7 @@ typedef enum IRQn
  
 
 
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-#line 91 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
+#line 86 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
 
 
 
@@ -4470,7 +4468,7 @@ typedef enum IRQn
 
  
 
-#line 117 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
+#line 112 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
 
 
 
@@ -4480,6 +4478,13 @@ typedef enum IRQn
 
 
  
+
+
+
+
+
+ 
+
 
 
 
@@ -4489,23 +4494,19 @@ typedef enum IRQn
 typedef struct
 {
   volatile uint32_t ISER[8];                       
-       uint32_t RESERVED0[24];                                   
+       uint32_t RESERVED0[24];
   volatile uint32_t ICER[8];                       
-       uint32_t RSERVED1[24];                                    
+       uint32_t RSERVED1[24];
   volatile uint32_t ISPR[8];                       
-       uint32_t RESERVED2[24];                                   
+       uint32_t RESERVED2[24];
   volatile uint32_t ICPR[8];                       
-       uint32_t RESERVED3[24];                                   
+       uint32_t RESERVED3[24];
   volatile uint32_t IABR[8];                       
-       uint32_t RESERVED4[56];                                   
+       uint32_t RESERVED4[56];
   volatile uint8_t  IP[240];                       
-       uint32_t RESERVED5[644];                                  
+       uint32_t RESERVED5[644];
   volatile  uint32_t STIR;                          
-}  NVIC_Type;                                               
-   
-
-
-
+}  NVIC_Type;
 
 
  
@@ -4530,192 +4531,7 @@ typedef struct
   volatile const  uint32_t ADR;                           
   volatile const  uint32_t MMFR[4];                       
   volatile const  uint32_t ISAR[5];                       
-} SCB_Type;                                                
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                     
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-
-
-
+} SCB_Type;
 
 
  
@@ -4727,41 +4543,6 @@ typedef struct
   volatile const  uint32_t CALIB;                         
 } SysTick_Type;
 
- 
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
-
-
-
-
-
-   
-
-
-
-
 
  
 typedef struct
@@ -4772,88 +4553,33 @@ typedef struct
     volatile  uint16_t   u16;                       
     volatile  uint32_t   u32;                       
   }  PORT [32];                                
-       uint32_t RESERVED0[864];                                 
+       uint32_t RESERVED0[864];
   volatile uint32_t TER;                           
-       uint32_t RESERVED1[15];                                  
+       uint32_t RESERVED1[15];
   volatile uint32_t TPR;                           
-       uint32_t RESERVED2[15];                                  
+       uint32_t RESERVED2[15];
   volatile uint32_t TCR;                           
-       uint32_t RESERVED3[29];                                  
+       uint32_t RESERVED3[29];
   volatile uint32_t IWR;                           
   volatile uint32_t IRR;                           
   volatile uint32_t IMCR;                          
-       uint32_t RESERVED4[43];                                  
+       uint32_t RESERVED4[43];
   volatile uint32_t LAR;                           
   volatile uint32_t LSR;                           
-       uint32_t RESERVED5[6];                                   
+       uint32_t RESERVED5[6];
   volatile const  uint32_t PID4;                          
-  volatile const  uint32_t PID5;                          
-  volatile const  uint32_t PID6;                          
-  volatile const  uint32_t PID7;                          
-  volatile const  uint32_t PID0;                          
-  volatile const  uint32_t PID1;                          
-  volatile const  uint32_t PID2;                          
-  volatile const  uint32_t PID3;                          
-  volatile const  uint32_t CID0;                          
-  volatile const  uint32_t CID1;                          
-  volatile const  uint32_t CID2;                          
-  volatile const  uint32_t CID3;                          
-} ITM_Type;                                                
-
- 
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
- 
-
-
-
-
-
-
-
-
-   
-
-
-
+  volatile const  uint32_t PID5;
+  volatile const  uint32_t PID6;
+  volatile const  uint32_t PID7;
+  volatile const  uint32_t PID0;
+  volatile const  uint32_t PID1;
+  volatile const  uint32_t PID2;
+  volatile const  uint32_t PID3;
+  volatile const  uint32_t CID0;
+  volatile const  uint32_t CID1;
+  volatile const  uint32_t CID2;
+  volatile const  uint32_t CID3;
+} ITM_Type;
 
 
  
@@ -4868,27 +4594,9 @@ typedef struct
 
 } InterruptType_Type;
 
- 
-
-
 
  
 
-
-
-
-
-
-
-
-   
-
-
-
-
-
-
- 
 typedef struct
 {
   volatile const  uint32_t TYPE;                          
@@ -4902,74 +4610,7 @@ typedef struct
   volatile uint32_t RASR_A2;                       
   volatile uint32_t RBAR_A3;                       
   volatile uint32_t RASR_A3;                       
-} MPU_Type;                                                
-
- 
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
- 
-
-
-
- 
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-
-
-
+} MPU_Type;
 
 
 
@@ -4982,33 +4623,11 @@ typedef struct
   volatile uint32_t DEMCR;                         
 } CoreDebug_Type;
 
+
  
+#line 274 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#line 281 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
 
 
 
@@ -5026,70 +4645,7 @@ typedef struct
 
 
 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-
-
- 
-#line 721 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
-
-#line 728 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
-
-
-
-
-
-
-   
-
-
-
-
- 
-
-
-
-
-
-#line 758 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
+#line 311 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
 
 
  
@@ -5100,13 +4656,14 @@ typedef struct
 
 
 
-#line 783 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
+#line 336 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
 
 
  
  
  
  
+
 
 
 
@@ -5125,6 +4682,7 @@ extern uint32_t __get_PSP(void);
 
 
 
+
  
 extern void __set_PSP(uint32_t topOfProcStack);
 
@@ -5135,8 +4693,10 @@ extern void __set_PSP(uint32_t topOfProcStack);
 
 
 
+
  
 extern uint32_t __get_MSP(void);
+
 
 
 
@@ -5169,13 +4729,18 @@ extern uint32_t __REV16(uint16_t value);
 extern int32_t __REVSH(int16_t value);
 
 
-#line 933 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
+#line 502 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
+
+
+
+
 
 
 
 
 
  
+
 
 
 
@@ -5197,12 +4762,15 @@ static __inline uint32_t  __get_BASEPRI(void)
 
 
 
+
  
 static __inline void __set_BASEPRI(uint32_t basePri)
 {
   register uint32_t __regBasePri         __asm("basepri");
-  __regBasePri = (basePri & 0xff);
+  __regBasePri = (basePri & 0x1ff);
 }
+
+
 
 
 
@@ -5223,12 +4791,14 @@ static __inline uint32_t __get_PRIMASK(void)
 
 
 
+
  
 static __inline void __set_PRIMASK(uint32_t priMask)
 {
   register uint32_t __regPriMask         __asm("primask");
   __regPriMask = (priMask);
 }
+
 
 
 
@@ -5249,12 +4819,14 @@ static __inline uint32_t __get_FAULTMASK(void)
 
 
 
+
  
 static __inline void __set_FAULTMASK(uint32_t faultMask)
 {
   register uint32_t __regFaultMask       __asm("faultmask");
   __regFaultMask = (faultMask & 1);
 }
+
 
 
 
@@ -5275,6 +4847,7 @@ static __inline uint32_t __get_CONTROL(void)
 
 
 
+
  
 static __inline void __set_CONTROL(uint32_t control)
 {
@@ -5286,18 +4859,13 @@ static __inline void __set_CONTROL(uint32_t control)
 
 
 
-#line 1445 "C:\\Keil\\\\ARM\\RV31\\INC\\core_cm3.h"
-
-
-
-
+#line 1044 "C:\\Keil\\ARM\\RV31\\INC\\core_cm3.h"
 
 
 
  
- 
 
- 
+
 
 
 
@@ -5315,13 +4883,12 @@ static __inline void NVIC_SetPriorityGrouping(uint32_t PriorityGroup)
   uint32_t reg_value;
   uint32_t PriorityGroupTmp = (PriorityGroup & 0x07);                          
   
-  reg_value  =  ((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR;                                                    
-  reg_value &= ~((0xFFFFul << 16) | (7ul << 8));              
-  reg_value  =  (reg_value                       |
-                (0x5FA << 16) | 
-                (PriorityGroupTmp << 8));                                      
-  ((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR =  reg_value;
+  reg_value  = ((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR;                                                     
+  reg_value &= ~((0xFFFFU << 16) | (0x0F << 8));                               
+  reg_value  = ((reg_value | (0x5FA << 16) | (PriorityGroupTmp << 8)));   
+  ((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR = reg_value;
 }
+
 
 
 
@@ -5333,8 +4900,9 @@ static __inline void NVIC_SetPriorityGrouping(uint32_t PriorityGroup)
  
 static __inline uint32_t NVIC_GetPriorityGrouping(void)
 {
-  return ((((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR & (7ul << 8)) >> 8);    
+  return ((((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR >> 8) & 0x07);                                           
 }
+
 
 
 
@@ -5348,6 +4916,7 @@ static __inline void NVIC_EnableIRQ(IRQn_Type IRQn)
 {
   ((NVIC_Type *) ((0xE000E000) + 0x0100))->ISER[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F));  
 }
+
 
 
 
@@ -5383,11 +4952,13 @@ static __inline uint32_t NVIC_GetPendingIRQ(IRQn_Type IRQn)
 
 
 
+
  
 static __inline void NVIC_SetPendingIRQ(IRQn_Type IRQn)
 {
   ((NVIC_Type *) ((0xE000E000) + 0x0100))->ISPR[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F));  
 }
+
 
 
 
@@ -5415,6 +4986,7 @@ static __inline uint32_t NVIC_GetActive(IRQn_Type IRQn)
 {
   return((uint32_t)((((NVIC_Type *) ((0xE000E000) + 0x0100))->IABR[(uint32_t)(IRQn) >> 5] & (1 << ((uint32_t)(IRQn) & 0x1F)))?1:0));  
 }
+
 
 
 
@@ -5478,7 +5050,7 @@ static __inline uint32_t NVIC_GetPriority(IRQn_Type IRQn)
  
 static __inline uint32_t NVIC_EncodePriority (uint32_t PriorityGroup, uint32_t PreemptPriority, uint32_t SubPriority)
 {
-  uint32_t PriorityGroupTmp = (PriorityGroup & 0x07);           
+  uint32_t PriorityGroupTmp = (PriorityGroup & 0x07);                          
   uint32_t PreemptPriorityBits;
   uint32_t SubPriorityBits;
 
@@ -5506,10 +5078,11 @@ static __inline uint32_t NVIC_EncodePriority (uint32_t PriorityGroup, uint32_t P
 
 
 
+
  
 static __inline void NVIC_DecodePriority (uint32_t Priority, uint32_t PriorityGroup, uint32_t* pPreemptPriority, uint32_t* pSubPriority)
 {
-  uint32_t PriorityGroupTmp = (PriorityGroup & 0x07);           
+  uint32_t PriorityGroupTmp = (PriorityGroup & 0x07);                          
   uint32_t PreemptPriorityBits;
   uint32_t SubPriorityBits;
 
@@ -5526,6 +5099,12 @@ static __inline void NVIC_DecodePriority (uint32_t Priority, uint32_t PriorityGr
 
 
 
+ 
+
+
+
+
+
 
 
 
@@ -5538,15 +5117,13 @@ static __inline void NVIC_DecodePriority (uint32_t Priority, uint32_t PriorityGr
  
 static __inline uint32_t SysTick_Config(uint32_t ticks)
 { 
-  if (ticks > (0xFFFFFFul << 0))  return (1);             
-                                                               
-  ((SysTick_Type *) ((0xE000E000) + 0x0010))->LOAD  = (ticks & (0xFFFFFFul << 0)) - 1;       
-  NVIC_SetPriority (SysTick_IRQn, (1<<5) - 1);   
-  ((SysTick_Type *) ((0xE000E000) + 0x0010))->VAL   = 0;                                           
-  ((SysTick_Type *) ((0xE000E000) + 0x0010))->CTRL  = (1ul << 2) | 
-                   (1ul << 1)   | 
-                   (1ul << 0);                     
-  return (0);                                                   
+  if (ticks > ((1<<24) -1))  return (1);                                              
+
+  ((SysTick_Type *) ((0xE000E000) + 0x0010))->LOAD  =  (ticks & ((1<<24) -1)) - 1;                                       
+  NVIC_SetPriority (SysTick_IRQn, (1<<5) - 1);                             
+  ((SysTick_Type *) ((0xE000E000) + 0x0010))->VAL   =  (0x00);                                                               
+  ((SysTick_Type *) ((0xE000E000) + 0x0010))->CTRL = (1 << 2) | (1<<0) | (1<<1);  
+  return (0);                                                                             
 }
 
 
@@ -5554,7 +5131,11 @@ static __inline uint32_t SysTick_Config(uint32_t ticks)
 
 
 
+
  
+
+
+
 
 
 
@@ -5563,29 +5144,13 @@ static __inline uint32_t SysTick_Config(uint32_t ticks)
  
 static __inline void NVIC_SystemReset(void)
 {
-  ((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR  = ((0x5FA << 16)      | 
-                 (((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR & (7ul << 8)) | 
-                 (1ul << 2));                    
-  __dsb(0);                                                                    
-  while(1);                                                     
+  ((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR  = ((0x5FA << 16) | (((SCB_Type *) ((0xE000E000) + 0x0D00))->AIRCR & (0x700)) | (1<<2));  
+  __dsb(0);                                                                                            
+  while(1);                                                                             
 }
 
-   
-
-
 
  
-
-
-
-
-
-
- 
- 
-
-extern volatile int ITM_RxBuffer;                     
-
 
 
 
@@ -5600,9 +5165,11 @@ extern volatile int ITM_RxBuffer;
  
 static __inline uint32_t ITM_SendChar (uint32_t ch)
 {
-  if ((((CoreDebug_Type *) (0xE000EDF0))->DEMCR & (1ul << 24))  &&       
-      (((ITM_Type *) (0xE0000000))->TCR & (1ul << 0))                  &&       
-      (((ITM_Type *) (0xE0000000))->TER & (1ul << 0)        )                    )      
+  if (ch == '\n') ITM_SendChar('\r');
+  
+  if ((((CoreDebug_Type *) (0xE000EDF0))->DEMCR & (1 << 24))  &&
+      (((ITM_Type *) (0xE0000000))->TCR & 1)                  &&
+      (((ITM_Type *) (0xE0000000))->TER & (1UL << 0))  ) 
   {
     while (((ITM_Type *) (0xE0000000))->PORT[0].u32 == 0);
     ((ITM_Type *) (0xE0000000))->PORT[0].u8 = (uint8_t) ch;
@@ -5613,50 +5180,6 @@ static __inline uint32_t ITM_SendChar (uint32_t ch)
 
 
 
-
-
-
-
-
-
- 
-static __inline int ITM_ReceiveChar (void) {
-  int ch = -1;                                
-
-  if (ITM_RxBuffer != 0x5AA55AA5) {
-    ch = ITM_RxBuffer;
-    ITM_RxBuffer = 0x5AA55AA5;        
-  }
-  
-  return (ch); 
-}
-
-
-
-
-
-
-
-
-
- 
-static __inline int ITM_CheckChar (void) {
-
-  if (ITM_RxBuffer == 0x5AA55AA5) {
-    return (0);                                  
-  } else {
-    return (1);                                  
-  }
-}
-
-   
-
-
-
-
-
-
-   
 
 
 
@@ -13857,7 +13380,9 @@ else if(a_ind . i==iStr_220_IPS_TERMOKOMPENSAT)
 	ptrs[1]=" Датчиков темпер.  #";
 	ptrs[2]=" Мониторов АКБ     %";
 	ptrs[3]=" Сухих контактов   $";
-	ptrs[4]=" Выход              ";
+	ptrs[4]=" РКИ               &";
+	ptrs[5]=" Сетевых вводов    *";
+	ptrs[6]=" Выход              ";
 	
 	if(a_ind . s_i<a_ind . i_s) a_ind . i_s=a_ind . s_i;
 	else if((a_ind . s_i-a_ind . i_s)>2) a_ind . i_s=a_ind . s_i-2;
@@ -13869,7 +13394,9 @@ else if(a_ind . i==iStr_220_IPS_TERMOKOMPENSAT)
 	int2lcd(NUMDT,'#',0);
 	int2lcd(NUMMAKB,'%',0);
 	int2lcd(NUMSK,'$',0);
-	}    
+	int2lcd(num_rki,'&',0);
+	int2lcd(num_net_in,'*',0);
+	} 
 
 else if(a_ind . i==iStr_GLONASS)
 	{
@@ -14773,6 +14300,10 @@ else if(a_ind . i==iK_220_IPS_TERMOKOMPENSAT_IB)
 	ptrs[i++]=" Выходные параметры ";
     if(NUMDT)
     ptrs[i++]=" Внешние датчики    ";
+	if(num_rki)						  
+	ptrs[i++]=" РКИ                ";
+	if(num_net_in)
+	ptrs[i++]=" Сетевые вводы      "; 
     ptrs[i++]=" Выход              ";
     ptrs[i++]="                    ";
     ptrs[i++]="                    ";
@@ -16274,7 +15805,7 @@ if(a_ind . i==iDeb)
      		    	"    !     $         ",
      		    	"    @     %         ",
      		    	"            ^       ");
-#line 10529 "main.c"
+#line 10537 "main.c"
     	}
 
 
@@ -17949,7 +17480,7 @@ else if(a_ind . i==iTst_220_IPS_TERMOKOMPENSAT)
 
  
 	}
-#line 12452 "main.c"
+#line 12460 "main.c"
 else if(a_ind . i==iTst_bps)
 	{
 	if(tst_state[5]==tstOFF)ptrs[0]=		" Выключен           ";
@@ -18125,7 +17656,7 @@ else if(a_ind . i==iKlimat_kontur)
 	
 	int2lcdyx(t_box,0,19,0);	 
 	}
-#line 12760 "main.c"
+#line 12768 "main.c"
 
 else if(a_ind . i==iNpn_set)
 	{
@@ -19067,12 +18598,12 @@ else if (a_ind . i==iIps_Curr_Avg_Set)
 }							    
 
 
-#line 13707 "main.c"
+#line 13715 "main.c"
 
 
 
 
-#line 13730 "main.c"
+#line 13738 "main.c"
 
 
 
@@ -19395,7 +18926,7 @@ else if(a_ind . i==iMn)
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV)))
 			{
-#line 14060 "main.c"
+#line 14068 "main.c"
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV+1)))
 			{
@@ -19409,9 +18940,9 @@ else if(a_ind . i==iMn)
 		     ret(1000);
 			}
 
-#line 14080 "main.c"
-
 #line 14088 "main.c"
+
+#line 14096 "main.c"
 
 		else if(a_ind . s_i==(4+NUMBAT+NUMIST+2)+(NUMAVT!=0))
 			{
@@ -20759,6 +20290,276 @@ else if(a_ind . i==iMn_TELECORE2015)
 		}
     }
 
+
+else if(a_ind . i==iSetNetIn){
+	ret(1000);
+	if(but==251)
+		{
+		a_ind . s_i++;
+		gran_char(&a_ind . s_i,0,7);
+
+		}
+	else if(but==253)
+		{
+		a_ind . s_i--;
+		gran_char(&a_ind . s_i,0,7);
+
+		}
+	else if(but==239){
+		if(a_ind . s_i==0) command_net_in=1;
+		else if(a_ind . s_i==1) command_net_in=5;
+		else if(a_ind . s_i==2) command_net_in=9;
+		else if(a_ind . s_i==3) command_net_in=14;
+		else if(a_ind . s_i==4) command_net_in=63;
+		else if(a_ind . s_i==5) command_net_in=67;
+		else if(a_ind . s_i==6) command_net_in=71;
+	}
+	else if(but==247){
+		if(a_ind . s_i==0) command_net_in=3;
+		else if(a_ind . s_i==1) command_net_in=7;
+		else if(a_ind . s_i==2) command_net_in=11;
+		else if(a_ind . s_i==3) command_net_in=13;
+		else if(a_ind . s_i==4) command_net_in=65;
+		else if(a_ind . s_i==5) command_net_in=69;
+		else if(a_ind . s_i==6) command_net_in=73; 
+	}
+	else if(but==111){
+		if(a_ind . s_i==0) command_net_in=2;
+		else if(a_ind . s_i==1) command_net_in=6;
+		else if(a_ind . s_i==2) command_net_in=10;
+		else if(a_ind . s_i==3) command_net_in=14;
+		else if(a_ind . s_i==4) command_net_in=64;
+		else if(a_ind . s_i==5) command_net_in=68;
+		else if(a_ind . s_i==6) command_net_in=72;
+	}
+	else if(but==119){
+		if(a_ind . s_i==0) command_net_in=4;
+		else if(a_ind . s_i==1) command_net_in=8;
+		else if(a_ind . s_i==2) command_net_in=12;
+		else if(a_ind . s_i==3) command_net_in=13;
+		else if(a_ind . s_i==4) command_net_in=66;
+		else if(a_ind . s_i==5) command_net_in=70;
+		else if(a_ind . s_i==6) command_net_in=74; 
+	}
+	
+	else if(but==254)
+	     {
+		 	if(a_ind . s_i==7){
+		 		tree_down(0,0); 
+				ret(0);
+			}	     
+	     }
+}
+else if(a_ind . i==iK_RKI) 
+	{
+	ret(1000);
+	if(but==251)
+		{
+		a_ind . s_i++;
+		gran_char(&a_ind . s_i,0,2);
+
+		}
+	else if(but==253)
+		{
+		a_ind . s_i--;
+		gran_char(&a_ind . s_i,0,2);
+		}
+	else if(but==247){
+		if(a_ind . s_i==0) command_rki=31;
+	}
+	else if(but==119){
+		if(a_ind . s_i==0) command_rki=32;
+	}
+	else if(but==239){
+		if(a_ind . s_i==0) command_rki=33;
+	}
+	else if(but==111){
+		if(a_ind . s_i==0) command_rki=34;
+	}
+	else if(but==126)
+	     {
+		  	if(a_ind . s_i==1) command_rki=35;
+			a_ind . i=iK_MOST;
+			ret(0);
+		 }
+	else if(but==254)
+	     {
+		 	if(a_ind . s_i==2){
+		 		tree_down(0,0); 
+				ret(0);
+			}	     
+	     }
+}
+else if(a_ind . i==iSetRKI) 
+	{
+	ret(1000);
+	if(but==251)
+		{
+		a_ind . s_i++;
+		if(type_rki==0) gran_char(&a_ind . s_i,0,7);
+		else if(type_rki==1) gran_char(&a_ind . s_i,0,9);
+		}
+	else if(but==253)
+		{
+		a_ind . s_i--;
+		if(type_rki==0) gran_char(&a_ind . s_i,0,7);
+		else if(type_rki==1) gran_char(&a_ind . s_i,0,9);
+		}
+	else if(but==247){
+		if(a_ind . s_i==0) command_rki=1;
+		else if(a_ind . s_i==1) command_rki=3;
+		else if(a_ind . s_i==2) command_rki=13;
+		else if(a_ind . s_i==3) command_rki=19;
+		else if(a_ind . s_i==4) command_rki=23;
+		else if(a_ind . s_i==5) command_rki=27;
+		else if(a_ind . s_i==6) command_rki=15;
+		if(type_rki==1){
+			if(a_ind . s_i==7) command_rki=5;
+			else if(a_ind . s_i==8) command_rki=7;
+		} 
+		
+	}
+	else if(but==239){
+		if(a_ind . s_i==0) command_rki=2;
+		else if(a_ind . s_i==1) command_rki=4;
+		else if(a_ind . s_i==2) command_rki=14;
+		else if(a_ind . s_i==3) command_rki=20;
+		else if(a_ind . s_i==4) command_rki=24;
+		else if(a_ind . s_i==5) command_rki=28;
+		else if(a_ind . s_i==6) command_rki=16;
+		if(type_rki==1){
+			if(a_ind . s_i==7) command_rki=6;
+			else if(a_ind . s_i==8) command_rki=8;			
+		}
+		 
+	}
+	else if(but==119){
+		if(a_ind . s_i==3) command_rki=21;
+		else if(a_ind . s_i==4) command_rki=25;
+		else if(a_ind . s_i==5) command_rki=29;
+		else if(a_ind . s_i==6) command_rki=19;
+		if(type_rki==1){
+			if(a_ind . s_i==7) command_rki=9;
+			else if(a_ind . s_i==8) command_rki=11;
+		} 
+	}
+	else if(but==111){
+		if(a_ind . s_i==3) command_rki=22;
+		else if(a_ind . s_i==4) command_rki=26;
+		else if(a_ind . s_i==5) command_rki=30;
+		else if(a_ind . s_i==6) command_rki=18;
+		if(type_rki==1){
+			if(a_ind . s_i==7) command_rki=10;
+			else if(a_ind . s_i==8) command_rki=12; 
+		}
+	}
+	else if(but==254)
+	     {
+		 	if( (a_ind . s_i==7 && type_rki==0) || (a_ind . s_i==9 && type_rki==1) ){
+		 		tree_down(0,0); 
+				ret(0);
+			}	     
+	     }
+	else if(but==123)
+		{
+		if(type_rki==0) a_ind . s_i=7;
+		else if(type_rki==1) a_ind . s_i=9;
+		}
+	}
+else if(a_ind . i==iRKI) 
+	{
+	ret(1000);
+	if(but==251)
+		{
+		a_ind . s_i++;
+		if(type_rki==0) gran_char(&a_ind . s_i,0,11);
+		else {
+			if(count_Iddt==0) gran_char(&a_ind . s_i,0,35);
+			else gran_char(&a_ind . s_i,0,37+(count_Iddt<<1) );
+		}
+		}
+	else if(but==253)
+		{
+		a_ind . s_i--;
+		if(type_rki==0) gran_char(&a_ind . s_i,0,11);
+		else {
+			if(count_Iddt==0) gran_char(&a_ind . s_i,0,35);
+			else gran_char(&a_ind . s_i,0,37+(count_Iddt<<1) );
+		}
+		}
+	else if(but==247 || but==254)
+	     {
+	     tree_down(0,0);
+	     ret(0);
+	     }
+	else if(but==123)
+		{
+		if(type_rki==0) a_ind . s_i=11;
+		else {
+			if(count_Iddt==0) a_ind . s_i=35;
+			else a_ind . s_i=37+(count_Iddt<<1);
+		}
+		}
+	else if(but==125)	a_ind . s_i=0;	     
+     }
+	
+else if(a_ind . i==iNET_IN){ 
+	ret(1000);
+	if(but==251){
+		a_ind . s_i++;
+		if(a_ind . s_i==11) a_ind . s_i=13;
+		gran_char(&a_ind . s_i,0,23);
+	}
+	else if(but==253)
+		{
+		a_ind . s_i--;
+		if(a_ind . s_i==12) a_ind . s_i=10;
+		gran_char(&a_ind . s_i,0,23);
+		}
+	else if(but==247 || but==254)
+	     {
+	     tree_down(0,0);
+	     ret(0);
+	     }
+	else if(but==123)
+		{
+		a_ind . s_i=23;
+		}
+	else if(but==125)	a_ind . s_i=0;	
+
+
+}
+else if(a_ind . i==iK_Net_In){ 
+	ret(1000);
+	if(but==251){
+		a_ind . s_i++;
+		if(a_ind . s_i==6) a_ind . i_s=6;
+		
+		gran_char(&a_ind . s_i,0,12);
+	}
+	else if(but==253)
+		{
+		a_ind . s_i--;
+		if(a_ind . s_i==5) a_ind . i_s=3;
+		gran_char(&a_ind . s_i,0,12);
+		}
+	else if( but==254)
+	     {
+	     tree_down(0,0);
+	     ret(0);
+	     }
+	else if(but==123)
+		{
+		a_ind . s_i=12;
+		}
+	else if(but==125)	a_ind . s_i=0;	
+	else if(but==239) { if(a_ind . s_i<12) command_net_in=15+a_ind . s_i*4; }
+	else if(but==111) { if(a_ind . s_i<12) command_net_in=16+a_ind . s_i*4; }
+	else if(but==247) { if(a_ind . s_i<12) command_net_in=17+a_ind . s_i*4; }
+	else if(but==119) { if(a_ind . s_i<12) command_net_in=18+a_ind . s_i*4; }
+
+}
+
 else if(a_ind . i==iBat)
 	{
 	ret(1000);
@@ -21556,9 +21357,9 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==184) 
 				{
 				tree_down(0,0);
-#line 16251 "main.c"
+#line 16529 "main.c"
 				tree_up(iSet_220_IPS_TERMOKOMPENSAT,0,0,0);
-#line 16262 "main.c"
+#line 16540 "main.c"
 				ret(1000);
 				}
 			else 
@@ -21575,7 +21376,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==873) 
 				{
 				tree_down(0,0);
-#line 16309 "main.c"
+#line 16587 "main.c"
 				if((AUSW_MAIN==22033)||(AUSW_MAIN==22018))
 					{
 					tree_up(iK_220_IPS_TERMOKOMPENSAT,0,0,0);
@@ -21589,7 +21390,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 
 				else
 				tree_up(iK_220,0,0,0);
-#line 16329 "main.c"
+#line 16607 "main.c"
 				show_mess(	"Включите авт-ты СЕТЬ",
  							"  БАТАРЕЯ,НАГРУЗКА  ",
  							"   Установите ток   ",
@@ -21649,9 +21450,9 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 			if(tempU==999) 
 				{
 				tree_down(0,0);
-#line 16418 "main.c"
+#line 16696 "main.c"
 				tree_up(iTst_220_IPS_TERMOKOMPENSAT,0,0,0);
-#line 16426 "main.c"
+#line 16704 "main.c"
 				tst_state[0]=tstOFF;
 				tst_state[1]=tstOFF;
 				tst_state[2]=tstOFF;
@@ -21750,7 +21551,7 @@ else if(a_ind . i==iSet_bat_sel)
 
 		}
 	}
-#line 16692 "main.c"
+#line 16970 "main.c"
 else if(a_ind . i==iPrl_bat_in_sel)
 	{
 	ret(1000);
@@ -22283,7 +22084,7 @@ else if(a_ind . i==iSet)
 	     {
 	     if(but==254)
 	          {
-#line 17236 "main.c"
+#line 17514 "main.c"
 	          ret(1000);
 	          default_temp=10;
 	          }
@@ -22305,7 +22106,7 @@ else if(a_ind . i==iSet)
 		{
 		if(but==254)
 		     {
-#line 17282 "main.c"
+#line 17560 "main.c"
 
 
 
@@ -25112,7 +24913,7 @@ else if(a_ind . i==iSet_TELECORE2015)
 			}						
 		}
      }
-#line 20621 "main.c"
+#line 20899 "main.c"
 
 else if((a_ind . i==iSet_220))
 	{
@@ -32226,7 +32027,7 @@ else if(a_ind . i==iK_inv)
 			}
 		}			
 	}
-#line 27881 "main.c"
+#line 28159 "main.c"
 
 else if(a_ind . i==iK_byps)
 	{
@@ -34737,9 +34538,9 @@ else if(a_ind . i==iTst_220_IPS_TERMOKOMPENSAT)
 			}
 		}					
 	}
-#line 30637 "main.c"
+#line 30915 "main.c"
 
-#line 30847 "main.c"
+#line 31125 "main.c"
 
 else if(a_ind . i==iTst_TELECORE)
 	{
@@ -35308,7 +35109,7 @@ else if(a_ind . i==iKlimat_kontur)
 			}
 		}
 	}
-#line 31795 "main.c"
+#line 32073 "main.c"
 else if(a_ind . i==iNpn_set)
 	{
 	ret(1000);
@@ -36017,7 +35818,7 @@ char ind_reset_cnt=0;
 long ii;
 char mac_adr[6] = { 0x00,0x73,0x04,50,60,70 };
 
-ii=200000;
+ii=2000;
 while(--ii){};
 
 SystemInit();
@@ -36133,9 +35934,9 @@ lcd_clear();
 rtc_init();
 
 a_ind . i=iMn;
-#line 32638 "main.c"
+#line 32916 "main.c"
 a_ind . i=iMn_220_IPS_TERMOKOMPENSAT;
-#line 32649 "main.c"
+#line 32927 "main.c"
 
 
 
@@ -36174,7 +35975,7 @@ adc_init();
 
 lc640_write_int(100,134);
 
-#line 32693 "main.c"
+#line 32971 "main.c"
 
 
 
@@ -36265,7 +36066,7 @@ if((AUSW_MAIN==2400)||(AUSW_MAIN==4800)||(AUSW_MAIN==6000)||(BAT_TYPE==1))
 
 
 
-#line 32801 "main.c"
+#line 33079 "main.c"
 
 
 cntrl_stat=10*PWM_START;
@@ -36469,7 +36270,7 @@ while (1)
 		ret_hndl();  
 		mess_hndl();
 
-#line 33011 "main.c"
+#line 33289 "main.c"
 		cntrl_hndl();
 
 
@@ -36568,9 +36369,9 @@ while (1)
 		
 		
 
-#line 33121 "main.c"
+#line 33399 "main.c"
 
-#line 33134 "main.c"
+#line 33412 "main.c"
 
 
 

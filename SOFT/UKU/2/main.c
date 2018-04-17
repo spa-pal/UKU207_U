@@ -8066,7 +8066,9 @@ else if(ind==iStr_220_IPS_TERMOKOMPENSAT)
 	ptrs[1]=" Датчиков темпер.  #";
 	ptrs[2]=" Мониторов АКБ     %";
 	ptrs[3]=" Сухих контактов   $";
-	ptrs[4]=" Выход              ";
+	ptrs[4]=" РКИ               &";
+	ptrs[5]=" Сетевых вводов    *";
+	ptrs[6]=" Выход              ";
 	
 	if(sub_ind<index_set) index_set=sub_ind;
 	else if((sub_ind-index_set)>2) index_set=sub_ind-2;
@@ -8078,7 +8080,9 @@ else if(ind==iStr_220_IPS_TERMOKOMPENSAT)
 	int2lcd(NUMDT,'#',0);
 	int2lcd(NUMMAKB,'%',0);
 	int2lcd(NUMSK,'$',0);
-	}    
+	int2lcd(num_rki,'&',0);
+	int2lcd(num_net_in,'*',0);
+	} 
 
 else if(ind==iStr_GLONASS)
 	{
@@ -8982,6 +8986,10 @@ else if(ind==iK_220_IPS_TERMOKOMPENSAT_IB)
 	ptrs[i++]=" Выходные параметры ";
     if(NUMDT)
     ptrs[i++]=" Внешние датчики    ";
+	if(num_rki)						  //oleg_start*
+	ptrs[i++]=" РКИ                ";
+	if(num_net_in)
+	ptrs[i++]=" Сетевые вводы      "; //oleg_end
     ptrs[i++]=" Выход              ";
     ptrs[i++]="                    ";
     ptrs[i++]="                    ";
@@ -15432,6 +15440,276 @@ else if(ind==iMn_TELECORE2015)
 		}
     }
 
+// oleg_start+
+else if(ind==iSetNetIn){
+	ret(1000);
+	if(but==butD)
+		{
+		sub_ind++;
+		gran_char(&sub_ind,0,7);
+
+		}
+	else if(but==butU)
+		{
+		sub_ind--;
+		gran_char(&sub_ind,0,7);
+
+		}
+	else if(but==butR){
+		if(sub_ind==0) command_net_in=1;
+		else if(sub_ind==1) command_net_in=5;
+		else if(sub_ind==2) command_net_in=9;
+		else if(sub_ind==3) command_net_in=14;
+		else if(sub_ind==4) command_net_in=63;
+		else if(sub_ind==5) command_net_in=67;
+		else if(sub_ind==6) command_net_in=71;
+	}
+	else if(but==butL){
+		if(sub_ind==0) command_net_in=3;
+		else if(sub_ind==1) command_net_in=7;
+		else if(sub_ind==2) command_net_in=11;
+		else if(sub_ind==3) command_net_in=13;
+		else if(sub_ind==4) command_net_in=65;
+		else if(sub_ind==5) command_net_in=69;
+		else if(sub_ind==6) command_net_in=73; 
+	}
+	else if(but==butR_){
+		if(sub_ind==0) command_net_in=2;
+		else if(sub_ind==1) command_net_in=6;
+		else if(sub_ind==2) command_net_in=10;
+		else if(sub_ind==3) command_net_in=14;
+		else if(sub_ind==4) command_net_in=64;
+		else if(sub_ind==5) command_net_in=68;
+		else if(sub_ind==6) command_net_in=72;
+	}
+	else if(but==butL_){
+		if(sub_ind==0) command_net_in=4;
+		else if(sub_ind==1) command_net_in=8;
+		else if(sub_ind==2) command_net_in=12;
+		else if(sub_ind==3) command_net_in=13;
+		else if(sub_ind==4) command_net_in=66;
+		else if(sub_ind==5) command_net_in=70;
+		else if(sub_ind==6) command_net_in=74; 
+	}
+	
+	else if(but==butE)
+	     {
+		 	if(sub_ind==7){
+		 		tree_down(0,0); 
+				ret(0);
+			}	     
+	     }
+}
+else if(ind==iK_RKI) // меню калибровки РКИ
+	{
+	ret(1000);
+	if(but==butD)
+		{
+		sub_ind++;
+		gran_char(&sub_ind,0,2);
+
+		}
+	else if(but==butU)
+		{
+		sub_ind--;
+		gran_char(&sub_ind,0,2);
+		}
+	else if(but==butL){
+		if(sub_ind==0) command_rki=31;
+	}
+	else if(but==butL_){
+		if(sub_ind==0) command_rki=32;
+	}
+	else if(but==butR){
+		if(sub_ind==0) command_rki=33;
+	}
+	else if(but==butR_){
+		if(sub_ind==0) command_rki=34;
+	}
+	else if(but==butE_)
+	     {
+		  	if(sub_ind==1) command_rki=35;
+			ind=iK_MOST;
+			ret(0);
+		 }
+	else if(but==butE)
+	     {
+		 	if(sub_ind==2){
+		 		tree_down(0,0); 
+				ret(0);
+			}	     
+	     }
+}
+else if(ind==iSetRKI) // меню установки РКИ
+	{
+	ret(1000);
+	if(but==butD)
+		{
+		sub_ind++;
+		if(type_rki==0) gran_char(&sub_ind,0,7);
+		else if(type_rki==1) gran_char(&sub_ind,0,9);
+		}
+	else if(but==butU)
+		{
+		sub_ind--;
+		if(type_rki==0) gran_char(&sub_ind,0,7);
+		else if(type_rki==1) gran_char(&sub_ind,0,9);
+		}
+	else if(but==butL){
+		if(sub_ind==0) command_rki=1;
+		else if(sub_ind==1) command_rki=3;
+		else if(sub_ind==2) command_rki=13;
+		else if(sub_ind==3) command_rki=19;
+		else if(sub_ind==4) command_rki=23;
+		else if(sub_ind==5) command_rki=27;
+		else if(sub_ind==6) command_rki=15;
+		if(type_rki==1){
+			if(sub_ind==7) command_rki=5;
+			else if(sub_ind==8) command_rki=7;
+		} 
+		
+	}
+	else if(but==butR){
+		if(sub_ind==0) command_rki=2;
+		else if(sub_ind==1) command_rki=4;
+		else if(sub_ind==2) command_rki=14;
+		else if(sub_ind==3) command_rki=20;
+		else if(sub_ind==4) command_rki=24;
+		else if(sub_ind==5) command_rki=28;
+		else if(sub_ind==6) command_rki=16;
+		if(type_rki==1){
+			if(sub_ind==7) command_rki=6;
+			else if(sub_ind==8) command_rki=8;			
+		}
+		 
+	}
+	else if(but==butL_){
+		if(sub_ind==3) command_rki=21;
+		else if(sub_ind==4) command_rki=25;
+		else if(sub_ind==5) command_rki=29;
+		else if(sub_ind==6) command_rki=19;
+		if(type_rki==1){
+			if(sub_ind==7) command_rki=9;
+			else if(sub_ind==8) command_rki=11;
+		} 
+	}
+	else if(but==butR_){
+		if(sub_ind==3) command_rki=22;
+		else if(sub_ind==4) command_rki=26;
+		else if(sub_ind==5) command_rki=30;
+		else if(sub_ind==6) command_rki=18;
+		if(type_rki==1){
+			if(sub_ind==7) command_rki=10;
+			else if(sub_ind==8) command_rki=12; 
+		}
+	}
+	else if(but==butE)
+	     {
+		 	if( (sub_ind==7 && type_rki==0) || (sub_ind==9 && type_rki==1) ){
+		 		tree_down(0,0); 
+				ret(0);
+			}	     
+	     }
+	else if(but==butD_)
+		{
+		if(type_rki==0) sub_ind=7;
+		else if(type_rki==1) sub_ind=9;
+		}
+	}
+else if(ind==iRKI) // индикация данных с РКИ
+	{
+	ret(1000);
+	if(but==butD)
+		{
+		sub_ind++;
+		if(type_rki==0) gran_char(&sub_ind,0,11);
+		else {
+			if(count_Iddt==0) gran_char(&sub_ind,0,35);
+			else gran_char(&sub_ind,0,37+(count_Iddt<<1) );
+		}
+		}
+	else if(but==butU)
+		{
+		sub_ind--;
+		if(type_rki==0) gran_char(&sub_ind,0,11);
+		else {
+			if(count_Iddt==0) gran_char(&sub_ind,0,35);
+			else gran_char(&sub_ind,0,37+(count_Iddt<<1) );
+		}
+		}
+	else if(but==butL || but==butE)
+	     {
+	     tree_down(0,0);
+	     ret(0);
+	     }
+	else if(but==butD_)
+		{
+		if(type_rki==0) sub_ind=11;
+		else {
+			if(count_Iddt==0) sub_ind=35;
+			else sub_ind=37+(count_Iddt<<1);
+		}
+		}
+	else if(but==butU_)	sub_ind=0;	     
+     }
+	// сетевые вводы
+else if(ind==iNET_IN){ // подменю сетевые вводы
+	ret(1000);
+	if(but==butD){
+		sub_ind++;
+		if(sub_ind==11) sub_ind=13;
+		gran_char(&sub_ind,0,23);
+	}
+	else if(but==butU)
+		{
+		sub_ind--;
+		if(sub_ind==12) sub_ind=10;
+		gran_char(&sub_ind,0,23);
+		}
+	else if(but==butL || but==butE)
+	     {
+	     tree_down(0,0);
+	     ret(0);
+	     }
+	else if(but==butD_)
+		{
+		sub_ind=23;
+		}
+	else if(but==butU_)	sub_ind=0;	
+
+
+}
+else if(ind==iK_Net_In){ // подменю сетевые вводы
+	ret(1000);
+	if(but==butD){
+		sub_ind++;
+		if(sub_ind==6) index_set=6;
+		
+		gran_char(&sub_ind,0,12);
+	}
+	else if(but==butU)
+		{
+		sub_ind--;
+		if(sub_ind==5) index_set=3;
+		gran_char(&sub_ind,0,12);
+		}
+	else if( but==butE)
+	     {
+	     tree_down(0,0);
+	     ret(0);
+	     }
+	else if(but==butD_)
+		{
+		sub_ind=12;
+		}
+	else if(but==butU_)	sub_ind=0;	
+	else if(but==butR) { if(sub_ind<12) command_net_in=15+sub_ind*4; }
+	else if(but==butR_) { if(sub_ind<12) command_net_in=16+sub_ind*4; }
+	else if(but==butL) { if(sub_ind<12) command_net_in=17+sub_ind*4; }
+	else if(but==butL_) { if(sub_ind<12) command_net_in=18+sub_ind*4; }
+
+}
+// oleg_end+
 else if(ind==iBat)
 	{
 	ret(1000);
@@ -32500,7 +32778,7 @@ char ind_reset_cnt=0;
 long ii;
 char mac_adr[6] = { 0x00,0x73,0x04,50,60,70 };
 
-ii=200000;
+ii=2000;
 while(--ii){};
 
 SystemInit();

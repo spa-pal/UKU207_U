@@ -15386,7 +15386,7 @@ else if(ind==iMn_TELECORE2015)
 			}
 		}
     }
-// oleg_start
+// oleg_start*
 else if(ind==iSetNetIn){
 	ret(1000);
 	if(but==butD)

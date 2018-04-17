@@ -3249,7 +3249,7 @@
 001542  f1000001          ADD      r0,r0,#1
 001546  7048              STRB     r0,[r1,#1]
 ;;;1153   
-;;;1154   // oleg_start
+;;;1154   // oleg_start*
 ;;;1155   if (RXBUFF[0]==0xE7) {
 001548  f1a10050          SUB      r0,r1,#0x50
 ;;;1156   	no_rki=0;
@@ -6793,20 +6793,20 @@
                           ENDP
 
                   NVIC_EnableIRQ PROC
-;;;927     */
-;;;928    static __INLINE void NVIC_EnableIRQ(IRQn_Type IRQn)
+;;;1095    */
+;;;1096   static __INLINE void NVIC_EnableIRQ(IRQn_Type IRQn)
 0029da  f000021f          AND      r2,r0,#0x1f
-;;;929    {
-;;;930      NVIC->ISER[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F)); /* enable interrupt */
+;;;1097   {
+;;;1098     NVIC->ISER[((uint32_t)(IRQn) >> 5)] = (1 << ((uint32_t)(IRQn) & 0x1F)); /* enable interrupt */
 0029de  f04f0101          MOV      r1,#1
 0029e2  fa01f102          LSL      r1,r1,r2
 0029e6  ea4f1050          LSR      r0,r0,#5
 0029ea  f04f22e0          MOV      r2,#0xe000e000
 0029ee  eb020080          ADD      r0,r2,r0,LSL #2
 0029f2  f8c01100          STR      r1,[r0,#0x100]
-;;;931    }
+;;;1099   }
 0029f6  4770              BX       lr
-;;;932    
+;;;1100   
                           ENDP
 
                   |L1.10744|
@@ -7206,29 +7206,3 @@
                           EXPORTAS ||area_number.13||, ||.data||
                   rotor_rotor_rotor
 000000  0000              DCB      0x00,0x00
-
-;*** Start embedded assembler ***
-
-#line 1 "full_can.c"
-	AREA ||.emb_text||, CODE, READONLY
-	THUMB
-	EXPORT |__asm___10_full_can_c_0f077f62____REV16|
-#line 112 "C:\\Keil\\ARM\\CMSIS\\Include\\core_cmInstr.h"
-|__asm___10_full_can_c_0f077f62____REV16| PROC
-#line 113
-
- rev16 r0, r0
- bx lr
-	ENDP
-	AREA ||.emb_text||, CODE, READONLY
-	THUMB
-	EXPORT |__asm___10_full_can_c_0f077f62____REVSH|
-#line 130
-|__asm___10_full_can_c_0f077f62____REVSH| PROC
-#line 131
-
- revsh r0, r0
- bx lr
-	ENDP
-
-;*** End   embedded assembler ***
