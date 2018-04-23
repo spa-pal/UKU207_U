@@ -3593,7 +3593,7 @@ if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_EXT))
 	}
 else if(DOP_RELE_FUNC==0)	//åñëè äîïðåëå ïîäêëþ÷åíî ê óñêîðåííîìó çàðÿäó
 	{
-	if((!speedChIsOn)&&(spc_stat!=spcVZ)&&(hv_vz_stat==hvsOFF))   SET_REG(LPC_GPIO0->FIOCLR,1,9,1);
+	if((!speedChIsOn)&&(spc_stat!=spcVZ)&&(hv_vz_stat==hvsOFF)&&(sp_ch_stat==scsOFF))   SET_REG(LPC_GPIO0->FIOCLR,1,9,1);
 	else SET_REG(LPC_GPIO0->FIOSET,1,9,1);
 	}
 else if(DOP_RELE_FUNC==1)  //åñëè äîïðåëå ïîäêëþ÷åíî ê èíäèêàçèè ðàçðÿæåííîé áàòàðåè
@@ -7421,6 +7421,85 @@ if(npn_stat==npnsOFF) mess_send(MESS2RELE_HNDL,PARAM_RELE_NPN,1,15);
 //-----------------------------------------------
 void speedChargeHndl(void)
 {
+/*
+if(sp_ch_stat==scsOFF)
+	{
+	if((sk_stat[1]==1)&&(sk_stat_old[1]=0))
+	}*/
+	 
+if(sp_ch_stat==scsSTEP1)
+	{
+	if(sp_ch_stat_old!=sp_ch_stat)
+		{
+		sp_ch_stat_cnt=5;
+		}
+	if(sp_ch_stat_cnt)
+		{
+		sp_ch_stat_cnt--;
+		if(sp_ch_stat_cnt==0)
+			{
+			sp_ch_stat=hvsERR1; 	//Íå âêëþ÷èëàñü âåíòèëÿöèÿ;
+
+			}
+		}
+	if(sk_stat[0]==1)sp_ch_stat=scsWRK;
+	}
+
+if(sp_ch_stat==scsWRK)
+	{
+	if(sp_ch_stat_old!=sp_ch_stat)
+		{
+		sp_ch_wrk_cnt=(signed long)speedChrgTimeInHour*3600L;
+		}
+	sp_ch_wrk_cnt--;
+	if(sp_ch_wrk_cnt==0)
+		{
+		sp_ch_stat=scsOFF;
+		}
+	if(sk_stat[0]==0)sp_ch_stat=scsERR2;
+	
+	}
+
+if(sp_ch_stat==scsERR1)		//Îòñóòñòâóåò âåíòèëÿöèÿ ïðè âêëþ÷åíèè
+	{
+	if((sp_ch_stat_old!=sp_ch_stat)||(sp_ch_stat_cnt==0))
+		{
+		sp_ch_stat_cnt=10;
+		}
+	sp_ch_stat_cnt--;
+	if((sp_ch_stat_cnt==10)||(sp_ch_stat_cnt==9))
+		{
+		show_mess(	"  ÓÑÊÎÐÅÍÍÛÉ ÇÀÐßÄ  ",
+					"   ÍÅ ÌÎÆÅÒ ÁÛÒÜ    ",
+					"      ÂÊËÞ×ÅÍ       ",
+					"  ÁÅÇ ÂÅÍÒÈËßÖÈÈ!!  ",
+					5000);
+		}
+	}
+if(sp_ch_stat==hvsERR2)		//Ïðîïàëà âåíòèëÿöèÿ ïðè ðàáîòå
+	{
+	if((sp_ch_stat_old!=sp_ch_stat)||(sp_ch_stat_cnt==0))
+		{
+		sp_ch_stat_cnt=10;
+		}
+	sp_ch_stat_cnt--;
+	if((sp_ch_stat_cnt==10)||(sp_ch_stat_cnt==9))
+		{
+		show_mess(	"  ÓÑÊÎÐÅÍÍÛÉ ÇÀÐßÄ  ",
+					"    ÇÀÁËÎÊÈÐÎÂÀÍ    ",
+					"     ÍÅÈÑÏÐÀÂÍÀ     ",
+					"    ÂÅÍÒÈËßÖÈß!!!   ",
+					5000);
+		}
+	if(sk_stat[0]==1)hv_vz_stat=hvsWRK;
+	}
+
+
+sp_ch_stat_old=sp_ch_stat;
+
+
+
+/*
 if(speedChIsOn)
 	{
 	speedChTimeCnt++;
@@ -7463,7 +7542,7 @@ else
 		if(((speedChrgBlckLog==0)&&(adc_buff_[13]>2000)) || ((speedChrgBlckLog==1)&&(adc_buff_[13]<2000))) speedChrgBlckStat=1;
 		}
 	}
-
+*/
 /*
 if(speedChrgBlckStat==1)
 	{
@@ -7489,7 +7568,7 @@ else speedChrgShowCnt=0;  */
 //-----------------------------------------------
 void speedChargeStartStop(void)
 {
-if(speedChIsOn)
+/*if(speedChIsOn)
 	{
 	speedChIsOn=0;
 	}
@@ -7508,6 +7587,16 @@ else
 	          		"    çàáëîêèðîâàí!   ",
 	          		"                    ",2000);	 
 		}
+	}*/
+
+if(sp_ch_stat!=scsOFF)
+	{
+	sp_ch_stat=scsOFF;
+	}
+
+else
+	{
+	sp_ch_stat=scsSTEP1;
 	}
 }
 

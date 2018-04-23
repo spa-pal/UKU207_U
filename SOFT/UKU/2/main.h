@@ -1626,6 +1626,13 @@ extern signed short speedChrgBlckStat;		//Сигнал блокировки для выравнивающего и
 extern char  		speedChrgShowCnt;		//Счетчик показа информационного сообщения
 
 //-----------------------------------------------
+//Новый ускоренный заряд
+typedef enum  {scsOFF,scsSTEP1,scsWRK,scsERR1,scsERR2} enum_sp_ch_stat;
+extern enum_sp_ch_stat sp_ch_stat,sp_ch_stat_old;
+extern short sp_ch_stat_cnt;
+extern long sp_ch_wrk_cnt;
+
+//-----------------------------------------------
 //Блокировка ИПС
 extern signed short ipsBlckSrc;
 extern signed short ipsBlckLog;

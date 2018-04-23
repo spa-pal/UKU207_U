@@ -718,6 +718,11 @@ signed short speedChrgBlckSrc;		//Источник сигнала блокировки, 0-выкл., 1-СК1, 2
 signed short speedChrgBlckLog;		//Логика сигнала блокировки, 1 - блокировка по замкнутому СК, 0 - по разомкнутому
 signed short speedChrgBlckStat;		//Сигнал блокировки для выравнивающего и ускоренного заряда.
 char  	   speedChrgShowCnt;		//Счетчик показа информационного сообщения
+//-----------------------------------------------
+//Новый ускоренный заряд
+enum_sp_ch_stat sp_ch_stat=scsOFF,sp_ch_stat_old;
+short sp_ch_stat_cnt;
+long sp_ch_wrk_cnt;
 
 //-----------------------------------------------
 //Блокировка ИПС
@@ -3498,7 +3503,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 //    ptrs[5+NUMIST/*+NUMBAT+NUMINV*/]= 				" Нагрузка           "; 
     ptrs[6+NUMIST/*+NUMBAT+NUMINV*/]= 				" Внешние датчики    ";
 	ptrs[6+NUMIST/*+NUMBAT+NUMINV*/+(NUMEXT!=0)]= 	" Ускоренный заряд   ";
-	if((speedChIsOn)&&(bFL))ptrs[6+NUMIST+(NUMEXT!=0)]= 	"                     "; 
+	if((sp_ch_stat!=scsOFF)&&(bFL))ptrs[6+NUMIST+(NUMEXT!=0)]= 	"                     "; 
  	//ptrs[7+NUMIST/*+NUMBAT+NUMINV*/+(NUMEXT!=0)]= 	" Спецфункции    	 ";
 	ptrs[7+NUMIST/*+NUMBAT+NUMINV*/+(NUMEXT!=0)]= 	" Выравнивающий заряд ";
     if((hv_vz_stat!=hvsOFF)&&(bFL))	ptrs[7+NUMIST+(NUMEXT!=0)]= "                     ";
