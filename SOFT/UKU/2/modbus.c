@@ -266,6 +266,18 @@ unsigned short modbus_rx_arg1;		//встроенный в посылку второй аргумент
 //unsigned short modbus_rx_arg3;		//встроенный в посылку четвертый аргумент
 unsigned char modbus_func;			//встроенный в посылку код функции
 
+modbus_deb_char[0]=modbus_an_buffer[0];
+modbus_deb_char[1]=modbus_an_buffer[1];
+modbus_deb_char[2]=modbus_an_buffer[2];
+modbus_deb_char[3]=modbus_an_buffer[3];
+modbus_deb_char[4]=modbus_an_buffer[4];
+modbus_deb_char[5]=modbus_an_buffer[5];
+modbus_deb_char[6]=modbus_an_buffer[6];
+modbus_deb_char[7]=modbus_an_buffer[7];
+modbus_deb_char[8]=modbus_an_buffer[8];
+modbus_deb_char[9]=modbus_an_buffer[9];
+
+modbus_debug[1]++;
 
 
 mem_copy(modbus_an_buffer,modbus_rx_buffer,modbus_rx_buffer_ptr);
@@ -419,6 +431,7 @@ if(modbus_an_buffer[0]=='w')
 
 if(crc16_calculated==crc16_incapsulated)
 	{
+	modbus_debug[0]++;
 	ica_plazma[4]++;
  	if(modbus_an_buffer[0]==MODBUS_ADRESS)
 		{

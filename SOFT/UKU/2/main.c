@@ -768,6 +768,8 @@ U8 tcp_connect_stat;
 
 short pvlk;
 char klbr_en;
+short modbus_debug[8];
+char modbus_deb_char[10];
 //-----------------------------------------------
 void rtc_init (void) 
 {
@@ -9736,125 +9738,32 @@ if(ind==iDeb)
 
 	else if(sub_ind==3)
      	{
-     	bgnd_par("ÊÅ                  ",
+     	bgnd_par("M                   ",
      	         "                    ",
-     	         "                   ^",
-     	         "                   &");
-
-/*	int2lcdyx(spc_stat,0,5,0);
-	int2lcdyx(__ee_spc_stat,0,9,0);
-	int2lcdyx(lc640_read_int(EE_SPC_STAT),0,13,0);
-
-	int2lcdyx(spc_bat,1,5,0);
-	int2lcdyx(__ee_spc_bat,1,9,0);
-	int2lcdyx(lc640_read_int(EE_SPC_BAT),1,13,0);
-
-	int2lcdyx(bat_u_old_cnt,0,19,0);
-	
-	
-	int2lcdyx(bat[0]._zar_cnt_ke,2,5,0);
-	int2lcdyx(lc640_read_int(ADR_EE_BAT_ZAR_CNT_KE[0]),2,10,0);	
-	int2lcdyx(bat[0]._u_old[0],2,14,0);
-	int2lcd_mmm(bat[0]._Ib,'^',2);
-
-	int2lcdyx(bat[1]._zar_cnt_ke,3,5,0);
-	int2lcdyx(lc640_read_int(ADR_EE_BAT_ZAR_CNT_KE[1]),3,10,0);
-	int2lcdyx(bat[1]._Ub,3,14,0);
-	int2lcd_mmm(bat[1]._Ib,'&',2);	
-
-	int2lcdyx(spc_phase,1,15,0);
-	int2lcdyx(__ee_spc_phase,1,17,0);
-	int2lcdyx(lc640_read_int(EE_SPC_PHASE),1,19,0);	*/
-
-/*	int2lcdyx(speedChIsOn,0,4,0);
-	int2lcdyx(speedChTimeCnt,1,4,0);
-	int2lcdyx(speedChrgBlckStat,2,4,0);
-	int2lcdyx(speedChrgBlckSrc,3,4,0);
-
-	int2lcdyx(speedChrgBlckSrc,0,8,0);
-	int2lcdyx(speedChrgBlckLog,1,8,0); */
-	
-	
-		
-
-/*	    		int2lcdyx(adc_net_buff_cnt,0,4,0);
-
-		    	int2lcdyx((short)(main_power_buffer[0]>>12),0,19,0);
-			int2lcdyx((short)(main_power_buffer[1]>>12),1,19,0);
-			int2lcdyx((short)(main_power_buffer[2]>>12),2,19,0);
-			int2lcdyx((short)(main_power_buffer[3]>>12),3,19,0);
-
-		    	int2lcdyx((net_buff_),2,5,0); */
+     	         "                    ",
+     	         "                    ");
 
 
-		   
-		    
-
-
-/*		int2lcdyx(load_U,0,4,0);
-		int2lcdyx(load_I,1,4,0);
-		lcd_buffer[44]='a';
-		int2lcd_mmm((bat[0]._Ib)/10,'a',1);
-		lcd_buffer[64]='a';
-		int2lcd_mmm((bat[1]._Ib)/10,'a',1);
-
- 		int2lcdyx(u_necc,0,8,0);
+		int2lcdyx(modbus_debug[0],0,4,0);
+		int2lcdyx(modbus_debug[1],0,9,0);
+		int2lcdyx(modbus_debug[2],0,14,0);
+		int2lcdyx(modbus_debug[3],0,19,0);
+		int2lcdyx(modbus_debug[4],1,4,0);
+		int2lcdyx(modbus_debug[5],1,9,0);
+		int2lcdyx(modbus_debug[6],1,14,0);
+		int2lcdyx(modbus_debug[7],1,19,0);
+		char2lcdhyx(modbus_deb_char[0],2,2);
+		char2lcdhyx(modbus_deb_char[1],2,6);
+		char2lcdhyx(modbus_deb_char[2],2,10);
+		char2lcdhyx(modbus_deb_char[3],2,14);
+		char2lcdhyx(modbus_deb_char[4],2,18);
+		char2lcdhyx(modbus_deb_char[5],3,2);
+		char2lcdhyx(modbus_deb_char[6],3,6);
+		char2lcdhyx(modbus_deb_char[7],3,10);
+		char2lcdhyx(modbus_deb_char[8],3,14);
+		char2lcdhyx(modbus_deb_char[9],3,18);
 
 		
-		
-		lcd_buffer[14]='.';
-		lcd_buffer[34]='.';
-		int2lcdyx(Isumm,0,15,1);		
-		int2lcdyx(Isumm_,1,15,1);
-
-
-		int2lcdyx(cntrl_stat,0,19,0);
-		int2lcdyx(num_necc,1,19,0);
-		
-		
-		  
-//		int2lcdyx(cntrl_stat,0,15,0);
-		 
-		//int2lcdyx(cntrl_plazma,1,3,0);
-		//lcd_buffer[30]='a';
-		int2lcd_mmm(Ibmax,'a',0);
-		int2lcdyx(IZMAX,1,14,0);
-
-		lcd_buffer[65]='a';
-		int2lcd_mmm(bat[0]._Ib,'a',0);
-
-		lcd_buffer[70]='a';
-		int2lcd_mmm(bat[1]._Ib,'a',0); 
-
-		lcd_buffer[75]='a';
-		int2lcd_mmm(Ibmax,'a',0); 
-
-	//	int2lcdyx(IMAX,2,3,0);
-		
-		
-
-	//	int2lcdyx(IZMAX,3,19,0);
-
-		//int2lcdyx(num_necc_Imax,3,6,0);
-		//int2lcdyx(num_necc_Imin,3,12,0);
-
-
- //    	lcd_buffer[4]='a';            
- //    	int2lcd_mmm(Ibat,'a',1);   int2lcdyx(cntrl_stat,0,9,0);          int2lcdyx(hour_apv_cnt,0,13,0);                             char2lcdhyx(St_[0],0,19);  
- //    	int2lcdyx(Ubat,1,4,0);     int2lcdyx(main_apv_cnt,1,9,0);        int2lcdyx(lc640_read_int(bps1_AVAR_PTR),1,13,0);            char2lcdhyx(St_[1],1,19);
- //    	int2lcdyx(Us[0],2,4,0);  int2lcdyx(apv_cnt_1,2,9,0);           int2lcdyx(lc640_read_int(SRC1_AVAR_CNT),2,13,0);                                     int2lcdhyx(av_stat,2,19);
- //    	int2lcdyx(Us[1],3,4,0);  int2lcdyx(reset_apv_cnt,3,9,0);                                            int2lcdyx(plazma,3,19,0);
-     	//int2lcd(plazma,'(',0);
-
-     	//int2lcd(Us[0],'#',1);
-     	//int2lcd(Us[1],'$',1);
-     	//int2lcd(Is[0],'%',1);
-     	//int2lcd(Is[1],'^',1);
-    // 	int2lcd(bat[0]._Ub,'<',1);
-    // 	int2lcd_mmm(bat[0]._Ib,'>',2);
- //    	char2lcdhyx(St_[0],3,13);
- //    	char2lcdhyx(St_[1],3,19);
- //    	char2lcdhyx(St,3,5);  */
 		}
 
    else if(sub_ind==4)

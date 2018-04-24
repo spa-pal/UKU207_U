@@ -154,6 +154,7 @@ if(sc16is700ByteAvailable) //Если в приемном ФИФО	микросхемы есть данные
 			modbus_rx_buffer_ptr++;
 			modbus_timeout_cnt=0;   //Запускаем таймер опознавания конца посылки 
 			//pvlk++;
+			modbus_debug[2]++;
 			}
 		else sc16is700_rd_byte(CS16IS7xx_RHR);
 		}

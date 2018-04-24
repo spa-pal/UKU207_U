@@ -531,6 +531,7 @@ if ( IIRValue == IIR_RLS )		/* Receive Line Status */
   	}
 else if ( IIRValue == IIR_RDA )	/* Receive Data Available */
   	{
+	//modbus_debug[1]++;
 	plazma_bat_drv0++;
 	modbus_plazma++;
 	while((LPC_UART0->LSR)&0x0001) {	

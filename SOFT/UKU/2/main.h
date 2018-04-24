@@ -1661,6 +1661,8 @@ extern U8 tcp_soc_avg;
 extern U8 tcp_connect_stat;
 
 extern short pvlk;
+extern short modbus_debug[8];
+extern char modbus_deb_char[10];
 //-----------------------------------------------
 //Ресурс вентиляторов
 //extern char vent_resurs_temp[4];
