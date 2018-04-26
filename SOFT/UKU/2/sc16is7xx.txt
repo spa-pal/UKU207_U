@@ -191,11 +191,11 @@
 ;;;91     
 ;;;92     unsigned char baud_h,baud_l;
 ;;;93     
-;;;94     baud_h = (char)((10000000U/16U/baudrate)>>8);
+;;;94     baud_h = (char)((40000000U/16U/baudrate)>>8);
 00013a  494a              LDR      r1,|L1.612|
 00013c  fbb1f0f0          UDIV     r0,r1,r0
 000140  f3c02407          UBFX     r4,r0,#8,#8
-;;;95     baud_l = (char)((10000000U/16U/baudrate)); 
+;;;95     baud_l = (char)((40000000U/16U/baudrate)); 
 000144  b2c5              UXTB     r5,r0
 ;;;96     
 ;;;97     sc16is700_wr_byte(CS16IS7xx_LCR, 0x80);
@@ -412,7 +412,7 @@
                   |L1.608|
                           DCD      ||.bss||
                   |L1.612|
-                          DCD      0x00098968
+                          DCD      0x002625a0
                   |L1.616|
                           DCD      ||.data||
                   |L1.620|

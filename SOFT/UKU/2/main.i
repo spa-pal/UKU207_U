@@ -6764,7 +6764,7 @@ max_net_slot=20+NUMINV+8;
 
 if(++cnt_net_drv>max_net_slot) 
 	{
-	cnt_net_drv=-2;
+	cnt_net_drv=-10;
 	
 	
 	if(bCAN_INV)bCAN_INV=0;
@@ -6814,17 +6814,17 @@ if(cnt_net_drv<=11)
 	}
 
 #line 1277 "main.c"
-else if(cnt_net_drv==12)
+else if(cnt_net_drv==-3)
 	{
      if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x62,*((char*)(&UMAX)),*((char*)((&UMAX))+1),*((char*)(&DU)),*((char*)((&DU))+1),0);
      } 
      
-else if(cnt_net_drv==13)
+else if(cnt_net_drv==-4)
 	{
      if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x26,*((char*)(&TMAX)),*((char*)((&TMAX))+1),*((char*)(&TSIGN)),*((char*)((&TSIGN))+1),(char)TZAS);
      byps._cnt++;
 	} 
-else if(cnt_net_drv==14)
+else if(cnt_net_drv==-5)
 	{                 
 	static char makb_cnt;
 	makb_cnt++;
@@ -6835,7 +6835,7 @@ else if(cnt_net_drv==14)
 	}
 	
 	
-else if(cnt_net_drv==15)
+else if(cnt_net_drv==-6)
 	{
      if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x26,*((char*)(&TMAX)),*((char*)((&TMAX))+1),*((char*)(&TSIGN)),*((char*)((&TSIGN))+1),(char)TZAS);
      }
@@ -6861,7 +6861,7 @@ else if(cnt_net_drv==15)
  	
 	
 
-else if(cnt_net_drv==19)
+else if(cnt_net_drv==-7)
 	{
      if(!bCAN_OFF)
 		{
