@@ -844,6 +844,10 @@ extern char simax;
 extern short av_j_si_max;
 extern const char ABCDEF[];
 extern const char sm_mont[13][4]; 
+extern char *show_mess_p1,*show_mess_p2,*show_mess_p3,*show_mess_p4;
+extern char show_mess_cnt;
+extern short show_mess_number_;
+extern char show_mess_komma;
 
 
 //**********************************************
@@ -1390,7 +1394,7 @@ extern signed short t_ext[3];
 extern char ND_EXT[3];
 extern signed char sk_cnt[4],sk_av_cnt[4];
 typedef enum  {ssOFF,ssON} enum_sk_stat;
-extern enum_sk_stat sk_stat[4];
+extern enum_sk_stat sk_stat[4],sk_stat_old[4];
 typedef enum  {sasOFF,sasON} enum_sk_av_stat;
 extern enum_sk_av_stat sk_av_stat[4],sk_av_stat_old[4];
 extern signed short t_box,t_box_warm,t_box_vent;
@@ -1626,6 +1630,13 @@ extern signed short speedChrgBlckStat;		//Сигнал блокировки для выравнивающего и
 extern char  		speedChrgShowCnt;		//Счетчик показа информационного сообщения
 
 //-----------------------------------------------
+//Новый ускоренный заряд
+typedef enum  {scsOFF,scsSTEP1,scsWRK,scsERR1,scsERR2} enum_sp_ch_stat;
+extern enum_sp_ch_stat sp_ch_stat,sp_ch_stat_old;
+extern short sp_ch_stat_cnt;
+extern long sp_ch_wrk_cnt;
+
+//-----------------------------------------------
 //Блокировка ИПС
 extern signed short ipsBlckSrc;
 extern signed short ipsBlckLog;
@@ -1657,8 +1668,17 @@ extern char ica_timer_cnt;
 extern signed short ica_my_current;
 extern signed short ica_your_current;
 extern signed short ica_u_necc;
+extern signed short ica_cntrl_hndl;
+extern signed short ica_cntrl_hndl_cnt;
 extern U8 tcp_soc_avg;
 extern U8 tcp_connect_stat;
+
+//-----------------------------------------------
+//Высоковольтный выравнивающий заряд
+typedef enum  {hvsOFF,hvsSTEP1,hvsSTEP2,hvsSTEP3,hvsSTEP4,hvsWRK,hvsERR1,hvsERR2,hvsERR3,hvsERR4} enum_hv_vz_stat;
+extern enum_hv_vz_stat hv_vz_stat,hv_vz_stat_old;
+extern short hv_vz_stat_cnt;
+extern long hv_vz_wrk_cnt;
 
 extern short pvlk;
 //-----------------------------------------------

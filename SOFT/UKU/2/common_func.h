@@ -25,6 +25,7 @@ void tree_up(char tind, char tsub_ind, char tindex_set, char tsub_ind1);
 void bgnd_par(char const *ptr0,char const *ptr1,char const *ptr2,char const *ptr3);
 void sub_bgnd(char const *adr,char xy,signed char offset);
 void show_mess(char* p1, char* p2, char* p3, char* p4,int m_sec);
+void show_mess_number(char* p1, char* p2, char* p3, char* p4,int m_sec,short number,char komma);
 void event2ind(char num, char simbol);
 char ptr_carry(signed int in,unsigned char modul,signed int carry);
 void event_data2ind(char num, char simbol);
