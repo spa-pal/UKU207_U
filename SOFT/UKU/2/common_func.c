@@ -1231,11 +1231,30 @@ while (*adr)
 //-----------------------------------------------
 void show_mess(char* p1, char* p2, char* p3, char* p4,int m_sec)
 {
-bgnd_par(p1,p2,p3,p4);
-tree_up(iSM,sub_ind,sub_ind1,sub_ind2);
-ret((char)(m_sec/100));
+//bgnd_par(p1,p2,p3,p4);
+//tree_up(iSM,sub_ind,sub_ind1,sub_ind2);
+//ret((char)(m_sec/100));
+show_mess_cnt=(char)(m_sec/100);
+show_mess_p1=p1;
+show_mess_p2=p2;
+show_mess_p3=p3;
+show_mess_p4=p4;
 }
-
+//-----------------------------------------------
+void show_mess_number(char* p1, char* p2, char* p3, char* p4,int m_sec,short number, char komma)
+{
+/*bgnd_par(p1,p2,p3,p4);
+int2lcd(number,'@',1);
+tree_up(iSM,sub_ind,sub_ind1,sub_ind2);
+ret((char)(m_sec/100));*/
+show_mess_cnt=(char)(m_sec/100);
+show_mess_p1=p1;
+show_mess_p2=p2;
+show_mess_p3=p3;
+show_mess_p4=p4;
+show_mess_number_=number;
+show_mess_komma=komma;
+}
 //-----------------------------------------------
 char ptr_carry(signed int in,unsigned char modul,signed int carry)
 {
