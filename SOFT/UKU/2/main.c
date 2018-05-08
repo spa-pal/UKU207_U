@@ -167,6 +167,7 @@ signed short KB_ALGORITM;		//2-х или 3-х ступеннчатый алгоритм проверки цепи бат
 signed short REG_SPEED;			//скорость регулирования, 1- стандартная, 2,3,4,5- замедленная в 2,3,4,5 раз
 enum_apv_on APV_ON1,APV_ON2;
 signed short APV_ON2_TIME;
+signed short RS485_QWARZ_DIGIT;
 
 enum_bat_is_on BAT_IS_ON[2];
 signed short BAT_DAY_OF_ON[2];
@@ -8525,7 +8526,7 @@ else if(ind==iK_220_IPS_TERMOKOMPENSAT)
      if(NUMDT)
      ptrs[i++]=" Внешние датчики    ";
      ptrs[i++]=" Выход              ";
-     ptrs[i++]="                    ";
+     ptrs[i++]=" Кварц RS485   !МГЦ ";
      ptrs[i++]="                    ";
 
 	if((sub_ind-index_set)>2)index_set=sub_ind-2;
@@ -8552,7 +8553,7 @@ else if(ind==iK_220_IPS_TERMOKOMPENSAT_IB)
     if(NUMDT)
     ptrs[i++]=" Внешние датчики    ";
     ptrs[i++]=" Выход              ";
-    ptrs[i++]="                    ";
+    ptrs[i++]=" Кварц RS485   !МГЦ ";
     ptrs[i++]="                    ";
 
 	if((sub_ind-index_set)>2)index_set=sub_ind-2;
@@ -8562,7 +8563,8 @@ else if(ind==iK_220_IPS_TERMOKOMPENSAT_IB)
 			ptrs[index_set+1],
 			ptrs[index_set+2]);
 
-	pointer_set(1);	 
+	pointer_set(1);
+	int2lcd(RS485_QWARZ_DIGIT,'!',0);	 
 	}   
 
 
@@ -24789,12 +24791,12 @@ else if(ind==iK_220_IPS_TERMOKOMPENSAT)
 	if(but==butD)
 		{
 		sub_ind++;
-		gran_char(&sub_ind,0,2+(NUMBAT!=0)+(NUMIST!=0)+(NUMINV!=0)+(NUMDT!=0));
+		gran_char(&sub_ind,0,3+(NUMBAT!=0)+(NUMIST!=0)+(NUMINV!=0)+(NUMDT!=0));
 		}
 	else if(but==butU)
 		{
 		sub_ind--;
-		gran_char(&sub_ind,0,2+(NUMBAT!=0)+(NUMIST!=0)+(NUMINV!=0)+(NUMDT!=0));
+		gran_char(&sub_ind,0,3+(NUMBAT!=0)+(NUMIST!=0)+(NUMINV!=0)+(NUMDT!=0));
 		}
 	else if(but==butD_)
 		{
@@ -24852,17 +24854,35 @@ else if(ind==iK_220_IPS_TERMOKOMPENSAT_IB)
 	if(but==butD)
 		{
 		sub_ind++;
-		gran_char(&sub_ind,0,3+(NUMIST!=0)+(NUMDT!=0));
+		gran_char(&sub_ind,0,4+(NUMIST!=0)+(NUMDT!=0));
 		}
 	else if(but==butU)
 		{
 		sub_ind--;
-		gran_char(&sub_ind,0,3+(NUMIST!=0)+(NUMDT!=0));
+		gran_char(&sub_ind,0,4+(NUMIST!=0)+(NUMDT!=0));
 		}
 	else if(but==butD_)
 		{
 		sub_ind=3+(NUMIST!=0)+(NUMDT!=0);
 		}
+		else if(sub_ind==(4+(NUMIST!=0)+(NUMDT!=0)))
+			{
+			if((but==butR)||(but==butR_))
+				{
+				if(RS485_QWARZ_DIGIT==10)RS485_QWARZ_DIGIT=30;
+				else if(RS485_QWARZ_DIGIT==30)RS485_QWARZ_DIGIT=40;
+				else RS485_QWARZ_DIGIT=10;
+				}
+			else if((but==butL)||(but==butL_))
+				{
+				if(RS485_QWARZ_DIGIT==10)RS485_QWARZ_DIGIT=40;
+				else if(RS485_QWARZ_DIGIT==40)RS485_QWARZ_DIGIT=30;
+				else RS485_QWARZ_DIGIT=10;
+				}
+			gran(&RS485_QWARZ_DIGIT,10,40);
+			lc640_write_int(EE_RS485_QWARZ_DIGIT,RS485_QWARZ_DIGIT);
+			speed=0;
+			}	  
 	else if(but==butE)
 		{
 		if(sub_ind==0)
@@ -24901,11 +24921,12 @@ else if(ind==iK_220_IPS_TERMOKOMPENSAT_IB)
 			ret(1000);			
 			}
  						
-          else if(sub_ind==(3+(NUMIST!=0)+(NUMDT!=0)))
+        else if(sub_ind==(3+(NUMIST!=0)+(NUMDT!=0)))
 			{
-	          tree_down(0,0);
-	          ret(0);
-               }	               			
+	        tree_down(0,0);
+	        ret(0);
+            }
+             			
 		}			
 	}
 /*
