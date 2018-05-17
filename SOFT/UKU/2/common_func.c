@@ -1019,6 +1019,15 @@ else
 }
 
 //-----------------------------------------------
+void checkboxing(char xy,short in)
+{
+char i;
+i=find(xy);
+if(in)lcd_buffer[i]=3;
+else lcd_buffer[i]=4;	 
+}
+
+//-----------------------------------------------
 void int2lcd(unsigned short in,char xy,char des)
 {
 char i;

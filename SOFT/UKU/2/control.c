@@ -3600,7 +3600,53 @@ else if(DOP_RELE_FUNC==1)  //если допреле подключено к индиказии разряженной бат
 	{
 	if((mess_find_unvol(MESS2RELE_HNDL))&& (mess_data[0]==PARAM_RELE_BAT_IS_DISCHARGED)) SET_REG(LPC_GPIO0->FIOCLR,1,9,1);
 	else SET_REG(LPC_GPIO0->FIOSET,1,9,1);
-	}	 	
+	}
+	
+//Блок выносной реле
+if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_BDR1))
+	{
+	if(mess_data[1]==0) 		bdr_transmit_stat&=0xfe;
+	else if(mess_data[1]==1) 	bdr_transmit_stat|=0x01;
+	}
+else 
+	{
+	if(bdr_avar_stat&0x01)  	bdr_transmit_stat|=0x01;
+	else 						bdr_transmit_stat&=0xfe;
+	}	
+
+if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_BDR2))
+	{
+	if(mess_data[1]==0) 		bdr_transmit_stat&=0xfd;
+	else if(mess_data[1]==1) 	bdr_transmit_stat|=0x02;
+	}
+else 
+	{
+	if(bdr_avar_stat&0x01)  	bdr_transmit_stat|=0x02;
+	else 						bdr_transmit_stat&=0xfd;
+	}	
+	
+if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_BDR3))
+	{
+	if(mess_data[1]==0) 		bdr_transmit_stat&=0xfb;
+	else if(mess_data[1]==1) 	bdr_transmit_stat|=0x04;
+	}
+else 
+	{
+	if(bdr_avar_stat&0x01)  	bdr_transmit_stat|=0x04;
+	else 						bdr_transmit_stat&=0xfb;
+	}	
+	
+if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_BDR4))
+	{
+	if(mess_data[1]==0) 		bdr_transmit_stat&=0xf7;
+	else if(mess_data[1]==1) 	bdr_transmit_stat|=0x08;
+	}
+else 
+	{
+	if(bdr_avar_stat&0x01)  	bdr_transmit_stat|=0x08;
+	else 						bdr_transmit_stat&=0xf7;
+	}	
+					 	
 #endif
 
 #ifdef UKU_KONTUR
@@ -3837,6 +3883,46 @@ else
 	} 
 
 #endif
+
+if(NUMBDR==1)
+	{
+	char ii_;
+	char bdr_avar_stat_temp=0;
+	for	(ii_=0;ii_<4;ii_++)
+		{
+		//АБ разряжена
+		if((RELE_SET_MASK[i]&0x01)&&
+			(load_U<(USIGN*10)))			bdr_avar_stat_temp|=(1<<i);
+		//Ускоренный заряд
+		if((RELE_SET_MASK[i]&0x02)&&
+			(sp_ch_stat==scsWRK))			bdr_avar_stat_temp|=(1<<i);
+		//Выравнивающий заряд
+		if((RELE_SET_MASK[i]&0x04)&&
+			(hv_vz_stat==scsWRK))			bdr_avar_stat_temp|=(1<<i);
+		//Общая авария ЗВУ
+		if((RELE_SET_MASK[i]&0x08)&&
+			(avar_stat))					bdr_avar_stat_temp|=(1<<i);
+		//Uвых завышено
+		if((RELE_SET_MASK[i]&0x10)&&
+			(uout_av==1))					bdr_avar_stat_temp|=(1<<i);
+		//Uвых занижено
+		if((RELE_SET_MASK[i]&0x20)&&
+			(uout_av==2))					bdr_avar_stat_temp|=(1<<i);
+		if((RELE_SET_MASK[i]&0x40)&&
+			(
+			((bps[0]._av&(1<<4))&&(NUMIST>=1))||
+			((bps[1]._av&(1<<4))&&(NUMIST>=2))||
+			((bps[2]._av&(1<<4))&&(NUMIST>=3))
+			))bdr_avar_stat_temp|=(1<<i);
+		if((RELE_SET_MASK[i]&0x80)&&
+			(
+			((bps[0]._av&(0x0f))&&(NUMIST>=1))||
+			((bps[1]._av&(0x0f))&&(NUMIST>=2))||
+			((bps[2]._av&(0x0f))&&(NUMIST>=3))
+			))bdr_avar_stat_temp|=(1<<i);
+		}
+	bdr_avar_stat=bdr_avar_stat_temp;
+	}
 }
 
 

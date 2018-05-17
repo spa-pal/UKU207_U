@@ -521,6 +521,10 @@
 #define 		PARAM_RELE_BAT_IS_DISCHARGED	114
 #define		PARAM_KLIMAT_CNTRL_VENT_INT			115
 #define		PARAM_KLIMAT_CNTRL_VENT_EXT			116
+#define		PARAM_RELE_BDR1						117
+#define		PARAM_RELE_BDR2						118
+#define		PARAM_RELE_BDR3						119
+#define		PARAM_RELE_BDR4						120
 
 #define	MESS2IND_HNDL						215
 #define		PARAM_SAMOKALIBR					216
@@ -812,7 +816,9 @@ typedef enum {
 	iBps_list,
 	iSpch_set,
 	iAvt_set_sel,iAvt_set,iSet_li_bat,
-	iOut_volt_contr,iDop_rele_set,iBlok_ips_set,iIps_Curr_Avg_Set}i_enum;
+	iOut_volt_contr,iDop_rele_set,iBlok_ips_set,iIps_Curr_Avg_Set,
+	iRele_set,iRele_set_
+	}i_enum;
 
 typedef struct  
 {
@@ -943,6 +949,7 @@ extern signed short NUMEXT;
 extern signed short NUMAVT;
 extern signed short NUMMAKB;
 extern signed short NUMBYPASS;
+extern signed short NUMBDR;
 extern signed short U_OUT_KONTR_MAX;
 extern signed short U_OUT_KONTR_MIN;
 extern signed short U_OUT_KONTR_DELAY;
@@ -965,6 +972,8 @@ extern enum_apv_on APV_ON1,APV_ON2;
 
 extern signed short APV_ON2_TIME;
 extern signed short RS485_QWARZ_DIGIT;
+
+extern signed short RELE_SET_MASK[4];
 
 typedef enum {bisON=0x0055,bisOFF=0x00aa}enum_bat_is_on;
 extern enum_bat_is_on BAT_IS_ON[2];
@@ -1680,6 +1689,11 @@ typedef enum  {hvsOFF,hvsSTEP1,hvsSTEP2,hvsSTEP3,hvsSTEP4,hvsWRK,hvsERR1,hvsERR2
 extern enum_hv_vz_stat hv_vz_stat,hv_vz_stat_old;
 extern short hv_vz_stat_cnt;
 extern long hv_vz_wrk_cnt;
+
+//-----------------------------------------------
+//Блок выносной реле
+extern char bdr_transmit_stat;
+extern char bdr_avar_stat;
 
 extern short pvlk;
 //-----------------------------------------------

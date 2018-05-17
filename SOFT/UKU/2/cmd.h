@@ -23,6 +23,7 @@
 #define Zero_kf0 0x63
 #define Zero_kf2 0x64
 #define MEM_KF 0x62
+#define PUT_BDR 0x69
 #define BLKON 0x80
 #define BLKOFF 0x81
 #define Put_reg 0x90

@@ -154,6 +154,10 @@
 #define EE_AUSW_MAIN_NUMBER 				SECTOR_SETS+226 
 #define EE_AUSW_UKU_NUMBER					SECTOR_SETS+228
 #define EE_RS485_QWARZ_DIGIT		 		SECTOR_SETS+230
+#define EE_RELE_SET_MASK0					SECTOR_SETS+232
+#define EE_RELE_SET_MASK1					SECTOR_SETS+234
+#define EE_RELE_SET_MASK2					SECTOR_SETS+236
+#define EE_RELE_SET_MASK3					SECTOR_SETS+238
 
 #ifdef UKU_TELECORE2017
 #define EE_TELECORE2017_ULINECC			EE_UB0
@@ -287,7 +291,7 @@
 #define EE_NUMAVT			SECTOR_EXT+98
 #define EE_NUMMAKB			SECTOR_EXT+100
 #define EE_RELE_LOG			SECTOR_EXT+102
-
+#define EE_NUMBDR			SECTOR_EXT+104
 
 #define SECTOR_ETH  		SECTOR_EXT+200
 #define EE_ETH_IS_ON		SECTOR_ETH
@@ -486,4 +490,6 @@ extern const unsigned short ADR_SK_REL_EN[4];
 extern const unsigned short ADR_SK_ZVUK_EN[4];
 extern const unsigned short ADR_SK_LCD_EN[4];
 extern const unsigned short ADR_SK_RS_EN[4];
+
+extern const unsigned short ADR_EE_RELE_SET_MASK[4];
 
