@@ -66,6 +66,7 @@ UVZ=lc640_read_int(EE_UVZ);
 IMAX=lc640_read_int(EE_IMAX);
 IMIN=lc640_read_int(EE_IMIN);
 APV_ON=lc640_read_int(EE_APV_ON);
+RS485_QWARZ_DIGIT=lc640_read_int(EE_RS485_QWARZ_DIGIT);
 IZMAX=lc640_read_int(EE_IZMAX);
 U0B=lc640_read_int(EE_U0B);
 TZAS=lc640_read_int(EE_TZAS);

@@ -2947,6 +2947,7 @@ typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
 extern enum_apv_on APV_ON1,APV_ON2;
 
 extern signed short APV_ON2_TIME;
+extern signed short RS485_QWARZ_DIGIT;
 
 typedef enum {bisON=0x0055,bisOFF=0x00aa}enum_bat_is_on;
 extern enum_bat_is_on BAT_IS_ON[2];
@@ -3459,11 +3460,11 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1483 "main.h"
+#line 1484 "main.h"
 
-#line 1494 "main.h"
+#line 1495 "main.h"
 
-#line 1510 "main.h"
+#line 1511 "main.h"
 
 extern char ext_can_cnt;
 
@@ -3506,11 +3507,11 @@ extern short can_plazma;
 
 
 
-#line 1563 "main.h"
+#line 1564 "main.h"
 
 
 
-#line 1587 "main.h"
+#line 1588 "main.h"
 
 
 

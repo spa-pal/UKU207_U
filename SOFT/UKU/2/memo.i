@@ -49,19 +49,9 @@ void memo_read (void);
 
 
 
-#line 156 "eeprom_map.h"
+#line 157 "eeprom_map.h"
 
-#line 167 "eeprom_map.h"
-
-
-
-
-
-
- 
-
-
-
+#line 168 "eeprom_map.h"
 
 
 
@@ -70,25 +60,6 @@ void memo_read (void);
 
  
 
-#line 199 "eeprom_map.h"
-
-
-
-#line 211 "eeprom_map.h"
-
-
-#line 222 "eeprom_map.h"
-
-
-
-#line 233 "eeprom_map.h"
-
-
-
-#line 289 "eeprom_map.h"
-
-
-#line 331 "eeprom_map.h"
 
 
 
@@ -97,7 +68,36 @@ void memo_read (void);
 
 
 
-#line 353 "eeprom_map.h"
+ 
+
+#line 200 "eeprom_map.h"
+
+
+
+#line 212 "eeprom_map.h"
+
+
+#line 223 "eeprom_map.h"
+
+
+
+#line 234 "eeprom_map.h"
+
+
+
+#line 290 "eeprom_map.h"
+
+
+#line 332 "eeprom_map.h"
+
+
+
+
+
+
+
+
+#line 354 "eeprom_map.h"
 
 
 
@@ -1074,6 +1074,7 @@ typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
 extern enum_apv_on APV_ON1,APV_ON2;
 
 extern signed short APV_ON2_TIME;
+extern signed short RS485_QWARZ_DIGIT;
 
 typedef enum {bisON=0x0055,bisOFF=0x00aa}enum_bat_is_on;
 extern enum_bat_is_on BAT_IS_ON[2];
@@ -1586,11 +1587,11 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1483 "main.h"
+#line 1484 "main.h"
 
-#line 1494 "main.h"
+#line 1495 "main.h"
 
-#line 1510 "main.h"
+#line 1511 "main.h"
 
 extern char ext_can_cnt;
 
@@ -1633,11 +1634,11 @@ extern short can_plazma;
 
 
 
-#line 1563 "main.h"
+#line 1564 "main.h"
 
 
 
-#line 1587 "main.h"
+#line 1588 "main.h"
 
 
 
@@ -2231,6 +2232,7 @@ UVZ=lc640_read_int(0x10+100+106);
 IMAX=lc640_read_int(0x10+100+24);
 IMIN=lc640_read_int(0x10+100+26);
 APV_ON=lc640_read_int(0x10+100+28);
+RS485_QWARZ_DIGIT=lc640_read_int(0x10+100+230);
 IZMAX=lc640_read_int(0x10+100+30);
 U0B=lc640_read_int(0x10+100+32);
 TZAS=lc640_read_int(0x10+100+34);
@@ -2277,7 +2279,7 @@ TBOXWARMON=lc640_read_int(0x10+100+132);
 TBOXWARMOFF=lc640_read_int(0x10+100+134);
 NUMBYPASS=lc640_read_int(0x10+100+136);
 BAT_TYPE=lc640_read_int(0x10+100+142); 
-#line 145 "memo.c"
+#line 146 "memo.c"
 
 speedChrgCurr =lc640_read_int(0x10+100+162); 
 speedChrgVolt =lc640_read_int(0x10+100+164);
@@ -2309,7 +2311,7 @@ ICA_MODBUS_TCP_UNIT_ID=lc640_read_int(0x10+350+18);
 PWM_START=lc640_read_int(0x10+350+20);
 KB_ALGORITM=lc640_read_int(0x10+350+22);
 REG_SPEED=lc640_read_int(0x10+350+24);
-#line 186 "memo.c"
+#line 187 "memo.c"
 BAT_IS_ON[0]=(enum_bat_is_on)lc640_read_int(0x10+400);
 BAT_IS_ON[1]=(enum_bat_is_on)lc640_read_int(0x10+400+30);
 NUMBAT=0;

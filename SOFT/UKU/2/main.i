@@ -1143,6 +1143,7 @@ typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
 extern enum_apv_on APV_ON1,APV_ON2;
 
 extern signed short APV_ON2_TIME;
+extern signed short RS485_QWARZ_DIGIT;
 
 typedef enum {bisON=0x0055,bisOFF=0x00aa}enum_bat_is_on;
 extern enum_bat_is_on BAT_IS_ON[2];
@@ -1655,11 +1656,11 @@ extern enum_av_tbox_stat av_tbox_stat;
 extern signed short av_tbox_cnt;
 extern char tbatdisable_cmnd,tloaddisable_cmnd;
 extern short tbatdisable_cnt,tloaddisable_cnt;
-#line 1483 "main.h"
+#line 1484 "main.h"
 
-#line 1494 "main.h"
+#line 1495 "main.h"
 
-#line 1510 "main.h"
+#line 1511 "main.h"
 
 extern char ext_can_cnt;
 
@@ -1702,11 +1703,11 @@ extern short can_plazma;
 
 
 
-#line 1563 "main.h"
+#line 1564 "main.h"
 
 
 
-#line 1587 "main.h"
+#line 1588 "main.h"
 
 
 
@@ -2256,19 +2257,9 @@ void ret_hndl(void);
 
 
 
-#line 156 "eeprom_map.h"
+#line 157 "eeprom_map.h"
 
-#line 167 "eeprom_map.h"
-
-
-
-
-
-
- 
-
-
-
+#line 168 "eeprom_map.h"
 
 
 
@@ -2277,25 +2268,6 @@ void ret_hndl(void);
 
  
 
-#line 199 "eeprom_map.h"
-
-
-
-#line 211 "eeprom_map.h"
-
-
-#line 222 "eeprom_map.h"
-
-
-
-#line 233 "eeprom_map.h"
-
-
-
-#line 289 "eeprom_map.h"
-
-
-#line 331 "eeprom_map.h"
 
 
 
@@ -2304,7 +2276,36 @@ void ret_hndl(void);
 
 
 
-#line 353 "eeprom_map.h"
+ 
+
+#line 200 "eeprom_map.h"
+
+
+
+#line 212 "eeprom_map.h"
+
+
+#line 223 "eeprom_map.h"
+
+
+
+#line 234 "eeprom_map.h"
+
+
+
+#line 290 "eeprom_map.h"
+
+
+#line 332 "eeprom_map.h"
+
+
+
+
+
+
+
+
+#line 354 "eeprom_map.h"
 
 
 
@@ -3899,6 +3900,7 @@ signed short KB_ALGORITM;
 signed short REG_SPEED;			
 enum_apv_on APV_ON1,APV_ON2;
 signed short APV_ON2_TIME;
+signed short RS485_QWARZ_DIGIT;
 
 enum_bat_is_on BAT_IS_ON[2];
 signed short BAT_DAY_OF_ON[2];
@@ -6013,7 +6015,7 @@ typedef struct
  
 #line 1031 "C:\\Keil\\ARM\\INC\\NXP\\LPC17xx\\LPC17xx.H"
 
-#line 474 "main.c"
+#line 475 "main.c"
 
 
 
@@ -6122,11 +6124,11 @@ enum_av_tbox_stat av_tbox_stat=atsOFF;
 signed short av_tbox_cnt;
 char tbatdisable_cmnd=20,tloaddisable_cmnd=22;
 short tbatdisable_cnt,tloaddisable_cnt;
-#line 588 "main.c"
+#line 589 "main.c"
 
-#line 597 "main.c"
+#line 598 "main.c"
 
-#line 610 "main.c"
+#line 611 "main.c"
 
 
 
@@ -6152,11 +6154,11 @@ short bIBAT_SMKLBR;
 
 
 
-#line 646 "main.c"
+#line 647 "main.c"
 
 
 
-#line 670 "main.c"
+#line 671 "main.c"
 
 
 
@@ -6708,7 +6710,7 @@ if(cnt_net_drv<=11)
 	     }
 	}
 
-#line 1237 "main.c"
+#line 1238 "main.c"
 else if(cnt_net_drv==12)
 	{
      if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x62,*((char*)(&UMAX)),*((char*)((&UMAX))+1),*((char*)(&DU)),*((char*)((&DU))+1),0);
@@ -6946,7 +6948,7 @@ else if((cnt_net_drv>=20)&&(cnt_net_drv<20+15))
 	}
 
 
-#line 1490 "main.c"
+#line 1491 "main.c"
 else if(cnt_net_drv==20+16)
 	{
      if(!bCAN_OFF)mcp2515_transmit(0xff,0xff,0x62,*((char*)(&UMAX)),*((char*)((&UMAX))+1),*((char*)(&DU)),*((char*)((&DU))+1),0);
@@ -7347,9 +7349,9 @@ if(avar_stat&(1<<(3+7)))
 	sub_cnt_max++;	
 	}
 
-#line 1909 "main.c"
+#line 1910 "main.c"
 
-#line 1929 "main.c"
+#line 1930 "main.c"
 
 
 if((sk_av_stat[0]==sasON)&&(NUMSK)&&(!SK_LCD_EN[0]))
@@ -9015,12 +9017,12 @@ else if(a_ind . i==iMn_220_IPS_TERMOKOMPENSAT)
 
 	
 
-	int2lcdyx(cntrl_stat_old,1,3,0);
-	int2lcdyx(ica_cntrl_hndl_cnt,0,8,0);
-	int2lcdyx(ica_cntrl_hndl,0,13,0);
-	int2lcdyx(ica_u_necc+100,0,19,0);
-	int2lcdyx(cntrl_stat,0,3,0);
-	
+
+
+
+
+
+
 
  
 	
@@ -11502,7 +11504,7 @@ else if(a_ind . i==iSet_bat_sel)
 	
 	}
 
-#line 6142 "main.c"
+#line 6143 "main.c"
 else if(a_ind . i==iSet)
 	{
      ptrs[0]=		" Стандартные        ";
@@ -12196,7 +12198,7 @@ else if(a_ind . i==iSet_TELECORE2015)
 	
 	
 	}
-#line 6951 "main.c"
+#line 6952 "main.c"
 
 else if((a_ind . i==iSet_220))
 	{
@@ -13767,7 +13769,7 @@ else if(a_ind . i==iK_220_IPS_TERMOKOMPENSAT_IB)
     if(NUMDT)
     ptrs[i++]=" Внешние датчики    ";
     ptrs[i++]=" Выход              ";
-    ptrs[i++]="                    ";
+    ptrs[i++]=" Кварц RS485   !МГЦ ";
     ptrs[i++]="                    ";
 
 	if((a_ind . s_i-a_ind . i_s)>2)a_ind . i_s=a_ind . s_i-2;
@@ -13777,8 +13779,9 @@ else if(a_ind . i==iK_220_IPS_TERMOKOMPENSAT_IB)
 			ptrs[a_ind . i_s+1],
 			ptrs[a_ind . i_s+2]);
 
-	pointer_set(1);	 
-	}   
+	pointer_set(1);
+	int2lcd(RS485_QWARZ_DIGIT,'!',0);	 
+	} 
 
 
 else if(a_ind . i==iK_220_380)
@@ -15267,7 +15270,7 @@ if(a_ind . i==iDeb)
      		    	"    !     $         ",
      		    	"    @     %         ",
      		    	"            ^       ");
-#line 10064 "main.c"
+#line 10066 "main.c"
     	}
 
 
@@ -16787,7 +16790,7 @@ else if(a_ind . i==iTst_220_IPS_TERMOKOMPENSAT)
 
  
 	}
-#line 11832 "main.c"
+#line 11834 "main.c"
 else if(a_ind . i==iTst_bps)
 	{
 	if(tst_state[5]==tstOFF)ptrs[0]=		" Выключен           ";
@@ -16963,7 +16966,7 @@ else if(a_ind . i==iKlimat_kontur)
 	
 	int2lcdyx(t_box,0,19,0);	 
 	}
-#line 12140 "main.c"
+#line 12142 "main.c"
 
 else if(a_ind . i==iNpn_set)
 	{
@@ -17308,12 +17311,12 @@ else if (a_ind . i==iIps_Curr_Avg_Set)
 }							    
 
 
-#line 12490 "main.c"
+#line 12492 "main.c"
 
 
 
 
-#line 12513 "main.c"
+#line 12515 "main.c"
 
 
 
@@ -17636,7 +17639,7 @@ else if(a_ind . i==iMn)
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV)))
 			{
-#line 12843 "main.c"
+#line 12845 "main.c"
 			}
 		else if((a_ind . s_i==(3+NUMBAT+NUMIST+NUMINV+1)))
 			{
@@ -17650,9 +17653,9 @@ else if(a_ind . i==iMn)
 		     ret(1000);
 			}
 
-#line 12863 "main.c"
+#line 12865 "main.c"
 
-#line 12871 "main.c"
+#line 12873 "main.c"
 
 		else if(a_ind . s_i==(4+NUMBAT+NUMIST+2)+(NUMAVT!=0))
 			{
@@ -19752,9 +19755,9 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==184) 
 				{
 				tree_down(0,0);
-#line 14989 "main.c"
+#line 14991 "main.c"
 				tree_up(iSet_220_IPS_TERMOKOMPENSAT,0,0,0);
-#line 15000 "main.c"
+#line 15002 "main.c"
 				ret(1000);
 				}
 			else 
@@ -19771,7 +19774,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 	     	if(tempU==873) 
 				{
 				tree_down(0,0);
-#line 15047 "main.c"
+#line 15049 "main.c"
 				if((AUSW_MAIN==22033)||(AUSW_MAIN==22018))
 					{
 					tree_up(iK_220_IPS_TERMOKOMPENSAT,0,0,0);
@@ -19785,7 +19788,7 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 
 				else
 				tree_up(iK_220,0,0,0);
-#line 15067 "main.c"
+#line 15069 "main.c"
 				show_mess(	"Включите авт-ты СЕТЬ",
  							"  БАТАРЕЯ,НАГРУЗКА  ",
  							"   Установите ток   ",
@@ -19845,9 +19848,9 @@ else if((a_ind . i==iPrl_bat_in_out)||(a_ind . i==iSet_prl)||(a_ind . i==iK_prl)
 			if(tempU==999) 
 				{
 				tree_down(0,0);
-#line 15156 "main.c"
+#line 15158 "main.c"
 				tree_up(iTst_220_IPS_TERMOKOMPENSAT,0,0,0);
-#line 15164 "main.c"
+#line 15166 "main.c"
 				tst_state[0]=tstOFF;
 				tst_state[1]=tstOFF;
 				tst_state[2]=tstOFF;
@@ -19946,7 +19949,7 @@ else if(a_ind . i==iSet_bat_sel)
 
 		}
 	}
-#line 15430 "main.c"
+#line 15432 "main.c"
 else if(a_ind . i==iPrl_bat_in_sel)
 	{
 	ret(1000);
@@ -20479,7 +20482,7 @@ else if(a_ind . i==iSet)
 	     {
 	     if(but==254)
 	          {
-#line 15974 "main.c"
+#line 15976 "main.c"
 	          ret(1000);
 	          default_temp=10;
 	          }
@@ -20501,7 +20504,7 @@ else if(a_ind . i==iSet)
 		{
 		if(but==254)
 		     {
-#line 16020 "main.c"
+#line 16022 "main.c"
 
 
 
@@ -23308,7 +23311,7 @@ else if(a_ind . i==iSet_TELECORE2015)
 			}						
 		}
      }
-#line 19359 "main.c"
+#line 19361 "main.c"
 
 else if((a_ind . i==iSet_220))
 	{
@@ -28642,17 +28645,35 @@ else if(a_ind . i==iK_220_IPS_TERMOKOMPENSAT_IB)
 	if(but==251)
 		{
 		a_ind . s_i++;
-		gran_char(&a_ind . s_i,0,3+(NUMIST!=0)+(NUMDT!=0));
+		gran_char(&a_ind . s_i,0,4+(NUMIST!=0)+(NUMDT!=0));
 		}
 	else if(but==253)
 		{
 		a_ind . s_i--;
-		gran_char(&a_ind . s_i,0,3+(NUMIST!=0)+(NUMDT!=0));
+		gran_char(&a_ind . s_i,0,4+(NUMIST!=0)+(NUMDT!=0));
 		}
 	else if(but==123)
 		{
 		a_ind . s_i=3+(NUMIST!=0)+(NUMDT!=0);
 		}
+		else if(a_ind . s_i==(4+(NUMIST!=0)+(NUMDT!=0)))
+			{
+			if((but==239)||(but==111))
+				{
+				if(RS485_QWARZ_DIGIT==10)RS485_QWARZ_DIGIT=30;
+				else if(RS485_QWARZ_DIGIT==30)RS485_QWARZ_DIGIT=40;
+				else RS485_QWARZ_DIGIT=10;
+				}
+			else if((but==247)||(but==119))
+				{
+				if(RS485_QWARZ_DIGIT==10)RS485_QWARZ_DIGIT=40;
+				else if(RS485_QWARZ_DIGIT==40)RS485_QWARZ_DIGIT=30;
+				else RS485_QWARZ_DIGIT=10;
+				}
+			gran(&RS485_QWARZ_DIGIT,10,40);
+			lc640_write_int(0x10+100+230,RS485_QWARZ_DIGIT);
+			speed=0;
+			}	  
 	else if(but==254)
 		{
 		if(a_ind . s_i==0)
@@ -28691,11 +28712,12 @@ else if(a_ind . i==iK_220_IPS_TERMOKOMPENSAT_IB)
 			ret(1000);			
 			}
  						
-          else if(a_ind . s_i==(3+(NUMIST!=0)+(NUMDT!=0)))
+        else if(a_ind . s_i==(3+(NUMIST!=0)+(NUMDT!=0)))
 			{
-	          tree_down(0,0);
-	          ret(0);
-               }	               			
+	        tree_down(0,0);
+	        ret(0);
+            }
+             			
 		}			
 	}
 
@@ -30363,7 +30385,7 @@ else if(a_ind . i==iK_inv)
 			}
 		}			
 	}
-#line 26560 "main.c"
+#line 26581 "main.c"
 
 else if(a_ind . i==iK_byps)
 	{
@@ -32794,9 +32816,9 @@ else if(a_ind . i==iTst_220_IPS_TERMOKOMPENSAT)
 			}
 		}					
 	}
-#line 29236 "main.c"
+#line 29257 "main.c"
 
-#line 29446 "main.c"
+#line 29467 "main.c"
 
 else if(a_ind . i==iTst_TELECORE)
 	{
@@ -33365,7 +33387,7 @@ else if(a_ind . i==iKlimat_kontur)
 			}
 		}
 	}
-#line 30394 "main.c"
+#line 30415 "main.c"
 else if(a_ind . i==iNpn_set)
 	{
 	ret(1000);
@@ -34190,9 +34212,9 @@ lcd_clear();
 rtc_init();
 
 a_ind . i=iMn;
-#line 31237 "main.c"
+#line 31258 "main.c"
 a_ind . i=iMn_220_IPS_TERMOKOMPENSAT;
-#line 31248 "main.c"
+#line 31269 "main.c"
 
 
 
@@ -34231,7 +34253,7 @@ adc_init();
 
 lc640_write_int(100,134);
 
-#line 31292 "main.c"
+#line 31313 "main.c"
 
 
 
@@ -34322,7 +34344,7 @@ if((AUSW_MAIN==2400)||(AUSW_MAIN==4800)||(AUSW_MAIN==6000)||(BAT_TYPE==1))
 
 
 
-#line 31400 "main.c"
+#line 31421 "main.c"
 
 
 cntrl_stat=10*PWM_START;
@@ -34526,7 +34548,7 @@ while (1)
 		ret_hndl();  
 		mess_hndl();
 
-#line 31610 "main.c"
+#line 31631 "main.c"
 		cntrl_hndl();
 
 
@@ -34625,9 +34647,9 @@ while (1)
 		
 		
 
-#line 31720 "main.c"
+#line 31741 "main.c"
 
-#line 31733 "main.c"
+#line 31754 "main.c"
 
 
 

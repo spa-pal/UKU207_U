@@ -960,6 +960,7 @@ typedef enum {apvON=0x01,apvOFF=0x00}enum_apv_on;
 extern enum_apv_on APV_ON1,APV_ON2;
 
 extern signed short APV_ON2_TIME;
+extern signed short RS485_QWARZ_DIGIT;
 
 typedef enum {bisON=0x0055,bisOFF=0x00aa}enum_bat_is_on;
 extern enum_bat_is_on BAT_IS_ON[2];
