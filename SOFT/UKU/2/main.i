@@ -24425,7 +24425,7 @@ else if((a_ind . i==iSet_220_IPS_TERMOKOMPENSAT))
 	     else if(but==111)IZMAX+=10;
 	     else if(but==247)IZMAX--;
 	     else if(but==119)IZMAX-=10;
-		gran(&IZMAX,10,1000);
+		gran(&IZMAX,10,5000);
 	     lc640_write_int(0x10+100+30,IZMAX);
 	     speed=1;
 	     }   
@@ -27232,25 +27232,25 @@ else if (a_ind . i==iSpch_set)
 		if(but==239)
 			{
 			speedChrgCurr++;
-			gran(&speedChrgCurr,0,500);
+			gran(&speedChrgCurr,0,1000);
 			lc640_write_int(0x10+100+162,speedChrgCurr);
 			}
 		else if(but==111)
 			{
 			speedChrgCurr+=2;
-			gran(&speedChrgCurr,0,500);
+			gran(&speedChrgCurr,0,1000);
 			lc640_write_int(0x10+100+162,speedChrgCurr);
 			}
 		else if(but==247)
 			{
 			speedChrgCurr--;
-			gran(&speedChrgCurr,0,500);
+			gran(&speedChrgCurr,0,1000);
 			lc640_write_int(0x10+100+162,speedChrgCurr);
 			}
 		else if(but==119)
 			{
 			speedChrgCurr-=2;
-			gran(&speedChrgCurr,0,500);
+			gran(&speedChrgCurr,0,1000);
 			lc640_write_int(0x10+100+162,speedChrgCurr);
 			}
 		speed=1;
