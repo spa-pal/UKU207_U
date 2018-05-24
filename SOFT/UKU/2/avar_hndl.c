@@ -24,6 +24,24 @@ unsigned avar_stat_new,avar_stat_offed;
 
 char /*av_net*//*,av_bat[2]*//*av_bps[12],*/av_inv[6];//,/*av_dt[4],av_sk[4]*/;
 
+// oleg_start
+//Аварии
+unsigned rki_avar1_stat;	 	//"Отображение" всех аварийных в данный момент устройств в одном месте
+unsigned rki_avar1_ind_stat; 	//"Отображение" всех не просмотренных аварийных устройств в одном месте
+unsigned rki_avar1_stat_old;
+unsigned rki_avar1_stat_new, rki_avar1_stat_offed;
+
+unsigned rki_avarI1_stat;	 	//"Отображение" всех аварийных в данный момент устройств в одном месте
+unsigned rki_avarI1_ind_stat; 	//"Отображение" всех не просмотренных аварийных устройств в одном месте
+unsigned rki_avarI1_stat_old;
+unsigned rki_avarI1_stat_new, rki_avarI1_stat_offed;
+
+unsigned rki_avarI2_stat;	 	//"Отображение" всех аварийных в данный момент устройств в одном месте
+unsigned rki_avarI2_ind_stat; 	//"Отображение" всех не просмотренных аварийных устройств в одном месте
+unsigned rki_avarI2_stat_old;
+unsigned rki_avarI2_stat_new, rki_avarI2_stat_offed;
+// oleg_end
+
 extern char bOUT_FREE2;	
 
 
@@ -114,6 +132,32 @@ if(!AV_OFF_AVT)avar_stat_offed|=0xeffffffe;
 avar_ind_stat&=avar_stat_offed; 
 
 avar_stat_old=avar_stat;
+
+//oleg_start
+
+
+
+rki_avar1_stat=(sk_alarm<<8)|(status_izm_r&0x3F);
+rki_avar1_stat_new=(rki_avar1_stat^rki_avar1_stat_old)&rki_avar1_stat;
+rki_avar1_ind_stat|=rki_avar1_stat_new;
+rki_avar1_stat_offed=~((rki_avar1_stat^rki_avar1_stat_old)&rki_avar1_stat_old);
+rki_avar1_ind_stat&=rki_avar1_stat_offed;
+rki_avar1_stat_old=rki_avar1_stat;
+
+rki_avarI1_stat=status_di1;
+rki_avarI1_stat_new=(rki_avarI1_stat^rki_avarI1_stat_old)&rki_avarI1_stat;
+rki_avarI1_ind_stat|=rki_avarI1_stat_new;
+rki_avarI1_stat_offed=~((rki_avarI1_stat^rki_avarI1_stat_old)&rki_avarI1_stat_old);
+rki_avarI1_ind_stat&=rki_avarI1_stat_offed;
+rki_avarI1_stat_old=rki_avarI1_stat;
+
+rki_avarI2_stat=status_di2;
+rki_avarI2_stat_new=(rki_avarI2_stat^rki_avarI2_stat_old)&rki_avarI2_stat;
+rki_avarI2_ind_stat|=rki_avarI2_stat_new;
+rki_avarI2_stat_offed=~((rki_avarI2_stat^rki_avarI2_stat_old)&rki_avarI2_stat_old);
+rki_avarI2_ind_stat&=rki_avarI2_stat_offed;
+rki_avarI2_stat_old=rki_avarI2_stat;
+//oleg_end
 }
 
 //-----------------------------------------------

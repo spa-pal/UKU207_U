@@ -317,6 +317,10 @@ RELE_SET_MASK[0]=lc640_read_int(EE_RELE_SET_MASK0);
 RELE_SET_MASK[1]=lc640_read_int(EE_RELE_SET_MASK1);
 RELE_SET_MASK[2]=lc640_read_int(EE_RELE_SET_MASK2);
 RELE_SET_MASK[3]=lc640_read_int(EE_RELE_SET_MASK3);
+num_rki=(char)lc640_read_int(EE_NUM_RKI);
+//if(num_rki>1) {num_rki=0; lc640_write_int(EE_NUM_RKI, num_rki);}
+num_net_in=(char)lc640_read_int(EE_NUM_NET_IN);
+
 
 for(i=0;i<64;i++)
 	{

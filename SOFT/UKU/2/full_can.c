@@ -1151,6 +1151,225 @@ char slave_num;
 //can_debug_plazma[1][2]++;
 can_rotor[1]++;
 
+// oleg_start
+if (RXBUFF[0]==0xE7) {
+	no_rki=0;
+	if(RXBUFF[1]==0) { type_rki=1;
+		r_iz_plus=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		r_iz_minus=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		r_iz_porog_pred=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==1) {
+		r_iz_porog_error=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		v_plus=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		v_minus=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	} 
+	else if(RXBUFF[1]==2) {
+		asymmetry=RXBUFF[2];
+		sk1_24=RXBUFF[3];
+		sk1_24=sk1_24<<16;
+		sk1_24=sk1_24+((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		count_Iddt=RXBUFF[6];
+		ddt_error_temp=RXBUFF[7];
+		ddt_error=(ddt_error&0x0000FFFF) | (ddt_error_temp<<16);
+	}
+	else if(RXBUFF[1]==3) {
+		Iddt_porog_pred=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Iddt_porog_error=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Iddt[0]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==4) {
+		Iddt[1]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Iddt[2]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Iddt[3]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==5) {
+		Iddt[4]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Iddt[5]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Iddt[6]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==6) {
+		Iddt[7]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Iddt[8]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Iddt[9]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==7) {
+		Iddt[10]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Iddt[11]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Iddt[12]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==8) {
+		Iddt[13]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Iddt[14]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Iddt[15]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==9) {
+		Iddt[16]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Iddt[17]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Iddt[18]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==10) {
+		Iddt[19]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Iddt[20]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Iddt[21]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==11) {
+		Iddt[22]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Iddt[23]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		ddt_error_temp=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+		ddt_error=(ddt_error&0x00FF0000) | ddt_error_temp;
+	}
+	else if(RXBUFF[1]==12) {
+		status_izm_r=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		sk_alarm=((unsigned int)RXBUFF[4]<<16)+((unsigned int)RXBUFF[5]<<8) + RXBUFF[6];
+		asymmetry_porog=RXBUFF[7];
+	}
+	else if(RXBUFF[1]==13) {
+		status_di1=((unsigned int)RXBUFF[2]<<16)+((unsigned int)RXBUFF[3]<<8) + RXBUFF[4];
+		status_di2=((unsigned int)RXBUFF[5]<<16)+((unsigned int)RXBUFF[6]<<8) + RXBUFF[7];
+		
+	}
+	else if(RXBUFF[1]==14) {
+		porog_u_in=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		u_asymmetry_porog_up=RXBUFF[4];
+		u_asymmetry_porog=RXBUFF[5];
+		u_asymmetry_porog_down=RXBUFF[6];
+	}
+	else if(RXBUFF[1]==15) {
+		Rddt[0]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Rddt[1]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[2]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==16) {
+		Rddt[3]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Rddt[4]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[5]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==17) {
+		Rddt[6]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Rddt[7]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[8]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==18) {
+		Rddt[9]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Rddt[10]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[11]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==19) {
+		Rddt[12]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Rddt[13]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[14]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==20) {
+		Rddt[15]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Rddt[16]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[17]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==21) {
+		Rddt[18]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Rddt[19]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[20]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==22) {
+		Rddt[21]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Rddt[22]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[23]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+
+
+
+	//***************************
+	else if(RXBUFF[1]==200) { type_rki=0;
+		r_iz_plus=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		r_iz_minus=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		r_iz_porog_pred=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==201) {
+		r_iz_porog_error=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		v_plus=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		v_minus=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==202) {
+		asymmetry=RXBUFF[2];
+		porog_u_in=((unsigned short)RXBUFF[3]<<8)+RXBUFF[4];
+		asymmetry_porog=RXBUFF[5];
+		status_izm_r=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==203) {
+		u_asymmetry_porog_up=RXBUFF[2];
+		u_asymmetry_porog=RXBUFF[3];
+		u_asymmetry_porog_down=RXBUFF[4];
+	}
+	
+	
+//status_izm_r=0x3f;
+//sk_alarm=0xFFffff;
+//status_di1=0xFFffff;
+//status_di2=0xFFffff;	
+}
+else if (RXBUFF[0]==0xE6) {	  // прием от сетевых входов
+	no_net_in=0;
+	if(RXBUFF[1]==0) {
+		net_in_u1_a=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		net_in_u1_b=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		net_in_u1_c=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==1) {
+		net_in_i1_a=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		net_in_i1_b=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		net_in_i1_c=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	} 
+	else if(RXBUFF[1]==2) {
+		net_in_p1_a=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		net_in_p1_b=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		net_in_p1_c=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==3) {
+	   	net_in_s1_a=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		net_in_s1_b=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		net_in_s1_c=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==4) {
+		net_in_u2_a=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		net_in_u2_b=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		net_in_u2_c=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==5) {
+		net_in_i2_a=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		net_in_i2_b=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		net_in_i2_c=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	} 
+	else if(RXBUFF[1]==6) {
+		net_in_p2_a=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		net_in_p2_b=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		net_in_p2_c=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==7) {
+	   	net_in_s2_a=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		net_in_s2_b=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		net_in_s2_c=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==8) {
+		net_in_f1=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		net_in_f2=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		priority_net_in=RXBUFF[6];
+		hysteresis_net_in=RXBUFF[7];
+	}
+	else if(RXBUFF[1]==9) {
+		u_min_net_in=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		u_max_net_in=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		i_min_net_in=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==10) {
+		t_inclusion_net_in=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		t_shutdown_net_in=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		
+	}
+
+	
+}
+// oleg_end
+
 if((RXBUFF[0]==sub_ind1)&&(RXBUFF[1]==PUTID)&&(RXBUFF[2]==0xdd)&&(RXBUFF[3]==0xdd)/*&&(sub_ind==6)*/)
 	{
 	mess_send(MESS2IND_HNDL,PARAM_U_AVT_GOOD,0,10);

@@ -3891,35 +3891,37 @@ if(NUMBDR==1)
 	for	(ii_=0;ii_<4;ii_++)
 		{
 		//АБ разряжена
-		if((RELE_SET_MASK[i]&0x01)&&
-			(load_U<(USIGN*10)))			bdr_avar_stat_temp|=(1<<i);
+		if((RELE_SET_MASK[ii_]&0x01)&&
+			(load_U<(USIGN*10)))			bdr_avar_stat_temp|=(1<<ii_);
 		//Ускоренный заряд
-		if((RELE_SET_MASK[i]&0x02)&&
-			(sp_ch_stat==scsWRK))			bdr_avar_stat_temp|=(1<<i);
+		if((RELE_SET_MASK[ii_]&0x02)&&
+			(sp_ch_stat==scsWRK))			bdr_avar_stat_temp|=(1<<ii_);
 		//Выравнивающий заряд
-		if((RELE_SET_MASK[i]&0x04)&&
-			(hv_vz_stat==scsWRK))			bdr_avar_stat_temp|=(1<<i);
+		if((RELE_SET_MASK[ii_]&0x04)&&
+			(hv_vz_stat==scsWRK))			bdr_avar_stat_temp|=(1<<ii_);
 		//Общая авария ЗВУ
-		if((RELE_SET_MASK[i]&0x08)&&
-			(avar_stat))					bdr_avar_stat_temp|=(1<<i);
+		if((RELE_SET_MASK[ii_]&0x08)&&
+			(avar_stat))					bdr_avar_stat_temp|=(1<<ii_);
 		//Uвых завышено
-		if((RELE_SET_MASK[i]&0x10)&&
-			(uout_av==1))					bdr_avar_stat_temp|=(1<<i);
+		if((RELE_SET_MASK[ii_]&0x10)&&
+			(uout_av==1))					bdr_avar_stat_temp|=(1<<ii_);
 		//Uвых занижено
-		if((RELE_SET_MASK[i]&0x20)&&
-			(uout_av==2))					bdr_avar_stat_temp|=(1<<i);
-		if((RELE_SET_MASK[i]&0x40)&&
+		if((RELE_SET_MASK[ii_]&0x20)&&
+			(uout_av==2))					bdr_avar_stat_temp|=(1<<ii_);
+		if((RELE_SET_MASK[ii_]&0x40)&&
 			(
 			((bps[0]._av&(1<<4))&&(NUMIST>=1))||
 			((bps[1]._av&(1<<4))&&(NUMIST>=2))||
 			((bps[2]._av&(1<<4))&&(NUMIST>=3))
-			))bdr_avar_stat_temp|=(1<<i);
-		if((RELE_SET_MASK[i]&0x80)&&
+			))bdr_avar_stat_temp|=(1<<ii_);
+		if((RELE_SET_MASK[ii_]&0x80)&&
 			(
 			((bps[0]._av&(0x0f))&&(NUMIST>=1))||
 			((bps[1]._av&(0x0f))&&(NUMIST>=2))||
 			((bps[2]._av&(0x0f))&&(NUMIST>=3))
-			))bdr_avar_stat_temp|=(1<<i);
+			))bdr_avar_stat_temp|=(1<<ii_);
+
+		if(!(RELE_SET_MASK[ii_]&(1<<15))) bdr_avar_stat_temp^=(1<<ii_); 
 		}
 	bdr_avar_stat=bdr_avar_stat_temp;
 	}
