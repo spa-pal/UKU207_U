@@ -7083,9 +7083,12 @@ else if((ind==iSet_220_V2))
 	ptrs[31]=      " Серийный N        w";
  /*    ptrs[32]=      " Контроль ср.точки  ";
      ptrs[33]=      " батареи         Q% ";*/
-     ptrs[32]=		" Выход              ";
-     ptrs[33]=		" Калибровки         "; 
-     ptrs[34]=		"                    ";        
+	ptrs[32]=		" MODBUS ADRESS     <";
+	ptrs[33]=		" MODBUS BAUDRATE    ";
+	ptrs[34]=		"                  >0";
+     ptrs[35]=		" Выход              ";
+     ptrs[36]=		" Калибровки         "; 
+     ptrs[37]=		"                    ";        
 	
 	if((sub_ind-index_set)>2)index_set=sub_ind-2;
 	else if(sub_ind<index_set)index_set=sub_ind;
@@ -7133,7 +7136,9 @@ else if((ind==iSet_220_V2))
           int2lcd(UBM_AV,'Q',0);
           } 
      else sub_bgnd("ВЫКЛ.",'Q',-2);
-
+		
+	int2lcd(MODBUS_ADRESS,'<',0);
+	int2lcd(MODBUS_BAUDRATE,'>',0);
 
 	long2lcd_mmm(AUSW_MAIN_NUMBER,'w',0);
 	}
@@ -8465,6 +8470,7 @@ else if(ind==iK_220)
      if(NUMDT)
      ptrs[i++]=" Внешние датчики    ";
      ptrs[i++]=" Выход              ";
+	 ptrs[i++]=" Кварц RS485   !МГЦ ";
      ptrs[i++]="                    ";
      ptrs[i++]="                    ";
 
@@ -8475,7 +8481,8 @@ else if(ind==iK_220)
 			ptrs[index_set+1],
 			ptrs[index_set+2]);
 
-	pointer_set(1);	 
+	pointer_set(1);	
+	int2lcd(RS485_QWARZ_DIGIT,'!',0); 
 	}    	
 
 else if(ind==iK_220_IPS_TERMOKOMPENSAT)
@@ -19806,29 +19813,30 @@ else if((ind==iSet_220_V2))
                index_set=30;
                }
 		if(sub_ind==32)index_set=31;
-        /*  if(sub_ind==33)
+		if(sub_ind==33)index_set=32;
+        if(sub_ind==34)
                {
-               sub_ind=34;
+               sub_ind=35;
                
-               }  */
+               }  
 		
-		gran_char(&sub_ind,0,33);
+		gran_char(&sub_ind,0,36);
 		}
 	else if(but==butU)
 		{
 		sub_ind--;
 		if(sub_ind==7)sub_ind=6;
 		if(sub_ind==11)sub_ind=8;
-         /* if(sub_ind==33)
+        if(sub_ind==34)
                {
-               sub_ind=32;
+               sub_ind=33;
 		     
-               } */
-		gran_char(&sub_ind,0,33);
+               } 
+		gran_char(&sub_ind,0,36);
 		}
 	else if(but==butD_)
 		{
-		sub_ind=32;
+		sub_ind=35;
 		}
 		
 	else if(sub_ind==0)
@@ -19947,7 +19955,7 @@ else if((ind==iSet_220_V2))
 	     else if(but==butR_)UB0+=10;
 	     else if(but==butL)UB0--;
 	     else if(but==butL_)UB0-=10;
-		gran(&UB0,1500,3000);
+		gran(&UB0,800,3000);
           lc640_write_int(EE_UB0,UB0);
 	     speed=1;
 	     }
@@ -19958,7 +19966,7 @@ else if((ind==iSet_220_V2))
 	     else if(but==butR_)UB20+=10;
 	     else if(but==butL)UB20--;
 	     else if(but==butL_)UB20-=10;
-		gran(&UB20,1500,3000);
+		gran(&UB20,800,3000);
 	     lc640_write_int(EE_UB20,UB20);
 	     speed=1;
 	     }	
@@ -19969,7 +19977,7 @@ else if((ind==iSet_220_V2))
 	     else if(but==butR_)USIGN+=10;
 	     else if(but==butL)USIGN--;
 	     else if(but==butL_)USIGN-=10;
-		gran(&USIGN,100,300);
+		gran(&USIGN,80,300);
 	     lc640_write_int(EE_USIGN,USIGN);
 	     speed=1;
 	     }	
@@ -19990,7 +19998,7 @@ else if((ind==iSet_220_V2))
 	     else if(but==butR_)U0B+=10;
 	     else if(but==butL)U0B--;
 	     else if(but==butL_)U0B-=10;
-		gran(&U0B,1500,3000);
+		gran(&U0B,800,3000);
 	     lc640_write_int(EE_U0B,U0B);
 	     speed=1;
 	     }	
@@ -20132,18 +20140,58 @@ else if((ind==iSet_220_V2))
 	     speed=1;
 	     }                    		
 
-/*	else if(sub_ind==32)
+     else if(sub_ind==32)
 	     {
-	     if(but==butR)UBM_AV++;
-	     else if(but==butR_)UBM_AV++;
-	     else if(but==butL)UBM_AV--;
-	     else if(but==butL_)UBM_AV--;
-	     gran(&UBM_AV,0,50);
-	     lc640_write_int(EE_UBM_AV,UBM_AV);
-	     speed=1;
-	     }  */
+	     if((but==butR)||(but==butR_))
+	     	{
+	     	MODBUS_ADRESS++;
+	     	gran(&MODBUS_ADRESS,1,100);
+	     	lc640_write_int(EE_MODBUS_ADRESS,MODBUS_ADRESS);
+			speed=1;
+	     	}
+	     
+	     else if((but==butL)||(but==butL_))
+	     	{
+	     	MODBUS_ADRESS--;
+	     	gran(&MODBUS_ADRESS,1,100);
+	     	lc640_write_int(EE_MODBUS_ADRESS,MODBUS_ADRESS);
+			speed=1;
+	     	}
+          }
+     else if(sub_ind==33)
+	     {
+	     if((but==butR)||(but==butR_))
+	     	{
+			if(MODBUS_BAUDRATE==120)MODBUS_BAUDRATE=240;
+			else if(MODBUS_BAUDRATE==240)MODBUS_BAUDRATE=480;
+	     	else if(MODBUS_BAUDRATE==480)MODBUS_BAUDRATE=960;
+			else if(MODBUS_BAUDRATE==960)MODBUS_BAUDRATE=1920;
+			else if(MODBUS_BAUDRATE==1920)MODBUS_BAUDRATE=3840;
+			else if(MODBUS_BAUDRATE==3840)MODBUS_BAUDRATE=5760;
+			//else if(MODBUS_BAUDRATE==3840)MODBUS_BAUDRATE=5760;
+			else if(MODBUS_BAUDRATE==5760)MODBUS_BAUDRATE=11520;
+			else MODBUS_BAUDRATE=120;
+	     	gran(&MODBUS_BAUDRATE,120,11520);
+	     	lc640_write_int(EE_MODBUS_BAUDRATE,MODBUS_BAUDRATE);
+	     	}
+	     
+	     else if((but==butL)||(but==butL_))
+	     	{
+			if(MODBUS_BAUDRATE==120)MODBUS_BAUDRATE=11520;
+			else if(MODBUS_BAUDRATE==240)MODBUS_BAUDRATE=120;
+	     	else if(MODBUS_BAUDRATE==480)MODBUS_BAUDRATE=240;
+			else if(MODBUS_BAUDRATE==960)MODBUS_BAUDRATE=480;
+			else if(MODBUS_BAUDRATE==1920)MODBUS_BAUDRATE=960;
+			else if(MODBUS_BAUDRATE==3840)MODBUS_BAUDRATE=1920;
+			//else if(MODBUS_BAUDRATE==3840)MODBUS_BAUDRATE=3840;
+			else if(MODBUS_BAUDRATE==5760)MODBUS_BAUDRATE=3840;
+			else MODBUS_BAUDRATE=11520;
+	     	gran(&MODBUS_BAUDRATE,120,11520);
+	     	lc640_write_int(EE_MODBUS_BAUDRATE,MODBUS_BAUDRATE);
+	     	}
+          }
  
-     else if((sub_ind==32) || (sub_ind==3))
+     else if((sub_ind==35) || (sub_ind==3))
 		{
 		if(but==butE)
 		     {
@@ -20152,7 +20200,7 @@ else if((ind==iSet_220_V2))
 		     }
 		}
 				
-	else if(sub_ind==33)
+	else if(sub_ind==36)
 		{
 		if(but==butE)
 		     {		
@@ -21381,21 +21429,21 @@ else if (ind==iDef_220)
 
 else if (ind==iDef_220_V2)
 	{
-	simax=3;
+	//simax=3;
 	ret(1000);
 	if(but==butD)
 		{
 		sub_ind++;
-		gran_char(&sub_ind,0,simax);
+		gran_char(&sub_ind,0,3/*simax*/);
 		}
 	else if(but==butU)
 		{
 		sub_ind--;
-		gran_char(&sub_ind,0,simax);
+		gran_char(&sub_ind,0,3/*simax*/);
 		}
 	else if(but==butD_)
 		{
-		sub_ind=simax;
+		sub_ind=3/*simax*/;
 		}
 	
 	else if(but==butE)
@@ -21407,6 +21455,8 @@ else if (ind==iDef_220_V2)
 			lc640_write_int(EE_U_AVT,2450);
 			lc640_write_int(EE_IZMAX,20);
 			lc640_write_int(EE_AUSW_MAIN,22010);
+			default_temp=sub_ind;
+			//tree_down(0,0);
 			}
 		else if(sub_ind==1)
 			{
@@ -21415,6 +21465,8 @@ else if (ind==iDef_220_V2)
 			lc640_write_int(EE_U_AVT,2315);
 			lc640_write_int(EE_IZMAX,20);
 			lc640_write_int(EE_AUSW_MAIN,22010);
+			default_temp=sub_ind;
+			//tree_down(0,0);
 			}
 		else if(sub_ind==2)
 			{
@@ -21423,13 +21475,16 @@ else if (ind==iDef_220_V2)
 			lc640_write_int(EE_U_AVT,2450);
 			lc640_write_int(EE_IZMAX,20);
 			lc640_write_int(EE_AUSW_MAIN,22033);
+			default_temp=sub_ind;
+			//tree_down(0,0);
 			}
 
-		else if(sub_ind==SIMAXIDEF)
+		else if(sub_ind==3/*SIMAXIDEF*/)
 			{
+			//default_temp=sub_ind;
 			tree_down(0,0);
 			}
-		default_temp=sub_ind;	
+			
 		}
      }
 
@@ -24559,17 +24614,35 @@ else if(ind==iK_220)
 	if(but==butD)
 		{
 		sub_ind++;
-		gran_char(&sub_ind,0,2+(NUMBAT!=0)+(NUMIST!=0)+(NUMINV!=0)+(NUMDT!=0));
+		gran_char(&sub_ind,0,3+(NUMBAT!=0)+(NUMIST!=0)+(NUMINV!=0)+(NUMDT!=0));
 		}
 	else if(but==butU)
 		{
 		sub_ind--;
-		gran_char(&sub_ind,0,2+(NUMBAT!=0)+(NUMIST!=0)+(NUMINV!=0)+(NUMDT!=0));
+		gran_char(&sub_ind,0,3+(NUMBAT!=0)+(NUMIST!=0)+(NUMINV!=0)+(NUMDT!=0));
 		}
 	else if(but==butD_)
 		{
 		sub_ind=2+(NUMBAT!=0)+(NUMIST!=0)+(NUMINV!=0)+(NUMDT!=0);
-		}				
+		}
+	else if(sub_ind==(3+(NUMBAT!=0)+(NUMIST!=0)+(NUMINV!=0)+(NUMDT!=0)))
+		{
+		if((but==butR)||(but==butR_))
+			{
+			if(RS485_QWARZ_DIGIT==10)RS485_QWARZ_DIGIT=30;
+			else if(RS485_QWARZ_DIGIT==30)RS485_QWARZ_DIGIT=40;
+			else RS485_QWARZ_DIGIT=10;
+			}
+		else if((but==butL)||(but==butL_))
+			{
+			if(RS485_QWARZ_DIGIT==10)RS485_QWARZ_DIGIT=40;
+			else if(RS485_QWARZ_DIGIT==40)RS485_QWARZ_DIGIT=30;
+			else RS485_QWARZ_DIGIT=10;
+			}
+		gran(&RS485_QWARZ_DIGIT,10,40);
+		lc640_write_int(EE_RS485_QWARZ_DIGIT,RS485_QWARZ_DIGIT);
+		speed=0;
+		}	  						
 	else if(but==butE)
 		{
 		if(sub_ind==0)
