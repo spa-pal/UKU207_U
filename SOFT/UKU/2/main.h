@@ -773,8 +773,7 @@ extern char cnt_of_slave;
 typedef enum {
 	#ifdef UKU_220_IPS_TERMOKOMPENSAT
 	iMn_220_IPS_TERMOKOMPENSAT,
-	iRKI, iSetRKI, iK_RKI,iK_MOST,//oleg_start
-	iNET_IN, iSetNetIn, iK_Net_In,//oleg_start
+
 	#endif
 	#ifdef UKU_220
 	iMn_220,
@@ -818,7 +817,9 @@ typedef enum {
 	#endif
 	#ifndef UKU_TELECORE2017
 	iMn_TELECORE2017,
-	#endif 
+	#endif
+	iRKI, iSetRKI, iK_RKI,iK_MOST,//oleg_start
+	iNET_IN, iSetNetIn, iK_Net_In,//oleg_start 
 	iSrv_sl,iNet,iNet3,iNetEM,
 	iSet,iSet_3U,iSet_RSTKM,iSet_GLONASS,iSet_KONTUR,iSet_6U,iSet_220,iSet_220_IPS_TERMOKOMPENSAT,iSet_220_V2,iInv_set_sel,
 	iBat, iBat_simple, iBat_li, iBat_SacredSun, iBat_universe, iInv_set, iSet_TELECORE2015, iSet_TELECORE2017,
