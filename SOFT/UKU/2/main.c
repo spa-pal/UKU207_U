@@ -22210,7 +22210,7 @@ else if((ind==iSet_220))
 			}						
 		}
      }
-	 else if((ind==iSet_220_V2))
+	else if((ind==iSet_220_V2))
 	{
 	ret(1000);
 	if(but==butD)
@@ -22225,29 +22225,30 @@ else if((ind==iSet_220))
                index_set=30;
                }
 		if(sub_ind==32)index_set=31;
-        /*  if(sub_ind==33)
+		if(sub_ind==33)index_set=32;
+        if(sub_ind==34)
                {
-               sub_ind=34;
+               sub_ind=35;
                
-               }  */
+               }  
 		
-		gran_char(&sub_ind,0,33);
+		gran_char(&sub_ind,0,36);
 		}
 	else if(but==butU)
 		{
 		sub_ind--;
 		if(sub_ind==7)sub_ind=6;
 		if(sub_ind==11)sub_ind=8;
-         /* if(sub_ind==33)
+        if(sub_ind==34)
                {
-               sub_ind=32;
+               sub_ind=33;
 		     
-               } */
-		gran_char(&sub_ind,0,33);
+               } 
+		gran_char(&sub_ind,0,36);
 		}
 	else if(but==butD_)
 		{
-		sub_ind=32;
+		sub_ind=35;
 		}
 		
 	else if(sub_ind==0)
@@ -22551,18 +22552,58 @@ else if((ind==iSet_220))
 	     speed=1;
 	     }                    		
 
-/*	else if(sub_ind==32)
+     else if(sub_ind==32)
 	     {
-	     if(but==butR)UBM_AV++;
-	     else if(but==butR_)UBM_AV++;
-	     else if(but==butL)UBM_AV--;
-	     else if(but==butL_)UBM_AV--;
-	     gran(&UBM_AV,0,50);
-	     lc640_write_int(EE_UBM_AV,UBM_AV);
-	     speed=1;
-	     }  */
+	     if((but==butR)||(but==butR_))
+	     	{
+	     	MODBUS_ADRESS++;
+	     	gran(&MODBUS_ADRESS,1,100);
+	     	lc640_write_int(EE_MODBUS_ADRESS,MODBUS_ADRESS);
+			speed=1;
+	     	}
+	     
+	     else if((but==butL)||(but==butL_))
+	     	{
+	     	MODBUS_ADRESS--;
+	     	gran(&MODBUS_ADRESS,1,100);
+	     	lc640_write_int(EE_MODBUS_ADRESS,MODBUS_ADRESS);
+			speed=1;
+	     	}
+          }
+     else if(sub_ind==33)
+	     {
+	     if((but==butR)||(but==butR_))
+	     	{
+			if(MODBUS_BAUDRATE==120)MODBUS_BAUDRATE=240;
+			else if(MODBUS_BAUDRATE==240)MODBUS_BAUDRATE=480;
+	     	else if(MODBUS_BAUDRATE==480)MODBUS_BAUDRATE=960;
+			else if(MODBUS_BAUDRATE==960)MODBUS_BAUDRATE=1920;
+			else if(MODBUS_BAUDRATE==1920)MODBUS_BAUDRATE=3840;
+			else if(MODBUS_BAUDRATE==3840)MODBUS_BAUDRATE=5760;
+			//else if(MODBUS_BAUDRATE==3840)MODBUS_BAUDRATE=5760;
+			else if(MODBUS_BAUDRATE==5760)MODBUS_BAUDRATE=11520;
+			else MODBUS_BAUDRATE=120;
+	     	gran(&MODBUS_BAUDRATE,120,11520);
+	     	lc640_write_int(EE_MODBUS_BAUDRATE,MODBUS_BAUDRATE);
+	     	}
+	     
+	     else if((but==butL)||(but==butL_))
+	     	{
+			if(MODBUS_BAUDRATE==120)MODBUS_BAUDRATE=11520;
+			else if(MODBUS_BAUDRATE==240)MODBUS_BAUDRATE=120;
+	     	else if(MODBUS_BAUDRATE==480)MODBUS_BAUDRATE=240;
+			else if(MODBUS_BAUDRATE==960)MODBUS_BAUDRATE=480;
+			else if(MODBUS_BAUDRATE==1920)MODBUS_BAUDRATE=960;
+			else if(MODBUS_BAUDRATE==3840)MODBUS_BAUDRATE=1920;
+			//else if(MODBUS_BAUDRATE==3840)MODBUS_BAUDRATE=3840;
+			else if(MODBUS_BAUDRATE==5760)MODBUS_BAUDRATE=3840;
+			else MODBUS_BAUDRATE=11520;
+	     	gran(&MODBUS_BAUDRATE,120,11520);
+	     	lc640_write_int(EE_MODBUS_BAUDRATE,MODBUS_BAUDRATE);
+	     	}
+          }
  
-     else if((sub_ind==32) || (sub_ind==3))
+     else if((sub_ind==35) || (sub_ind==3))
 		{
 		if(but==butE)
 		     {
@@ -22571,7 +22612,7 @@ else if((ind==iSet_220))
 		     }
 		}
 				
-	else if(sub_ind==33)
+	else if(sub_ind==36)
 		{
 		if(but==butE)
 		     {		
