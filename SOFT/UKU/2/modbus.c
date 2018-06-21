@@ -31,6 +31,8 @@ short modbus_plazma;				//Отладка
 short modbus_plazma1;				//Отладка
 short modbus_plazma2;				//Отладка
 short modbus_plazma3;				//Отладка
+short modbus_plazma_p;				//Отладка
+short modbus_plazma_pp;				//Отладка
 
 unsigned short modbus_rx_arg0;		//встроенный в посылку первый аргумент
 unsigned short modbus_rx_arg1;		//встроенный в посылку второй аргумент
