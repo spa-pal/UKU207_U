@@ -41,6 +41,7 @@
 #include "mcp2515.h"
 //#include "sc16is7xx.h"
 #include "modbus_tcp.h"
+#include "curr_version.h"
 
 extern U8 own_hw_adr[];
 extern U8  snmp_Community[];
@@ -4098,6 +4099,8 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 	int2lcdyx(hv_vz_stat,0,5,0);	
 	int2lcdyx(plazma_pavlik,0,19,0);		
 	int2lcdyx(cnt_net_drv,0,15,0);  */
+
+	int2lcdyx(modbus_tcp_plazma[0],0,3,0);
 	}
 
 else if(ind==iMn_TELECORE2015)
@@ -7764,7 +7767,8 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	//int2lcdyx(sub_ind,0,3,0);
 	//int2lcdyx(index_set,0,1,0);PWM_START
 	int2lcd(PWM_START,'(',0);
-	int2lcd(TVENTMAX*10,'^',0);
+	if(TVENTMAX==0)sub_bgnd("выкл.",'^',-3);
+	else int2lcd(TVENTMAX*10,'^',0);
 	if(KB_ALGORITM==1)	sub_bgnd("1-о ступ.",')',0);
 	else if(KB_ALGORITM==2)	sub_bgnd("2-х ступ.",')',0);
 	else 				sub_bgnd("3-х ступ.",')',0);
@@ -14424,6 +14428,18 @@ else if(ind==iRele_set_)
 	//int2lcdyx(sub_ind1,0,2,0);  
 	}
 
+else if(ind==iFWabout)
+	{
+	bgnd_par(	" Версия             ",
+				" Сборка  0000.00.00 ",
+				"                    ",
+				"                    ");
+	int2lcdyx(BUILD_YEAR,1,12,0);
+	int2lcdyx(BUILD_MONTH,1,15,0);
+	int2lcdyx(BUILD_DAY,1,18,0);
+	
+	sprintf(&lcd_buffer[9],"%d.%d.%d",HARDVARE_VERSION,SOFT_VERSION,BUILD);
+	}
 
 if(show_mess_cnt)
 	{
@@ -15903,7 +15919,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 		{
 		sub_ind++;
 		//oleg_start  было без (num_rki!=0)
-		gran_char(&sub_ind,0,9+NUMIST/*+NUMINV*/+(NUMEXT!=0)+(num_rki!=0)+(num_net_in!=0));
+		gran_char(&sub_ind,0,9+NUMIST/*+NUMINV*/+(NUMEXT!=0)+(num_rki!=0)+(num_net_in!=0)+1);
 		//oleg_end  
 		}
 		
@@ -15911,7 +15927,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 		{
 		sub_ind--;
 		//oleg_start  было без (num_rki!=0)
-		gran_char(&sub_ind,0,9+NUMIST/*+NUMINV*/+(NUMEXT!=0)+(num_rki!=0)+(num_net_in!=0));
+		gran_char(&sub_ind,0,9+NUMIST/*+NUMINV*/+(NUMEXT!=0)+(num_rki!=0)+(num_net_in!=0)+1);
 		//oleg_end 
 		}		
 
@@ -16080,6 +16096,13 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 			if(but==butE)
 		     	{
 		     	tree_up(iBps_list,0,0,0);
+		     	}
+			}
+		else if(sub_ind==(9+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0))+1)
+			{
+			if(but==butE)
+		     	{
+		     	tree_up(iFWabout,0,0,0);
 		     	}
 			}
 		}
@@ -23188,8 +23211,9 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	    else if(but==butR_)	TVENTMAX=((TVENTMAX/100)+1)*100;
 	    else if(but==butL)	TVENTMAX=((TVENTMAX/100)-1)*100;
 	    else if(but==butL_)	TVENTMAX=((TVENTMAX/100)-1)*100;
-		else if(but==butE_)	TVENTMAX=1500;
+		//else if(but==butE_)	TVENTMAX=1500;
 		gran(&TVENTMAX,1,6000);
+		if(but==butE_)	TVENTMAX=0;
 		lc640_write_int(EE_TVENTMAX,TVENTMAX);
 	    speed=1;
 	    }
@@ -34112,7 +34136,15 @@ else if(ind==iRele_set_)
 	if(RELE_SET_MASK[sub_ind1]!=lc640_read_int(ADR_EE_RELE_SET_MASK[sub_ind1]))lc640_write_int(ADR_EE_RELE_SET_MASK[sub_ind1],RELE_SET_MASK[sub_ind1]);
 
 	} 
-
+else if(ind==iFWabout)
+	{
+	ret(1000);
+	if(but==butE)
+	     {
+	     tree_down(0,0);
+	     ret(0);
+	     }
+	}
 #endif		
 but_an_end:
 n_but=0;

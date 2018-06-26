@@ -7,6 +7,7 @@
 #include "25lc640.h"
 
 char plazma_modbus_tcp[20];
+char modbus_tcp_plazma[20];
 
 char modbus_tcp_func;
 char modbus_tcp_unit;
@@ -28,6 +29,8 @@ par = par;
 if (soc != socket_tcp) {
 	return (0);
 }
+
+modbus_tcp_plazma[0]++;
 
 switch (evt) 
 	{

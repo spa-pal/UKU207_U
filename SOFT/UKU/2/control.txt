@@ -13785,7 +13785,7 @@
                   averageChargeStartStop PROC
 ;;;7904   //-----------------------------------------------
 ;;;7905   void averageChargeStartStop(void)
-004588  48ff              LDR      r0,|L1.18824|
+004588  48fa              LDR      r0,|L1.18804|
 ;;;7906   {
 ;;;7907   if(hv_vz_stat!=hvsOFF)
 00458a  7801              LDRB     r1,[r0,#0]  ; hv_vz_stat
@@ -13816,7 +13816,7 @@
 ;;;7920   {
 ;;;7921   
 ;;;7922   numOfForvardBps_old=numOfForvardBps;
-0045a2  4cfa              LDR      r4,|L1.18828|
+0045a2  4cf5              LDR      r4,|L1.18808|
 0045a4  7e60              LDRB     r0,[r4,#0x19]  ; numOfForvardBps
 0045a6  76a0              STRB     r0,[r4,#0x1a]
 ;;;7923   
@@ -13827,7 +13827,7 @@
 ;;;7926   //FORVARDBPSCHHOUR=10;
 ;;;7927   
 ;;;7928   if((FORVARDBPSCHHOUR<=0)||(FORVARDBPSCHHOUR>500))
-0045ae  4ef8              LDR      r6,|L1.18832|
+0045ae  4ef3              LDR      r6,|L1.18812|
 0045b0  f9b60000          LDRSH    r0,[r6,#0]  ; FORVARDBPSCHHOUR
 0045b4  2800              CMP      r0,#0
 0045b6  dd02              BLE      |L1.17854|
@@ -13876,7 +13876,7 @@
 0045de  f1000001          ADD      r0,r0,#1              ;7941
 0045e2  b200              SXTH     r0,r0                 ;7941
 0045e4  f8a40066          STRH     r0,[r4,#0x66]         ;7941
-0045e8  4aea              LDR      r2,|L1.18836|
+0045e8  4ae5              LDR      r2,|L1.18816|
 0045ea  f9b61000          LDRSH    r1,[r6,#0]            ;7942  ; FORVARDBPSCHHOUR
 0045ee  f9b22000          LDRSH    r2,[r2,#0]            ;7942  ; NUMIST
 0045f2  fb01f102          MUL      r1,r1,r2              ;7942
@@ -13906,7 +13906,7 @@
 00461c  f44f7094          MOV      r0,#0x128
 004620  f7fffffe          BL       lc640_write_int
 ;;;7959   numOfForvardBps_minCnt=58;
-004624  49d9              LDR      r1,|L1.18828|
+004624  49d4              LDR      r1,|L1.18808|
 004626  f04f003a          MOV      r0,#0x3a
 00462a  76c8              STRB     r0,[r1,#0x1b]
 ;;;7960   }
@@ -13920,26 +13920,26 @@
 00462e  b570              PUSH     {r4-r6,lr}
 ;;;7964   { 
 ;;;7965   if((load_U>U_OUT_KONTR_MAX)||(load_U<U_OUT_KONTR_MIN))
-004630  4cd9              LDR      r4,|L1.18840|
-004632  48da              LDR      r0,|L1.18844|
+004630  4cd4              LDR      r4,|L1.18820|
+004632  48d5              LDR      r0,|L1.18824|
 ;;;7966   	{
 ;;;7967   	outVoltContrHndlCnt_=0;
 ;;;7968   	if(outVoltContrHndlCnt<U_OUT_KONTR_DELAY)
-004634  4ada              LDR      r2,|L1.18848|
+004634  4ad5              LDR      r2,|L1.18828|
 004636  f9b41000          LDRSH    r1,[r4,#0]            ;7965  ; load_U
 00463a  f9b06000          LDRSH    r6,[r0,#0]            ;7965  ; U_OUT_KONTR_MAX
 00463e  2500              MOVS     r5,#0                 ;7967
 004640  f9b20000          LDRSH    r0,[r2,#0]
-004644  4bd7              LDR      r3,|L1.18852|
+004644  4bd2              LDR      r3,|L1.18832|
 004646  42b1              CMP      r1,r6                 ;7965
 004648  dc04              BGT      |L1.18004|
-00464a  4ed7              LDR      r6,|L1.18856|
+00464a  4ed2              LDR      r6,|L1.18836|
 00464c  f9b66000          LDRSH    r6,[r6,#0]            ;7965  ; U_OUT_KONTR_MIN
 004650  42b1              CMP      r1,r6                 ;7965
 004652  da0f              BGE      |L1.18036|
                   |L1.18004|
 004654  801d              STRH     r5,[r3,#0]            ;7967
-004656  49d5              LDR      r1,|L1.18860|
+004656  49d0              LDR      r1,|L1.18840|
 004658  f9b11000          LDRSH    r1,[r1,#0]  ; U_OUT_KONTR_DELAY
 00465c  4288              CMP      r0,r1
 00465e  da1b              BGE      |L1.18072|
@@ -13981,7 +13981,7 @@
 ;;;7986   				outVoltContrHndlCnt=0;
 00468a  8015              STRH     r5,[r2,#0]
 ;;;7987   				if(uout_av)avar_uout_hndl(0);
-00468c  48c8              LDR      r0,|L1.18864|
+00468c  48c3              LDR      r0,|L1.18844|
 00468e  7800              LDRB     r0,[r0,#0]  ; uout_av
 004690  b110              CBZ      r0,|L1.18072|
 004692  2000              MOVS     r0,#0
@@ -13993,7 +13993,7 @@
 ;;;7991   	}
 ;;;7992   
 ;;;7993   if (load_U<(USIGN*10)) 
-004698  48c6              LDR      r0,|L1.18868|
+004698  48c1              LDR      r0,|L1.18848|
 00469a  f9b41000          LDRSH    r1,[r4,#0]  ; load_U
 00469e  f9b00000          LDRSH    r0,[r0,#0]  ; USIGN
 0046a2  eb000080          ADD      r0,r0,r0,LSL #2
@@ -14001,7 +14001,7 @@
 0046aa  da0b              BGE      |L1.18116|
 ;;;7994   	{
 ;;;7995   	if(!bSILENT)
-0046ac  48c2              LDR      r0,|L1.18872|
+0046ac  48bd              LDR      r0,|L1.18852|
 0046ae  6800              LDR      r0,[r0,#0]  ; bSILENT
 0046b0  2800              CMP      r0,#0
 0046b2  d107              BNE      |L1.18116|
@@ -14028,167 +14028,169 @@
                   vent_resurs_hndl PROC
 ;;;8006   //-----------------------------------------------
 ;;;8007   void vent_resurs_hndl(void)
-0046c6  e92d41f0          PUSH     {r4-r8,lr}
+0046c6  e92d47f0          PUSH     {r4-r10,lr}
 ;;;8008   {
 ;;;8009   char i;
 ;;;8010   char crc_in,crc_eval;
 ;;;8011   
 ;;;8012   for(i=0;i<NUMIST;i++)
 0046ca  f04f0200          MOV      r2,#0
-0046ce  48b1              LDR      r0,|L1.18836|
 ;;;8013   	{
 ;;;8014   	if((bps[i]._buff[7]&0xc0)==0x00)
-0046d0  4fba              LDR      r7,|L1.18876|
-0046d2  f9b06000          LDRSH    r6,[r0,#0]            ;8012
-0046d6  e06e              B        |L1.18358|
-                  |L1.18136|
-0046d8  ebc200c2          RSB      r0,r2,r2,LSL #3
-0046dc  eb001002          ADD      r0,r0,r2,LSL #4
-0046e0  eb070080          ADD      r0,r7,r0,LSL #2
-0046e4  7b41              LDRB     r1,[r0,#0xd]
-0046e6  098b              LSRS     r3,r1,#6
-0046e8  d006              BEQ      |L1.18168|
 ;;;8015   		{
 ;;;8016   		bps[i]._vent_resurs_temp[0]=bps[i]._buff[7];
 ;;;8017   		}
 ;;;8018   	else if((bps[i]._buff[7]&0xc0)==0x40)
-0046ea  2301              MOVS     r3,#1
-0046ec  ebb31f91          CMP      r3,r1,LSR #6
-0046f0  d105              BNE      |L1.18174|
 ;;;8019   		{
 ;;;8020   		bps[i]._vent_resurs_temp[1]=bps[i]._buff[7];
-0046f2  f8801055          STRB     r1,[r0,#0x55]
-0046f6  e00f              B        |L1.18200|
-                  |L1.18168|
-0046f8  f8801054          STRB     r1,[r0,#0x54]         ;8016
-0046fc  e00c              B        |L1.18200|
-                  |L1.18174|
 ;;;8021   		}
 ;;;8022   	else if((bps[i]._buff[7]&0xc0)==0x80)
-0046fe  2302              MOVS     r3,#2
-004700  ebb31f91          CMP      r3,r1,LSR #6
-004704  d102              BNE      |L1.18188|
 ;;;8023   		{
 ;;;8024   		bps[i]._vent_resurs_temp[2]=bps[i]._buff[7];
-004706  f8801056          STRB     r1,[r0,#0x56]
-00470a  e005              B        |L1.18200|
-                  |L1.18188|
 ;;;8025   		}
 ;;;8026   	else if((bps[i]._buff[7]&0xc0)==0xc0)
-00470c  2303              MOVS     r3,#3
-00470e  ebb31f91          CMP      r3,r1,LSR #6
-004712  d101              BNE      |L1.18200|
 ;;;8027   		{
 ;;;8028   		bps[i]._vent_resurs_temp[3]=bps[i]._buff[7];
-004714  f8801057          STRB     r1,[r0,#0x57]
-                  |L1.18200|
 ;;;8029   		}
 ;;;8030   	crc_in=0;
 ;;;8031   	crc_in|=(bps[i]._vent_resurs_temp[0]&0x30)>>4;
-004718  f8101f54          LDRB     r1,[r0,#0x54]!
-00471c  f3c11401          UBFX     r4,r1,#4,#2
 ;;;8032   	crc_in|=(bps[i]._vent_resurs_temp[1]&0x30)>>2;
-004720  7843              LDRB     r3,[r0,#1]
-004722  f0030530          AND      r5,r3,#0x30
-004726  ea440595          ORR      r5,r4,r5,LSR #2
 ;;;8033   	crc_in|=(bps[i]._vent_resurs_temp[2]&0x30);
-00472a  7884              LDRB     r4,[r0,#2]
-00472c  f0040c30          AND      r12,r4,#0x30
-004730  ea4c0c05          ORR      r12,r12,r5
 ;;;8034   	crc_in|=(bps[i]._vent_resurs_temp[3]&0x30)<<2;
-004734  78c5              LDRB     r5,[r0,#3]
-004736  f1a00054          SUB      r0,r0,#0x54
-00473a  f0050830          AND      r8,r5,#0x30
-00473e  ea4c0c88          ORR      r12,r12,r8,LSL #2
 ;;;8035   
 ;;;8036   	crc_eval =bps[i]._vent_resurs_temp[0]&0x0f;
-004742  f001010f          AND      r1,r1,#0xf
 ;;;8037   	crc_eval^=bps[i]._vent_resurs_temp[1]&0x0f;
-004746  f003030f          AND      r3,r3,#0xf
-00474a  ea830801          EOR      r8,r3,r1
 ;;;8038   	crc_eval^=bps[i]._vent_resurs_temp[2]&0x0f;
-00474e  f004040f          AND      r4,r4,#0xf
-004752  ea840808          EOR      r8,r4,r8
 ;;;8039   	crc_eval^=bps[i]._vent_resurs_temp[3]&0x0f;
-004756  f005050f          AND      r5,r5,#0xf
-00475a  ea850808          EOR      r8,r5,r8
 ;;;8040   
 ;;;8041   	if(crc_eval==crc_in)
-00475e  45e0              CMP      r8,r12
-004760  d113              BNE      |L1.18314|
 ;;;8042   		{
 ;;;8043   		unsigned short temp_US;
 ;;;8044   		temp_US=0;
 ;;;8045   
 ;;;8046   		temp_US|=(bps[i]._vent_resurs_temp[3]&0x0f);
 ;;;8047   		temp_US<<=4;
-004762  ea4f1505          LSL      r5,r5,#4
 ;;;8048   		temp_US|=(bps[i]._vent_resurs_temp[2]&0x0f);
-004766  ea440405          ORR      r4,r4,r5
 ;;;8049   		temp_US<<=4;
-00476a  ea4f1404          LSL      r4,r4,#4
 ;;;8050   		temp_US|=(bps[i]._vent_resurs_temp[1]&0x0f);
-00476e  ea430304          ORR      r3,r3,r4
 ;;;8051   		temp_US<<=4;
-004772  ea4f5303          LSL      r3,r3,#20
-004776  ea4f4313          LSR      r3,r3,#16
 ;;;8052   		temp_US|=(bps[i]._vent_resurs_temp[0]&0x0f);
-00477a  ea410103          ORR      r1,r1,r3
 ;;;8053   
 ;;;8054   		if(bps[i]._vent_resurs!=temp_US)bps[i]._vent_resurs=temp_US;
-00477e  f8b03058          LDRH     r3,[r0,#0x58]
-004782  428b              CMP      r3,r1
-004784  d001              BEQ      |L1.18314|
-004786  f8a01058          STRH     r1,[r0,#0x58]
-                  |L1.18314|
 ;;;8055   		}
 ;;;8056   
-;;;8057   	if(bps[i]._vent_resurs>TVENTMAX*10)
-00478a  498d              LDR      r1,|L1.18880|
-00478c  f8b03058          LDRH     r3,[r0,#0x58]
-004790  f9b11000          LDRSH    r1,[r1,#0]  ; TVENTMAX
-004794  eb010181          ADD      r1,r1,r1,LSL #2
-004798  ebb30f41          CMP      r3,r1,LSL #1
-00479c  dd04              BLE      |L1.18344|
+;;;8057   	if((bps[i]._vent_resurs>TVENTMAX*10)&&(TVENTMAX>=0))
+0046ce  48b6              LDR      r0,|L1.18856|
+0046d0  f8dfc2d8          LDR      r12,|L1.18860|
+0046d4  f9b06000          LDRSH    r6,[r0,#0]
+0046d8  48a9              LDR      r0,|L1.18816|
+0046da  f9b07000          LDRSH    r7,[r0,#0]            ;8012
+0046de  e06e              B        |L1.18366|
+                  |L1.18144|
+0046e0  ebc200c2          RSB      r0,r2,r2,LSL #3       ;8014
+0046e4  eb001002          ADD      r0,r0,r2,LSL #4       ;8014
+0046e8  eb0c0080          ADD      r0,r12,r0,LSL #2      ;8014
+0046ec  7b41              LDRB     r1,[r0,#0xd]          ;8014
+0046ee  098b              LSRS     r3,r1,#6              ;8014
+0046f0  d006              BEQ      |L1.18176|
+0046f2  2301              MOVS     r3,#1                 ;8018
+0046f4  ebb31f91          CMP      r3,r1,LSR #6          ;8018
+0046f8  d105              BNE      |L1.18182|
+0046fa  f8801055          STRB     r1,[r0,#0x55]         ;8020
+0046fe  e00f              B        |L1.18208|
+                  |L1.18176|
+004700  f8801054          STRB     r1,[r0,#0x54]         ;8016
+004704  e00c              B        |L1.18208|
+                  |L1.18182|
+004706  2302              MOVS     r3,#2                 ;8022
+004708  ebb31f91          CMP      r3,r1,LSR #6          ;8022
+00470c  d102              BNE      |L1.18196|
+00470e  f8801056          STRB     r1,[r0,#0x56]         ;8024
+004712  e005              B        |L1.18208|
+                  |L1.18196|
+004714  2303              MOVS     r3,#3                 ;8026
+004716  ebb31f91          CMP      r3,r1,LSR #6          ;8026
+00471a  d101              BNE      |L1.18208|
+00471c  f8801057          STRB     r1,[r0,#0x57]         ;8028
+                  |L1.18208|
+004720  f8101f54          LDRB     r1,[r0,#0x54]!        ;8031
+004724  f3c11401          UBFX     r4,r1,#4,#2           ;8031
+004728  7843              LDRB     r3,[r0,#1]            ;8032
+00472a  f0030530          AND      r5,r3,#0x30           ;8032
+00472e  ea440495          ORR      r4,r4,r5,LSR #2       ;8032
+004732  f8909002          LDRB     r9,[r0,#2]            ;8033
+004736  f0090830          AND      r8,r9,#0x30           ;8033
+00473a  ea480804          ORR      r8,r8,r4              ;8033
+00473e  78c5              LDRB     r5,[r0,#3]            ;8034
+004740  f1a00054          SUB      r0,r0,#0x54           ;8034
+004744  f0050430          AND      r4,r5,#0x30           ;8034
+004748  ea480884          ORR      r8,r8,r4,LSL #2       ;8034
+00474c  f001010f          AND      r1,r1,#0xf            ;8036
+004750  f003040f          AND      r4,r3,#0xf            ;8037
+004754  ea840a01          EOR      r10,r4,r1             ;8037
+004758  f009030f          AND      r3,r9,#0xf            ;8038
+00475c  ea83090a          EOR      r9,r3,r10             ;8038
+004760  f005050f          AND      r5,r5,#0xf            ;8039
+004764  ea850909          EOR      r9,r5,r9              ;8039
+004768  45c1              CMP      r9,r8                 ;8041
+00476a  d113              BNE      |L1.18324|
+00476c  ea4f1505          LSL      r5,r5,#4              ;8047
+004770  ea430305          ORR      r3,r3,r5              ;8048
+004774  ea4f1303          LSL      r3,r3,#4              ;8049
+004778  ea440403          ORR      r4,r4,r3              ;8050
+00477c  ea4f5304          LSL      r3,r4,#20             ;8051
+004780  ea4f4313          LSR      r3,r3,#16             ;8051
+004784  ea410103          ORR      r1,r1,r3              ;8052
+004788  f8b03058          LDRH     r3,[r0,#0x58]         ;8054
+00478c  428b              CMP      r3,r1                 ;8054
+00478e  d001              BEQ      |L1.18324|
+004790  f8a01058          STRH     r1,[r0,#0x58]         ;8054
+                  |L1.18324|
+004794  f8b01058          LDRH     r1,[r0,#0x58]
+004798  eb060386          ADD      r3,r6,r6,LSL #2
+00479c  ebb10f43          CMP      r1,r3,LSL #1
+0047a0  dd06              BLE      |L1.18352|
+0047a2  2e00              CMP      r6,#0
+0047a4  db04              BLT      |L1.18352|
 ;;;8058   		{
 ;;;8059   		bps[i]._av|=(1<<4);
-00479e  7841              LDRB     r1,[r0,#1]
-0047a0  f0410110          ORR      r1,r1,#0x10
-0047a4  7041              STRB     r1,[r0,#1]
-0047a6  e003              B        |L1.18352|
-                  |L1.18344|
+0047a6  7841              LDRB     r1,[r0,#1]
+0047a8  f0410110          ORR      r1,r1,#0x10
+0047ac  7041              STRB     r1,[r0,#1]
+0047ae  e003              B        |L1.18360|
+                  |L1.18352|
 ;;;8060   		}
 ;;;8061   	else bps[i]._av&=~(1<<4);
-0047a8  7841              LDRB     r1,[r0,#1]
-0047aa  f0210110          BIC      r1,r1,#0x10
-0047ae  7041              STRB     r1,[r0,#1]
-                  |L1.18352|
-0047b0  f1020201          ADD      r2,r2,#1              ;8012
-0047b4  b2d2              UXTB     r2,r2                 ;8012
-                  |L1.18358|
-0047b6  42b2              CMP      r2,r6                 ;8012
-0047b8  db8e              BLT      |L1.18136|
+0047b0  7841              LDRB     r1,[r0,#1]
+0047b2  f0210110          BIC      r1,r1,#0x10
+0047b6  7041              STRB     r1,[r0,#1]
+                  |L1.18360|
+0047b8  f1020201          ADD      r2,r2,#1              ;8012
+0047bc  b2d2              UXTB     r2,r2                 ;8012
+                  |L1.18366|
+0047be  42ba              CMP      r2,r7                 ;8012
+0047c0  db8e              BLT      |L1.18144|
 ;;;8062   	}
 ;;;8063   }
-0047ba  e701              B        |L1.17856|
+0047c2  e8bd87f0          POP      {r4-r10,pc}
 ;;;8064   
                           ENDP
 
                   vent_hndl PROC
 ;;;8065   //-----------------------------------------------
 ;;;8066   void vent_hndl(void)
-0047bc  e92d4ff0          PUSH     {r4-r11,lr}
+0047c6  e92d4ff0          PUSH     {r4-r11,lr}
 ;;;8067   {
-0047c0  b087              SUB      sp,sp,#0x1c
+0047ca  b087              SUB      sp,sp,#0x1c
 ;;;8068   if(RELEVENTSIGN==rvsAKB)
-0047c2  4880              LDR      r0,|L1.18884|
+0047cc  4878              LDR      r0,|L1.18864|
 ;;;8069   	{
 ;;;8070   	if(vent_stat==0)
-0047c4  4c71              LDR      r4,|L1.18828|
+0047ce  4c6a              LDR      r4,|L1.18808|
 ;;;8071   		{
 ;;;8072   		if	(
 ;;;8073   			(BAT_IS_ON[0]==bisON)&&((bat[0]._Tb>TVENTON)||(bat[0]._nd))
-0047c6  4980              LDR      r1,|L1.18888|
+0047d0  4978              LDR      r1,|L1.18868|
 ;;;8074   			||
 ;;;8075   			(BAT_IS_ON[1]==bisON)&&((bat[1]._Tb>TVENTON)||(bat[1]._nd))
 ;;;8076   			)
@@ -14200,12 +14202,12 @@
 ;;;8082   		{
 ;;;8083   		if	(
 ;;;8084   			((BAT_IS_ON[0]!=bisON)||((BAT_IS_ON[0]==bisON)&&(bat[0]._Tb<TVENTOFF)&&(!bat[0]._nd)))
-0047c8  4a80              LDR      r2,|L1.18892|
-0047ca  7800              LDRB     r0,[r0,#0]            ;8068  ; RELEVENTSIGN
-0047cc  f9943000          LDRSB    r3,[r4,#0]            ;8070
-0047d0  f9b11000          LDRSH    r1,[r1,#0]            ;8073
-0047d4  f9b22000          LDRSH    r2,[r2,#0]
-0047d8  b148              CBZ      r0,|L1.18414|
+0047d2  4a79              LDR      r2,|L1.18872|
+0047d4  7800              LDRB     r0,[r0,#0]            ;8068  ; RELEVENTSIGN
+0047d6  f9943000          LDRSB    r3,[r4,#0]            ;8070
+0047da  f9b11000          LDRSH    r1,[r1,#0]            ;8073
+0047de  f9b22000          LDRSH    r2,[r2,#0]
+0047e2  b148              CBZ      r0,|L1.18424|
 ;;;8085   			&&
 ;;;8086   			((BAT_IS_ON[1]!=bisON)||((BAT_IS_ON[1]==bisON)&&(bat[1]._Tb<TVENTOFF)&&(!bat[1]._nd)))
 ;;;8087   			)
@@ -14215,8 +14217,8 @@
 ;;;8091   		}
 ;;;8092   	}
 ;;;8093   else if(RELEVENTSIGN==rvsBPS)
-0047da  2802              CMP      r0,#2
-0047dc  d03c              BEQ      |L1.18520|
+0047e4  2802              CMP      r0,#2
+0047e6  d03c              BEQ      |L1.18530|
 ;;;8094   	{
 ;;;8095   /*	if	(
 ;;;8096   		(((bps[0]._flags_tm&0x06)||(bps[0]._cnt>=30)))||
@@ -14278,8 +14280,8 @@
 ;;;8152   		}
 ;;;8153   	}
 ;;;8154   else if(RELEVENTSIGN==rvsEXT)
-0047de  2801              CMP      r0,#1
-0047e0  d07e              BEQ      |L1.18656|
+0047e8  2801              CMP      r0,#1
+0047ea  d07e              BEQ      |L1.18666|
 ;;;8155   	{
 ;;;8156   	if	(
 ;;;8157   		((NUMDT)&&((t_ext[0]>TVENTON)||(ND_EXT[0])))
@@ -14306,347 +14308,345 @@
 ;;;8178   		}
 ;;;8179   	}
 ;;;8180   else vent_stat=1;
-0047e2  f04f0001          MOV      r0,#1
-0047e6  7020              STRB     r0,[r4,#0]
-                  |L1.18408|
+0047ec  f04f0001          MOV      r0,#1
+0047f0  7020              STRB     r0,[r4,#0]
+                  |L1.18418|
 ;;;8181   }
-0047e8  b007              ADD      sp,sp,#0x1c
-0047ea  e8bd8ff0          POP      {r4-r11,pc}
-                  |L1.18414|
-0047ee  4f78              LDR      r7,|L1.18896|
-0047f0  f8df81e0          LDR      r8,|L1.18900|
-0047f4  f9b7000a          LDRSH    r0,[r7,#0xa]          ;8073
-0047f8  7b3d              LDRB     r5,[r7,#0xc]          ;8073
-0047fa  f9b76056          LDRSH    r6,[r7,#0x56]         ;8075
-0047fe  f898c000          LDRB     r12,[r8,#0]           ;8072
-004802  f8977058          LDRB     r7,[r7,#0x58]         ;8075
-004806  f8988001          LDRB     r8,[r8,#1]            ;8075
-00480a  b12b              CBZ      r3,|L1.18456|
-00480c  2b01              CMP      r3,#1                 ;8081
-00480e  d1eb              BNE      |L1.18408|
-004810  f1bc0f55          CMP      r12,#0x55             ;8083
-004814  d115              BNE      |L1.18498|
-004816  e010              B        |L1.18490|
-                  |L1.18456|
-004818  f1bc0f55          CMP      r12,#0x55             ;8072
-00481c  d102              BNE      |L1.18468|
-00481e  4288              CMP      r0,r1                 ;8073
-004820  dc07              BGT      |L1.18482|
-004822  b935              CBNZ     r5,|L1.18482|
-                  |L1.18468|
-004824  f1b80f55          CMP      r8,#0x55              ;8075
-004828  d1de              BNE      |L1.18408|
-00482a  428e              CMP      r6,r1                 ;8075
-00482c  dc01              BGT      |L1.18482|
-00482e  2f00              CMP      r7,#0                 ;8075
-004830  d0da              BEQ      |L1.18408|
-                  |L1.18482|
-004832  f04f0001          MOV      r0,#1                 ;8078
-004836  7020              STRB     r0,[r4,#0]            ;8078
-004838  e7d6              B        |L1.18408|
-                  |L1.18490|
-00483a  4290              CMP      r0,r2                 ;8084
-00483c  dad4              BGE      |L1.18408|
-00483e  2d00              CMP      r5,#0                 ;8084
-004840  d1d2              BNE      |L1.18408|
-                  |L1.18498|
-004842  f1b80f55          CMP      r8,#0x55              ;8086
-004846  d103              BNE      |L1.18512|
-004848  4296              CMP      r6,r2                 ;8086
-00484a  dacd              BGE      |L1.18408|
-00484c  2f00              CMP      r7,#0                 ;8086
-00484e  d1cb              BNE      |L1.18408|
-                  |L1.18512|
-004850  f04f0000          MOV      r0,#0                 ;8089
-004854  7020              STRB     r0,[r4,#0]            ;8089
-004856  e7c7              B        |L1.18408|
-                  |L1.18520|
-004858  4e58              LDR      r6,|L1.18876|
-00485a  484e              LDR      r0,|L1.18836|
-00485c  6ab5              LDR      r5,[r6,#0x28]         ;8111
-00485e  f9b00000          LDRSH    r0,[r0,#0]            ;8110  ; NUMIST
-004862  78f6              LDRB     r6,[r6,#3]            ;8111
-004864  b118              CBZ      r0,|L1.18542|
-004866  428d              CMP      r5,r1                 ;8111
-004868  dc7a              BGT      |L1.18784|
-00486a  2e1e              CMP      r6,#0x1e              ;8111
-00486c  d278              BCS      |L1.18784|
-                  |L1.18542|
-00486e  f8dfc14c          LDR      r12,|L1.18876|
-004872  2801              CMP      r0,#1                 ;8113
-004874  f8dc7084          LDR      r7,[r12,#0x84]        ;8113
-004878  f89cc05f          LDRB     r12,[r12,#0x5f]       ;8113
-00487c  f8cdc018          STR      r12,[sp,#0x18]        ;8113
-004880  dd06              BLE      |L1.18576|
-004882  428f              CMP      r7,r1                 ;8113
-004884  dc6c              BGT      |L1.18784|
-004886  f8ddc018          LDR      r12,[sp,#0x18]        ;8113
-00488a  f1bc0f1e          CMP      r12,#0x1e             ;8113
-00488e  d267              BCS      |L1.18784|
-                  |L1.18576|
-004890  f8dfc128          LDR      r12,|L1.18876|
-004894  2802              CMP      r0,#2                 ;8115
-004896  f8dc80e0          LDR      r8,[r12,#0xe0]        ;8115
-00489a  f8cd8014          STR      r8,[sp,#0x14]         ;8115
-00489e  f89cc0bb          LDRB     r12,[r12,#0xbb]       ;8115
-0048a2  f8cdc010          STR      r12,[sp,#0x10]        ;8115
-0048a6  dd08              BLE      |L1.18618|
-0048a8  f8ddc014          LDR      r12,[sp,#0x14]        ;8115
-0048ac  458c              CMP      r12,r1                ;8115
-0048ae  dc57              BGT      |L1.18784|
-0048b0  f8ddc010          LDR      r12,[sp,#0x10]        ;8115
-0048b4  f1bc0f1e          CMP      r12,#0x1e             ;8115
-0048b8  d252              BCS      |L1.18784|
-                  |L1.18618|
-0048ba  f8dfc100          LDR      r12,|L1.18876|
-0048be  2803              CMP      r0,#3                 ;8117
-0048c0  f8dc813c          LDR      r8,[r12,#0x13c]       ;8117
-0048c4  f8cd800c          STR      r8,[sp,#0xc]          ;8117
-0048c8  f89cc117          LDRB     r12,[r12,#0x117]      ;8117
-0048cc  f8cdc008          STR      r12,[sp,#8]           ;8117
-0048d0  dd0a              BLE      |L1.18664|
-0048d2  f8ddc00c          LDR      r12,[sp,#0xc]         ;8117
-0048d6  458c              CMP      r12,r1                ;8117
-0048d8  dc42              BGT      |L1.18784|
-0048da  f8ddc008          LDR      r12,[sp,#8]           ;8117
-0048de  e000              B        |L1.18658|
-                  |L1.18656|
-0048e0  e0a9              B        |L1.18998|
-                  |L1.18658|
-0048e2  f1bc0f1e          CMP      r12,#0x1e             ;8117
-0048e6  d23b              BCS      |L1.18784|
-                  |L1.18664|
-0048e8  f8df80d0          LDR      r8,|L1.18876|
-0048ec  2804              CMP      r0,#4                 ;8119
-0048ee  f8d8c198          LDR      r12,[r8,#0x198]       ;8119
-0048f2  f8988173          LDRB     r8,[r8,#0x173]        ;8119
-0048f6  f8cd8004          STR      r8,[sp,#4]            ;8119
-0048fa  dd06              BLE      |L1.18698|
-0048fc  458c              CMP      r12,r1                ;8119
-0048fe  dc2f              BGT      |L1.18784|
-004900  f8dd8004          LDR      r8,[sp,#4]            ;8119
-004904  f1b80f1e          CMP      r8,#0x1e              ;8119
-004908  d22a              BCS      |L1.18784|
-                  |L1.18698|
-00490a  f8df90b0          LDR      r9,|L1.18876|
-00490e  2805              CMP      r0,#5                 ;8121
-004910  f8d981f4          LDR      r8,[r9,#0x1f4]        ;8121
-004914  f89991cf          LDRB     r9,[r9,#0x1cf]        ;8121
-004918  f8cd9000          STR      r9,[sp,#0]            ;8121
-00491c  dd06              BLE      |L1.18732|
-00491e  4588              CMP      r8,r1                 ;8121
-004920  dc1e              BGT      |L1.18784|
-004922  f8dd9000          LDR      r9,[sp,#0]            ;8121
-004926  f1b90f1e          CMP      r9,#0x1e              ;8121
-00492a  d219              BCS      |L1.18784|
-                  |L1.18732|
-00492c  f8dfa08c          LDR      r10,|L1.18876|
-004930  2806              CMP      r0,#6                 ;8123
-004932  f89ae22b          LDRB     lr,[r10,#0x22b]       ;8123
-004936  f8da9250          LDR      r9,[r10,#0x250]       ;8123
-00493a  dd04              BLE      |L1.18758|
-00493c  4589              CMP      r9,r1                 ;8123
-00493e  dc0f              BGT      |L1.18784|
-004940  f1be0f1e          CMP      lr,#0x1e              ;8123
-004944  d20c              BCS      |L1.18784|
-                  |L1.18758|
-004946  f8dfb074          LDR      r11,|L1.18876|
-00494a  2807              CMP      r0,#7                 ;8125
-00494c  f8dba2ac          LDR      r10,[r11,#0x2ac]      ;8125
-004950  f89bb287          LDRB     r11,[r11,#0x287]      ;8125
-004954  dd08              BLE      |L1.18792|
-004956  458a              CMP      r10,r1                ;8125
-004958  dc02              BGT      |L1.18784|
-00495a  f1bb0f1e          CMP      r11,#0x1e             ;8125
-00495e  d303              BCC      |L1.18792|
-                  |L1.18784|
-004960  f04f0001          MOV      r0,#1                 ;8128
-004964  7020              STRB     r0,[r4,#0]            ;8128
-                  |L1.18790|
-004966  e73f              B        |L1.18408|
-                  |L1.18792|
-004968  2b01              CMP      r3,#1                 ;8130
-00496a  d1fc              BNE      |L1.18790|
-00496c  b118              CBZ      r0,|L1.18806|
-00496e  4295              CMP      r5,r2                 ;8133
-004970  daf9              BGE      |L1.18790|
-004972  2e0a              CMP      r6,#0xa               ;8133
-004974  d2f7              BCS      |L1.18790|
-                  |L1.18806|
-004976  2802              CMP      r0,#2                 ;8135
-004978  db04              BLT      |L1.18820|
-00497a  4297              CMP      r7,r2                 ;8135
-00497c  daf3              BGE      |L1.18790|
-00497e  9906              LDR      r1,[sp,#0x18]         ;8135
-004980  290a              CMP      r1,#0xa               ;8135
-004982  d2f0              BCS      |L1.18790|
-                  |L1.18820|
-004984  2803              CMP      r0,#3                 ;8137
-004986  e027              B        |L1.18904|
-                  |L1.18824|
+0047f2  b007              ADD      sp,sp,#0x1c
+0047f4  e8bd8ff0          POP      {r4-r11,pc}
+                  |L1.18424|
+0047f8  4f70              LDR      r7,|L1.18876|
+0047fa  f8df81c4          LDR      r8,|L1.18880|
+0047fe  f9b7000a          LDRSH    r0,[r7,#0xa]          ;8073
+004802  7b3d              LDRB     r5,[r7,#0xc]          ;8073
+004804  f9b76056          LDRSH    r6,[r7,#0x56]         ;8075
+004808  f898c000          LDRB     r12,[r8,#0]           ;8072
+00480c  f8977058          LDRB     r7,[r7,#0x58]         ;8075
+004810  f8988001          LDRB     r8,[r8,#1]            ;8075
+004814  b12b              CBZ      r3,|L1.18466|
+004816  2b01              CMP      r3,#1                 ;8081
+004818  d1eb              BNE      |L1.18418|
+00481a  f1bc0f55          CMP      r12,#0x55             ;8083
+00481e  d115              BNE      |L1.18508|
+004820  e010              B        |L1.18500|
+                  |L1.18466|
+004822  f1bc0f55          CMP      r12,#0x55             ;8072
+004826  d102              BNE      |L1.18478|
+004828  4288              CMP      r0,r1                 ;8073
+00482a  dc07              BGT      |L1.18492|
+00482c  b935              CBNZ     r5,|L1.18492|
+                  |L1.18478|
+00482e  f1b80f55          CMP      r8,#0x55              ;8075
+004832  d1de              BNE      |L1.18418|
+004834  428e              CMP      r6,r1                 ;8075
+004836  dc01              BGT      |L1.18492|
+004838  2f00              CMP      r7,#0                 ;8075
+00483a  d0da              BEQ      |L1.18418|
+                  |L1.18492|
+00483c  f04f0001          MOV      r0,#1                 ;8078
+004840  7020              STRB     r0,[r4,#0]            ;8078
+004842  e7d6              B        |L1.18418|
+                  |L1.18500|
+004844  4290              CMP      r0,r2                 ;8084
+004846  dad4              BGE      |L1.18418|
+004848  2d00              CMP      r5,#0                 ;8084
+00484a  d1d2              BNE      |L1.18418|
+                  |L1.18508|
+00484c  f1b80f55          CMP      r8,#0x55              ;8086
+004850  d103              BNE      |L1.18522|
+004852  4296              CMP      r6,r2                 ;8086
+004854  dacd              BGE      |L1.18418|
+004856  2f00              CMP      r7,#0                 ;8086
+004858  d1cb              BNE      |L1.18418|
+                  |L1.18522|
+00485a  f04f0000          MOV      r0,#0                 ;8089
+00485e  7020              STRB     r0,[r4,#0]            ;8089
+004860  e7c7              B        |L1.18418|
+                  |L1.18530|
+004862  4e52              LDR      r6,|L1.18860|
+004864  4846              LDR      r0,|L1.18816|
+004866  6ab5              LDR      r5,[r6,#0x28]         ;8111
+004868  f9b00000          LDRSH    r0,[r0,#0]            ;8110  ; NUMIST
+00486c  78f6              LDRB     r6,[r6,#3]            ;8111
+00486e  b118              CBZ      r0,|L1.18552|
+004870  428d              CMP      r5,r1                 ;8111
+004872  dc7a              BGT      |L1.18794|
+004874  2e1e              CMP      r6,#0x1e              ;8111
+004876  d278              BCS      |L1.18794|
+                  |L1.18552|
+004878  f8dfc130          LDR      r12,|L1.18860|
+00487c  2801              CMP      r0,#1                 ;8113
+00487e  f8dc7084          LDR      r7,[r12,#0x84]        ;8113
+004882  f89cc05f          LDRB     r12,[r12,#0x5f]       ;8113
+004886  f8cdc018          STR      r12,[sp,#0x18]        ;8113
+00488a  dd06              BLE      |L1.18586|
+00488c  428f              CMP      r7,r1                 ;8113
+00488e  dc6c              BGT      |L1.18794|
+004890  f8ddc018          LDR      r12,[sp,#0x18]        ;8113
+004894  f1bc0f1e          CMP      r12,#0x1e             ;8113
+004898  d267              BCS      |L1.18794|
+                  |L1.18586|
+00489a  f8dfc110          LDR      r12,|L1.18860|
+00489e  2802              CMP      r0,#2                 ;8115
+0048a0  f8dc80e0          LDR      r8,[r12,#0xe0]        ;8115
+0048a4  f8cd8014          STR      r8,[sp,#0x14]         ;8115
+0048a8  f89cc0bb          LDRB     r12,[r12,#0xbb]       ;8115
+0048ac  f8cdc010          STR      r12,[sp,#0x10]        ;8115
+0048b0  dd08              BLE      |L1.18628|
+0048b2  f8ddc014          LDR      r12,[sp,#0x14]        ;8115
+0048b6  458c              CMP      r12,r1                ;8115
+0048b8  dc57              BGT      |L1.18794|
+0048ba  f8ddc010          LDR      r12,[sp,#0x10]        ;8115
+0048be  f1bc0f1e          CMP      r12,#0x1e             ;8115
+0048c2  d252              BCS      |L1.18794|
+                  |L1.18628|
+0048c4  f8dfc0e4          LDR      r12,|L1.18860|
+0048c8  2803              CMP      r0,#3                 ;8117
+0048ca  f8dc813c          LDR      r8,[r12,#0x13c]       ;8117
+0048ce  f8cd800c          STR      r8,[sp,#0xc]          ;8117
+0048d2  f89cc117          LDRB     r12,[r12,#0x117]      ;8117
+0048d6  f8cdc008          STR      r12,[sp,#8]           ;8117
+0048da  dd0a              BLE      |L1.18674|
+0048dc  f8ddc00c          LDR      r12,[sp,#0xc]         ;8117
+0048e0  458c              CMP      r12,r1                ;8117
+0048e2  dc42              BGT      |L1.18794|
+0048e4  f8ddc008          LDR      r12,[sp,#8]           ;8117
+0048e8  e000              B        |L1.18668|
+                  |L1.18666|
+0048ea  e0a9              B        |L1.19008|
+                  |L1.18668|
+0048ec  f1bc0f1e          CMP      r12,#0x1e             ;8117
+0048f0  d23b              BCS      |L1.18794|
+                  |L1.18674|
+0048f2  f8df80b8          LDR      r8,|L1.18860|
+0048f6  2804              CMP      r0,#4                 ;8119
+0048f8  f8d8c198          LDR      r12,[r8,#0x198]       ;8119
+0048fc  f8988173          LDRB     r8,[r8,#0x173]        ;8119
+004900  f8cd8004          STR      r8,[sp,#4]            ;8119
+004904  dd06              BLE      |L1.18708|
+004906  458c              CMP      r12,r1                ;8119
+004908  dc2f              BGT      |L1.18794|
+00490a  f8dd8004          LDR      r8,[sp,#4]            ;8119
+00490e  f1b80f1e          CMP      r8,#0x1e              ;8119
+004912  d22a              BCS      |L1.18794|
+                  |L1.18708|
+004914  f8df9094          LDR      r9,|L1.18860|
+004918  2805              CMP      r0,#5                 ;8121
+00491a  f8d981f4          LDR      r8,[r9,#0x1f4]        ;8121
+00491e  f89991cf          LDRB     r9,[r9,#0x1cf]        ;8121
+004922  f8cd9000          STR      r9,[sp,#0]            ;8121
+004926  dd06              BLE      |L1.18742|
+004928  4588              CMP      r8,r1                 ;8121
+00492a  dc1e              BGT      |L1.18794|
+00492c  f8dd9000          LDR      r9,[sp,#0]            ;8121
+004930  f1b90f1e          CMP      r9,#0x1e              ;8121
+004934  d219              BCS      |L1.18794|
+                  |L1.18742|
+004936  f8dfa074          LDR      r10,|L1.18860|
+00493a  2806              CMP      r0,#6                 ;8123
+00493c  f89ae22b          LDRB     lr,[r10,#0x22b]       ;8123
+004940  f8da9250          LDR      r9,[r10,#0x250]       ;8123
+004944  dd04              BLE      |L1.18768|
+004946  4589              CMP      r9,r1                 ;8123
+004948  dc0f              BGT      |L1.18794|
+00494a  f1be0f1e          CMP      lr,#0x1e              ;8123
+00494e  d20c              BCS      |L1.18794|
+                  |L1.18768|
+004950  f8dfb058          LDR      r11,|L1.18860|
+004954  2807              CMP      r0,#7                 ;8125
+004956  f8dba2ac          LDR      r10,[r11,#0x2ac]      ;8125
+00495a  f89bb287          LDRB     r11,[r11,#0x287]      ;8125
+00495e  dd31              BLE      |L1.18884|
+004960  458a              CMP      r10,r1                ;8125
+004962  dc02              BGT      |L1.18794|
+004964  f1bb0f1e          CMP      r11,#0x1e             ;8125
+004968  d32c              BCC      |L1.18884|
+                  |L1.18794|
+00496a  f04f0001          MOV      r0,#1                 ;8128
+00496e  7020              STRB     r0,[r4,#0]            ;8128
+                  |L1.18800|
+004970  e73f              B        |L1.18418|
+004972  0000              DCW      0x0000
+                  |L1.18804|
                           DCD      hv_vz_stat
-                  |L1.18828|
+                  |L1.18808|
                           DCD      ||area_number.22||
-                  |L1.18832|
+                  |L1.18812|
                           DCD      FORVARDBPSCHHOUR
-                  |L1.18836|
+                  |L1.18816|
                           DCD      NUMIST
-                  |L1.18840|
+                  |L1.18820|
                           DCD      load_U
-                  |L1.18844|
+                  |L1.18824|
                           DCD      U_OUT_KONTR_MAX
-                  |L1.18848|
+                  |L1.18828|
                           DCD      outVoltContrHndlCnt
-                  |L1.18852|
+                  |L1.18832|
                           DCD      outVoltContrHndlCnt_
-                  |L1.18856|
+                  |L1.18836|
                           DCD      U_OUT_KONTR_MIN
-                  |L1.18860|
+                  |L1.18840|
                           DCD      U_OUT_KONTR_DELAY
-                  |L1.18864|
+                  |L1.18844|
                           DCD      uout_av
-                  |L1.18868|
+                  |L1.18848|
                           DCD      USIGN
-                  |L1.18872|
+                  |L1.18852|
                           DCD      bSILENT
-                  |L1.18876|
-                          DCD      bps
-                  |L1.18880|
+                  |L1.18856|
                           DCD      TVENTMAX
-                  |L1.18884|
+                  |L1.18860|
+                          DCD      bps
+                  |L1.18864|
                           DCD      RELEVENTSIGN
-                  |L1.18888|
+                  |L1.18868|
                           DCD      TVENTON
-                  |L1.18892|
+                  |L1.18872|
                           DCD      TVENTOFF
-                  |L1.18896|
+                  |L1.18876|
                           DCD      bat
-                  |L1.18900|
+                  |L1.18880|
                           DCD      BAT_IS_ON
-                  |L1.18904|
-0049d8  db05              BLT      |L1.18918|
-0049da  9905              LDR      r1,[sp,#0x14]         ;8137
-0049dc  4291              CMP      r1,r2                 ;8137
-0049de  dac2              BGE      |L1.18790|
-0049e0  9904              LDR      r1,[sp,#0x10]         ;8137
-0049e2  290a              CMP      r1,#0xa               ;8137
-0049e4  d2bf              BCS      |L1.18790|
-                  |L1.18918|
-0049e6  2804              CMP      r0,#4                 ;8139
-0049e8  db05              BLT      |L1.18934|
-0049ea  9903              LDR      r1,[sp,#0xc]          ;8139
-0049ec  4291              CMP      r1,r2                 ;8139
-0049ee  daba              BGE      |L1.18790|
-0049f0  9902              LDR      r1,[sp,#8]            ;8139
-0049f2  290a              CMP      r1,#0xa               ;8139
-0049f4  d2b7              BCS      |L1.18790|
-                  |L1.18934|
-0049f6  2805              CMP      r0,#5                 ;8141
-0049f8  db04              BLT      |L1.18948|
-0049fa  4594              CMP      r12,r2                ;8141
-0049fc  dab3              BGE      |L1.18790|
-0049fe  9901              LDR      r1,[sp,#4]            ;8141
-004a00  290a              CMP      r1,#0xa               ;8141
-004a02  d2b0              BCS      |L1.18790|
-                  |L1.18948|
-004a04  2806              CMP      r0,#6                 ;8143
-004a06  db04              BLT      |L1.18962|
-004a08  4590              CMP      r8,r2                 ;8143
-004a0a  daac              BGE      |L1.18790|
-004a0c  9900              LDR      r1,[sp,#0]            ;8143
-004a0e  290a              CMP      r1,#0xa               ;8143
-004a10  d2a9              BCS      |L1.18790|
-                  |L1.18962|
-004a12  2807              CMP      r0,#7                 ;8145
-004a14  db04              BLT      |L1.18976|
-004a16  4591              CMP      r9,r2                 ;8145
-004a18  daa5              BGE      |L1.18790|
-004a1a  f1be0f0a          CMP      lr,#0xa               ;8145
-004a1e  d2a2              BCS      |L1.18790|
-                  |L1.18976|
-004a20  2808              CMP      r0,#8                 ;8147
-004a22  db04              BLT      |L1.18990|
-004a24  4592              CMP      r10,r2                ;8147
-004a26  da9e              BGE      |L1.18790|
-004a28  f1bb0f0a          CMP      r11,#0xa              ;8147
-004a2c  d29b              BCS      |L1.18790|
-                  |L1.18990|
-004a2e  f04f0000          MOV      r0,#0                 ;8150
-004a32  7020              STRB     r0,[r4,#0]            ;8150
-                  |L1.18996|
-004a34  e6d8              B        |L1.18408|
-                  |L1.18998|
-004a36  4823              LDR      r0,|L1.19140|
-004a38  4d23              LDR      r5,|L1.19144|
-004a3a  4e24              LDR      r6,|L1.19148|
-004a3c  f9b00000          LDRSH    r0,[r0,#0]            ;8156  ; NUMDT
-004a40  f9b55000          LDRSH    r5,[r5,#0]            ;8157
-004a44  7836              LDRB     r6,[r6,#0]            ;8157
-004a46  b110              CBZ      r0,|L1.19022|
-004a48  428d              CMP      r5,r1                 ;8157
-004a4a  dc1d              BGT      |L1.19080|
-004a4c  b9e6              CBNZ     r6,|L1.19080|
-                  |L1.19022|
-004a4e  4f1e              LDR      r7,|L1.19144|
-004a50  f8dfc078          LDR      r12,|L1.19148|
-004a54  2801              CMP      r0,#1                 ;8159
-004a56  f9b77002          LDRSH    r7,[r7,#2]            ;8159
-004a5a  f89cc001          LDRB     r12,[r12,#1]          ;8159
-004a5e  dd04              BLE      |L1.19050|
-004a60  428f              CMP      r7,r1                 ;8159
-004a62  dc11              BGT      |L1.19080|
-004a64  f1bc0f00          CMP      r12,#0                ;8159
-004a68  d10e              BNE      |L1.19080|
-                  |L1.19050|
-004a6a  f8df805c          LDR      r8,|L1.19144|
-004a6e  f8df905c          LDR      r9,|L1.19148|
-004a72  2802              CMP      r0,#2                 ;8161
-004a74  f9b88004          LDRSH    r8,[r8,#4]            ;8161
-004a78  f8999002          LDRB     r9,[r9,#2]            ;8161
-004a7c  dd08              BLE      |L1.19088|
-004a7e  4588              CMP      r8,r1                 ;8161
-004a80  dc02              BGT      |L1.19080|
-004a82  f1b90f00          CMP      r9,#0                 ;8161
-004a86  d003              BEQ      |L1.19088|
-                  |L1.19080|
-004a88  f04f0001          MOV      r0,#1                 ;8164
-004a8c  7020              STRB     r0,[r4,#0]            ;8164
-004a8e  e6ab              B        |L1.18408|
-                  |L1.19088|
-004a90  2b01              CMP      r3,#1                 ;8166
-004a92  d1cf              BNE      |L1.18996|
-004a94  b118              CBZ      r0,|L1.19102|
-004a96  4295              CMP      r5,r2                 ;8169
-004a98  dacc              BGE      |L1.18996|
-004a9a  2e00              CMP      r6,#0                 ;8169
-004a9c  d1ca              BNE      |L1.18996|
-                  |L1.19102|
-004a9e  2802              CMP      r0,#2                 ;8171
-004aa0  db04              BLT      |L1.19116|
-004aa2  4297              CMP      r7,r2                 ;8171
-004aa4  dac6              BGE      |L1.18996|
-004aa6  f1bc0f00          CMP      r12,#0                ;8171
-004aaa  d1c3              BNE      |L1.18996|
-                  |L1.19116|
-004aac  2803              CMP      r0,#3                 ;8173
-004aae  db04              BLT      |L1.19130|
-004ab0  4590              CMP      r8,r2                 ;8173
-004ab2  dabf              BGE      |L1.18996|
-004ab4  f1b90f00          CMP      r9,#0                 ;8173
-004ab8  d1bc              BNE      |L1.18996|
-                  |L1.19130|
-004aba  f04f0000          MOV      r0,#0                 ;8176
-004abe  7020              STRB     r0,[r4,#0]            ;8176
-004ac0  e692              B        |L1.18408|
+                  |L1.18884|
+0049c4  2b01              CMP      r3,#1                 ;8130
+0049c6  d1d3              BNE      |L1.18800|
+0049c8  b118              CBZ      r0,|L1.18898|
+0049ca  4295              CMP      r5,r2                 ;8133
+0049cc  dad0              BGE      |L1.18800|
+0049ce  2e0a              CMP      r6,#0xa               ;8133
+0049d0  d2ce              BCS      |L1.18800|
+                  |L1.18898|
+0049d2  2802              CMP      r0,#2                 ;8135
+0049d4  db04              BLT      |L1.18912|
+0049d6  4297              CMP      r7,r2                 ;8135
+0049d8  daca              BGE      |L1.18800|
+0049da  9906              LDR      r1,[sp,#0x18]         ;8135
+0049dc  290a              CMP      r1,#0xa               ;8135
+0049de  d2c7              BCS      |L1.18800|
+                  |L1.18912|
+0049e0  2803              CMP      r0,#3                 ;8137
+0049e2  db05              BLT      |L1.18928|
+0049e4  9905              LDR      r1,[sp,#0x14]         ;8137
+0049e6  4291              CMP      r1,r2                 ;8137
+0049e8  dac2              BGE      |L1.18800|
+0049ea  9904              LDR      r1,[sp,#0x10]         ;8137
+0049ec  290a              CMP      r1,#0xa               ;8137
+0049ee  d2bf              BCS      |L1.18800|
+                  |L1.18928|
+0049f0  2804              CMP      r0,#4                 ;8139
+0049f2  db05              BLT      |L1.18944|
+0049f4  9903              LDR      r1,[sp,#0xc]          ;8139
+0049f6  4291              CMP      r1,r2                 ;8139
+0049f8  daba              BGE      |L1.18800|
+0049fa  9902              LDR      r1,[sp,#8]            ;8139
+0049fc  290a              CMP      r1,#0xa               ;8139
+0049fe  d2b7              BCS      |L1.18800|
+                  |L1.18944|
+004a00  2805              CMP      r0,#5                 ;8141
+004a02  db04              BLT      |L1.18958|
+004a04  4594              CMP      r12,r2                ;8141
+004a06  dab3              BGE      |L1.18800|
+004a08  9901              LDR      r1,[sp,#4]            ;8141
+004a0a  290a              CMP      r1,#0xa               ;8141
+004a0c  d2b0              BCS      |L1.18800|
+                  |L1.18958|
+004a0e  2806              CMP      r0,#6                 ;8143
+004a10  db04              BLT      |L1.18972|
+004a12  4590              CMP      r8,r2                 ;8143
+004a14  daac              BGE      |L1.18800|
+004a16  9900              LDR      r1,[sp,#0]            ;8143
+004a18  290a              CMP      r1,#0xa               ;8143
+004a1a  d2a9              BCS      |L1.18800|
+                  |L1.18972|
+004a1c  2807              CMP      r0,#7                 ;8145
+004a1e  db04              BLT      |L1.18986|
+004a20  4591              CMP      r9,r2                 ;8145
+004a22  daa5              BGE      |L1.18800|
+004a24  f1be0f0a          CMP      lr,#0xa               ;8145
+004a28  d2a2              BCS      |L1.18800|
+                  |L1.18986|
+004a2a  2808              CMP      r0,#8                 ;8147
+004a2c  db04              BLT      |L1.19000|
+004a2e  4592              CMP      r10,r2                ;8147
+004a30  da9e              BGE      |L1.18800|
+004a32  f1bb0f0a          CMP      r11,#0xa              ;8147
+004a36  d29b              BCS      |L1.18800|
+                  |L1.19000|
+004a38  f04f0000          MOV      r0,#0                 ;8150
+004a3c  7020              STRB     r0,[r4,#0]            ;8150
+                  |L1.19006|
+004a3e  e6d8              B        |L1.18418|
+                  |L1.19008|
+004a40  4822              LDR      r0,|L1.19148|
+004a42  4d23              LDR      r5,|L1.19152|
+004a44  4e23              LDR      r6,|L1.19156|
+004a46  f9b00000          LDRSH    r0,[r0,#0]            ;8156  ; NUMDT
+004a4a  f9b55000          LDRSH    r5,[r5,#0]            ;8157
+004a4e  7836              LDRB     r6,[r6,#0]            ;8157
+004a50  b110              CBZ      r0,|L1.19032|
+004a52  428d              CMP      r5,r1                 ;8157
+004a54  dc1d              BGT      |L1.19090|
+004a56  b9e6              CBNZ     r6,|L1.19090|
+                  |L1.19032|
+004a58  4f1d              LDR      r7,|L1.19152|
+004a5a  f8dfc078          LDR      r12,|L1.19156|
+004a5e  2801              CMP      r0,#1                 ;8159
+004a60  f9b77002          LDRSH    r7,[r7,#2]            ;8159
+004a64  f89cc001          LDRB     r12,[r12,#1]          ;8159
+004a68  dd04              BLE      |L1.19060|
+004a6a  428f              CMP      r7,r1                 ;8159
+004a6c  dc11              BGT      |L1.19090|
+004a6e  f1bc0f00          CMP      r12,#0                ;8159
+004a72  d10e              BNE      |L1.19090|
+                  |L1.19060|
+004a74  f8df8058          LDR      r8,|L1.19152|
+004a78  f8df9058          LDR      r9,|L1.19156|
+004a7c  2802              CMP      r0,#2                 ;8161
+004a7e  f9b88004          LDRSH    r8,[r8,#4]            ;8161
+004a82  f8999002          LDRB     r9,[r9,#2]            ;8161
+004a86  dd08              BLE      |L1.19098|
+004a88  4588              CMP      r8,r1                 ;8161
+004a8a  dc02              BGT      |L1.19090|
+004a8c  f1b90f00          CMP      r9,#0                 ;8161
+004a90  d003              BEQ      |L1.19098|
+                  |L1.19090|
+004a92  f04f0001          MOV      r0,#1                 ;8164
+004a96  7020              STRB     r0,[r4,#0]            ;8164
+004a98  e6ab              B        |L1.18418|
+                  |L1.19098|
+004a9a  2b01              CMP      r3,#1                 ;8166
+004a9c  d1cf              BNE      |L1.19006|
+004a9e  b118              CBZ      r0,|L1.19112|
+004aa0  4295              CMP      r5,r2                 ;8169
+004aa2  dacc              BGE      |L1.19006|
+004aa4  2e00              CMP      r6,#0                 ;8169
+004aa6  d1ca              BNE      |L1.19006|
+                  |L1.19112|
+004aa8  2802              CMP      r0,#2                 ;8171
+004aaa  db04              BLT      |L1.19126|
+004aac  4297              CMP      r7,r2                 ;8171
+004aae  dac6              BGE      |L1.19006|
+004ab0  f1bc0f00          CMP      r12,#0                ;8171
+004ab4  d1c3              BNE      |L1.19006|
+                  |L1.19126|
+004ab6  2803              CMP      r0,#3                 ;8173
+004ab8  db04              BLT      |L1.19140|
+004aba  4590              CMP      r8,r2                 ;8173
+004abc  dabf              BGE      |L1.19006|
+004abe  f1b90f00          CMP      r9,#0                 ;8173
+004ac2  d1bc              BNE      |L1.19006|
+                  |L1.19140|
+004ac4  f04f0000          MOV      r0,#0                 ;8176
+004ac8  7020              STRB     r0,[r4,#0]            ;8176
+004aca  e692              B        |L1.18418|
 ;;;8182   
                           ENDP
 
-004ac2  0000              DCW      0x0000
-                  |L1.19140|
-                          DCD      NUMDT
-                  |L1.19144|
-                          DCD      t_ext
                   |L1.19148|
+                          DCD      NUMDT
+                  |L1.19152|
+                          DCD      t_ext
+                  |L1.19156|
                           DCD      ND_EXT
 
                           AREA ||area_number.2||, CODE, READONLY, ALIGN=2

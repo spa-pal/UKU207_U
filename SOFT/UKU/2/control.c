@@ -8054,7 +8054,7 @@ for(i=0;i<NUMIST;i++)
 		if(bps[i]._vent_resurs!=temp_US)bps[i]._vent_resurs=temp_US;
 		}
 
-	if(bps[i]._vent_resurs>TVENTMAX*10)
+	if((bps[i]._vent_resurs>TVENTMAX*10)&&(TVENTMAX>=0))
 		{
 		bps[i]._av|=(1<<4);
 		}
