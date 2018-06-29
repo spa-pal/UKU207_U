@@ -829,7 +829,7 @@ typedef enum {
 	iSpcprl,iSpc,k,Crash_0,Crash_1,iKednd,iAv_view_avt,iAKE,iSpc_termocompensat,
 	iLoad,iSpc_prl_vz,iSpc_prl_ke,iKe,iVz,iAvz,iAVAR,
 	iStr,iStr_3U,iStr_RSTKM,iStr_GLONASS,iStr_KONTUR,iStr_6U,iStr_220_IPS_TERMOKOMPENSAT,iStr_TELECORE2015,
-	iVrs,iPrltst,iApv,
+	iVrs,iPrltst,iApv,iVZ_set,
 	iK_bps,iK_bps_sel,iK_bat,iK_bat_simple,iK_bat_ips_termokompensat_ib,iK_bat_TELECORE,iK_bat_sel,iK_bat_sel_TELECORE,iK_load,iK_net,iK_net3,
 	iK_makb_sel,iK_makb,iK_out,
 	iTst,iTst_3U,iTst_RSTKM,iTst_GLONASS,iTst_KONTUR,iTst_6U,iTst_220,iTst_220_380,iTst_220_IPS_TERMOKOMPENSAT,
@@ -1017,6 +1017,9 @@ extern enum_apv_on APV_ON1,APV_ON2;
 
 extern signed short APV_ON2_TIME;
 extern signed short RS485_QWARZ_DIGIT;
+extern signed short UVENTOFF;			//Напряжение (1в) при котором выключится вентиляция после окончания ВЗ или УСКЗ
+extern signed short VZ_KIND;			//Тип выравнивающего заряда, 0 - обычный(исторический, повышение напряжения на время), 
+										//1- высоковольтный, с контролем вентиляции и запросами к оператору
 
 extern signed short RELE_SET_MASK[4];
 
@@ -1734,6 +1737,7 @@ typedef enum  {hvsOFF,hvsSTEP1,hvsSTEP2,hvsSTEP3,hvsSTEP4,hvsWRK,hvsERR1,hvsERR2
 extern enum_hv_vz_stat hv_vz_stat,hv_vz_stat_old;
 extern short hv_vz_stat_cnt;
 extern long hv_vz_wrk_cnt;
+extern long hv_vz_up_cnt;
 
 //-----------------------------------------------
 //Блок выносной реле

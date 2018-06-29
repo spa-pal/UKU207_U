@@ -3593,10 +3593,10 @@ if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_EXT))
 	}
 else if(DOP_RELE_FUNC==0)	//если допреле подключено к ускоренному заряду
 	{
-	if((!speedChIsOn)&&(spc_stat!=spcVZ)&&(hv_vz_stat==hvsOFF)&&(sp_ch_stat==scsOFF))   SET_REG(LPC_GPIO0->FIOCLR,1,9,1);
-	else SET_REG(LPC_GPIO0->FIOSET,1,9,1);
+	if((!speedChIsOn)&&(spc_stat!=spcVZ)&&(hv_vz_stat==hvsOFF)&&(sp_ch_stat==scsOFF)&&(load_U/10<UVENTOFF))   SET_REG(LPC_GPIO0->FIOCLR,1,9,1);
+	else if((speedChIsOn)||(spc_stat==spcVZ)||(hv_vz_stat!=hvsOFF)||(sp_ch_stat!=scsOFF)) SET_REG(LPC_GPIO0->FIOSET,1,9,1);
 	}
-else if(DOP_RELE_FUNC==1)  //если допреле подключено к индиказии разряженной батареи
+else if(DOP_RELE_FUNC==1)  //если допреле подключено к индикации разряженной батареи
 	{
 	if((mess_find_unvol(MESS2RELE_HNDL))&& (mess_data[0]==PARAM_RELE_BAT_IS_DISCHARGED)) SET_REG(LPC_GPIO0->FIOCLR,1,9,1);
 	else SET_REG(LPC_GPIO0->FIOSET,1,9,1);
@@ -7756,8 +7756,11 @@ if(hv_vz_stat==hvsWRK)
 	if(hv_vz_stat_old!=hv_vz_stat)
 		{
 		hv_vz_wrk_cnt=3600L/*100L*/*((long)VZ_HR);
+		hv_vz_up_cnt=0L;
 		}
 	hv_vz_wrk_cnt--;
+	hv_vz_up_cnt++;
+
 	if(hv_vz_wrk_cnt==0)
 		{
 		hv_vz_stat=hvsERR4;
@@ -8054,7 +8057,7 @@ for(i=0;i<NUMIST;i++)
 		if(bps[i]._vent_resurs!=temp_US)bps[i]._vent_resurs=temp_US;
 		}
 
-	if((bps[i]._vent_resurs>TVENTMAX*10)&&(TVENTMAX>=0))
+	if((bps[i]._vent_resurs>TVENTMAX*10)&&(TVENTMAX>0))
 		{
 		bps[i]._av|=(1<<4);
 		}
