@@ -1320,187 +1320,187 @@
                   |L1.2668|
 000a6c  f44f7034          MOV      r0,#0x2d0
 000a70  f7fffffe          BL       lc640_read_int
-000a74  4994              LDR      r1,|L1.3272|
+000a74  499a              LDR      r1,|L1.3296|
 000a76  8008              STRH     r0,[r1,#0]
 ;;;282    ETH_IP_2=lc640_read_int(EE_ETH_IP_2);
 000a78  f24020d2          MOV      r0,#0x2d2
 000a7c  f7fffffe          BL       lc640_read_int
-000a80  4992              LDR      r1,|L1.3276|
+000a80  4998              LDR      r1,|L1.3300|
 000a82  8008              STRH     r0,[r1,#0]
 ;;;283    ETH_IP_3=lc640_read_int(EE_ETH_IP_3);
 000a84  f44f7035          MOV      r0,#0x2d4
 000a88  f7fffffe          BL       lc640_read_int
-000a8c  4990              LDR      r1,|L1.3280|
+000a8c  4996              LDR      r1,|L1.3304|
 000a8e  8008              STRH     r0,[r1,#0]
 ;;;284    ETH_IP_4=lc640_read_int(EE_ETH_IP_4);
 000a90  f24020d6          MOV      r0,#0x2d6
 000a94  f7fffffe          BL       lc640_read_int
-000a98  498e              LDR      r1,|L1.3284|
+000a98  4994              LDR      r1,|L1.3308|
 000a9a  8008              STRH     r0,[r1,#0]
 ;;;285    ETH_MASK_1=lc640_read_int(EE_ETH_MASK_1);
 000a9c  f44f7036          MOV      r0,#0x2d8
 000aa0  f7fffffe          BL       lc640_read_int
-000aa4  498c              LDR      r1,|L1.3288|
+000aa4  4992              LDR      r1,|L1.3312|
 000aa6  8008              STRH     r0,[r1,#0]
 ;;;286    ETH_MASK_2=lc640_read_int(EE_ETH_MASK_2);
 000aa8  f24020da          MOV      r0,#0x2da
 000aac  f7fffffe          BL       lc640_read_int
-000ab0  498a              LDR      r1,|L1.3292|
+000ab0  4990              LDR      r1,|L1.3316|
 000ab2  8008              STRH     r0,[r1,#0]
 ;;;287    ETH_MASK_3=lc640_read_int(EE_ETH_MASK_3);
 000ab4  f44f7037          MOV      r0,#0x2dc
 000ab8  f7fffffe          BL       lc640_read_int
-000abc  4988              LDR      r1,|L1.3296|
+000abc  498e              LDR      r1,|L1.3320|
 000abe  8008              STRH     r0,[r1,#0]
 ;;;288    ETH_MASK_4=lc640_read_int(EE_ETH_MASK_4);
 000ac0  f24020de          MOV      r0,#0x2de
 000ac4  f7fffffe          BL       lc640_read_int
-000ac8  4986              LDR      r1,|L1.3300|
+000ac8  498c              LDR      r1,|L1.3324|
 000aca  8008              STRH     r0,[r1,#0]
 ;;;289    ETH_GW_1=lc640_read_int(EE_ETH_GW_1);
 000acc  f44f7043          MOV      r0,#0x30c
 000ad0  f7fffffe          BL       lc640_read_int
-000ad4  4984              LDR      r1,|L1.3304|
+000ad4  498a              LDR      r1,|L1.3328|
 000ad6  8008              STRH     r0,[r1,#0]
 ;;;290    ETH_GW_2=lc640_read_int(EE_ETH_GW_2);
 000ad8  f240300e          MOV      r0,#0x30e
 000adc  f7fffffe          BL       lc640_read_int
-000ae0  4982              LDR      r1,|L1.3308|
+000ae0  4988              LDR      r1,|L1.3332|
 000ae2  8008              STRH     r0,[r1,#0]
 ;;;291    ETH_GW_3=lc640_read_int(EE_ETH_GW_3);
 000ae4  f44f7044          MOV      r0,#0x310
 000ae8  f7fffffe          BL       lc640_read_int
-000aec  4980              LDR      r1,|L1.3312|
+000aec  4986              LDR      r1,|L1.3336|
 000aee  8008              STRH     r0,[r1,#0]
 ;;;292    ETH_GW_4=lc640_read_int(EE_ETH_GW_4);
 000af0  f2403012          MOV      r0,#0x312
 000af4  f7fffffe          BL       lc640_read_int
-000af8  497e              LDR      r1,|L1.3316|
+000af8  4984              LDR      r1,|L1.3340|
 000afa  8008              STRH     r0,[r1,#0]
 ;;;293    ETH_TRAP1_IP_1=lc640_read_int(EE_ETH_TRAP1_IP_1);
 000afc  f44f7038          MOV      r0,#0x2e0
 000b00  f7fffffe          BL       lc640_read_int
-000b04  497c              LDR      r1,|L1.3320|
+000b04  4982              LDR      r1,|L1.3344|
 000b06  8008              STRH     r0,[r1,#0]
 ;;;294    ETH_TRAP1_IP_2=lc640_read_int(EE_ETH_TRAP1_IP_2);
 000b08  f24020e2          MOV      r0,#0x2e2
 000b0c  f7fffffe          BL       lc640_read_int
-000b10  497a              LDR      r1,|L1.3324|
+000b10  4980              LDR      r1,|L1.3348|
 000b12  8008              STRH     r0,[r1,#0]
 ;;;295    ETH_TRAP1_IP_3=lc640_read_int(EE_ETH_TRAP1_IP_3);
 000b14  f44f7039          MOV      r0,#0x2e4
 000b18  f7fffffe          BL       lc640_read_int
-000b1c  4978              LDR      r1,|L1.3328|
+000b1c  497e              LDR      r1,|L1.3352|
 000b1e  8008              STRH     r0,[r1,#0]
 ;;;296    ETH_TRAP1_IP_4=lc640_read_int(EE_ETH_TRAP1_IP_4);
 000b20  f24020e6          MOV      r0,#0x2e6
 000b24  f7fffffe          BL       lc640_read_int
-000b28  4976              LDR      r1,|L1.3332|
+000b28  497c              LDR      r1,|L1.3356|
 000b2a  8008              STRH     r0,[r1,#0]
 ;;;297    ETH_TRAP2_IP_1=lc640_read_int(EE_ETH_TRAP2_IP_1);
 000b2c  f44f703a          MOV      r0,#0x2e8
 000b30  f7fffffe          BL       lc640_read_int
-000b34  4974              LDR      r1,|L1.3336|
+000b34  497a              LDR      r1,|L1.3360|
 000b36  8008              STRH     r0,[r1,#0]
 ;;;298    ETH_TRAP2_IP_2=lc640_read_int(EE_ETH_TRAP2_IP_2);
 000b38  f24020ea          MOV      r0,#0x2ea
 000b3c  f7fffffe          BL       lc640_read_int
-000b40  4972              LDR      r1,|L1.3340|
+000b40  4978              LDR      r1,|L1.3364|
 000b42  8008              STRH     r0,[r1,#0]
 ;;;299    ETH_TRAP2_IP_3=lc640_read_int(EE_ETH_TRAP2_IP_3);
 000b44  f44f703b          MOV      r0,#0x2ec
 000b48  f7fffffe          BL       lc640_read_int
-000b4c  4970              LDR      r1,|L1.3344|
+000b4c  4976              LDR      r1,|L1.3368|
 000b4e  8008              STRH     r0,[r1,#0]
 ;;;300    ETH_TRAP2_IP_4=lc640_read_int(EE_ETH_TRAP2_IP_4);
 000b50  f24020ee          MOV      r0,#0x2ee
 000b54  f7fffffe          BL       lc640_read_int
-000b58  496e              LDR      r1,|L1.3348|
+000b58  4974              LDR      r1,|L1.3372|
 000b5a  8008              STRH     r0,[r1,#0]
 ;;;301    ETH_TRAP3_IP_1=lc640_read_int(EE_ETH_TRAP3_IP_1);
 000b5c  f44f703c          MOV      r0,#0x2f0
 000b60  f7fffffe          BL       lc640_read_int
-000b64  496c              LDR      r1,|L1.3352|
+000b64  4972              LDR      r1,|L1.3376|
 000b66  8008              STRH     r0,[r1,#0]
 ;;;302    ETH_TRAP3_IP_2=lc640_read_int(EE_ETH_TRAP3_IP_2);
 000b68  f24020f2          MOV      r0,#0x2f2
 000b6c  f7fffffe          BL       lc640_read_int
-000b70  496a              LDR      r1,|L1.3356|
+000b70  4970              LDR      r1,|L1.3380|
 000b72  8008              STRH     r0,[r1,#0]
 ;;;303    ETH_TRAP3_IP_3=lc640_read_int(EE_ETH_TRAP3_IP_3);
 000b74  f44f703d          MOV      r0,#0x2f4
 000b78  f7fffffe          BL       lc640_read_int
-000b7c  4968              LDR      r1,|L1.3360|
+000b7c  496e              LDR      r1,|L1.3384|
 000b7e  8008              STRH     r0,[r1,#0]
 ;;;304    ETH_TRAP3_IP_4=lc640_read_int(EE_ETH_TRAP3_IP_4);
 000b80  f24020f6          MOV      r0,#0x2f6
 000b84  f7fffffe          BL       lc640_read_int
-000b88  4966              LDR      r1,|L1.3364|
+000b88  496c              LDR      r1,|L1.3388|
 000b8a  8008              STRH     r0,[r1,#0]
 ;;;305    ETH_TRAP4_IP_1=lc640_read_int(EE_ETH_TRAP4_IP_1);
 000b8c  f44f703e          MOV      r0,#0x2f8
 000b90  f7fffffe          BL       lc640_read_int
-000b94  4964              LDR      r1,|L1.3368|
+000b94  496a              LDR      r1,|L1.3392|
 000b96  8008              STRH     r0,[r1,#0]
 ;;;306    ETH_TRAP4_IP_2=lc640_read_int(EE_ETH_TRAP4_IP_2);
 000b98  f24020fa          MOV      r0,#0x2fa
 000b9c  f7fffffe          BL       lc640_read_int
-000ba0  4962              LDR      r1,|L1.3372|
+000ba0  4968              LDR      r1,|L1.3396|
 000ba2  8008              STRH     r0,[r1,#0]
 ;;;307    ETH_TRAP4_IP_3=lc640_read_int(EE_ETH_TRAP4_IP_3);
 000ba4  f44f703f          MOV      r0,#0x2fc
 000ba8  f7fffffe          BL       lc640_read_int
-000bac  4960              LDR      r1,|L1.3376|
+000bac  4966              LDR      r1,|L1.3400|
 000bae  8008              STRH     r0,[r1,#0]
 ;;;308    ETH_TRAP4_IP_4=lc640_read_int(EE_ETH_TRAP4_IP_4);
 000bb0  f24020fe          MOV      r0,#0x2fe
 000bb4  f7fffffe          BL       lc640_read_int
-000bb8  495e              LDR      r1,|L1.3380|
+000bb8  4964              LDR      r1,|L1.3404|
 000bba  8008              STRH     r0,[r1,#0]
 ;;;309    ETH_TRAP5_IP_1=lc640_read_int(EE_ETH_TRAP5_IP_1);
 000bbc  f44f7040          MOV      r0,#0x300
 000bc0  f7fffffe          BL       lc640_read_int
-000bc4  495c              LDR      r1,|L1.3384|
+000bc4  4962              LDR      r1,|L1.3408|
 000bc6  8008              STRH     r0,[r1,#0]
 ;;;310    ETH_TRAP5_IP_2=lc640_read_int(EE_ETH_TRAP5_IP_2);
 000bc8  f2403002          MOV      r0,#0x302
 000bcc  f7fffffe          BL       lc640_read_int
-000bd0  495a              LDR      r1,|L1.3388|
+000bd0  4960              LDR      r1,|L1.3412|
 000bd2  8008              STRH     r0,[r1,#0]
 ;;;311    ETH_TRAP5_IP_3=lc640_read_int(EE_ETH_TRAP5_IP_3);
 000bd4  f44f7041          MOV      r0,#0x304
 000bd8  f7fffffe          BL       lc640_read_int
-000bdc  4958              LDR      r1,|L1.3392|
+000bdc  495e              LDR      r1,|L1.3416|
 000bde  8008              STRH     r0,[r1,#0]
 ;;;312    ETH_TRAP5_IP_4=lc640_read_int(EE_ETH_TRAP5_IP_4);
 000be0  f2403006          MOV      r0,#0x306
 000be4  f7fffffe          BL       lc640_read_int
-000be8  4956              LDR      r1,|L1.3396|
+000be8  495c              LDR      r1,|L1.3420|
 000bea  8008              STRH     r0,[r1,#0]
 ;;;313    ETH_SNMP_PORT_READ=lc640_read_int(EE_ETH_SNMP_PORT_READ);
 000bec  f44f7042          MOV      r0,#0x308
 000bf0  f7fffffe          BL       lc640_read_int
-000bf4  4954              LDR      r1,|L1.3400|
+000bf4  495a              LDR      r1,|L1.3424|
 000bf6  8008              STRH     r0,[r1,#0]
 ;;;314    ETH_SNMP_PORT_WRITE=lc640_read_int(EE_ETH_SNMP_PORT_WRITE);
 000bf8  f240300a          MOV      r0,#0x30a
 000bfc  f7fffffe          BL       lc640_read_int
-000c00  4952              LDR      r1,|L1.3404|
+000c00  4958              LDR      r1,|L1.3428|
 000c02  8008              STRH     r0,[r1,#0]
 ;;;315    MODBUS_ADRESS=lc640_read_int(EE_MODBUS_ADRESS);
 000c04  f44f7045          MOV      r0,#0x314
 000c08  f7fffffe          BL       lc640_read_int
-000c0c  4950              LDR      r1,|L1.3408|
+000c0c  4956              LDR      r1,|L1.3432|
 000c0e  8008              STRH     r0,[r1,#0]
 ;;;316    MODBUS_BAUDRATE=lc640_read_int(EE_MODBUS_BAUDRATE);
 000c10  f2403016          MOV      r0,#0x316
 000c14  f7fffffe          BL       lc640_read_int
-000c18  494e              LDR      r1,|L1.3412|
+000c18  4954              LDR      r1,|L1.3436|
 000c1a  8008              STRH     r0,[r1,#0]
 ;;;317    RELE_SET_MASK[0]=lc640_read_int(EE_RELE_SET_MASK0);
 000c1c  f44f70ae          MOV      r0,#0x15c
 000c20  f7fffffe          BL       lc640_read_int
-000c24  4c4c              LDR      r4,|L1.3416|
+000c24  4c52              LDR      r4,|L1.3440|
 000c26  8020              STRH     r0,[r4,#0]
 ;;;318    RELE_SET_MASK[1]=lc640_read_int(EE_RELE_SET_MASK1);
 000c28  f44f70af          MOV      r0,#0x15e
@@ -1517,159 +1517,172 @@
 ;;;321    num_rki=(char)lc640_read_int(EE_NUM_RKI);
 000c46  2046              MOVS     r0,#0x46
 000c48  f7fffffe          BL       lc640_read_int
-000c4c  4943              LDR      r1,|L1.3420|
+000c4c  4949              LDR      r1,|L1.3444|
 000c4e  7008              STRB     r0,[r1,#0]
 ;;;322    //if(num_rki>1) {num_rki=0; lc640_write_int(EE_NUM_RKI, num_rki);}
 ;;;323    num_net_in=(char)lc640_read_int(EE_NUM_NET_IN);
 000c50  2048              MOVS     r0,#0x48
 000c52  f7fffffe          BL       lc640_read_int
-000c56  4942              LDR      r1,|L1.3424|
+000c56  4948              LDR      r1,|L1.3448|
 000c58  7008              STRB     r0,[r1,#0]
-;;;324    
-;;;325    
-;;;326    for(i=0;i<64;i++)
-000c5a  f04f0400          MOV      r4,#0
-;;;327    	{
-;;;328    	snmp_location[i]=lc640_read(EE_LOCATION+i);
-000c5e  4d41              LDR      r5,|L1.3428|
-                  |L1.3168|
-000c60  f5047065          ADD      r0,r4,#0x394
-000c64  f7fffffe          BL       lc640_read
-000c68  5528              STRB     r0,[r5,r4]
-000c6a  f1040401          ADD      r4,r4,#1              ;326
-000c6e  b2e4              UXTB     r4,r4                 ;326
-000c70  2c40              CMP      r4,#0x40              ;326
-000c72  d3f5              BCC      |L1.3168|
-;;;329    	}
-;;;330    for(i=0;i<10;i++)
-000c74  f04f0400          MOV      r4,#0
-;;;331    	{
-;;;332    	snmp_community[i]=lc640_read(EE_COMMUNITY+(i*2));
-000c78  4d3b              LDR      r5,|L1.3432|
-000c7a  f24036da          MOV      r6,#0x3da
-                  |L1.3198|
-000c7e  eb060044          ADD      r0,r6,r4,LSL #1
-000c82  f7fffffe          BL       lc640_read
-000c86  5528              STRB     r0,[r5,r4]
-000c88  f1040401          ADD      r4,r4,#1              ;330
-000c8c  b2e4              UXTB     r4,r4                 ;330
-000c8e  2c0a              CMP      r4,#0xa               ;330
-000c90  d3f5              BCC      |L1.3198|
-;;;333    	}
-;;;334    
-;;;335    __ee_vz_cnt=lc640_read_int(EE_VZ_CNT);
-000c92  f44f70f9          MOV      r0,#0x1f2
-000c96  f7fffffe          BL       lc640_read_int
-000c9a  4934              LDR      r1,|L1.3436|
-000c9c  8008              STRH     r0,[r1,#0]
-;;;336    __ee_spc_stat=lc640_read_int(EE_SPC_STAT);
-000c9e  f44f70f8          MOV      r0,#0x1f0
-000ca2  f7fffffe          BL       lc640_read_int
-000ca6  4932              LDR      r1,|L1.3440|
-000ca8  8008              STRH     r0,[r1,#0]
-;;;337    __ee_spc_bat=lc640_read_int(EE_SPC_BAT);
-000caa  f44f70fa          MOV      r0,#0x1f4
+;;;324    hv_vz_stat=(enum_hv_vz_stat)lc640_read_int(EE_HV_VZ_STAT);
+000c5a  f44f70b4          MOV      r0,#0x168
+000c5e  f7fffffe          BL       lc640_read_int
+000c62  4946              LDR      r1,|L1.3452|
+000c64  7008              STRB     r0,[r1,#0]
+;;;325    VZ_KIND=lc640_read_int(EE_VZ_KIND);
+000c66  f44f70b3          MOV      r0,#0x166
+000c6a  f7fffffe          BL       lc640_read_int
+000c6e  4944              LDR      r1,|L1.3456|
+000c70  8008              STRH     r0,[r1,#0]
+;;;326    
+;;;327    for(i=0;i<64;i++)
+000c72  f04f0400          MOV      r4,#0
+;;;328    	{
+;;;329    	snmp_location[i]=lc640_read(EE_LOCATION+i);
+000c76  4d43              LDR      r5,|L1.3460|
+                  |L1.3192|
+000c78  f5047065          ADD      r0,r4,#0x394
+000c7c  f7fffffe          BL       lc640_read
+000c80  5528              STRB     r0,[r5,r4]
+000c82  f1040401          ADD      r4,r4,#1              ;327
+000c86  b2e4              UXTB     r4,r4                 ;327
+000c88  2c40              CMP      r4,#0x40              ;327
+000c8a  d3f5              BCC      |L1.3192|
+;;;330    	}
+;;;331    for(i=0;i<10;i++)
+000c8c  f04f0400          MOV      r4,#0
+;;;332    	{
+;;;333    	snmp_community[i]=lc640_read(EE_COMMUNITY+(i*2));
+000c90  4d3d              LDR      r5,|L1.3464|
+000c92  f24036da          MOV      r6,#0x3da
+                  |L1.3222|
+000c96  eb060044          ADD      r0,r6,r4,LSL #1
+000c9a  f7fffffe          BL       lc640_read
+000c9e  5528              STRB     r0,[r5,r4]
+000ca0  f1040401          ADD      r4,r4,#1              ;331
+000ca4  b2e4              UXTB     r4,r4                 ;331
+000ca6  2c0a              CMP      r4,#0xa               ;331
+000ca8  d3f5              BCC      |L1.3222|
+;;;334    	}
+;;;335    
+;;;336    __ee_vz_cnt=lc640_read_int(EE_VZ_CNT);
+000caa  f44f70f9          MOV      r0,#0x1f2
 000cae  f7fffffe          BL       lc640_read_int
-000cb2  4930              LDR      r1,|L1.3444|
+000cb2  4936              LDR      r1,|L1.3468|
 000cb4  8008              STRH     r0,[r1,#0]
-;;;338    __ee_spc_phase=lc640_read_int(EE_SPC_PHASE);
-000cb6  f44f70fb          MOV      r0,#0x1f6
+;;;337    __ee_spc_stat=lc640_read_int(EE_SPC_STAT);
+000cb6  f44f70f8          MOV      r0,#0x1f0
 000cba  f7fffffe          BL       lc640_read_int
-000cbe  492e              LDR      r1,|L1.3448|
+000cbe  4934              LDR      r1,|L1.3472|
 000cc0  8008              STRH     r0,[r1,#0]
-;;;339    }
-000cc2  e8bd87f0          POP      {r4-r10,pc}
-;;;340    
+;;;338    __ee_spc_bat=lc640_read_int(EE_SPC_BAT);
+000cc2  f44f70fa          MOV      r0,#0x1f4
+000cc6  f7fffffe          BL       lc640_read_int
+000cca  4932              LDR      r1,|L1.3476|
+000ccc  8008              STRH     r0,[r1,#0]
+;;;339    __ee_spc_phase=lc640_read_int(EE_SPC_PHASE);
+000cce  f44f70fb          MOV      r0,#0x1f6
+000cd2  f7fffffe          BL       lc640_read_int
+000cd6  4930              LDR      r1,|L1.3480|
+000cd8  8008              STRH     r0,[r1,#0]
+;;;340    }
+000cda  e8bd87f0          POP      {r4-r10,pc}
+;;;341    
                           ENDP
 
-000cc6  0000              DCW      0x0000
-                  |L1.3272|
-                          DCD      ETH_IP_1
-                  |L1.3276|
-                          DCD      ETH_IP_2
-                  |L1.3280|
-                          DCD      ETH_IP_3
-                  |L1.3284|
-                          DCD      ETH_IP_4
-                  |L1.3288|
-                          DCD      ETH_MASK_1
-                  |L1.3292|
-                          DCD      ETH_MASK_2
+000cde  0000              DCW      0x0000
                   |L1.3296|
-                          DCD      ETH_MASK_3
+                          DCD      ETH_IP_1
                   |L1.3300|
-                          DCD      ETH_MASK_4
+                          DCD      ETH_IP_2
                   |L1.3304|
-                          DCD      ETH_GW_1
+                          DCD      ETH_IP_3
                   |L1.3308|
-                          DCD      ETH_GW_2
+                          DCD      ETH_IP_4
                   |L1.3312|
-                          DCD      ETH_GW_3
+                          DCD      ETH_MASK_1
                   |L1.3316|
-                          DCD      ETH_GW_4
+                          DCD      ETH_MASK_2
                   |L1.3320|
-                          DCD      ETH_TRAP1_IP_1
+                          DCD      ETH_MASK_3
                   |L1.3324|
-                          DCD      ETH_TRAP1_IP_2
+                          DCD      ETH_MASK_4
                   |L1.3328|
-                          DCD      ETH_TRAP1_IP_3
+                          DCD      ETH_GW_1
                   |L1.3332|
-                          DCD      ETH_TRAP1_IP_4
+                          DCD      ETH_GW_2
                   |L1.3336|
-                          DCD      ETH_TRAP2_IP_1
+                          DCD      ETH_GW_3
                   |L1.3340|
-                          DCD      ETH_TRAP2_IP_2
+                          DCD      ETH_GW_4
                   |L1.3344|
-                          DCD      ETH_TRAP2_IP_3
+                          DCD      ETH_TRAP1_IP_1
                   |L1.3348|
-                          DCD      ETH_TRAP2_IP_4
+                          DCD      ETH_TRAP1_IP_2
                   |L1.3352|
-                          DCD      ETH_TRAP3_IP_1
+                          DCD      ETH_TRAP1_IP_3
                   |L1.3356|
-                          DCD      ETH_TRAP3_IP_2
+                          DCD      ETH_TRAP1_IP_4
                   |L1.3360|
-                          DCD      ETH_TRAP3_IP_3
+                          DCD      ETH_TRAP2_IP_1
                   |L1.3364|
-                          DCD      ETH_TRAP3_IP_4
+                          DCD      ETH_TRAP2_IP_2
                   |L1.3368|
-                          DCD      ETH_TRAP4_IP_1
+                          DCD      ETH_TRAP2_IP_3
                   |L1.3372|
-                          DCD      ETH_TRAP4_IP_2
+                          DCD      ETH_TRAP2_IP_4
                   |L1.3376|
-                          DCD      ETH_TRAP4_IP_3
+                          DCD      ETH_TRAP3_IP_1
                   |L1.3380|
-                          DCD      ETH_TRAP4_IP_4
+                          DCD      ETH_TRAP3_IP_2
                   |L1.3384|
-                          DCD      ETH_TRAP5_IP_1
+                          DCD      ETH_TRAP3_IP_3
                   |L1.3388|
-                          DCD      ETH_TRAP5_IP_2
+                          DCD      ETH_TRAP3_IP_4
                   |L1.3392|
-                          DCD      ETH_TRAP5_IP_3
+                          DCD      ETH_TRAP4_IP_1
                   |L1.3396|
-                          DCD      ETH_TRAP5_IP_4
+                          DCD      ETH_TRAP4_IP_2
                   |L1.3400|
-                          DCD      ETH_SNMP_PORT_READ
+                          DCD      ETH_TRAP4_IP_3
                   |L1.3404|
-                          DCD      ETH_SNMP_PORT_WRITE
+                          DCD      ETH_TRAP4_IP_4
                   |L1.3408|
-                          DCD      MODBUS_ADRESS
+                          DCD      ETH_TRAP5_IP_1
                   |L1.3412|
-                          DCD      MODBUS_BAUDRATE
+                          DCD      ETH_TRAP5_IP_2
                   |L1.3416|
-                          DCD      RELE_SET_MASK
+                          DCD      ETH_TRAP5_IP_3
                   |L1.3420|
-                          DCD      num_rki
+                          DCD      ETH_TRAP5_IP_4
                   |L1.3424|
-                          DCD      num_net_in
+                          DCD      ETH_SNMP_PORT_READ
                   |L1.3428|
-                          DCD      snmp_location
+                          DCD      ETH_SNMP_PORT_WRITE
                   |L1.3432|
-                          DCD      snmp_community
+                          DCD      MODBUS_ADRESS
                   |L1.3436|
-                          DCD      __ee_vz_cnt
+                          DCD      MODBUS_BAUDRATE
                   |L1.3440|
-                          DCD      __ee_spc_stat
+                          DCD      RELE_SET_MASK
                   |L1.3444|
-                          DCD      __ee_spc_bat
+                          DCD      num_rki
                   |L1.3448|
+                          DCD      num_net_in
+                  |L1.3452|
+                          DCD      hv_vz_stat
+                  |L1.3456|
+                          DCD      VZ_KIND
+                  |L1.3460|
+                          DCD      snmp_location
+                  |L1.3464|
+                          DCD      snmp_community
+                  |L1.3468|
+                          DCD      __ee_vz_cnt
+                  |L1.3472|
+                          DCD      __ee_spc_stat
+                  |L1.3476|
+                          DCD      __ee_spc_bat
+                  |L1.3480|
                           DCD      __ee_spc_phase

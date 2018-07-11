@@ -635,6 +635,35 @@ if(crc16_calculated==crc16_incapsulated)
 					}*/
 				}
 			//modbus_hold_register_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0);
+
+			if(modbus_rx_arg0==100)		//Передача шима для управления от ведущего ИПС
+				{
+				//plazma1000[2]=modbus_rx_arg1;
+				if(modbus_rx_arg1&0x4000)
+					{
+					short tempSSSS;
+					
+					tempSSSS=modbus_rx_arg1&0x3fff;
+					//plazma1000[3]=tempSSSS;
+					if((tempSSSS>0)&&(tempSSSS<5))tempSSSS=0;
+					else if(tempSSSS>=60)tempSSSS=60;
+				//	else tempSSSS=modbus_rx_arg1;
+					if(TBAT!=tempSSSS)lc640_write_int(EE_TBAT,tempSSSS);
+
+					main_kb_cnt=(tempSSSS*60)-20;
+					}
+				else ica_cntrl_hndl=modbus_rx_arg1;
+				ica_cntrl_hndl_cnt=200;
+
+				//plazma1000[1]++;
+				}
+			if(modbus_rx_arg0==101)		//Значение тока в ведомом ИПСе (прочитанное мастером в ведомом и переданное ведущему)
+				{
+				ica_your_current==modbus_rx_arg1;
+				ica_cntrl_hndl_cnt=200;
+				//plazma1000[2]++;
+				}
+
 			modbus_hold_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,1,MODBUS_RTU_PROT);
 			}
 		} 
@@ -1271,6 +1300,12 @@ if(avar_stat&(1<<(3+1)))tempS|=(1<<3);						 //	Бит 3	Авария выпрямителя №2
 if(avar_stat&(1<<(3+2)))tempS|=(1<<4);						 //	Бит 4	Авария выпрямителя №2
 modbus_registers[118]=(signed char)(tempS>>8);
 modbus_registers[119]=(signed char)(tempS);
+
+tempS=cntrl_stat_old;
+if(	(main_kb_cnt==(TBAT*60)-21) || (main_kb_cnt==(TBAT*60)-20) || (main_kb_cnt==(TBAT*60)-19)) tempS=((short)TBAT)|0x4000;
+//tempS=0x800f;
+modbus_registers[198]=(signed char)(tempS>>8);				//???100	????????? ???
+modbus_registers[199]=(signed char)(tempS);
 
 tempS=t_ext[0];
 if(ND_EXT[0])tempS=-1000;

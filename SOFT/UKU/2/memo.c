@@ -321,7 +321,8 @@ RELE_SET_MASK[3]=lc640_read_int(EE_RELE_SET_MASK3);
 num_rki=(char)lc640_read_int(EE_NUM_RKI);
 //if(num_rki>1) {num_rki=0; lc640_write_int(EE_NUM_RKI, num_rki);}
 num_net_in=(char)lc640_read_int(EE_NUM_NET_IN);
-
+hv_vz_stat=(enum_hv_vz_stat)lc640_read_int(EE_HV_VZ_STAT);
+VZ_KIND=lc640_read_int(EE_VZ_KIND);
 
 for(i=0;i<64;i++)
 	{
