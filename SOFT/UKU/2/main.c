@@ -16570,8 +16570,8 @@ else if(ind==iSetRKI) // меню установки РКИ
 		else if(type_rki==1) gran_char(&sub_ind,0,9);
 		}
 	else if(but==butL){
-		if(sub_ind==0) command_rki=1;
-		else if(sub_ind==1) command_rki=3;
+		if(sub_ind==0) command_rki=38;
+		else if(sub_ind==1) command_rki=42;
 		else if(sub_ind==2) command_rki=13;
 		else if(sub_ind==3) command_rki=19;
 		else if(sub_ind==4) command_rki=23;
@@ -16584,8 +16584,8 @@ else if(ind==iSetRKI) // меню установки РКИ
 		
 	}
 	else if(but==butR){
-		if(sub_ind==0) command_rki=2;
-		else if(sub_ind==1) command_rki=4;
+		if(sub_ind==0) command_rki=36;
+		else if(sub_ind==1) command_rki=40;
 		else if(sub_ind==2) command_rki=14;
 		else if(sub_ind==3) command_rki=20;
 		else if(sub_ind==4) command_rki=24;
@@ -16598,7 +16598,9 @@ else if(ind==iSetRKI) // меню установки РКИ
 		 
 	}
 	else if(but==butL_){
-		if(sub_ind==3) command_rki=21;
+		if(sub_ind==0) command_rki=39;
+		else if(sub_ind==1) command_rki=43;
+		else if(sub_ind==3) command_rki=21;
 		else if(sub_ind==4) command_rki=25;
 		else if(sub_ind==5) command_rki=29;
 		else if(sub_ind==6) command_rki=19;
@@ -16608,7 +16610,9 @@ else if(ind==iSetRKI) // меню установки РКИ
 		} 
 	}
 	else if(but==butR_){
-		if(sub_ind==3) command_rki=22;
+		if(sub_ind==0) command_rki=37;
+		else if(sub_ind==1) command_rki=41;
+		else if(sub_ind==3) command_rki=22;
 		else if(sub_ind==4) command_rki=26;
 		else if(sub_ind==5) command_rki=30;
 		else if(sub_ind==6) command_rki=18;
