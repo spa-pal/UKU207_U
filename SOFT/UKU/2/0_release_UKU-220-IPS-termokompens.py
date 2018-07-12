@@ -55,9 +55,9 @@ print(targetDir_)
 
 try : os.mkdir(targetDir_)
 except FileExistsError :
-	print ("Папка уже существует")
-	input()
-	#os.system("pause")
+    print ("Папка уже существует")
+    input()
+    #os.system("pause")
 
 target_file=targetDir_+ "\\ips_zvu_"+"_"+build_year+"_"+build_month+"_"+build_day+"__"+version+"."+subversion+"."+build+".hex"
 

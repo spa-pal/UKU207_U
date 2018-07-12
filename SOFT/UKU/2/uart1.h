@@ -26,13 +26,15 @@ extern char memo_out1[100];
 extern char UIB10[30];
 extern char usart1_router_cnt;
 extern char plazma_suz[5];
+extern volatile uint32_t UART1Status;
+extern volatile uint8_t UART1TxEmpty;
 
 void putchar1(char c);
 void uart_out1 (char num,char data0,char data1,char data2,char data3,char data4,char data5);
 void uart_out_adr1 (char *ptr, unsigned char len);
-void uart1_init(void);
+uint32_t uart1_init(uint32_t baudrate);
 char getchar1(void);
-__irq void uart1_interrupt(void);
+void UART1_IRQHandler (void);
 void uart_in_an1(void);
 char index_offset1 (signed char index,signed char offset);
 char control_check1(char index);

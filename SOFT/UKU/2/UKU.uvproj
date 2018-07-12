@@ -586,6 +586,11 @@
               <FileType>1</FileType>
               <FilePath>.\MODBUS_TCP.c</FilePath>
             </File>
+            <File>
+              <FileName>uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart1.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1187,6 +1192,11 @@
               <FileName>MODBUS_TCP.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\MODBUS_TCP.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart1.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1790,6 +1800,11 @@
               <FileType>1</FileType>
               <FilePath>.\MODBUS_TCP.c</FilePath>
             </File>
+            <File>
+              <FileName>uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart1.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2391,6 +2406,11 @@
               <FileName>MODBUS_TCP.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\MODBUS_TCP.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart1.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2994,6 +3014,11 @@
               <FileType>1</FileType>
               <FilePath>.\MODBUS_TCP.c</FilePath>
             </File>
+            <File>
+              <FileName>uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart1.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3595,6 +3620,11 @@
               <FileName>MODBUS_TCP.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\MODBUS_TCP.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart1.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4216,6 +4246,11 @@
               <FileType>1</FileType>
               <FilePath>.\MODBUS_TCP.c</FilePath>
             </File>
+            <File>
+              <FileName>uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart1.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4817,6 +4852,11 @@
               <FileName>MODBUS_TCP.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\MODBUS_TCP.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart1.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5555,6 +5595,11 @@
               <FileType>1</FileType>
               <FilePath>.\MODBUS_TCP.c</FilePath>
             </File>
+            <File>
+              <FileName>uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart1.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6214,6 +6259,11 @@
               <FileType>1</FileType>
               <FilePath>.\MODBUS_TCP.c</FilePath>
             </File>
+            <File>
+              <FileName>uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart1.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6816,6 +6866,11 @@
               <FileType>1</FileType>
               <FilePath>.\MODBUS_TCP.c</FilePath>
             </File>
+            <File>
+              <FileName>uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart1.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -7417,6 +7472,11 @@
               <FileName>MODBUS_TCP.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\MODBUS_TCP.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart1.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8155,6 +8215,11 @@
               <FileType>1</FileType>
               <FilePath>.\MODBUS_TCP.c</FilePath>
             </File>
+            <File>
+              <FileName>uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart1.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -8774,6 +8839,11 @@
               <FileName>MODBUS_TCP.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\MODBUS_TCP.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart1.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9668,6 +9738,11 @@
               <FileType>1</FileType>
               <FilePath>.\MODBUS_TCP.c</FilePath>
             </File>
+            <File>
+              <FileName>uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart1.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -10462,6 +10537,11 @@
               <FileType>1</FileType>
               <FilePath>.\MODBUS_TCP.c</FilePath>
             </File>
+            <File>
+              <FileName>uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart1.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -11198,6 +11278,11 @@
               <FileName>MODBUS_TCP.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\MODBUS_TCP.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart1.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -11936,6 +12021,11 @@
               <FileType>1</FileType>
               <FilePath>.\MODBUS_TCP.c</FilePath>
             </File>
+            <File>
+              <FileName>uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart1.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -12672,6 +12762,11 @@
               <FileName>MODBUS_TCP.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\MODBUS_TCP.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\uart1.c</FilePath>
             </File>
           </Files>
         </Group>

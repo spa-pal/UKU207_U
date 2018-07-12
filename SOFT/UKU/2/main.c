@@ -34852,6 +34852,8 @@ if (socket_tcp != 0)
 	{
     tcp_listen (socket_tcp, 502);
   	}
+
+uart1_init(9600);
   		
 while (1)  
 	{
@@ -35191,6 +35193,14 @@ while (1)
 		#endif
 
 		ips_current_average_hndl();
+
+		//SET_REG(LPC_GPIO2->FIODIR,1,2,1);
+		//SET_REG(LPC_GPIO2->FIOPIN,1,2,1);
+		//putchar1(0x56);
+		LPC_PINCON->PINSEL4 &= ~0x0000003f;
+	//	LPC_PINCON->PINSEL4 |= 0x0000000A;	/* Enable RxD1 P2.1, TxD1 P2.0 */
+		LPC_GPIO2->FIODIR|=(7UL<<0);
+		LPC_GPIO2->FIOPIN^=(7UL<<0);
 		}
 	if(b1min)
 		{
