@@ -42,7 +42,14 @@ if (tx_counter1 || ((LPC_UART1->LSR & 0x60)==0))
    if (++tx_wr_index1 == TX_BUFFER_SIZE1) tx_wr_index1=0;
    ++tx_counter1;
    }
-else LPC_UART1->THR=c;
+else
+	{
+	LPC_PINCON->PINSEL4 &= ~0x0000c000;//!!!!!!!!!!!
+	LPC_PINCON->PINSEL4 |= 0x00000000; //!!!!!!!!!!! 
+	LPC_GPIO2->FIODIR|=(1UL<<2);
+	LPC_GPIO2->FIOPIN|=(1UL<<2);
+	LPC_UART1->THR=c;
+	} 
 }
 
 //-----------------------------------------------
@@ -109,7 +116,7 @@ LPC_PINCON->PINSEL4 |= 0x0000000A;	/* Enable RxD1 P2.1, TxD1 P2.0 */
 LPC_PINCON->PINSEL4 &= ~0x00000030;//!!!!!!!!!!!
 LPC_PINCON->PINSEL4 |= 0x00000000; //!!!!!!!!!!! 
 LPC_GPIO2->FIODIR|=(1UL<<2);
-LPC_GPIO2->FIOPIN|=(1UL<<2);
+LPC_GPIO2->FIOPIN&=~(1UL<<2);
 
 pclkdiv = (LPC_SC->PCLKSEL0 >> 8) & 0x03;
 switch ( pclkdiv )
@@ -238,7 +245,7 @@ else if ( IIRValue == IIR_THRE )	/* THRE, transmit holding register empty */
    			LPC_UART1->THR=tx_buffer1[tx_rd_index1];
    			if (++tx_rd_index1 == TX_BUFFER_SIZE1) tx_rd_index1=0;
    			}
-		//else LPC_GPIO2->FIOPIN&=~(1UL<<7);
+		else LPC_GPIO2->FIOPIN&=~(1UL<<2);
 		}
 	else
 		{
@@ -264,12 +271,18 @@ for(i=0;i<24;i++)
 }
 uart1_mess[0]++;
 
-if((UIB1[0]==0x55)&&(UIB1[1]==0x66))
+if((UIB1[0]==4)&&(UIB1[1]==0)&&(UIB1[2]==2)&&(UIB1[3]==0)&&(UIB1[4]==1) && (ICA_EN==0))
 	{
-	
-	uart_out1(2,0x57,0x66,0,0,0,0);
+	bps_I=4321;
+	uart_out1(5,4,1,2,(char)bps_I,(char)(bps_I/256),0);
+	plazma_uart1++;
 	}
 
+else if((UIB1[0]==4)&&(UIB1[1]==1)&&(UIB1[2]==2) && (ICA_EN==1) && (ICA_CH==2) )
+	{
+	
+	ica_your_current=(short)UIB1[3]+((short)UIB1[4]*256);
+	}
 else if((UIB1[0]==CMND)&&(UIB1[1]==1))
 	{
 //	adc_buff_out_[0]=UIB1[2]+(UIB1[3]*256);
@@ -354,6 +367,7 @@ if(rx_counter1&&(rx_buffer1[index_offset1(rx_wr_index1,-1)])==END)
 			rx_rd_index1=rx_wr_index1;
 			rx_counter1=0;
 			uart_in_an1();
+			
 			if(usart1_router_stat==ursMEGA)usart1_router_wrk=0;
     			}
  	

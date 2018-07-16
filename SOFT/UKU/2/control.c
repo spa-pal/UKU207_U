@@ -4279,6 +4279,8 @@ if((ica_timer_cnt==8)&&(ICA_EN==1))
 	modbus_buff[6]= (char)crc_temp;
 	modbus_buff[7]= (char)(crc_temp>>8);
 
+
+
 	if(ICA_CH==0)
 		{
 		for (i=0;i<8;i++)
@@ -4370,34 +4372,10 @@ if((++ica_timer_cnt>=10)	&& (num_of_wrks_bps))
 	}
 
 
-if((ICA_EN==1)&& (num_of_wrks_bps))
+if((ICA_EN==1)/*&& (num_of_wrks_bps)*/)
 	{
-/*	if(main_kb_cnt==(TBAT*60)-21)
-		{
-		char modbus_buff[20],i;
-		short crc_temp;
 	
-		modbus_buff[0] = ICA_MODBUS_ADDRESS;
-		modbus_buff[1] = 6;
-		modbus_buff[2] = 0;
-		modbus_buff[3] = 30;
-		modbus_buff[4] = (char)(TBAT/256);	
-		modbus_buff[5] = (char)(TBAT%256);
-	
-		crc_temp= CRC16_2(modbus_buff,6);
-	
-		modbus_buff[6]= (char)crc_temp;
-		modbus_buff[7]= (char)(crc_temp>>8);
-	
-		if(ICA_CH==0)
-			{
-			for (i=0;i<8;i++)
-				{
-				putchar_sc16is700(modbus_buff[i]);
-				}
-			}
-		}
-	else*/ if(ica_timer_cnt==8)
+	if(ica_timer_cnt==8)
 		{
 		char modbus_buff[20],i;
 		short crc_temp;
@@ -4420,6 +4398,10 @@ if((ICA_EN==1)&& (num_of_wrks_bps))
 				{
 				putchar_sc16is700(modbus_buff[i]);
 				}
+			}
+		else if(ICA_CH==2)
+			{
+			uart_out1 (5,4,0,2,0,1,0);
 			}
 		}
 	else

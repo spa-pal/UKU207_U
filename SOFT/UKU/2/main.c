@@ -4123,10 +4123,13 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 	int2lcdyx((short)sp_ch_wrk_cnt,0,14,0);
 	
 	
-	int2lcdyx(cntrl_stat_new,2,3,0); */	 
+	int2lcdyx(cntrl_stat_new,2,3,0); */	
+	int2lcdyx(plazma_uart1,0,19,0);
+	int2lcdyx(rx_wr_index1,0,15,0);
+	int2lcdyx(ica_your_current,0,12,0);
 /*	int2lcdyx(sp_ch_stat,0,3,0);
 	int2lcdyx(hv_vz_stat,0,5,0);	
-	int2lcdyx(plazma_pavlik,0,19,0);		
+			
 	int2lcdyx(cnt_net_drv,0,15,0);  */
 
 	//int2lcdyx(speedChrgBlckStat,0,3,0);
@@ -14359,12 +14362,26 @@ else if (ind==iIps_Curr_Avg_Set)
 			ptrs[2]=	" ÀÄÐÅÑ ÂÅÄÎÌÎÃÎ   ! ";
 			simax=3;
 			}
-		else
+		else if(ICA_CH==1)
 			{
 			ptrs[1]=	" Êàíàë   MODBUS-TCP ";
 			ptrs[2]=	" IP 00@.00#.00$.00% ";
 			ptrs[3]=	" ÀÄÐÅÑ ÂÅÄÎÌÎÃÎ   ^ ";
 			simax=4;
+			}
+		else if(ICA_CH==2)
+			{
+			ptrs[1]=	" Êàíàë   RS485-2    ";
+			ptrs[2]=	"                    ";
+			ptrs[3]=	"                    ";
+			simax=2;
+			}
+		else 
+			{
+			ptrs[1]=	" Íåîïðåäåëåííîñòü   ";
+			ptrs[2]=	"                    ";
+			ptrs[3]=	"                    ";
+			simax=2;
 			}
 		} 
 	else if(ICA_EN==2) 
@@ -33963,16 +33980,16 @@ else if (ind==iIps_Curr_Avg_Set)
 
 	else if(sub_ind==0)
 		{
-		if((but==butE)||(but==butR))
+		if(/*(but==butE)||*/(but==butR))
 			{
 			ICA_EN++;
-			gran(&ICA_EN,0,2);
+			gran_ring(&ICA_EN,0,2);
 			lc640_write_int(EE_ICA_EN,ICA_EN);
 			}
 		else if(but==butL)
 			{
 			ICA_EN--;
-			gran(&ICA_EN,0,2);
+			gran_ring(&ICA_EN,0,2);
 			lc640_write_int(EE_ICA_EN,ICA_EN);
 			}
 		}
@@ -33980,9 +33997,17 @@ else if (ind==iIps_Curr_Avg_Set)
 		{
 		if(sub_ind==1)
 			{
-			if(but==butE)
+			if(but==butR)
 				{
-				if(ICA_CH)ICA_CH=0;
+				if(ICA_CH==0)ICA_CH=1;
+				else if(ICA_CH==1)ICA_CH=2;
+				else ICA_CH=0;
+				lc640_write_int(EE_ICA_CH,ICA_CH);
+				}
+			else if(but==butL)
+				{
+				if(ICA_CH==0)ICA_CH=2;
+				else if(ICA_CH==1)ICA_CH=0;
 				else ICA_CH=1;
 				lc640_write_int(EE_ICA_CH,ICA_CH);
 				}
@@ -34876,6 +34901,13 @@ while (1)
 		modbus_in();
 		}
 
+	if(bRXIN1) 
+		{
+		bRXIN1=0;
+	
+		uart_in1();
+		}
+
 	if(bRXIN0) 
 		{
 		bRXIN0=0;
@@ -35197,10 +35229,12 @@ while (1)
 		//SET_REG(LPC_GPIO2->FIODIR,1,2,1);
 		//SET_REG(LPC_GPIO2->FIOPIN,1,2,1);
 		//putchar1(0x56);
-		LPC_PINCON->PINSEL4 &= ~0x0000003f;
+		//LPC_PINCON->PINSEL4 &= ~0x0000003f;
 	//	LPC_PINCON->PINSEL4 |= 0x0000000A;	/* Enable RxD1 P2.1, TxD1 P2.0 */
-		LPC_GPIO2->FIODIR|=(7UL<<0);
-		LPC_GPIO2->FIOPIN^=(7UL<<0);
+		//LPC_GPIO2->FIODIR|=(4UL<<0);
+		//LPC_GPIO2->FIOPIN|=(4UL<<0);
+		//putchar1(0x78);
+		
 		}
 	if(b1min)
 		{
