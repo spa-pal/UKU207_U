@@ -145,6 +145,8 @@ extern char bPARALLEL;
 
 extern char cntrl_hndl_plazma;
 
+extern short plazma_ica1,plazma_ica2;
+
 void zar_superviser_drv(void);
 void zar_superviser_start(void);
 void vent_hndl(void);

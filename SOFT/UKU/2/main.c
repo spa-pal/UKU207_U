@@ -4124,12 +4124,12 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 	
 	
 	int2lcdyx(cntrl_stat_new,2,3,0); */	
-	int2lcdyx(plazma_uart1,0,19,0);
+/*	int2lcdyx(plazma_uart1,0,19,0);
 	int2lcdyx(rx_wr_index1,0,15,0);
 	int2lcdyx(ica_your_current,0,12,0);
-/*	int2lcdyx(sp_ch_stat,0,3,0);
-	int2lcdyx(hv_vz_stat,0,5,0);	
-			
+	int2lcdyx(plazma_ica1,0,3,0);
+	int2lcdyx(plazma_ica2,0,8,0);*/	
+/*			
 	int2lcdyx(cnt_net_drv,0,15,0);  */
 
 	//int2lcdyx(speedChrgBlckStat,0,3,0);
@@ -14350,7 +14350,7 @@ else if (ind==iIps_Curr_Avg_Set)
 	{ 
 	if(ICA_EN==0)
 		{
-		ptrs[0]=		" Выключено          ";
+		ptrs[0]=		" Ведомый            ";
 		simax=1;
 		}
 	else if(ICA_EN==1) 

@@ -229,6 +229,8 @@ char bPARALLEL;
 
 char cntrl_hndl_plazma;
 
+
+short plazma_ica1,plazma_ica2;
 //-----------------------------------------------
 void ke_start(char in)
 {          
@@ -4351,7 +4353,7 @@ if((main_kb_cnt==(TBAT*60)-21)&&(ICA_EN==1))
 //-----------------------------------------------
 void ips_current_average_hndl(void)
 {
-if((++ica_timer_cnt>=10)	&& (num_of_wrks_bps))
+if((++ica_timer_cnt>=10) && (num_of_wrks_bps))
 	{
 	ica_timer_cnt=0;
 	ica_plazma[0]++;
@@ -4372,7 +4374,7 @@ if((++ica_timer_cnt>=10)	&& (num_of_wrks_bps))
 	}
 
 
-if((ICA_EN==1)/*&& (num_of_wrks_bps)*/)
+if((ICA_EN==1) && (num_of_wrks_bps))
 	{
 	
 	if(ica_timer_cnt==8)
@@ -4427,12 +4429,17 @@ if((ICA_EN==1)/*&& (num_of_wrks_bps)*/)
 	
 		crc_temp= CRC16_2(modbus_buff,6);
 	
+		plazma_ica1=tempSSSS;
 		if(ICA_CH==0)
 			{
 			for (i=0;i<8;i++)
 				{
 				putchar_sc16is700(modbus_buff[i]);
 				}
+			}
+		else if(ICA_CH==2)
+			{
+			uart_out1 (5,6,0,100,modbus_buff[4],modbus_buff[5],0);
 			}
 		}
 	}
@@ -6308,7 +6315,7 @@ else if(b1Hz_unh)
 			temp_SL/=200;
 			temp_SL+=UB0;
 			}
-		if((spc_stat==spcVZ)&&(sk_stat[0]==1)
+		if((spc_stat==spcVZ)&&(sk_stat[0]==1))
 			{
 			temp_SL=UVZ;
 			}

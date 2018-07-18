@@ -273,10 +273,33 @@ uart1_mess[0]++;
 
 if((UIB1[0]==4)&&(UIB1[1]==0)&&(UIB1[2]==2)&&(UIB1[3]==0)&&(UIB1[4]==1) && (ICA_EN==0))
 	{
-	bps_I=4321;
+	
 	uart_out1(5,4,1,2,(char)bps_I,(char)(bps_I/256),0);
 	plazma_uart1++;
 	}
+
+
+if((UIB1[0]==6)&&(UIB1[1]==0)&&(UIB1[2]==100) && (ICA_EN==0))
+	{
+	short tempSSSS;
+	tempSSSS=(short)UIB1[4] + ((short)UIB1[3])*256;
+
+	plazma_ica2=tempSSSS;
+
+	if(tempSSSS&0x4000)
+		{
+		tempSSSS&=0x3fff;
+		if((tempSSSS>0)&&(tempSSSS<5))tempSSSS=0;
+		else if(tempSSSS>=60)tempSSSS=60;
+		if(TBAT!=tempSSSS)lc640_write_int(EE_TBAT,tempSSSS);
+
+		main_kb_cnt=(tempSSSS*60)-20;
+		}
+	else ica_cntrl_hndl=tempSSSS;
+
+	ica_cntrl_hndl_cnt=200;
+	}
+
 
 else if((UIB1[0]==4)&&(UIB1[1]==1)&&(UIB1[2]==2) && (ICA_EN==1) && (ICA_CH==2) )
 	{
