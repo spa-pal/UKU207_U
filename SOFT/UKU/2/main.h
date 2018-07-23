@@ -820,7 +820,7 @@ typedef enum {
 	#endif
 	iRKI, iSetRKI, iK_RKI,iK_MOST,//oleg_start
 	iNET_IN, iSetNetIn, iK_Net_In,//oleg_start 
-	iSrv_sl,iNet,iNet3,iNetEM,
+	iSrv_sl,iNet,iNet3,iNetEM,iNet3LIN,
 	iSet,iSet_3U,iSet_RSTKM,iSet_GLONASS,iSet_KONTUR,iSet_6U,iSet_220,iSet_220_IPS_TERMOKOMPENSAT,iSet_220_V2,iInv_set_sel,
 	iBat, iBat_simple, iBat_li, iBat_SacredSun, iBat_universe, iInv_set, iSet_TELECORE2015, iSet_TELECORE2017,
 	iMakb,
@@ -1300,8 +1300,8 @@ extern short numOfPacks,numOfPacks_;
 extern short numOfCells, numOfTemperCells, baseOfData;
 extern short lakb_stat_comm_error;	//аварийность канала связи с литиевыми батареями. 0 означает исправность платы расширения и наличие связи со всеми литиевыми батареями
 extern short lakbNotErrorNum;		//колличество литиевых батарей с исправной связью
-extern short lakbKanErrorCnt;		//Счетчик аварийности канала связи с платой расширения
-extern short lakbKanErrorStat;		//Состояние аварийности канала связи с платой расширения
+extern short libat_comm_cnt;		//Счетчик аварийности канала связи с платой расширения
+//extern short lakbKanErrorStat;		//Состояние аварийности канала связи с платой расширения
 
 
 

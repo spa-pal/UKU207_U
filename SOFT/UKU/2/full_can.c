@@ -1945,6 +1945,8 @@ if(RXBUFF[1]==PUT_ZTT_TM1)
 	//lakb[0]._cell_temp_2=38;
 	plazma_ztt[0]++;
 
+	libat_comm_cnt=50;
+
 	}
 
 if(RXBUFF[1]==PUT_ZTT_TM2)
@@ -1958,6 +1960,8 @@ if(RXBUFF[1]==PUT_ZTT_TM2)
 	//lakb[0]._cell_temp_4=40;
 	
 	plazma_ztt[1]++;
+
+	libat_comm_cnt=50;
 	}		
 
 if(RXBUFF[1]==PUT_ZTT_TM3)
@@ -1968,6 +1972,7 @@ if(RXBUFF[1]==PUT_ZTT_TM3)
 	lakb[1]._cell_temp_1=(signed char)(RXBUFF[6]);
 	lakb[1]._cell_temp_2=(signed char)(RXBUFF[7]);
 	
+	libat_comm_cnt=50;
 	}
 
 if(RXBUFF[1]==PUT_ZTT_TM4)
@@ -1978,6 +1983,7 @@ if(RXBUFF[1]==PUT_ZTT_TM4)
 	lakb[1]._cell_temp_3=(signed char)(RXBUFF[6]);
 	lakb[1]._cell_temp_4=(signed char)(RXBUFF[7]);
 	
+	libat_comm_cnt=50;
 	}	
 
 if(RXBUFF[1]==PUT_ZTT_TM5)
@@ -1988,6 +1994,7 @@ if(RXBUFF[1]==PUT_ZTT_TM5)
 	lakb[2]._cell_temp_1=(signed char)(RXBUFF[6]);
 	lakb[2]._cell_temp_2=(signed char)(RXBUFF[7]);
 	
+	libat_comm_cnt=50;
 	}
 
 if(RXBUFF[1]==PUT_ZTT_TM6)
@@ -1996,7 +2003,9 @@ if(RXBUFF[1]==PUT_ZTT_TM6)
 	lakb[2]._s_o_c=(signed short)(*((signed short*)&RXBUFF[2]));
 	lakb[2]._s_o_h=(signed short)(*((signed short*)&RXBUFF[4]));
 	lakb[2]._cell_temp_3=(signed char)(RXBUFF[6]);
-	lakb[2]._cell_temp_3=(signed char)(RXBUFF[7]);	
+	lakb[2]._cell_temp_3=(signed char)(RXBUFF[7]);
+	
+	libat_comm_cnt=50;	
 	}	
 
 if(RXBUFF[1]==PUT_ZTT_TM7)
@@ -2009,6 +2018,8 @@ if(RXBUFF[1]==PUT_ZTT_TM7)
 	lakb[2]._cell_temp_power=(signed char)(RXBUFF[6]);	
 	//lakb[0]._cell_temp_ambient=41;
 	//lakb[0]._cell_temp_power=42;
+
+	libat_comm_cnt=50;
 	}	
 
 if(RXBUFF[1]==PUT_ZTT_TM8)
@@ -2061,6 +2072,8 @@ if(RXBUFF[1]==PUT_ZTT_TM8)
 		lakb[1]._system_status_code=(signed char)(RXBUFF[4]);
 		lakb[2]._system_status_code=(signed char)(RXBUFF[6]);
 		}
+
+	libat_comm_cnt=50;
 	}	
 	
 CAN_IN_AN1_end:

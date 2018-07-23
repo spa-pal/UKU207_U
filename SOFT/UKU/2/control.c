@@ -1057,7 +1057,7 @@ else
 	if(net_Ub<net_U)net_U=net_Ub;
 	if(net_Uc<net_U)net_U=net_Uc;
 	}
-else if((AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043)||(AUSW_MAIN==22018))
+else if((AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043)||(AUSW_MAIN==22044)||(AUSW_MAIN==22018))
 	{
 	temp_SL=(signed long)net_buff_;
 	temp_SL*=KunetA;
@@ -1535,7 +1535,7 @@ if(bps[8]._device==dIBAT_METR)
 		temp_SL=(signed long)ibat_metr_buff_[0];
 		temp_SL-=(signed long)ibat_metr_buff_[1];
 		temp_SL*=(signed long)Kibat1[0];
-		if((AUSW_MAIN==22010)||(AUSW_MAIN==22011)||(AUSW_MAIN==22035)||(AUSW_MAIN==22033)||(AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043))temp_SL/=2000L;
+		if((AUSW_MAIN==22010)||(AUSW_MAIN==22011)||(AUSW_MAIN==22035)||(AUSW_MAIN==22033)||(AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043)||(AUSW_MAIN==22044))temp_SL/=2000L;
 	
 		Ib_ips_termokompensat =(signed short)temp_SL;
 		}
@@ -3479,7 +3479,7 @@ else	if(AUSW_MAIN==22023)
 	     else SET_REG(LPC_GPIO0->FIOSET,1,7,1);
 		} 
 	}
-else	if(AUSW_MAIN==22043)
+else	if((AUSW_MAIN==22043)||(AUSW_MAIN==22044))
 	{
 	//Реле аварий батарей
 	if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_BAT))
@@ -4948,7 +4948,7 @@ for(i=0;i<3;i++)
 	if(i>=NUMBAT_TELECORE)lakb[i]._communicationFullErrorStat=0;
 	else
 		{
-		if(lakbKanErrorStat)					lakb[i]._communicationFullErrorStat=1;
+		if(libat_comm_cnt==0)					lakb[i]._communicationFullErrorStat=1;
 		if(lakb[i]._communication2lvlErrorStat)	lakb[i]._communicationFullErrorStat=2;
 		else
 			{
@@ -4992,6 +4992,7 @@ for(i=0;i<3;i++)
 		lakb[i]._s_o_h=0;
 		}
 	}
+if(libat_comm_cnt) libat_comm_cnt--;
 }
 #endif
 #ifdef UKU_TELECORE2015
