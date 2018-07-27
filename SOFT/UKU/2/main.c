@@ -6687,6 +6687,7 @@ else if(ind==iSet_li_bat)
 	ptrs[ptr_ptrs++]=  	    " K2            &ед/с";
 	ptrs[ptr_ptrs++]=  	    " K3            *ед/с";
 	ptrs[ptr_ptrs++]=  	    " T4             (сек";
+	ptrs[ptr_ptrs++]=  	    " Uстарт           )В";
 	ptrs[ptr_ptrs++]=  	    " Выход              ";
 
 	bgnd_par(	ptrs[0],
@@ -6706,6 +6707,7 @@ else if(ind==iSet_li_bat)
     int2lcd(TELECORE2017_K2,'&',0);
     int2lcd(TELECORE2017_K3,'*',0);
     int2lcd(TELECORE2017_T4,'(',0);
+	int2lcd(TELECORE2017_USTART,')',1);
 	}
 #endif
 else if(ind==iSet)
@@ -17961,16 +17963,16 @@ else if(ind==iSet_li_bat)
 	if(but==butU)
 		{
 		sub_ind--;
-		gran_char(&sub_ind,0,8);
+		gran_char(&sub_ind,0,9);
 		}
 	else if (but==butD)
 		{
 		sub_ind++;
-		gran_char(&sub_ind,0,8);
+		gran_char(&sub_ind,0,9);
 		}
 	else if(but==butE)
 		{
-		if(sub_ind==8)
+		if(sub_ind==9)
 			{
 			tree_down(0,0);
           	ret(0);
@@ -18054,6 +18056,16 @@ else if(ind==iSet_li_bat)
 	     else if(but==butL_)TELECORE2017_T4--;
 	     gran(&TELECORE2017_T4,1,10);
 	     lc640_write_int(EE_TELECORE2017_T4,TELECORE2017_T4);
+	     speed=1;
+	     }
+	else if(sub_ind==8)
+	     {
+	     if(but==butR)TELECORE2017_USTART++;
+	     else if(but==butR_)TELECORE2017_USTART++;
+	     else if(but==butL)TELECORE2017_USTART--;
+	     else if(but==butL_)TELECORE2017_USTART--;
+	     gran(&TELECORE2017_USTART,400,540);
+	     lc640_write_int(EE_TELECORE2017_USTART,TELECORE2017_USTART);
 	     speed=1;
 	     }
 	}
@@ -34919,8 +34931,8 @@ signed short tempSS,tempSS1;
 tempSS=0;
 tempSS1=0;
 tempSS=ULAUNCH;
-if(ULAUNCH<420)tempSS=420;
-if(ULAUNCH>540)tempSS=540;
+if(TELECORE2017_USTART<420)tempSS=420;
+if(TELECORE2017_USTART>540)tempSS=540;
 tempSS-=420;
 tempSS*=100;
 tempSS/=12;
