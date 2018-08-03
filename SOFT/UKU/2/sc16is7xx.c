@@ -13,6 +13,9 @@ char sc16is700TxFifoEmptyCnt; //Временной счетчик свободности ФИФО передачи
 char sc16is700TxPossibleFlag;//Флаг возможности передачи
 char sc16is700RecieveDisableFlag;
 
+
+char sc16is700_spi_init_cnt;
+
 //----------------------------------------------- 
 //настройка SPI1
 void sc16is700_spi_init(void)
@@ -26,7 +29,7 @@ SET_REG( LPC_PINCON->PINSEL1, 3, (18-16)*2, 2);
 S1SPCCR=100;
 S1SPCR=0x3f; */
 
-LPC_SPI->SPCCR=20;
+LPC_SPI->SPCCR=40;
 LPC_SPI->SPCR=0x20;
 }
 

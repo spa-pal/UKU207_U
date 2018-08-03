@@ -1425,6 +1425,7 @@ extern signed short load_I;
 extern signed short bps_U;
 extern signed short out_U;
 extern signed short bps_I;
+extern signed short bps_I_phantom;
 
 //***********************************************
 //Состояние первичной сети
@@ -1609,6 +1610,8 @@ extern char bat_drv_rx_buff[512];
 extern char bat_drv_rx_in;
 
 extern short can_plazma;
+extern short modbus_modbus_adress_eq;
+extern short modbus_modbus4f_cnt;
 
 //-----------------------------------------------
 //Климатконтроль TELECORE2015	

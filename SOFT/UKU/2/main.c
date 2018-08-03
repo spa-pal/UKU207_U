@@ -42,6 +42,7 @@
 //#include "sc16is7xx.h"
 #include "modbus_tcp.h"
 #include "curr_version.h"
+#include "sc16is7xx.h"
 
 extern U8 own_hw_adr[];
 extern U8  snmp_Community[];
@@ -382,6 +383,7 @@ signed short load_I;
 signed short bps_U;
 signed short out_U;
 signed short bps_I;
+signed short bps_I_phantom;
 
 
 //***********************************************
@@ -754,6 +756,8 @@ char bat_drv_rx_in;
 
 short plazma_bat_drv0,plazma_bat_drv1,bat_drv_cnt_cnt;
 short can_plazma;
+short modbus_modbus_adress_eq;
+short modbus_modbus4f_cnt;
 
 //-----------------------------------------------
 //Ускоренный заряд
@@ -4132,7 +4136,9 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 /*			
 	int2lcdyx(cnt_net_drv,0,15,0);  */
 
-	//int2lcdyx(speedChrgBlckStat,0,3,0);
+/*	int2lcdyx(modbus_modbus4f_cnt,0,3,0);
+	int2lcdyx(modbus_modbus_adress_eq,0,8,0);
+	int2lcdyx(bps_I_phantom,0,19,0);   */
 	}
 
 else if(ind==iMn_TELECORE2015)
@@ -34959,6 +34965,8 @@ can_mcp2515_init();
 
 #ifdef SC16IS740_UART
 sc16is700_init((uint32_t)(MODBUS_BAUDRATE*10UL));
+delay_ms(100);
+sc16is700_init((uint32_t)(MODBUS_BAUDRATE*10UL));
 #endif
 //sc16is700_init();
 
@@ -35166,6 +35174,12 @@ while (1)
 		ext_drv();
 		avt_hndl();
 		ret_hndl();
+
+		if(++sc16is700_spi_init_cnt>=13)
+			{
+			sc16is700_spi_init_cnt=0;
+			sc16is700_init((uint32_t)(MODBUS_BAUDRATE*10UL));
+			}
 		}
 
 	if(b5Hz)
@@ -35214,6 +35228,10 @@ while (1)
 	if(b1Hz)
 		{
 		b1Hz=0;
+
+		bps_I_phantom++;
+
+		if(bps_I_phantom>=100)bps_I_phantom=0;
 
 		if(!bRESET_INT_WDT)
 			{

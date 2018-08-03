@@ -424,6 +424,7 @@ if(crc16_calculated==crc16_incapsulated)
 	ica_plazma[4]++;
  	if(modbus_an_buffer[0]==MODBUS_ADRESS)
 		{
+		modbus_modbus_adress_eq++;
 		if(modbus_func==3)		//чтение произвольного кол-ва регистров хранения
 			{
 			modbus_plazma++;
@@ -433,6 +434,7 @@ if(crc16_calculated==crc16_incapsulated)
 		if(modbus_func==4)		//чтение произвольного кол-ва регистров	входов
 			{
 			modbus_input_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,modbus_rx_arg1,MODBUS_RTU_PROT);
+			modbus_modbus4f_cnt++;
 			}
 
 		else if(modbus_func==6) 	//запись регистров хранения
@@ -1172,6 +1174,7 @@ char i;
 short tempS;
 
 //tempS=(MODBUS_INPUT_REGS[0]);
+//bps_I=bps_I_phantom;
 
 modbus_registers[0]=(signed char)(out_U>>8);					//Рег1   	напряжение выходной шины, 0.1В
 modbus_registers[1]=(signed char)(out_U);
