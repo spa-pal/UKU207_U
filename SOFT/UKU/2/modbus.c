@@ -1285,7 +1285,7 @@ modbus_registers[105]=(signed char)(bps[7]._av);
 modbus_registers[106]=(signed char)(bps_U>>8);					//Рег54   	напряжение выпрямителей, 0.1В
 modbus_registers[107]=(signed char)(bps_U);
 tempS=0;
-if(speedChIsOn) tempS=1;
+if((speedChIsOn)||(sp_ch_stat==scsWRK)) tempS=1;
 modbus_registers[108]=(signed char)(tempS>>8);					//Рег55   	Ускоренный заряд включенность, (1 - вкл, 0 - Выкл)
 modbus_registers[109]=(signed char)(tempS);
 tempS=0;
