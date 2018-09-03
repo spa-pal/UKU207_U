@@ -108,6 +108,7 @@ NPN_SIGN=(enum_npn_sign)lc640_read_int(EE_NPN_SIGN);
 UONPN=lc640_read_int(EE_UONPN);
 UVNPN=lc640_read_int(EE_UVNPN);
 TZNPN=lc640_read_int(EE_TZNPN);
+dUNPN=lc640_read_int(EE_dUNPN);
 TERMOKOMPENS=lc640_read_int(EE_TERMOKOMP);
 TBOXVENTON=lc640_read_int(EE_TBOXVENTON);
 TBOXVENTOFF=lc640_read_int(EE_TBOXVENTOFF);

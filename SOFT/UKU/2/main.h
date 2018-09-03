@@ -701,7 +701,7 @@
 
 #ifdef UKU_TELECORE2017
 #define SHIFT_REL_AV_NET		5
-#define SHIFT_REL_AV_BAT	4
+#define SHIFT_REL_LOAD_OFF	4
 #define SHIFT_REL_AV_BPS	     7
 #define SHIFT_REL_BAT1	     8
 #define SHIFT_REL_BAT2	     6
@@ -863,7 +863,8 @@ typedef enum {
 	iOut_volt_contr,iDop_rele_set,iBlok_ips_set,iIps_Curr_Avg_Set,
 	iRele_set,iRele_set_,
 	iFWabout,
-	iHV_STEP2_1,iHV_STEP2_2
+	iHV_STEP2_1,iHV_STEP2_2,
+	iSet_load_off
 	}i_enum;
 
 typedef struct  
@@ -973,6 +974,7 @@ extern enum_releventsign RELEVENTSIGN;
 extern signed short TZNPN;
 extern signed short UONPN;
 extern signed short UVNPN;
+extern signed short dUNPN;
 typedef enum {npnoOFF=0,npnoRELEVENT,npnoRELEAVBAT2} enum_npn_out;
 extern enum_npn_out NPN_OUT;
 typedef enum {npnsULOAD=0,npnsAVNET} enum_npn_sign;
@@ -1593,7 +1595,8 @@ extern short bIBAT_SMKLBR;
 //”правление низкоприоритетной нагрузкой
 extern signed short npn_tz_cnt;
 typedef enum {npnsOFF=0,npnsON} enum_npn_stat;
-extern enum_npn_stat npn_stat;
+extern enum_npn_stat npn_stat,load_off_stat;
+extern signed short load_off_cnt;
 
 extern char snmp_plazma;
 

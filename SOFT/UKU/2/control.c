@@ -3909,6 +3909,28 @@ else
      else SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VVENT,1);
 	} 
 
+//Реле выключения нагрузки
+if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_LOAD_OFF))
+	{
+	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_LOAD_OFF,1);
+	else if(mess_data[1]==1) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_LOAD_OFF,1);
+     }
+else if(tloaddisable_cmnd==0)
+	{
+	SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_LOAD_OFF,1);
+	}
+else if((tloaddisable_cmnd)&&(tloaddisable_cmnd<=11))
+	{
+	SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_LOAD_OFF,1);
+	}
+
+else 
+	{
+	if(!(tloaddisable_stat==tldsON)) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_LOAD_OFF,1);
+     else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_LOAD_OFF,1);
+	} 
+
+
 #endif
 
 if(NUMBDR==1)
@@ -4374,7 +4396,7 @@ if((++ica_timer_cnt>=10) && (num_of_wrks_bps))
 	}
 
 
-if((ICA_EN==1) && (num_of_wrks_bps))
+if((ICA_EN==1) /*&& (num_of_wrks_bps)*/)
 	{
 	
 	if(ica_timer_cnt==8)
@@ -7623,6 +7645,40 @@ if(npn_stat==npnsOFF) mess_send(MESS2RELE_HNDL,PARAM_RELE_NPN,1,15);
 
 }
 
+
+//-----------------------------------------------
+void loadoff_hndl(void)
+{
+if((load_U>UONPN)||(load_U<UVNPN))
+	{
+	if(load_off_cnt<TZNPN)
+		{
+		load_off_cnt++;
+		if(load_off_cnt>=TZNPN)
+			{
+			load_off_stat=npnsOFF;
+			load_off_cnt=TZNPN;
+			}
+		}
+	}
+else if((load_U>(UVNPN+dUNPN))&&(load_U<(UONPN-dUNPN)))
+	{
+	if(load_off_cnt)
+		{
+		load_off_cnt--;
+		if(load_off_cnt<=0)
+			{
+			load_off_stat=npnsON;
+			load_off_cnt=0;
+			}
+		}
+	}
+
+
+if(load_off_stat==npnsOFF) tloaddisable_cmnd=10;
+
+
+}
 
 //-----------------------------------------------
 void speedChargeHndl(void)
