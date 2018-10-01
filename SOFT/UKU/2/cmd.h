@@ -65,3 +65,12 @@
 #define PUT_ZTT_TM6 	0xC6
 #define PUT_ZTT_TM7 	0xC7
 #define PUT_ZTT_TM8 	0xC8
+#define PUT_STARK_TM1 	0xB1
+#define PUT_STARK_TM2 	0xB2
+#define PUT_STARK_TM3 	0xB3
+#define PUT_STARK_TM4 	0xB4
+#define PUT_STARK_TM5 	0xB5
+#define PUT_STARK_TM6 	0xB6
+#define PUT_STARK_TM7 	0xB7
+#define PUT_STARK_TM8 	0xB8
+#define PUT_STARK_TM9 	0xB9

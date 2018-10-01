@@ -836,7 +836,7 @@ typedef enum {
 	iTst_TELECORE,
 	iTst_klbr,iTst_BPS1,iTst_BPS2,iTst_BPS12,iDebug,
 	iDef,iDef_3U,iDef_RSTKM,iDef_GLONASS,iDef_KONTUR,iDef_6U,iDef_220,iDef_220_IPS_TERMOKOMPENSAT,iDef_220_V2,
-	iSet_st_prl,iK_pdp,iSet_T,
+	iSet_st_prl,iK_pdp,iSet_T,iSet_T_avt,
 	iDeb,iBat_link_set,iK_inv,iK_inv_sel,iK_byps,
 	iPrl_bat_in_out,iPrl_bat_in_sel,iPdp1,iJAv_sel,iJAv_net_sel,iJAv_net,iJAv_src1,
 	iTst_bps,/*iJAv_bat,iJAv_bat_sel,*/iAusw,iAusw_prl,iAusw_set,
@@ -1023,6 +1023,9 @@ extern signed short RS485_QWARZ_DIGIT;
 extern signed short UVENTOFF;			//Напряжение (1в) при котором выключится вентиляция после окончания ВЗ или УСКЗ
 extern signed short VZ_KIND;			//Тип выравнивающего заряда, 0 - обычный(исторический, повышение напряжения на время), 
 										//1- высоковольтный, с контролем вентиляции и запросами к оператору
+extern signed short SNTP_ENABLE;
+extern signed short SNTP_GMT;
+
 
 extern signed short RELE_SET_MASK[4];
 
@@ -1723,6 +1726,7 @@ extern short plazma_numOfTemperCells;
 extern short plazma_numOfPacks;
 
 extern char plazma_ztt[2];
+extern char plazma_stark[32];
 
 extern U8 socket_tcp;
 

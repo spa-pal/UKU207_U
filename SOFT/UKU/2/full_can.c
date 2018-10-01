@@ -2074,8 +2074,158 @@ if(RXBUFF[1]==PUT_ZTT_TM8)
 		}
 
 	libat_comm_cnt=50;
-	}	
+	}
+		
+if(RXBUFF[1]==PUT_STARK_TM1)
+    {
+	//lakb[0]._communication2lvlErrorCnt=(signed short)(*((signed char*)&RXBUFF[0]));
+	//lakb[0]._ch_curr=(signed short)(*((signed short*)&RXBUFF[2]));
+	lakb[0]._tot_bat_volt=((((short)RXBUFF[0])<<8)+(short)RXBUFF[2])/10;
+	lakb[0]._ch_curr=(((short)RXBUFF[3])<<8)+(short)RXBUFF[4];
+	lakb[0]._cell_temp_1=(((short)RXBUFF[5])<<8)+(short)RXBUFF[6];
+	//lakb[0]._cell_temp_2=(signed char)(RXBUFF[7]);
 	
+	//lakb[0]._cell_temp_1=37;
+	//lakb[0]._cell_temp_2=38;
+	//plazma_stark[0]++;
+   /*
+	plazma_stark[2]=RXBUFF[0];
+	plazma_stark[3]=RXBUFF[1];
+	plazma_stark[4]=RXBUFF[2];
+	plazma_stark[5]=RXBUFF[3];
+	plazma_stark[6]=RXBUFF[4];
+	plazma_stark[7]=RXBUFF[5];
+	plazma_stark[8]=RXBUFF[6];
+	//plazma_stark[9]=RXBUFF[7];*/
+	libat_comm_cnt=50;
+
+	}
+
+if(RXBUFF[1]==PUT_STARK_TM2)
+    {
+	lakb[0]._cell_temp_2=(((short)RXBUFF[0])<<8)+(short)RXBUFF[2];
+	lakb[0]._cell_temp_3=(((short)RXBUFF[3])<<8)+(short)RXBUFF[4];
+	//lakb[0]._communication2lvlErrorStat=(signed short)(*((signed char*)&RXBUFF[0]));
+	//lakb[0]._s_o_c=(signed short)(*((signed short*)&RXBUFF[2]));
+	//lakb[0]._s_o_h=(signed short)(*((signed short*)&RXBUFF[4]));
+	//lakb[0]._cell_temp_3=(signed char)(RXBUFF[6]);
+	//lakb[0]._cell_temp_4=(signed char)(RXBUFF[7]);
+	//lakb[0]._cell_temp_3=39;
+	//lakb[0]._cell_temp_4=40;
+	
+	//plazma_stark[1]++;
+	/*
+	plazma_stark[9]=RXBUFF[0];
+	plazma_stark[10]=RXBUFF[1];
+	plazma_stark[11]=RXBUFF[2];
+	plazma_stark[12]=RXBUFF[3];
+	plazma_stark[13]=RXBUFF[4];
+	plazma_stark[14]=RXBUFF[5];
+	plazma_stark[15]=RXBUFF[6];
+	//plazma_stark[17]=RXBUFF[7];
+	*/
+
+	plazma_stark[2]=RXBUFF[0];
+	plazma_stark[3]=RXBUFF[1];
+	plazma_stark[4]=RXBUFF[2];
+	plazma_stark[5]=RXBUFF[3];
+	plazma_stark[6]=RXBUFF[4];
+	plazma_stark[7]=RXBUFF[5];
+	plazma_stark[8]=RXBUFF[6];
+
+	libat_comm_cnt=50;
+	}		
+
+if(RXBUFF[1]==PUT_STARK_TM3)
+    {
+
+	lakb[0]._s_o_h=(((short)RXBUFF[3])<<8)+(short)RXBUFF[4];
+	lakb[0]._s_o_c=(((short)RXBUFF[5])<<8)+(short)RXBUFF[6];
+	/*
+	plazma_stark[16]=RXBUFF[0];
+	plazma_stark[17]=RXBUFF[1];
+	plazma_stark[18]=RXBUFF[2];
+	plazma_stark[19]=RXBUFF[3];
+	plazma_stark[20]=RXBUFF[4];
+	plazma_stark[21]=RXBUFF[5];
+	plazma_stark[22]=RXBUFF[6];	*/
+
+	plazma_stark[9]=RXBUFF[0];
+	plazma_stark[10]=RXBUFF[1];
+	plazma_stark[11]=RXBUFF[2];
+	plazma_stark[12]=RXBUFF[3];
+	plazma_stark[13]=RXBUFF[4];
+	plazma_stark[14]=RXBUFF[5];
+	plazma_stark[15]=RXBUFF[6];
+
+	//lakb[1]._communication2lvlErrorCnt=(signed short)(*((signed char*)&RXBUFF[0]));
+	//lakb[1]._ch_curr=(signed short)(*((signed short*)&RXBUFF[2]));
+	//lakb[1]._tot_bat_volt=(signed short)(*((signed short*)&RXBUFF[4]));
+	//lakb[1]._cell_temp_1=(signed char)(RXBUFF[6]);
+	//lakb[1]._cell_temp_2=(signed char)(RXBUFF[7]);
+	
+	libat_comm_cnt=50;
+	}
+
+if(RXBUFF[1]==PUT_STARK_TM4)
+    {
+	lakb[0]._flags1=(((short)RXBUFF[3])<<8)+(short)RXBUFF[2];
+	lakb[0]._flags2=(((short)RXBUFF[5])<<8)+(short)RXBUFF[6];
+
+	plazma_stark[16]=RXBUFF[0];
+	plazma_stark[17]=RXBUFF[1];
+	plazma_stark[18]=RXBUFF[2];
+	plazma_stark[19]=RXBUFF[3];
+	plazma_stark[20]=RXBUFF[4];
+	plazma_stark[21]=RXBUFF[5];
+	plazma_stark[22]=RXBUFF[6];
+	//lakb[1]._communication2lvlErrorStat=(signed short)(*((signed char*)&RXBUFF[0]));
+	//lakb[1]._s_o_c=(signed short)(*((signed short*)&RXBUFF[2]));
+	//lakb[1]._s_o_h=(signed short)(*((signed short*)&RXBUFF[4]));
+	//lakb[1]._cell_temp_3=(signed char)(RXBUFF[6]);
+	//lakb[1]._cell_temp_4=(signed char)(RXBUFF[7]);
+	
+	libat_comm_cnt=50;
+	}	
+
+if(RXBUFF[1]==PUT_STARK_TM5)
+    {
+
+
+
+	//lakb[2]._communication2lvlErrorCnt=(signed short)(*((signed char*)&RXBUFF[0]));
+	//lakb[2]._ch_curr=(signed short)(*((signed short*)&RXBUFF[2]));
+	//lakb[2]._tot_bat_volt=(signed short)(*((signed short*)&RXBUFF[4]));
+	//lakb[2]._cell_temp_1=(signed char)(RXBUFF[6]);
+	//lakb[2]._cell_temp_2=(signed char)(RXBUFF[7]);
+	
+	libat_comm_cnt=50;
+	}
+
+if(RXBUFF[1]==PUT_STARK_TM6)
+    {
+	//lakb[2]._communication2lvlErrorStat=(signed short)(*((signed char*)&RXBUFF[0]));
+	//lakb[2]._s_o_c=(signed short)(*((signed short*)&RXBUFF[2]));
+	//lakb[2]._s_o_h=(signed short)(*((signed short*)&RXBUFF[4]));
+	//lakb[2]._cell_temp_3=(signed char)(RXBUFF[6]);
+	//lakb[2]._cell_temp_3=(signed char)(RXBUFF[7]);
+	
+	libat_comm_cnt=50;	
+	}	
+
+if(RXBUFF[1]==PUT_STARK_TM7)
+    {
+	//lakb[0]._cell_temp_ambient=(signed char)(RXBUFF[0]);
+	//lakb[0]._cell_temp_power=(signed char)(RXBUFF[2]);
+	//lakb[1]._cell_temp_ambient=(signed char)(RXBUFF[3]);
+	//lakb[1]._cell_temp_power=(signed char)(RXBUFF[4]);
+	//lakb[2]._cell_temp_ambient=(signed char)(RXBUFF[5]);
+	//lakb[2]._cell_temp_power=(signed char)(RXBUFF[6]);	
+	//lakb[0]._cell_temp_ambient=41;
+	//lakb[0]._cell_temp_power=42;
+
+	libat_comm_cnt=50;
+	}		
 CAN_IN_AN1_end:
 bIN2=0;
 }
