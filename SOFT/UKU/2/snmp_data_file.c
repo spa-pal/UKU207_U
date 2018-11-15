@@ -1033,7 +1033,15 @@ if(mode==MIB_WRITE)
 	}
 }
 
-
+//-----------------------------------------------
+void snmp_u_ips_set_write (int mode)
+{
+if(mode==MIB_WRITE)
+	{
+	lc640_write_int(EE_UB0,snmp_u_0_grad);
+	lc640_write_int(EE_UB20,snmp_u_0_grad);
+	}
+}
 //-----------------------------------------------
 void snmp_u_0_grad_write (int mode)
 {

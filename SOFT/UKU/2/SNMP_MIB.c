@@ -97,7 +97,9 @@ char* aaa_="abc";
   	{ MIB_INTEGER | MIB_ATR_RO,  	12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_MAINS_POWER, DISPLAY_MAINS_POWER_VOLTAGE_PHASEA, 0},  	MIB_INT(snmp_mains_power_voltage_phaseA), NULL},	//напряжение сети	
   	{ MIB_INTEGER | MIB_ATR_RO,  	12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_MAINS_POWER, DISPLAY_MAINS_POWER_VOLTAGE_PHASEB, 0},  	MIB_INT(snmp_mains_power_voltage_phaseB), NULL},	//напряжение сети	
   	{ MIB_INTEGER | MIB_ATR_RO,  	12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_MAINS_POWER, DISPLAY_MAINS_POWER_VOLTAGE_PHASEC, 0},  	MIB_INT(snmp_mains_power_voltage_phaseC), NULL},	//напряжение сети	
-
+  	{ MIB_INTEGER | MIB_ATR_RO,  	12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_MAINS_POWER, DISPLAY_MAINS_ENERGOMETR_VOLT, 0},  	MIB_INT(volta_short), NULL},	//напряжение сети	
+  	{ MIB_INTEGER | MIB_ATR_RO,  	12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_MAINS_POWER, DISPLAY_MAINS_ENERGOMETR_CURR, 0},  	MIB_INT(curr_short), NULL},	//напряжение сети	
+  	{ MIB_INTEGER | MIB_ATR_RO,  	12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_MAINS_POWER, DISPLAY_MAINS_ENERGOMETR_POWER, 0},  	MIB_INT(power_int), NULL},	//напряжение сети	
 
 	{ MIB_INTEGER | MIB_ATR_RO,  	12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LOAD, DISPLAY_LOAD_VOLTAGE, 0},  				MIB_INT(snmp_load_voltage),  		NULL},	//напряжение нагрузки
   	{ MIB_INTEGER | MIB_ATR_RO,  	12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_LOAD, DISPLAY_LOAD_CURRENT, 0},  				MIB_INT(snmp_load_current),  		NULL},	//ток нагрузки
@@ -439,6 +441,7 @@ char* aaa_="abc";
 	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_TMAX_BPS, 0},					MIB_INT(snmp_tmax_bps),			snmp_tmax_bps_write},		//номер первого бпса 
 	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_BAT_PART_ALARM, 0},				MIB_INT(snmp_bat_part_alarm),		snmp_bat_part_alarm_write},		//номер первого бпса 
 	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_POWER_CNT_ADRESS, 0},			MIB_INT(snmp_power_cnt_adress),	snmp_power_cnt_adress_write},		//номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_U_IPS_SET, 0},					MIB_INT(snmp_u_0_grad),			snmp_u_ips_set_write},		//номер первого бпса 
 
 
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_SK, DISPLAY_SK_ENTRY_NUMBER, 1},  			MIB_INT(snmp_sk_number[0]),  	NULL},	//Номер БПСа

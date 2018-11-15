@@ -592,6 +592,11 @@ if(crc16_calculated==crc16_incapsulated)
 				{
 				lc640_write_int(EE_U_OUT_KONTR_DELAY,modbus_rx_arg1);
 	     		}
+			if(modbus_rx_arg0==54)		//
+				{
+				lc640_write_int(EE_UB0,modbus_rx_arg1);
+				lc640_write_int(EE_UB20,modbus_rx_arg1);
+	     		}
 
 			if(modbus_rx_arg0==19)		//вкл/выкл источника напр.
 				{
@@ -1132,6 +1137,8 @@ modbus_registers[102]=(char)(U_OUT_KONTR_MIN>>8);					//Рег52	 Контроль выходног
 modbus_registers[103]=(char)(U_OUT_KONTR_MIN);
 modbus_registers[104]=(char)(U_OUT_KONTR_DELAY>>8);				//Рег53	 Контроль выходного напряжения, Tзадержки, 1сек.
 modbus_registers[105]=(char)(U_OUT_KONTR_DELAY);
+modbus_registers[106]=(char)(UB0>>8);							//Рег54	 Установка выходного напряжения для ИПС без батареи(СГЕП-ГАЗПРОМ)
+modbus_registers[107]=(char)(UB0);
 
 
 
@@ -1303,6 +1310,14 @@ if(avar_stat&(1<<(3+1)))tempS|=(1<<3);						 //	Бит 3	Авария выпрямителя №2
 if(avar_stat&(1<<(3+2)))tempS|=(1<<4);						 //	Бит 4	Авария выпрямителя №2
 modbus_registers[118]=(signed char)(tempS>>8);
 modbus_registers[119]=(signed char)(tempS);
+
+modbus_registers[120]=(signed char)(volta_short>>8);		//Рег61   	напряжение счетчика, 0.1В
+modbus_registers[121]=(signed char)(volta_short);
+modbus_registers[122]=(signed char)(curr_short>>8);			//Рег62  	ток счетчика, 0.01А
+modbus_registers[123]=(signed char)(curr_short);
+modbus_registers[124]=(signed char)(power_int>>8);			//Рег63   	мощность счетчика, 1Вт
+modbus_registers[125]=(signed char)(power_int);
+
 
 tempS=cntrl_stat_old;
 if(	(main_kb_cnt==(TBAT*60)-21) || (main_kb_cnt==(TBAT*60)-20) || (main_kb_cnt==(TBAT*60)-19)) tempS=((short)TBAT)|0x4000;

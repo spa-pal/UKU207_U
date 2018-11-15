@@ -12,6 +12,7 @@
 #include "sc16is7xx.h"
 #include "modbus.h"
 #include "modbus_tcp.h"
+#include "uart1.h"
 #include <LPC17xx.h>
 
 #define KOEFPOT  105L
@@ -227,10 +228,24 @@ char bPARALLEL_NOT_ENOUG;
 char bPARALLEL_ENOUG;
 char bPARALLEL;
 
+//***********************************************
+//Счетчик электроэнергии
+char rx_read_power_cnt_phase=15;
+short read_power_cnt_main_cnt=100;
+short ce102m_delayCnt;
+char rx_read_power_cnt_plazma=0;
+char rx_read_power_cnt_flag=0;
+short volta_short;
+short curr_short;
+int power_int;
+
+char bENERGOMETR_UIP=0;
+
 char cntrl_hndl_plazma;
 
 
 short plazma_ica1,plazma_ica2;
+char rele_hndl_plazma[3];
 //-----------------------------------------------
 void ke_start(char in)
 {          
@@ -932,6 +947,13 @@ temp_SL/=110000L;
 net_U=(signed short)temp_SL;
 #endif
 
+#ifdef IPS_SGEP_GAZPROM
+//напряжение сети
+temp_SL=(signed long)net_buff_;
+temp_SL*=Kunet;
+temp_SL/=110000L;
+net_U=(signed short)temp_SL;
+#endif
 
 #ifdef UKU_220_V2
 //напряжение сети
@@ -1920,7 +1942,9 @@ load_I=load_I+Isumm;
 if(load_I<0)load_I=0;
 
 #endif
-
+#ifdef IPS_SGEP_GAZPROM
+load_I=Isumm;
+#endif
 
 
 #ifdef UKU_GLONASS
@@ -3933,6 +3957,30 @@ else
 
 #endif
 
+#ifdef IPS_SGEP_GAZPROM
+rele_hndl_plazma[0]++;
+if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_BPS))
+	{
+	rele_hndl_plazma[1]++;
+	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_AV_BPS,1);
+	else/* if(mess_data[1]==1)*/ SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_BPS,1);
+     }
+else 
+	{
+	if(!(avar_ind_stat&0x000007f8)) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_AV_BPS,1);
+     else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_AV_BPS,1);
+	} 
+
+if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_AV_NET))
+	{
+	rele_hndl_plazma[2]++;
+	if(mess_data[1]==0) SET_REG(LPC_GPIO3->FIOSET,1,25,1);
+	else SET_REG(LPC_GPIO3->FIOCLR,1,25,1);
+	}
+else	if(!(avar_ind_stat&0x00000001)) SET_REG(LPC_GPIO3->FIOCLR,1,25,1);
+else SET_REG(LPC_GPIO3->FIOSET,1,25,1);
+#endif
+
 if(NUMBDR==1)
 	{
 	char ii_;
@@ -4370,6 +4418,151 @@ if((main_kb_cnt==(TBAT*60)-21)&&(ICA_EN==1))
 		}
 	}
 
+}
+
+//-----------------------------------------------
+void energometr_hndl(void)
+{
+//2F 3F 21 0D 0A 
+//05 33 0A 2F 45 4B 54 35 43 45 31 30 32 4D 76 30 31 0D 0A 
+//2F 3F 21 0D 0A 
+//05 33 0A 2F 45 4B 54 35 43 45 31 30 32 4D 76 30 31 0D 0A 
+//06 30 35 31 0D 0A 
+//06 33 0A 01 50 30 02 28 31 31 38 36 35 32 39 32 32 29 03 2A 
+
+#ifdef CE102M_ENABLED
+/*if
+uart_out1 (5,0xaf,0x3f,0x21,0x8d,0x0a,0);*/
+
+if(read_power_cnt_main_cnt)
+	{
+	read_power_cnt_main_cnt--;
+	if(read_power_cnt_main_cnt==0)
+		{
+		rx_read_power_cnt_phase=0;
+		if(bENERGOMETR_UIP==0)bENERGOMETR_UIP=1;
+		else if(bENERGOMETR_UIP==1)bENERGOMETR_UIP=2;
+		else bENERGOMETR_UIP=0;
+		//bENERGOMETR_UIP=2;
+		}
+	}
+
+if (rx_read_power_cnt_phase==0)
+	{
+	char command_with_crc[20];
+	
+   	command_with_crc[0]=0xaf;  // /
+	command_with_crc[1]=0x3f;  // ?
+	command_with_crc[2]=0x21;  // !
+	command_with_crc[3]=0x8d;  // CR
+	command_with_crc[4]=0x0a;  // LF
+
+	uart_out__adr1(command_with_crc,5);
+
+	rx_wr_index1=0;
+	rx_read_power_cnt_phase=1;
+
+	read_power_cnt_main_cnt=50;
+	}
+if ((rx_read_power_cnt_phase==2)&&(!ce102m_delayCnt))
+	{
+	char command_with_crc[20];
+	
+	command_with_crc[0]=0x06;  //  
+	command_with_crc[1]=0x30;  // 0
+	command_with_crc[2]=0x35;  // 5
+	command_with_crc[3]=0xb1;  // 1
+	command_with_crc[4]=0x8d;  // CR
+	command_with_crc[5]=0x0a;  // LF
+	
+	uart_out__adr1(command_with_crc,6);
+	
+	rx_wr_index1=0;
+	rx_read_power_cnt_phase=3;
+
+	read_power_cnt_main_cnt=50;
+	}  
+
+if ((rx_read_power_cnt_phase==4)&&(!ce102m_delayCnt))
+	{
+	char command_with_crc[20];
+	
+	command_with_crc[0]=0x81;  //  
+	command_with_crc[1]=0xd2;  // 0
+	command_with_crc[2]=0xb1;  // 5
+	command_with_crc[3]=0x82;  // 1
+	command_with_crc[4]=0x56;  // CR
+	command_with_crc[5]=0xcf;  // LF
+	command_with_crc[6]=0xcc;  // 1
+	command_with_crc[7]=0xd4;  // CR
+	command_with_crc[8]=0x41;  // LF
+	command_with_crc[9]=0x28;  // 1
+	command_with_crc[10]=0xa9;  // CR
+	command_with_crc[11]=0x03;  // LF
+	command_with_crc[12]=0x5f;  // LF
+		
+	uart_out__adr1(command_with_crc,13);
+	
+	rx_wr_index1=0;
+	rx_read_power_cnt_phase=5;
+
+	read_power_cnt_main_cnt=50;
+	}  
+
+if ((rx_read_power_cnt_phase==8)&&(!ce102m_delayCnt))
+	{
+	char command_with_crc[20];
+	
+	command_with_crc[0]=0x81;  //  
+	command_with_crc[1]=0xd2;  // 0
+	command_with_crc[2]=0xb1;  // 5
+	command_with_crc[3]=0x82;  // 1
+	command_with_crc[4]=0xc3;  // CR
+	command_with_crc[5]=0x55;  // LF
+	command_with_crc[6]=0xd2;  // 1
+	command_with_crc[7]=0xd2;  // CR
+	command_with_crc[8]=0xc5;  // LF
+	command_with_crc[9]=0x28;  // 1
+	command_with_crc[10]=0xa9;  // CR
+	command_with_crc[11]=0x03;  // LF
+	command_with_crc[12]=0x5a;  // LF
+		
+	uart_out__adr1(command_with_crc,13);
+	
+	rx_wr_index1=0;
+	rx_read_power_cnt_phase=9;
+
+	read_power_cnt_main_cnt=50;
+	}  
+
+if ((rx_read_power_cnt_phase==20)&&(!ce102m_delayCnt))
+	{
+	char command_with_crc[20];
+	
+	command_with_crc[0]=0x81;  //  		01
+	command_with_crc[1]=0xd2;  // R		52
+	command_with_crc[2]=0xb1;  // 1		31
+	command_with_crc[3]=0x82;  // 		02
+	command_with_crc[4]=0x50;  // P		50
+	command_with_crc[5]=0xcf;  // O	  	4f
+	command_with_crc[6]=0xd7;  // W		57
+	command_with_crc[7]=0xc5;  // E		45
+	command_with_crc[8]=0x50;  // P		50
+	command_with_crc[9]=0x28;  // (		28
+	command_with_crc[10]=0xa9;  // )	29
+	command_with_crc[11]=0x03;  // 		03
+	command_with_crc[12]=0xe4;  // d	64
+		
+	uart_out__adr1(command_with_crc,13);
+	
+	rx_wr_index1=0;
+	rx_read_power_cnt_phase=21;
+
+	read_power_cnt_main_cnt=50;
+	}  
+
+
+#endif
 }
 
 //-----------------------------------------------
@@ -5991,6 +6184,10 @@ signed long temp_SL;
 
 //temp_SS=0;
 signed short t[2];
+
+
+
+
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
 
 if(!TERMOKOMPENS)
@@ -6085,6 +6282,9 @@ else if(b1Hz_unh)
 		{
 		
 		u_necc=U0B;
+		#ifdef IPS_SGEP_GAZPROM
+		u_necc=UB0;
+		#endif
 		}
 	else 
 		{
@@ -6417,6 +6617,8 @@ else if(b1Hz_unh)
 //u_necc=2356;
 #endif//gran(&u_necc,400,UMAX);
 
+
+
 temp_L=(signed long) u_necc;
 temp_L*=98L;
 temp_L/=100L;
@@ -6426,8 +6628,10 @@ temp_L=(signed long) u_necc;
 temp_L*=102L;
 temp_L/=100L;
 u_necc_up=(signed short)temp_L;
-
-
+/*
+#ifdef IPS_SGEP_GAZPROM
+u_necc=248;
+#endif */
 }
 
 
@@ -6478,6 +6682,8 @@ gran(&num_necc,1,NUMIST);
 //-----------------------------------------------
 void cntrl_hndl(void)
 {
+
+
 
 IZMAX_=IZMAX;
 
@@ -7382,6 +7588,9 @@ for(i=0;i<NUMSK;i++)
 	#endif
 	#ifdef UKU_TELECORE2017
 	if(adc_buff_[sk_buff_TELECORE2015[i]]<2000)	 //TODO
+	#endif
+	#ifdef IPS_SGEP_GAZPROM
+	if(adc_buff_[sk_buff_6U[i]]<2000)
 	#endif		
 		{
 		if(sk_cnt[i]<10)

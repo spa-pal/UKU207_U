@@ -62,507 +62,507 @@
                           ENDP
 
                   modbus_hold_registers_transmit PROC
-;;;1059   //-----------------------------------------------
-;;;1060   void modbus_hold_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot)
+;;;1064   //-----------------------------------------------
+;;;1065   void modbus_hold_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot)
 000044  b5f0              PUSH     {r4-r7,lr}
-;;;1061   {
+;;;1066   {
 000046  b0a7              SUB      sp,sp,#0x9c
-000048  461d              MOV      r5,r3
-00004a  9b2c              LDR      r3,[sp,#0xb0]
-00004c  4604              MOV      r4,r0
-00004e  460f              MOV      r7,r1
-;;;1062   signed char modbus_registers[150];
-;;;1063   //char modbus_tx_buff[150];
-;;;1064   unsigned short crc_temp;
-;;;1065   char i;
-;;;1066   
-;;;1067   modbus_registers[20]=(char)((LPC_RTC->YEAR)>>8);			//Рег11  Время, год
+000048  4604              MOV      r4,r0
+00004a  9e2c              LDR      r6,[sp,#0xb0]
+00004c  460f              MOV      r7,r1
+00004e  461d              MOV      r5,r3
+;;;1067   signed char modbus_registers[150];
+;;;1068   //char modbus_tx_buff[150];
+;;;1069   unsigned short crc_temp;
+;;;1070   char i;
+;;;1071   
+;;;1072   modbus_registers[20]=(char)((LPC_RTC->YEAR)>>8);			//Рег11  Время, год
 000050  48ff              LDR      r0,|L1.1104|
 000052  8b81              LDRH     r1,[r0,#0x1c]
 000054  ea4f2111          LSR      r1,r1,#8
 000058  f88d1018          STRB     r1,[sp,#0x18]
-;;;1068   modbus_registers[21]=(char)((LPC_RTC->YEAR));
+;;;1073   modbus_registers[21]=(char)((LPC_RTC->YEAR));
 00005c  8b81              LDRH     r1,[r0,#0x1c]
 00005e  f88d1019          STRB     r1,[sp,#0x19]
-;;;1069   modbus_registers[22]=(char)((LPC_RTC->MONTH)>>8);		//Рег12  Время, месяц
+;;;1074   modbus_registers[22]=(char)((LPC_RTC->MONTH)>>8);		//Рег12  Время, месяц
 000062  7e01              LDRB     r1,[r0,#0x18]
 000064  f04f0100          MOV      r1,#0
 000068  f88d101a          STRB     r1,[sp,#0x1a]
-;;;1070   modbus_registers[23]=(char)((LPC_RTC->MONTH));
-00006c  7e06              LDRB     r6,[r0,#0x18]
-00006e  f88d601b          STRB     r6,[sp,#0x1b]
-;;;1071   modbus_registers[24]=(char)((LPC_RTC->DOM)>>8);			//Рег13  Время, день месяца
-000072  7b06              LDRB     r6,[r0,#0xc]
+;;;1075   modbus_registers[23]=(char)((LPC_RTC->MONTH));
+00006c  7e03              LDRB     r3,[r0,#0x18]
+00006e  f88d301b          STRB     r3,[sp,#0x1b]
+;;;1076   modbus_registers[24]=(char)((LPC_RTC->DOM)>>8);			//Рег13  Время, день месяца
+000072  7b03              LDRB     r3,[r0,#0xc]
 000074  f88d101c          STRB     r1,[sp,#0x1c]
-;;;1072   modbus_registers[25]=(char)((LPC_RTC->DOM));
-000078  7b06              LDRB     r6,[r0,#0xc]
-00007a  f88d601d          STRB     r6,[sp,#0x1d]
-;;;1073   modbus_registers[26]=(char)((LPC_RTC->HOUR)>>8);			//Рег14  Время, час
-00007e  7a06              LDRB     r6,[r0,#8]
+;;;1077   modbus_registers[25]=(char)((LPC_RTC->DOM));
+000078  7b03              LDRB     r3,[r0,#0xc]
+00007a  f88d301d          STRB     r3,[sp,#0x1d]
+;;;1078   modbus_registers[26]=(char)((LPC_RTC->HOUR)>>8);			//Рег14  Время, час
+00007e  7a03              LDRB     r3,[r0,#8]
 000080  f88d101e          STRB     r1,[sp,#0x1e]
-;;;1074   modbus_registers[27]=(char)((LPC_RTC->HOUR));
-000084  7a06              LDRB     r6,[r0,#8]
-000086  f88d601f          STRB     r6,[sp,#0x1f]
-;;;1075   modbus_registers[28]=(char)((LPC_RTC->MIN)>>8);			//Рег15  Время, минуты
-00008a  7906              LDRB     r6,[r0,#4]
+;;;1079   modbus_registers[27]=(char)((LPC_RTC->HOUR));
+000084  7a03              LDRB     r3,[r0,#8]
+000086  f88d301f          STRB     r3,[sp,#0x1f]
+;;;1080   modbus_registers[28]=(char)((LPC_RTC->MIN)>>8);			//Рег15  Время, минуты
+00008a  7903              LDRB     r3,[r0,#4]
 00008c  f88d1020          STRB     r1,[sp,#0x20]
-;;;1076   modbus_registers[29]=(char)((LPC_RTC->MIN));
-000090  7906              LDRB     r6,[r0,#4]
-000092  f88d6021          STRB     r6,[sp,#0x21]
-;;;1077   modbus_registers[30]=(char)((LPC_RTC->SEC)>>8);			//Рег16  Время, секунды
-000096  7806              LDRB     r6,[r0,#0]
+;;;1081   modbus_registers[29]=(char)((LPC_RTC->MIN));
+000090  7903              LDRB     r3,[r0,#4]
+000092  f88d3021          STRB     r3,[sp,#0x21]
+;;;1082   modbus_registers[30]=(char)((LPC_RTC->SEC)>>8);			//Рег16  Время, секунды
+000096  7803              LDRB     r3,[r0,#0]
 000098  f88d1022          STRB     r1,[sp,#0x22]
-;;;1078   modbus_registers[31]=(char)((LPC_RTC->SEC));
+;;;1083   modbus_registers[31]=(char)((LPC_RTC->SEC));
 00009c  7800              LDRB     r0,[r0,#0]
 00009e  f88d0023          STRB     r0,[sp,#0x23]
-;;;1079   modbus_registers[38]=(char)(NUMIST>>8);				//Рег20  Количество выпрямителей в структуре
+;;;1084   modbus_registers[38]=(char)(NUMIST>>8);				//Рег20  Количество выпрямителей в структуре
 0000a2  48ec              LDR      r0,|L1.1108|
 0000a4  8800              LDRH     r0,[r0,#0]  ; NUMIST
 0000a6  ea4f2120          ASR      r1,r0,#8
 0000aa  f88d102a          STRB     r1,[sp,#0x2a]
-;;;1080   modbus_registers[39]=(char)(NUMIST);
+;;;1085   modbus_registers[39]=(char)(NUMIST);
 0000ae  f88d002b          STRB     r0,[sp,#0x2b]
-;;;1081   modbus_registers[40]=(char)(PAR>>8);					//Рег21  Параллельная работа выпрямителей вкл./выкл.
+;;;1086   modbus_registers[40]=(char)(PAR>>8);					//Рег21  Параллельная работа выпрямителей вкл./выкл.
 0000b2  48e9              LDR      r0,|L1.1112|
 0000b4  8800              LDRH     r0,[r0,#0]  ; PAR
 0000b6  ea4f2120          ASR      r1,r0,#8
 0000ba  f88d102c          STRB     r1,[sp,#0x2c]
-;;;1082   modbus_registers[41]=(char)(PAR);
+;;;1087   modbus_registers[41]=(char)(PAR);
 0000be  f88d002d          STRB     r0,[sp,#0x2d]
-;;;1083   modbus_registers[42]=(char)(ZV_ON>>8);					//Рег22  Звуковая аварийная сигнализация вкл./выкл.
+;;;1088   modbus_registers[42]=(char)(ZV_ON>>8);					//Рег22  Звуковая аварийная сигнализация вкл./выкл.
 0000c2  48e6              LDR      r0,|L1.1116|
 0000c4  8800              LDRH     r0,[r0,#0]  ; ZV_ON
 0000c6  ea4f2120          ASR      r1,r0,#8
 0000ca  f88d102e          STRB     r1,[sp,#0x2e]
-;;;1084   modbus_registers[43]=(char)(ZV_ON);
+;;;1089   modbus_registers[43]=(char)(ZV_ON);
 0000ce  f88d002f          STRB     r0,[sp,#0x2f]
-;;;1085   modbus_registers[46]=(char)(UBM_AV>>8);				//Рег24  Аварийный уровень отклонения напряжения средней точки батареи, %
+;;;1090   modbus_registers[46]=(char)(UBM_AV>>8);				//Рег24  Аварийный уровень отклонения напряжения средней точки батареи, %
 0000d2  48e3              LDR      r0,|L1.1120|
 0000d4  8800              LDRH     r0,[r0,#0]  ; UBM_AV
 0000d6  ea4f2120          ASR      r1,r0,#8
 0000da  f88d1032          STRB     r1,[sp,#0x32]
-;;;1086   modbus_registers[47]=(char)(UBM_AV);
+;;;1091   modbus_registers[47]=(char)(UBM_AV);
 0000de  f88d0033          STRB     r0,[sp,#0x33]
-;;;1087   modbus_registers[58]=(char)(TBAT>>8);					//Рег30  Период проверки цепи батареи, минут.
+;;;1092   modbus_registers[58]=(char)(TBAT>>8);					//Рег30  Период проверки цепи батареи, минут.
 0000e2  48e0              LDR      r0,|L1.1124|
 0000e4  8800              LDRH     r0,[r0,#0]  ; TBAT
 0000e6  ea4f2120          ASR      r1,r0,#8
 0000ea  f88d103e          STRB     r1,[sp,#0x3e]
-;;;1088   modbus_registers[59]=(char)(TBAT);
+;;;1093   modbus_registers[59]=(char)(TBAT);
 0000ee  f88d003f          STRB     r0,[sp,#0x3f]
-;;;1089   modbus_registers[60]=(char)(UMAX>>8);					//Рег31  Максимальное (аварийное) напряжение выпрямителей, 0.1В
+;;;1094   modbus_registers[60]=(char)(UMAX>>8);					//Рег31  Максимальное (аварийное) напряжение выпрямителей, 0.1В
 0000f2  48dd              LDR      r0,|L1.1128|
 0000f4  8800              LDRH     r0,[r0,#0]  ; UMAX
 0000f6  ea4f2120          ASR      r1,r0,#8
 0000fa  f88d1040          STRB     r1,[sp,#0x40]
-;;;1090   modbus_registers[61]=(char)(UMAX);
+;;;1095   modbus_registers[61]=(char)(UMAX);
 0000fe  f88d0041          STRB     r0,[sp,#0x41]
-;;;1091   modbus_registers[62]=(char)((UB20-DU)>>8);				//Рег32  Минимальное (аварийное) напряжение выпрямителей, 0.1В
+;;;1096   modbus_registers[62]=(char)((UB20-DU)>>8);				//Рег32  Минимальное (аварийное) напряжение выпрямителей, 0.1В
 000102  48da              LDR      r0,|L1.1132|
 000104  49da              LDR      r1,|L1.1136|
 000106  8800              LDRH     r0,[r0,#0]  ; UB20
 000108  8809              LDRH     r1,[r1,#0]  ; DU
 00010a  eba00101          SUB      r1,r0,r1
-00010e  ea4f2621          ASR      r6,r1,#8
-000112  f88d6042          STRB     r6,[sp,#0x42]
-;;;1092   modbus_registers[63]=(char)((UB20-DU));
+00010e  ea4f2321          ASR      r3,r1,#8
+000112  f88d3042          STRB     r3,[sp,#0x42]
+;;;1097   modbus_registers[63]=(char)((UB20-DU));
 000116  f88d1043          STRB     r1,[sp,#0x43]
-;;;1093   modbus_registers[64]=(char)(UB0>>8);					//Рег33  Напряжение содержания батареи при 0гЦ, 0.1В
+;;;1098   modbus_registers[64]=(char)(UB0>>8);					//Рег33  Напряжение содержания батареи при 0гЦ, 0.1В
 00011a  49d6              LDR      r1,|L1.1140|
 00011c  8809              LDRH     r1,[r1,#0]  ; UB0
-00011e  ea4f2621          ASR      r6,r1,#8
-000122  f88d6044          STRB     r6,[sp,#0x44]
-;;;1094   modbus_registers[65]=(char)(UB0);
+00011e  ea4f2321          ASR      r3,r1,#8
+000122  f88d3044          STRB     r3,[sp,#0x44]
+;;;1099   modbus_registers[65]=(char)(UB0);
 000126  f88d1045          STRB     r1,[sp,#0x45]
-;;;1095   modbus_registers[66]=(char)(UB20>>8);					//Рег34  Напряжение содержания батареи при 20гЦ, 0.1В
-00012a  ea4f2120          ASR      r1,r0,#8
-00012e  f88d1046          STRB     r1,[sp,#0x46]
-;;;1096   modbus_registers[67]=(char)(UB20);
+;;;1100   modbus_registers[66]=(char)(UB20>>8);					//Рег34  Напряжение содержания батареи при 20гЦ, 0.1В
+00012a  ea4f2c20          ASR      r12,r0,#8
+00012e  f88dc046          STRB     r12,[sp,#0x46]
+;;;1101   modbus_registers[67]=(char)(UB20);
 000132  f88d0047          STRB     r0,[sp,#0x47]
-;;;1097   modbus_registers[68]=(char)(USIGN>>8);					//Рег35  Минимальное (сигнальное) напряжение батареи, 1В
+;;;1102   modbus_registers[68]=(char)(USIGN>>8);					//Рег35  Минимальное (сигнальное) напряжение батареи, 1В
 000136  48d0              LDR      r0,|L1.1144|
 000138  8800              LDRH     r0,[r0,#0]  ; USIGN
-00013a  ea4f2120          ASR      r1,r0,#8
-00013e  f88d1048          STRB     r1,[sp,#0x48]
-;;;1098   modbus_registers[69]=(char)(USIGN);
+00013a  ea4f2c20          ASR      r12,r0,#8
+00013e  f88dc048          STRB     r12,[sp,#0x48]
+;;;1103   modbus_registers[69]=(char)(USIGN);
 000142  f88d0049          STRB     r0,[sp,#0x49]
-;;;1099   modbus_registers[70]=(char)(UMN>>8);					//Рег36  Минимальное (аварийное) напряжение питающей сети, 1В
+;;;1104   modbus_registers[70]=(char)(UMN>>8);					//Рег36  Минимальное (аварийное) напряжение питающей сети, 1В
 000146  48cd              LDR      r0,|L1.1148|
 000148  8800              LDRH     r0,[r0,#0]  ; UMN
-00014a  ea4f2120          ASR      r1,r0,#8
-00014e  f88d104a          STRB     r1,[sp,#0x4a]
-;;;1100   modbus_registers[71]=(char)(UMN);
+00014a  ea4f2c20          ASR      r12,r0,#8
+00014e  f88dc04a          STRB     r12,[sp,#0x4a]
+;;;1105   modbus_registers[71]=(char)(UMN);
 000152  f88d004b          STRB     r0,[sp,#0x4b]
-;;;1101   modbus_registers[72]=(char)(U0B>>8);					//Рег37  Рабочее напряжение при невведенных батареях, 0.1В
+;;;1106   modbus_registers[72]=(char)(U0B>>8);					//Рег37  Рабочее напряжение при невведенных батареях, 0.1В
 000156  48ca              LDR      r0,|L1.1152|
 000158  8800              LDRH     r0,[r0,#0]  ; U0B
-00015a  ea4f2120          ASR      r1,r0,#8
-00015e  f88d104c          STRB     r1,[sp,#0x4c]
-;;;1102   modbus_registers[73]=(char)(U0B);
+00015a  ea4f2c20          ASR      r12,r0,#8
+00015e  f88dc04c          STRB     r12,[sp,#0x4c]
+;;;1107   modbus_registers[73]=(char)(U0B);
 000162  f88d004d          STRB     r0,[sp,#0x4d]
-;;;1103   modbus_registers[74]=(char)(IKB>>8);					//Рег38  Ток контроля наличия батареи, 0.1а
+;;;1108   modbus_registers[74]=(char)(IKB>>8);					//Рег38  Ток контроля наличия батареи, 0.1а
 000166  48c7              LDR      r0,|L1.1156|
 000168  8800              LDRH     r0,[r0,#0]  ; IKB
-00016a  ea4f2120          ASR      r1,r0,#8
-00016e  f88d104e          STRB     r1,[sp,#0x4e]
-;;;1104   modbus_registers[75]=(char)(IKB);
+00016a  ea4f2c20          ASR      r12,r0,#8
+00016e  f88dc04e          STRB     r12,[sp,#0x4e]
+;;;1109   modbus_registers[75]=(char)(IKB);
 000172  f88d004f          STRB     r0,[sp,#0x4f]
-;;;1105   modbus_registers[76]=(char)(IZMAX>>8);					//Рег39  Ток заряда батареи максимальный, 0.1А
+;;;1110   modbus_registers[76]=(char)(IZMAX>>8);					//Рег39  Ток заряда батареи максимальный, 0.1А
 000176  48c4              LDR      r0,|L1.1160|
 000178  8800              LDRH     r0,[r0,#0]  ; IZMAX
-00017a  ea4f2120          ASR      r1,r0,#8
-00017e  f88d1050          STRB     r1,[sp,#0x50]
-;;;1106   modbus_registers[77]=(char)(IZMAX);
+00017a  ea4f2c20          ASR      r12,r0,#8
+00017e  f88dc050          STRB     r12,[sp,#0x50]
+;;;1111   modbus_registers[77]=(char)(IZMAX);
 000182  f88d0051          STRB     r0,[sp,#0x51]
-;;;1107   modbus_registers[78]=(char)(IMAX>>8);					//Рег40  Ток переключения на большее кол-во выпрямителей, 0.1А
+;;;1112   modbus_registers[78]=(char)(IMAX>>8);					//Рег40  Ток переключения на большее кол-во выпрямителей, 0.1А
 000186  48c1              LDR      r0,|L1.1164|
 000188  8800              LDRH     r0,[r0,#0]  ; IMAX
-00018a  ea4f2120          ASR      r1,r0,#8
-00018e  f88d1052          STRB     r1,[sp,#0x52]
-;;;1108   modbus_registers[79]=(char)(IMAX);
+00018a  ea4f2c20          ASR      r12,r0,#8
+00018e  f88dc052          STRB     r12,[sp,#0x52]
+;;;1113   modbus_registers[79]=(char)(IMAX);
 000192  f88d0053          STRB     r0,[sp,#0x53]
-;;;1109   modbus_registers[80]=(char)(IMIN>>8);					//Рег41  Ток переключения на меньшее кол-во выпрямителей, 0.1А
+;;;1114   modbus_registers[80]=(char)(IMIN>>8);					//Рег41  Ток переключения на меньшее кол-во выпрямителей, 0.1А
 000196  48be              LDR      r0,|L1.1168|
 000198  8800              LDRH     r0,[r0,#0]  ; IMIN
-00019a  ea4f2120          ASR      r1,r0,#8
-00019e  f88d1054          STRB     r1,[sp,#0x54]
-;;;1110   modbus_registers[81]=(char)(IMIN);
+00019a  ea4f2c20          ASR      r12,r0,#8
+00019e  f88dc054          STRB     r12,[sp,#0x54]
+;;;1115   modbus_registers[81]=(char)(IMIN);
 0001a2  f88d0055          STRB     r0,[sp,#0x55]
-;;;1111   modbus_registers[82]=(char)(UVZ>>8);					//Рег42  Напряжение выравнивающего заряда, 0.1В
+;;;1116   modbus_registers[82]=(char)(UVZ>>8);					//Рег42  Напряжение выравнивающего заряда, 0.1В
 0001a6  48bb              LDR      r0,|L1.1172|
 0001a8  8800              LDRH     r0,[r0,#0]  ; UVZ
-0001aa  ea4f2120          ASR      r1,r0,#8
-0001ae  f88d1056          STRB     r1,[sp,#0x56]
-;;;1112   modbus_registers[83]=(char)(UVZ);
+0001aa  ea4f2c20          ASR      r12,r0,#8
+0001ae  f88dc056          STRB     r12,[sp,#0x56]
+;;;1117   modbus_registers[83]=(char)(UVZ);
 0001b2  f88d0057          STRB     r0,[sp,#0x57]
-;;;1113   modbus_registers[84]=(char)(TZAS>>8);					//Рег43  Время задержки включения выпрямителей, сек
+;;;1118   modbus_registers[84]=(char)(TZAS>>8);					//Рег43  Время задержки включения выпрямителей, сек
 0001b6  48b8              LDR      r0,|L1.1176|
 0001b8  8800              LDRH     r0,[r0,#0]  ; TZAS
-0001ba  ea4f2120          ASR      r1,r0,#8
-0001be  f88d1058          STRB     r1,[sp,#0x58]
-;;;1114   modbus_registers[85]=(char)(TZAS);
+0001ba  ea4f2c20          ASR      r12,r0,#8
+0001be  f88dc058          STRB     r12,[sp,#0x58]
+;;;1119   modbus_registers[85]=(char)(TZAS);
 0001c2  f88d0059          STRB     r0,[sp,#0x59]
-;;;1115   modbus_registers[86]=(char)(TMAX>>8);					//Рег44  Температура выпрямителей аварийная, 1гЦ
+;;;1120   modbus_registers[86]=(char)(TMAX>>8);					//Рег44  Температура выпрямителей аварийная, 1гЦ
 0001c6  48b5              LDR      r0,|L1.1180|
 0001c8  8800              LDRH     r0,[r0,#0]  ; TMAX
-0001ca  ea4f2120          ASR      r1,r0,#8
-0001ce  f88d105a          STRB     r1,[sp,#0x5a]
-;;;1116   modbus_registers[87]=(char)(TMAX);
+0001ca  ea4f2c20          ASR      r12,r0,#8
+0001ce  f88dc05a          STRB     r12,[sp,#0x5a]
+;;;1121   modbus_registers[87]=(char)(TMAX);
 0001d2  f88d005b          STRB     r0,[sp,#0x5b]
-;;;1117   modbus_registers[88]=(char)(TSIGN>>8);					//Рег45  Температура выпрямителей сигнальная, 1гЦ
+;;;1122   modbus_registers[88]=(char)(TSIGN>>8);					//Рег45  Температура выпрямителей сигнальная, 1гЦ
 0001d6  48b2              LDR      r0,|L1.1184|
 0001d8  8800              LDRH     r0,[r0,#0]  ; TSIGN
-0001da  ea4f2120          ASR      r1,r0,#8
-0001de  f88d105c          STRB     r1,[sp,#0x5c]
-;;;1118   modbus_registers[89]=(char)(TSIGN);
+0001da  ea4f2c20          ASR      r12,r0,#8
+0001de  f88dc05c          STRB     r12,[sp,#0x5c]
+;;;1123   modbus_registers[89]=(char)(TSIGN);
 0001e2  f88d005d          STRB     r0,[sp,#0x5d]
-;;;1119   modbus_registers[90]=(char)(TBATMAX>>8);				//Рег46  Температура батареи аварийная, 1гЦ
+;;;1124   modbus_registers[90]=(char)(TBATMAX>>8);				//Рег46  Температура батареи аварийная, 1гЦ
 0001e6  48af              LDR      r0,|L1.1188|
 0001e8  8800              LDRH     r0,[r0,#0]  ; TBATMAX
-0001ea  ea4f2120          ASR      r1,r0,#8
-0001ee  f88d105e          STRB     r1,[sp,#0x5e]
-;;;1120   modbus_registers[91]=(char)(TBATMAX);
+0001ea  ea4f2c20          ASR      r12,r0,#8
+0001ee  f88dc05e          STRB     r12,[sp,#0x5e]
+;;;1125   modbus_registers[91]=(char)(TBATMAX);
 0001f2  f88d005f          STRB     r0,[sp,#0x5f]
-;;;1121   modbus_registers[92]=(char)(TBATSIGN>>8);				//Рег47  Температура батареи сигнальная, 1гЦ
+;;;1126   modbus_registers[92]=(char)(TBATSIGN>>8);				//Рег47  Температура батареи сигнальная, 1гЦ
 0001f6  48ac              LDR      r0,|L1.1192|
 0001f8  8800              LDRH     r0,[r0,#0]  ; TBATSIGN
-0001fa  ea4f2120          ASR      r1,r0,#8
-0001fe  f88d1060          STRB     r1,[sp,#0x60]
-;;;1122   modbus_registers[93]=(char)(TBATSIGN);
+0001fa  ea4f2c20          ASR      r12,r0,#8
+0001fe  f88dc060          STRB     r12,[sp,#0x60]
+;;;1127   modbus_registers[93]=(char)(TBATSIGN);
 000202  f88d0061          STRB     r0,[sp,#0x61]
-;;;1123   modbus_registers[94]=(char)(speedChrgCurr>>8);					//Рег48  Ток ускоренного заряда, 0.1А
+;;;1128   modbus_registers[94]=(char)(speedChrgCurr>>8);					//Рег48  Ток ускоренного заряда, 0.1А
 000206  48a9              LDR      r0,|L1.1196|
 000208  8800              LDRH     r0,[r0,#0]  ; speedChrgCurr
-00020a  ea4f2120          ASR      r1,r0,#8
-00020e  f88d1062          STRB     r1,[sp,#0x62]
-;;;1124   modbus_registers[95]=(char)(speedChrgCurr);
+00020a  ea4f2c20          ASR      r12,r0,#8
+00020e  f88dc062          STRB     r12,[sp,#0x62]
+;;;1129   modbus_registers[95]=(char)(speedChrgCurr);
 000212  f88d0063          STRB     r0,[sp,#0x63]
-;;;1125   modbus_registers[96]=(char)(speedChrgVolt>>8);				//Рег49	 Напряжение ускоренного заряда, 0.1В 
+;;;1130   modbus_registers[96]=(char)(speedChrgVolt>>8);				//Рег49	 Напряжение ускоренного заряда, 0.1В 
 000216  48a6              LDR      r0,|L1.1200|
 000218  8800              LDRH     r0,[r0,#0]  ; speedChrgVolt
-00021a  ea4f2120          ASR      r1,r0,#8
-00021e  f88d1064          STRB     r1,[sp,#0x64]
-;;;1126   modbus_registers[97]=(char)(speedChrgVolt);
+00021a  ea4f2c20          ASR      r12,r0,#8
+00021e  f88dc064          STRB     r12,[sp,#0x64]
+;;;1131   modbus_registers[97]=(char)(speedChrgVolt);
 000222  f88d0065          STRB     r0,[sp,#0x65]
-;;;1127   modbus_registers[98]=(char)(speedChrgTimeInHour>>8);				//Рег50	 Время ускоренного заряда, 1ч
+;;;1132   modbus_registers[98]=(char)(speedChrgTimeInHour>>8);				//Рег50	 Время ускоренного заряда, 1ч
 000226  48a3              LDR      r0,|L1.1204|
 000228  8800              LDRH     r0,[r0,#0]  ; speedChrgTimeInHour
-00022a  ea4f2120          ASR      r1,r0,#8
-00022e  f88d1066          STRB     r1,[sp,#0x66]
-;;;1128   modbus_registers[99]=(char)(speedChrgTimeInHour);
+00022a  ea4f2c20          ASR      r12,r0,#8
+00022e  f88dc066          STRB     r12,[sp,#0x66]
+;;;1133   modbus_registers[99]=(char)(speedChrgTimeInHour);
 000232  f88d0067          STRB     r0,[sp,#0x67]
-;;;1129   modbus_registers[100]=(char)(U_OUT_KONTR_MAX>>8);					//Рег51	 Контроль выходного напряжения, Umax, 0.1В
+;;;1134   modbus_registers[100]=(char)(U_OUT_KONTR_MAX>>8);					//Рег51	 Контроль выходного напряжения, Umax, 0.1В
 000236  48a0              LDR      r0,|L1.1208|
 000238  8800              LDRH     r0,[r0,#0]  ; U_OUT_KONTR_MAX
-00023a  ea4f2120          ASR      r1,r0,#8
-00023e  f88d1068          STRB     r1,[sp,#0x68]
-;;;1130   modbus_registers[101]=(char)(U_OUT_KONTR_MAX);
+00023a  ea4f2c20          ASR      r12,r0,#8
+00023e  f88dc068          STRB     r12,[sp,#0x68]
+;;;1135   modbus_registers[101]=(char)(U_OUT_KONTR_MAX);
 000242  f88d0069          STRB     r0,[sp,#0x69]
-;;;1131   modbus_registers[102]=(char)(U_OUT_KONTR_MIN>>8);					//Рег52	 Контроль выходного напряжения, Umin, 0.1В
+;;;1136   modbus_registers[102]=(char)(U_OUT_KONTR_MIN>>8);					//Рег52	 Контроль выходного напряжения, Umin, 0.1В
 000246  489d              LDR      r0,|L1.1212|
 000248  8800              LDRH     r0,[r0,#0]  ; U_OUT_KONTR_MIN
-00024a  ea4f2120          ASR      r1,r0,#8
-00024e  f88d106a          STRB     r1,[sp,#0x6a]
-;;;1132   modbus_registers[103]=(char)(U_OUT_KONTR_MIN);
+00024a  ea4f2c20          ASR      r12,r0,#8
+00024e  f88dc06a          STRB     r12,[sp,#0x6a]
+;;;1137   modbus_registers[103]=(char)(U_OUT_KONTR_MIN);
 000252  f88d006b          STRB     r0,[sp,#0x6b]
-;;;1133   modbus_registers[104]=(char)(U_OUT_KONTR_DELAY>>8);				//Рег53	 Контроль выходного напряжения, Tзадержки, 1сек.
+;;;1138   modbus_registers[104]=(char)(U_OUT_KONTR_DELAY>>8);				//Рег53	 Контроль выходного напряжения, Tзадержки, 1сек.
 000256  489a              LDR      r0,|L1.1216|
 000258  8800              LDRH     r0,[r0,#0]  ; U_OUT_KONTR_DELAY
-00025a  ea4f2120          ASR      r1,r0,#8
-00025e  f88d106c          STRB     r1,[sp,#0x6c]
-;;;1134   modbus_registers[105]=(char)(U_OUT_KONTR_DELAY);
+00025a  ea4f2c20          ASR      r12,r0,#8
+00025e  f88dc06c          STRB     r12,[sp,#0x6c]
+;;;1139   modbus_registers[105]=(char)(U_OUT_KONTR_DELAY);
 000262  f88d006d          STRB     r0,[sp,#0x6d]
-;;;1135   
-;;;1136   
-;;;1137   
-;;;1138   
-;;;1139   if(prot==MODBUS_RTU_PROT)
-;;;1140   	{
-;;;1141   	modbus_tx_buff[0]=adr;
-;;;1142   	modbus_tx_buff[1]=func;
-;;;1143   	modbus_tx_buff[2]=(char)(reg_quantity*2);
-;;;1144   	mem_copy((char*)&modbus_tx_buff[3],(char*)&modbus_registers[(reg_adr-1)*2],reg_quantity*2);
-000266  f1a20201          SUB      r2,r2,#1
-00026a  a801              ADD      r0,sp,#4              ;1062
-00026c  eb000142          ADD      r1,r0,r2,LSL #1
-000270  b12b              CBZ      r3,|L1.638|
-;;;1145   	
-;;;1146   	crc_temp=CRC16_2(modbus_tx_buff,(reg_quantity*2)+3);
-;;;1147   
-;;;1148   	modbus_tx_buff[3+(reg_quantity*2)]=(char)crc_temp;
-;;;1149   	modbus_tx_buff[4+(reg_quantity*2)]=crc_temp>>8;
-;;;1150   
-;;;1151   	for (i=0;i<(5+(reg_quantity*2));i++)
-;;;1152   		{
-;;;1153   		putchar0(modbus_tx_buff[i]);
-;;;1154   		}
-;;;1155   
-;;;1156   	for (i=0;i<(5+(reg_quantity*2));i++)
-;;;1157   		{
-;;;1158   		putchar_sc16is700(modbus_tx_buff[i]);
-;;;1159   		}
-;;;1160   	}
-;;;1161   else if(prot==MODBUS_TCP_PROT)
-000272  2b01              CMP      r3,#1
-000274  d101              BNE      |L1.634|
-;;;1162   	{
-;;;1163   	modbus_tcp_out_ptr=(char*)&modbus_registers[(reg_adr-1)*2];
-000276  4893              LDR      r0,|L1.1220|
-000278  6001              STR      r1,[r0,#0]  ; modbus_tcp_out_ptr
-                  |L1.634|
-;;;1164   	}
-;;;1165   }
-00027a  b027              ADD      sp,sp,#0x9c
-00027c  bdf0              POP      {r4-r7,pc}
-                  |L1.638|
-00027e  4e92              LDR      r6,|L1.1224|
-000280  7034              STRB     r4,[r6,#0]            ;1141
-000282  7077              STRB     r7,[r6,#1]            ;1142
-000284  ea4f0245          LSL      r2,r5,#1              ;1143
-000288  70b2              STRB     r2,[r6,#2]            ;1143
-00028a  f1060003          ADD      r0,r6,#3              ;1144
-00028e  f7fffffe          BL       mem_copy
-000292  2003              MOVS     r0,#3                 ;1146
-000294  eb000045          ADD      r0,r0,r5,LSL #1       ;1146
-000298  b201              SXTH     r1,r0                 ;1146
-00029a  4630              MOV      r0,r6                 ;1146
-00029c  f7fffffe          BL       CRC16_2
-0002a0  eb060145          ADD      r1,r6,r5,LSL #1       ;1148
-0002a4  70c8              STRB     r0,[r1,#3]            ;1148
-0002a6  ea4f2010          LSR      r0,r0,#8              ;1149
-0002aa  7108              STRB     r0,[r1,#4]            ;1149
-0002ac  f04f0400          MOV      r4,#0                 ;1151
-0002b0  f04f0005          MOV      r0,#5                 ;1151
-0002b4  eb000545          ADD      r5,r0,r5,LSL #1       ;1151
-0002b8  e005              B        |L1.710|
-                  |L1.698|
-0002ba  5d30              LDRB     r0,[r6,r4]            ;1153
-0002bc  f7fffffe          BL       putchar0
-0002c0  f1040401          ADD      r4,r4,#1              ;1151
-0002c4  b2e4              UXTB     r4,r4                 ;1151
-                  |L1.710|
-0002c6  42a5              CMP      r5,r4                 ;1151
-0002c8  d8f7              BHI      |L1.698|
-0002ca  f04f0400          MOV      r4,#0                 ;1156
-0002ce  e005              B        |L1.732|
-                  |L1.720|
-0002d0  5d30              LDRB     r0,[r6,r4]            ;1158
-0002d2  f7fffffe          BL       putchar_sc16is700
-0002d6  f1040401          ADD      r4,r4,#1              ;1156
-0002da  b2e4              UXTB     r4,r4                 ;1156
-                  |L1.732|
-0002dc  42a5              CMP      r5,r4                 ;1156
-0002de  d8f7              BHI      |L1.720|
-0002e0  e7cb              B        |L1.634|
-;;;1166   
+;;;1140   modbus_registers[106]=(char)(UB0>>8);							//Рег54	 Установка выходного напряжения для ИПС без батареи(СГЕП-ГАЗПРОМ)
+000266  f88d306e          STRB     r3,[sp,#0x6e]
+;;;1141   modbus_registers[107]=(char)(UB0);
+00026a  f88d106f          STRB     r1,[sp,#0x6f]
+;;;1142   
+;;;1143   
+;;;1144   
+;;;1145   
+;;;1146   if(prot==MODBUS_RTU_PROT)
+;;;1147   	{
+;;;1148   	modbus_tx_buff[0]=adr;
+;;;1149   	modbus_tx_buff[1]=func;
+;;;1150   	modbus_tx_buff[2]=(char)(reg_quantity*2);
+;;;1151   	mem_copy((char*)&modbus_tx_buff[3],(char*)&modbus_registers[(reg_adr-1)*2],reg_quantity*2);
+00026e  f1a20201          SUB      r2,r2,#1
+000272  a801              ADD      r0,sp,#4              ;1067
+000274  eb000142          ADD      r1,r0,r2,LSL #1
+000278  b12e              CBZ      r6,|L1.646|
+;;;1152   	
+;;;1153   	crc_temp=CRC16_2(modbus_tx_buff,(reg_quantity*2)+3);
+;;;1154   
+;;;1155   	modbus_tx_buff[3+(reg_quantity*2)]=(char)crc_temp;
+;;;1156   	modbus_tx_buff[4+(reg_quantity*2)]=crc_temp>>8;
+;;;1157   
+;;;1158   	for (i=0;i<(5+(reg_quantity*2));i++)
+;;;1159   		{
+;;;1160   		putchar0(modbus_tx_buff[i]);
+;;;1161   		}
+;;;1162   
+;;;1163   	for (i=0;i<(5+(reg_quantity*2));i++)
+;;;1164   		{
+;;;1165   		putchar_sc16is700(modbus_tx_buff[i]);
+;;;1166   		}
+;;;1167   	}
+;;;1168   else if(prot==MODBUS_TCP_PROT)
+00027a  2e01              CMP      r6,#1
+00027c  d101              BNE      |L1.642|
+;;;1169   	{
+;;;1170   	modbus_tcp_out_ptr=(char*)&modbus_registers[(reg_adr-1)*2];
+00027e  4891              LDR      r0,|L1.1220|
+000280  6001              STR      r1,[r0,#0]  ; modbus_tcp_out_ptr
+                  |L1.642|
+;;;1171   	}
+;;;1172   }
+000282  b027              ADD      sp,sp,#0x9c
+000284  bdf0              POP      {r4-r7,pc}
+                  |L1.646|
+000286  4e90              LDR      r6,|L1.1224|
+000288  7034              STRB     r4,[r6,#0]            ;1148
+00028a  7077              STRB     r7,[r6,#1]            ;1149
+00028c  ea4f0245          LSL      r2,r5,#1              ;1150
+000290  70b2              STRB     r2,[r6,#2]            ;1150
+000292  f1060003          ADD      r0,r6,#3              ;1151
+000296  f7fffffe          BL       mem_copy
+00029a  2003              MOVS     r0,#3                 ;1153
+00029c  eb000045          ADD      r0,r0,r5,LSL #1       ;1153
+0002a0  b201              SXTH     r1,r0                 ;1153
+0002a2  4630              MOV      r0,r6                 ;1153
+0002a4  f7fffffe          BL       CRC16_2
+0002a8  eb060145          ADD      r1,r6,r5,LSL #1       ;1155
+0002ac  70c8              STRB     r0,[r1,#3]            ;1155
+0002ae  ea4f2010          LSR      r0,r0,#8              ;1156
+0002b2  7108              STRB     r0,[r1,#4]            ;1156
+0002b4  f04f0400          MOV      r4,#0                 ;1158
+0002b8  f04f0005          MOV      r0,#5                 ;1158
+0002bc  eb000545          ADD      r5,r0,r5,LSL #1       ;1158
+0002c0  e005              B        |L1.718|
+                  |L1.706|
+0002c2  5d30              LDRB     r0,[r6,r4]            ;1160
+0002c4  f7fffffe          BL       putchar0
+0002c8  f1040401          ADD      r4,r4,#1              ;1158
+0002cc  b2e4              UXTB     r4,r4                 ;1158
+                  |L1.718|
+0002ce  42a5              CMP      r5,r4                 ;1158
+0002d0  d8f7              BHI      |L1.706|
+0002d2  f04f0400          MOV      r4,#0                 ;1163
+0002d6  e005              B        |L1.740|
+                  |L1.728|
+0002d8  5d30              LDRB     r0,[r6,r4]            ;1165
+0002da  f7fffffe          BL       putchar_sc16is700
+0002de  f1040401          ADD      r4,r4,#1              ;1163
+0002e2  b2e4              UXTB     r4,r4                 ;1163
+                  |L1.740|
+0002e4  42a5              CMP      r5,r4                 ;1163
+0002e6  d8f7              BHI      |L1.728|
+0002e8  e7cb              B        |L1.642|
+;;;1173   
                           ENDP
 
                   modbus_input_registers_transmit PROC
-;;;1167   //-----------------------------------------------
-;;;1168   void modbus_input_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot)
-0002e2  e92d41f0          PUSH     {r4-r8,lr}
-;;;1169   {
-0002e6  b0fe              SUB      sp,sp,#0x1f8
-0002e8  461d              MOV      r5,r3
-0002ea  9e84              LDR      r6,[sp,#0x210]
-;;;1170   signed char modbus_registers[500];
-;;;1171   //char modbus_tx_buff[200];
-;;;1172   unsigned short crc_temp;
-;;;1173   char i;
-;;;1174   short tempS;
-;;;1175   
-;;;1176   //tempS=(MODBUS_INPUT_REGS[0]);
-;;;1177   //bps_I=bps_I_phantom;
-;;;1178   
-;;;1179   modbus_registers[0]=(signed char)(out_U>>8);					//Рег1   	напряжение выходной шины, 0.1В
-0002ec  4b77              LDR      r3,|L1.1228|
-0002ee  881b              LDRH     r3,[r3,#0]  ; out_U
-0002f0  ea4f2423          ASR      r4,r3,#8
-0002f4  f88d4004          STRB     r4,[sp,#4]
-;;;1180   modbus_registers[1]=(signed char)(out_U);
-0002f8  f88d3005          STRB     r3,[sp,#5]
-;;;1181   modbus_registers[2]=(signed char)(bps_I>>8);					//Рег2   	ток выпрямителей, 0.1А
-0002fc  4b74              LDR      r3,|L1.1232|
-0002fe  881b              LDRH     r3,[r3,#0]  ; bps_I
-000300  ea4f2423          ASR      r4,r3,#8
-000304  f88d4006          STRB     r4,[sp,#6]
-;;;1182   modbus_registers[3]=(signed char)(bps_I);
-000308  f88d3007          STRB     r3,[sp,#7]
-;;;1183   modbus_registers[4]=(signed char)(net_U>>8);					//Рег3   	напряжение сети питания, 1В
-00030c  4b71              LDR      r3,|L1.1236|
-00030e  881b              LDRH     r3,[r3,#0]  ; net_U
-000310  ea4f2423          ASR      r4,r3,#8
-000314  f88d4008          STRB     r4,[sp,#8]
-;;;1184   modbus_registers[5]=(signed char)(net_U);
-000318  f88d3009          STRB     r3,[sp,#9]
-;;;1185   modbus_registers[6]=(signed char)(net_F>>8);					//Рег4   	частота сети питания, 0.1Гц
-00031c  4b6e              LDR      r3,|L1.1240|
-00031e  881b              LDRH     r3,[r3,#0]  ; net_F
-000320  ea4f2423          ASR      r4,r3,#8
-000324  f88d400a          STRB     r4,[sp,#0xa]
-;;;1186   modbus_registers[7]=(signed char)(net_F);
-000328  f88d300b          STRB     r3,[sp,#0xb]
-;;;1187   modbus_registers[8]=(signed char)(net_Ua>>8);					//Рег5	напряжение сети питания фаза A, 1В	
-00032c  4b6b              LDR      r3,|L1.1244|
-00032e  881b              LDRH     r3,[r3,#0]  ; net_Ua
-000330  ea4f2423          ASR      r4,r3,#8
-000334  f88d400c          STRB     r4,[sp,#0xc]
-;;;1188   modbus_registers[9]=(signed char)(net_Ua);		 	
-000338  f88d300d          STRB     r3,[sp,#0xd]
-;;;1189   modbus_registers[10]=(signed char)(net_Ub>>8);				//Рег6	напряжение сети питания фаза B, 1В
-00033c  4b68              LDR      r3,|L1.1248|
-00033e  881b              LDRH     r3,[r3,#0]  ; net_Ub
-000340  ea4f2423          ASR      r4,r3,#8
-000344  f88d400e          STRB     r4,[sp,#0xe]
-;;;1190   modbus_registers[11]=(signed char)(net_Ub);
-000348  f88d300f          STRB     r3,[sp,#0xf]
-;;;1191   modbus_registers[12]=(signed char)(net_Uc>>8);				//Рег7	напряжение сети питания фаза C, 1В
-00034c  4b65              LDR      r3,|L1.1252|
-00034e  881b              LDRH     r3,[r3,#0]  ; net_Uc
-000350  ea4f2423          ASR      r4,r3,#8
-000354  f88d4010          STRB     r4,[sp,#0x10]
-;;;1192   modbus_registers[13]=(signed char)(net_Uc);
-000358  f88d3011          STRB     r3,[sp,#0x11]
-;;;1193   modbus_registers[14]=(signed char)(bat[0]._Ub>>8);				//Рег8	напряжение батареи №1, 0.1В
-00035c  4c62              LDR      r4,|L1.1256|
-00035e  8863              LDRH     r3,[r4,#2]  ; bat
-000360  ea4f2723          ASR      r7,r3,#8
-000364  f88d7012          STRB     r7,[sp,#0x12]
-;;;1194   modbus_registers[15]=(signed char)(bat[0]._Ub);
-000368  f88d3013          STRB     r3,[sp,#0x13]
-;;;1195   modbus_registers[16]=(signed char)(bat[0]._Ib>>8);				//Рег9   	ток батареи №1, 0.01А
-00036c  8923              LDRH     r3,[r4,#8]  ; bat
-00036e  ea4f2723          ASR      r7,r3,#8
-000372  f88d7014          STRB     r7,[sp,#0x14]
-;;;1196   modbus_registers[17]=(signed char)(bat[0]._Ib);
-000376  f88d3015          STRB     r3,[sp,#0x15]
-;;;1197   modbus_registers[18]=(signed char)(bat[0]._Tb>>8);				//Рег10	температура батареи №1, 1Гц
-00037a  8963              LDRH     r3,[r4,#0xa]  ; bat
-00037c  ea4f2723          ASR      r7,r3,#8
-000380  f88d7016          STRB     r7,[sp,#0x16]
-;;;1198   modbus_registers[19]=(signed char)(bat[0]._Tb);
-000384  f88d3017          STRB     r3,[sp,#0x17]
-;;;1199   modbus_registers[20]=(signed char)(bat[0]._zar>>8);			//Рег11	заряд батареи №1, %
-000388  8a23              LDRH     r3,[r4,#0x10]  ; bat
-00038a  ea4f2713          LSR      r7,r3,#8
-00038e  f88d7018          STRB     r7,[sp,#0x18]
-;;;1200   modbus_registers[21]=(signed char)(bat[0]._zar);
-000392  f88d3019          STRB     r3,[sp,#0x19]
-;;;1201   modbus_registers[22]=(signed char)(bat[0]._Ubm>>8);			//Рег12	напряжение средней точки батареи №1, 0.1В
-000396  88a3              LDRH     r3,[r4,#4]  ; bat
-000398  ea4f2723          ASR      r7,r3,#8
-00039c  f88d701a          STRB     r7,[sp,#0x1a]
-;;;1202   modbus_registers[23]=(signed char)(bat[0]._Ubm);
-0003a0  f88d301b          STRB     r3,[sp,#0x1b]
-;;;1203   modbus_registers[24]=(signed char)(bat[0]._dUbm>>8);			//Рег13	ошибка средней точки батареи №1, %
-0003a4  88e3              LDRH     r3,[r4,#6]  ; bat
-0003a6  ea4f2723          ASR      r7,r3,#8
-0003aa  f88d701c          STRB     r7,[sp,#0x1c]
-;;;1204   modbus_registers[25]=(signed char)(bat[0]._dUbm);
-0003ae  f88d301d          STRB     r3,[sp,#0x1d]
-;;;1205   modbus_registers[26]=(signed char)(BAT_C_REAL[0]>>8);			//Рег14	Реальная емкость батареи №1, 0.1А*ч, если 0x5555 то не измерялась
-0003b2  4f4e              LDR      r7,|L1.1260|
-0003b4  883b              LDRH     r3,[r7,#0]  ; BAT_C_REAL
-0003b6  ea4f2c23          ASR      r12,r3,#8
-0003ba  f88dc01e          STRB     r12,[sp,#0x1e]
-;;;1206   modbus_registers[27]=(signed char)(BAT_C_REAL[0]);
-0003be  f88d301f          STRB     r3,[sp,#0x1f]
-;;;1207   modbus_registers[28]=(signed char)(bat[1]._Ub>>8);				//Рег15	напряжение батареи №1, 0.1В
-0003c2  f8b4304e          LDRH     r3,[r4,#0x4e]  ; bat
-0003c6  ea4f2c23          ASR      r12,r3,#8
-0003ca  f88dc020          STRB     r12,[sp,#0x20]
-;;;1208   modbus_registers[29]=(signed char)(bat[1]._Ub);
-0003ce  f88d3021          STRB     r3,[sp,#0x21]
-;;;1209   modbus_registers[30]=(signed char)(bat[1]._Ib>>8);				//Рег16   	ток батареи №1, 0.01А
-0003d2  f8b43054          LDRH     r3,[r4,#0x54]  ; bat
-0003d6  ea4f2c23          ASR      r12,r3,#8
-0003da  f88dc022          STRB     r12,[sp,#0x22]
-;;;1210   modbus_registers[31]=(signed char)(bat[1]._Ib);
-0003de  f88d3023          STRB     r3,[sp,#0x23]
-;;;1211   modbus_registers[32]=(signed char)(bat[1]._Tb>>8);				//Рег17	температура батареи №1, 1Гц
-0003e2  f8b43056          LDRH     r3,[r4,#0x56]  ; bat
-0003e6  ea4f2c23          ASR      r12,r3,#8
-0003ea  f88dc024          STRB     r12,[sp,#0x24]
-;;;1212   modbus_registers[33]=(signed char)(bat[1]._Tb);
-0003ee  f88d3025          STRB     r3,[sp,#0x25]
-;;;1213   modbus_registers[34]=(signed char)(bat[1]._zar>>8);			//Рег18	заряд батареи №1, %
-0003f2  f8b4305c          LDRH     r3,[r4,#0x5c]  ; bat
-0003f6  ea4f2c13          LSR      r12,r3,#8
-0003fa  f88dc026          STRB     r12,[sp,#0x26]
-;;;1214   modbus_registers[35]=(signed char)(bat[1]._zar);
-0003fe  f88d3027          STRB     r3,[sp,#0x27]
-;;;1215   modbus_registers[36]=(signed char)(bat[1]._Ubm>>8);			//Рег19	напряжение средней точки батареи №1, 0.1В
-000402  f8b43050          LDRH     r3,[r4,#0x50]  ; bat
-000406  ea4f2c23          ASR      r12,r3,#8
-00040a  f88dc028          STRB     r12,[sp,#0x28]
-;;;1216   modbus_registers[37]=(signed char)(bat[1]._Ubm);
-00040e  f88d3029          STRB     r3,[sp,#0x29]
-;;;1217   modbus_registers[38]=(signed char)(bat[1]._dUbm>>8);			//Рег20	ошибка средней точки батареи №1, %
-000412  f8b43052          LDRH     r3,[r4,#0x52]  ; bat
-000416  ea4f2423          ASR      r4,r3,#8
-00041a  f88d402a          STRB     r4,[sp,#0x2a]
-;;;1218   modbus_registers[39]=(signed char)(bat[1]._dUbm);
-00041e  f88d302b          STRB     r3,[sp,#0x2b]
-;;;1219   modbus_registers[40]=(signed char)(BAT_C_REAL[1]>>8);			//Рег21	Реальная емкость батареи №1, 0.1А*ч, если 0x5555 то не измерялась
-000422  887b              LDRH     r3,[r7,#2]  ; BAT_C_REAL
-000424  ea4f2423          ASR      r4,r3,#8
-000428  f88d402c          STRB     r4,[sp,#0x2c]
-;;;1220   modbus_registers[41]=(signed char)(BAT_C_REAL[1]);
-00042c  f88d302d          STRB     r3,[sp,#0x2d]
-;;;1221   modbus_registers[42]=(signed char)(bps[0]._Uii>>8);			//Рег22	Выходное напряжение выпрямителя №1, 0.1В
-000430  4c2f              LDR      r4,|L1.1264|
-000432  69e3              LDR      r3,[r4,#0x1c]  ; bps
-000434  ea4f2723          ASR      r7,r3,#8
-000438  f88d702e          STRB     r7,[sp,#0x2e]
-;;;1222   modbus_registers[43]=(signed char)(bps[0]._Uii);
-00043c  f88d302f          STRB     r3,[sp,#0x2f]
-;;;1223   modbus_registers[44]=(signed char)(bps[0]._Ii>>8);				//Рег23	Выходной ток выпрямителя №1, 0.1А
-000440  6a63              LDR      r3,[r4,#0x24]  ; bps
-000442  ea4f2723          ASR      r7,r3,#8
-000446  f88d7030          STRB     r7,[sp,#0x30]
-;;;1224   modbus_registers[45]=(signed char)(bps[0]._Ii);
-00044a  f88d3031          STRB     r3,[sp,#0x31]
-;;;1225   modbus_registers[46]=(signed char)(bps[0]._Ti>>8);				//Рег24	Температура радиатора выпрямителя №1, 1гЦ
+;;;1174   //-----------------------------------------------
+;;;1175   void modbus_input_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot)
+0002ea  e92d41f0          PUSH     {r4-r8,lr}
+;;;1176   {
+0002ee  b0fe              SUB      sp,sp,#0x1f8
+0002f0  461d              MOV      r5,r3
+0002f2  9e84              LDR      r6,[sp,#0x210]
+;;;1177   signed char modbus_registers[500];
+;;;1178   //char modbus_tx_buff[200];
+;;;1179   unsigned short crc_temp;
+;;;1180   char i;
+;;;1181   short tempS;
+;;;1182   
+;;;1183   //tempS=(MODBUS_INPUT_REGS[0]);
+;;;1184   //bps_I=bps_I_phantom;
+;;;1185   
+;;;1186   modbus_registers[0]=(signed char)(out_U>>8);					//Рег1   	напряжение выходной шины, 0.1В
+0002f4  4b75              LDR      r3,|L1.1228|
+0002f6  881b              LDRH     r3,[r3,#0]  ; out_U
+0002f8  ea4f2423          ASR      r4,r3,#8
+0002fc  f88d4004          STRB     r4,[sp,#4]
+;;;1187   modbus_registers[1]=(signed char)(out_U);
+000300  f88d3005          STRB     r3,[sp,#5]
+;;;1188   modbus_registers[2]=(signed char)(bps_I>>8);					//Рег2   	ток выпрямителей, 0.1А
+000304  4b72              LDR      r3,|L1.1232|
+000306  881b              LDRH     r3,[r3,#0]  ; bps_I
+000308  ea4f2423          ASR      r4,r3,#8
+00030c  f88d4006          STRB     r4,[sp,#6]
+;;;1189   modbus_registers[3]=(signed char)(bps_I);
+000310  f88d3007          STRB     r3,[sp,#7]
+;;;1190   modbus_registers[4]=(signed char)(net_U>>8);					//Рег3   	напряжение сети питания, 1В
+000314  4b6f              LDR      r3,|L1.1236|
+000316  881b              LDRH     r3,[r3,#0]  ; net_U
+000318  ea4f2423          ASR      r4,r3,#8
+00031c  f88d4008          STRB     r4,[sp,#8]
+;;;1191   modbus_registers[5]=(signed char)(net_U);
+000320  f88d3009          STRB     r3,[sp,#9]
+;;;1192   modbus_registers[6]=(signed char)(net_F>>8);					//Рег4   	частота сети питания, 0.1Гц
+000324  4b6c              LDR      r3,|L1.1240|
+000326  881b              LDRH     r3,[r3,#0]  ; net_F
+000328  ea4f2423          ASR      r4,r3,#8
+00032c  f88d400a          STRB     r4,[sp,#0xa]
+;;;1193   modbus_registers[7]=(signed char)(net_F);
+000330  f88d300b          STRB     r3,[sp,#0xb]
+;;;1194   modbus_registers[8]=(signed char)(net_Ua>>8);					//Рег5	напряжение сети питания фаза A, 1В	
+000334  4b69              LDR      r3,|L1.1244|
+000336  881b              LDRH     r3,[r3,#0]  ; net_Ua
+000338  ea4f2423          ASR      r4,r3,#8
+00033c  f88d400c          STRB     r4,[sp,#0xc]
+;;;1195   modbus_registers[9]=(signed char)(net_Ua);		 	
+000340  f88d300d          STRB     r3,[sp,#0xd]
+;;;1196   modbus_registers[10]=(signed char)(net_Ub>>8);				//Рег6	напряжение сети питания фаза B, 1В
+000344  4b66              LDR      r3,|L1.1248|
+000346  881b              LDRH     r3,[r3,#0]  ; net_Ub
+000348  ea4f2423          ASR      r4,r3,#8
+00034c  f88d400e          STRB     r4,[sp,#0xe]
+;;;1197   modbus_registers[11]=(signed char)(net_Ub);
+000350  f88d300f          STRB     r3,[sp,#0xf]
+;;;1198   modbus_registers[12]=(signed char)(net_Uc>>8);				//Рег7	напряжение сети питания фаза C, 1В
+000354  4b63              LDR      r3,|L1.1252|
+000356  881b              LDRH     r3,[r3,#0]  ; net_Uc
+000358  ea4f2423          ASR      r4,r3,#8
+00035c  f88d4010          STRB     r4,[sp,#0x10]
+;;;1199   modbus_registers[13]=(signed char)(net_Uc);
+000360  f88d3011          STRB     r3,[sp,#0x11]
+;;;1200   modbus_registers[14]=(signed char)(bat[0]._Ub>>8);				//Рег8	напряжение батареи №1, 0.1В
+000364  4c60              LDR      r4,|L1.1256|
+000366  8863              LDRH     r3,[r4,#2]  ; bat
+000368  ea4f2723          ASR      r7,r3,#8
+00036c  f88d7012          STRB     r7,[sp,#0x12]
+;;;1201   modbus_registers[15]=(signed char)(bat[0]._Ub);
+000370  f88d3013          STRB     r3,[sp,#0x13]
+;;;1202   modbus_registers[16]=(signed char)(bat[0]._Ib>>8);				//Рег9   	ток батареи №1, 0.01А
+000374  8923              LDRH     r3,[r4,#8]  ; bat
+000376  ea4f2723          ASR      r7,r3,#8
+00037a  f88d7014          STRB     r7,[sp,#0x14]
+;;;1203   modbus_registers[17]=(signed char)(bat[0]._Ib);
+00037e  f88d3015          STRB     r3,[sp,#0x15]
+;;;1204   modbus_registers[18]=(signed char)(bat[0]._Tb>>8);				//Рег10	температура батареи №1, 1Гц
+000382  8963              LDRH     r3,[r4,#0xa]  ; bat
+000384  ea4f2723          ASR      r7,r3,#8
+000388  f88d7016          STRB     r7,[sp,#0x16]
+;;;1205   modbus_registers[19]=(signed char)(bat[0]._Tb);
+00038c  f88d3017          STRB     r3,[sp,#0x17]
+;;;1206   modbus_registers[20]=(signed char)(bat[0]._zar>>8);			//Рег11	заряд батареи №1, %
+000390  8a23              LDRH     r3,[r4,#0x10]  ; bat
+000392  ea4f2713          LSR      r7,r3,#8
+000396  f88d7018          STRB     r7,[sp,#0x18]
+;;;1207   modbus_registers[21]=(signed char)(bat[0]._zar);
+00039a  f88d3019          STRB     r3,[sp,#0x19]
+;;;1208   modbus_registers[22]=(signed char)(bat[0]._Ubm>>8);			//Рег12	напряжение средней точки батареи №1, 0.1В
+00039e  88a3              LDRH     r3,[r4,#4]  ; bat
+0003a0  ea4f2723          ASR      r7,r3,#8
+0003a4  f88d701a          STRB     r7,[sp,#0x1a]
+;;;1209   modbus_registers[23]=(signed char)(bat[0]._Ubm);
+0003a8  f88d301b          STRB     r3,[sp,#0x1b]
+;;;1210   modbus_registers[24]=(signed char)(bat[0]._dUbm>>8);			//Рег13	ошибка средней точки батареи №1, %
+0003ac  88e3              LDRH     r3,[r4,#6]  ; bat
+0003ae  ea4f2723          ASR      r7,r3,#8
+0003b2  f88d701c          STRB     r7,[sp,#0x1c]
+;;;1211   modbus_registers[25]=(signed char)(bat[0]._dUbm);
+0003b6  f88d301d          STRB     r3,[sp,#0x1d]
+;;;1212   modbus_registers[26]=(signed char)(BAT_C_REAL[0]>>8);			//Рег14	Реальная емкость батареи №1, 0.1А*ч, если 0x5555 то не измерялась
+0003ba  4f4c              LDR      r7,|L1.1260|
+0003bc  883b              LDRH     r3,[r7,#0]  ; BAT_C_REAL
+0003be  ea4f2c23          ASR      r12,r3,#8
+0003c2  f88dc01e          STRB     r12,[sp,#0x1e]
+;;;1213   modbus_registers[27]=(signed char)(BAT_C_REAL[0]);
+0003c6  f88d301f          STRB     r3,[sp,#0x1f]
+;;;1214   modbus_registers[28]=(signed char)(bat[1]._Ub>>8);				//Рег15	напряжение батареи №1, 0.1В
+0003ca  f8b4304e          LDRH     r3,[r4,#0x4e]  ; bat
+0003ce  ea4f2c23          ASR      r12,r3,#8
+0003d2  f88dc020          STRB     r12,[sp,#0x20]
+;;;1215   modbus_registers[29]=(signed char)(bat[1]._Ub);
+0003d6  f88d3021          STRB     r3,[sp,#0x21]
+;;;1216   modbus_registers[30]=(signed char)(bat[1]._Ib>>8);				//Рег16   	ток батареи №1, 0.01А
+0003da  f8b43054          LDRH     r3,[r4,#0x54]  ; bat
+0003de  ea4f2c23          ASR      r12,r3,#8
+0003e2  f88dc022          STRB     r12,[sp,#0x22]
+;;;1217   modbus_registers[31]=(signed char)(bat[1]._Ib);
+0003e6  f88d3023          STRB     r3,[sp,#0x23]
+;;;1218   modbus_registers[32]=(signed char)(bat[1]._Tb>>8);				//Рег17	температура батареи №1, 1Гц
+0003ea  f8b43056          LDRH     r3,[r4,#0x56]  ; bat
+0003ee  ea4f2c23          ASR      r12,r3,#8
+0003f2  f88dc024          STRB     r12,[sp,#0x24]
+;;;1219   modbus_registers[33]=(signed char)(bat[1]._Tb);
+0003f6  f88d3025          STRB     r3,[sp,#0x25]
+;;;1220   modbus_registers[34]=(signed char)(bat[1]._zar>>8);			//Рег18	заряд батареи №1, %
+0003fa  f8b4305c          LDRH     r3,[r4,#0x5c]  ; bat
+0003fe  ea4f2c13          LSR      r12,r3,#8
+000402  f88dc026          STRB     r12,[sp,#0x26]
+;;;1221   modbus_registers[35]=(signed char)(bat[1]._zar);
+000406  f88d3027          STRB     r3,[sp,#0x27]
+;;;1222   modbus_registers[36]=(signed char)(bat[1]._Ubm>>8);			//Рег19	напряжение средней точки батареи №1, 0.1В
+00040a  f8b43050          LDRH     r3,[r4,#0x50]  ; bat
+00040e  ea4f2c23          ASR      r12,r3,#8
+000412  f88dc028          STRB     r12,[sp,#0x28]
+;;;1223   modbus_registers[37]=(signed char)(bat[1]._Ubm);
+000416  f88d3029          STRB     r3,[sp,#0x29]
+;;;1224   modbus_registers[38]=(signed char)(bat[1]._dUbm>>8);			//Рег20	ошибка средней точки батареи №1, %
+00041a  f8b43052          LDRH     r3,[r4,#0x52]  ; bat
+00041e  ea4f2423          ASR      r4,r3,#8
+000422  f88d402a          STRB     r4,[sp,#0x2a]
+;;;1225   modbus_registers[39]=(signed char)(bat[1]._dUbm);
+000426  f88d302b          STRB     r3,[sp,#0x2b]
+;;;1226   modbus_registers[40]=(signed char)(BAT_C_REAL[1]>>8);			//Рег21	Реальная емкость батареи №1, 0.1А*ч, если 0x5555 то не измерялась
+00042a  887b              LDRH     r3,[r7,#2]  ; BAT_C_REAL
+00042c  ea4f2423          ASR      r4,r3,#8
+000430  f88d402c          STRB     r4,[sp,#0x2c]
+;;;1227   modbus_registers[41]=(signed char)(BAT_C_REAL[1]);
+000434  f88d302d          STRB     r3,[sp,#0x2d]
+;;;1228   modbus_registers[42]=(signed char)(bps[0]._Uii>>8);			//Рег22	Выходное напряжение выпрямителя №1, 0.1В
+000438  4c2d              LDR      r4,|L1.1264|
+00043a  69e3              LDR      r3,[r4,#0x1c]  ; bps
+00043c  ea4f2723          ASR      r7,r3,#8
+000440  f88d702e          STRB     r7,[sp,#0x2e]
+;;;1229   modbus_registers[43]=(signed char)(bps[0]._Uii);
+000444  f88d302f          STRB     r3,[sp,#0x2f]
+;;;1230   modbus_registers[44]=(signed char)(bps[0]._Ii>>8);				//Рег23	Выходной ток выпрямителя №1, 0.1А
+000448  6a63              LDR      r3,[r4,#0x24]  ; bps
+00044a  ea4f2723          ASR      r7,r3,#8
 00044e  e051              B        |L1.1268|
                   |L1.1104|
                           DCD      0x40024020
@@ -647,511 +647,538 @@
                   |L1.1264|
                           DCD      bps
                   |L1.1268|
-0004f4  6aa3              LDR      r3,[r4,#0x28]  ; bps
-0004f6  ea4f2723          ASR      r7,r3,#8
-0004fa  f88d7032          STRB     r7,[sp,#0x32]
-;;;1226   modbus_registers[47]=(signed char)(bps[0]._Ti);
-0004fe  f88d3033          STRB     r3,[sp,#0x33]
-;;;1227   modbus_registers[48]=(signed char)(bps[0]._av>>8);				//Рег25	Байт флагов выпрямителя №1, 0x01 - перегрев, 0x02 завышено Uвых, 0x04 занижено Uвых, 0x08 - отсутствует связь с выпрямителем
-000502  f04f0700          MOV      r7,#0
-000506  f88d7034          STRB     r7,[sp,#0x34]
-;;;1228   modbus_registers[49]=(signed char)(bps[0]._av);
-00050a  7863              LDRB     r3,[r4,#1]  ; bps
-00050c  f88d3035          STRB     r3,[sp,#0x35]
-;;;1229   modbus_registers[50]=(signed char)(bps[1]._Uii>>8);			//Рег26	Выходное напряжение выпрямителя №2, 0.1В
-000510  6fa3              LDR      r3,[r4,#0x78]  ; bps
-000512  ea4f2c23          ASR      r12,r3,#8
-000516  f88dc036          STRB     r12,[sp,#0x36]
-;;;1230   modbus_registers[51]=(signed char)(bps[1]._Uii);
-00051a  f88d3037          STRB     r3,[sp,#0x37]
-;;;1231   modbus_registers[52]=(signed char)(bps[1]._Ii>>8);				//Рег27	Выходной ток выпрямителя №2, 0.1А
-00051e  f8d43080          LDR      r3,[r4,#0x80]  ; bps
-000522  ea4f2c23          ASR      r12,r3,#8
-000526  f88dc038          STRB     r12,[sp,#0x38]
-;;;1232   modbus_registers[53]=(signed char)(bps[1]._Ii);
-00052a  f88d3039          STRB     r3,[sp,#0x39]
-;;;1233   modbus_registers[54]=(signed char)(bps[1]._Ti>>8);				//Рег28	Температура радиатора выпрямителя №2, 1гЦ
-00052e  f8d43084          LDR      r3,[r4,#0x84]  ; bps
-000532  ea4f2c23          ASR      r12,r3,#8
-000536  f88dc03a          STRB     r12,[sp,#0x3a]
-;;;1234   modbus_registers[55]=(signed char)(bps[1]._Ti);
-00053a  f88d303b          STRB     r3,[sp,#0x3b]
-;;;1235   modbus_registers[56]=(signed char)(bps[1]._av>>8);				//Рег29	Байт флагов выпрямителя №2, 0x01 - перегрев, 0x02 завышено Uвых, 0x04 занижено Uвых, 0x08 - отсутствует связь с выпрямителем
-00053e  f88d703c          STRB     r7,[sp,#0x3c]
-;;;1236   modbus_registers[57]=(signed char)(bps[1]._av);
-000542  f894305d          LDRB     r3,[r4,#0x5d]  ; bps
-000546  f88d303d          STRB     r3,[sp,#0x3d]
-;;;1237   modbus_registers[58]=(signed char)(bps[2]._Uii>>8);			//Рег30	Выходное напряжение выпрямителя №3, 0.1В
-00054a  f8d430d4          LDR      r3,[r4,#0xd4]  ; bps
-00054e  ea4f2c23          ASR      r12,r3,#8
-000552  f88dc03e          STRB     r12,[sp,#0x3e]
-;;;1238   modbus_registers[59]=(signed char)(bps[2]._Uii);
-000556  f88d303f          STRB     r3,[sp,#0x3f]
-;;;1239   modbus_registers[60]=(signed char)(bps[2]._Ii>>8);				//Рег31	Выходной ток выпрямителя №3, 0.1А
-00055a  f8d430dc          LDR      r3,[r4,#0xdc]  ; bps
-00055e  ea4f2c23          ASR      r12,r3,#8
-000562  f88dc040          STRB     r12,[sp,#0x40]
-;;;1240   modbus_registers[61]=(signed char)(bps[2]._Ii);
-000566  f88d3041          STRB     r3,[sp,#0x41]
-;;;1241   modbus_registers[62]=(signed char)(bps[2]._Ti>>8);				//Рег32	Температура радиатора выпрямителя №3, 1гЦ
-00056a  f8d430e0          LDR      r3,[r4,#0xe0]  ; bps
-00056e  ea4f2c23          ASR      r12,r3,#8
-000572  f88dc042          STRB     r12,[sp,#0x42]
-;;;1242   modbus_registers[63]=(signed char)(bps[2]._Ti);
-000576  f88d3043          STRB     r3,[sp,#0x43]
-;;;1243   modbus_registers[64]=(signed char)(bps[2]._av>>8);				//Рег33	Байт флагов выпрямителя №3, 0x01 - перегрев, 0x02 завышено Uвых, 0x04 занижено Uвых, 0x08 - отсутствует связь с выпрямителем
-00057a  f88d7044          STRB     r7,[sp,#0x44]
-;;;1244   modbus_registers[65]=(signed char)(bps[2]._av);
-00057e  f89430b9          LDRB     r3,[r4,#0xb9]  ; bps
-000582  f88d3045          STRB     r3,[sp,#0x45]
-;;;1245   modbus_registers[66]=(signed char)(bps[3]._Uii>>8);			//Рег34	Выходное напряжение выпрямителя №4, 0.1В
-000586  f8d43130          LDR      r3,[r4,#0x130]  ; bps
-00058a  ea4f2c23          ASR      r12,r3,#8
-00058e  f88dc046          STRB     r12,[sp,#0x46]
-;;;1246   modbus_registers[67]=(signed char)(bps[3]._Uii);
-000592  f88d3047          STRB     r3,[sp,#0x47]
-;;;1247   modbus_registers[68]=(signed char)(bps[3]._Ii>>8);				//Рег35	Выходной ток выпрямителя №4, 0.1А
-000596  f8d43138          LDR      r3,[r4,#0x138]  ; bps
-00059a  ea4f2c23          ASR      r12,r3,#8
-00059e  f88dc048          STRB     r12,[sp,#0x48]
-;;;1248   modbus_registers[69]=(signed char)(bps[3]._Ii);
-0005a2  f88d3049          STRB     r3,[sp,#0x49]
-;;;1249   modbus_registers[70]=(signed char)(bps[3]._Ti>>8);				//Рег36	Температура радиатора выпрямителя №4, 1гЦ
-0005a6  f8d4313c          LDR      r3,[r4,#0x13c]  ; bps
-0005aa  ea4f2c23          ASR      r12,r3,#8
-0005ae  f88dc04a          STRB     r12,[sp,#0x4a]
-;;;1250   modbus_registers[71]=(signed char)(bps[3]._Ti);
-0005b2  f88d304b          STRB     r3,[sp,#0x4b]
-;;;1251   modbus_registers[72]=(signed char)(bps[3]._av>>8);				//Рег37	Байт флагов выпрямителя №4, 0x01 - перегрев, 0x02 завышено Uвых, 0x04 занижено Uвых, 0x08 - отсутствует связь с выпрямителем
-0005b6  f88d704c          STRB     r7,[sp,#0x4c]
-;;;1252   modbus_registers[73]=(signed char)(bps[3]._av);
-0005ba  f8943115          LDRB     r3,[r4,#0x115]  ; bps
-0005be  f88d304d          STRB     r3,[sp,#0x4d]
-;;;1253   modbus_registers[74]=(signed char)(bps[4]._Uii>>8);			//Рег38	Выходное напряжение выпрямителя №5, 0.1В
-0005c2  f8d4318c          LDR      r3,[r4,#0x18c]  ; bps
-0005c6  ea4f2c23          ASR      r12,r3,#8
-0005ca  f88dc04e          STRB     r12,[sp,#0x4e]
-;;;1254   modbus_registers[75]=(signed char)(bps[4]._Uii);
-0005ce  f88d304f          STRB     r3,[sp,#0x4f]
-;;;1255   modbus_registers[76]=(signed char)(bps[4]._Ii>>8);				//Рег39	Выходной ток выпрямителя №5, 0.1А
-0005d2  f8d43194          LDR      r3,[r4,#0x194]  ; bps
-0005d6  ea4f2c23          ASR      r12,r3,#8
-0005da  f88dc050          STRB     r12,[sp,#0x50]
-;;;1256   modbus_registers[77]=(signed char)(bps[4]._Ii);
-0005de  f88d3051          STRB     r3,[sp,#0x51]
-;;;1257   modbus_registers[78]=(signed char)(bps[4]._Ti>>8);				//Рег40	Температура радиатора выпрямителя №5, 1гЦ
-0005e2  f8d43198          LDR      r3,[r4,#0x198]  ; bps
-0005e6  ea4f2c23          ASR      r12,r3,#8
-0005ea  f88dc052          STRB     r12,[sp,#0x52]
-;;;1258   modbus_registers[79]=(signed char)(bps[4]._Ti);
-0005ee  f88d3053          STRB     r3,[sp,#0x53]
-;;;1259   modbus_registers[80]=(signed char)(bps[4]._av>>8);				//Рег41	Байт флагов выпрямителя №5, 0x01 - перегрев, 0x02 завышено Uвых, 0x04 занижено Uвых, 0x08 - отсутствует связь с выпрямителем
-0005f2  f88d7054          STRB     r7,[sp,#0x54]
-;;;1260   modbus_registers[81]=(signed char)(bps[4]._av);
-0005f6  f8943171          LDRB     r3,[r4,#0x171]  ; bps
-0005fa  f88d3055          STRB     r3,[sp,#0x55]
-;;;1261   modbus_registers[82]=(signed char)(bps[5]._Uii>>8);			//Рег42	Выходное напряжение выпрямителя №6, 0.1В
-0005fe  f8d431e8          LDR      r3,[r4,#0x1e8]  ; bps
-000602  ea4f2c23          ASR      r12,r3,#8
-000606  f88dc056          STRB     r12,[sp,#0x56]
-;;;1262   modbus_registers[83]=(signed char)(bps[5]._Uii);
-00060a  f88d3057          STRB     r3,[sp,#0x57]
-;;;1263   modbus_registers[84]=(signed char)(bps[5]._Ii>>8);				//Рег43	Выходной ток выпрямителя №6, 0.1А
-00060e  f8d431f0          LDR      r3,[r4,#0x1f0]  ; bps
-000612  ea4f2c23          ASR      r12,r3,#8
-000616  f88dc058          STRB     r12,[sp,#0x58]
-;;;1264   modbus_registers[85]=(signed char)(bps[5]._Ii);
-00061a  f88d3059          STRB     r3,[sp,#0x59]
-;;;1265   modbus_registers[86]=(signed char)(bps[5]._Ti>>8);				//Рег44	Температура радиатора выпрямителя №6, 1гЦ
-00061e  f504740c          ADD      r4,r4,#0x230
-000622  f8543c3c          LDR      r3,[r4,#-0x3c]  ; bps
-000626  ea4f2c23          ASR      r12,r3,#8
-00062a  f88dc05a          STRB     r12,[sp,#0x5a]
-;;;1266   modbus_registers[87]=(signed char)(bps[5]._Ti);
-00062e  f88d305b          STRB     r3,[sp,#0x5b]
-;;;1267   modbus_registers[88]=(signed char)(bps[5]._av>>8);				//Рег45	Байт флагов выпрямителя №6, 0x01 - перегрев, 0x02 завышено Uвых, 0x04 занижено Uвых, 0x08 - отсутствует связь с выпрямителем
-000632  f88d705c          STRB     r7,[sp,#0x5c]
-;;;1268   modbus_registers[89]=(signed char)(bps[5]._av);
-000636  f8143c63          LDRB     r3,[r4,#-0x63]  ; bps
-00063a  f88d305d          STRB     r3,[sp,#0x5d]
-;;;1269   modbus_registers[90]=(signed char)(bps[6]._Uii>>8);			//Рег46	Выходное напряжение выпрямителя №7, 0.1В
-00063e  6963              LDR      r3,[r4,#0x14]  ; bps
-000640  ea4f2c23          ASR      r12,r3,#8
-000644  f88dc05e          STRB     r12,[sp,#0x5e]
-;;;1270   modbus_registers[91]=(signed char)(bps[6]._Uii);
-000648  f88d305f          STRB     r3,[sp,#0x5f]
-;;;1271   modbus_registers[92]=(signed char)(bps[6]._Ii>>8);				//Рег47	Выходной ток выпрямителя №7, 0.1А
-00064c  69e3              LDR      r3,[r4,#0x1c]  ; bps
-00064e  ea4f2c23          ASR      r12,r3,#8
-000652  f88dc060          STRB     r12,[sp,#0x60]
-;;;1272   modbus_registers[93]=(signed char)(bps[6]._Ii);
-000656  f88d3061          STRB     r3,[sp,#0x61]
-;;;1273   modbus_registers[94]=(signed char)(bps[6]._Ti>>8);				//Рег48	Температура радиатора выпрямителя №7, 1гЦ
-00065a  6a23              LDR      r3,[r4,#0x20]  ; bps
-00065c  ea4f2c23          ASR      r12,r3,#8
-000660  f88dc062          STRB     r12,[sp,#0x62]
-;;;1274   modbus_registers[95]=(signed char)(bps[6]._Ti);
-000664  f88d3063          STRB     r3,[sp,#0x63]
-;;;1275   modbus_registers[96]=(signed char)(bps[6]._av>>8);				//Рег49	Байт флагов выпрямителя №7, 0x01 - перегрев, 0x02 завышено Uвых, 0x04 занижено Uвых, 0x08 - отсутствует связь с выпрямителем
-000668  f88d7064          STRB     r7,[sp,#0x64]
-;;;1276   modbus_registers[97]=(signed char)(bps[6]._av);
-00066c  f8143c07          LDRB     r3,[r4,#-7]  ; bps
-000670  f88d3065          STRB     r3,[sp,#0x65]
-;;;1277   modbus_registers[98]=(signed char)(bps[7]._Uii>>8);			//Рег50	Выходное напряжение выпрямителя №8, 0.1В
-000674  6f23              LDR      r3,[r4,#0x70]  ; bps
-000676  ea4f2c23          ASR      r12,r3,#8
-00067a  f88dc066          STRB     r12,[sp,#0x66]
-;;;1278   modbus_registers[99]=(signed char)(bps[7]._Uii);
-00067e  f88d3067          STRB     r3,[sp,#0x67]
-;;;1279   modbus_registers[100]=(signed char)(bps[7]._Ii>>8);			//Рег51	Выходной ток выпрямителя №8, 0.1А
-000682  6fa3              LDR      r3,[r4,#0x78]  ; bps
-000684  ea4f2c23          ASR      r12,r3,#8
-000688  f88dc068          STRB     r12,[sp,#0x68]
-;;;1280   modbus_registers[101]=(signed char)(bps[7]._Ii);
-00068c  f88d3069          STRB     r3,[sp,#0x69]
-;;;1281   modbus_registers[102]=(signed char)(bps[7]._Ti>>8);			//Рег52	Температура радиатора выпрямителя №8, 1гЦ
-000690  6fe3              LDR      r3,[r4,#0x7c]  ; bps
-000692  ea4f2c23          ASR      r12,r3,#8
-000696  f88dc06a          STRB     r12,[sp,#0x6a]
-;;;1282   modbus_registers[103]=(signed char)(bps[7]._Ti);
-00069a  f88d306b          STRB     r3,[sp,#0x6b]
-;;;1283   modbus_registers[104]=(signed char)(bps[7]._av>>8);			//Рег53	Байт флагов выпрямителя №8, 0x01 - перегрев, 0x02 завышено Uвых, 0x04 занижено Uвых, 0x08 - отсутствует связь с выпрямителем
-00069e  f88d706c          STRB     r7,[sp,#0x6c]
-;;;1284   modbus_registers[105]=(signed char)(bps[7]._av);
-0006a2  f8943055          LDRB     r3,[r4,#0x55]  ; bps
-0006a6  f88d306d          STRB     r3,[sp,#0x6d]
-;;;1285   modbus_registers[106]=(signed char)(bps_U>>8);					//Рег54   	напряжение выпрямителей, 0.1В
-0006aa  4bff              LDR      r3,|L1.2728|
-0006ac  881b              LDRH     r3,[r3,#0]  ; bps_U
-0006ae  ea4f2423          ASR      r4,r3,#8
-0006b2  f88d406e          STRB     r4,[sp,#0x6e]
-;;;1286   modbus_registers[107]=(signed char)(bps_U);
-0006b6  f88d306f          STRB     r3,[sp,#0x6f]
-;;;1287   tempS=0;
-0006ba  463b              MOV      r3,r7
-;;;1288   if((speedChIsOn)||(sp_ch_stat==scsWRK)) tempS=1;
-0006bc  4cfb              LDR      r4,|L1.2732|
-0006be  8824              LDRH     r4,[r4,#0]  ; speedChIsOn
-0006c0  b91c              CBNZ     r4,|L1.1738|
-0006c2  4cfb              LDR      r4,|L1.2736|
-0006c4  7824              LDRB     r4,[r4,#0]  ; sp_ch_stat
-0006c6  2c02              CMP      r4,#2
-0006c8  d101              BNE      |L1.1742|
-                  |L1.1738|
-0006ca  f04f0301          MOV      r3,#1
-                  |L1.1742|
-;;;1289   modbus_registers[108]=(signed char)(tempS>>8);					//Рег55   	Ускоренный заряд включенность, (1 - вкл, 0 - Выкл)
-0006ce  ea4f2423          ASR      r4,r3,#8
-0006d2  f88d4070          STRB     r4,[sp,#0x70]
-;;;1290   modbus_registers[109]=(signed char)(tempS);
-0006d6  f88d3071          STRB     r3,[sp,#0x71]
-;;;1291   tempS=0;
-0006da  f04f0300          MOV      r3,#0
-;;;1292   if(spc_stat==spcVZ) tempS=1;
-0006de  4cf5              LDR      r4,|L1.2740|
-0006e0  7824              LDRB     r4,[r4,#0]  ; spc_stat
-0006e2  2c02              CMP      r4,#2
-0006e4  d101              BNE      |L1.1770|
-0006e6  f04f0301          MOV      r3,#1
-                  |L1.1770|
-;;;1293   modbus_registers[110]=(signed char)(tempS>>8);					//Рег56   	Выравнивающий заряд включенность, (1 - вкл, 0 - Выкл)
-0006ea  ea4f2423          ASR      r4,r3,#8
-0006ee  f88d4072          STRB     r4,[sp,#0x72]
-;;;1294   modbus_registers[111]=(signed char)(tempS);
-0006f2  f88d3073          STRB     r3,[sp,#0x73]
-;;;1295   modbus_registers[112]=(signed char)(uout_av>>8);					//Рег57   Контроль выходного напряжения, (0 - норма, 1 - завышено, 2 - занижено)
-0006f6  f88d7074          STRB     r7,[sp,#0x74]
-;;;1296   modbus_registers[113]=(signed char)(uout_av);
-0006fa  4bef              LDR      r3,|L1.2744|
-0006fc  781b              LDRB     r3,[r3,#0]  ; uout_av
-0006fe  f88d3075          STRB     r3,[sp,#0x75]
-;;;1297   
-;;;1298   tempS=0;													 //Рег60	Регистр флагов состояния системы
-000702  f04f0400          MOV      r4,#0
-;;;1299   if(bat_ips._av)			tempS|=(1<<0);						 // Бит 0	Авария батареи
-000706  4bed              LDR      r3,|L1.2748|
-000708  f893303d          LDRB     r3,[r3,#0x3d]  ; bat_ips
-00070c  b10b              CBZ      r3,|L1.1810|
-00070e  f04f0401          MOV      r4,#1
-                  |L1.1810|
-;;;1300   if(avar_stat&0x0001)   	tempS|=(1<<1);						 //	Бит 1	Авария питающей сети 
-000712  4beb              LDR      r3,|L1.2752|
-000714  681b              LDR      r3,[r3,#0]  ; avar_stat
-000716  07df              LSLS     r7,r3,#31
-000718  d001              BEQ      |L1.1822|
-00071a  f0440402          ORR      r4,r4,#2
-                  |L1.1822|
-;;;1301   if(avar_stat&(1<<(3+0)))tempS|=(1<<2);						 //	Бит 2	Авария выпрямителя №1
-00071e  071f              LSLS     r7,r3,#28
-000720  d501              BPL      |L1.1830|
-000722  f0440404          ORR      r4,r4,#4
+0004f4  f88d7030          STRB     r7,[sp,#0x30]
+;;;1231   modbus_registers[45]=(signed char)(bps[0]._Ii);
+0004f8  f88d3031          STRB     r3,[sp,#0x31]
+;;;1232   modbus_registers[46]=(signed char)(bps[0]._Ti>>8);				//Рег24	Температура радиатора выпрямителя №1, 1гЦ
+0004fc  6aa3              LDR      r3,[r4,#0x28]  ; bps
+0004fe  ea4f2723          ASR      r7,r3,#8
+000502  f88d7032          STRB     r7,[sp,#0x32]
+;;;1233   modbus_registers[47]=(signed char)(bps[0]._Ti);
+000506  f88d3033          STRB     r3,[sp,#0x33]
+;;;1234   modbus_registers[48]=(signed char)(bps[0]._av>>8);				//Рег25	Байт флагов выпрямителя №1, 0x01 - перегрев, 0x02 завышено Uвых, 0x04 занижено Uвых, 0x08 - отсутствует связь с выпрямителем
+00050a  f04f0700          MOV      r7,#0
+00050e  f88d7034          STRB     r7,[sp,#0x34]
+;;;1235   modbus_registers[49]=(signed char)(bps[0]._av);
+000512  7863              LDRB     r3,[r4,#1]  ; bps
+000514  f88d3035          STRB     r3,[sp,#0x35]
+;;;1236   modbus_registers[50]=(signed char)(bps[1]._Uii>>8);			//Рег26	Выходное напряжение выпрямителя №2, 0.1В
+000518  6fa3              LDR      r3,[r4,#0x78]  ; bps
+00051a  ea4f2c23          ASR      r12,r3,#8
+00051e  f88dc036          STRB     r12,[sp,#0x36]
+;;;1237   modbus_registers[51]=(signed char)(bps[1]._Uii);
+000522  f88d3037          STRB     r3,[sp,#0x37]
+;;;1238   modbus_registers[52]=(signed char)(bps[1]._Ii>>8);				//Рег27	Выходной ток выпрямителя №2, 0.1А
+000526  f8d43080          LDR      r3,[r4,#0x80]  ; bps
+00052a  ea4f2c23          ASR      r12,r3,#8
+00052e  f88dc038          STRB     r12,[sp,#0x38]
+;;;1239   modbus_registers[53]=(signed char)(bps[1]._Ii);
+000532  f88d3039          STRB     r3,[sp,#0x39]
+;;;1240   modbus_registers[54]=(signed char)(bps[1]._Ti>>8);				//Рег28	Температура радиатора выпрямителя №2, 1гЦ
+000536  f8d43084          LDR      r3,[r4,#0x84]  ; bps
+00053a  ea4f2c23          ASR      r12,r3,#8
+00053e  f88dc03a          STRB     r12,[sp,#0x3a]
+;;;1241   modbus_registers[55]=(signed char)(bps[1]._Ti);
+000542  f88d303b          STRB     r3,[sp,#0x3b]
+;;;1242   modbus_registers[56]=(signed char)(bps[1]._av>>8);				//Рег29	Байт флагов выпрямителя №2, 0x01 - перегрев, 0x02 завышено Uвых, 0x04 занижено Uвых, 0x08 - отсутствует связь с выпрямителем
+000546  f88d703c          STRB     r7,[sp,#0x3c]
+;;;1243   modbus_registers[57]=(signed char)(bps[1]._av);
+00054a  f894305d          LDRB     r3,[r4,#0x5d]  ; bps
+00054e  f88d303d          STRB     r3,[sp,#0x3d]
+;;;1244   modbus_registers[58]=(signed char)(bps[2]._Uii>>8);			//Рег30	Выходное напряжение выпрямителя №3, 0.1В
+000552  f8d430d4          LDR      r3,[r4,#0xd4]  ; bps
+000556  ea4f2c23          ASR      r12,r3,#8
+00055a  f88dc03e          STRB     r12,[sp,#0x3e]
+;;;1245   modbus_registers[59]=(signed char)(bps[2]._Uii);
+00055e  f88d303f          STRB     r3,[sp,#0x3f]
+;;;1246   modbus_registers[60]=(signed char)(bps[2]._Ii>>8);				//Рег31	Выходной ток выпрямителя №3, 0.1А
+000562  f8d430dc          LDR      r3,[r4,#0xdc]  ; bps
+000566  ea4f2c23          ASR      r12,r3,#8
+00056a  f88dc040          STRB     r12,[sp,#0x40]
+;;;1247   modbus_registers[61]=(signed char)(bps[2]._Ii);
+00056e  f88d3041          STRB     r3,[sp,#0x41]
+;;;1248   modbus_registers[62]=(signed char)(bps[2]._Ti>>8);				//Рег32	Температура радиатора выпрямителя №3, 1гЦ
+000572  f8d430e0          LDR      r3,[r4,#0xe0]  ; bps
+000576  ea4f2c23          ASR      r12,r3,#8
+00057a  f88dc042          STRB     r12,[sp,#0x42]
+;;;1249   modbus_registers[63]=(signed char)(bps[2]._Ti);
+00057e  f88d3043          STRB     r3,[sp,#0x43]
+;;;1250   modbus_registers[64]=(signed char)(bps[2]._av>>8);				//Рег33	Байт флагов выпрямителя №3, 0x01 - перегрев, 0x02 завышено Uвых, 0x04 занижено Uвых, 0x08 - отсутствует связь с выпрямителем
+000582  f88d7044          STRB     r7,[sp,#0x44]
+;;;1251   modbus_registers[65]=(signed char)(bps[2]._av);
+000586  f89430b9          LDRB     r3,[r4,#0xb9]  ; bps
+00058a  f88d3045          STRB     r3,[sp,#0x45]
+;;;1252   modbus_registers[66]=(signed char)(bps[3]._Uii>>8);			//Рег34	Выходное напряжение выпрямителя №4, 0.1В
+00058e  f8d43130          LDR      r3,[r4,#0x130]  ; bps
+000592  ea4f2c23          ASR      r12,r3,#8
+000596  f88dc046          STRB     r12,[sp,#0x46]
+;;;1253   modbus_registers[67]=(signed char)(bps[3]._Uii);
+00059a  f88d3047          STRB     r3,[sp,#0x47]
+;;;1254   modbus_registers[68]=(signed char)(bps[3]._Ii>>8);				//Рег35	Выходной ток выпрямителя №4, 0.1А
+00059e  f8d43138          LDR      r3,[r4,#0x138]  ; bps
+0005a2  ea4f2c23          ASR      r12,r3,#8
+0005a6  f88dc048          STRB     r12,[sp,#0x48]
+;;;1255   modbus_registers[69]=(signed char)(bps[3]._Ii);
+0005aa  f88d3049          STRB     r3,[sp,#0x49]
+;;;1256   modbus_registers[70]=(signed char)(bps[3]._Ti>>8);				//Рег36	Температура радиатора выпрямителя №4, 1гЦ
+0005ae  f8d4313c          LDR      r3,[r4,#0x13c]  ; bps
+0005b2  ea4f2c23          ASR      r12,r3,#8
+0005b6  f88dc04a          STRB     r12,[sp,#0x4a]
+;;;1257   modbus_registers[71]=(signed char)(bps[3]._Ti);
+0005ba  f88d304b          STRB     r3,[sp,#0x4b]
+;;;1258   modbus_registers[72]=(signed char)(bps[3]._av>>8);				//Рег37	Байт флагов выпрямителя №4, 0x01 - перегрев, 0x02 завышено Uвых, 0x04 занижено Uвых, 0x08 - отсутствует связь с выпрямителем
+0005be  f88d704c          STRB     r7,[sp,#0x4c]
+;;;1259   modbus_registers[73]=(signed char)(bps[3]._av);
+0005c2  f8943115          LDRB     r3,[r4,#0x115]  ; bps
+0005c6  f88d304d          STRB     r3,[sp,#0x4d]
+;;;1260   modbus_registers[74]=(signed char)(bps[4]._Uii>>8);			//Рег38	Выходное напряжение выпрямителя №5, 0.1В
+0005ca  f8d4318c          LDR      r3,[r4,#0x18c]  ; bps
+0005ce  ea4f2c23          ASR      r12,r3,#8
+0005d2  f88dc04e          STRB     r12,[sp,#0x4e]
+;;;1261   modbus_registers[75]=(signed char)(bps[4]._Uii);
+0005d6  f88d304f          STRB     r3,[sp,#0x4f]
+;;;1262   modbus_registers[76]=(signed char)(bps[4]._Ii>>8);				//Рег39	Выходной ток выпрямителя №5, 0.1А
+0005da  f8d43194          LDR      r3,[r4,#0x194]  ; bps
+0005de  ea4f2c23          ASR      r12,r3,#8
+0005e2  f88dc050          STRB     r12,[sp,#0x50]
+;;;1263   modbus_registers[77]=(signed char)(bps[4]._Ii);
+0005e6  f88d3051          STRB     r3,[sp,#0x51]
+;;;1264   modbus_registers[78]=(signed char)(bps[4]._Ti>>8);				//Рег40	Температура радиатора выпрямителя №5, 1гЦ
+0005ea  f8d43198          LDR      r3,[r4,#0x198]  ; bps
+0005ee  ea4f2c23          ASR      r12,r3,#8
+0005f2  f88dc052          STRB     r12,[sp,#0x52]
+;;;1265   modbus_registers[79]=(signed char)(bps[4]._Ti);
+0005f6  f88d3053          STRB     r3,[sp,#0x53]
+;;;1266   modbus_registers[80]=(signed char)(bps[4]._av>>8);				//Рег41	Байт флагов выпрямителя №5, 0x01 - перегрев, 0x02 завышено Uвых, 0x04 занижено Uвых, 0x08 - отсутствует связь с выпрямителем
+0005fa  f88d7054          STRB     r7,[sp,#0x54]
+;;;1267   modbus_registers[81]=(signed char)(bps[4]._av);
+0005fe  f8943171          LDRB     r3,[r4,#0x171]  ; bps
+000602  f88d3055          STRB     r3,[sp,#0x55]
+;;;1268   modbus_registers[82]=(signed char)(bps[5]._Uii>>8);			//Рег42	Выходное напряжение выпрямителя №6, 0.1В
+000606  f8d431e8          LDR      r3,[r4,#0x1e8]  ; bps
+00060a  ea4f2c23          ASR      r12,r3,#8
+00060e  f88dc056          STRB     r12,[sp,#0x56]
+;;;1269   modbus_registers[83]=(signed char)(bps[5]._Uii);
+000612  f88d3057          STRB     r3,[sp,#0x57]
+;;;1270   modbus_registers[84]=(signed char)(bps[5]._Ii>>8);				//Рег43	Выходной ток выпрямителя №6, 0.1А
+000616  f8d431f0          LDR      r3,[r4,#0x1f0]  ; bps
+00061a  ea4f2c23          ASR      r12,r3,#8
+00061e  f88dc058          STRB     r12,[sp,#0x58]
+;;;1271   modbus_registers[85]=(signed char)(bps[5]._Ii);
+000622  f88d3059          STRB     r3,[sp,#0x59]
+;;;1272   modbus_registers[86]=(signed char)(bps[5]._Ti>>8);				//Рег44	Температура радиатора выпрямителя №6, 1гЦ
+000626  f504740c          ADD      r4,r4,#0x230
+00062a  f8543c3c          LDR      r3,[r4,#-0x3c]  ; bps
+00062e  ea4f2c23          ASR      r12,r3,#8
+000632  f88dc05a          STRB     r12,[sp,#0x5a]
+;;;1273   modbus_registers[87]=(signed char)(bps[5]._Ti);
+000636  f88d305b          STRB     r3,[sp,#0x5b]
+;;;1274   modbus_registers[88]=(signed char)(bps[5]._av>>8);				//Рег45	Байт флагов выпрямителя №6, 0x01 - перегрев, 0x02 завышено Uвых, 0x04 занижено Uвых, 0x08 - отсутствует связь с выпрямителем
+00063a  f88d705c          STRB     r7,[sp,#0x5c]
+;;;1275   modbus_registers[89]=(signed char)(bps[5]._av);
+00063e  f8143c63          LDRB     r3,[r4,#-0x63]  ; bps
+000642  f88d305d          STRB     r3,[sp,#0x5d]
+;;;1276   modbus_registers[90]=(signed char)(bps[6]._Uii>>8);			//Рег46	Выходное напряжение выпрямителя №7, 0.1В
+000646  6963              LDR      r3,[r4,#0x14]  ; bps
+000648  ea4f2c23          ASR      r12,r3,#8
+00064c  f88dc05e          STRB     r12,[sp,#0x5e]
+;;;1277   modbus_registers[91]=(signed char)(bps[6]._Uii);
+000650  f88d305f          STRB     r3,[sp,#0x5f]
+;;;1278   modbus_registers[92]=(signed char)(bps[6]._Ii>>8);				//Рег47	Выходной ток выпрямителя №7, 0.1А
+000654  69e3              LDR      r3,[r4,#0x1c]  ; bps
+000656  ea4f2c23          ASR      r12,r3,#8
+00065a  f88dc060          STRB     r12,[sp,#0x60]
+;;;1279   modbus_registers[93]=(signed char)(bps[6]._Ii);
+00065e  f88d3061          STRB     r3,[sp,#0x61]
+;;;1280   modbus_registers[94]=(signed char)(bps[6]._Ti>>8);				//Рег48	Температура радиатора выпрямителя №7, 1гЦ
+000662  6a23              LDR      r3,[r4,#0x20]  ; bps
+000664  ea4f2c23          ASR      r12,r3,#8
+000668  f88dc062          STRB     r12,[sp,#0x62]
+;;;1281   modbus_registers[95]=(signed char)(bps[6]._Ti);
+00066c  f88d3063          STRB     r3,[sp,#0x63]
+;;;1282   modbus_registers[96]=(signed char)(bps[6]._av>>8);				//Рег49	Байт флагов выпрямителя №7, 0x01 - перегрев, 0x02 завышено Uвых, 0x04 занижено Uвых, 0x08 - отсутствует связь с выпрямителем
+000670  f88d7064          STRB     r7,[sp,#0x64]
+;;;1283   modbus_registers[97]=(signed char)(bps[6]._av);
+000674  f8143c07          LDRB     r3,[r4,#-7]  ; bps
+000678  f88d3065          STRB     r3,[sp,#0x65]
+;;;1284   modbus_registers[98]=(signed char)(bps[7]._Uii>>8);			//Рег50	Выходное напряжение выпрямителя №8, 0.1В
+00067c  6f23              LDR      r3,[r4,#0x70]  ; bps
+00067e  ea4f2c23          ASR      r12,r3,#8
+000682  f88dc066          STRB     r12,[sp,#0x66]
+;;;1285   modbus_registers[99]=(signed char)(bps[7]._Uii);
+000686  f88d3067          STRB     r3,[sp,#0x67]
+;;;1286   modbus_registers[100]=(signed char)(bps[7]._Ii>>8);			//Рег51	Выходной ток выпрямителя №8, 0.1А
+00068a  6fa3              LDR      r3,[r4,#0x78]  ; bps
+00068c  ea4f2c23          ASR      r12,r3,#8
+000690  f88dc068          STRB     r12,[sp,#0x68]
+;;;1287   modbus_registers[101]=(signed char)(bps[7]._Ii);
+000694  f88d3069          STRB     r3,[sp,#0x69]
+;;;1288   modbus_registers[102]=(signed char)(bps[7]._Ti>>8);			//Рег52	Температура радиатора выпрямителя №8, 1гЦ
+000698  6fe3              LDR      r3,[r4,#0x7c]  ; bps
+00069a  ea4f2c23          ASR      r12,r3,#8
+00069e  f88dc06a          STRB     r12,[sp,#0x6a]
+;;;1289   modbus_registers[103]=(signed char)(bps[7]._Ti);
+0006a2  f88d306b          STRB     r3,[sp,#0x6b]
+;;;1290   modbus_registers[104]=(signed char)(bps[7]._av>>8);			//Рег53	Байт флагов выпрямителя №8, 0x01 - перегрев, 0x02 завышено Uвых, 0x04 занижено Uвых, 0x08 - отсутствует связь с выпрямителем
+0006a6  f88d706c          STRB     r7,[sp,#0x6c]
+;;;1291   modbus_registers[105]=(signed char)(bps[7]._av);
+0006aa  f8943055          LDRB     r3,[r4,#0x55]  ; bps
+0006ae  f88d306d          STRB     r3,[sp,#0x6d]
+;;;1292   modbus_registers[106]=(signed char)(bps_U>>8);					//Рег54   	напряжение выпрямителей, 0.1В
+0006b2  4bff              LDR      r3,|L1.2736|
+0006b4  881b              LDRH     r3,[r3,#0]  ; bps_U
+0006b6  ea4f2423          ASR      r4,r3,#8
+0006ba  f88d406e          STRB     r4,[sp,#0x6e]
+;;;1293   modbus_registers[107]=(signed char)(bps_U);
+0006be  f88d306f          STRB     r3,[sp,#0x6f]
+;;;1294   tempS=0;
+0006c2  463b              MOV      r3,r7
+;;;1295   if((speedChIsOn)||(sp_ch_stat==scsWRK)) tempS=1;
+0006c4  4cfb              LDR      r4,|L1.2740|
+0006c6  8824              LDRH     r4,[r4,#0]  ; speedChIsOn
+0006c8  b91c              CBNZ     r4,|L1.1746|
+0006ca  4cfb              LDR      r4,|L1.2744|
+0006cc  7824              LDRB     r4,[r4,#0]  ; sp_ch_stat
+0006ce  2c02              CMP      r4,#2
+0006d0  d101              BNE      |L1.1750|
+                  |L1.1746|
+0006d2  f04f0301          MOV      r3,#1
+                  |L1.1750|
+;;;1296   modbus_registers[108]=(signed char)(tempS>>8);					//Рег55   	Ускоренный заряд включенность, (1 - вкл, 0 - Выкл)
+0006d6  ea4f2423          ASR      r4,r3,#8
+0006da  f88d4070          STRB     r4,[sp,#0x70]
+;;;1297   modbus_registers[109]=(signed char)(tempS);
+0006de  f88d3071          STRB     r3,[sp,#0x71]
+;;;1298   tempS=0;
+0006e2  f04f0300          MOV      r3,#0
+;;;1299   if(spc_stat==spcVZ) tempS=1;
+0006e6  4cf5              LDR      r4,|L1.2748|
+0006e8  7824              LDRB     r4,[r4,#0]  ; spc_stat
+0006ea  2c02              CMP      r4,#2
+0006ec  d101              BNE      |L1.1778|
+0006ee  f04f0301          MOV      r3,#1
+                  |L1.1778|
+;;;1300   modbus_registers[110]=(signed char)(tempS>>8);					//Рег56   	Выравнивающий заряд включенность, (1 - вкл, 0 - Выкл)
+0006f2  ea4f2423          ASR      r4,r3,#8
+0006f6  f88d4072          STRB     r4,[sp,#0x72]
+;;;1301   modbus_registers[111]=(signed char)(tempS);
+0006fa  f88d3073          STRB     r3,[sp,#0x73]
+;;;1302   modbus_registers[112]=(signed char)(uout_av>>8);					//Рег57   Контроль выходного напряжения, (0 - норма, 1 - завышено, 2 - занижено)
+0006fe  f88d7074          STRB     r7,[sp,#0x74]
+;;;1303   modbus_registers[113]=(signed char)(uout_av);
+000702  4bef              LDR      r3,|L1.2752|
+000704  781b              LDRB     r3,[r3,#0]  ; uout_av
+000706  f88d3075          STRB     r3,[sp,#0x75]
+;;;1304   
+;;;1305   tempS=0;													 //Рег60	Регистр флагов состояния системы
+00070a  f04f0400          MOV      r4,#0
+;;;1306   if(bat_ips._av)			tempS|=(1<<0);						 // Бит 0	Авария батареи
+00070e  4bed              LDR      r3,|L1.2756|
+000710  f893303d          LDRB     r3,[r3,#0x3d]  ; bat_ips
+000714  b10b              CBZ      r3,|L1.1818|
+000716  f04f0401          MOV      r4,#1
+                  |L1.1818|
+;;;1307   if(avar_stat&0x0001)   	tempS|=(1<<1);						 //	Бит 1	Авария питающей сети 
+00071a  4beb              LDR      r3,|L1.2760|
+00071c  681b              LDR      r3,[r3,#0]  ; avar_stat
+00071e  07df              LSLS     r7,r3,#31
+000720  d001              BEQ      |L1.1830|
+000722  f0440402          ORR      r4,r4,#2
                   |L1.1830|
-;;;1302   if(avar_stat&(1<<(3+1)))tempS|=(1<<3);						 //	Бит 3	Авария выпрямителя №2
-000726  06df              LSLS     r7,r3,#27
+;;;1308   if(avar_stat&(1<<(3+0)))tempS|=(1<<2);						 //	Бит 2	Авария выпрямителя №1
+000726  071f              LSLS     r7,r3,#28
 000728  d501              BPL      |L1.1838|
-00072a  f0440408          ORR      r4,r4,#8
+00072a  f0440404          ORR      r4,r4,#4
                   |L1.1838|
-;;;1303   if(avar_stat&(1<<(3+2)))tempS|=(1<<4);						 //	Бит 4	Авария выпрямителя №2
-00072e  069b              LSLS     r3,r3,#26
+;;;1309   if(avar_stat&(1<<(3+1)))tempS|=(1<<3);						 //	Бит 3	Авария выпрямителя №2
+00072e  06df              LSLS     r7,r3,#27
 000730  d501              BPL      |L1.1846|
-000732  f0440410          ORR      r4,r4,#0x10
+000732  f0440408          ORR      r4,r4,#8
                   |L1.1846|
-;;;1304   modbus_registers[118]=(signed char)(tempS>>8);
-000736  ea4f2324          ASR      r3,r4,#8
-00073a  f88d307a          STRB     r3,[sp,#0x7a]
-;;;1305   modbus_registers[119]=(signed char)(tempS);
-00073e  f88d407b          STRB     r4,[sp,#0x7b]
-;;;1306   
-;;;1307   tempS=cntrl_stat_old;
-000742  4be0              LDR      r3,|L1.2756|
-000744  f9b33000          LDRSH    r3,[r3,#0]  ; cntrl_stat_old
-;;;1308   if(	(main_kb_cnt==(TBAT*60)-21) || (main_kb_cnt==(TBAT*60)-20) || (main_kb_cnt==(TBAT*60)-19)) tempS=((short)TBAT)|0x4000;
-000748  4cdf              LDR      r4,|L1.2760|
-00074a  f06f0c14          MVN      r12,#0x14
-00074e  f9b44000          LDRSH    r4,[r4,#0]  ; TBAT
-000752  ebc41704          RSB      r7,r4,r4,LSL #4
-000756  eb0c0887          ADD      r8,r12,r7,LSL #2
-00075a  f8dfc370          LDR      r12,|L1.2764|
-00075e  f9bcc000          LDRSH    r12,[r12,#0]  ; main_kb_cnt
-000762  45e0              CMP      r8,r12
-000764  d00b              BEQ      |L1.1918|
-000766  f06f0813          MVN      r8,#0x13
-00076a  eb080887          ADD      r8,r8,r7,LSL #2
-00076e  45e0              CMP      r8,r12
-000770  d005              BEQ      |L1.1918|
-000772  f06f0812          MVN      r8,#0x12
-000776  eb080787          ADD      r7,r8,r7,LSL #2
-00077a  4567              CMP      r7,r12
-00077c  d101              BNE      |L1.1922|
-                  |L1.1918|
-00077e  f4444380          ORR      r3,r4,#0x4000
-                  |L1.1922|
-;;;1309   //tempS=0x800f;
-;;;1310   modbus_registers[198]=(signed char)(tempS>>8);				//???100	????????? ???
-000782  ea4f2423          ASR      r4,r3,#8
-000786  f88d40ca          STRB     r4,[sp,#0xca]
-;;;1311   modbus_registers[199]=(signed char)(tempS);
-00078a  f88d30cb          STRB     r3,[sp,#0xcb]
-;;;1312   
-;;;1313   tempS=t_ext[0];
-00078e  4fd0              LDR      r7,|L1.2768|
-000790  f9b73000          LDRSH    r3,[r7,#0]  ; t_ext
-;;;1314   if(ND_EXT[0])tempS=-1000;
-000794  f8df833c          LDR      r8,|L1.2772|
-000798  f8dfc33c          LDR      r12,|L1.2776|
-00079c  f8984000          LDRB     r4,[r8,#0]  ; ND_EXT
-0007a0  b104              CBZ      r4,|L1.1956|
-0007a2  4663              MOV      r3,r12
-                  |L1.1956|
-;;;1315   modbus_registers[400]=(signed char)(tempS>>8);				//Рег201	Внешний датчик температуры №1
-0007a4  ea4f2423          ASR      r4,r3,#8
-0007a8  f88d4194          STRB     r4,[sp,#0x194]
-;;;1316   modbus_registers[401]=(signed char)(tempS);
-0007ac  f88d3195          STRB     r3,[sp,#0x195]
-;;;1317   tempS=t_ext[1];
-0007b0  f9b74002          LDRSH    r4,[r7,#2]  ; t_ext
-;;;1318   if(ND_EXT[1])tempS=-1000;
-0007b4  f8983001          LDRB     r3,[r8,#1]  ; ND_EXT
-0007b8  b103              CBZ      r3,|L1.1980|
-0007ba  4664              MOV      r4,r12
-                  |L1.1980|
-;;;1319   modbus_registers[402]=(signed char)(tempS>>8);				//Рег202	Внешний датчик температуры №2
-0007bc  ea4f2324          ASR      r3,r4,#8
-0007c0  f88d3196          STRB     r3,[sp,#0x196]
-;;;1320   modbus_registers[403]=(signed char)(tempS);
-0007c4  f88d4197          STRB     r4,[sp,#0x197]
-;;;1321   tempS=t_ext[2];
-0007c8  f9b77004          LDRSH    r7,[r7,#4]  ; t_ext
-;;;1322   if(ND_EXT[2])tempS=-1000;
-0007cc  f8983002          LDRB     r3,[r8,#2]  ; ND_EXT
-0007d0  b103              CBZ      r3,|L1.2004|
-0007d2  4667              MOV      r7,r12
-                  |L1.2004|
-;;;1323   modbus_registers[404]=(signed char)(tempS>>8);				//Рег203	Внешний датчик температуры №3
-0007d4  ea4f2327          ASR      r3,r7,#8
-0007d8  f88d3198          STRB     r3,[sp,#0x198]
-;;;1324   modbus_registers[405]=(signed char)(tempS);
-0007dc  f88d7199          STRB     r7,[sp,#0x199]
-;;;1325   /*tempS=t_ext[3];
-;;;1326   if(ND_EXT[3])tempS=-1000;
-;;;1327   modbus_registers[406]=(signed char)(tempS>>8);				//Рег204	Внешний датчик температуры №4
-;;;1328   modbus_registers[407]=(signed char)(tempS);   */
-;;;1329   
-;;;1330   tempS=0;
-0007e0  f04f0400          MOV      r4,#0
-;;;1331   if(sk_stat[0]==ssON) tempS|=0x0001;
-0007e4  4fbd              LDR      r7,|L1.2780|
-0007e6  783b              LDRB     r3,[r7,#0]  ; sk_stat
-0007e8  2b01              CMP      r3,#1
-0007ea  d100              BNE      |L1.2030|
-0007ec  461c              MOV      r4,r3
-                  |L1.2030|
-;;;1332   if(sk_av_stat[0]==sasON) tempS|=0x0002;
-0007ee  f8dfc2f0          LDR      r12,|L1.2784|
-0007f2  f89c3000          LDRB     r3,[r12,#0]  ; sk_av_stat
-0007f6  2b01              CMP      r3,#1
-0007f8  d101              BNE      |L1.2046|
-0007fa  f0440402          ORR      r4,r4,#2
-                  |L1.2046|
-;;;1333   modbus_registers[420]=(signed char)(tempS>>8);				//Рег211	Состояние  сухого контакта №1, (нулевой бит - физическое состояние, 1 - замкнут, 0 - разомкнут, первый бит - аварийность, 1 - авария, 0 - норма)
-0007fe  ea4f2324          ASR      r3,r4,#8
-000802  f88d31a8          STRB     r3,[sp,#0x1a8]
-;;;1334   modbus_registers[421]=(signed char)(tempS);
-000806  f88d41a9          STRB     r4,[sp,#0x1a9]
-;;;1335   tempS=0;
-00080a  f04f0400          MOV      r4,#0
-;;;1336   if(sk_stat[1]==ssON) tempS|=0x0001;
-00080e  787b              LDRB     r3,[r7,#1]  ; sk_stat
-000810  2b01              CMP      r3,#1
-000812  d100              BNE      |L1.2070|
-000814  461c              MOV      r4,r3
-                  |L1.2070|
-;;;1337   if(sk_av_stat[1]==sasON) tempS|=0x0002;
-000816  f89c3001          LDRB     r3,[r12,#1]  ; sk_av_stat
-00081a  2b01              CMP      r3,#1
-00081c  d101              BNE      |L1.2082|
-00081e  f0440402          ORR      r4,r4,#2
-                  |L1.2082|
-;;;1338   modbus_registers[422]=(signed char)(tempS>>8);				//Рег212	Состояние  сухого контакта №1, (нулевой бит - физическое состояние, 1 - замкнут, 0 - разомкнут, первый бит - аварийность, 1 - авария, 0 - норма)
-000822  ea4f2324          ASR      r3,r4,#8
-000826  f88d31aa          STRB     r3,[sp,#0x1aa]
-;;;1339   modbus_registers[423]=(signed char)(tempS);
-00082a  f88d41ab          STRB     r4,[sp,#0x1ab]
-;;;1340   tempS=0;
-00082e  f04f0400          MOV      r4,#0
-;;;1341   if(sk_stat[2]==ssON) tempS|=0x0001;
-000832  78bb              LDRB     r3,[r7,#2]  ; sk_stat
-000834  2b01              CMP      r3,#1
-000836  d100              BNE      |L1.2106|
-000838  461c              MOV      r4,r3
-                  |L1.2106|
-;;;1342   if(sk_av_stat[2]==sasON) tempS|=0x0002;
-00083a  f89c3002          LDRB     r3,[r12,#2]  ; sk_av_stat
-00083e  2b01              CMP      r3,#1
-000840  d101              BNE      |L1.2118|
-000842  f0440402          ORR      r4,r4,#2
-                  |L1.2118|
-;;;1343   modbus_registers[424]=(signed char)(tempS>>8);				//Рег213	Состояние  сухого контакта №1, (нулевой бит - физическое состояние, 1 - замкнут, 0 - разомкнут, первый бит - аварийность, 1 - авария, 0 - норма)
-000846  ea4f2324          ASR      r3,r4,#8
-00084a  f88d31ac          STRB     r3,[sp,#0x1ac]
-;;;1344   modbus_registers[425]=(signed char)(tempS);
-00084e  f88d41ad          STRB     r4,[sp,#0x1ad]
+;;;1310   if(avar_stat&(1<<(3+2)))tempS|=(1<<4);						 //	Бит 4	Авария выпрямителя №2
+000736  069b              LSLS     r3,r3,#26
+000738  d501              BPL      |L1.1854|
+00073a  f0440410          ORR      r4,r4,#0x10
+                  |L1.1854|
+;;;1311   modbus_registers[118]=(signed char)(tempS>>8);
+00073e  ea4f2324          ASR      r3,r4,#8
+000742  f88d307a          STRB     r3,[sp,#0x7a]
+;;;1312   modbus_registers[119]=(signed char)(tempS);
+000746  f88d407b          STRB     r4,[sp,#0x7b]
+;;;1313   
+;;;1314   modbus_registers[120]=(signed char)(volta_short>>8);		//Рег61   	напряжение счетчика, 0.1В
+00074a  4be0              LDR      r3,|L1.2764|
+00074c  881b              LDRH     r3,[r3,#0]  ; volta_short
+00074e  ea4f2423          ASR      r4,r3,#8
+000752  f88d407c          STRB     r4,[sp,#0x7c]
+;;;1315   modbus_registers[121]=(signed char)(volta_short);
+000756  f88d307d          STRB     r3,[sp,#0x7d]
+;;;1316   modbus_registers[122]=(signed char)(curr_short>>8);			//Рег62  	ток счетчика, 0.01А
+00075a  4bdd              LDR      r3,|L1.2768|
+00075c  881b              LDRH     r3,[r3,#0]  ; curr_short
+00075e  ea4f2423          ASR      r4,r3,#8
+000762  f88d407e          STRB     r4,[sp,#0x7e]
+;;;1317   modbus_registers[123]=(signed char)(curr_short);
+000766  f88d307f          STRB     r3,[sp,#0x7f]
+;;;1318   modbus_registers[124]=(signed char)(power_int>>8);			//Рег63   	мощность счетчика, 1Вт
+00076a  4bda              LDR      r3,|L1.2772|
+00076c  681b              LDR      r3,[r3,#0]  ; power_int
+00076e  ea4f2423          ASR      r4,r3,#8
+000772  f88d4080          STRB     r4,[sp,#0x80]
+;;;1319   modbus_registers[125]=(signed char)(power_int);
+000776  f88d3081          STRB     r3,[sp,#0x81]
+;;;1320   
+;;;1321   
+;;;1322   tempS=cntrl_stat_old;
+00077a  4bd7              LDR      r3,|L1.2776|
+00077c  f9b33000          LDRSH    r3,[r3,#0]  ; cntrl_stat_old
+;;;1323   if(	(main_kb_cnt==(TBAT*60)-21) || (main_kb_cnt==(TBAT*60)-20) || (main_kb_cnt==(TBAT*60)-19)) tempS=((short)TBAT)|0x4000;
+000780  4cd6              LDR      r4,|L1.2780|
+000782  f06f0c14          MVN      r12,#0x14
+000786  f9b44000          LDRSH    r4,[r4,#0]  ; TBAT
+00078a  ebc41704          RSB      r7,r4,r4,LSL #4
+00078e  eb0c0887          ADD      r8,r12,r7,LSL #2
+000792  f8dfc34c          LDR      r12,|L1.2784|
+000796  f9bcc000          LDRSH    r12,[r12,#0]  ; main_kb_cnt
+00079a  45e0              CMP      r8,r12
+00079c  d00b              BEQ      |L1.1974|
+00079e  f06f0813          MVN      r8,#0x13
+0007a2  eb080887          ADD      r8,r8,r7,LSL #2
+0007a6  45e0              CMP      r8,r12
+0007a8  d005              BEQ      |L1.1974|
+0007aa  f06f0812          MVN      r8,#0x12
+0007ae  eb080787          ADD      r7,r8,r7,LSL #2
+0007b2  4567              CMP      r7,r12
+0007b4  d101              BNE      |L1.1978|
+                  |L1.1974|
+0007b6  f4444380          ORR      r3,r4,#0x4000
+                  |L1.1978|
+;;;1324   //tempS=0x800f;
+;;;1325   modbus_registers[198]=(signed char)(tempS>>8);				//???100	????????? ???
+0007ba  ea4f2423          ASR      r4,r3,#8
+0007be  f88d40ca          STRB     r4,[sp,#0xca]
+;;;1326   modbus_registers[199]=(signed char)(tempS);
+0007c2  f88d30cb          STRB     r3,[sp,#0xcb]
+;;;1327   
+;;;1328   tempS=t_ext[0];
+0007c6  4fc7              LDR      r7,|L1.2788|
+0007c8  f9b73000          LDRSH    r3,[r7,#0]  ; t_ext
+;;;1329   if(ND_EXT[0])tempS=-1000;
+0007cc  f8df8318          LDR      r8,|L1.2792|
+0007d0  f8dfc318          LDR      r12,|L1.2796|
+0007d4  f8984000          LDRB     r4,[r8,#0]  ; ND_EXT
+0007d8  b104              CBZ      r4,|L1.2012|
+0007da  4663              MOV      r3,r12
+                  |L1.2012|
+;;;1330   modbus_registers[400]=(signed char)(tempS>>8);				//Рег201	Внешний датчик температуры №1
+0007dc  ea4f2423          ASR      r4,r3,#8
+0007e0  f88d4194          STRB     r4,[sp,#0x194]
+;;;1331   modbus_registers[401]=(signed char)(tempS);
+0007e4  f88d3195          STRB     r3,[sp,#0x195]
+;;;1332   tempS=t_ext[1];
+0007e8  f9b74002          LDRSH    r4,[r7,#2]  ; t_ext
+;;;1333   if(ND_EXT[1])tempS=-1000;
+0007ec  f8983001          LDRB     r3,[r8,#1]  ; ND_EXT
+0007f0  b103              CBZ      r3,|L1.2036|
+0007f2  4664              MOV      r4,r12
+                  |L1.2036|
+;;;1334   modbus_registers[402]=(signed char)(tempS>>8);				//Рег202	Внешний датчик температуры №2
+0007f4  ea4f2324          ASR      r3,r4,#8
+0007f8  f88d3196          STRB     r3,[sp,#0x196]
+;;;1335   modbus_registers[403]=(signed char)(tempS);
+0007fc  f88d4197          STRB     r4,[sp,#0x197]
+;;;1336   tempS=t_ext[2];
+000800  f9b77004          LDRSH    r7,[r7,#4]  ; t_ext
+;;;1337   if(ND_EXT[2])tempS=-1000;
+000804  f8983002          LDRB     r3,[r8,#2]  ; ND_EXT
+000808  b103              CBZ      r3,|L1.2060|
+00080a  4667              MOV      r7,r12
+                  |L1.2060|
+;;;1338   modbus_registers[404]=(signed char)(tempS>>8);				//Рег203	Внешний датчик температуры №3
+00080c  ea4f2327          ASR      r3,r7,#8
+000810  f88d3198          STRB     r3,[sp,#0x198]
+;;;1339   modbus_registers[405]=(signed char)(tempS);
+000814  f88d7199          STRB     r7,[sp,#0x199]
+;;;1340   /*tempS=t_ext[3];
+;;;1341   if(ND_EXT[3])tempS=-1000;
+;;;1342   modbus_registers[406]=(signed char)(tempS>>8);				//Рег204	Внешний датчик температуры №4
+;;;1343   modbus_registers[407]=(signed char)(tempS);   */
+;;;1344   
 ;;;1345   tempS=0;
-000852  f04f0300          MOV      r3,#0
-;;;1346   if(sk_stat[3]==ssON) tempS|=0x0001;
-000856  78fc              LDRB     r4,[r7,#3]  ; sk_stat
-000858  2c01              CMP      r4,#1
-00085a  d101              BNE      |L1.2144|
-00085c  f04f0301          MOV      r3,#1
-                  |L1.2144|
-;;;1347   if(sk_av_stat[3]==sasON) tempS|=0x0002;
-000860  f89c4003          LDRB     r4,[r12,#3]  ; sk_av_stat
-000864  2c01              CMP      r4,#1
-000866  d101              BNE      |L1.2156|
-000868  f0430302          ORR      r3,r3,#2
-                  |L1.2156|
-;;;1348   modbus_registers[426]=(signed char)(tempS>>8);				//Рег214	Состояние  сухого контакта №1, (нулевой бит - физическое состояние, 1 - замкнут, 0 - разомкнут, первый бит - аварийность, 1 - авария, 0 - норма)
-00086c  ea4f2423          ASR      r4,r3,#8
-000870  f88d41ae          STRB     r4,[sp,#0x1ae]
-;;;1349   modbus_registers[427]=(signed char)(tempS);
-000874  f88d31af          STRB     r3,[sp,#0x1af]
-000878  ab01              ADD      r3,sp,#4              ;1170
-;;;1350   
-;;;1351   //modbus_registers[
-;;;1352   
-;;;1353   
-;;;1354   if(prot==MODBUS_RTU_PROT)
-;;;1355   	{
-;;;1356   	modbus_tx_buff[0]=adr;
-;;;1357   	modbus_tx_buff[1]=func;
-;;;1358   
-;;;1359   	modbus_tx_buff[2]=(char)(reg_quantity*2);
-;;;1360   
-;;;1361   	mem_copy((signed char*)&modbus_tx_buff[3],(signed char*)&modbus_registers[(reg_adr-1)*2],reg_quantity*2);
-00087a  f1a20201          SUB      r2,r2,#1
-00087e  4f99              LDR      r7,|L1.2788|
-000880  eb030342          ADD      r3,r3,r2,LSL #1
-000884  ea4f0245          LSL      r2,r5,#1              ;1359
-000888  b156              CBZ      r6,|L1.2208|
-;;;1362   
-;;;1363   	crc_temp=CRC16_2(modbus_tx_buff,(reg_quantity*2)+3);
-;;;1364   
-;;;1365   	modbus_tx_buff[3+(reg_quantity*2)]=(char)crc_temp;
-;;;1366   	modbus_tx_buff[4+(reg_quantity*2)]=crc_temp>>8;
+000818  f04f0400          MOV      r4,#0
+;;;1346   if(sk_stat[0]==ssON) tempS|=0x0001;
+00081c  4fb4              LDR      r7,|L1.2800|
+00081e  783b              LDRB     r3,[r7,#0]  ; sk_stat
+000820  2b01              CMP      r3,#1
+000822  d100              BNE      |L1.2086|
+000824  461c              MOV      r4,r3
+                  |L1.2086|
+;;;1347   if(sk_av_stat[0]==sasON) tempS|=0x0002;
+000826  f8dfc2cc          LDR      r12,|L1.2804|
+00082a  f89c3000          LDRB     r3,[r12,#0]  ; sk_av_stat
+00082e  2b01              CMP      r3,#1
+000830  d101              BNE      |L1.2102|
+000832  f0440402          ORR      r4,r4,#2
+                  |L1.2102|
+;;;1348   modbus_registers[420]=(signed char)(tempS>>8);				//Рег211	Состояние  сухого контакта №1, (нулевой бит - физическое состояние, 1 - замкнут, 0 - разомкнут, первый бит - аварийность, 1 - авария, 0 - норма)
+000836  ea4f2324          ASR      r3,r4,#8
+00083a  f88d31a8          STRB     r3,[sp,#0x1a8]
+;;;1349   modbus_registers[421]=(signed char)(tempS);
+00083e  f88d41a9          STRB     r4,[sp,#0x1a9]
+;;;1350   tempS=0;
+000842  f04f0400          MOV      r4,#0
+;;;1351   if(sk_stat[1]==ssON) tempS|=0x0001;
+000846  787b              LDRB     r3,[r7,#1]  ; sk_stat
+000848  2b01              CMP      r3,#1
+00084a  d100              BNE      |L1.2126|
+00084c  461c              MOV      r4,r3
+                  |L1.2126|
+;;;1352   if(sk_av_stat[1]==sasON) tempS|=0x0002;
+00084e  f89c3001          LDRB     r3,[r12,#1]  ; sk_av_stat
+000852  2b01              CMP      r3,#1
+000854  d101              BNE      |L1.2138|
+000856  f0440402          ORR      r4,r4,#2
+                  |L1.2138|
+;;;1353   modbus_registers[422]=(signed char)(tempS>>8);				//Рег212	Состояние  сухого контакта №1, (нулевой бит - физическое состояние, 1 - замкнут, 0 - разомкнут, первый бит - аварийность, 1 - авария, 0 - норма)
+00085a  ea4f2324          ASR      r3,r4,#8
+00085e  f88d31aa          STRB     r3,[sp,#0x1aa]
+;;;1354   modbus_registers[423]=(signed char)(tempS);
+000862  f88d41ab          STRB     r4,[sp,#0x1ab]
+;;;1355   tempS=0;
+000866  f04f0400          MOV      r4,#0
+;;;1356   if(sk_stat[2]==ssON) tempS|=0x0001;
+00086a  78bb              LDRB     r3,[r7,#2]  ; sk_stat
+00086c  2b01              CMP      r3,#1
+00086e  d100              BNE      |L1.2162|
+000870  461c              MOV      r4,r3
+                  |L1.2162|
+;;;1357   if(sk_av_stat[2]==sasON) tempS|=0x0002;
+000872  f89c3002          LDRB     r3,[r12,#2]  ; sk_av_stat
+000876  2b01              CMP      r3,#1
+000878  d101              BNE      |L1.2174|
+00087a  f0440402          ORR      r4,r4,#2
+                  |L1.2174|
+;;;1358   modbus_registers[424]=(signed char)(tempS>>8);				//Рег213	Состояние  сухого контакта №1, (нулевой бит - физическое состояние, 1 - замкнут, 0 - разомкнут, первый бит - аварийность, 1 - авария, 0 - норма)
+00087e  ea4f2324          ASR      r3,r4,#8
+000882  f88d31ac          STRB     r3,[sp,#0x1ac]
+;;;1359   modbus_registers[425]=(signed char)(tempS);
+000886  f88d41ad          STRB     r4,[sp,#0x1ad]
+;;;1360   tempS=0;
+00088a  f04f0300          MOV      r3,#0
+;;;1361   if(sk_stat[3]==ssON) tempS|=0x0001;
+00088e  78fc              LDRB     r4,[r7,#3]  ; sk_stat
+000890  2c01              CMP      r4,#1
+000892  d101              BNE      |L1.2200|
+000894  f04f0301          MOV      r3,#1
+                  |L1.2200|
+;;;1362   if(sk_av_stat[3]==sasON) tempS|=0x0002;
+000898  f89c4003          LDRB     r4,[r12,#3]  ; sk_av_stat
+00089c  2c01              CMP      r4,#1
+00089e  d101              BNE      |L1.2212|
+0008a0  f0430302          ORR      r3,r3,#2
+                  |L1.2212|
+;;;1363   modbus_registers[426]=(signed char)(tempS>>8);				//Рег214	Состояние  сухого контакта №1, (нулевой бит - физическое состояние, 1 - замкнут, 0 - разомкнут, первый бит - аварийность, 1 - авария, 0 - норма)
+0008a4  ea4f2423          ASR      r4,r3,#8
+0008a8  f88d41ae          STRB     r4,[sp,#0x1ae]
+;;;1364   modbus_registers[427]=(signed char)(tempS);
+0008ac  f88d31af          STRB     r3,[sp,#0x1af]
+0008b0  ab01              ADD      r3,sp,#4              ;1177
+;;;1365   
+;;;1366   //modbus_registers[
 ;;;1367   
-;;;1368   	for (i=0;i<(5+(reg_quantity*2));i++)
-;;;1369   		{
-;;;1370   		putchar0(modbus_tx_buff[i]);
-;;;1371   		}
-;;;1372   	for (i=0;i<(5+(reg_quantity*2));i++)
-;;;1373   		{
-;;;1374   		putchar_sc16is700(modbus_tx_buff[i]);
-;;;1375   		}
-;;;1376   	}
-;;;1377   else if(prot==MODBUS_TCP_PROT)
-00088a  2e01              CMP      r6,#1
-00088c  d105              BNE      |L1.2202|
-;;;1378   	{
-;;;1379   	mem_copy((signed char*)modbus_tx_buff,(signed char*)&modbus_registers[(reg_adr-1)*2],reg_quantity*2);
-00088e  4619              MOV      r1,r3
-000890  4638              MOV      r0,r7
-000892  f7fffffe          BL       mem_copy
-;;;1380   	modbus_tcp_out_ptr=(signed char*)modbus_tx_buff;
-000896  4894              LDR      r0,|L1.2792|
-000898  6007              STR      r7,[r0,#0]  ; modbus_tcp_out_ptr
-                  |L1.2202|
-;;;1381   	}
-;;;1382   }
-00089a  b07e              ADD      sp,sp,#0x1f8
-00089c  e8bd81f0          POP      {r4-r8,pc}
-                  |L1.2208|
-0008a0  7038              STRB     r0,[r7,#0]            ;1356
-0008a2  7079              STRB     r1,[r7,#1]            ;1357
-0008a4  70ba              STRB     r2,[r7,#2]            ;1359
-0008a6  4619              MOV      r1,r3                 ;1361
-0008a8  1cf8              ADDS     r0,r7,#3              ;1361
-0008aa  f7fffffe          BL       mem_copy
-0008ae  2003              MOVS     r0,#3                 ;1363
-0008b0  eb000045          ADD      r0,r0,r5,LSL #1       ;1363
-0008b4  b201              SXTH     r1,r0                 ;1363
-0008b6  488b              LDR      r0,|L1.2788|
-0008b8  f7fffffe          BL       CRC16_2
-0008bc  eb070145          ADD      r1,r7,r5,LSL #1       ;1365
-0008c0  70c8              STRB     r0,[r1,#3]            ;1365
-0008c2  ea4f2010          LSR      r0,r0,#8              ;1366
-0008c6  7108              STRB     r0,[r1,#4]            ;1366
-0008c8  f04f0400          MOV      r4,#0                 ;1368
-0008cc  f04f0005          MOV      r0,#5                 ;1368
-0008d0  eb000545          ADD      r5,r0,r5,LSL #1       ;1368
-0008d4  e005              B        |L1.2274|
-                  |L1.2262|
-0008d6  5d38              LDRB     r0,[r7,r4]            ;1370
-0008d8  f7fffffe          BL       putchar0
-0008dc  f1040401          ADD      r4,r4,#1              ;1368
-0008e0  b2e4              UXTB     r4,r4                 ;1368
-                  |L1.2274|
-0008e2  42a5              CMP      r5,r4                 ;1368
-0008e4  d8f7              BHI      |L1.2262|
-0008e6  f04f0400          MOV      r4,#0                 ;1372
-0008ea  e005              B        |L1.2296|
-                  |L1.2284|
-0008ec  5d38              LDRB     r0,[r7,r4]            ;1374
-0008ee  f7fffffe          BL       putchar_sc16is700
-0008f2  f1040401          ADD      r4,r4,#1              ;1372
-0008f6  b2e4              UXTB     r4,r4                 ;1372
-                  |L1.2296|
-0008f8  42a5              CMP      r5,r4                 ;1372
-0008fa  d8f7              BHI      |L1.2284|
-0008fc  e7cd              B        |L1.2202|
-;;;1383   
+;;;1368   
+;;;1369   if(prot==MODBUS_RTU_PROT)
+;;;1370   	{
+;;;1371   	modbus_tx_buff[0]=adr;
+;;;1372   	modbus_tx_buff[1]=func;
+;;;1373   
+;;;1374   	modbus_tx_buff[2]=(char)(reg_quantity*2);
+;;;1375   
+;;;1376   	mem_copy((signed char*)&modbus_tx_buff[3],(signed char*)&modbus_registers[(reg_adr-1)*2],reg_quantity*2);
+0008b2  f1a20201          SUB      r2,r2,#1
+0008b6  4f90              LDR      r7,|L1.2808|
+0008b8  eb030342          ADD      r3,r3,r2,LSL #1
+0008bc  ea4f0245          LSL      r2,r5,#1              ;1374
+0008c0  b156              CBZ      r6,|L1.2264|
+;;;1377   
+;;;1378   	crc_temp=CRC16_2(modbus_tx_buff,(reg_quantity*2)+3);
+;;;1379   
+;;;1380   	modbus_tx_buff[3+(reg_quantity*2)]=(char)crc_temp;
+;;;1381   	modbus_tx_buff[4+(reg_quantity*2)]=crc_temp>>8;
+;;;1382   
+;;;1383   	for (i=0;i<(5+(reg_quantity*2));i++)
+;;;1384   		{
+;;;1385   		putchar0(modbus_tx_buff[i]);
+;;;1386   		}
+;;;1387   	for (i=0;i<(5+(reg_quantity*2));i++)
+;;;1388   		{
+;;;1389   		putchar_sc16is700(modbus_tx_buff[i]);
+;;;1390   		}
+;;;1391   	}
+;;;1392   else if(prot==MODBUS_TCP_PROT)
+0008c2  2e01              CMP      r6,#1
+0008c4  d105              BNE      |L1.2258|
+;;;1393   	{
+;;;1394   	mem_copy((signed char*)modbus_tx_buff,(signed char*)&modbus_registers[(reg_adr-1)*2],reg_quantity*2);
+0008c6  4619              MOV      r1,r3
+0008c8  4638              MOV      r0,r7
+0008ca  f7fffffe          BL       mem_copy
+;;;1395   	modbus_tcp_out_ptr=(signed char*)modbus_tx_buff;
+0008ce  488b              LDR      r0,|L1.2812|
+0008d0  6007              STR      r7,[r0,#0]  ; modbus_tcp_out_ptr
+                  |L1.2258|
+;;;1396   	}
+;;;1397   }
+0008d2  b07e              ADD      sp,sp,#0x1f8
+0008d4  e8bd81f0          POP      {r4-r8,pc}
+                  |L1.2264|
+0008d8  7038              STRB     r0,[r7,#0]            ;1371
+0008da  7079              STRB     r1,[r7,#1]            ;1372
+0008dc  70ba              STRB     r2,[r7,#2]            ;1374
+0008de  4619              MOV      r1,r3                 ;1376
+0008e0  1cf8              ADDS     r0,r7,#3              ;1376
+0008e2  f7fffffe          BL       mem_copy
+0008e6  2003              MOVS     r0,#3                 ;1378
+0008e8  eb000045          ADD      r0,r0,r5,LSL #1       ;1378
+0008ec  b201              SXTH     r1,r0                 ;1378
+0008ee  4882              LDR      r0,|L1.2808|
+0008f0  f7fffffe          BL       CRC16_2
+0008f4  eb070145          ADD      r1,r7,r5,LSL #1       ;1380
+0008f8  70c8              STRB     r0,[r1,#3]            ;1380
+0008fa  ea4f2010          LSR      r0,r0,#8              ;1381
+0008fe  7108              STRB     r0,[r1,#4]            ;1381
+000900  f04f0400          MOV      r4,#0                 ;1383
+000904  f04f0005          MOV      r0,#5                 ;1383
+000908  eb000545          ADD      r5,r0,r5,LSL #1       ;1383
+00090c  e005              B        |L1.2330|
+                  |L1.2318|
+00090e  5d38              LDRB     r0,[r7,r4]            ;1385
+000910  f7fffffe          BL       putchar0
+000914  f1040401          ADD      r4,r4,#1              ;1383
+000918  b2e4              UXTB     r4,r4                 ;1383
+                  |L1.2330|
+00091a  42a5              CMP      r5,r4                 ;1383
+00091c  d8f7              BHI      |L1.2318|
+00091e  f04f0400          MOV      r4,#0                 ;1387
+000922  e005              B        |L1.2352|
+                  |L1.2340|
+000924  5d38              LDRB     r0,[r7,r4]            ;1389
+000926  f7fffffe          BL       putchar_sc16is700
+00092a  f1040401          ADD      r4,r4,#1              ;1387
+00092e  b2e4              UXTB     r4,r4                 ;1387
+                  |L1.2352|
+000930  42a5              CMP      r5,r4                 ;1387
+000932  d8f7              BHI      |L1.2340|
+000934  e7cd              B        |L1.2258|
+;;;1398   
                           ENDP
 
                   modbus_in PROC
 ;;;260    //-----------------------------------------------
 ;;;261    void modbus_in(void)
-0008fe  e92d4ff0          PUSH     {r4-r11,lr}
+000936  e92d4ff0          PUSH     {r4-r11,lr}
 ;;;262    {
-000902  b089              SUB      sp,sp,#0x24
+00093a  b089              SUB      sp,sp,#0x24
 ;;;263    short crc16_calculated;		//вычисляемая из принятых данных CRC
 ;;;264    short crc16_incapsulated;	//встроеннная в посылку CRC
 ;;;265    unsigned short modbus_rx_arg0;		//встроенный в посылку первый аргумент
@@ -1163,53 +1190,53 @@
 ;;;271    
 ;;;272    
 ;;;273    mem_copy(modbus_an_buffer,modbus_rx_buffer,modbus_rx_buffer_ptr);
-000904  4c79              LDR      r4,|L1.2796|
-000906  4977              LDR      r1,|L1.2788|
-000908  393c              SUBS     r1,r1,#0x3c
-00090a  7862              LDRB     r2,[r4,#1]  ; modbus_rx_buffer_ptr
-00090c  f101001e          ADD      r0,r1,#0x1e
-000910  f7fffffe          BL       mem_copy
+00093c  4c70              LDR      r4,|L1.2816|
+00093e  496e              LDR      r1,|L1.2808|
+000940  393c              SUBS     r1,r1,#0x3c
+000942  7862              LDRB     r2,[r4,#1]  ; modbus_rx_buffer_ptr
+000944  f101001e          ADD      r0,r1,#0x1e
+000948  f7fffffe          BL       mem_copy
 ;;;274    modbus_rx_counter=modbus_rx_buffer_ptr;
-000914  7861              LDRB     r1,[r4,#1]  ; modbus_rx_buffer_ptr
-000916  70a1              STRB     r1,[r4,#2]
+00094c  7861              LDRB     r1,[r4,#1]  ; modbus_rx_buffer_ptr
+00094e  70a1              STRB     r1,[r4,#2]
 ;;;275    modbus_rx_buffer_ptr=0;
-000918  f04f0900          MOV      r9,#0
-00091c  f8849001          STRB     r9,[r4,#1]
+000950  f04f0900          MOV      r9,#0
+000954  f8849001          STRB     r9,[r4,#1]
 ;;;276    bMODBUS_TIMEOUT=0;
-000920  f8849000          STRB     r9,[r4,#0]
+000958  f8849000          STRB     r9,[r4,#0]
 ;;;277    	
 ;;;278    crc16_calculated  = CRC16_2((char*)modbus_an_buffer, modbus_rx_counter-2);
-000924  486f              LDR      r0,|L1.2788|
-000926  f1a10102          SUB      r1,r1,#2
-00092a  f1a0001e          SUB      r0,r0,#0x1e
-00092e  f7fffffe          BL       CRC16_2
-000932  fa0ffa80          SXTH     r10,r0
+00095c  4866              LDR      r0,|L1.2808|
+00095e  f1a10102          SUB      r1,r1,#2
+000962  f1a0001e          SUB      r0,r0,#0x1e
+000966  f7fffffe          BL       CRC16_2
+00096a  fa0ffa80          SXTH     r10,r0
 ;;;279    crc16_incapsulated = *((short*)&modbus_an_buffer[modbus_rx_counter-2]);
-000936  486b              LDR      r0,|L1.2788|
-000938  78a1              LDRB     r1,[r4,#2]  ; modbus_rx_counter
-00093a  381e              SUBS     r0,r0,#0x1e
-00093c  eb000201          ADD      r2,r0,r1
-000940  f932bc02          LDRSH    r11,[r2,#-2]
+00096e  4862              LDR      r0,|L1.2808|
+000970  78a1              LDRB     r1,[r4,#2]  ; modbus_rx_counter
+000972  381e              SUBS     r0,r0,#0x1e
+000974  eb000201          ADD      r2,r0,r1
+000978  f932bc02          LDRSH    r11,[r2,#-2]
 ;;;280    
 ;;;281    modbus_plazma1=modbus_rx_counter;
-000944  80e1              STRH     r1,[r4,#6]
+00097c  80e1              STRH     r1,[r4,#6]
 ;;;282    modbus_plazma2=crc16_calculated;
-000946  f8a4a008          STRH     r10,[r4,#8]
+00097e  f8a4a008          STRH     r10,[r4,#8]
 ;;;283    modbus_plazma3=crc16_incapsulated;
-00094a  f8a4b00a          STRH     r11,[r4,#0xa]
+000982  f8a4b00a          STRH     r11,[r4,#0xa]
 ;;;284    
 ;;;285    modbus_func=modbus_an_buffer[1];
-00094e  7846              LDRB     r6,[r0,#1]  ; modbus_an_buffer
+000986  7846              LDRB     r6,[r0,#1]  ; modbus_an_buffer
 ;;;286    modbus_rx_arg0=(((unsigned short)modbus_an_buffer[2])*((unsigned short)256))+((unsigned short)modbus_an_buffer[3]);
-000950  78c1              LDRB     r1,[r0,#3]  ; modbus_an_buffer
-000952  7882              LDRB     r2,[r0,#2]  ; modbus_an_buffer
-000954  eb012302          ADD      r3,r1,r2,LSL #8
-000958  b29d              UXTH     r5,r3
+000988  78c1              LDRB     r1,[r0,#3]  ; modbus_an_buffer
+00098a  7882              LDRB     r2,[r0,#2]  ; modbus_an_buffer
+00098c  eb012302          ADD      r3,r1,r2,LSL #8
+000990  b29d              UXTH     r5,r3
 ;;;287    modbus_rx_arg1=(((unsigned short)modbus_an_buffer[4])*((unsigned short)256))+((unsigned short)modbus_an_buffer[5]);
-00095a  7943              LDRB     r3,[r0,#5]  ; modbus_an_buffer
-00095c  7904              LDRB     r4,[r0,#4]  ; modbus_an_buffer
-00095e  eb032304          ADD      r3,r3,r4,LSL #8
-000962  b29c              UXTH     r4,r3
+000992  7943              LDRB     r3,[r0,#5]  ; modbus_an_buffer
+000994  7904              LDRB     r4,[r0,#4]  ; modbus_an_buffer
+000996  eb032304          ADD      r3,r3,r4,LSL #8
+00099a  b29c              UXTH     r4,r3
 ;;;288    //modbus_rx_arg2=(((unsigned short)modbus_an_buffer[6])*((unsigned short)256))+((unsigned short)modbus_an_buffer[7]);
 ;;;289    //modbus_rx_arg3=(((unsigned short)modbus_an_buffer[8])*((unsigned short)256))+((unsigned short)modbus_an_buffer[9]);
 ;;;290    
@@ -1217,55 +1244,55 @@
 ;;;292    
 ;;;293    
 ;;;294    if(modbus_an_buffer[0]=='r')
-000964  7800              LDRB     r0,[r0,#0]  ; modbus_an_buffer
-000966  2872              CMP      r0,#0x72
-000968  d17e              BNE      |L1.2664|
+00099c  7800              LDRB     r0,[r0,#0]  ; modbus_an_buffer
+00099e  2872              CMP      r0,#0x72
+0009a0  d17e              BNE      |L1.2720|
 ;;;295    	{
 ;;;296    	pvlk=1;
-00096a  4f61              LDR      r7,|L1.2800|
-00096c  f04f0001          MOV      r0,#1
-000970  8038              STRH     r0,[r7,#0]
+0009a2  4f58              LDR      r7,|L1.2820|
+0009a4  f04f0001          MOV      r0,#1
+0009a8  8038              STRH     r0,[r7,#0]
 ;;;297    	if(modbus_an_buffer[1]=='e')
-000972  f8df8170          LDR      r8,|L1.2788|
-000976  2e65              CMP      r6,#0x65
-000978  f1a8081e          SUB      r8,r8,#0x1e
-00097c  d174              BNE      |L1.2664|
+0009aa  f8df814c          LDR      r8,|L1.2808|
+0009ae  2e65              CMP      r6,#0x65
+0009b0  f1a8081e          SUB      r8,r8,#0x1e
+0009b4  d174              BNE      |L1.2720|
 ;;;298    		{
 ;;;299    		pvlk=2;
-00097e  f04f0002          MOV      r0,#2
-000982  8038              STRH     r0,[r7,#0]
+0009b6  f04f0002          MOV      r0,#2
+0009ba  8038              STRH     r0,[r7,#0]
 ;;;300    		if(modbus_an_buffer[2]=='a')
-000984  2a61              CMP      r2,#0x61
-000986  d16f              BNE      |L1.2664|
+0009bc  2a61              CMP      r2,#0x61
+0009be  d16f              BNE      |L1.2720|
 ;;;301    			{
 ;;;302    			pvlk=3;
-000988  f04f0003          MOV      r0,#3
-00098c  8038              STRH     r0,[r7,#0]
+0009c0  f04f0003          MOV      r0,#3
+0009c4  8038              STRH     r0,[r7,#0]
 ;;;303    			if(modbus_an_buffer[3]=='d')
-00098e  2964              CMP      r1,#0x64
-000990  d16a              BNE      |L1.2664|
+0009c6  2964              CMP      r1,#0x64
+0009c8  d16a              BNE      |L1.2720|
 ;;;304    				{
 ;;;305    				pvlk=4;
-000992  f04f0004          MOV      r0,#4
-000996  8038              STRH     r0,[r7,#0]
+0009ca  f04f0004          MOV      r0,#4
+0009ce  8038              STRH     r0,[r7,#0]
 ;;;306    				if(modbus_an_buffer[6]==crc_87(modbus_an_buffer,6))
-000998  f04f0106          MOV      r1,#6
-00099c  4640              MOV      r0,r8
-00099e  f7fffffe          BL       crc_87
-0009a2  f8981006          LDRB     r1,[r8,#6]  ; modbus_an_buffer
-0009a6  4288              CMP      r0,r1
-0009a8  d15e              BNE      |L1.2664|
+0009d0  f04f0106          MOV      r1,#6
+0009d4  4640              MOV      r0,r8
+0009d6  f7fffffe          BL       crc_87
+0009da  f8981006          LDRB     r1,[r8,#6]  ; modbus_an_buffer
+0009de  4288              CMP      r0,r1
+0009e0  d15e              BNE      |L1.2720|
 ;;;307    					{
 ;;;308    					pvlk=5;
-0009aa  f04f0005          MOV      r0,#5
-0009ae  8038              STRH     r0,[r7,#0]
+0009e2  f04f0005          MOV      r0,#5
+0009e6  8038              STRH     r0,[r7,#0]
 ;;;309    					if(modbus_an_buffer[7]==crc_95(modbus_an_buffer,6))
-0009b0  f04f0106          MOV      r1,#6
-0009b4  4640              MOV      r0,r8
-0009b6  f7fffffe          BL       crc_95
-0009ba  f8981007          LDRB     r1,[r8,#7]  ; modbus_an_buffer
-0009be  4288              CMP      r0,r1
-0009c0  d152              BNE      |L1.2664|
+0009e8  f04f0106          MOV      r1,#6
+0009ec  4640              MOV      r0,r8
+0009ee  f7fffffe          BL       crc_95
+0009f2  f8981007          LDRB     r1,[r8,#7]  ; modbus_an_buffer
+0009f6  4288              CMP      r0,r1
+0009f8  d152              BNE      |L1.2720|
 ;;;310    						{
 ;;;311    						pvlk=6;	
 ;;;312    
@@ -1274,157 +1301,161 @@
 ;;;315    							unsigned long data1,data2;
 ;;;316    							char temp_out[20];
 ;;;317    							pvlk++;
-0009c2  f04f0007          MOV      r0,#7
-0009c6  8038              STRH     r0,[r7,#0]
+0009fa  f04f0007          MOV      r0,#7
+0009fe  8038              STRH     r0,[r7,#0]
 ;;;318    							ptr=modbus_an_buffer[4]+(modbus_an_buffer[5]*256U);
-0009c8  f8980004          LDRB     r0,[r8,#4]  ; modbus_an_buffer
-0009cc  f8981005          LDRB     r1,[r8,#5]  ; modbus_an_buffer
-0009d0  eb002001          ADD      r0,r0,r1,LSL #8
-0009d4  b280              UXTH     r0,r0
-0009d6  4607              MOV      r7,r0
-0009d8  9008              STR      r0,[sp,#0x20]
+000a00  f8980004          LDRB     r0,[r8,#4]  ; modbus_an_buffer
+000a04  f8981005          LDRB     r1,[r8,#5]  ; modbus_an_buffer
+000a08  eb002001          ADD      r0,r0,r1,LSL #8
+000a0c  b280              UXTH     r0,r0
+000a0e  4607              MOV      r7,r0
+000a10  9008              STR      r0,[sp,#0x20]
 ;;;319    							data1=lc640_read_long(ptr);
-0009da  4638              MOV      r0,r7
-0009dc  f7fffffe          BL       lc640_read_long
-0009e0  9007              STR      r0,[sp,#0x1c]
+000a12  4638              MOV      r0,r7
+000a14  f7fffffe          BL       lc640_read_long
+000a18  9007              STR      r0,[sp,#0x1c]
 ;;;320    							data2=lc640_read_long(ptr+4);
-0009e2  1d38              ADDS     r0,r7,#4
-0009e4  f7fffffe          BL       lc640_read_long
-0009e8  9006              STR      r0,[sp,#0x18]
+000a1a  1d38              ADDS     r0,r7,#4
+000a1c  f7fffffe          BL       lc640_read_long
+000a20  9006              STR      r0,[sp,#0x18]
 ;;;321    							temp_out[0]='r';
-0009ea  f04f0072          MOV      r0,#0x72
-0009ee  f88d0004          STRB     r0,[sp,#4]
+000a22  f04f0072          MOV      r0,#0x72
+000a26  f88d0004          STRB     r0,[sp,#4]
 ;;;322    							temp_out[1]='e';
-0009f2  4630              MOV      r0,r6
-0009f4  f88d0005          STRB     r0,[sp,#5]
+000a2a  4630              MOV      r0,r6
+000a2c  f88d0005          STRB     r0,[sp,#5]
 ;;;323    							temp_out[2]='a';
-0009f8  f04f0061          MOV      r0,#0x61
-0009fc  f88d0006          STRB     r0,[sp,#6]
+000a30  f04f0061          MOV      r0,#0x61
+000a34  f88d0006          STRB     r0,[sp,#6]
 ;;;324    							temp_out[3]='d';
-000a00  f04f0064          MOV      r0,#0x64
-000a04  f88d0007          STRB     r0,[sp,#7]
+000a38  f04f0064          MOV      r0,#0x64
+000a3c  f88d0007          STRB     r0,[sp,#7]
 ;;;325    							temp_out[4]=*((char*)&ptr);
-000a08  f89d0020          LDRB     r0,[sp,#0x20]
-000a0c  f88d0008          STRB     r0,[sp,#8]
+000a40  f89d0020          LDRB     r0,[sp,#0x20]
+000a44  f88d0008          STRB     r0,[sp,#8]
 ;;;326    							temp_out[5]=*(((char*)&ptr)+1);	
-000a10  f89d0021          LDRB     r0,[sp,#0x21]
-000a14  f88d0009          STRB     r0,[sp,#9]
+000a48  f89d0021          LDRB     r0,[sp,#0x21]
+000a4c  f88d0009          STRB     r0,[sp,#9]
 ;;;327    							temp_out[6]=*((char*)&data1);
-000a18  f89d001c          LDRB     r0,[sp,#0x1c]
-000a1c  f88d000a          STRB     r0,[sp,#0xa]
+000a50  f89d001c          LDRB     r0,[sp,#0x1c]
+000a54  f88d000a          STRB     r0,[sp,#0xa]
 ;;;328    							temp_out[7]=*(((char*)&data1)+1);		
-000a20  f89d001d          LDRB     r0,[sp,#0x1d]
-000a24  f88d000b          STRB     r0,[sp,#0xb]
+000a58  f89d001d          LDRB     r0,[sp,#0x1d]
+000a5c  f88d000b          STRB     r0,[sp,#0xb]
 ;;;329    							temp_out[8]=*(((char*)&data1)+2);	
-000a28  f89d001e          LDRB     r0,[sp,#0x1e]
-000a2c  f88d000c          STRB     r0,[sp,#0xc]
+000a60  f89d001e          LDRB     r0,[sp,#0x1e]
+000a64  f88d000c          STRB     r0,[sp,#0xc]
 ;;;330    							temp_out[9]=*(((char*)&data1)+3);		
-000a30  f89d001f          LDRB     r0,[sp,#0x1f]
-000a34  f88d000d          STRB     r0,[sp,#0xd]
+000a68  f89d001f          LDRB     r0,[sp,#0x1f]
+000a6c  f88d000d          STRB     r0,[sp,#0xd]
 ;;;331    							temp_out[10]=*((char*)&data2);
-000a38  f89d0018          LDRB     r0,[sp,#0x18]
-000a3c  f88d000e          STRB     r0,[sp,#0xe]
+000a70  f89d0018          LDRB     r0,[sp,#0x18]
+000a74  f88d000e          STRB     r0,[sp,#0xe]
 ;;;332    							temp_out[11]=*(((char*)&data2)+1);		
-000a40  f89d0019          LDRB     r0,[sp,#0x19]
-000a44  f88d000f          STRB     r0,[sp,#0xf]
+000a78  f89d0019          LDRB     r0,[sp,#0x19]
+000a7c  f88d000f          STRB     r0,[sp,#0xf]
 ;;;333    							temp_out[12]=*(((char*)&data2)+2);	
-000a48  f89d001a          LDRB     r0,[sp,#0x1a]
-000a4c  f88d0010          STRB     r0,[sp,#0x10]
+000a80  f89d001a          LDRB     r0,[sp,#0x1a]
+000a84  f88d0010          STRB     r0,[sp,#0x10]
 ;;;334    							temp_out[13]=*(((char*)&data2)+3);	
-000a50  f89d001b          LDRB     r0,[sp,#0x1b]
-000a54  f88d0011          STRB     r0,[sp,#0x11]
+000a88  f89d001b          LDRB     r0,[sp,#0x1b]
+000a8c  f88d0011          STRB     r0,[sp,#0x11]
 ;;;335    							temp_out[14]=crc_87(temp_out,14);	
-000a58  f04f010e          MOV      r1,#0xe
-000a5c  a801              ADD      r0,sp,#4
-000a5e  f7fffffe          BL       crc_87
-000a62  f88d0012          STRB     r0,[sp,#0x12]
+000a90  f04f010e          MOV      r1,#0xe
+000a94  a801              ADD      r0,sp,#4
+000a96  f7fffffe          BL       crc_87
+000a9a  f88d0012          STRB     r0,[sp,#0x12]
 ;;;336    							temp_out[15]=crc_95(temp_out,14);			
-000a66  e000              B        |L1.2666|
-                  |L1.2664|
-000a68  e055              B        |L1.2838|
-                  |L1.2666|
-000a6a  210e              MOVS     r1,#0xe
-000a6c  a801              ADD      r0,sp,#4
-000a6e  f7fffffe          BL       crc_95
-000a72  f88d0013          STRB     r0,[sp,#0x13]
+000a9e  e000              B        |L1.2722|
+                  |L1.2720|
+000aa0  e059              B        |L1.2902|
+                  |L1.2722|
+000aa2  210e              MOVS     r1,#0xe
+000aa4  a801              ADD      r0,sp,#4
+000aa6  f7fffffe          BL       crc_95
+000aaa  f88d0013          STRB     r0,[sp,#0x13]
 ;;;337    							
 ;;;338    							temp_out[17]=0;
-000a76  f88d9015          STRB     r9,[sp,#0x15]
+000aae  e02b              B        |L1.2824|
+                  |L1.2736|
+                          DCD      bps_U
+                  |L1.2740|
+                          DCD      speedChIsOn
+                  |L1.2744|
+                          DCD      sp_ch_stat
+                  |L1.2748|
+                          DCD      spc_stat
+                  |L1.2752|
+                          DCD      uout_av
+                  |L1.2756|
+                          DCD      bat_ips
+                  |L1.2760|
+                          DCD      avar_stat
+                  |L1.2764|
+                          DCD      volta_short
+                  |L1.2768|
+                          DCD      curr_short
+                  |L1.2772|
+                          DCD      power_int
+                  |L1.2776|
+                          DCD      cntrl_stat_old
+                  |L1.2780|
+                          DCD      TBAT
+                  |L1.2784|
+                          DCD      main_kb_cnt
+                  |L1.2788|
+                          DCD      t_ext
+                  |L1.2792|
+                          DCD      ND_EXT
+                  |L1.2796|
+                          DCD      0xfffffc18
+                  |L1.2800|
+                          DCD      sk_stat
+                  |L1.2804|
+                          DCD      sk_av_stat
+                  |L1.2808|
+                          DCD      ||area_number.4||+0x3c
+                  |L1.2812|
+                          DCD      modbus_tcp_out_ptr
+                  |L1.2816|
+                          DCD      ||area_number.8||
+                  |L1.2820|
+                          DCD      pvlk
+                  |L1.2824|
+000b08  f88d9015          STRB     r9,[sp,#0x15]
 ;;;339    							for (i=0;i<16;i++)
-000a7a  4f1e              LDR      r7,|L1.2804|
-000a7c  f8879000          STRB     r9,[r7,#0]
-000a80  f10d0804          ADD      r8,sp,#4              ;316
-                  |L1.2692|
+000b0c  4fff              LDR      r7,|L1.3852|
+000b0e  f8879000          STRB     r9,[r7,#0]
+000b12  f10d0804          ADD      r8,sp,#4              ;316
+                  |L1.2838|
 ;;;340    								{
 ;;;341    								putchar_sc16is700(temp_out[i]);
-000a84  7838              LDRB     r0,[r7,#0]  ; i
-000a86  f8180000          LDRB     r0,[r8,r0]
-000a8a  f7fffffe          BL       putchar_sc16is700
+000b16  7838              LDRB     r0,[r7,#0]  ; i
+000b18  f8180000          LDRB     r0,[r8,r0]
+000b1c  f7fffffe          BL       putchar_sc16is700
 ;;;342    								temp_out[17]^=temp_out[i];
-000a8e  7838              LDRB     r0,[r7,#0]  ; i
-000a90  f89d1015          LDRB     r1,[sp,#0x15]
-000a94  f8182000          LDRB     r2,[r8,r0]
-000a98  ea810102          EOR      r1,r1,r2
-000a9c  f88d1015          STRB     r1,[sp,#0x15]
-000aa0  f1000001          ADD      r0,r0,#1              ;339
-000aa4  b2c0              UXTB     r0,r0                 ;339
-000aa6  e027              B        |L1.2808|
-                  |L1.2728|
-                          DCD      bps_U
-                  |L1.2732|
-                          DCD      speedChIsOn
-                  |L1.2736|
-                          DCD      sp_ch_stat
-                  |L1.2740|
-                          DCD      spc_stat
-                  |L1.2744|
-                          DCD      uout_av
-                  |L1.2748|
-                          DCD      bat_ips
-                  |L1.2752|
-                          DCD      avar_stat
-                  |L1.2756|
-                          DCD      cntrl_stat_old
-                  |L1.2760|
-                          DCD      TBAT
-                  |L1.2764|
-                          DCD      main_kb_cnt
-                  |L1.2768|
-                          DCD      t_ext
-                  |L1.2772|
-                          DCD      ND_EXT
-                  |L1.2776|
-                          DCD      0xfffffc18
-                  |L1.2780|
-                          DCD      sk_stat
-                  |L1.2784|
-                          DCD      sk_av_stat
-                  |L1.2788|
-                          DCD      ||area_number.4||+0x3c
-                  |L1.2792|
-                          DCD      modbus_tcp_out_ptr
-                  |L1.2796|
-                          DCD      ||area_number.8||
-                  |L1.2800|
-                          DCD      pvlk
-                  |L1.2804|
-                          DCD      i
-                  |L1.2808|
-000af8  7038              STRB     r0,[r7,#0]            ;339
-000afa  2810              CMP      r0,#0x10              ;339
-000afc  d3c2              BCC      |L1.2692|
+000b20  7838              LDRB     r0,[r7,#0]  ; i
+000b22  f89d1015          LDRB     r1,[sp,#0x15]
+000b26  f8182000          LDRB     r2,[r8,r0]
+000b2a  ea810102          EOR      r1,r1,r2
+000b2e  f88d1015          STRB     r1,[sp,#0x15]
+000b32  f1000001          ADD      r0,r0,#1              ;339
+000b36  b2c0              UXTB     r0,r0                 ;339
+000b38  7038              STRB     r0,[r7,#0]            ;339
+000b3a  2810              CMP      r0,#0x10              ;339
+000b3c  d3eb              BCC      |L1.2838|
 ;;;343    								}
 ;;;344    							putchar_sc16is700(16);
-000afe  2010              MOVS     r0,#0x10
-000b00  f7fffffe          BL       putchar_sc16is700
+000b3e  2010              MOVS     r0,#0x10
+000b40  f7fffffe          BL       putchar_sc16is700
 ;;;345    							putchar_sc16is700(temp_out[17]^16);
-000b04  f89d0015          LDRB     r0,[sp,#0x15]
-000b08  f0800010          EOR      r0,r0,#0x10
-000b0c  f7fffffe          BL       putchar_sc16is700
+000b44  f89d0015          LDRB     r0,[sp,#0x15]
+000b48  f0800010          EOR      r0,r0,#0x10
+000b4c  f7fffffe          BL       putchar_sc16is700
 ;;;346    							putchar_sc16is700(0x0a);
-000b10  200a              MOVS     r0,#0xa
-000b12  f7fffffe          BL       putchar_sc16is700
-                  |L1.2838|
+000b50  200a              MOVS     r0,#0xa
+000b52  f7fffffe          BL       putchar_sc16is700
+                  |L1.2902|
 ;;;347    							}
 ;;;348    						}
 ;;;349    					}
@@ -1434,53 +1465,53 @@
 ;;;353    	} 
 ;;;354    
 ;;;355    if(modbus_an_buffer[0]=='w')
-000b16  48f8              LDR      r0,|L1.3832|
-000b18  7800              LDRB     r0,[r0,#0]  ; modbus_an_buffer
-000b1a  2877              CMP      r0,#0x77
-000b1c  d17d              BNE      |L1.3098|
+000b56  48ee              LDR      r0,|L1.3856|
+000b58  7800              LDRB     r0,[r0,#0]  ; modbus_an_buffer
+000b5a  2877              CMP      r0,#0x77
+000b5c  d17d              BNE      |L1.3162|
 ;;;356    	{
 ;;;357    //	pvlk=1;
 ;;;358    	if(modbus_an_buffer[1]=='r')
-000b1e  4ff6              LDR      r7,|L1.3832|
-000b20  7878              LDRB     r0,[r7,#1]  ; modbus_an_buffer
-000b22  2872              CMP      r0,#0x72
-000b24  d179              BNE      |L1.3098|
+000b5e  4fec              LDR      r7,|L1.3856|
+000b60  7878              LDRB     r0,[r7,#1]  ; modbus_an_buffer
+000b62  2872              CMP      r0,#0x72
+000b64  d179              BNE      |L1.3162|
 ;;;359    		{
 ;;;360    //		pvlk=2;
 ;;;361    		if(modbus_an_buffer[2]=='i')
-000b26  78b8              LDRB     r0,[r7,#2]  ; modbus_an_buffer
-000b28  2869              CMP      r0,#0x69
-000b2a  d176              BNE      |L1.3098|
+000b66  78b8              LDRB     r0,[r7,#2]  ; modbus_an_buffer
+000b68  2869              CMP      r0,#0x69
+000b6a  d176              BNE      |L1.3162|
 ;;;362    			{
 ;;;363    //			pvlk=3;
 ;;;364    			if(modbus_an_buffer[3]=='t')
-000b2c  78f8              LDRB     r0,[r7,#3]  ; modbus_an_buffer
-000b2e  2874              CMP      r0,#0x74
-000b30  d173              BNE      |L1.3098|
+000b6c  78f8              LDRB     r0,[r7,#3]  ; modbus_an_buffer
+000b6e  2874              CMP      r0,#0x74
+000b70  d173              BNE      |L1.3162|
 ;;;365    				{
 ;;;366    //				pvlk=4;
 ;;;367    				if(modbus_an_buffer[4]=='e')
-000b32  7938              LDRB     r0,[r7,#4]  ; modbus_an_buffer
-000b34  2865              CMP      r0,#0x65
-000b36  d170              BNE      |L1.3098|
+000b72  7938              LDRB     r0,[r7,#4]  ; modbus_an_buffer
+000b74  2865              CMP      r0,#0x65
+000b76  d170              BNE      |L1.3162|
 ;;;368    					{
 ;;;369    //					pvlk=5;
 ;;;370    					if(modbus_an_buffer[15]==crc_87(modbus_an_buffer,15))
-000b38  210f              MOVS     r1,#0xf
-000b3a  4638              MOV      r0,r7
-000b3c  f7fffffe          BL       crc_87
-000b40  7bf9              LDRB     r1,[r7,#0xf]  ; modbus_an_buffer
-000b42  4288              CMP      r0,r1
-000b44  d169              BNE      |L1.3098|
+000b78  210f              MOVS     r1,#0xf
+000b7a  4638              MOV      r0,r7
+000b7c  f7fffffe          BL       crc_87
+000b80  7bf9              LDRB     r1,[r7,#0xf]  ; modbus_an_buffer
+000b82  4288              CMP      r0,r1
+000b84  d169              BNE      |L1.3162|
 ;;;371    						{
 ;;;372    //						pvlk=6;
 ;;;373    						if(modbus_an_buffer[16]==crc_95(modbus_an_buffer,15))
-000b46  210f              MOVS     r1,#0xf
-000b48  4638              MOV      r0,r7
-000b4a  f7fffffe          BL       crc_95
-000b4e  7c39              LDRB     r1,[r7,#0x10]  ; modbus_an_buffer
-000b50  4288              CMP      r0,r1
-000b52  d179              BNE      |L1.3144|
+000b86  210f              MOVS     r1,#0xf
+000b88  4638              MOV      r0,r7
+000b8a  f7fffffe          BL       crc_95
+000b8e  7c39              LDRB     r1,[r7,#0x10]  ; modbus_an_buffer
+000b90  4288              CMP      r0,r1
+000b92  d179              BNE      |L1.3208|
 ;;;374    
 ;;;375    							{
 ;;;376    							unsigned short ptr;
@@ -1488,119 +1519,119 @@
 ;;;378    							char temp_out[20];
 ;;;379    //							pvlk=7;
 ;;;380    							ptr=modbus_an_buffer[5]+(modbus_an_buffer[6]*256U);
-000b54  7978              LDRB     r0,[r7,#5]  ; modbus_an_buffer
-000b56  79b9              LDRB     r1,[r7,#6]  ; modbus_an_buffer
-000b58  eb002001          ADD      r0,r0,r1,LSL #8
-000b5c  b280              UXTH     r0,r0
-000b5e  4680              MOV      r8,r0
-000b60  9008              STR      r0,[sp,#0x20]
+000b94  7978              LDRB     r0,[r7,#5]  ; modbus_an_buffer
+000b96  79b9              LDRB     r1,[r7,#6]  ; modbus_an_buffer
+000b98  eb002001          ADD      r0,r0,r1,LSL #8
+000b9c  b280              UXTH     r0,r0
+000b9e  4680              MOV      r8,r0
+000ba0  9008              STR      r0,[sp,#0x20]
 ;;;381    							*((char*)&data1)=modbus_an_buffer[7];
-000b62  79f8              LDRB     r0,[r7,#7]  ; modbus_an_buffer
-000b64  f88d001c          STRB     r0,[sp,#0x1c]
+000ba2  79f8              LDRB     r0,[r7,#7]  ; modbus_an_buffer
+000ba4  f88d001c          STRB     r0,[sp,#0x1c]
 ;;;382    							*(((char*)&data1)+1)=modbus_an_buffer[8];
-000b68  7a38              LDRB     r0,[r7,#8]  ; modbus_an_buffer
-000b6a  f88d001d          STRB     r0,[sp,#0x1d]
+000ba8  7a38              LDRB     r0,[r7,#8]  ; modbus_an_buffer
+000baa  f88d001d          STRB     r0,[sp,#0x1d]
 ;;;383    							*(((char*)&data1)+2)=modbus_an_buffer[9];
-000b6e  7a78              LDRB     r0,[r7,#9]  ; modbus_an_buffer
-000b70  f88d001e          STRB     r0,[sp,#0x1e]
+000bae  7a78              LDRB     r0,[r7,#9]  ; modbus_an_buffer
+000bb0  f88d001e          STRB     r0,[sp,#0x1e]
 ;;;384    							*(((char*)&data1)+3)=modbus_an_buffer[10];
-000b74  7ab8              LDRB     r0,[r7,#0xa]  ; modbus_an_buffer
-000b76  f88d001f          STRB     r0,[sp,#0x1f]
+000bb4  7ab8              LDRB     r0,[r7,#0xa]  ; modbus_an_buffer
+000bb6  f88d001f          STRB     r0,[sp,#0x1f]
 ;;;385    							*((char*)&data2)=modbus_an_buffer[11];
-000b7a  7af8              LDRB     r0,[r7,#0xb]  ; modbus_an_buffer
-000b7c  f88d0018          STRB     r0,[sp,#0x18]
+000bba  7af8              LDRB     r0,[r7,#0xb]  ; modbus_an_buffer
+000bbc  f88d0018          STRB     r0,[sp,#0x18]
 ;;;386    							*(((char*)&data2)+1)=modbus_an_buffer[12];
-000b80  7b38              LDRB     r0,[r7,#0xc]  ; modbus_an_buffer
-000b82  f88d0019          STRB     r0,[sp,#0x19]
+000bc0  7b38              LDRB     r0,[r7,#0xc]  ; modbus_an_buffer
+000bc2  f88d0019          STRB     r0,[sp,#0x19]
 ;;;387    							*(((char*)&data2)+2)=modbus_an_buffer[13];
-000b86  7b78              LDRB     r0,[r7,#0xd]  ; modbus_an_buffer
-000b88  f88d001a          STRB     r0,[sp,#0x1a]
+000bc6  7b78              LDRB     r0,[r7,#0xd]  ; modbus_an_buffer
+000bc8  f88d001a          STRB     r0,[sp,#0x1a]
 ;;;388    							*(((char*)&data2)+3)=modbus_an_buffer[14];	
-000b8c  7bb8              LDRB     r0,[r7,#0xe]  ; modbus_an_buffer
-000b8e  f88d001b          STRB     r0,[sp,#0x1b]
+000bcc  7bb8              LDRB     r0,[r7,#0xe]  ; modbus_an_buffer
+000bce  f88d001b          STRB     r0,[sp,#0x1b]
 ;;;389    							lc640_write_long(ptr,data1);
-000b92  4640              MOV      r0,r8
-000b94  9907              LDR      r1,[sp,#0x1c]
-000b96  f7fffffe          BL       lc640_write_long
+000bd2  4640              MOV      r0,r8
+000bd4  9907              LDR      r1,[sp,#0x1c]
+000bd6  f7fffffe          BL       lc640_write_long
 ;;;390    							lc640_write_long(ptr+4,data2);
-000b9a  f1080004          ADD      r0,r8,#4
-000b9e  9906              LDR      r1,[sp,#0x18]
-000ba0  f7fffffe          BL       lc640_write_long
+000bda  f1080004          ADD      r0,r8,#4
+000bde  9906              LDR      r1,[sp,#0x18]
+000be0  f7fffffe          BL       lc640_write_long
 ;;;391    							
 ;;;392    							//data1=lc640_read_long(ptr);
 ;;;393    							//data2=lc640_read_long(ptr+4);
 ;;;394    							temp_out[0]='w';
-000ba4  f04f0077          MOV      r0,#0x77
-000ba8  f88d0004          STRB     r0,[sp,#4]
+000be4  f04f0077          MOV      r0,#0x77
+000be8  f88d0004          STRB     r0,[sp,#4]
 ;;;395    							temp_out[1]='r';
-000bac  f04f0072          MOV      r0,#0x72
-000bb0  f88d0005          STRB     r0,[sp,#5]
+000bec  f04f0072          MOV      r0,#0x72
+000bf0  f88d0005          STRB     r0,[sp,#5]
 ;;;396    							temp_out[2]='i';
-000bb4  f04f0069          MOV      r0,#0x69
-000bb8  f88d0006          STRB     r0,[sp,#6]
+000bf4  f04f0069          MOV      r0,#0x69
+000bf8  f88d0006          STRB     r0,[sp,#6]
 ;;;397    							temp_out[3]='t';
-000bbc  f04f0074          MOV      r0,#0x74
-000bc0  f88d0007          STRB     r0,[sp,#7]
+000bfc  f04f0074          MOV      r0,#0x74
+000c00  f88d0007          STRB     r0,[sp,#7]
 ;;;398    							temp_out[4]='e';
-000bc4  f04f0065          MOV      r0,#0x65
-000bc8  f88d0008          STRB     r0,[sp,#8]
+000c04  f04f0065          MOV      r0,#0x65
+000c08  f88d0008          STRB     r0,[sp,#8]
 ;;;399    							temp_out[5]=*((char*)&ptr);
-000bcc  f89d0020          LDRB     r0,[sp,#0x20]
-000bd0  f88d0009          STRB     r0,[sp,#9]
+000c0c  f89d0020          LDRB     r0,[sp,#0x20]
+000c10  f88d0009          STRB     r0,[sp,#9]
 ;;;400    							temp_out[6]=*(((char*)&ptr)+1);	
-000bd4  f89d0021          LDRB     r0,[sp,#0x21]
-000bd8  f88d000a          STRB     r0,[sp,#0xa]
+000c14  f89d0021          LDRB     r0,[sp,#0x21]
+000c18  f88d000a          STRB     r0,[sp,#0xa]
 ;;;401    						
 ;;;402    							temp_out[7]=crc_87(temp_out,7);	
-000bdc  f04f0107          MOV      r1,#7
-000be0  a801              ADD      r0,sp,#4
-000be2  f7fffffe          BL       crc_87
-000be6  f88d000b          STRB     r0,[sp,#0xb]
+000c1c  f04f0107          MOV      r1,#7
+000c20  a801              ADD      r0,sp,#4
+000c22  f7fffffe          BL       crc_87
+000c26  f88d000b          STRB     r0,[sp,#0xb]
 ;;;403    							temp_out[8]=crc_95(temp_out,7);			
-000bea  2107              MOVS     r1,#7
-000bec  a801              ADD      r0,sp,#4
-000bee  f7fffffe          BL       crc_95
-000bf2  f88d000c          STRB     r0,[sp,#0xc]
+000c2a  2107              MOVS     r1,#7
+000c2c  a801              ADD      r0,sp,#4
+000c2e  f7fffffe          BL       crc_95
+000c32  f88d000c          STRB     r0,[sp,#0xc]
 ;;;404    							
 ;;;405    							temp_out[10]=0;
-000bf6  f88d900e          STRB     r9,[sp,#0xe]
+000c36  f88d900e          STRB     r9,[sp,#0xe]
 ;;;406    							for (i=0;i<9;i++)
-000bfa  4fc0              LDR      r7,|L1.3836|
-000bfc  f8879000          STRB     r9,[r7,#0]
-000c00  f10d0804          ADD      r8,sp,#4              ;378
-                  |L1.3076|
+000c3a  4fb4              LDR      r7,|L1.3852|
+000c3c  f8879000          STRB     r9,[r7,#0]
+000c40  f10d0804          ADD      r8,sp,#4              ;378
+                  |L1.3140|
 ;;;407    								{
 ;;;408    								putchar_sc16is700(temp_out[i]);
-000c04  7838              LDRB     r0,[r7,#0]  ; i
-000c06  f8180000          LDRB     r0,[r8,r0]
-000c0a  f7fffffe          BL       putchar_sc16is700
+000c44  7838              LDRB     r0,[r7,#0]  ; i
+000c46  f8180000          LDRB     r0,[r8,r0]
+000c4a  f7fffffe          BL       putchar_sc16is700
 ;;;409    								temp_out[10]^=temp_out[i];
-000c0e  7838              LDRB     r0,[r7,#0]  ; i
-000c10  f89d100e          LDRB     r1,[sp,#0xe]
-000c14  f8182000          LDRB     r2,[r8,r0]
-000c18  e000              B        |L1.3100|
-                  |L1.3098|
-000c1a  e015              B        |L1.3144|
-                  |L1.3100|
-000c1c  ea810102          EOR      r1,r1,r2
-000c20  f88d100e          STRB     r1,[sp,#0xe]
-000c24  f1000001          ADD      r0,r0,#1              ;406
-000c28  b2c0              UXTB     r0,r0                 ;406
-000c2a  7038              STRB     r0,[r7,#0]            ;406
-000c2c  2809              CMP      r0,#9                 ;406
-000c2e  d3e9              BCC      |L1.3076|
+000c4e  7838              LDRB     r0,[r7,#0]  ; i
+000c50  f89d100e          LDRB     r1,[sp,#0xe]
+000c54  f8182000          LDRB     r2,[r8,r0]
+000c58  e000              B        |L1.3164|
+                  |L1.3162|
+000c5a  e015              B        |L1.3208|
+                  |L1.3164|
+000c5c  ea810102          EOR      r1,r1,r2
+000c60  f88d100e          STRB     r1,[sp,#0xe]
+000c64  f1000001          ADD      r0,r0,#1              ;406
+000c68  b2c0              UXTB     r0,r0                 ;406
+000c6a  7038              STRB     r0,[r7,#0]            ;406
+000c6c  2809              CMP      r0,#9                 ;406
+000c6e  d3e9              BCC      |L1.3140|
 ;;;410    								}
 ;;;411    							putchar_sc16is700(9);
-000c30  2009              MOVS     r0,#9
-000c32  f7fffffe          BL       putchar_sc16is700
+000c70  2009              MOVS     r0,#9
+000c72  f7fffffe          BL       putchar_sc16is700
 ;;;412    							putchar_sc16is700(temp_out[10]^9);
-000c36  f89d000e          LDRB     r0,[sp,#0xe]
-000c3a  f0800009          EOR      r0,r0,#9
-000c3e  f7fffffe          BL       putchar_sc16is700
+000c76  f89d000e          LDRB     r0,[sp,#0xe]
+000c7a  f0800009          EOR      r0,r0,#9
+000c7e  f7fffffe          BL       putchar_sc16is700
 ;;;413    							putchar_sc16is700(0x0a);
-000c42  200a              MOVS     r0,#0xa
-000c44  f7fffffe          BL       putchar_sc16is700
-                  |L1.3144|
+000c82  200a              MOVS     r0,#0xa
+000c84  f7fffffe          BL       putchar_sc16is700
+                  |L1.3208|
 ;;;414    							}
 ;;;415    						}
 ;;;416    					}
@@ -1610,78 +1641,78 @@
 ;;;420    	}
 ;;;421    
 ;;;422    if(crc16_calculated==crc16_incapsulated)
-000c48  45da              CMP      r10,r11
-000c4a  d137              BNE      |L1.3260|
+000c88  45da              CMP      r10,r11
+000c8a  d137              BNE      |L1.3324|
 ;;;423    	{
 ;;;424    	ica_plazma[4]++;
-000c4c  49ac              LDR      r1,|L1.3840|
-000c4e  7908              LDRB     r0,[r1,#4]  ; ica_plazma
-000c50  f1000001          ADD      r0,r0,#1
-000c54  7108              STRB     r0,[r1,#4]
+000c8c  49a1              LDR      r1,|L1.3860|
+000c8e  7908              LDRB     r0,[r1,#4]  ; ica_plazma
+000c90  f1000001          ADD      r0,r0,#1
+000c94  7108              STRB     r0,[r1,#4]
 ;;;425     	if(modbus_an_buffer[0]==MODBUS_ADRESS)
-000c56  4aa8              LDR      r2,|L1.3832|
-000c58  f8df82a8          LDR      r8,|L1.3844|
-000c5c  7810              LDRB     r0,[r2,#0]  ; modbus_an_buffer
-000c5e  f9b87000          LDRSH    r7,[r8,#0]  ; MODBUS_ADRESS
-000c62  42b8              CMP      r0,r7
-000c64  d178              BNE      |L1.3416|
+000c96  4a9e              LDR      r2,|L1.3856|
+000c98  f8df827c          LDR      r8,|L1.3864|
+000c9c  7810              LDRB     r0,[r2,#0]  ; modbus_an_buffer
+000c9e  f9b87000          LDRSH    r7,[r8,#0]  ; MODBUS_ADRESS
+000ca2  42b8              CMP      r0,r7
+000ca4  d178              BNE      |L1.3480|
 ;;;426    		{
 ;;;427    		modbus_modbus_adress_eq++;
-000c66  49a8              LDR      r1,|L1.3848|
-000c68  8808              LDRH     r0,[r1,#0]  ; modbus_modbus_adress_eq
-000c6a  f1000001          ADD      r0,r0,#1
-000c6e  8008              STRH     r0,[r1,#0]
+000ca6  499d              LDR      r1,|L1.3868|
+000ca8  8808              LDRH     r0,[r1,#0]  ; modbus_modbus_adress_eq
+000caa  f1000001          ADD      r0,r0,#1
+000cae  8008              STRH     r0,[r1,#0]
 ;;;428    		if(modbus_func==3)		//чтение произвольного кол-ва регистров хранения
-000c70  2e03              CMP      r6,#3
-000c72  d10c              BNE      |L1.3214|
+000cb0  2e03              CMP      r6,#3
+000cb2  d10c              BNE      |L1.3278|
 ;;;429    			{
 ;;;430    			modbus_plazma++;
-000c74  48a5              LDR      r0,|L1.3852|
-000c76  8881              LDRH     r1,[r0,#4]  ; modbus_plazma
-000c78  f1010101          ADD      r1,r1,#1
-000c7c  8081              STRH     r1,[r0,#4]
+000cb4  489a              LDR      r0,|L1.3872|
+000cb6  8881              LDRH     r1,[r0,#4]  ; modbus_plazma
+000cb8  f1010101          ADD      r1,r1,#1
+000cbc  8081              STRH     r1,[r0,#4]
 ;;;431    			modbus_hold_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,modbus_rx_arg1,MODBUS_RTU_PROT);
-000c7e  4623              MOV      r3,r4
-000c80  462a              MOV      r2,r5
-000c82  4631              MOV      r1,r6
-000c84  b2f8              UXTB     r0,r7
-000c86  f8cd9000          STR      r9,[sp,#0]
-000c8a  f7fffffe          BL       modbus_hold_registers_transmit
-                  |L1.3214|
+000cbe  4623              MOV      r3,r4
+000cc0  462a              MOV      r2,r5
+000cc2  4631              MOV      r1,r6
+000cc4  b2f8              UXTB     r0,r7
+000cc6  f8cd9000          STR      r9,[sp,#0]
+000cca  f7fffffe          BL       modbus_hold_registers_transmit
+                  |L1.3278|
 ;;;432    			}
 ;;;433    
 ;;;434    		if(modbus_func==4)		//чтение произвольного кол-ва регистров	входов
-000c8e  2e04              CMP      r6,#4
-000c90  d005              BEQ      |L1.3230|
+000cce  2e04              CMP      r6,#4
+000cd0  d005              BEQ      |L1.3294|
 ;;;435    			{
 ;;;436    			modbus_input_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,modbus_rx_arg1,MODBUS_RTU_PROT);
 ;;;437    			modbus_modbus4f_cnt++;
 ;;;438    			}
 ;;;439    
 ;;;440    		else if(modbus_func==6) 	//запись регистров хранения
-000c92  2e06              CMP      r6,#6
-000c94  d112              BNE      |L1.3260|
+000cd2  2e06              CMP      r6,#6
+000cd4  d112              BNE      |L1.3324|
 ;;;441    			{
 ;;;442    			if(modbus_rx_arg0==11)		//Установка времени 
 ;;;443    				{
 ;;;444    				LPC_RTC->YEAR=(uint16_t)modbus_rx_arg1;
-000c96  489e              LDR      r0,|L1.3856|
-000c98  2d0b              CMP      r5,#0xb               ;442
-000c9a  d012              BEQ      |L1.3266|
-000c9c  e012              B        |L1.3268|
-                  |L1.3230|
-000c9e  f8cd9000          STR      r9,[sp,#0]            ;436
-000ca2  f8b80000          LDRH     r0,[r8,#0]            ;436  ; MODBUS_ADRESS
-000ca6  4623              MOV      r3,r4                 ;436
-000ca8  462a              MOV      r2,r5                 ;436
-000caa  4631              MOV      r1,r6                 ;436
-000cac  b2c0              UXTB     r0,r0                 ;436
-000cae  f7fffffe          BL       modbus_input_registers_transmit
-000cb2  4998              LDR      r1,|L1.3860|
-000cb4  8808              LDRH     r0,[r1,#0]            ;437  ; modbus_modbus4f_cnt
-000cb6  f1000001          ADD      r0,r0,#1              ;437
-000cba  8008              STRH     r0,[r1,#0]            ;437
-                  |L1.3260|
+000cd6  4893              LDR      r0,|L1.3876|
+000cd8  2d0b              CMP      r5,#0xb               ;442
+000cda  d012              BEQ      |L1.3330|
+000cdc  e012              B        |L1.3332|
+                  |L1.3294|
+000cde  f8cd9000          STR      r9,[sp,#0]            ;436
+000ce2  f8b80000          LDRH     r0,[r8,#0]            ;436  ; MODBUS_ADRESS
+000ce6  4623              MOV      r3,r4                 ;436
+000ce8  462a              MOV      r2,r5                 ;436
+000cea  4631              MOV      r1,r6                 ;436
+000cec  b2c0              UXTB     r0,r0                 ;436
+000cee  f7fffffe          BL       modbus_input_registers_transmit
+000cf2  498d              LDR      r1,|L1.3880|
+000cf4  8808              LDRH     r0,[r1,#0]            ;437  ; modbus_modbus4f_cnt
+000cf6  f1000001          ADD      r0,r0,#1              ;437
+000cfa  8008              STRH     r0,[r1,#0]            ;437
+                  |L1.3324|
 ;;;445    				}
 ;;;446    			if(modbus_rx_arg0==12)		//Установка времени 
 ;;;447    				{
@@ -1832,446 +1863,465 @@
 ;;;592    				{
 ;;;593    				lc640_write_int(EE_U_OUT_KONTR_DELAY,modbus_rx_arg1);
 ;;;594    	     		}
-;;;595    
-;;;596    			if(modbus_rx_arg0==19)		//вкл/выкл источника напр.
-;;;597    				{
-;;;598    	/*			if(modbus_rx_arg1==1)
-;;;599    					{
-;;;600    					if(work_stat!=wsPS)
-;;;601    						{
-;;;602    						work_stat=wsPS;
-;;;603    						time_proc=0;
-;;;604    						time_proc_remain=T_PROC_PS;
-;;;605    						restart_on_PS();
-;;;606    						lc640_write_int(EE_MAIN_MENU_MODE,mmmIN);
-;;;607    						}
-;;;608    					}
-;;;609    				if(modbus_rx_arg1==0)
-;;;610    					{
-;;;611    					if(work_stat==wsPS)
-;;;612    						{
-;;;613    						work_stat=wsOFF;
-;;;614    						restart_off();
-;;;615    						}
-;;;616    					} */
-;;;617    				}
-;;;618    			if(modbus_rx_arg0==20)		//вкл/выкл источника тока
-;;;619    				{
-;;;620    /*				if(modbus_rx_arg1==1)
-;;;621    					{
-;;;622    					if(work_stat!=wsGS)
-;;;623    						{
-;;;624    						work_stat=wsGS;
-;;;625    						time_proc=0;
-;;;626    						time_proc_remain=T_PROC_GS;
-;;;627    						lc640_write_int(EE_MAIN_MENU_MODE,mmmIT);
-;;;628    						}
-;;;629    					}
-;;;630    				if(modbus_rx_arg1==0)
-;;;631    					{
-;;;632    					if(work_stat==wsGS)
-;;;633    						{
-;;;634    						work_stat=wsOFF;
-;;;635    						restart_off();
-;;;636    						}
-;;;637    					}*/
-;;;638    				}
-;;;639    			//modbus_hold_register_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0);
-;;;640    
-;;;641    			if(modbus_rx_arg0==100)		//Передача шима для управления от ведущего ИПС
-;;;642    				{
-;;;643    				//plazma1000[2]=modbus_rx_arg1;
-;;;644    				if(modbus_rx_arg1&0x4000)
-;;;645    					{
-;;;646    					short tempSSSS;
-;;;647    					
-;;;648    					tempSSSS=modbus_rx_arg1&0x3fff;
-;;;649    					//plazma1000[3]=tempSSSS;
-;;;650    					if((tempSSSS>0)&&(tempSSSS<5))tempSSSS=0;
-;;;651    					else if(tempSSSS>=60)tempSSSS=60;
-;;;652    				//	else tempSSSS=modbus_rx_arg1;
-;;;653    					if(TBAT!=tempSSSS)lc640_write_int(EE_TBAT,tempSSSS);
-;;;654    
-;;;655    					main_kb_cnt=(tempSSSS*60)-20;
-;;;656    					}
-;;;657    				else ica_cntrl_hndl=modbus_rx_arg1;
-;;;658    				ica_cntrl_hndl_cnt=200;
+;;;595    			if(modbus_rx_arg0==54)		//
+;;;596    				{
+;;;597    				lc640_write_int(EE_UB0,modbus_rx_arg1);
+;;;598    				lc640_write_int(EE_UB20,modbus_rx_arg1);
+;;;599    	     		}
+;;;600    
+;;;601    			if(modbus_rx_arg0==19)		//вкл/выкл источника напр.
+;;;602    				{
+;;;603    	/*			if(modbus_rx_arg1==1)
+;;;604    					{
+;;;605    					if(work_stat!=wsPS)
+;;;606    						{
+;;;607    						work_stat=wsPS;
+;;;608    						time_proc=0;
+;;;609    						time_proc_remain=T_PROC_PS;
+;;;610    						restart_on_PS();
+;;;611    						lc640_write_int(EE_MAIN_MENU_MODE,mmmIN);
+;;;612    						}
+;;;613    					}
+;;;614    				if(modbus_rx_arg1==0)
+;;;615    					{
+;;;616    					if(work_stat==wsPS)
+;;;617    						{
+;;;618    						work_stat=wsOFF;
+;;;619    						restart_off();
+;;;620    						}
+;;;621    					} */
+;;;622    				}
+;;;623    			if(modbus_rx_arg0==20)		//вкл/выкл источника тока
+;;;624    				{
+;;;625    /*				if(modbus_rx_arg1==1)
+;;;626    					{
+;;;627    					if(work_stat!=wsGS)
+;;;628    						{
+;;;629    						work_stat=wsGS;
+;;;630    						time_proc=0;
+;;;631    						time_proc_remain=T_PROC_GS;
+;;;632    						lc640_write_int(EE_MAIN_MENU_MODE,mmmIT);
+;;;633    						}
+;;;634    					}
+;;;635    				if(modbus_rx_arg1==0)
+;;;636    					{
+;;;637    					if(work_stat==wsGS)
+;;;638    						{
+;;;639    						work_stat=wsOFF;
+;;;640    						restart_off();
+;;;641    						}
+;;;642    					}*/
+;;;643    				}
+;;;644    			//modbus_hold_register_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0);
+;;;645    
+;;;646    			if(modbus_rx_arg0==100)		//Передача шима для управления от ведущего ИПС
+;;;647    				{
+;;;648    				//plazma1000[2]=modbus_rx_arg1;
+;;;649    				if(modbus_rx_arg1&0x4000)
+;;;650    					{
+;;;651    					short tempSSSS;
+;;;652    					
+;;;653    					tempSSSS=modbus_rx_arg1&0x3fff;
+;;;654    					//plazma1000[3]=tempSSSS;
+;;;655    					if((tempSSSS>0)&&(tempSSSS<5))tempSSSS=0;
+;;;656    					else if(tempSSSS>=60)tempSSSS=60;
+;;;657    				//	else tempSSSS=modbus_rx_arg1;
+;;;658    					if(TBAT!=tempSSSS)lc640_write_int(EE_TBAT,tempSSSS);
 ;;;659    
-;;;660    				//plazma1000[1]++;
-;;;661    				}
-;;;662    			if(modbus_rx_arg0==101)		//Значение тока в ведомом ИПСе (прочитанное мастером в ведомом и переданное ведущему)
-;;;663    				{
-;;;664    				ica_your_current==modbus_rx_arg1;
-;;;665    				ica_cntrl_hndl_cnt=200;
-;;;666    				//plazma1000[2]++;
-;;;667    				}
-;;;668    
-;;;669    			modbus_hold_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,1,MODBUS_RTU_PROT);
-;;;670    			}
-;;;671    		} 
-;;;672    	else if(modbus_an_buffer[0]==ICA_MODBUS_ADDRESS)
-;;;673    		{
-;;;674    		ica_plazma[3]++;
-;;;675    		if(modbus_func==4)		//чтение произвольного кол-ва регистров	входов
-;;;676    			{
-;;;677    			ica_plazma[2]++;
-;;;678    			if(modbus_an_buffer[2]==2)
-;;;679    				{
-;;;680    				ica_your_current=(((unsigned short)modbus_an_buffer[3])*((unsigned short)256))+((unsigned short)modbus_an_buffer[4]);
-;;;681    				}
-;;;682    			}
-;;;683    		}
-;;;684    	
-;;;685    	}
-;;;686    
-;;;687    
-;;;688    }
-000cbc  b009              ADD      sp,sp,#0x24
-000cbe  e8bd8ff0          POP      {r4-r11,pc}
-                  |L1.3266|
-000cc2  8784              STRH     r4,[r0,#0x3c]         ;444
-                  |L1.3268|
-000cc4  2d0c              CMP      r5,#0xc               ;446
-000cc6  d101              BNE      |L1.3276|
-000cc8  f8804038          STRB     r4,[r0,#0x38]         ;448
-                  |L1.3276|
-000ccc  2d0d              CMP      r5,#0xd               ;450
-000cce  d101              BNE      |L1.3284|
-000cd0  f880402c          STRB     r4,[r0,#0x2c]         ;452
-                  |L1.3284|
-000cd4  2d0e              CMP      r5,#0xe               ;454
-000cd6  d101              BNE      |L1.3292|
-000cd8  f8804028          STRB     r4,[r0,#0x28]         ;456
-                  |L1.3292|
-000cdc  2d0f              CMP      r5,#0xf               ;458
-000cde  d101              BNE      |L1.3300|
-000ce0  f8804024          STRB     r4,[r0,#0x24]         ;460
-                  |L1.3300|
-000ce4  2d10              CMP      r5,#0x10              ;462
-000ce6  d101              BNE      |L1.3308|
-000ce8  f8804020          STRB     r4,[r0,#0x20]         ;464
-                  |L1.3308|
-000cec  2d14              CMP      r5,#0x14              ;466
-000cee  d106              BNE      |L1.3326|
-000cf0  1e60              SUBS     r0,r4,#1              ;468
-000cf2  2811              CMP      r0,#0x11              ;468
-000cf4  d803              BHI      |L1.3326|
-000cf6  b221              SXTH     r1,r4                 ;469
-000cf8  2098              MOVS     r0,#0x98              ;469
-000cfa  f7fffffe          BL       lc640_write_int
-                  |L1.3326|
-000cfe  2d15              CMP      r5,#0x15              ;471
-000d00  d106              BNE      |L1.3344|
-000d02  b10c              CBZ      r4,|L1.3336|
-000d04  2c01              CMP      r4,#1                 ;473
-000d06  d103              BNE      |L1.3344|
-                  |L1.3336|
-000d08  b221              SXTH     r1,r4                 ;474
-000d0a  20ca              MOVS     r0,#0xca              ;474
-000d0c  f7fffffe          BL       lc640_write_int
-                  |L1.3344|
-000d10  2d16              CMP      r5,#0x16              ;476
-000d12  d106              BNE      |L1.3362|
-000d14  b10c              CBZ      r4,|L1.3354|
-000d16  2c01              CMP      r4,#1                 ;478
-000d18  d103              BNE      |L1.3362|
-                  |L1.3354|
-000d1a  b221              SXTH     r1,r4                 ;479
-000d1c  2086              MOVS     r0,#0x86              ;479
-000d1e  f7fffffe          BL       lc640_write_int
-                  |L1.3362|
-000d22  2d17              CMP      r5,#0x17              ;481
-000d24  d106              BNE      |L1.3380|
-000d26  b10c              CBZ      r4,|L1.3372|
-000d28  2c01              CMP      r4,#1                 ;483
-000d2a  d103              BNE      |L1.3380|
+;;;660    					main_kb_cnt=(tempSSSS*60)-20;
+;;;661    					}
+;;;662    				else ica_cntrl_hndl=modbus_rx_arg1;
+;;;663    				ica_cntrl_hndl_cnt=200;
+;;;664    
+;;;665    				//plazma1000[1]++;
+;;;666    				}
+;;;667    			if(modbus_rx_arg0==101)		//Значение тока в ведомом ИПСе (прочитанное мастером в ведомом и переданное ведущему)
+;;;668    				{
+;;;669    				ica_your_current==modbus_rx_arg1;
+;;;670    				ica_cntrl_hndl_cnt=200;
+;;;671    				//plazma1000[2]++;
+;;;672    				}
+;;;673    
+;;;674    			modbus_hold_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,1,MODBUS_RTU_PROT);
+;;;675    			}
+;;;676    		} 
+;;;677    	else if(modbus_an_buffer[0]==ICA_MODBUS_ADDRESS)
+;;;678    		{
+;;;679    		ica_plazma[3]++;
+;;;680    		if(modbus_func==4)		//чтение произвольного кол-ва регистров	входов
+;;;681    			{
+;;;682    			ica_plazma[2]++;
+;;;683    			if(modbus_an_buffer[2]==2)
+;;;684    				{
+;;;685    				ica_your_current=(((unsigned short)modbus_an_buffer[3])*((unsigned short)256))+((unsigned short)modbus_an_buffer[4]);
+;;;686    				}
+;;;687    			}
+;;;688    		}
+;;;689    	
+;;;690    	}
+;;;691    
+;;;692    
+;;;693    }
+000cfc  b009              ADD      sp,sp,#0x24
+000cfe  e8bd8ff0          POP      {r4-r11,pc}
+                  |L1.3330|
+000d02  8784              STRH     r4,[r0,#0x3c]         ;444
+                  |L1.3332|
+000d04  2d0c              CMP      r5,#0xc               ;446
+000d06  d101              BNE      |L1.3340|
+000d08  f8804038          STRB     r4,[r0,#0x38]         ;448
+                  |L1.3340|
+000d0c  2d0d              CMP      r5,#0xd               ;450
+000d0e  d101              BNE      |L1.3348|
+000d10  f880402c          STRB     r4,[r0,#0x2c]         ;452
+                  |L1.3348|
+000d14  2d0e              CMP      r5,#0xe               ;454
+000d16  d101              BNE      |L1.3356|
+000d18  f8804028          STRB     r4,[r0,#0x28]         ;456
+                  |L1.3356|
+000d1c  2d0f              CMP      r5,#0xf               ;458
+000d1e  d101              BNE      |L1.3364|
+000d20  f8804024          STRB     r4,[r0,#0x24]         ;460
+                  |L1.3364|
+000d24  2d10              CMP      r5,#0x10              ;462
+000d26  d101              BNE      |L1.3372|
+000d28  f8804020          STRB     r4,[r0,#0x20]         ;464
                   |L1.3372|
-000d2c  b221              SXTH     r1,r4                 ;484
-000d2e  20f2              MOVS     r0,#0xf2              ;484
-000d30  f7fffffe          BL       lc640_write_int
-                  |L1.3380|
-000d34  2d18              CMP      r5,#0x18              ;486
-000d36  d106              BNE      |L1.3398|
-000d38  2c14              CMP      r4,#0x14              ;488
-000d3a  d804              BHI      |L1.3398|
-000d3c  b221              SXTH     r1,r4                 ;489
-000d3e  f44f7019          MOV      r0,#0x264             ;489
-000d42  f7fffffe          BL       lc640_write_int
-                  |L1.3398|
-000d46  4f74              LDR      r7,|L1.3864|
-000d48  2d1e              CMP      r5,#0x1e              ;493
-000d4a  d11b              BNE      |L1.3460|
-000d4c  1e60              SUBS     r0,r4,#1              ;496
-000d4e  2804              CMP      r0,#4                 ;496
-000d50  d803              BHI      |L1.3418|
-000d52  f04f0400          MOV      r4,#0                 ;496
-000d56  e007              B        |L1.3432|
-                  |L1.3416|
-000d58  e0f9              B        |L1.3918|
+000d2c  2d14              CMP      r5,#0x14              ;466
+000d2e  d106              BNE      |L1.3390|
+000d30  1e60              SUBS     r0,r4,#1              ;468
+000d32  2811              CMP      r0,#0x11              ;468
+000d34  d803              BHI      |L1.3390|
+000d36  b221              SXTH     r1,r4                 ;469
+000d38  2098              MOVS     r0,#0x98              ;469
+000d3a  f7fffffe          BL       lc640_write_int
+                  |L1.3390|
+000d3e  2d15              CMP      r5,#0x15              ;471
+000d40  d106              BNE      |L1.3408|
+000d42  b10c              CBZ      r4,|L1.3400|
+000d44  2c01              CMP      r4,#1                 ;473
+000d46  d103              BNE      |L1.3408|
+                  |L1.3400|
+000d48  b221              SXTH     r1,r4                 ;474
+000d4a  20ca              MOVS     r0,#0xca              ;474
+000d4c  f7fffffe          BL       lc640_write_int
+                  |L1.3408|
+000d50  2d16              CMP      r5,#0x16              ;476
+000d52  d106              BNE      |L1.3426|
+000d54  b10c              CBZ      r4,|L1.3418|
+000d56  2c01              CMP      r4,#1                 ;478
+000d58  d103              BNE      |L1.3426|
                   |L1.3418|
-000d5a  2c3c              CMP      r4,#0x3c              ;497
-000d5c  d303              BCC      |L1.3430|
-000d5e  f04f003c          MOV      r0,#0x3c              ;497
-000d62  8038              STRH     r0,[r7,#0]            ;497
-000d64  e000              B        |L1.3432|
-                  |L1.3430|
-000d66  803c              STRH     r4,[r7,#0]            ;498
-                  |L1.3432|
-000d68  f9b71000          LDRSH    r1,[r7,#0]            ;499  ; TBAT
-000d6c  20c2              MOVS     r0,#0xc2              ;499
-000d6e  f7fffffe          BL       lc640_write_int
-000d72  8838              LDRH     r0,[r7,#0]            ;501  ; TBAT
-000d74  ebc01100          RSB      r1,r0,r0,LSL #4       ;501
-000d78  f06f0013          MVN      r0,#0x13              ;501
-000d7c  eb000081          ADD      r0,r0,r1,LSL #2       ;501
-000d80  4966              LDR      r1,|L1.3868|
-000d82  8008              STRH     r0,[r1,#0]            ;501
-                  |L1.3460|
-000d84  2d1f              CMP      r5,#0x1f              ;503
-000d86  d103              BNE      |L1.3472|
-000d88  b221              SXTH     r1,r4                 ;505
-000d8a  2078              MOVS     r0,#0x78              ;505
-000d8c  f7fffffe          BL       lc640_write_int
-                  |L1.3472|
-000d90  2d20              CMP      r5,#0x20              ;507
-000d92  d106              BNE      |L1.3490|
-000d94  4862              LDR      r0,|L1.3872|
-000d96  8800              LDRH     r0,[r0,#0]            ;509  ; UB20
-000d98  1b00              SUBS     r0,r0,r4              ;509
-000d9a  b201              SXTH     r1,r0                 ;509
-000d9c  20c8              MOVS     r0,#0xc8              ;509
-000d9e  f7fffffe          BL       lc640_write_int
-                  |L1.3490|
-000da2  2d21              CMP      r5,#0x21              ;511
-000da4  d103              BNE      |L1.3502|
-000da6  b221              SXTH     r1,r4                 ;513
-000da8  207a              MOVS     r0,#0x7a              ;513
-000daa  f7fffffe          BL       lc640_write_int
-                  |L1.3502|
-000dae  2d22              CMP      r5,#0x22              ;515
-000db0  d103              BNE      |L1.3514|
-000db2  b221              SXTH     r1,r4                 ;517
-000db4  207c              MOVS     r0,#0x7c              ;517
-000db6  f7fffffe          BL       lc640_write_int
-                  |L1.3514|
-000dba  2d23              CMP      r5,#0x23              ;519
-000dbc  d103              BNE      |L1.3526|
-000dbe  b221              SXTH     r1,r4                 ;521
-000dc0  2082              MOVS     r0,#0x82              ;521
-000dc2  f7fffffe          BL       lc640_write_int
-                  |L1.3526|
-000dc6  2d24              CMP      r5,#0x24              ;523
-000dc8  d103              BNE      |L1.3538|
-000dca  b221              SXTH     r1,r4                 ;525
-000dcc  2084              MOVS     r0,#0x84              ;525
-000dce  f7fffffe          BL       lc640_write_int
-                  |L1.3538|
-000dd2  2d25              CMP      r5,#0x25              ;527
-000dd4  d103              BNE      |L1.3550|
-000dd6  b221              SXTH     r1,r4                 ;529
-000dd8  2094              MOVS     r0,#0x94              ;529
-000dda  f7fffffe          BL       lc640_write_int
-                  |L1.3550|
-000dde  2d26              CMP      r5,#0x26              ;531
-000de0  d103              BNE      |L1.3562|
-000de2  b221              SXTH     r1,r4                 ;533
-000de4  2088              MOVS     r0,#0x88              ;533
-000de6  f7fffffe          BL       lc640_write_int
-                  |L1.3562|
-000dea  2d27              CMP      r5,#0x27              ;535
-000dec  d103              BNE      |L1.3574|
-000dee  b221              SXTH     r1,r4                 ;537
-000df0  2092              MOVS     r0,#0x92              ;537
-000df2  f7fffffe          BL       lc640_write_int
-                  |L1.3574|
-000df6  2d28              CMP      r5,#0x28              ;539
-000df8  d103              BNE      |L1.3586|
-000dfa  b221              SXTH     r1,r4                 ;541
-000dfc  208c              MOVS     r0,#0x8c              ;541
-000dfe  f7fffffe          BL       lc640_write_int
-                  |L1.3586|
-000e02  2d29              CMP      r5,#0x29              ;543
-000e04  d103              BNE      |L1.3598|
-000e06  b221              SXTH     r1,r4                 ;545
-000e08  208e              MOVS     r0,#0x8e              ;545
-000e0a  f7fffffe          BL       lc640_write_int
-                  |L1.3598|
-000e0e  2d2a              CMP      r5,#0x2a              ;547
-000e10  d103              BNE      |L1.3610|
-000e12  b221              SXTH     r1,r4                 ;549
-000e14  20de              MOVS     r0,#0xde              ;549
-000e16  f7fffffe          BL       lc640_write_int
-                  |L1.3610|
-000e1a  2d2b              CMP      r5,#0x2b              ;551
-000e1c  d103              BNE      |L1.3622|
-000e1e  b221              SXTH     r1,r4                 ;553
-000e20  2096              MOVS     r0,#0x96              ;553
-000e22  f7fffffe          BL       lc640_write_int
-                  |L1.3622|
-000e26  2d2c              CMP      r5,#0x2c              ;555
-000e28  d103              BNE      |L1.3634|
-000e2a  b221              SXTH     r1,r4                 ;557
-000e2c  207e              MOVS     r0,#0x7e              ;557
-000e2e  f7fffffe          BL       lc640_write_int
-                  |L1.3634|
-000e32  2d2d              CMP      r5,#0x2d              ;559
-000e34  d103              BNE      |L1.3646|
-000e36  b221              SXTH     r1,r4                 ;561
-000e38  20c6              MOVS     r0,#0xc6              ;561
-000e3a  f7fffffe          BL       lc640_write_int
-                  |L1.3646|
-000e3e  2d2e              CMP      r5,#0x2e              ;563
-000e40  d103              BNE      |L1.3658|
-000e42  b221              SXTH     r1,r4                 ;565
-000e44  20cc              MOVS     r0,#0xcc              ;565
-000e46  f7fffffe          BL       lc640_write_int
-                  |L1.3658|
-000e4a  2d2f              CMP      r5,#0x2f              ;567
-000e4c  d103              BNE      |L1.3670|
-000e4e  b221              SXTH     r1,r4                 ;569
-000e50  20ce              MOVS     r0,#0xce              ;569
-000e52  f7fffffe          BL       lc640_write_int
-                  |L1.3670|
-000e56  2d30              CMP      r5,#0x30              ;571
-000e58  d104              BNE      |L1.3684|
-000e5a  b221              SXTH     r1,r4                 ;573
-000e5c  f44f708b          MOV      r0,#0x116             ;573
-000e60  f7fffffe          BL       lc640_write_int
-                  |L1.3684|
-000e64  2d31              CMP      r5,#0x31              ;575
-000e66  d104              BNE      |L1.3698|
-000e68  b221              SXTH     r1,r4                 ;577
-000e6a  f44f708c          MOV      r0,#0x118             ;577
+000d5a  b221              SXTH     r1,r4                 ;479
+000d5c  2086              MOVS     r0,#0x86              ;479
+000d5e  f7fffffe          BL       lc640_write_int
+                  |L1.3426|
+000d62  2d17              CMP      r5,#0x17              ;481
+000d64  d106              BNE      |L1.3444|
+000d66  b10c              CBZ      r4,|L1.3436|
+000d68  2c01              CMP      r4,#1                 ;483
+000d6a  d103              BNE      |L1.3444|
+                  |L1.3436|
+000d6c  b221              SXTH     r1,r4                 ;484
+000d6e  20f2              MOVS     r0,#0xf2              ;484
+000d70  f7fffffe          BL       lc640_write_int
+                  |L1.3444|
+000d74  2d18              CMP      r5,#0x18              ;486
+000d76  d106              BNE      |L1.3462|
+000d78  2c14              CMP      r4,#0x14              ;488
+000d7a  d804              BHI      |L1.3462|
+000d7c  b221              SXTH     r1,r4                 ;489
+000d7e  f44f7019          MOV      r0,#0x264             ;489
+000d82  f7fffffe          BL       lc640_write_int
+                  |L1.3462|
+000d86  4f69              LDR      r7,|L1.3884|
+000d88  2d1e              CMP      r5,#0x1e              ;493
+000d8a  d11b              BNE      |L1.3524|
+000d8c  1e60              SUBS     r0,r4,#1              ;496
+000d8e  2804              CMP      r0,#4                 ;496
+000d90  d803              BHI      |L1.3482|
+000d92  f04f0400          MOV      r4,#0                 ;496
+000d96  e007              B        |L1.3496|
+                  |L1.3480|
+000d98  e104              B        |L1.4004|
+                  |L1.3482|
+000d9a  2c3c              CMP      r4,#0x3c              ;497
+000d9c  d303              BCC      |L1.3494|
+000d9e  f04f003c          MOV      r0,#0x3c              ;497
+000da2  8038              STRH     r0,[r7,#0]            ;497
+000da4  e000              B        |L1.3496|
+                  |L1.3494|
+000da6  803c              STRH     r4,[r7,#0]            ;498
+                  |L1.3496|
+000da8  f9b71000          LDRSH    r1,[r7,#0]            ;499  ; TBAT
+000dac  20c2              MOVS     r0,#0xc2              ;499
+000dae  f7fffffe          BL       lc640_write_int
+000db2  8838              LDRH     r0,[r7,#0]            ;501  ; TBAT
+000db4  ebc01100          RSB      r1,r0,r0,LSL #4       ;501
+000db8  f06f0013          MVN      r0,#0x13              ;501
+000dbc  eb000081          ADD      r0,r0,r1,LSL #2       ;501
+000dc0  495b              LDR      r1,|L1.3888|
+000dc2  8008              STRH     r0,[r1,#0]            ;501
+                  |L1.3524|
+000dc4  2d1f              CMP      r5,#0x1f              ;503
+000dc6  d103              BNE      |L1.3536|
+000dc8  b221              SXTH     r1,r4                 ;505
+000dca  2078              MOVS     r0,#0x78              ;505
+000dcc  f7fffffe          BL       lc640_write_int
+                  |L1.3536|
+000dd0  2d20              CMP      r5,#0x20              ;507
+000dd2  d106              BNE      |L1.3554|
+000dd4  4857              LDR      r0,|L1.3892|
+000dd6  8800              LDRH     r0,[r0,#0]            ;509  ; UB20
+000dd8  1b00              SUBS     r0,r0,r4              ;509
+000dda  b201              SXTH     r1,r0                 ;509
+000ddc  20c8              MOVS     r0,#0xc8              ;509
+000dde  f7fffffe          BL       lc640_write_int
+                  |L1.3554|
+000de2  2d21              CMP      r5,#0x21              ;511
+000de4  d103              BNE      |L1.3566|
+000de6  b221              SXTH     r1,r4                 ;513
+000de8  207a              MOVS     r0,#0x7a              ;513
+000dea  f7fffffe          BL       lc640_write_int
+                  |L1.3566|
+000dee  2d22              CMP      r5,#0x22              ;515
+000df0  d103              BNE      |L1.3578|
+000df2  b221              SXTH     r1,r4                 ;517
+000df4  207c              MOVS     r0,#0x7c              ;517
+000df6  f7fffffe          BL       lc640_write_int
+                  |L1.3578|
+000dfa  2d23              CMP      r5,#0x23              ;519
+000dfc  d103              BNE      |L1.3590|
+000dfe  b221              SXTH     r1,r4                 ;521
+000e00  2082              MOVS     r0,#0x82              ;521
+000e02  f7fffffe          BL       lc640_write_int
+                  |L1.3590|
+000e06  2d24              CMP      r5,#0x24              ;523
+000e08  d103              BNE      |L1.3602|
+000e0a  b221              SXTH     r1,r4                 ;525
+000e0c  2084              MOVS     r0,#0x84              ;525
+000e0e  f7fffffe          BL       lc640_write_int
+                  |L1.3602|
+000e12  2d25              CMP      r5,#0x25              ;527
+000e14  d103              BNE      |L1.3614|
+000e16  b221              SXTH     r1,r4                 ;529
+000e18  2094              MOVS     r0,#0x94              ;529
+000e1a  f7fffffe          BL       lc640_write_int
+                  |L1.3614|
+000e1e  2d26              CMP      r5,#0x26              ;531
+000e20  d103              BNE      |L1.3626|
+000e22  b221              SXTH     r1,r4                 ;533
+000e24  2088              MOVS     r0,#0x88              ;533
+000e26  f7fffffe          BL       lc640_write_int
+                  |L1.3626|
+000e2a  2d27              CMP      r5,#0x27              ;535
+000e2c  d103              BNE      |L1.3638|
+000e2e  b221              SXTH     r1,r4                 ;537
+000e30  2092              MOVS     r0,#0x92              ;537
+000e32  f7fffffe          BL       lc640_write_int
+                  |L1.3638|
+000e36  2d28              CMP      r5,#0x28              ;539
+000e38  d103              BNE      |L1.3650|
+000e3a  b221              SXTH     r1,r4                 ;541
+000e3c  208c              MOVS     r0,#0x8c              ;541
+000e3e  f7fffffe          BL       lc640_write_int
+                  |L1.3650|
+000e42  2d29              CMP      r5,#0x29              ;543
+000e44  d103              BNE      |L1.3662|
+000e46  b221              SXTH     r1,r4                 ;545
+000e48  208e              MOVS     r0,#0x8e              ;545
+000e4a  f7fffffe          BL       lc640_write_int
+                  |L1.3662|
+000e4e  2d2a              CMP      r5,#0x2a              ;547
+000e50  d103              BNE      |L1.3674|
+000e52  b221              SXTH     r1,r4                 ;549
+000e54  20de              MOVS     r0,#0xde              ;549
+000e56  f7fffffe          BL       lc640_write_int
+                  |L1.3674|
+000e5a  2d2b              CMP      r5,#0x2b              ;551
+000e5c  d103              BNE      |L1.3686|
+000e5e  b221              SXTH     r1,r4                 ;553
+000e60  2096              MOVS     r0,#0x96              ;553
+000e62  f7fffffe          BL       lc640_write_int
+                  |L1.3686|
+000e66  2d2c              CMP      r5,#0x2c              ;555
+000e68  d103              BNE      |L1.3698|
+000e6a  b221              SXTH     r1,r4                 ;557
+000e6c  207e              MOVS     r0,#0x7e              ;557
 000e6e  f7fffffe          BL       lc640_write_int
                   |L1.3698|
-000e72  2d32              CMP      r5,#0x32              ;579
-000e74  d104              BNE      |L1.3712|
-000e76  b221              SXTH     r1,r4                 ;581
-000e78  f44f708d          MOV      r0,#0x11a             ;581
-000e7c  f7fffffe          BL       lc640_write_int
-                  |L1.3712|
-000e80  2d33              CMP      r5,#0x33              ;583
-000e82  d104              BNE      |L1.3726|
-000e84  b221              SXTH     r1,r4                 ;585
-000e86  f44f7095          MOV      r0,#0x12a             ;585
-000e8a  f7fffffe          BL       lc640_write_int
-                  |L1.3726|
-000e8e  2d34              CMP      r5,#0x34              ;587
-000e90  d104              BNE      |L1.3740|
-000e92  b221              SXTH     r1,r4                 ;589
-000e94  f44f7096          MOV      r0,#0x12c             ;589
-000e98  f7fffffe          BL       lc640_write_int
-                  |L1.3740|
-000e9c  2d35              CMP      r5,#0x35              ;591
-000e9e  d104              BNE      |L1.3754|
-000ea0  b221              SXTH     r1,r4                 ;593
-000ea2  f44f7097          MOV      r0,#0x12e             ;593
-000ea6  f7fffffe          BL       lc640_write_int
-                  |L1.3754|
-000eaa  f8dfb078          LDR      r11,|L1.3876|
-000eae  f04f0ac8          MOV      r10,#0xc8             ;509
-000eb2  2d64              CMP      r5,#0x64              ;641
-000eb4  d13c              BNE      |L1.3888|
-000eb6  0460              LSLS     r0,r4,#17             ;644
-000eb8  d536              BPL      |L1.3880|
-000eba  f3c4040d          UBFX     r4,r4,#0,#14          ;648
-000ebe  f1a40001          SUB      r0,r4,#1              ;650
-000ec2  2804              CMP      r0,#4                 ;650
-000ec4  d202              BCS      |L1.3788|
-000ec6  f04f0400          MOV      r4,#0                 ;650
-000eca  e003              B        |L1.3796|
-                  |L1.3788|
-000ecc  2c3c              CMP      r4,#0x3c              ;651
-000ece  db01              BLT      |L1.3796|
-000ed0  f04f043c          MOV      r4,#0x3c              ;651
-                  |L1.3796|
-000ed4  f9b70000          LDRSH    r0,[r7,#0]            ;653  ; TBAT
-000ed8  42a0              CMP      r0,r4                 ;653
-000eda  d003              BEQ      |L1.3812|
-000edc  4621              MOV      r1,r4                 ;653
-000ede  20c2              MOVS     r0,#0xc2              ;653
-000ee0  f7fffffe          BL       lc640_write_int
-                  |L1.3812|
-000ee4  ebc41104          RSB      r1,r4,r4,LSL #4       ;655
-000ee8  f06f0013          MVN      r0,#0x13              ;655
-000eec  eb000081          ADD      r0,r0,r1,LSL #2       ;655
-000ef0  490a              LDR      r1,|L1.3868|
-000ef2  8008              STRH     r0,[r1,#0]            ;655
-000ef4  e01a              B        |L1.3884|
-000ef6  0000              DCW      0x0000
-                  |L1.3832|
-                          DCD      ||area_number.4||+0x1e
-                  |L1.3836|
-                          DCD      i
+000e72  2d2d              CMP      r5,#0x2d              ;559
+000e74  d103              BNE      |L1.3710|
+000e76  b221              SXTH     r1,r4                 ;561
+000e78  20c6              MOVS     r0,#0xc6              ;561
+000e7a  f7fffffe          BL       lc640_write_int
+                  |L1.3710|
+000e7e  2d2e              CMP      r5,#0x2e              ;563
+000e80  d103              BNE      |L1.3722|
+000e82  b221              SXTH     r1,r4                 ;565
+000e84  20cc              MOVS     r0,#0xcc              ;565
+000e86  f7fffffe          BL       lc640_write_int
+                  |L1.3722|
+000e8a  2d2f              CMP      r5,#0x2f              ;567
+000e8c  d103              BNE      |L1.3734|
+000e8e  b221              SXTH     r1,r4                 ;569
+000e90  20ce              MOVS     r0,#0xce              ;569
+000e92  f7fffffe          BL       lc640_write_int
+                  |L1.3734|
+000e96  2d30              CMP      r5,#0x30              ;571
+000e98  d104              BNE      |L1.3748|
+000e9a  b221              SXTH     r1,r4                 ;573
+000e9c  f44f708b          MOV      r0,#0x116             ;573
+000ea0  f7fffffe          BL       lc640_write_int
+                  |L1.3748|
+000ea4  2d31              CMP      r5,#0x31              ;575
+000ea6  d104              BNE      |L1.3762|
+000ea8  b221              SXTH     r1,r4                 ;577
+000eaa  f44f708c          MOV      r0,#0x118             ;577
+000eae  f7fffffe          BL       lc640_write_int
+                  |L1.3762|
+000eb2  2d32              CMP      r5,#0x32              ;579
+000eb4  d104              BNE      |L1.3776|
+000eb6  b221              SXTH     r1,r4                 ;581
+000eb8  f44f708d          MOV      r0,#0x11a             ;581
+000ebc  f7fffffe          BL       lc640_write_int
+                  |L1.3776|
+000ec0  2d33              CMP      r5,#0x33              ;583
+000ec2  d104              BNE      |L1.3790|
+000ec4  b221              SXTH     r1,r4                 ;585
+000ec6  f44f7095          MOV      r0,#0x12a             ;585
+000eca  f7fffffe          BL       lc640_write_int
+                  |L1.3790|
+000ece  2d34              CMP      r5,#0x34              ;587
+000ed0  d104              BNE      |L1.3804|
+000ed2  b221              SXTH     r1,r4                 ;589
+000ed4  f44f7096          MOV      r0,#0x12c             ;589
+000ed8  f7fffffe          BL       lc640_write_int
+                  |L1.3804|
+000edc  2d35              CMP      r5,#0x35              ;591
+000ede  d104              BNE      |L1.3818|
+000ee0  b221              SXTH     r1,r4                 ;593
+000ee2  f44f7097          MOV      r0,#0x12e             ;593
+000ee6  f7fffffe          BL       lc640_write_int
+                  |L1.3818|
+000eea  2d36              CMP      r5,#0x36              ;595
+000eec  d108              BNE      |L1.3840|
+000eee  b221              SXTH     r1,r4                 ;597
+000ef0  468a              MOV      r10,r1                ;597
+000ef2  207a              MOVS     r0,#0x7a              ;597
+000ef4  f7fffffe          BL       lc640_write_int
+000ef8  4651              MOV      r1,r10                ;598
+000efa  207c              MOVS     r0,#0x7c              ;598
+000efc  f7fffffe          BL       lc640_write_int
                   |L1.3840|
-                          DCD      ica_plazma
-                  |L1.3844|
-                          DCD      MODBUS_ADRESS
-                  |L1.3848|
-                          DCD      modbus_modbus_adress_eq
+000f00  f04f0ac8          MOV      r10,#0xc8             ;509
+000f04  f8dfb030          LDR      r11,|L1.3896|
+000f08  2d64              CMP      r5,#0x64              ;646
+000f0a  e017              B        |L1.3900|
                   |L1.3852|
-                          DCD      ||area_number.8||
+                          DCD      i
                   |L1.3856|
-                          DCD      0x40024000
+                          DCD      ||area_number.4||+0x1e
                   |L1.3860|
-                          DCD      modbus_modbus4f_cnt
+                          DCD      ica_plazma
                   |L1.3864|
-                          DCD      TBAT
+                          DCD      MODBUS_ADRESS
                   |L1.3868|
-                          DCD      main_kb_cnt
+                          DCD      modbus_modbus_adress_eq
                   |L1.3872|
-                          DCD      UB20
+                          DCD      ||area_number.8||
                   |L1.3876|
-                          DCD      ica_cntrl_hndl_cnt
+                          DCD      0x40024000
                   |L1.3880|
-000f28  4815              LDR      r0,|L1.3968|
-000f2a  8004              STRH     r4,[r0,#0]            ;657
+                          DCD      modbus_modbus4f_cnt
                   |L1.3884|
-000f2c  f8aba000          STRH     r10,[r11,#0]          ;658
+                          DCD      TBAT
                   |L1.3888|
-000f30  2d65              CMP      r5,#0x65              ;662
-000f32  d101              BNE      |L1.3896|
-000f34  f8aba000          STRH     r10,[r11,#0]          ;665
+                          DCD      main_kb_cnt
+                  |L1.3892|
+                          DCD      UB20
                   |L1.3896|
-000f38  f8cd9000          STR      r9,[sp,#0]            ;669
-000f3c  f8b80000          LDRH     r0,[r8,#0]            ;669  ; MODBUS_ADRESS
-000f40  2301              MOVS     r3,#1                 ;669
-000f42  462a              MOV      r2,r5                 ;669
-000f44  4631              MOV      r1,r6                 ;669
-000f46  b2c0              UXTB     r0,r0                 ;669
-000f48  f7fffffe          BL       modbus_hold_registers_transmit
-                  |L1.3916|
-000f4c  e6b6              B        |L1.3260|
-                  |L1.3918|
-000f4e  4b0d              LDR      r3,|L1.3972|
-000f50  f9b33000          LDRSH    r3,[r3,#0]            ;672  ; ICA_MODBUS_ADDRESS
-000f54  4298              CMP      r0,r3                 ;672
-000f56  d1f9              BNE      |L1.3916|
-000f58  78c8              LDRB     r0,[r1,#3]            ;674  ; ica_plazma
-000f5a  f1000001          ADD      r0,r0,#1              ;674
-000f5e  70c8              STRB     r0,[r1,#3]            ;674
-000f60  2e04              CMP      r6,#4                 ;675
-000f62  d1f3              BNE      |L1.3916|
-000f64  7888              LDRB     r0,[r1,#2]            ;677  ; ica_plazma
-000f66  f1000001          ADD      r0,r0,#1              ;677
-000f6a  7088              STRB     r0,[r1,#2]            ;677
-000f6c  7890              LDRB     r0,[r2,#2]            ;678  ; modbus_an_buffer
-000f6e  2802              CMP      r0,#2                 ;678
-000f70  d1ec              BNE      |L1.3916|
-000f72  7910              LDRB     r0,[r2,#4]            ;680  ; modbus_an_buffer
-000f74  78d1              LDRB     r1,[r2,#3]            ;680  ; modbus_an_buffer
-000f76  eb002001          ADD      r0,r0,r1,LSL #8       ;680
-000f7a  4903              LDR      r1,|L1.3976|
-000f7c  8008              STRH     r0,[r1,#0]            ;680
-000f7e  e69d              B        |L1.3260|
-;;;689    /*
+                          DCD      ica_cntrl_hndl_cnt
+                  |L1.3900|
+000f3c  d123              BNE      |L1.3974|
+000f3e  0460              LSLS     r0,r4,#17             ;649
+000f40  d51d              BPL      |L1.3966|
+000f42  f3c4040d          UBFX     r4,r4,#0,#14          ;653
+000f46  f1a40001          SUB      r0,r4,#1              ;655
+000f4a  2804              CMP      r0,#4                 ;655
+000f4c  d202              BCS      |L1.3924|
+000f4e  f04f0400          MOV      r4,#0                 ;655
+000f52  e003              B        |L1.3932|
+                  |L1.3924|
+000f54  2c3c              CMP      r4,#0x3c              ;656
+000f56  db01              BLT      |L1.3932|
+000f58  f04f043c          MOV      r4,#0x3c              ;656
+                  |L1.3932|
+000f5c  f9b70000          LDRSH    r0,[r7,#0]            ;658  ; TBAT
+000f60  42a0              CMP      r0,r4                 ;658
+000f62  d003              BEQ      |L1.3948|
+000f64  4621              MOV      r1,r4                 ;658
+000f66  20c2              MOVS     r0,#0xc2              ;658
+000f68  f7fffffe          BL       lc640_write_int
+                  |L1.3948|
+000f6c  ebc41104          RSB      r1,r4,r4,LSL #4       ;660
+000f70  f06f0013          MVN      r0,#0x13              ;660
+000f74  eb000081          ADD      r0,r0,r1,LSL #2       ;660
+000f78  4917              LDR      r1,|L1.4056|
+000f7a  8008              STRH     r0,[r1,#0]            ;660
+000f7c  e001              B        |L1.3970|
+                  |L1.3966|
+000f7e  4817              LDR      r0,|L1.4060|
+000f80  8004              STRH     r4,[r0,#0]            ;662
+                  |L1.3970|
+000f82  f8aba000          STRH     r10,[r11,#0]          ;663
+                  |L1.3974|
+000f86  2d65              CMP      r5,#0x65              ;667
+000f88  d101              BNE      |L1.3982|
+000f8a  f8aba000          STRH     r10,[r11,#0]          ;670
+                  |L1.3982|
+000f8e  f8cd9000          STR      r9,[sp,#0]            ;674
+000f92  f8b80000          LDRH     r0,[r8,#0]            ;674  ; MODBUS_ADRESS
+000f96  2301              MOVS     r3,#1                 ;674
+000f98  462a              MOV      r2,r5                 ;674
+000f9a  4631              MOV      r1,r6                 ;674
+000f9c  b2c0              UXTB     r0,r0                 ;674
+000f9e  f7fffffe          BL       modbus_hold_registers_transmit
+                  |L1.4002|
+000fa2  e6ab              B        |L1.3324|
+                  |L1.4004|
+000fa4  4b0e              LDR      r3,|L1.4064|
+000fa6  f9b33000          LDRSH    r3,[r3,#0]            ;677  ; ICA_MODBUS_ADDRESS
+000faa  4298              CMP      r0,r3                 ;677
+000fac  d1f9              BNE      |L1.4002|
+000fae  78c8              LDRB     r0,[r1,#3]            ;679  ; ica_plazma
+000fb0  f1000001          ADD      r0,r0,#1              ;679
+000fb4  70c8              STRB     r0,[r1,#3]            ;679
+000fb6  2e04              CMP      r6,#4                 ;680
+000fb8  d1f3              BNE      |L1.4002|
+000fba  7888              LDRB     r0,[r1,#2]            ;682  ; ica_plazma
+000fbc  f1000001          ADD      r0,r0,#1              ;682
+000fc0  7088              STRB     r0,[r1,#2]            ;682
+000fc2  7890              LDRB     r0,[r2,#2]            ;683  ; modbus_an_buffer
+000fc4  2802              CMP      r0,#2                 ;683
+000fc6  d1ec              BNE      |L1.4002|
+000fc8  7910              LDRB     r0,[r2,#4]            ;685  ; modbus_an_buffer
+000fca  78d1              LDRB     r1,[r2,#3]            ;685  ; modbus_an_buffer
+000fcc  eb002001          ADD      r0,r0,r1,LSL #8       ;685
+000fd0  4904              LDR      r1,|L1.4068|
+000fd2  8008              STRH     r0,[r1,#0]            ;685
+000fd4  e692              B        |L1.3324|
+;;;694    /*
                           ENDP
 
-                  |L1.3968|
+000fd6  0000              DCW      0x0000
+                  |L1.4056|
+                          DCD      main_kb_cnt
+                  |L1.4060|
                           DCD      ica_cntrl_hndl
-                  |L1.3972|
+                  |L1.4064|
                           DCD      ICA_MODBUS_ADDRESS
-                  |L1.3976|
+                  |L1.4068|
                           DCD      ica_your_current
 
                           AREA ||.bss||, DATA, NOINIT, ALIGN=0

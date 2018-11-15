@@ -143,9 +143,23 @@ extern char bPARALLEL_NOT_ENOUG;
 extern char bPARALLEL_ENOUG;
 extern char bPARALLEL;
 
+//***********************************************
+//Счетчик электроэнергии
+extern char rx_read_power_cnt_phase;
+extern short read_power_cnt_main_cnt;
+extern short ce102m_delayCnt;
+extern char rx_read_power_cnt_plazma;
+extern char rx_read_power_cnt_flag;
+extern short volta_short;
+extern short curr_short;
+extern int power_int;
+
+extern char bENERGOMETR_UIP;
+
 extern char cntrl_hndl_plazma;
 
 extern short plazma_ica1,plazma_ica2;
+extern char rele_hndl_plazma[3];
 
 void zar_superviser_drv(void);
 void zar_superviser_start(void);

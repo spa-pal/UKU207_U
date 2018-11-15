@@ -104,6 +104,31 @@ for (i=0;i<len+3;i++)
 	putchar1(UOB[i]);
 	}   
 }
+
+//-----------------------------------------------
+void uart_out__adr1 (char *ptr, unsigned char len)
+{
+char UOB[300]/*={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}*/;
+unsigned char i,t=0;
+
+//suzz[3]++;
+
+for(i=0;i<len;i++)
+	{
+	UOB[i]=ptr[i];
+	t^=UOB[i];
+	}
+/*
+UOB[len]=len;
+t^=len;	
+UOB[len+1]=t;	
+UOB[len+2]=END;*/
+ 
+for (i=0;i<len;i++)
+	{
+	putchar1(UOB[i]);
+	}   
+}
 //-----------------------------------------------
 uint32_t uart1_init(uint32_t baudrate)
 {
@@ -210,10 +235,12 @@ if ( IIRValue == IIR_RLS )		/* Receive Line Status */
   	}
 else if ( IIRValue == IIR_RDA )	/* Receive Data Available */
   	{
+	
 	//plazma_uart1++;
 	data=LPC_UART1->RBR;
 	rx_buffer1[rx_wr_index1]=data;
    	bRXIN1=1;
+
    	if (++rx_wr_index1 == RX_BUFFER_SIZE1) rx_wr_index1=0;
    	if (++rx_counter1 == RX_BUFFER_SIZE1)
       	{
@@ -395,7 +422,232 @@ if(rx_counter1&&(rx_buffer1[index_offset1(rx_wr_index1,-1)])==END)
     			}
  	
     		} 
-    	}	
+    	}
+//rx_read_power_cnt_plazma++;
+#ifdef CE102M_ENABLED
+	if(rx_read_power_cnt_phase==1)
+		{
+		
+		if((rx_buffer1[rx_wr_index1-1]==0x0a)/*&&(rx_buffer1[6]==0xc5)*/)
+			{
+			rx_read_power_cnt_plazma++;
+			rx_read_power_cnt_phase=2;
+			ce102m_delayCnt=200;
+			}
+		}
+else if(rx_read_power_cnt_phase==3)
+		{
+		
+		if(/*(rx_buffer1[6]==0x81)&&*/(rx_buffer1[rx_wr_index1-2]==0x03))
+			{
+			rx_read_power_cnt_plazma++;
+			if(bENERGOMETR_UIP==0) rx_read_power_cnt_phase=4;
+			else if(bENERGOMETR_UIP==1) rx_read_power_cnt_phase=8;
+			else rx_read_power_cnt_phase=20;
+			ce102m_delayCnt=200;
+			}
+		}
+else if((rx_read_power_cnt_phase==5)&&(rx_wr_index1>10))
+		{
+		
+		if(((rx_buffer1[rx_wr_index1-1])&0x7f)=='(')
+			{
+			rx_read_power_cnt_plazma++;
+			rx_read_power_cnt_phase=6;
+			ce102m_delayCnt=200;
+			rx_wr_index1=0;
+			}
+		}
+else if(rx_read_power_cnt_phase==6)
+		{
+		char float_buff[20]={0,0,0,0,0,0,0,0,0,0};
+		char* float_buff_ptr;
+		float volta;
+		char i,point_marker;
+		unsigned short ii;		
+		float_buff_ptr=float_buff;
+
+		if(((rx_buffer1[rx_wr_index1-1])&0x7f)==')')
+			{
+			ii=rx_wr_index1-1;
+			rx_read_power_cnt_plazma=rx_wr_index1-1;
+			
+			volta_short=0;//rx_wr_index1-1;
+			for(i=0;i<ii;i++)
+				{
+				float_buff[i]=rx_buffer1[i]&0x7f;
+				float_buff[i+1]=' ';
+ //volta_short+=(rx_buffer1[ii-i]&0x7f);//-0x30)*pow(10,i);
+ 				if(float_buff[i]=='.')point_marker=i;
+				rx_read_power_cnt_plazma++;
+				}
+
+
+		///if(((rx_buffer1[rx_wr_index1-2])&0x7f)=='.')
+		///	{
+		//	char s [] = "1.23";
+		///	ii=rx_wr_index1-1;
+		///	rx_read_power_cnt_plazma++;
+			rx_read_power_cnt_phase=15;
+			ce102m_delayCnt=200;
+			//memcpy(float_buff,rx_buffer1,rx_wr_index1-1);
+		///	volta_short=0;//rx_wr_index1-1;
+		///	for(i=0;i<ii;i++)
+				{
+		///		float_buff[i]=rx_buffer1[i]&0x7f;
+		///		float_buff[i+1]=' ';
+				/*if(rx_buffer1[ii-i]=='(')break;
+				else*/ //volta_short+=(rx_buffer1[ii-i]&0x7f);//-0x30)*pow(10,i);
+				}
+			//float_buff[0]='2';
+			//float_buff[1]='3';
+			//float_buff[2]='4';
+			//float_buff[3]='.';
+			//float_buff[4]='5';
+			//uart_out__adr1(float_buff, 10);
+			//volta=atof(s);//atof(float_buff);
+			volta_short=((atoi(float_buff))*10)+ ((atoi(&float_buff[point_marker+1]))/10);
+			}
+		}
+else if(rx_read_power_cnt_phase==7)
+		{
+
+
+		if(((rx_buffer1[rx_wr_index1-1])&0x7f)==')')
+			{
+			rx_read_power_cnt_phase=18;
+			rx_wr_index1=0;	
+			ce102m_delayCnt=200;
+			}
+		}
+else if((rx_read_power_cnt_phase==9)&&(rx_wr_index1>15))
+		{
+		
+		if(((rx_buffer1[rx_wr_index1-1])&0x7f)=='(')
+			{
+			rx_read_power_cnt_plazma++;
+			rx_read_power_cnt_phase=10;
+			
+			rx_wr_index1=0;
+			}
+		}
+else if((rx_read_power_cnt_phase==10)/*&&(rx_wr_index1>2)*/)
+		{
+		char float_buff[20]={0,0,0,0,0,0,0,0,0,0};
+		char* float_buff_ptr;
+		float curr;
+		char i,point_marker;
+		unsigned short ii;
+		int curr_1,curr_2;		
+		float_buff_ptr=float_buff;
+
+
+		if(((rx_buffer1[rx_wr_index1-1])&0x7f)==')')
+			{
+		//	char s [] = "1.23";
+			ii=rx_wr_index1-1;
+			rx_read_power_cnt_plazma=rx_wr_index1-1;
+			
+			//ce102m_delayCnt=500;
+			//memcpy(float_buff,rx_buffer1,rx_wr_index1-1);
+			curr_short=0;//rx_wr_index1-1;
+			for(i=0;i<ii;i++)
+				{
+				float_buff[i]=rx_buffer1[i]&0x7f;
+				float_buff[i+1]=' ';
+ //volta_short+=(rx_buffer1[ii-i]&0x7f);//-0x30)*pow(10,i);
+ 				if(float_buff[i]=='.')point_marker=i;
+				rx_read_power_cnt_plazma++;
+				}
+			curr_short=ii;
+			/*float_buff[0]='2';
+			float_buff[1]='.';
+			float_buff[2]='4';
+			float_buff[3]='3';
+			float_buff[4]='5';*/
+			curr_1=atoi(float_buff);
+			curr_2=atoi(&float_buff[point_marker+1]);
+			curr_short=(curr_2/10)+(curr_1*100);
+			//curr=0.0;
+			//uart_out__adr1(float_buff, 6);
+			//curr=atof(float_buff);
+			//curr=0.354;
+			//uart_out__adr1((char*)&curr, 10);
+			//curr*=1000.0;
+			//(int)(curr);//volta;
+			rx_read_power_cnt_phase=17;
+			}
+		}
+
+else if((rx_read_power_cnt_phase==21)&&(rx_wr_index1>10))
+		{
+		
+		if(((rx_buffer1[rx_wr_index1-1])&0x7f)=='(')
+			{
+			rx_read_power_cnt_plazma++;
+			rx_read_power_cnt_phase=22;
+			
+			//rx_read_power_cnt_plazma=rx_wr_index1;
+			rx_wr_index1=0;
+
+			}
+		}
+else if((rx_read_power_cnt_phase==22)&&(rx_wr_index1>2))
+		{
+		char float_buff[20]={0,0,0,0,0,0,0,0,0,0};
+		char* float_buff_ptr;
+		float power;
+		char i,point_marker;
+		unsigned short ii;
+		int power_1,power_2;		
+		float_buff_ptr=float_buff;
+
+
+		if(((rx_buffer1[rx_wr_index1-1])&0x7f)==')')
+			{
+		//	char s [] = "1.23";
+			ii=rx_wr_index1-1;
+			rx_read_power_cnt_plazma=rx_wr_index1-1;
+			
+			//ce102m_delayCnt=500;
+			//memcpy(float_buff,rx_buffer1,rx_wr_index1-1);
+			power_int=0;//rx_wr_index1-1;
+			for(i=0;i<ii;i++)
+				{
+				float_buff[i]=rx_buffer1[i]&0x7f;
+				float_buff[i+1]=' ';
+ //volta_short+=(rx_buffer1[ii-i]&0x7f);//-0x30)*pow(10,i);
+ 				if(float_buff[i]=='.')
+					{
+					point_marker=i;
+					//float_buff[i-1]='5';
+					}
+				rx_read_power_cnt_plazma++;
+				//if((point_marker!=0)&&(i==(point_marker+3)))break;
+				}
+			power_int=ii;
+			/*float_buff[0]='2';
+			float_buff[1]='.';
+			float_buff[2]='4';
+			float_buff[3]='3';
+			float_buff[4]='5';*/
+			power_1=atoi(float_buff);
+			power_2=(atoi(&float_buff[point_marker+1]))/1000;
+			power_int=power_2+(power_1*1000);
+			//power_int=power_2;
+			//curr=0.0;
+			//float_buff[0]=rx_wr_index1;
+			//uart_out__adr1(float_buff, 5);
+			//curr=atof(float_buff);
+			//curr=0.354;
+			//uart_out__adr1((char*)&curr, 10);
+			//curr*=1000.0;
+			//(int)(curr);//volta;
+			rx_read_power_cnt_phase=16;
+			}
+		}
+
+#endif	
 
 
 __enable_irq();     

@@ -219,6 +219,7 @@ void snmp_alarm_auto_disable_write (int mode);
 void snmp_bat_test_time_write (int mode);
 void snmp_u_max_write (int mode);
 void snmp_u_min_write (int mode);
+void snmp_u_ips_set_write (int mode);
 void snmp_u_0_grad_write (int mode);
 void snmp_u_20_grad_write (int mode);
 void snmp_u_sign_write (int mode);

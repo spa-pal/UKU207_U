@@ -64,6 +64,9 @@
 #define DISPLAY_MAINS_POWER_VOLTAGE_PHASEA	5
 #define DISPLAY_MAINS_POWER_VOLTAGE_PHASEB	6
 #define DISPLAY_MAINS_POWER_VOLTAGE_PHASEC	7
+#define DISPLAY_MAINS_ENERGOMETR_VOLT		8
+#define DISPLAY_MAINS_ENERGOMETR_CURR		9
+#define DISPLAY_MAINS_ENERGOMETR_POWER		10
 
 
 #define DISPLAY_LOAD				3
@@ -132,7 +135,8 @@
 #define SYSPARAMS_TSIGN_BPS				19
 #define SYSPARAMS_TMAX_BPS				20	
 #define SYSPARAMS_BAT_PART_ALARM			21
-#define SYSPARAMS_POWER_CNT_ADRESS			22	
+#define SYSPARAMS_POWER_CNT_ADRESS			22
+#define SYSPARAMS_U_IPS_SET					23
 
 #define DISPLAY_AVT					11
 #define DISPLAY_AVT_ENTRY_NUMBER			1,1
@@ -651,7 +655,17 @@
 #define SHIFT_REL_LIGHT 	     4
 #endif
 
-#ifdef UKU_6U
+#ifdef UKU_6U 
+#define SHIFT_REL_AV_NET		25
+#define SHIFT_REL_AV_BAT1	4
+#define SHIFT_REL_AV_BAT2	9
+#define SHIFT_REL_AV_BPS	     7
+#define SHIFT_REL_BAT1	     8
+#define SHIFT_REL_BAT2	     6
+#define SHIFT_REL_VENT		5
+#endif
+
+#ifdef IPS_SGEP_GAZPROM
 #define SHIFT_REL_AV_NET		25
 #define SHIFT_REL_AV_BAT1	4
 #define SHIFT_REL_AV_BAT2	9
@@ -773,7 +787,6 @@ extern char cnt_of_slave;
 typedef enum {
 	#ifdef UKU_220_IPS_TERMOKOMPENSAT
 	iMn_220_IPS_TERMOKOMPENSAT,
-
 	#endif
 	#ifdef UKU_220
 	iMn_220,
@@ -793,6 +806,10 @@ typedef enum {
 	#ifdef UKU_TELECORE2015
 	iMn_TELECORE2015, 
 	#endif
+	#ifdef IPS_SGEP_GAZPROM
+	iMn_IPS_SGEP_GAZPROM,
+	#endif
+
 	iMn,iMn_3U,iMn_RSTKM,
 	#ifndef UKU_220_IPS_TERMOKOMPENSAT
 	iMn_220_IPS_TERMOKOMPENSAT,
@@ -818,22 +835,25 @@ typedef enum {
 	#ifndef UKU_TELECORE2017
 	iMn_TELECORE2017,
 	#endif
+	#ifndef IPS_SGEP_GAZPROM
+	iMn_IPS_SGEP_GAZPROM,
+	#endif
 	iRKI, iSetRKI, iK_RKI,iK_MOST,//oleg_start
 	iNET_IN, iSetNetIn, iK_Net_In,//oleg_start 
-	iSrv_sl,iNet,iNet3,iNetEM,iNet3LIN,
+	iSrv_sl,iNet,iNet3,iNetEM,iNet3LIN,iNet_IPS_SGEP_GAZPROM,
 	iSet,iSet_3U,iSet_RSTKM,iSet_GLONASS,iSet_KONTUR,iSet_6U,iSet_220,iSet_220_IPS_TERMOKOMPENSAT,iSet_220_V2,iInv_set_sel,
-	iBat, iBat_simple, iBat_li, iBat_SacredSun, iBat_universe, iInv_set, iSet_TELECORE2015, iSet_TELECORE2017,
+	iBat, iBat_simple, iBat_li, iBat_SacredSun, iBat_universe, iInv_set, iSet_TELECORE2015, iSet_TELECORE2017, iSet_IPS_SGEP_GAZPROM,
 	iMakb,
 	iBps,iBps_elteh,iS2,iSet_prl,iK_prl,iDnd,
-	iK,iK_3U,iK_RSTKM,iK_GLONASS,iK_KONTUR,iK_6U,iK_220,iK_220_380,iK_220_IPS_TERMOKOMPENSAT,iK_220_IPS_TERMOKOMPENSAT_IB,iK_TELECORE,
+	iK,iK_3U,iK_RSTKM,iK_GLONASS,iK_KONTUR,iK_6U,iK_220,iK_220_380,iK_220_IPS_TERMOKOMPENSAT,iK_220_IPS_TERMOKOMPENSAT_IB,iK_TELECORE,iK_IPS_SGEP_GAZPROM,
 	iSpcprl,iSpc,k,Crash_0,Crash_1,iKednd,iAv_view_avt,iAKE,iSpc_termocompensat,
 	iLoad,iSpc_prl_vz,iSpc_prl_ke,iKe,iVz,iAvz,iAVAR,
-	iStr,iStr_3U,iStr_RSTKM,iStr_GLONASS,iStr_KONTUR,iStr_6U,iStr_220_IPS_TERMOKOMPENSAT,iStr_TELECORE2015,
+	iStr,iStr_3U,iStr_RSTKM,iStr_GLONASS,iStr_KONTUR,iStr_6U,iStr_220_IPS_TERMOKOMPENSAT,iStr_TELECORE2015,iStr_IPS_SGEP_GAZPROM,
 	iVrs,iPrltst,iApv,iVZ_set,
 	iK_bps,iK_bps_sel,iK_bat,iK_bat_simple,iK_bat_ips_termokompensat_ib,iK_bat_TELECORE,iK_bat_sel,iK_bat_sel_TELECORE,iK_load,iK_net,iK_net3,
 	iK_makb_sel,iK_makb,iK_out,
 	iTst,iTst_3U,iTst_RSTKM,iTst_GLONASS,iTst_KONTUR,iTst_6U,iTst_220,iTst_220_380,iTst_220_IPS_TERMOKOMPENSAT,
-	iTst_TELECORE,
+	iTst_TELECORE, iTst_IPS_SGEP_GAZPROM,
 	iTst_klbr,iTst_BPS1,iTst_BPS2,iTst_BPS12,iDebug,
 	iDef,iDef_3U,iDef_RSTKM,iDef_GLONASS,iDef_KONTUR,iDef_6U,iDef_220,iDef_220_IPS_TERMOKOMPENSAT,iDef_220_V2,
 	iSet_st_prl,iK_pdp,iSet_T,iSet_T_avt,
