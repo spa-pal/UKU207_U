@@ -1179,6 +1179,7 @@ else if(sub_ind==(index_set+7))lcd_buffer[(num_of_first_row+7)*20]=1;
 void tree_down(signed char offset_ind,signed char offset_sub_ind)
 {
 ind_pointer--;
+if(ind_pointer<=0)ind_pointer=0;
 ind_pointer+=offset_ind;
 a_ind=b_ind[ind_pointer];
 

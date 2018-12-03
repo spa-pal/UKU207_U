@@ -244,6 +244,23 @@ char bENERGOMETR_UIP=0;
 char cntrl_hndl_plazma;
 
 
+//***********************************************
+//Уравнительный заряд
+enum_vz1_stat vz1_stat, vz1_stat_old;
+short vz1_stat_cnt;
+long vz1_wrk_cnt;
+long vz1_up_cnt;
+char volt_region;
+short volt_region_cnt;
+
+//***********************************************
+//Формовочный заряд
+enum_vz2_stat vz2_stat, vz2_stat_old;
+short vz2_stat_cnt;
+long vz2_wrk_cnt;
+long vz2_up_cnt;
+signed short vz2_stat_ph2_cnt;
+
 short plazma_ica1,plazma_ica2;
 char rele_hndl_plazma[3];
 //-----------------------------------------------
@@ -545,8 +562,754 @@ if(spc_stat==spcVZ)
 
 } 
 
+//-----------------------------------------------
+//драйвер уравнительного заряда
+void vz1_drv(void)
+{
+if(volt_region_cnt)volt_region_cnt--;
+if(vz1_stat==vz1sOFF)
+	{
+	mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	}
+if(vz1_stat==vz1sSTEP1)
+	{
+	if(vz1_stat_old!=vz1_stat)
+		{
+		vz1_stat_cnt=5;
+		}
+	if(vz1_stat_cnt)
+		{
+		vz1_stat_cnt--;
+		if(vz1_stat_cnt==0)
+			{
+			vz1_stat=vz1sERR1; 	//Не включилась вентиляция;
+			lc640_write(EE_VZ1_STAT,vz1sERR1);
+			}
+		}
+	if(sk_stat[0]==1)
+		{
+		vz1_stat=vz1sSTEP2;
+		lc640_write(EE_VZ1_STAT,vz1sSTEP2);
+		tree_up(iVZ1_STEP2_2,1,0,0);
+		tree_up(iVZ1_STEP2_1,0,0,0);
+		ret(1200);
+		}
+	mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	}
+
+if(vz1_stat==vz1sSTEP2)
+	{
+	if((vz1_stat_old!=vz1_stat)||(vz1_stat_cnt==0))
+		{
+		vz1_stat_cnt=15;
+		}
+	vz1_stat_cnt--;
+	mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	}
+
+if(vz1_stat==vz1sSTEP3)
+	{
+	if((vz1_stat_old!=vz1_stat)||(vz1_stat_cnt==0))
+		{
+		vz1_stat_cnt=10;
+
+		}
+	vz1_stat_cnt--;
+	if((vz1_stat_cnt==10)||(vz1_stat_cnt==9))
+		{
+		show_mess(	"     ВКЛЮЧИТЕ       ",
+					"      ТУМБЛЕР       ",
+					"     ВЫСОКОГО       ",
+					"    НАПРЯЖЕНИЯ      ",
+					5000);
+		}
+	if(sk_stat[1]==1)
+		{
+		vz1_stat=vz1sWRK;
+		lc640_write(EE_VZ1_STAT,vz1sWRK);
+		volt_region=1;
+		cntrl_stat=0;
+		cntrl_stat_new=0;
+		cntrl_stat_old=0;
+		}
+	mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	}
+
+if(vz1_stat==vz1sWRK)
+	{
+	if(vz1_stat_old!=vz1_stat)
+		{
+		vz1_wrk_cnt=3600L/*100L*/*((long)UZ_T);
+		//if(VZ_HR==0)  	hv_vz_wrk_cnt=1800L;
+		vz1_up_cnt=0L;
+
+		}
+	vz1_wrk_cnt--;
+	vz1_up_cnt++;
+
+	if(vz1_wrk_cnt==0)
+		{
+		vz1_stat=vz1sFINE;
+		lc640_write(EE_VZ1_STAT,vz1sFINE);
+		}
+	if(sk_stat[0]==0)
+		{
+		vz1_stat=vz1sERR2;
+		lc640_write(EE_VZ1_STAT,vz1sERR2);
+		}
+	if(sk_stat[1]==0)
+		{
+		vz1_stat=vz1sERR3;
+		lc640_write(EE_VZ1_STAT,vz1sERR3);
+		}
+	if(((Ibmax/10)>IZMAX_)&&(cntrl_stat<=20)&&(volt_region==1)&&(volt_region_cnt==0))
+		{
+		volt_region=0;
+		cntrl_stat=1000;
+		cntrl_stat_new=1000;
+		cntrl_stat_old=1000;
+		volt_region_cnt=110;
+		}
+	if(((Ibmax/10)<IZMAX_)&&(cntrl_stat>=1000)&&(volt_region==0)&&(volt_region_cnt==0))
+		{
+		volt_region=1;
+		cntrl_stat=10;
+		cntrl_stat_new=10;
+		cntrl_stat_old=10;
+		volt_region_cnt=10;
+		}
+	if(volt_region==0) 		mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	else if(volt_region==1) mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,1,20);
+	}
+
+if(vz1_stat==vz1sERR1)		//Отсутствует вентиляция при включении
+	{
+	if((vz1_stat_old!=vz1_stat)||(vz1_stat_cnt==0))
+		{
+		vz1_stat_cnt=10;
+		}
+	vz1_stat_cnt--;
+	if((vz1_stat_cnt==10)||(vz1_stat_cnt==9))
+		{
+		show_mess(	"УРАВНИТЕЛЬНЫЙ ЗАРЯД ",
+					"   НЕ МОЖЕТ БЫТЬ    ",
+					"      ВКЛЮЧЕН       ",
+					"  БЕЗ ВЕНТИЛЯЦИИ!!  ",
+					5000);
+		}
+	mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	}
+if(vz1_stat==vz1sERR2)		//Пропала вентиляция при работе
+	{
+	if((vz1_stat_old!=vz1_stat)||(vz1_stat_cnt==0))
+		{
+		vz1_stat_cnt=10;
+		}
+	vz1_stat_cnt--;
+	if((vz1_stat_cnt==10)||(vz1_stat_cnt==9))
+		{
+		show_mess(	"УРАВНИТЕЛЬНЫЙ ЗАРЯД ",
+					"    ЗАБЛОКИРОВАН    ",
+					"     НЕИСПРАВНА     ",
+					"    ВЕНТИЛЯЦИЯ!!!   ",
+					5000);
+		}
+	if(sk_stat[0]==1)
+		{
+		vz1_stat=vz1sWRK;
+		lc640_write(EE_VZ1_STAT,vz1sWRK);
+		}
+	mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	}
+
+if(vz1_stat==vz1sERR3)		//Отключен тумблер "Высокое напряжение"
+	{
+	if((vz1_stat_old!=vz1_stat)||(vz1_stat_cnt==0))
+		{
+		vz1_stat_cnt=10;
+		}
+	vz1_stat_cnt--;
+	if((vz1_stat_cnt==10)||(vz1_stat_cnt==9))
+		{
+		show_mess(	"УРАВНИТЕЛЬНЫЙ ЗАРЯД ",
+					"  БУДЕТ ПРОДОЛЖЕН   ",
+					"  ПОСЛЕ ВКЛЮЧЕНИЯ   ",
+					"*   ТУМБЛЕРА!!!     ",
+					5000);
+		}
+	if(sk_stat[1]==1)
+		{
+		vz1_stat=vz1sWRK;
+		lc640_write(EE_VZ1_STAT,vz1sWRK);
+		}
+	mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	}
+if(vz1_stat==vz1sERR4)		//ВЗ закончился а тумблер включен
+	{
+	if((vz1_stat_old!=vz1_stat)||(vz1_stat_cnt==0))
+		{
+		vz1_stat_cnt=10;
+		}
+	vz1_stat_cnt--;
+	if((vz1_stat_cnt==10)||(vz1_stat_cnt==9))
+		{
+		show_mess(	"*    ВЫКЛЮЧИТЕ      ",
+					"      ТУМБЛЕР       ",
+					"     ВЫСОКОГО       ",
+					"    НАПРЯЖЕНИЯ      ",
+					5000);
+		}
+	if(sk_stat[1]==0)
+		{
+		vz1_stat=vz1sOFF;
+		lc640_write(EE_VZ1_STAT,vz1sOFF);
+		vz_stop();
+
+		}
+	mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,1,20);
+	}
+if(vz1_stat==vz1sFINE)		//УЗ закончился, напоминание
+	{
+	if((vz1_stat_old!=vz1_stat)||(vz1_stat_cnt==0))
+		{
+		vz1_stat_cnt=10;
+		}
+	vz1_stat_cnt--;
+	if((vz1_stat_cnt==10)||(vz1_stat_cnt==9))
+		{
+		show_mess(	"   УРАВНИТЕЛЬНЫЙ    ",
+					"       ЗАРЯД        ",
+					"      УСПЕШНО       ",
+					"     ЗАВЕРШЕН       ",
+					3000);
+		}
+	if((vz1_stat_cnt==6)||(vz1_stat_cnt==5))
+		{
+		show_mess(	"     ВЫКЛЮЧИТЕ      ",
+					"      ТУМБЛЕР       ",
+					"     ВЫСОКОГО       ",
+					"    НАПРЯЖЕНИЯ      ",
+					3000);
+		}
+	if(sk_stat[1]==0)
+		{
+		vz1_stat=vz1sOFF;
+		lc640_write(EE_VZ1_STAT,vz1sOFF);
+		}
+	mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	}
+
+if(vz1_stat==vz1sSTOP)		//УЗ прекращен, напоминание
+	{
+	if((vz1_stat_old!=vz1_stat)||(vz1_stat_cnt==0))
+		{
+		vz1_stat_cnt=10;
+		}
+	vz1_stat_cnt--;
+	if((vz1_stat_cnt==10)||(vz1_stat_cnt==9))
+		{
+		show_mess(	"   УРАВНИТЕЛЬНЫЙ    ",
+					"       ЗАРЯД        ",
+					"     ПРЕКРАЩЕН      ",
+					"                    ",
+					3000);
+		}
+	if((vz1_stat_cnt==6)||(vz1_stat_cnt==5))
+		{
+		show_mess(	"     ВЫКЛЮЧИТЕ      ",
+					"      ТУМБЛЕР       ",
+					"     ВЫСОКОГО       ",
+					"    НАПРЯЖЕНИЯ      ",
+					3000);
+		}
+	if(sk_stat[1]==0)
+		{
+		vz1_stat=vz1sOFF;
+		lc640_write(EE_VZ1_STAT,vz1sOFF);
+		}
+	mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	}
+
+vz1_stat_old=vz1_stat;
 
 
+
+}
+
+//-----------------------------------------------
+//старт уравнительног заряда
+char vz1_start(char hour)
+{          
+char out;
+out=0;
+if((spc_stat==spcOFF)&&(speedChrgBlckStat!=1)&&(vz1_stat==vz1sOFF))
+	{
+	if(vz1_stat==vz1sOFF)
+		{
+		vz1_stat=vz1sSTEP1;
+		lc640_write(EE_VZ1_STAT,vz1sSTEP1);
+		out=1;
+		
+		}
+/*	spc_stat=spcVZ;
+	__ee_spc_stat=spcVZ; 
+	lc640_write_int(EE_SPC_STAT,__ee_spc_stat);   
+	vz_cnt_h=hour;
+	__ee_vz_cnt=hour*60;
+	if(hour==0)__ee_vz_cnt=30;
+	lc640_write_int(EE_VZ_CNT,__ee_vz_cnt);
+	lc640_write_int(EE_SPC_VZ_LENGT,__ee_vz_cnt);	
+	vz_cnt_h_=0;
+	vz_cnt_s=0;
+	vz_cnt_s_=0;
+	
+		*/
+	}
+//else if((spc_stat==spc_KE1p1)||(spc_stat==spc_KE1p2)) out=22; 
+//else if((spc_stat==spc_KE2p1)||(spc_stat==spc_KE2p2)) out=33;
+//plazma=out;	
+return out;
+}
+
+//-----------------------------------------------
+//стоп уравнительног заряда
+void vz1_stop(void)
+{
+if(vz1_stat!=vz1sOFF)
+	{
+	vz1_stat=vz1sSTOP;
+	lc640_write(EE_VZ1_STAT,vz1sSTOP);
+	}
+}
+
+//-----------------------------------------------
+//драйвер формовочного заряда
+void vz2_drv(void)
+{
+
+if(vz2_stat==vz2sSTEP1)
+	{
+	if(vz2_stat_old!=vz2_stat)
+		{
+		vz2_stat_cnt=5;
+		}
+	if(vz2_stat_cnt)
+		{
+		vz2_stat_cnt--;
+		if(vz2_stat_cnt==0)
+			{
+			vz2_stat=vz2sERR1; 	//Не включилась вентиляция;
+			lc640_write(EE_VZ2_STAT,vz2sERR1);
+			}
+		}
+	if(sk_stat[0]==1)
+		{
+		vz2_stat=vz2sSTEP2;
+		lc640_write(EE_VZ2_STAT,vz2sSTEP2);
+		tree_up(iVZ2_STEP2_2,1,0,0);
+		tree_up(iVZ2_STEP2_1,0,0,0);
+		ret(1200);
+		}
+	mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	}
+
+if(vz2_stat==vz2sSTEP2)
+	{
+	if((vz2_stat_old!=vz2_stat)||(vz2_stat_cnt==0))
+		{
+		vz2_stat_cnt=15;
+		}
+	vz2_stat_cnt--;
+	mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	}
+
+if(vz2_stat==vz2sSTEP3)
+	{
+	if((vz2_stat_old!=vz2_stat)||(vz2_stat_cnt==0))
+		{
+		vz2_stat_cnt=10;
+		cntrl_stat=0;
+		cntrl_stat_new=0;
+		cntrl_stat_old=0;
+		}
+	vz2_stat_cnt--;
+	if((vz2_stat_cnt==10)||(vz2_stat_cnt==9))
+		{
+		show_mess(	"     ВКЛЮЧИТЕ       ",
+					"      ТУМБЛЕР       ",
+					"     ВЫСОКОГО       ",
+					"    НАПРЯЖЕНИЯ      ",
+					5000);
+		}
+	if(sk_stat[1]==1)
+		{
+		vz2_stat=vz2sWRK1;
+		lc640_write(EE_VZ2_STAT,vz2sWRK1);
+		volt_region=1;
+		cntrl_stat=0;
+		cntrl_stat_new=0;
+		cntrl_stat_old=0;
+		}
+	mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	}
+
+if(vz2_stat==vz2sWRK1)
+	{
+
+	if(vz2_stat_old!=vz2_stat)
+		{
+		vz2_wrk_cnt=3600L/*100L*/*((long)FZ_T1);
+		//if(VZ_HR==0)  	hv_vz_wrk_cnt=1800L;
+		vz2_up_cnt=0L;
+
+		}
+	vz2_wrk_cnt--;
+	vz2_up_cnt++;
+
+	if(vz2_wrk_cnt==0)
+		{
+		vz2_stat=vz2sWRK2;
+		lc640_write(EE_VZ2_STAT,vz2sWRK2);
+		}
+	if(sk_stat[0]==0)
+		{
+		vz2_stat=vz2sERR2;
+		lc640_write(EE_VZ2_STAT,vz2sERR2);
+		}
+	if(sk_stat[1]==0)
+		{
+		vz2_stat=vz2sERR3;
+		lc640_write(EE_VZ2_STAT,vz2sERR3);
+		}
+	//if(abs(out_U-FZ_U1)<10)
+	if((out_U<(FZ_U1+30))&&(out_U>(FZ_U1-10)))
+		{
+		if((Ib_ips_termokompensat/10)<FZ_ISW12)
+			{
+			if(vz2_stat_ph2_cnt)
+				{
+				vz2_stat_ph2_cnt--;
+				if(vz2_stat_ph2_cnt==0)
+					{
+					vz2_stat=vz2sWRK2;
+					lc640_write(EE_VZ2_STAT,vz2sWRK2);
+					}
+				}
+			}
+		else
+			{
+			vz2_stat_ph2_cnt=60;
+			}
+		}
+	else
+		{
+		vz2_stat_ph2_cnt=60;
+		}
+	if(((Ibmax/10)>IZMAX_)&&(cntrl_stat<=20)&&(volt_region==1)&&(volt_region_cnt==0))
+		{
+		volt_region=0;
+		cntrl_stat=1000;
+		cntrl_stat_new=1000;
+		cntrl_stat_old=1000;
+		volt_region_cnt=110;
+		}
+	if(((Ibmax/10)<IZMAX_)&&(cntrl_stat>=1000)&&(volt_region==0)&&(volt_region_cnt==0))
+		{
+		volt_region=1;
+		cntrl_stat=10;
+		cntrl_stat_new=10;
+		cntrl_stat_old=10;
+		volt_region_cnt=10;
+		}
+	if(volt_region==0) 		mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	else if(volt_region==1) mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,1,20);
+	}
+
+if(vz2_stat==vz2sWRK2)
+	{
+	if(vz2_stat_old!=vz2_stat)
+		{
+		vz2_wrk_cnt=3600L/*100L*/*((long)FZ_T2);
+		//if(VZ_HR==0)  	hv_vz_wrk_cnt=1800L;
+		//vz2_up_cnt=0L;
+		}
+	vz2_wrk_cnt--;
+	vz2_up_cnt++;
+
+	if(vz2_wrk_cnt==0)
+		{
+		vz2_stat=vz2sFINE;
+		lc640_write(EE_VZ2_STAT,vz2sFINE);
+		}
+	if(sk_stat[0]==0)
+		{
+		vz2_stat=vz2sERR5;
+		lc640_write(EE_VZ2_STAT,vz2sERR5);
+		}
+	if(sk_stat[1]==0)
+		{
+		vz2_stat=vz2sERR6;
+		lc640_write(EE_VZ2_STAT,vz2sERR6);
+		}
+	if(((Ibmax/10)>IZMAX_)&&(cntrl_stat<=20)&&(volt_region==1)&&(volt_region_cnt==0))
+		{
+		volt_region=0;
+		cntrl_stat=1000;
+		cntrl_stat_new=1000;
+		cntrl_stat_old=1000;
+		volt_region_cnt=110;
+		}
+	if(((Ibmax/10)<IZMAX_)&&(cntrl_stat>=1000)&&(volt_region==0)&&(volt_region_cnt==0))
+		{
+		volt_region=1;
+		cntrl_stat=10;
+		cntrl_stat_new=10;
+		cntrl_stat_old=10;
+		volt_region_cnt=10;
+		}
+	if(volt_region==0) 		mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	else if(volt_region==1) mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,1,20);
+	}
+
+if(vz2_stat==vz2sERR1)		//Отсутствует вентиляция при включении
+	{
+	if((vz2_stat_old!=vz2_stat)||(vz2_stat_cnt==0))
+		{
+		vz2_stat_cnt=10;
+		}
+	vz2_stat_cnt--;
+	if((vz2_stat_cnt==10)||(vz2_stat_cnt==9))
+		{
+		show_mess(	" ФОРМОВОЧНЫЙ ЗАРЯД  ",
+					"   НЕ МОЖЕТ БЫТЬ    ",
+					"      ВКЛЮЧЕН       ",
+					"  БЕЗ ВЕНТИЛЯЦИИ!!  ",
+					5000);
+		}
+	mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	}
+if(vz2_stat==vz2sERR2)		//Пропала вентиляция при работе в первой фазе ФЗ
+	{
+	if((vz2_stat_old!=vz2_stat)||(vz2_stat_cnt==0))
+		{
+		vz2_stat_cnt=10;
+		}
+	vz2_stat_cnt--;
+	if((vz2_stat_cnt==10)||(vz2_stat_cnt==9))
+		{
+		show_mess(	" ФОРМОВОЧНЫЙ ЗАРЯД  ",
+					"    ЗАБЛОКИРОВАН    ",
+					"     НЕИСПРАВНА     ",
+					"    ВЕНТИЛЯЦИЯ!!!   ",
+					5000);
+		}
+	if(sk_stat[0]==1)
+		{
+		vz2_stat=vz2sWRK1;
+		lc640_write(EE_VZ2_STAT,vz2sWRK1);
+		}
+	mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	}
+
+if(vz2_stat==vz2sERR3)		//Отключен тумблер "Выравнивающий заряд" при работе в первой фазе ФЗ
+	{
+	if((vz2_stat_old!=vz2_stat)||(vz2_stat_cnt==0))
+		{
+		vz2_stat_cnt=10;
+		}
+	vz2_stat_cnt--;
+	if((vz2_stat_cnt==10)||(vz2_stat_cnt==9))
+		{
+		show_mess(	" ФОРМОВОЧНЫЙ ЗАРЯД  ",
+					"  БУДЕТ ПРОДОЛЖЕН   ",
+					"  ПОСЛЕ ВКЛЮЧЕНИЯ   ",
+					"    ТУМБЛЕРА!!!     ",
+					5000);
+		}
+	if(sk_stat[1]==1)
+		{
+		vz2_stat=vz2sWRK1;
+		lc640_write(EE_VZ2_STAT,vz2sWRK1);
+		}
+	mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	}
+if(vz2_stat==vz2sERR5)		//Пропала вентиляция при работе
+	{
+	if((vz2_stat_old!=vz2_stat)||(vz2_stat_cnt==0))
+		{
+		vz2_stat_cnt=10;
+		}
+	vz2_stat_cnt--;
+	if((vz2_stat_cnt==10)||(vz2_stat_cnt==9))
+		{
+		show_mess(	" ФОРМОВОЧНЫЙ ЗАРЯД  ",
+					"    ЗАБЛОКИРОВАН    ",
+					"     НЕИСПРАВНА     ",
+					"    ВЕНТИЛЯЦИЯ!!!   ",
+					5000);
+		}
+	if(sk_stat[0]==1)
+		{
+		vz2_stat=vz2sWRK2;
+		lc640_write(EE_VZ2_STAT,vz2sWRK2);
+		}
+	mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	}
+
+if(vz2_stat==vz2sERR6)		//Отключен тумблер "Выравнивающий заряд"
+	{
+	if((vz2_stat_old!=vz2_stat)||(vz2_stat_cnt==0))
+		{
+		vz2_stat_cnt=10;
+		}
+	vz2_stat_cnt--;
+	if((vz2_stat_cnt==10)||(vz2_stat_cnt==9))
+		{
+		show_mess(	" ФОРМОВОЧНЫЙ ЗАРЯД  ",
+					"  БУДЕТ ПРОДОЛЖЕН   ",
+					"  ПОСЛЕ ВКЛЮЧЕНИЯ   ",
+					"    ТУМБЛЕРА!!!     ",
+					5000);
+		}
+	if(sk_stat[1]==1)
+		{
+		vz2_stat=vz2sWRK2;
+		lc640_write(EE_VZ2_STAT,vz2sWRK2);
+		}
+	mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	}
+if(vz2_stat==vz2sERR4)		//ВЗ закончился а тумблер включен
+	{
+	if((vz2_stat_old!=vz2_stat)||(vz2_stat_cnt==0))
+		{
+		vz2_stat_cnt=10;
+		}
+	vz2_stat_cnt--;
+	if((vz2_stat_cnt==10)||(vz2_stat_cnt==9))
+		{
+		show_mess(	"     ВЫКЛЮЧИТЕ      ",
+					"      ТУМБЛЕР       ",
+					"     ВЫСОКОГО       ",
+					"    НАПРЯЖЕНИЯ      ",
+					5000);
+		}
+	if(sk_stat[1]==0)
+		{
+		vz2_stat=vz2sOFF;
+		lc640_write(EE_VZ2_STAT,vz2sOFF);
+		vz_stop();
+
+		}
+	mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	}
+if(vz2_stat==vz2sFINE)		//ФЗ закончился, напоминание
+	{
+	if((vz2_stat_old!=vz2_stat)||(vz2_stat_cnt==0))
+		{
+		vz2_stat_cnt=10;
+		}
+	vz2_stat_cnt--;
+	if((vz2_stat_cnt==10)||(vz2_stat_cnt==9))
+		{
+		show_mess(	"    ФОРМОВОЧНЫЙ     ",
+					"       ЗАРЯД        ",
+					"      УСПЕШНО       ",
+					"     ЗАВЕРШЕН       ",
+					3000);
+		}
+	if((vz2_stat_cnt==6)||(vz2_stat_cnt==5))
+		{
+		show_mess(	"     ВЫКЛЮЧИТЕ      ",
+					"      ТУМБЛЕР       ",
+					"     ВЫСОКОГО       ",
+					"    НАПРЯЖЕНИЯ      ",
+					3000);
+		}
+	if(sk_stat[1]==0)
+		{
+		vz2_stat=vz2sOFF;
+		lc640_write(EE_VZ2_STAT,vz2sOFF);
+		}
+	mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	}
+if(vz2_stat==vz2sSTOP)		//ФЗ прекращен, напоминание
+	{
+	if((vz2_stat_old!=vz2_stat)||(vz2_stat_cnt==0))
+		{
+		vz2_stat_cnt=10;
+		}
+	vz2_stat_cnt--;
+	if((vz2_stat_cnt==10)||(vz2_stat_cnt==9))
+		{
+		show_mess(	"    ФОРМОВОЧНЫЙ     ",
+					"       ЗАРЯД        ",
+					"     ПРЕКРАЩЕН      ",
+					"                    ",
+					3000);
+		}
+	if((vz2_stat_cnt==6)||(vz2_stat_cnt==5))
+		{
+		show_mess(	"     ВЫКЛЮЧИТЕ      ",
+					"      ТУМБЛЕР       ",
+					"     ВЫСОКОГО       ",
+					"    НАПРЯЖЕНИЯ      ",
+					3000);
+		}
+	if(sk_stat[1]==0)
+		{
+		vz2_stat=vz2sOFF;
+		lc640_write(EE_VZ2_STAT,vz2sOFF);
+		}
+	mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,0,20);
+	}
+vz2_stat_old=vz2_stat;
+
+}
+
+//-----------------------------------------------
+//старт уравнительног заряда
+char vz2_start(char hour)
+{          
+char out;
+out=0;
+if((spc_stat==spcOFF)&&(speedChrgBlckStat!=1)&&(vz1_stat==vz1sOFF))
+	{
+	if(vz1_stat==vz1sOFF)
+		{
+		vz2_stat=vz2sSTEP1;
+		lc640_write(EE_VZ2_STAT,vz2sSTEP1);
+		out=1;
+		
+		}
+/*	spc_stat=spcVZ;
+	__ee_spc_stat=spcVZ; 
+	lc640_write_int(EE_SPC_STAT,__ee_spc_stat);   
+	vz_cnt_h=hour;
+	__ee_vz_cnt=hour*60;
+	if(hour==0)__ee_vz_cnt=30;
+	lc640_write_int(EE_VZ_CNT,__ee_vz_cnt);
+	lc640_write_int(EE_SPC_VZ_LENGT,__ee_vz_cnt);	
+	vz_cnt_h_=0;
+	vz_cnt_s=0;
+	vz_cnt_s_=0;
+	
+		*/
+	}
+//else if((spc_stat==spc_KE1p1)||(spc_stat==spc_KE1p2)) out=22; 
+//else if((spc_stat==spc_KE2p1)||(spc_stat==spc_KE2p2)) out=33;
+//plazma=out;	
+return out;
+}
+//-----------------------------------------------
+//стоп формовочного заряда
+void vz2_stop(void)
+{
+if(vz2_stat!=vz2sOFF)
+	{
+	vz2_stat=vz2sSTOP;
+	lc640_write(EE_VZ2_STAT,vz2sSTOP);
+	}
+}
 
 //-----------------------------------------------
 void kb_init(void)
@@ -576,7 +1339,9 @@ if(((++main_kb_cnt>=TBAT*60)&&(TBAT)))
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
 	if( (!ips_bat_av_vzvod)                      && ((abs(Ib_ips_termokompensat)<IKB) || (bat_ips._av&1) ) ) kb_start_ips=1;
 #endif	
-	if( (net_av) || (num_of_wrks_bps==0) || ( (spc_stat!=spcOFF) && (spc_stat!=spcVZ) ) ) 
+	if( (net_av) || (num_of_wrks_bps==0) || ( (spc_stat!=spcOFF) && (spc_stat!=spcVZ) ) 
+	  ||(vz1_stat!=vz1sOFF)||(vz2_stat!=vz2sOFF)||(sp_ch_stat!=scsOFF) 	)
+ 
 		{
 		kb_start[0]=0;
 		kb_start[1]=0;
@@ -772,21 +1537,23 @@ samokalibr_cnt=1785;
 //-----------------------------------------------
 void samokalibr_hndl(void)
 {
+#ifndef UKU_220_IPS_TERMOKOMPENSAT
 if(++samokalibr_cnt>=1800)samokalibr_cnt=0;
 
-if(samokalibr_cnt>=1785U)
+if((samokalibr_cnt>=1785U)&&(vz2_stat==vz2sOFF))
 	{
 	mess_send(MESS2RELE_HNDL,PARAM_RELE_SAMOKALIBR,1,15);
 	mess_send(MESS2IND_HNDL,PARAM_SAMOKALIBR,0,15);
 	mess_send(MESS2MATEMAT,PARAM_SAMOKALIBR,0,15);
 	} 
 
-if(samokalibr_cnt==1799U)
+if((samokalibr_cnt==1799U)&&(vz2_stat==vz2sOFF))
 	{
 	if((Kibat0[0]!=ad7705_buff_[0])&&(abs(bat[0]._Ib/10)<IZMAX)) lc640_write_int(ADR_KI0BAT[0],ad7705_buff_[0]);
 	if((Kibat0[1]!=ad7705_buff_[1])&&(abs(bat[0]._Ib/10)<IZMAX)) lc640_write_int(ADR_KI0BAT[1],ad7705_buff_[1]);
 	
-	}	 	
+	}
+#endif	 	
 }
 
 
@@ -3644,8 +4411,8 @@ if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_EXT))
 	}
 else if(DOP_RELE_FUNC==0)	//если допреле подключено к ускоренному заряду
 	{
-	if((!speedChIsOn)&&(spc_stat!=spcVZ)&&(hv_vz_stat==hvsOFF)&&(sp_ch_stat==scsOFF)&&(load_U/10<UVENTOFF))   SET_REG(LPC_GPIO0->FIOCLR,1,9,1);
-	else if((speedChIsOn)||(spc_stat==spcVZ)||(hv_vz_stat!=hvsOFF)||(sp_ch_stat!=scsOFF)) SET_REG(LPC_GPIO0->FIOSET,1,9,1);
+	if((!speedChIsOn)&&(spc_stat!=spcVZ)&&(hv_vz_stat==hvsOFF)&&(sp_ch_stat==scsOFF)&&(vz1_stat==vz1sOFF)&&(vz2_stat==vz2sOFF)&&(load_U/10<UVENTOFF))   SET_REG(LPC_GPIO0->FIOCLR,1,9,1);
+	else if((speedChIsOn)||(spc_stat==spcVZ)||(hv_vz_stat!=hvsOFF)||(sp_ch_stat!=scsOFF)||(vz1_stat!=vz1sOFF)||(vz2_stat!=vz2sOFF)) SET_REG(LPC_GPIO0->FIOSET,1,9,1);
 	}
 else if(DOP_RELE_FUNC==1)  //если допреле подключено к индикации разряженной батареи
 	{
@@ -4568,7 +5335,7 @@ if ((rx_read_power_cnt_phase==20)&&(!ce102m_delayCnt))
 //-----------------------------------------------
 void ips_current_average_hndl(void)
 {
-if((++ica_timer_cnt>=10) && (num_of_wrks_bps))
+if((++ica_timer_cnt>=10) && (num_of_wrks_bps)&&((spc_stat==spcOFF)&&(vz1_stat==vz1sOFF)&&(vz2_stat==vz2sOFF)&&(sp_ch_stat==scsOFF)))
 	{
 	ica_timer_cnt=0;
 	ica_plazma[0]++;
@@ -4589,7 +5356,7 @@ if((++ica_timer_cnt>=10) && (num_of_wrks_bps))
 	}
 
 
-if((ICA_EN==1) /*&& (num_of_wrks_bps)*/)
+if((ICA_EN==1)&&((spc_stat==spcOFF)&&(vz1_stat==vz1sOFF)&&(vz2_stat==vz2sOFF)&&(sp_ch_stat==scsOFF)) /*&& (num_of_wrks_bps)*/)
 	{
 	
 	if(ica_timer_cnt==8)
@@ -6229,6 +6996,18 @@ if(hv_vz_stat==hvsWRK)
 	{
 	u_necc=UVZ;
 	}
+if(vz1_stat==vz1sWRK)
+	{
+	u_necc=UZ_U;
+	}
+if(vz2_stat==vz2sWRK1)
+	{
+	u_necc=FZ_U1;
+	}
+if(vz2_stat==vz2sWRK2)
+	{
+	u_necc=FZ_U2;
+	}
 if(mess_find_unvol(MESS2UNECC_HNDL))
 	{		
 	if(mess_data[0]==PARAM_UNECC_SET)
@@ -6668,9 +7447,10 @@ else if(num_necc_down<num_necc)
 	}
 
 if(PAR) num_necc=NUMIST;
-
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
 if(bPARALLEL) num_necc=NUMIST;
+if(vz1_stat==vz1sWRK)num_necc=NUMIST; //Включаем все источники если уравнительный заряд
+if((vz2_stat==vz2sWRK1)||(vz2_stat==vz2sWRK2))num_necc=NUMIST; //Включаем все источники если уравнительный заряд
 #endif
 
 gran(&num_necc,1,NUMIST);
@@ -6690,11 +7470,15 @@ IZMAX_=IZMAX;
 //cntrl_hndl_plazma=10;
 
 if((speedChIsOn)||(sp_ch_stat==scsWRK))IZMAX_=speedChrgCurr;
+if(vz1_stat==vz1sWRK) IZMAX_=UZ_IMAX;
+if(vz2_stat==vz2sWRK1) IZMAX_=FZ_IMAX1;
+if(vz2_stat==vz2sWRK2) IZMAX_=FZ_IMAX2;
+if(spc_stat==spcVZ) IZMAX_=IMAX_VZ;
 
 if(cntrl_stat_blok_cnt)cntrl_stat_blok_cnt--;
 if(cntrl_stat_blok_cnt_)cntrl_stat_blok_cnt_--;
 
-if((bat[0]._temper_stat&0x03)||(bat[1]._temper_stat&0x03))IZMAX_=IZMAX/10;
+if((bat[0]._temper_stat&0x03)||(bat[1]._temper_stat&0x03))IZMAX_=IZMAX_/10;
 
 
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
@@ -6905,7 +7689,7 @@ else if((b1Hz_ch)&&((!bIBAT_SMKLBR)||(bps[8]._cnt>40)))
 			}					
 		}
 
-	if(hv_vz_stat==hvsOFF)
+	if((hv_vz_stat==hvsOFF)&&(vz1_stat==vz1sOFF)&&(vz2_stat==vz2sOFF))
 		{
 		if(((sk_stat[1]==1)&&(sk_stat_old[1]==0))&&(VZ_KIND==1))cntrl_stat_new=50;
 		}
@@ -7974,7 +8758,7 @@ sp_ch_stat_old=sp_ch_stat;
 
 if(speedChrgAvtEn==1)
 	{
-	if(sp_ch_stat==scsOFF)
+	if((sp_ch_stat==scsOFF)&&(spc_stat==spcOFF)&&(vz1_stat==vz1sOFF)&&(vz2_stat==vz2sOFF))
 		{
 		if((load_U<u_necc)&&((u_necc-load_U)>speedChrgDU)&&(abs(Ib_ips_termokompensat/10-IZMAX)<5)&&(!speedChrgBlckStat))
 			{
@@ -8082,7 +8866,7 @@ if(sp_ch_stat!=scsOFF)
 
 else
 	{
-	if(speedChrgBlckStat==0)
+	if((speedChrgBlckStat==0)&&(spc_stat==spcOFF)&&(vz1_stat==vz1sOFF)&&(vz2_stat==vz2sOFF))
 		{
 		sp_ch_stat=scsSTEP1;
 		}

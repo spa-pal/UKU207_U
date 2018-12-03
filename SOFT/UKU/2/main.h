@@ -575,6 +575,8 @@
 #define PAROL_BAT_OUT 722
 #define PAROL_KE 125
 #define PAROL_VZ 126
+#define PAROL_VZ1 177
+#define PAROL_VZ2 177
 #define PAROL_TST 999 
 #define PAROL_DEFAULT 295
 #define PAROL_AUSW 949
@@ -844,12 +846,12 @@ typedef enum {
 	iSet,iSet_3U,iSet_RSTKM,iSet_GLONASS,iSet_KONTUR,iSet_6U,iSet_220,iSet_220_IPS_TERMOKOMPENSAT,iSet_220_V2,iInv_set_sel,
 	iBat, iBat_simple, iBat_li, iBat_SacredSun, iBat_universe, iInv_set, iSet_TELECORE2015, iSet_TELECORE2017, iSet_IPS_SGEP_GAZPROM,
 	iMakb,
-	iBps,iBps_elteh,iS2,iSet_prl,iK_prl,iDnd,
+	iBps,iBps_elteh,iS2,iSet_prl,iK_prl,iDnd,iPrlVZ1,iPrlVZ2,
 	iK,iK_3U,iK_RSTKM,iK_GLONASS,iK_KONTUR,iK_6U,iK_220,iK_220_380,iK_220_IPS_TERMOKOMPENSAT,iK_220_IPS_TERMOKOMPENSAT_IB,iK_TELECORE,iK_IPS_SGEP_GAZPROM,
 	iSpcprl,iSpc,k,Crash_0,Crash_1,iKednd,iAv_view_avt,iAKE,iSpc_termocompensat,
 	iLoad,iSpc_prl_vz,iSpc_prl_ke,iKe,iVz,iAvz,iAVAR,
 	iStr,iStr_3U,iStr_RSTKM,iStr_GLONASS,iStr_KONTUR,iStr_6U,iStr_220_IPS_TERMOKOMPENSAT,iStr_TELECORE2015,iStr_IPS_SGEP_GAZPROM,
-	iVrs,iPrltst,iApv,iVZ_set,
+	iVrs,iPrltst,iApv,iVZ_set,iVZ1_set,iVZ2_set,
 	iK_bps,iK_bps_sel,iK_bat,iK_bat_simple,iK_bat_ips_termokompensat_ib,iK_bat_TELECORE,iK_bat_sel,iK_bat_sel_TELECORE,iK_load,iK_net,iK_net3,
 	iK_makb_sel,iK_makb,iK_out,
 	iTst,iTst_3U,iTst_RSTKM,iTst_GLONASS,iTst_KONTUR,iTst_6U,iTst_220,iTst_220_380,iTst_220_IPS_TERMOKOMPENSAT,
@@ -883,7 +885,7 @@ typedef enum {
 	iOut_volt_contr,iDop_rele_set,iBlok_ips_set,iIps_Curr_Avg_Set,
 	iRele_set,iRele_set_,
 	iFWabout,
-	iHV_STEP2_1,iHV_STEP2_2,
+	iHV_STEP2_1,iHV_STEP2_2,iVZ1_STEP2_1,iVZ1_STEP2_2,iVZ2_STEP2_1,iVZ2_STEP2_2,
 	iSet_load_off
 	}i_enum;
 
@@ -956,6 +958,7 @@ extern signed short UMN;
 extern signed short ZV_ON;
 extern signed short IKB;
 extern signed short UVZ;
+extern signed short IMAX_VZ;
 extern signed short IMAX;
 extern signed short IMIN;
 extern signed short APV_ON;
@@ -1046,6 +1049,17 @@ extern signed short VZ_KIND;			//“ип выравнивающего зар€да, 0 - обычный(историче
 extern signed short SNTP_ENABLE;
 extern signed short SNTP_GMT;
 
+extern signed short UZ_U;
+extern signed short UZ_IMAX;
+extern signed short UZ_T;
+
+extern signed short FZ_U1;
+extern signed short FZ_IMAX1;
+extern signed short FZ_T1;
+extern signed short FZ_ISW12;
+extern signed short FZ_U2;
+extern signed short FZ_IMAX2;
+extern signed short FZ_T2;
 
 extern signed short RELE_SET_MASK[4];
 

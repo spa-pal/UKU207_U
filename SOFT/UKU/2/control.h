@@ -156,6 +156,24 @@ extern int power_int;
 
 extern char bENERGOMETR_UIP;
 
+//***********************************************
+//Уравнительный заряд
+typedef enum {vz1sOFF=0, vz1sSTEP1=1, vz1sSTEP2=2, vz1sSTEP3=3, vz1sWRK=10, vz1sERR1, vz1sERR2, vz1sERR3, vz1sERR4, vz1sFINE, vz1sSTOP}enum_vz1_stat;
+extern enum_vz1_stat vz1_stat, vz1_stat_old;
+extern short vz1_stat_cnt;
+extern long vz1_wrk_cnt;
+extern long vz1_up_cnt;
+extern char volt_region;
+
+//***********************************************
+//Формовочный заряд
+typedef enum {vz2sOFF=0, vz2sSTEP1=1, vz2sSTEP2=2, vz2sSTEP3=3, vz2sWRK1=10, vz2sWRK2=11, vz2sERR1, vz2sERR2, vz2sERR3, vz2sERR4, vz2sERR5, vz2sERR6, vz2sFINE, vz2sSTOP}enum_vz2_stat;
+extern enum_vz2_stat vz2_stat, vz2_stat_old;
+extern short vz2_stat_cnt;
+extern long vz2_wrk_cnt;
+extern long vz2_up_cnt;
+extern signed short vz2_stat_ph2_cnt;
+
 extern char cntrl_hndl_plazma;
 
 extern short plazma_ica1,plazma_ica2;

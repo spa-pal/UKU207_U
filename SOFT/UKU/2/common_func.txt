@@ -659,42 +659,42 @@
                           ENDP
 
                   sub_bgnd PROC
-;;;1225   //-----------------------------------------------
-;;;1226   void sub_bgnd(char const *adr,char xy,signed char offset)
+;;;1226   //-----------------------------------------------
+;;;1227   void sub_bgnd(char const *adr,char xy,signed char offset)
 00036c  b530              PUSH     {r4,r5,lr}
-;;;1227   {
+;;;1228   {
 00036e  4604              MOV      r4,r0
 000370  4608              MOV      r0,r1
 000372  4615              MOV      r5,r2
-;;;1228   char temp;
-;;;1229   temp=find(xy);
+;;;1229   char temp;
+;;;1230   temp=find(xy);
 000374  f7fffffe          BL       find
-;;;1230   
-;;;1231   //ptr_ram=&lcd_buffer[find(xy)];
-;;;1232   if(temp!=255)
+;;;1231   
+;;;1232   //ptr_ram=&lcd_buffer[find(xy)];
+;;;1233   if(temp!=255)
 000378  28ff              CMP      r0,#0xff
 00037a  d00c              BEQ      |L1.918|
-;;;1233   while (*adr)
-;;;1234   	{
-;;;1235   	lcd_buffer[temp+offset]=*adr++;
+;;;1234   while (*adr)
+;;;1235   	{
+;;;1236   	lcd_buffer[temp+offset]=*adr++;
 00037c  4a21              LDR      r2,|L1.1028|
-;;;1236   	temp++;
+;;;1237   	temp++;
 00037e  e007              B        |L1.912|
                   |L1.896|
-000380  eb000305          ADD      r3,r0,r5              ;1235
-000384  f1040401          ADD      r4,r4,#1              ;1235
-000388  54d1              STRB     r1,[r2,r3]            ;1235
+000380  eb000305          ADD      r3,r0,r5              ;1236
+000384  f1040401          ADD      r4,r4,#1              ;1236
+000388  54d1              STRB     r1,[r2,r3]            ;1236
 00038a  f1000001          ADD      r0,r0,#1
 00038e  b2c0              UXTB     r0,r0
                   |L1.912|
-000390  7821              LDRB     r1,[r4,#0]            ;1233
-000392  2900              CMP      r1,#0                 ;1233
+000390  7821              LDRB     r1,[r4,#0]            ;1234
+000392  2900              CMP      r1,#0                 ;1234
 000394  d1f4              BNE      |L1.896|
                   |L1.918|
-;;;1237       	}
-;;;1238   }
+;;;1238       	}
+;;;1239   }
 000396  bd30              POP      {r4,r5,pc}
-;;;1239   
+;;;1240   
                           ENDP
 
                   int2lcd PROC
@@ -784,30 +784,30 @@
                           ENDP
 
                   ptr_carry PROC
-;;;1267   //-----------------------------------------------
-;;;1268   char ptr_carry(signed int in,unsigned char modul,signed int carry)
+;;;1268   //-----------------------------------------------
+;;;1269   char ptr_carry(signed int in,unsigned char modul,signed int carry)
 000410  4410              ADD      r0,r0,r2
-;;;1269   {
-;;;1270   signed int tempSI;
-;;;1271   tempSI=in;                                                             
-;;;1272   tempSI+=carry;
-;;;1273   if(tempSI<0)tempSI+=modul;
+;;;1270   {
+;;;1271   signed int tempSI;
+;;;1272   tempSI=in;                                                             
+;;;1273   tempSI+=carry;
+;;;1274   if(tempSI<0)tempSI+=modul;
 000412  2800              CMP      r0,#0
 000414  da01              BGE      |L1.1050|
 000416  4408              ADD      r0,r0,r1
 000418  e003              B        |L1.1058|
                   |L1.1050|
-;;;1274   else if(tempSI>=modul)tempSI-=modul;
+;;;1275   else if(tempSI>=modul)tempSI-=modul;
 00041a  4288              CMP      r0,r1
 00041c  db01              BLT      |L1.1058|
 00041e  eba00001          SUB      r0,r0,r1
                   |L1.1058|
-;;;1275   
-;;;1276   return (char)tempSI;
+;;;1276   
+;;;1277   return (char)tempSI;
 000422  b2c0              UXTB     r0,r0
-;;;1277   }
+;;;1278   }
 000424  4770              BX       lr
-;;;1278   
+;;;1279   
                           ENDP
 
                   event2ind PROC
@@ -3297,213 +3297,215 @@
 ;;;1181   ind_pointer--;
 0018c6  881a              LDRH     r2,[r3,#0]  ; ind_pointer
 0018c8  f1a20201          SUB      r2,r2,#1
-;;;1182   ind_pointer+=offset_ind;
-0018cc  4410              ADD      r0,r0,r2
-0018ce  b200              SXTH     r0,r0
-0018d0  8018              STRH     r0,[r3,#0]
-;;;1183   a_ind=b_ind[ind_pointer];
-0018d2  4a50              LDR      r2,|L1.6676|
-0018d4  eb000080          ADD      r0,r0,r0,LSL #2
-0018d8  4402              ADD      r2,r2,r0
-0018da  484c              LDR      r0,|L1.6668|
-0018dc  6813              LDR      r3,[r2,#0]
-0018de  6003              STR      r3,[r0,#0]  ; a_ind
-0018e0  7912              LDRB     r2,[r2,#4]
-0018e2  7102              STRB     r2,[r0,#4]
-;;;1184   
-;;;1185   sub_ind+=offset_sub_ind;
-0018e4  7842              LDRB     r2,[r0,#1]  ; a_ind
-0018e6  4411              ADD      r1,r1,r2
-0018e8  7041              STRB     r1,[r0,#1]
-;;;1186   }
-0018ea  4770              BX       lr
-;;;1187   
+0018cc  b212              SXTH     r2,r2
+0018ce  801a              STRH     r2,[r3,#0]
+;;;1182   if(ind_pointer<=0)ind_pointer=0;
+0018d0  2a00              CMP      r2,#0
+0018d2  dc02              BGT      |L1.6362|
+0018d4  f04f0200          MOV      r2,#0
+0018d8  801a              STRH     r2,[r3,#0]
+                  |L1.6362|
+;;;1183   ind_pointer+=offset_ind;
+0018da  881a              LDRH     r2,[r3,#0]  ; ind_pointer
+0018dc  4410              ADD      r0,r0,r2
+0018de  b200              SXTH     r0,r0
+0018e0  8018              STRH     r0,[r3,#0]
+;;;1184   a_ind=b_ind[ind_pointer];
+0018e2  4a4c              LDR      r2,|L1.6676|
+0018e4  eb000080          ADD      r0,r0,r0,LSL #2
+0018e8  4402              ADD      r2,r2,r0
+0018ea  4848              LDR      r0,|L1.6668|
+0018ec  6813              LDR      r3,[r2,#0]
+0018ee  6003              STR      r3,[r0,#0]  ; a_ind
+0018f0  7912              LDRB     r2,[r2,#4]
+0018f2  7102              STRB     r2,[r0,#4]
+;;;1185   
+;;;1186   sub_ind+=offset_sub_ind;
+0018f4  7842              LDRB     r2,[r0,#1]  ; a_ind
+0018f6  4411              ADD      r1,r1,r2
+0018f8  7041              STRB     r1,[r0,#1]
+;;;1187   }
+0018fa  4770              BX       lr
+;;;1188   
                           ENDP
 
                   tree_up PROC
-;;;1188   //-----------------------------------------------
-;;;1189   void tree_up(char tind, char tsub_ind, char tindex_set, char tsub_ind1)
-0018ec  b570              PUSH     {r4-r6,lr}
-;;;1190   {
-;;;1191   b_ind[ind_pointer++]=a_ind;
-0018ee  4d48              LDR      r5,|L1.6672|
-0018f0  f9b54000          LDRSH    r4,[r5,#0]  ; ind_pointer
-0018f4  f1040601          ADD      r6,r4,#1
-0018f8  802e              STRH     r6,[r5,#0]
-0018fa  4d46              LDR      r5,|L1.6676|
-0018fc  eb040484          ADD      r4,r4,r4,LSL #2
-001900  4425              ADD      r5,r5,r4
-001902  4c42              LDR      r4,|L1.6668|
-001904  6826              LDR      r6,[r4,#0]  ; a_ind
-001906  602e              STR      r6,[r5,#0]
-001908  7926              LDRB     r6,[r4,#4]  ; a_ind
-00190a  712e              STRB     r6,[r5,#4]
-;;;1192   ind=(i_enum)tind;
-00190c  7020              STRB     r0,[r4,#0]
-;;;1193   sub_ind=tsub_ind;
-00190e  7061              STRB     r1,[r4,#1]
-;;;1194   index_set=tindex_set;
-001910  7122              STRB     r2,[r4,#4]
-;;;1195   sub_ind1=tsub_ind1;
-001912  70a3              STRB     r3,[r4,#2]
-;;;1196   }
-001914  bd70              POP      {r4-r6,pc}
-;;;1197   
+;;;1189   //-----------------------------------------------
+;;;1190   void tree_up(char tind, char tsub_ind, char tindex_set, char tsub_ind1)
+0018fc  b570              PUSH     {r4-r6,lr}
+;;;1191   {
+;;;1192   b_ind[ind_pointer++]=a_ind;
+0018fe  4d44              LDR      r5,|L1.6672|
+001900  f9b54000          LDRSH    r4,[r5,#0]  ; ind_pointer
+001904  f1040601          ADD      r6,r4,#1
+001908  802e              STRH     r6,[r5,#0]
+00190a  4d42              LDR      r5,|L1.6676|
+00190c  eb040484          ADD      r4,r4,r4,LSL #2
+001910  4425              ADD      r5,r5,r4
+001912  4c3e              LDR      r4,|L1.6668|
+001914  6826              LDR      r6,[r4,#0]  ; a_ind
+001916  602e              STR      r6,[r5,#0]
+001918  7926              LDRB     r6,[r4,#4]  ; a_ind
+00191a  712e              STRB     r6,[r5,#4]
+;;;1193   ind=(i_enum)tind;
+00191c  7020              STRB     r0,[r4,#0]
+;;;1194   sub_ind=tsub_ind;
+00191e  7061              STRB     r1,[r4,#1]
+;;;1195   index_set=tindex_set;
+001920  7122              STRB     r2,[r4,#4]
+;;;1196   sub_ind1=tsub_ind1;
+001922  70a3              STRB     r3,[r4,#2]
+;;;1197   }
+001924  bd70              POP      {r4-r6,pc}
+;;;1198   
                           ENDP
 
                   bgnd_par PROC
-;;;1198   //-----------------------------------------------
-;;;1199   void bgnd_par(char const *ptr0,char const *ptr1,char const *ptr2,char const *ptr3)
-001916  e92d41f0          PUSH     {r4-r8,lr}
-;;;1200   {
-00191a  4680              MOV      r8,r0
-00191c  460f              MOV      r7,r1
-00191e  4616              MOV      r6,r2
-;;;1201   char i,*ptr_ram;
-;;;1202   clr_scrn();
-001920  f7fffffe          BL       clr_scrn
-;;;1203   
-;;;1204   ptr_ram=lcd_buffer;
-001924  4c36              LDR      r4,|L1.6656|
-;;;1205   for(i=0;i<20;i++)
-001926  f04f0500          MOV      r5,#0
-                  |L1.6442|
-;;;1206   	{
-;;;1207   	*ptr_ram++=*ptr0++;
-00192a  f8180b01          LDRB     r0,[r8],#1
-00192e  f8040b01          STRB     r0,[r4],#1
-001932  f1050501          ADD      r5,r5,#1              ;1205
-001936  b2ed              UXTB     r5,r5                 ;1205
-001938  2d14              CMP      r5,#0x14              ;1205
-00193a  d3f6              BCC      |L1.6442|
-;;;1208   	}
-;;;1209   for(i=0;i<20;i++)
-00193c  f04f0000          MOV      r0,#0
-                  |L1.6464|
-;;;1210   	{
-;;;1211   	*ptr_ram++=*ptr1++;
-001940  f8171b01          LDRB     r1,[r7],#1
-001944  f8041b01          STRB     r1,[r4],#1
-001948  f1000001          ADD      r0,r0,#1              ;1209
-00194c  b2c0              UXTB     r0,r0                 ;1209
-00194e  2814              CMP      r0,#0x14              ;1209
-001950  d3f6              BCC      |L1.6464|
-;;;1212   	}
-;;;1213   for(i=0;i<20;i++)
-001952  f04f0000          MOV      r0,#0
-                  |L1.6486|
-;;;1214   	{
-;;;1215   	*ptr_ram++=*ptr2++;
-001956  f8161b01          LDRB     r1,[r6],#1
-00195a  f8041b01          STRB     r1,[r4],#1
-00195e  f1000001          ADD      r0,r0,#1              ;1213
-001962  b2c0              UXTB     r0,r0                 ;1213
-001964  2814              CMP      r0,#0x14              ;1213
-001966  d3f6              BCC      |L1.6486|
-;;;1216   	}
-;;;1217   for(i=0;i<20;i++)
-001968  f04f0000          MOV      r0,#0
-                  |L1.6508|
-;;;1218   	{
-;;;1219   	*ptr_ram++=*ptr3++;
-00196c  f8131b01          LDRB     r1,[r3],#1
-001970  f8041b01          STRB     r1,[r4],#1
-001974  f1000001          ADD      r0,r0,#1              ;1217
-001978  b2c0              UXTB     r0,r0                 ;1217
-00197a  2814              CMP      r0,#0x14              ;1217
-00197c  d3f6              BCC      |L1.6508|
-;;;1220   	}
-;;;1221   
+;;;1199   //-----------------------------------------------
+;;;1200   void bgnd_par(char const *ptr0,char const *ptr1,char const *ptr2,char const *ptr3)
+001926  e92d41f0          PUSH     {r4-r8,lr}
+;;;1201   {
+00192a  4680              MOV      r8,r0
+00192c  460f              MOV      r7,r1
+00192e  4616              MOV      r6,r2
+;;;1202   char i,*ptr_ram;
+;;;1203   clr_scrn();
+001930  f7fffffe          BL       clr_scrn
+;;;1204   
+;;;1205   ptr_ram=lcd_buffer;
+001934  4c32              LDR      r4,|L1.6656|
+;;;1206   for(i=0;i<20;i++)
+001936  f04f0500          MOV      r5,#0
+                  |L1.6458|
+;;;1207   	{
+;;;1208   	*ptr_ram++=*ptr0++;
+00193a  f8180b01          LDRB     r0,[r8],#1
+00193e  f8040b01          STRB     r0,[r4],#1
+001942  f1050501          ADD      r5,r5,#1              ;1206
+001946  b2ed              UXTB     r5,r5                 ;1206
+001948  2d14              CMP      r5,#0x14              ;1206
+00194a  d3f6              BCC      |L1.6458|
+;;;1209   	}
+;;;1210   for(i=0;i<20;i++)
+00194c  f04f0000          MOV      r0,#0
+                  |L1.6480|
+;;;1211   	{
+;;;1212   	*ptr_ram++=*ptr1++;
+001950  f8171b01          LDRB     r1,[r7],#1
+001954  f8041b01          STRB     r1,[r4],#1
+001958  f1000001          ADD      r0,r0,#1              ;1210
+00195c  b2c0              UXTB     r0,r0                 ;1210
+00195e  2814              CMP      r0,#0x14              ;1210
+001960  d3f6              BCC      |L1.6480|
+;;;1213   	}
+;;;1214   for(i=0;i<20;i++)
+001962  f04f0000          MOV      r0,#0
+                  |L1.6502|
+;;;1215   	{
+;;;1216   	*ptr_ram++=*ptr2++;
+001966  f8161b01          LDRB     r1,[r6],#1
+00196a  f8041b01          STRB     r1,[r4],#1
+00196e  f1000001          ADD      r0,r0,#1              ;1214
+001972  b2c0              UXTB     r0,r0                 ;1214
+001974  2814              CMP      r0,#0x14              ;1214
+001976  d3f6              BCC      |L1.6502|
+;;;1217   	}
+;;;1218   for(i=0;i<20;i++)
+001978  f04f0000          MOV      r0,#0
+                  |L1.6524|
+;;;1219   	{
+;;;1220   	*ptr_ram++=*ptr3++;
+00197c  f8131b01          LDRB     r1,[r3],#1
+001980  f8041b01          STRB     r1,[r4],#1
+001984  f1000001          ADD      r0,r0,#1              ;1218
+001988  b2c0              UXTB     r0,r0                 ;1218
+00198a  2814              CMP      r0,#0x14              ;1218
+00198c  d3f6              BCC      |L1.6524|
+;;;1221   	}
 ;;;1222   
-;;;1223   }
-00197e  e8bd81f0          POP      {r4-r8,pc}
-;;;1224   
+;;;1223   
+;;;1224   }
+00198e  e8bd81f0          POP      {r4-r8,pc}
+;;;1225   
                           ENDP
 
                   show_mess PROC
-;;;1240   //-----------------------------------------------
-;;;1241   void show_mess(char* p1, char* p2, char* p3, char* p4,int m_sec)
-001982  b530              PUSH     {r4,r5,lr}
-;;;1242   {
-001984  9c03              LDR      r4,[sp,#0xc]
-;;;1243   //bgnd_par(p1,p2,p3,p4);
-;;;1244   //tree_up(iSM,sub_ind,sub_ind1,sub_ind2);
-;;;1245   //ret((char)(m_sec/100));
-;;;1246   show_mess_cnt=(char)(m_sec/100);
-001986  f04f0564          MOV      r5,#0x64
-00198a  fb94f4f5          SDIV     r4,r4,r5
-00198e  4d22              LDR      r5,|L1.6680|
-001990  702c              STRB     r4,[r5,#0]
-;;;1247   show_mess_p1=p1;
-001992  4c22              LDR      r4,|L1.6684|
-001994  6020              STR      r0,[r4,#0]  ; show_mess_p1
-;;;1248   show_mess_p2=p2;
-001996  4822              LDR      r0,|L1.6688|
-001998  6001              STR      r1,[r0,#0]  ; show_mess_p2
-;;;1249   show_mess_p3=p3;
-00199a  4822              LDR      r0,|L1.6692|
-00199c  6002              STR      r2,[r0,#0]  ; show_mess_p3
-;;;1250   show_mess_p4=p4;
-00199e  4822              LDR      r0,|L1.6696|
-0019a0  6003              STR      r3,[r0,#0]  ; show_mess_p4
-;;;1251   }
-0019a2  bd30              POP      {r4,r5,pc}
-;;;1252   //-----------------------------------------------
+;;;1241   //-----------------------------------------------
+;;;1242   void show_mess(char* p1, char* p2, char* p3, char* p4,int m_sec)
+001992  b530              PUSH     {r4,r5,lr}
+;;;1243   {
+001994  9c03              LDR      r4,[sp,#0xc]
+;;;1244   //bgnd_par(p1,p2,p3,p4);
+;;;1245   //tree_up(iSM,sub_ind,sub_ind1,sub_ind2);
+;;;1246   //ret((char)(m_sec/100));
+;;;1247   show_mess_cnt=(char)(m_sec/100);
+001996  f04f0564          MOV      r5,#0x64
+00199a  fb94f4f5          SDIV     r4,r4,r5
+00199e  4d1e              LDR      r5,|L1.6680|
+0019a0  702c              STRB     r4,[r5,#0]
+;;;1248   show_mess_p1=p1;
+0019a2  4c1e              LDR      r4,|L1.6684|
+0019a4  6020              STR      r0,[r4,#0]  ; show_mess_p1
+;;;1249   show_mess_p2=p2;
+0019a6  481e              LDR      r0,|L1.6688|
+0019a8  6001              STR      r1,[r0,#0]  ; show_mess_p2
+;;;1250   show_mess_p3=p3;
+0019aa  481e              LDR      r0,|L1.6692|
+0019ac  6002              STR      r2,[r0,#0]  ; show_mess_p3
+;;;1251   show_mess_p4=p4;
+0019ae  481e              LDR      r0,|L1.6696|
+0019b0  6003              STR      r3,[r0,#0]  ; show_mess_p4
+;;;1252   }
+0019b2  bd30              POP      {r4,r5,pc}
+;;;1253   //-----------------------------------------------
                           ENDP
 
                   event_data2ind PROC
-;;;1279   //-----------------------------------------------
-;;;1280   void event_data2ind(char num, char simbol)
-0019a4  e92d43fe          PUSH     {r1-r9,lr}
-;;;1281   {
-0019a8  460d              MOV      r5,r1
-;;;1282   char iii;
-;;;1283   char dt[4],dt_[4],dt__[4];
-;;;1284   unsigned int tempii;    
-;;;1285   		
-;;;1286   /*tempii=lc640_read_int(PTR_EVENT_LOG);
-;;;1287   tempii=ptr_carry(tempii,64,-1*((signed)num));*/
-;;;1288   tempii=(signed)num;
-;;;1289   tempii*=32;
-0019aa  ea4f1040          LSL      r0,r0,#5
-;;;1290   tempii+=EVENT_LOG;
-0019ae  f5006080          ADD      r0,r0,#0x400
-0019b2  4604              MOV      r4,r0
-;;;1291        
-;;;1292   lc640_read_long_ptr(tempii,dt);
-0019b4  a902              ADD      r1,sp,#8
-0019b6  4620              MOV      r0,r4
-0019b8  f7fffffe          BL       lc640_read_long_ptr
-;;;1293   lc640_read_long_ptr(tempii+8,dt_);
-0019bc  a901              ADD      r1,sp,#4
-0019be  f1040008          ADD      r0,r4,#8
-0019c2  f7fffffe          BL       lc640_read_long_ptr
-;;;1294   lc640_read_long_ptr(tempii+12,dt__);
-0019c6  4669              MOV      r1,sp
-0019c8  f104000c          ADD      r0,r4,#0xc
-0019cc  f7fffffe          BL       lc640_read_long_ptr
-;;;1295   
-;;;1296   iii=find(simbol);
-0019d0  4628              MOV      r0,r5
-0019d2  f7fffffe          BL       find
-;;;1297   
-;;;1298   lcd_buffer[iii++]=' ';
-0019d6  4c0a              LDR      r4,|L1.6656|
-0019d8  f04f0620          MOV      r6,#0x20
-0019dc  f1000101          ADD      r1,r0,#1
-0019e0  b2c9              UXTB     r1,r1
-0019e2  5426              STRB     r6,[r4,r0]
-;;;1299   lcd_buffer[iii++]='0';
-0019e4  f04f0730          MOV      r7,#0x30
-0019e8  f1010001          ADD      r0,r1,#1
-0019ec  b2c0              UXTB     r0,r0
-0019ee  5467              STRB     r7,[r4,r1]
-;;;1300   lcd_buffer[iii++]='!';
-0019f0  f04f0821          MOV      r8,#0x21
-0019f4  f1000101          ADD      r1,r0,#1
-0019f8  b2c9              UXTB     r1,r1
-0019fa  f8048000          STRB     r8,[r4,r0]
-;;;1301   lcd_buffer[iii++]='@'; 
+;;;1280   //-----------------------------------------------
+;;;1281   void event_data2ind(char num, char simbol)
+0019b4  e92d43fe          PUSH     {r1-r9,lr}
+;;;1282   {
+0019b8  460d              MOV      r5,r1
+;;;1283   char iii;
+;;;1284   char dt[4],dt_[4],dt__[4];
+;;;1285   unsigned int tempii;    
+;;;1286   		
+;;;1287   /*tempii=lc640_read_int(PTR_EVENT_LOG);
+;;;1288   tempii=ptr_carry(tempii,64,-1*((signed)num));*/
+;;;1289   tempii=(signed)num;
+;;;1290   tempii*=32;
+0019ba  ea4f1040          LSL      r0,r0,#5
+;;;1291   tempii+=EVENT_LOG;
+0019be  f5006080          ADD      r0,r0,#0x400
+0019c2  4604              MOV      r4,r0
+;;;1292        
+;;;1293   lc640_read_long_ptr(tempii,dt);
+0019c4  a902              ADD      r1,sp,#8
+0019c6  4620              MOV      r0,r4
+0019c8  f7fffffe          BL       lc640_read_long_ptr
+;;;1294   lc640_read_long_ptr(tempii+8,dt_);
+0019cc  a901              ADD      r1,sp,#4
+0019ce  f1040008          ADD      r0,r4,#8
+0019d2  f7fffffe          BL       lc640_read_long_ptr
+;;;1295   lc640_read_long_ptr(tempii+12,dt__);
+0019d6  4669              MOV      r1,sp
+0019d8  f104000c          ADD      r0,r4,#0xc
+0019dc  f7fffffe          BL       lc640_read_long_ptr
+;;;1296   
+;;;1297   iii=find(simbol);
+0019e0  4628              MOV      r0,r5
+0019e2  f7fffffe          BL       find
+;;;1298   
+;;;1299   lcd_buffer[iii++]=' ';
+0019e6  4c06              LDR      r4,|L1.6656|
+0019e8  f04f0620          MOV      r6,#0x20
+0019ec  f1000101          ADD      r1,r0,#1
+0019f0  b2c9              UXTB     r1,r1
+0019f2  5426              STRB     r6,[r4,r0]
+;;;1300   lcd_buffer[iii++]='0';
+0019f4  f1010001          ADD      r0,r1,#1
+0019f8  f04f0730          MOV      r7,#0x30
+0019fc  b2c0              UXTB     r0,r0
 0019fe  e015              B        |L1.6700|
                   |L1.6656|
                           DCD      lcd_buffer
@@ -3528,95 +3530,102 @@
                   |L1.6696|
                           DCD      show_mess_p4
                   |L1.6700|
-001a2c  f04f0940          MOV      r9,#0x40
-001a30  f1010001          ADD      r0,r1,#1
-001a34  b2c0              UXTB     r0,r0
-001a36  f8049001          STRB     r9,[r4,r1]
-;;;1302   lcd_buffer[iii++]=' ';
-001a3a  f1000101          ADD      r1,r0,#1
-001a3e  b2c9              UXTB     r1,r1
-001a40  5426              STRB     r6,[r4,r0]
+001a2c  5467              STRB     r7,[r4,r1]
+;;;1301   lcd_buffer[iii++]='!';
+001a2e  f04f0821          MOV      r8,#0x21
+001a32  f1000101          ADD      r1,r0,#1
+001a36  b2c9              UXTB     r1,r1
+001a38  f8048000          STRB     r8,[r4,r0]
+;;;1302   lcd_buffer[iii++]='@'; 
+001a3c  f04f0940          MOV      r9,#0x40
+001a40  f1010001          ADD      r0,r1,#1
+001a44  b2c0              UXTB     r0,r0
+001a46  f8049001          STRB     r9,[r4,r1]
 ;;;1303   lcd_buffer[iii++]=' ';
-001a42  f1010001          ADD      r0,r1,#1
-001a46  b2c0              UXTB     r0,r0
-001a48  5466              STRB     r6,[r4,r1]
-;;;1304   lcd_buffer[iii++]='0';
 001a4a  f1000101          ADD      r1,r0,#1
 001a4e  b2c9              UXTB     r1,r1
-001a50  5427              STRB     r7,[r4,r0]
-;;;1305   lcd_buffer[iii++]='#';
-001a52  f04f0223          MOV      r2,#0x23
-001a56  f1010001          ADD      r0,r1,#1
-001a5a  b2c5              UXTB     r5,r0
-001a5c  5462              STRB     r2,[r4,r1]
-;;;1306   int2lcd(dt_[2],'!',0);
-001a5e  f89d0006          LDRB     r0,[sp,#6]
-001a62  f04f0200          MOV      r2,#0
-001a66  f04f0121          MOV      r1,#0x21
-001a6a  f7fffffe          BL       int2lcd
-;;;1307   int2lcd(dt_[0],'#',0);   
-001a6e  f89d0004          LDRB     r0,[sp,#4]
-001a72  2200              MOVS     r2,#0
-001a74  2123              MOVS     r1,#0x23
-001a76  f7fffffe          BL       int2lcd
-;;;1308   if(!((dt_[1]>=1)&&(dt_[1]<=12)))dt_[1]=1;
-001a7a  f89d0005          LDRB     r0,[sp,#5]
-001a7e  1e40              SUBS     r0,r0,#1
-001a80  280c              CMP      r0,#0xc
-001a82  d303              BCC      |L1.6796|
-001a84  f04f0001          MOV      r0,#1
-001a88  f88d0005          STRB     r0,[sp,#5]
-                  |L1.6796|
-;;;1309   sub_bgnd(sm_mont[dt_[1]],'@',0); 
-001a8c  f89d0005          LDRB     r0,[sp,#5]
-001a90  4919              LDR      r1,|L1.6904|
-001a92  2200              MOVS     r2,#0
-001a94  eb010080          ADD      r0,r1,r0,LSL #2
-001a98  2140              MOVS     r1,#0x40
-001a9a  f7fffffe          BL       sub_bgnd
-;;;1310   lcd_buffer[iii++]=' ';		
-001a9e  f1050001          ADD      r0,r5,#1
-001aa2  b2c0              UXTB     r0,r0
-001aa4  5566              STRB     r6,[r4,r5]
-;;;1311   lcd_buffer[iii++]='0';
-001aa6  f1000101          ADD      r1,r0,#1
-001aaa  b2c9              UXTB     r1,r1
-001aac  5427              STRB     r7,[r4,r0]
-;;;1312   lcd_buffer[iii++]='!';
-001aae  f1010001          ADD      r0,r1,#1
+001a50  5426              STRB     r6,[r4,r0]
+;;;1304   lcd_buffer[iii++]=' ';
+001a52  f1010001          ADD      r0,r1,#1
+001a56  b2c0              UXTB     r0,r0
+001a58  5466              STRB     r6,[r4,r1]
+;;;1305   lcd_buffer[iii++]='0';
+001a5a  f1000101          ADD      r1,r0,#1
+001a5e  b2c9              UXTB     r1,r1
+001a60  5427              STRB     r7,[r4,r0]
+;;;1306   lcd_buffer[iii++]='#';
+001a62  f04f0223          MOV      r2,#0x23
+001a66  f1010001          ADD      r0,r1,#1
+001a6a  b2c5              UXTB     r5,r0
+001a6c  5462              STRB     r2,[r4,r1]
+;;;1307   int2lcd(dt_[2],'!',0);
+001a6e  f89d0006          LDRB     r0,[sp,#6]
+001a72  f04f0200          MOV      r2,#0
+001a76  f04f0121          MOV      r1,#0x21
+001a7a  f7fffffe          BL       int2lcd
+;;;1308   int2lcd(dt_[0],'#',0);   
+001a7e  f89d0004          LDRB     r0,[sp,#4]
+001a82  2200              MOVS     r2,#0
+001a84  2123              MOVS     r1,#0x23
+001a86  f7fffffe          BL       int2lcd
+;;;1309   if(!((dt_[1]>=1)&&(dt_[1]<=12)))dt_[1]=1;
+001a8a  f89d0005          LDRB     r0,[sp,#5]
+001a8e  1e40              SUBS     r0,r0,#1
+001a90  280c              CMP      r0,#0xc
+001a92  d303              BCC      |L1.6812|
+001a94  f04f0001          MOV      r0,#1
+001a98  f88d0005          STRB     r0,[sp,#5]
+                  |L1.6812|
+;;;1310   sub_bgnd(sm_mont[dt_[1]],'@',0); 
+001a9c  f89d0005          LDRB     r0,[sp,#5]
+001aa0  4919              LDR      r1,|L1.6920|
+001aa2  2200              MOVS     r2,#0
+001aa4  eb010080          ADD      r0,r1,r0,LSL #2
+001aa8  2140              MOVS     r1,#0x40
+001aaa  f7fffffe          BL       sub_bgnd
+;;;1311   lcd_buffer[iii++]=' ';		
+001aae  f1050001          ADD      r0,r5,#1
 001ab2  b2c0              UXTB     r0,r0
-001ab4  f8048001          STRB     r8,[r4,r1]
-;;;1313   lcd_buffer[iii++]=':'; 
-001ab8  f04f023a          MOV      r2,#0x3a
-001abc  f1000101          ADD      r1,r0,#1
-001ac0  b2c9              UXTB     r1,r1
-001ac2  5422              STRB     r2,[r4,r0]
-;;;1314   lcd_buffer[iii++]='0';
-001ac4  f1010001          ADD      r0,r1,#1
-001ac8  b2c0              UXTB     r0,r0
-001aca  5467              STRB     r7,[r4,r1]
-;;;1315   lcd_buffer[iii++]='@';
+001ab4  5566              STRB     r6,[r4,r5]
+;;;1312   lcd_buffer[iii++]='0';
+001ab6  f1000101          ADD      r1,r0,#1
+001aba  b2c9              UXTB     r1,r1
+001abc  5427              STRB     r7,[r4,r0]
+;;;1313   lcd_buffer[iii++]='!';
+001abe  f1010001          ADD      r0,r1,#1
+001ac2  b2c0              UXTB     r0,r0
+001ac4  f8048001          STRB     r8,[r4,r1]
+;;;1314   lcd_buffer[iii++]=':'; 
+001ac8  f04f023a          MOV      r2,#0x3a
 001acc  f1000101          ADD      r1,r0,#1
-001ad0  b2cd              UXTB     r5,r1
-001ad2  f8049000          STRB     r9,[r4,r0]
-;;;1316   int2lcd(dt__[0],'!',0);
-001ad6  f89d0000          LDRB     r0,[sp,#0]
-001ada  f04f0200          MOV      r2,#0
-001ade  f04f0121          MOV      r1,#0x21
-001ae2  f7fffffe          BL       int2lcd
-;;;1317   int2lcd(dt__[1],'@',0);
-001ae6  f89d0001          LDRB     r0,[sp,#1]
-001aea  2200              MOVS     r2,#0
-001aec  2140              MOVS     r1,#0x40
-001aee  f7fffffe          BL       int2lcd
-;;;1318      		     		
-;;;1319   lcd_buffer[iii++]=' ';
-001af2  5566              STRB     r6,[r4,r5]
-;;;1320   }	
-001af4  e8bd83fe          POP      {r1-r9,pc}
+001ad0  b2c9              UXTB     r1,r1
+001ad2  5422              STRB     r2,[r4,r0]
+;;;1315   lcd_buffer[iii++]='0';
+001ad4  f1010001          ADD      r0,r1,#1
+001ad8  b2c0              UXTB     r0,r0
+001ada  5467              STRB     r7,[r4,r1]
+;;;1316   lcd_buffer[iii++]='@';
+001adc  f1000101          ADD      r1,r0,#1
+001ae0  b2cd              UXTB     r5,r1
+001ae2  f8049000          STRB     r9,[r4,r0]
+;;;1317   int2lcd(dt__[0],'!',0);
+001ae6  f89d0000          LDRB     r0,[sp,#0]
+001aea  f04f0200          MOV      r2,#0
+001aee  f04f0121          MOV      r1,#0x21
+001af2  f7fffffe          BL       int2lcd
+;;;1318   int2lcd(dt__[1],'@',0);
+001af6  f89d0001          LDRB     r0,[sp,#1]
+001afa  2200              MOVS     r2,#0
+001afc  2140              MOVS     r1,#0x40
+001afe  f7fffffe          BL       int2lcd
+;;;1319      		     		
+;;;1320   lcd_buffer[iii++]=' ';
+001b02  5566              STRB     r6,[r4,r5]
+;;;1321   }	
+001b04  e8bd83fe          POP      {r1-r9,pc}
                           ENDP
 
-                  |L1.6904|
+                  |L1.6920|
                           DCD      sm_mont
 
                           AREA ||area_number.2||, CODE, READONLY, ALIGN=2
