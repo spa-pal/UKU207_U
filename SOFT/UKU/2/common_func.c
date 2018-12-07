@@ -387,7 +387,10 @@ if(dt[0]=='U')
    	lcd_buffer[iii++]=' ';
    	lcd_buffer[iii++]=' ';
 	lcd_buffer[iii++]=' ';
-
+   	lcd_buffer[iii++]=' ';
+	lcd_buffer[iii++]=' ';
+   	lcd_buffer[iii++]=' ';
+//	lcd_buffer[iii++]=' ';
     if((dt_[0]==LPC_RTC->YEAR)&&(dt_[1]==LPC_RTC->MONTH)&&(dt_[2]==LPC_RTC->DOM))
     	{
     	lcd_buffer[iii++]='0';
@@ -429,6 +432,10 @@ else if(dt[0]=='P')
 	lcd_buffer[iii++]=' ';
     lcd_buffer[iii++]=' ';
 	lcd_buffer[iii++]=' ';
+    lcd_buffer[iii++]=' ';
+	lcd_buffer[iii++]=' ';
+    lcd_buffer[iii++]=' ';
+	//lcd_buffer[iii++]=' ';
      	
     if((dt_[0]==LPC_RTC->YEAR)&&(dt_[1]==LPC_RTC->MONTH)&&(dt_[2]==LPC_RTC->DOM))
      	{
@@ -471,7 +478,10 @@ else if(dt[0]=='Q')
 	lcd_buffer[iii++]='û';
     lcd_buffer[iii++]='õ';
 	lcd_buffer[iii++]=' ';
-     	
+	lcd_buffer[iii++]=' ';
+	lcd_buffer[iii++]=' ';
+	lcd_buffer[iii++]=' ';
+		     	
     if((dt_[0]==LPC_RTC->YEAR)&&(dt_[1]==LPC_RTC->MONTH)&&(dt_[2]==LPC_RTC->DOM))
      	{
          	lcd_buffer[iii++]='0';
@@ -513,6 +523,7 @@ else if(dt[0]=='B')
     		lcd_buffer[iii++]='Á';
     		lcd_buffer[iii++]='à';
     		lcd_buffer[iii++]='ò';
+			lcd_buffer[iii++]='N';
 		if(dt[1]<9)
     			{
     			lcd_buffer[iii++]=0x31+dt[1];
@@ -531,7 +542,7 @@ else if(dt[0]=='B')
     			lcd_buffer[iii++]=' '; 
     			lcd_buffer[iii++]=' ';    		
     			} 
-    		//lcd_buffer[iii++]=' ';
+    		lcd_buffer[iii++]=' ';
      	
     		if((dt_[0]==LPC_RTC->YEAR)&&(dt_[1]==LPC_RTC->MONTH)&&(dt_[2]==LPC_RTC->DOM))
     			{
@@ -746,21 +757,24 @@ else if(dt[0]=='B')
     		lcd_buffer[iii++]='Á';
     		lcd_buffer[iii++]='à';
     		lcd_buffer[iii++]='ò';
+			lcd_buffer[iii++]='#';
 		if(dt[1]<9)
     			{
     			lcd_buffer[iii++]=0x31+dt[1];
     			lcd_buffer[iii++]='ê';
     			lcd_buffer[iii++]='å';
+				lcd_buffer[iii++]=' ';
     			}
     		else if((dt[1]>=9)&&(dt[1]<99))
     			{
     			lcd_buffer[iii++]=0x30+((dt[1]+1)/10);
     			lcd_buffer[iii++]=0x30+((dt[1]+1)%10);
     			lcd_buffer[iii++]='ê';
+				lcd_buffer[iii++]='å';
     			}
     		else 
     			{
-    			lcd_buffer[iii++]=' ';
+    			
     			lcd_buffer[iii++]=' '; 
     			lcd_buffer[iii++]=' ';    		
     			} 
@@ -809,6 +823,7 @@ else if(dt[0]=='S')
     	lcd_buffer[iii++]='Á';
     	lcd_buffer[iii++]='Ï';
     	lcd_buffer[iii++]='Ñ';
+		lcd_buffer[iii++]='#';
  	if(dt[1]<9)
     		{
     		lcd_buffer[iii++]=0x31+dt[1];
@@ -825,7 +840,8 @@ else if(dt[0]=='S')
     		lcd_buffer[iii++]=' ';     		
     		} 
     	lcd_buffer[iii++]=' '; 
- //   	lcd_buffer[iii++]=' ';
+   		lcd_buffer[iii++]=' ';
+		//lcd_buffer[iii++]=' ';
     	
     	if((dt_[0]==LPC_RTC->YEAR)&&(dt_[1]==LPC_RTC->MONTH)&&(dt_[2]==LPC_RTC->DOM))
     		{
@@ -889,6 +905,7 @@ else if(dt[0]=='I')
     	lcd_buffer[iii++]='È';
     	lcd_buffer[iii++]='í';
     	lcd_buffer[iii++]='â';
+		lcd_buffer[iii++]='#';
 	if(dt[1]<9)
     		{
     		lcd_buffer[iii++]=0x31+dt[1];
@@ -905,7 +922,205 @@ else if(dt[0]=='I')
     		lcd_buffer[iii++]=' ';     		
     		} 
     	lcd_buffer[iii++]=' ';
-    	}    
+		lcd_buffer[iii++]=' ';
+    	}
+
+else if(dt[0]=='s')
+    {
+    if(dt[2]=='Z')
+    	{
+  		lcd_buffer[iii++]='Ó';
+    	lcd_buffer[iii++]='ñ';
+		lcd_buffer[iii++]='ê';
+		lcd_buffer[iii++]='î';
+		lcd_buffer[iii++]='ð';    		
+    	lcd_buffer[iii++]='.';
+    	lcd_buffer[iii++]='ç';
+		lcd_buffer[iii++]='à';
+    	lcd_buffer[iii++]='ð'; 
+    	lcd_buffer[iii++]='.';
+    	
+/*		if(dt[1]<9)
+    		{
+    		lcd_buffer[iii++]=0x31+dt[1];
+    		lcd_buffer[iii++]=' ';
+    		lcd_buffer[iii++]=' ';
+    		}
+    	else if((dt[1]>=9)&&(dt[1]<99))
+    		{
+    		lcd_buffer[iii++]=0x30+((dt[1]+1)/10);
+    		lcd_buffer[iii++]=0x30+((dt[1]+1)%10);
+    		lcd_buffer[iii++]=' ';
+    		}
+    	else */
+    		{
+    		//lcd_buffer[iii++]=' ';
+    		//lcd_buffer[iii++]=' '; 
+    		lcd_buffer[iii++]=' ';    		
+    		} 
+    		//lcd_buffer[iii++]=' ';
+     	
+    	if((dt_[0]==LPC_RTC->YEAR)&&(dt_[1]==LPC_RTC->MONTH)&&(dt_[2]==LPC_RTC->DOM))
+    		{
+    	   	lcd_buffer[iii++]='0';
+   	 		lcd_buffer[iii++]='!';
+    	    lcd_buffer[iii++]=':'; 
+    		lcd_buffer[iii++]='0';
+    		lcd_buffer[iii++]='@';
+   	 		lcd_buffer[iii++]=':';
+   	 		lcd_buffer[iii++]='0';
+   	 		lcd_buffer[iii++]='#';
+   	 	    int2lcd(dt__[0],'!',0);
+   	 		int2lcd(dt__[1],'@',0);
+   	 		int2lcd(dt__[2],'#',0);    		     		
+    		}	                   
+    	else      	
+    		{
+    		lcd_buffer[iii++]=' ';
+    		lcd_buffer[iii++]='0';
+    		lcd_buffer[iii++]='!';
+    		lcd_buffer[iii++]='@'; 
+    		lcd_buffer[iii++]=' ';
+    		lcd_buffer[iii++]=' ';
+    		lcd_buffer[iii++]='0';
+    		lcd_buffer[iii++]='#';
+    		int2lcd(dt_[2],'!',0);
+    		int2lcd(dt_[0],'#',0);   
+    		if(!((dt_[1]>=1)&&(dt_[1]<=12)))dt_[1]=1;
+			sub_bgnd(sm_mont[dt_[1]],'@',0);  
+    		}
+		}		 
+    }	
+
+else if(dt[0]=='u')
+    {
+    if(dt[2]=='Z')
+    	{
+  		lcd_buffer[iii++]='Ó';
+    	lcd_buffer[iii++]='ð';
+		lcd_buffer[iii++]='à';
+		lcd_buffer[iii++]='â';
+		lcd_buffer[iii++]='í';    		
+    	lcd_buffer[iii++]='.';
+    	lcd_buffer[iii++]='ç';
+		lcd_buffer[iii++]='à';
+    	lcd_buffer[iii++]='ð'; 
+    	lcd_buffer[iii++]='.';		   	
+/*		if(dt[1]<9)
+    		{
+    		lcd_buffer[iii++]=0x31+dt[1];
+    		lcd_buffer[iii++]=' ';
+    		lcd_buffer[iii++]=' ';
+    		}
+    	else if((dt[1]>=9)&&(dt[1]<99))
+    		{
+    		lcd_buffer[iii++]=0x30+((dt[1]+1)/10);
+    		lcd_buffer[iii++]=0x30+((dt[1]+1)%10);
+    		lcd_buffer[iii++]=' ';
+    		}
+    	else */
+    		{
+    		//lcd_buffer[iii++]=' ';
+    		lcd_buffer[iii++]=' '; 
+    		//lcd_buffer[iii++]=' ';    		
+    		} 
+    		//lcd_buffer[iii++]=' ';
+     	
+    	if((dt_[0]==LPC_RTC->YEAR)&&(dt_[1]==LPC_RTC->MONTH)&&(dt_[2]==LPC_RTC->DOM))
+    		{
+    	   	lcd_buffer[iii++]='0';
+   	 		lcd_buffer[iii++]='!';
+    	    lcd_buffer[iii++]=':'; 
+    		lcd_buffer[iii++]='0';
+    		lcd_buffer[iii++]='@';
+   	 		lcd_buffer[iii++]=':';
+   	 		lcd_buffer[iii++]='0';
+   	 		lcd_buffer[iii++]='#';
+   	 	    int2lcd(dt__[0],'!',0);
+   	 		int2lcd(dt__[1],'@',0);
+   	 		int2lcd(dt__[2],'#',0);    		     		
+    		}	                   
+    	else      	
+    		{
+    		lcd_buffer[iii++]=' ';
+    		lcd_buffer[iii++]='0';
+    		lcd_buffer[iii++]='!';
+    		lcd_buffer[iii++]='@'; 
+    		lcd_buffer[iii++]=' ';
+    		lcd_buffer[iii++]=' ';
+    		lcd_buffer[iii++]='0';
+    		lcd_buffer[iii++]='#';
+    		int2lcd(dt_[2],'!',0);
+    		int2lcd(dt_[0],'#',0);   
+    		if(!((dt_[1]>=1)&&(dt_[1]<=12)))dt_[1]=1;
+			sub_bgnd(sm_mont[dt_[1]],'@',0);  
+    		}
+		}		 
+    }	
+else if(dt[0]=='f')
+    {
+    if(dt[2]=='Z')
+    	{
+  		lcd_buffer[iii++]='Ô';
+    	lcd_buffer[iii++]='î';     		
+    	lcd_buffer[iii++]='ð';
+    	lcd_buffer[iii++]='ì';
+    	lcd_buffer[iii++]='.';
+    	lcd_buffer[iii++]='ç';
+		lcd_buffer[iii++]='à';
+		lcd_buffer[iii++]='ð';
+		lcd_buffer[iii++]='.';
+/*		if(dt[1]<9)
+    		{
+    		lcd_buffer[iii++]=0x31+dt[1];
+    		lcd_buffer[iii++]=' ';
+    		lcd_buffer[iii++]=' ';
+    		}
+    	else if((dt[1]>=9)&&(dt[1]<99))
+    		{
+    		lcd_buffer[iii++]=0x30+((dt[1]+1)/10);
+    		lcd_buffer[iii++]=0x30+((dt[1]+1)%10);
+    		lcd_buffer[iii++]=' ';
+    		}
+    	else*/ 
+    		{
+    		//lcd_buffer[iii++]=' ';
+    		lcd_buffer[iii++]=' '; 
+    		lcd_buffer[iii++]=' ';    		
+    		} 
+    		//lcd_buffer[iii++]=' ';
+     	
+    	if((dt_[0]==LPC_RTC->YEAR)&&(dt_[1]==LPC_RTC->MONTH)&&(dt_[2]==LPC_RTC->DOM))
+    		{
+    	   	lcd_buffer[iii++]='0';
+   	 		lcd_buffer[iii++]='!';
+    	    lcd_buffer[iii++]=':'; 
+    		lcd_buffer[iii++]='0';
+    		lcd_buffer[iii++]='@';
+   	 		lcd_buffer[iii++]=':';
+   	 		lcd_buffer[iii++]='0';
+   	 		lcd_buffer[iii++]='#';
+   	 	    int2lcd(dt__[0],'!',0);
+   	 		int2lcd(dt__[1],'@',0);
+   	 		int2lcd(dt__[2],'#',0);    		     		
+    		}	                   
+    	else      	
+    		{
+    		lcd_buffer[iii++]=' ';
+    		lcd_buffer[iii++]='0';
+    		lcd_buffer[iii++]='!';
+    		lcd_buffer[iii++]='@'; 
+    		lcd_buffer[iii++]=' ';
+    		lcd_buffer[iii++]=' ';
+    		lcd_buffer[iii++]='0';
+    		lcd_buffer[iii++]='#';
+    		int2lcd(dt_[2],'!',0);
+    		int2lcd(dt_[0],'#',0);   
+    		if(!((dt_[1]>=1)&&(dt_[1]<=12)))dt_[1]=1;
+			sub_bgnd(sm_mont[dt_[1]],'@',0);  
+    		}
+		}		 
+    }			   
 }	
 
 //-----------------------------------------------

@@ -6733,7 +6733,143 @@ else if(ind==iLog_)
 		av_j_si_max=1;
 		}
 
+ 	else if((av_head[0]=='s')&&(av_head[2]=='Z'))
+		{
+		ptrs[0]=	"     ”скоренный     ";
+		ptrs[1]=	"       зар€д        ";
+		if(av_head[1]=='a') 
+			{
+			ptrs[0]="   јвтоматический   ";
+			ptrs[1]="  ускоренный  зар€д ";
+			} 
 
+		ptrs[2]="  0%(  0^ 0@:0#:0$  ";
+		if((av_data_off[0]=='A')&&(av_data_off[1]=='A'))
+			{
+			ptrs[3]="    не завершен     ";
+			bgnd_par(ptrs[0],ptrs[1],ptrs[2],ptrs[3]);
+			}
+		else
+			{
+			gran_char(&index_set,0,1); 
+			ptrs[3]=	"  нераспознано      ";
+			if((av_data[0]=='C')&&(av_data[1]=='C'))
+				{
+				ptrs[3]="  завершен успешно  ";
+				}
+			else if((av_data[0]=='B')&&(av_data[1]=='B'))
+				{
+				ptrs[3]="      прерван       ";
+				}
+			ptrs[4]="  0[]  0< 0>:0=:0)  ";
+			bgnd_par(ptrs[index_set],ptrs[1+index_set],ptrs[2+index_set],ptrs[3+index_set]);
+			int2lcd(av_data_off[4],'>',0);
+			int2lcd(av_data_off[5],'=',0);
+			int2lcd(av_data_off[6],')',0);
+			int2lcd(av_data_off[2],'[',0);
+			int2lcd(av_data_off[0],'<',0); 
+			if(!((av_data_off[1]>=1)&&(av_data_off[1]<=12)))av_data_off[1]=1;
+			sub_bgnd(sm_mont[av_data_off[1]],']',0);
+			}	
+		int2lcd(av_head[1]+1,'+',0);
+		int2lcd(av_data_on[4],'@',0);
+		int2lcd(av_data_on[5],'#',0);
+		int2lcd(av_data_on[6],'$',0);
+		int2lcd(av_data_on[2],'%',0);
+		int2lcd(av_data_on[0],'^',0); 
+		if(!((av_data_on[1]>=1)&&(av_data_on[1]<=12)))av_data_on[1]=1;
+		sub_bgnd(sm_mont[av_data_on[1]],'(',0);
+		
+		av_j_si_max=1;
+		}
+
+ 	else if((av_head[0]=='u')&&(av_head[2]=='Z'))
+		{  
+		ptrs[0]="   ”равнительный    ";
+		ptrs[1]="       зар€д        ";
+		ptrs[2]="  0%(  0^ 0@:0#:0$  ";
+		if((av_data_off[0]=='A')&&(av_data_off[1]=='A'))
+			{
+			ptrs[3]="    не завершен     ";
+			bgnd_par(ptrs[0],ptrs[1],ptrs[2],ptrs[3]);
+			}
+		else
+			{
+			gran_char(&index_set,0,1); 
+			ptrs[3]=	"  нераспознано      ";
+			if((av_data[0]=='C')&&(av_data[1]=='C'))
+				{
+				ptrs[3]="  завершен успешно  ";
+				}
+			else if((av_data[0]=='B')&&(av_data[1]=='B'))
+				{
+				ptrs[3]="      прерван       ";
+				}
+			ptrs[4]="  0[]  0< 0>:0=:0)  ";
+			bgnd_par(ptrs[index_set],ptrs[1+index_set],ptrs[2+index_set],ptrs[3+index_set]);
+			int2lcd(av_data_off[4],'>',0);
+			int2lcd(av_data_off[5],'=',0);
+			int2lcd(av_data_off[6],')',0);
+			int2lcd(av_data_off[2],'[',0);
+			int2lcd(av_data_off[0],'<',0); 
+			if(!((av_data_off[1]>=1)&&(av_data_off[1]<=12)))av_data_off[1]=1;
+			sub_bgnd(sm_mont[av_data_off[1]],']',0);
+			}	
+		int2lcd(av_head[1]+1,'+',0);
+		int2lcd(av_data_on[4],'@',0);
+		int2lcd(av_data_on[5],'#',0);
+		int2lcd(av_data_on[6],'$',0);
+		int2lcd(av_data_on[2],'%',0);
+		int2lcd(av_data_on[0],'^',0); 
+		if(!((av_data_on[1]>=1)&&(av_data_on[1]<=12)))av_data_on[1]=1;
+		sub_bgnd(sm_mont[av_data_on[1]],'(',0);
+		
+		av_j_si_max=1;
+		}
+
+ 	else if((av_head[0]=='f')&&(av_head[2]=='Z'))
+		{  
+		ptrs[0]="    ‘ормовочный     ";
+		ptrs[1]="       зар€д        ";
+		ptrs[2]="  0%(  0^ 0@:0#:0$  ";
+		if((av_data_off[0]=='A')&&(av_data_off[1]=='A'))
+			{
+			ptrs[3]="    не завершен     ";
+			bgnd_par(ptrs[0],ptrs[1],ptrs[2],ptrs[3]);
+			}
+		else
+			{
+			gran_char(&index_set,0,1); 
+			ptrs[3]=	"  нераспознано      ";
+			if((av_data[0]=='C')&&(av_data[1]=='C'))
+				{
+				ptrs[3]="  завершен успешно  ";
+				}
+			else if((av_data[0]=='B')&&(av_data[1]=='B'))
+				{
+				ptrs[3]="      прерван       ";
+				}
+			ptrs[4]="  0[]  0< 0>:0=:0)  ";
+			bgnd_par(ptrs[index_set],ptrs[1+index_set],ptrs[2+index_set],ptrs[3+index_set]);
+			int2lcd(av_data_off[4],'>',0);
+			int2lcd(av_data_off[5],'=',0);
+			int2lcd(av_data_off[6],')',0);
+			int2lcd(av_data_off[2],'[',0);
+			int2lcd(av_data_off[0],'<',0); 
+			if(!((av_data_off[1]>=1)&&(av_data_off[1]<=12)))av_data_off[1]=1;
+			sub_bgnd(sm_mont[av_data_off[1]],']',0);
+			}	
+		int2lcd(av_head[1]+1,'+',0);
+		int2lcd(av_data_on[4],'@',0);
+		int2lcd(av_data_on[5],'#',0);
+		int2lcd(av_data_on[6],'$',0);
+		int2lcd(av_data_on[2],'%',0);
+		int2lcd(av_data_on[0],'^',0); 
+		if(!((av_data_on[1]>=1)&&(av_data_on[1]<=12)))av_data_on[1]=1;
+		sub_bgnd(sm_mont[av_data_on[1]],'(',0);
+		
+		av_j_si_max=1;
+		}
 
 	else if((av_head[0]=='B')&&(av_head[2]=='W'))
 		{  
@@ -16958,6 +17094,8 @@ else if(ind==iMn_220)
 		else if(sub_ind==(3+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0)))
 			{
 			speedChargeStartStop();
+			if(sp_ch_stat!=scsOFF)speedz_mem_hndl(1);
+			else speedz_mem_hndl(10);
 			}
 
 		else if(sub_ind==(4+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0)))
@@ -17187,14 +17325,26 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
  	else if(but==butR)
 		{
 		//ind=iMn;
-		sub_ind=0;
-
+		//sub_ind=0;
+		speedz_mem_hndl(1);
+		}
+	else if(but==butR_)
+		{
+		//ind=iMn;
+		//sub_ind=0;
+		speedz_mem_hndl(5);
 		}
 	else if(but==butL)
 		{
 		//ind=iMn;
 		sub_ind=0;
-
+		speedz_mem_hndl(0);
+		}
+	else if(but==butL_)
+		{
+		//ind=iMn;
+		sub_ind=0;
+		speedz_mem_hndl(10);
 		}
 	else if(but==butD_)
 		{
@@ -17340,6 +17490,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 				else 
 					{
 					vz1_stop();
+					uz_mem_hndl(10);
 					}
 				}
 			}
@@ -17356,6 +17507,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 				else 
 					{
 					vz2_stop();
+					fz_mem_hndl(10);
 					}
 				}
 			}
@@ -19127,7 +19279,11 @@ else if((ind==iPrl_bat_in_out)||(ind==iSet_prl)||(ind==iK_prl)
 	          					"   не может быть    ",
 	          					"     включен!!!     ",1000);
 					}
-				else tree_down(0,0);
+				else 
+					{
+					tree_down(0,0);
+					uz_mem_hndl(1);
+					}
 				}
 	  		else 
 				{	
@@ -19151,7 +19307,11 @@ else if((ind==iPrl_bat_in_out)||(ind==iSet_prl)||(ind==iK_prl)
 	          					"   не может быть    ",
 	          					"     включен!!!     ",1000);
 					}
-				else tree_down(0,0);
+				else 
+					{
+					tree_down(0,0);
+					fz_mem_hndl(1);
+					}
 				}
 	  		else 
 				{	

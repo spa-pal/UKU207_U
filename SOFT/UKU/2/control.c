@@ -651,6 +651,7 @@ if(vz1_stat==vz1sWRK)
 		{
 		vz1_stat=vz1sFINE;
 		lc640_write(EE_VZ1_STAT,vz1sFINE);
+		uz_mem_hndl(0);
 		}
 	if(sk_stat[0]==0)
 		{
@@ -1040,6 +1041,7 @@ if(vz2_stat==vz2sWRK2)
 		{
 		vz2_stat=vz2sFINE;
 		lc640_write(EE_VZ2_STAT,vz2sFINE);
+		fz_mem_hndl(0);
 		}
 	if(sk_stat[0]==0)
 		{
@@ -8712,6 +8714,7 @@ if(sp_ch_stat==scsWRK)
 	if(sp_ch_wrk_cnt==0)
 		{
 		sp_ch_stat=scsOFF;
+		speedz_mem_hndl(0);
 		}
 	if(sk_stat[0]==0)sp_ch_stat=scsERR2;
 	
@@ -8763,6 +8766,7 @@ if(speedChrgAvtEn==1)
 		if((load_U<u_necc)&&((u_necc-load_U)>speedChrgDU)&&(abs(Ib_ips_termokompensat/10-IZMAX)<5)&&(!speedChrgBlckStat))
 			{
 			speedChargeStartStop();
+			speedz_mem_hndl(5);
 			}
 		}
 	}
@@ -8862,6 +8866,7 @@ else
 if(sp_ch_stat!=scsOFF)
 	{
 	sp_ch_stat=scsOFF;
+	
 	}
 
 else
