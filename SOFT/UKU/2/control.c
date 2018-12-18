@@ -5337,9 +5337,15 @@ if ((rx_read_power_cnt_phase==20)&&(!ce102m_delayCnt))
 //-----------------------------------------------
 void ips_current_average_hndl(void)
 {
-if((++ica_timer_cnt>=10) && (num_of_wrks_bps)&&((spc_stat==spcOFF)&&(vz1_stat==vz1sOFF)&&(vz2_stat==vz2sOFF)&&(sp_ch_stat==scsOFF)))
+
+if(++ica_timer_cnt>=10) 
 	{
 	ica_timer_cnt=0;
+	}
+
+if((ica_timer_cnt==0) && (num_of_wrks_bps)&&((spc_stat==spcOFF)&&(vz1_stat==vz1sOFF)&&(vz2_stat==vz2sOFF)&&(sp_ch_stat==scsOFF)))
+	{
+	
 	ica_plazma[0]++;
 
 	ica_my_current=bps_I;
@@ -8866,7 +8872,7 @@ else
 if(sp_ch_stat!=scsOFF)
 	{
 	sp_ch_stat=scsOFF;
-	
+	speedz_mem_hndl(10);
 	}
 
 else
@@ -8874,6 +8880,7 @@ else
 	if((speedChrgBlckStat==0)&&(spc_stat==spcOFF)&&(vz1_stat==vz1sOFF)&&(vz2_stat==vz2sOFF))
 		{
 		sp_ch_stat=scsSTEP1;
+		speedz_mem_hndl(1);
 		}
 	else 
 		{

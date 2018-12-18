@@ -32,6 +32,8 @@ char usart1_router_cnt;
 char plazma_suz[5];
 volatile uint32_t UART1Status;
 volatile uint8_t UART1TxEmpty = 1;
+
+char uart1_net_cnt=0;
 //-----------------------------------------------
 void putchar1(char c)
 {
@@ -303,6 +305,8 @@ if((UIB1[0]==4)&&(UIB1[1]==0)&&(UIB1[2]==2)&&(UIB1[3]==0)&&(UIB1[4]==1) && (ICA_
 	
 	uart_out1(5,4,1,2,(char)bps_I,(char)(bps_I/256),0);
 	plazma_uart1++;
+
+	uart1_net_cnt=0;
 	}
 
 
@@ -325,6 +329,8 @@ if((UIB1[0]==6)&&(UIB1[1]==0)&&(UIB1[2]==100) && (ICA_EN==0))
 	else ica_cntrl_hndl=tempSSSS;
 
 	ica_cntrl_hndl_cnt=200;
+
+	uart1_net_cnt=0;
 	}
 
 
@@ -332,6 +338,8 @@ else if((UIB1[0]==4)&&(UIB1[1]==1)&&(UIB1[2]==2) && (ICA_EN==1) && (ICA_CH==2) )
 	{
 	
 	ica_your_current=(short)UIB1[3]+((short)UIB1[4]*256);
+
+	uart1_net_cnt=0;
 	}
 else if((UIB1[0]==CMND)&&(UIB1[1]==1))
 	{
