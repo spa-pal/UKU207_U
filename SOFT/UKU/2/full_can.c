@@ -1370,7 +1370,7 @@ else if (RXBUFF[0]==0xE6) {	  // прием от сетевых входов
 }
 // oleg_end
 
-if((RXBUFF[0]==sub_ind1)&&(RXBUFF[1]==PUTID)&&(RXBUFF[2]==0xdd)&&(RXBUFF[3]==0xdd)/*&&(sub_ind==6)*/)
+if((((RXBUFF[0]==sub_ind1)&&(ind==iK_bps))||((RXBUFF[0]==uavt_bps_pntr)&&(uavt_set_stat==uassSTEP3)))&&(RXBUFF[1]==PUTID)&&(RXBUFF[2]==0xdd)&&(RXBUFF[3]==0xdd)/*&&(sub_ind==6)*/)
 	{
 	mess_send(MESS2IND_HNDL,PARAM_U_AVT_GOOD,0,10);
 	can_reset_cnt=0;

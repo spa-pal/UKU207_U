@@ -861,6 +861,17 @@ long hv_vz_up_cnt;
 char bdr_transmit_stat;
 char bdr_avar_stat;
 
+//-----------------------------------------------
+//Óñòàíîâêà íàïğÿæåíèÿ àâòîíîìíîé ğàáîòû
+enum_uavt_set_stat uavt_set_stat=uassOFF, uavt_set_stat_old=uassOFF;
+enum_uavt_set_result_stat uavt_set_result_stat=uasrsGOOD;
+short u_max_temp,u_min_temp;
+char  uavt_bps_pntr;
+char  uavt_error_bps=100;
+char avt_plazma;
+char avt_error_bps;
+char uavt_set_error_cnt;
+
 short pvlk;
 char klbr_en;
 char plazma_pavlik;
@@ -2571,6 +2582,26 @@ else if(status_di1&0x800000){
 	sub_cnt_max++;
 }
 
+if(uavt_set_stat!=uassOFF)
+	{
+	sub_ptrs[i++]=	"   Óñòàíîâêà  Uàâò. ";
+	sub_cnt_max++;	
+	}
+
+if(uavt_set_result_stat==uasrsSUCCESS)
+	{
+	sub_ptrs[i++]=	"   Óñòàíîâêà  Uàâò. ";
+	sub_ptrs[i++]=	"  óñïåøíî çàâåğøåíà ";
+	sub_cnt_max++;	
+	}
+
+if(uavt_set_result_stat==uasrsERR)
+	{
+	sub_ptrs[i++]=	"   Óñòàíîâêà  Uàâò. ";
+	sub_ptrs[i++]=	" çàâåğøåíà íåóäà÷åé ";
+	sub_ptrs[i++]=	" çàâåğøåíà íåóäà÷åé ";
+	sub_cnt_max++;	
+	} 
 
 // oleg_end
 cnt_of_slave=NUMIST+NUMINV;
@@ -4222,7 +4253,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 		int2lcd((short)((vz2_up_cnt/60L)%60L),'x',0);
 		int2lcd((short)((vz2_up_cnt/60L)/60L),'X',0); 
 		}
-	//int2lcdyx(net_av,0,19,0);
+	//int2lcdyx(uavt_set_stat,0,19,0);
 
 /*	int2lcdyx(cntrl_stat_old,1,3,0);
 	int2lcdyx(ica_cntrl_hndl_cnt,0,8,0);
@@ -11806,6 +11837,28 @@ if(ind==iDeb)
 		int2lcdyx(vz2_stat_ph2_cnt,0,5,0);
 		int2lcdyx(Ib_ips_termokompensat,0,10,0);
 		int2lcdyx(FZ_ISW12,0,15,0);	
+		}
+
+    else if(sub_ind==17)
+     	{
+     	bgnd_par(	"A                   ",
+     		    	"                    ",
+     		    	"                    ",
+     		    	"                    ");
+		int2lcdyx(uavt_set_result_stat,0,17,0);
+		int2lcdyx(uavt_set_stat,0,19,0);
+		int2lcdyx(u_max_temp,0,15,0);
+		int2lcdyx(u_min_temp,0,10,0);
+		int2lcdyx(uavt_bps_pntr,0,5,0);
+		int2lcdyx(avt_plazma,0,3,0);	
+		int2lcdyx(cntrl_hndl_plazma,1,4,0);
+		int2lcdyx(cntrl_stat,1,8,0);
+		int2lcdyx(U_AVT,2,4,0);
+		int2lcdyx(out_U,2,8,0);
+
+		int2lcdyx(u_necc,1,15,0);
+		int2lcdyx(bps_U,2,15,0);
+		int2lcdyx(uavt_set_error_cnt,3,19,0); 
 		}					     				     			
 	}
 
@@ -15364,6 +15417,52 @@ else if(ind==iAvt_set)
 		}
 	//int2lcdyx(sub_ind,0,4,0);		      
 	 }
+
+else if(ind==iAvt_comm_set)
+	{
+	ptrs[0]=" Uàâòîí =   $Â      ";
+	ptrs[1]="  äëÿ  çàïîìèíàíèÿ  ";
+    ptrs[2]="    óäåğæèâàéòå ¤   ";  
+	ptrs[3]=sm_exit;
+    ptrs[4]=sm_;
+    ptrs[5]=sm_;     	     	    
+	
+
+	if((sub_ind-index_set)>1)index_set=sub_ind-1;
+	else if(sub_ind<index_set)index_set=sub_ind;
+	
+	bgnd_par(	"ÓÑÒÀÍÎÂÊÀ ÍÀÏĞßÆÅÍÈß",
+				" ÀÂÒÎÍÎÌÍÎÉ ĞÀÁÎÒÛ  ",
+				ptrs[index_set],
+				ptrs[index_set+1]);
+
+	pointer_set(2);	
+	int2lcd(sub_ind1+1,'!',0);
+	int2lcd(U_AVT,'$',1);
+	 
+	
+     if(sub_ind==0)
+		{
+        //mess_send(MESS2BPS_HNDL,PARAM_BPS_MASK_ON_OFF_AFTER_2SEC,(1<<sub_ind1),10);
+        //mess_send(MESS2BAT_HNDL,PARAM_BAT_ALL_OFF_AFTER_2SEC,0,40);
+        //mess_send(MESS2UNECC_HNDL,PARAM_UNECC_SET,U_AVT,10);
+	    //mess_send(MESS2CNTRL_HNDL,PARAM_CNTRL_STAT_FAST_REG,0,10);
+
+        }
+
+ 	if(mess_find( (MESS2IND_HNDL)) && (mess_data[0]==PARAM_U_AVT_GOOD) )
+		{
+		sub_ind=3;
+		show_mess(	"     Óñòàíîâêà      ",
+	          		"    íàïğÿæåíèÿ      ",
+	          		" àâòîíîìíîé ğàáîòû  ",
+	          		"    ïğîèçâåäåíà     ",3000);
+		
+		}
+	//int2lcdyx(sub_ind,0,4,0);	
+
+	//int2lcdyx(uavt_bps_pntr,3,4,0);      
+	}
 else if(ind==iOut_volt_contr)
 	{
 	ptrs[0]=" Uâûõmax         !Â ";
@@ -15869,7 +15968,7 @@ int2lcdyx(retcnt,0,11,0);
 int2lcdyx(retcntsec,0,7,0);	*/
 //int2lcdyx(hv_vz_stat_cnt,3,7,0);
 //int2lcdyx(UB0,0,14,0);
-//int2lcdyx(ind_pointer,0,19,0); 
+
 }							    
 
 
@@ -16007,6 +16106,12 @@ if((main_1Hz_cnt<10)&&((but==butU)||(but==butU_)||(but==butD)||(but==butD_)||(bu
 	__ee_spc_stat=spcOFF;
 	spc_stat=spcOFF;
 	}
+
+//if(uavt_set_stat!=uassOFF) uavt_set_stat=uassOFF;
+if((uavt_set_result_stat==uasrsSUCCESS)||(uavt_set_result_stat==uasrsERR))uavt_set_result_stat=uasrsGOOD;
+
+
+if(uavt_set_result_stat!=uasrsERR)
 /*
 if(vz1_stat==vz1sFINE)
 	{
@@ -16024,7 +16129,7 @@ if(but==butUD)
      if(ind!=iDeb)
           {
 		c_ind=a_ind;
-		tree_up(iDeb,16,0,0);
+		tree_up(iDeb,17,0,0);
 		
           }
      else 
@@ -17396,6 +17501,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 		//ind=iMn;
 		//sub_ind=0;
 		//speedz_mem_hndl(5);
+		tree_up(iAvt_comm_set,0,0,0);
 		}
 	else if(but==butL)
 		{
@@ -24906,7 +25012,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 		{
 		if(but==butE)
 		    {		
-			tree_up(iAvt_set_sel,0,0,0);
+			tree_up(iAvt_comm_set,0,0,0);
 			parol_init();
 			ret(50);
 			}						
@@ -36519,7 +36625,9 @@ else if(ind==iAvt_set)
 		
 		speed=1;	
 					
-		}	
+		}
+		
+			
 	else if(sub_ind==3)
 		{
 		if(but==butE)
@@ -36532,6 +36640,85 @@ else if(ind==iAvt_set)
 		}			
 
 	}
+
+else if(ind==iAvt_comm_set)
+	{
+	ret(1000);
+	if (but==butU)
+		{      
+		sub_ind--;
+		if(sub_ind==2)sub_ind=1;
+		gran_char(&sub_ind,0,3);
+		}
+		
+	else if (but==butD)
+		{
+		sub_ind++;
+		if(sub_ind==1)index_set=1;
+		if(sub_ind==2)sub_ind=3;
+		gran_char(&sub_ind,0,3);
+		}
+	else if(but==butD_)
+		{
+		sub_ind=3;
+		}
+ 	else if (sub_ind == 0)
+		{
+		temp_SS=lc640_read_int(EE_U_AVT);
+		if(but==butR)temp_SS++;
+		else if(but==butR_)temp_SS+=2;
+		else if(but==butL)temp_SS--;
+		else if(but==butL_)temp_SS-=2;
+		else if(but==butE_)can1_out(sub_ind1,sub_ind1,CMND,0xee,0xee,0,0,0);   
+		
+		#ifdef UKU206_220				
+		gran(&temp_SS,1000,3000);
+		#endif
+
+		#ifdef UKU206_24
+		gran(&temp_SS,200,300);
+		#endif
+
+		#ifdef UKU320
+		gran(&temp_SS,400,800);
+		#endif
+
+		#ifdef UKU320_24
+		gran(&temp_SS,200,300);
+		#endif
+
+		#ifdef UKU320_F
+		gran(&temp_SS,400,800);
+		#endif		
+		lc640_write_int(EE_U_AVT,temp_SS);
+		
+		speed=1;	
+					
+		}
+	else if (sub_ind == 1)
+		{
+		if(but==butE_)
+			{
+			show_mess(	"     Óñòàíîâêà      ",
+	          			"    íàïğÿæåíèÿ      ",
+	          			" àâòîíîìíîé ğàáîòû  ",
+	          			"    èíèöèèğîâàíà    ",500);
+						uavt_set_stat=uassSTEP1;
+						uavt_set_result_stat=uasrsWRK;
+			}
+		}	
+	else if(sub_ind==3)
+		{
+		if(but==butE)
+			{
+			//a=b[--ptr_ind];
+			//sub_ind++;
+			tree_down(0,1);
+			ret(0);
+			}
+		}			
+	}
+
 else if(ind==iOut_volt_contr)
 	{
 	ret(1000);
@@ -38285,6 +38472,7 @@ while (1)
 		time_sinc_hndl();
 
 		if(uart1_net_cnt<10) uart1_net_cnt++;
+		u_avt_set_hndl();
 		}
 	if(b1min)
 		{

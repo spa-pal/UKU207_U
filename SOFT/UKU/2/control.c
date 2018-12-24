@@ -13,11 +13,14 @@
 #include "modbus.h"
 #include "modbus_tcp.h"
 #include "uart1.h"
+#include "cmd.h"
 #include <LPC17xx.h>
 
 #define KOEFPOT  105L
 
-
+#ifdef UKU2071x
+#define can1_out mcp2515_transmit
+#endif
 
 
 
@@ -6945,7 +6948,214 @@ temp_SS=bat[in]._Ub/2;
 
 }
 
+//-----------------------------------------------
+//Установка напряжения автономной работы в полуавтоматическом режиме
+void u_avt_set_hndl(void)
+{
+if(uavt_set_stat==uassSTEP1)
+	{
+	char i,find_succes;
 
+	//u_max_temp=U_AVT+10;//(short)((((long)U_AVT)*101U)/100U);
+	//u_min_temp=U_AVT-10;//(short)((((long)U_AVT)*99U)/100U);
+	if(uavt_set_stat_old!=uavt_set_stat)
+		{
+		uavt_set_error_cnt=60;
+		}
+	//mess_send(MESS2UNECC_HNDL,PARAM_UNECC_SET,U_AVT,10);
+	mess_send(MESS2CNTRL_HNDL,PARAM_CNTRL_STAT_FAST_REG,0,10);
+	find_succes=0;
+/*	for(i=0;i<NUMIST;i++)
+		{
+		if((bps[i]._Uii<u_max_temp)&&(bps[i]._Uii>u_min_temp))continue;
+		else
+			{
+			find_succes=0;
+			break;
+			}
+		}*/
+	if((bps_U>=U_AVT-1)&&(bps_U<=U_AVT+1))find_succes=1;
+
+	if(find_succes==1)
+		{
+		uavt_set_stat=uassSTEP2;
+		}
+	if(uavt_set_error_cnt)
+		{
+		uavt_set_error_cnt--;
+		if(!uavt_set_error_cnt)
+			{
+			uavt_set_stat=uassOFF;
+			uavt_set_result_stat=uasrsERR;
+			avt_error_bps=100;
+			}
+		}
+	}
+if(uavt_set_stat==uassSTEP2)
+	{
+	char i,find_succes;
+
+	u_max_temp=(short)((((long)U_AVT)*101U)/100U);
+	u_min_temp=(short)((((long)U_AVT)*99U)/100U);
+
+	if(uavt_set_stat_old!=uavt_set_stat)
+		{
+		uavt_set_error_cnt=60;
+		}
+
+	mess_send(MESS2UNECC_HNDL,PARAM_UNECC_SET,U_AVT,10);
+	mess_send(MESS2CNTRL_HNDL,PARAM_CNTRL_STAT_FAST_REG,0,10);
+	find_succes=1;
+
+	for(i=0;i<NUMIST;i++)
+		{
+		if((bps[i]._Uii<u_max_temp)&&(bps[i]._Uii>u_min_temp))continue;
+		else
+			{
+			find_succes=0;
+			avt_error_bps=i+1;
+			break;
+			}
+		}
+
+	if(find_succes==1)
+		{
+		uavt_set_stat=uassSTEP3;
+		uavt_bps_pntr=0;
+		avt_plazma=0;
+		}
+
+	if(uavt_set_error_cnt)
+		{
+		uavt_set_error_cnt--;
+		if(!uavt_set_error_cnt)
+			{
+			uavt_set_stat=uassOFF;
+			uavt_set_result_stat=uasrsERR;
+			}
+		}
+	}
+else if(uavt_set_stat==uassSTEP3)
+	{
+	char i,find_succes;
+
+	u_max_temp=(short)((((long)U_AVT)*101U)/100U);
+	u_min_temp=(short)((((long)U_AVT)*99U)/100U);
+	
+	if(uavt_set_stat_old!=uavt_set_stat)
+		{
+		uavt_bps_pntr=0;
+		}
+
+	mess_send(MESS2UNECC_HNDL,PARAM_UNECC_SET,U_AVT,10);
+	mess_send(MESS2CNTRL_HNDL,PARAM_CNTRL_STAT_FAST_REG,0,10);
+
+	find_succes=1;
+	for(i=0;i<NUMIST;i++)
+		{
+		if((bps[i]._Uii<u_max_temp)&&(bps[i]._Uii>u_min_temp))continue;
+		else
+			{
+			find_succes=0;
+			break;
+			}
+		}
+
+	if(mess_find( (MESS2IND_HNDL)) && (mess_data[0]==PARAM_U_AVT_GOOD) )
+		{
+		if(++uavt_bps_pntr>=NUMIST)
+			{
+			uavt_set_stat=uassOFF;
+			uavt_set_result_stat=uasrsSUCCESS;
+			}
+		//uavt_bps_pntr++;
+		//if()
+		}
+	if(find_succes==1)
+		{
+		mcp2515_transmit(uavt_bps_pntr,uavt_bps_pntr,CMND,0xee,0xee,0,0,0);
+		avt_plazma++;
+		}
+	}
+
+
+
+uavt_set_stat_old=uavt_set_stat;
+
+}
+
+
+//-----------------------------------------------
+//Установка напряжения автономной работы в полуавтоматическом режиме
+void u_avt_set_hndl1(void)
+{
+if(uavt_set_stat==uassSTEP1)
+	{
+	char i,find_succes;
+
+	u_max_temp=(short)((((long)U_AVT)*101U)/100U);
+	u_min_temp=(short)((((long)U_AVT)*99U)/100U);
+	if(uavt_set_stat_old!=uavt_set_stat)
+		{
+		uavt_bps_pntr=0;
+
+		}
+	//mess_send(MESS2UNECC_HNDL,PARAM_UNECC_SET,U_AVT,10);
+	mess_send(MESS2CNTRL_HNDL,PARAM_CNTRL_STAT_FAST_REG,0,10);
+	find_succes=1;
+	for(i=0;i<NUMIST;i++)
+		{
+		if((bps[i]._Uii<u_max_temp)&&(bps[i]._Uii>u_min_temp))continue;
+		else
+			{
+			find_succes=0;
+			break;
+			}
+		}
+
+	if(find_succes==1)
+		{
+		uavt_set_stat=uassSTEP2;
+		}
+	}
+else if(uavt_set_stat==uassSTEP2)
+	{
+	char i,find_succes;
+
+	u_max_temp=(short)((((long)U_AVT)*101U)/100U);
+	u_min_temp=(short)((((long)U_AVT)*99U)/100U);
+	
+	if(uavt_set_stat_old!=uavt_set_stat)
+		{
+		uavt_bps_pntr=0;
+		}
+
+	//mess_send(MESS2UNECC_HNDL,PARAM_UNECC_SET,U_AVT,10);
+	mess_send(MESS2CNTRL_HNDL,PARAM_CNTRL_STAT_FAST_REG,0,10);
+
+	find_succes=1;
+	for(i=0;i<NUMIST;i++)
+		{
+		if((bps[i]._Uii<u_max_temp)&&(bps[i]._Uii>u_min_temp))continue;
+		else
+			{
+			find_succes=0;
+			break;
+			}
+		}
+
+	if(find_succes==1)
+		{
+		can1_out(uavt_bps_pntr,uavt_bps_pntr,CMND,0xee,0xee,0,0,0);
+		if(++uavt_bps_pntr>=NUMIST)uavt_set_stat=uassOFF;
+		}
+	}
+
+
+
+uavt_set_stat_old=uavt_set_stat;
+
+}
 
 
 //-----------------------------------------------
@@ -7016,13 +7226,20 @@ if(vz2_stat==vz2sWRK2)
 	{
 	u_necc=FZ_U2;
 	}
+
+if((uavt_set_stat==uassSTEP1)||(uavt_set_stat==uassSTEP2))
+	{
+	u_necc=U_AVT;
+	}
+
 if(mess_find_unvol(MESS2UNECC_HNDL))
 	{		
 	if(mess_data[0]==PARAM_UNECC_SET)
 		{
 		u_necc=mess_data[1];
 		}		
-	}
+	} 
+
 //if(ICA_EN)u_necc+=ica_u_necc;
 #endif
 
@@ -7547,60 +7764,64 @@ if(mess_find_unvol(MESS2CNTRL_HNDL))
 	else if(mess_data[0]==PARAM_CNTRL_STAT_FAST_REG)
 		{
 		#ifdef UKU_220_IPS_TERMOKOMPENSAT
-		if(load_U>u_necc)
+		if(bps_U>u_necc)
 			{
 			cntrl_hndl_plazma=11;
-			if(((bps_U-u_necc)>40)&&(cntrl_stat>0))cntrl_stat-=5;
-			else if((cntrl_stat)&&b1Hz_ch)cntrl_stat--;
+			if(((bps_U-u_necc)>40)&&(cntrl_stat_new>0))cntrl_stat_new-=5;
+			else if((cntrl_stat_new)&&b1Hz_ch)cntrl_stat_new--;
 			}
 		else if(bps_U<u_necc)
 			{
 			cntrl_hndl_plazma=12;	
-			if(((u_necc-bps_U)>40)&&(cntrl_stat<1015))cntrl_stat+=5;
-			else	if((cntrl_stat<1020)&&b1Hz_ch)cntrl_stat++;
+			if(((u_necc-bps_U)>40)&&(cntrl_stat_new<1015))cntrl_stat_new+=5;
+			else	if((cntrl_stat_new<1020)&&b1Hz_ch)cntrl_stat_new++;
 			}
 		#elif defined(UKU_220)
 		if(load_U>u_necc)
 			{
 			cntrl_hndl_plazma=13;
-			if(((load_U-u_necc)>40)&&(cntrl_stat>0))cntrl_stat-=5;
-			else if((cntrl_stat)&&b1Hz_ch)cntrl_stat--;
+			if(((load_U-u_necc)>40)&&(cntrl_stat_new>0))cntrl_stat_new-=5;
+			else if((cntrl_stat_new)&&b1Hz_ch)cntrl_stat_new--;
 			}
 		else if(load_U<u_necc)
 			{
 			cntrl_hndl_plazma=14;	
-			if(((u_necc-load_U)>40)&&(cntrl_stat<1015))cntrl_stat+=5;
-			else	if((cntrl_stat<1020)&&b1Hz_ch)cntrl_stat++;
+			if(((u_necc-load_U)>40)&&(cntrl_stat_new<1015))cntrl_stat_new+=5;
+			else	if((cntrl_stat_new<1020)&&b1Hz_ch)cntrl_stat_new++;
 			}
 		#elif defined(UKU_220_V2)
 		if(load_U>u_necc)
 			{
 			cntrl_hndl_plazma=15;
-			if(((load_U-u_necc)>40)&&(cntrl_stat>0))cntrl_stat-=5;
-			else if((cntrl_stat)&&b1Hz_ch)cntrl_stat--;
+			if(((load_U-u_necc)>40)&&(cntrl_stat_new>0))cntrl_stat_new-=5;
+			else if((cntrl_stat_new)&&b1Hz_ch)cntrl_stat_new--;
 			}
 		else if(load_U<u_necc)
 			{
 			cntrl_hndl_plazma=16;	
-			if(((u_necc-load_U)>40)&&(cntrl_stat<1015))cntrl_stat+=5;
-			else	if((cntrl_stat<1020)&&b1Hz_ch)cntrl_stat++;
+			if(((u_necc-load_U)>40)&&(cntrl_stat_new<1015))cntrl_stat_new+=5;
+			else	if((cntrl_stat_new<1020)&&b1Hz_ch)cntrl_stat_new++;
 			}
 		#else
 
 		if(load_U>u_necc)
 			{
 			cntrl_hndl_plazma=17;
-			if(((load_U-u_necc)>10)&&(cntrl_stat>0))cntrl_stat-=5;
-			else if((cntrl_stat)&&b1Hz_ch)cntrl_stat--;
+			if(((load_U-u_necc)>10)&&(cntrl_stat_new>0))cntrl_stat_new-=5;
+			else if((cntrl_stat_new)&&b1Hz_ch)cntrl_stat_new--;
 			}
 		else if(load_U<u_necc)
 			{
 			cntrl_hndl_plazma=18;	
-			if(((u_necc-load_U)>10)&&(cntrl_stat<1015))cntrl_stat+=5;
-			else	if((cntrl_stat<1020)&&b1Hz_ch)cntrl_stat++;
+			if(((u_necc-load_U)>10)&&(cntrl_stat_new<1015))cntrl_stat_new+=5;
+			else	if((cntrl_stat_new<1020)&&b1Hz_ch)cntrl_stat_new++;
 			}
 		#endif	
 	 	}
+
+	gran(&cntrl_stat_new,10,1010);			
+	cntrl_stat_old=cntrl_stat_new;
+	cntrl_stat=cntrl_stat_new;
 	}
 
 #ifdef UKU_220_IPS_TERMOKOMPENSAT

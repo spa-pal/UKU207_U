@@ -881,7 +881,7 @@ typedef enum {
 	iByps,iInv_tabl,iSet_bat_sel,
 	iBps_list,
 	iSpch_set,
-	iAvt_set_sel,iAvt_set,iSet_li_bat,
+	iAvt_set_sel,iAvt_set,iAvt_comm_set,iSet_li_bat,
 	iOut_volt_contr,iDop_rele_set,iBlok_ips_set,iIps_Curr_Avg_Set,
 	iRele_set,iRele_set_,
 	iFWabout, iSpecInf,
@@ -1778,7 +1778,7 @@ extern U8 tcp_connect_stat;
 
 //-----------------------------------------------
 //Высоковольтный выравнивающий заряд
-typedef enum  {hvsOFF,hvsSTEP1,hvsSTEP2,hvsSTEP3,hvsSTEP4,hvsWRK,hvsERR1,hvsERR2,hvsERR3,hvsERR4} enum_hv_vz_stat;
+typedef enum {hvsOFF,hvsSTEP1,hvsSTEP2,hvsSTEP3,hvsSTEP4,hvsWRK,hvsERR1,hvsERR2,hvsERR3,hvsERR4} enum_hv_vz_stat;
 extern enum_hv_vz_stat hv_vz_stat,hv_vz_stat_old;
 extern short hv_vz_stat_cnt;
 extern long hv_vz_wrk_cnt;
@@ -1788,6 +1788,19 @@ extern long hv_vz_up_cnt;
 //Блок выносной реле
 extern char bdr_transmit_stat;
 extern char bdr_avar_stat;
+
+//-----------------------------------------------
+//Установка напряжения автономной работы
+typedef enum {uassOFF,uassSTEP1,uassSTEP2,uassSTEP3,uassSTEP4} enum_uavt_set_stat;
+extern enum_uavt_set_stat uavt_set_stat, uavt_set_stat_old;
+typedef enum {uasrsGOOD,uasrsWRK,uasrsERR,uasrsSUCCESS} enum_uavt_set_result_stat;
+extern enum_uavt_set_result_stat uavt_set_result_stat;
+extern short u_max_temp,u_min_temp;
+extern char  uavt_bps_pntr;
+extern char  uavt_error_bps;
+extern char avt_plazma;
+extern char avt_error_bps;
+extern char uavt_set_error_cnt;
 
 extern short pvlk;
 //-----------------------------------------------
