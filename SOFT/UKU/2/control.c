@@ -536,8 +536,8 @@ if(spc_stat==spcVZ)
 						__ee_spc_stat=spcOFF;
 		lc640_write_int(EE_SPC_STAT,spcOFF);
 
-				hv_vz_stat=hvsOFF;
-		lc640_write(EE_HV_VZ_STAT,hvsOFF);
+//				hv_vz_stat=hvsOFF;
+//		lc640_write(EE_HV_VZ_STAT,hvsOFF);
 				vz_mem_hndl(0);
 				}
 			}
@@ -4767,7 +4767,7 @@ if(NUMBDR==1)
 			(sp_ch_stat==scsWRK))			bdr_avar_stat_temp|=(1<<ii_);
 		//Выравнивающий заряд
 		if((RELE_SET_MASK[ii_]&0x04)&&
-			(hv_vz_stat==scsWRK))			bdr_avar_stat_temp|=(1<<ii_);
+			(spc_stat==spcVZ))			bdr_avar_stat_temp|=(1<<ii_);
 		//Общая авария ЗВУ
 		if((RELE_SET_MASK[ii_]&0x08)&&
 			(avar_stat))					bdr_avar_stat_temp|=(1<<ii_);
@@ -7619,6 +7619,11 @@ else if(b1Hz_unh)
 
 #endif 
 //u_necc=2356;
+
+if((speedChIsOn)||(sp_ch_stat==scsWRK))
+	{
+	u_necc=speedChrgVolt;
+	}
 #endif//gran(&u_necc,400,UMAX);
 
 
@@ -7735,11 +7740,11 @@ if(mess_find_unvol(MESS2CNTRL_HNDL))
 	{
 	if(mess_data[0]==PARAM_CNTRL_STAT_PLUS)
 		{
-		cntrl_stat=cntrl_stat_old+mess_data[1];
+		cntrl_stat_new=cntrl_stat_old+mess_data[1];
 		}
 	else if(mess_data[0]==PARAM_CNTRL_STAT_MINUS)
 		{
-		cntrl_stat=cntrl_stat_old-mess_data[1];
+		cntrl_stat_new=cntrl_stat_old-mess_data[1];
 		}
 	else if(mess_data[0]==PARAM_CNTRL_STAT_STEP_DOWN)
 		{
@@ -8943,8 +8948,9 @@ if(sp_ch_stat==scsWRK)
 		sp_ch_stat=scsOFF;
 		speedz_mem_hndl(0);
 		}
+	#ifdef UKU_220_IPS_TERMOKOMPENSAT
 	if(sk_stat[0]==0)sp_ch_stat=scsERR2;
-	
+	#endif
 	}
 
 if(sp_ch_stat==scsERR1)		//Отсутствует вентиляция при включении
@@ -8988,9 +8994,20 @@ sp_ch_stat_old=sp_ch_stat;
 
 if(speedChrgAvtEn==1)
 	{
-	if((sp_ch_stat==scsOFF)&&(spc_stat==spcOFF)&&(vz1_stat==vz1sOFF)&&(vz2_stat==vz2sOFF))
+	if((sp_ch_stat==scsOFF)&&(spc_stat==spcOFF)
+		#ifdef UKU_220_IPS_TERMOKOMPENSAT
+		&&(vz1_stat==vz1sOFF)&&(vz2_stat==vz2sOFF)
+		#endif
+		)
 		{
-		if((load_U<u_necc)&&((u_necc-load_U)>speedChrgDU)&&(abs(Ib_ips_termokompensat/10-IZMAX)<5)&&(!speedChrgBlckStat))
+		if((load_U<u_necc)&&((u_necc-load_U)>speedChrgDU)
+		#ifdef UKU_220_IPS_TERMOKOMPENSAT
+		&&(abs(Ib_ips_termokompensat/10-IZMAX)<5)
+		#endif
+		#ifdef UKU_220_V2
+		&&(abs(bat[0]._Ib/10-IZMAX)<5)
+		#endif
+		&&(!speedChrgBlckStat))
 			{
 			speedChargeStartStop();
 			speedz_mem_hndl(5);
@@ -9098,9 +9115,17 @@ if(sp_ch_stat!=scsOFF)
 
 else
 	{
-	if((speedChrgBlckStat==0)&&(spc_stat==spcOFF)&&(vz1_stat==vz1sOFF)&&(vz2_stat==vz2sOFF))
+	if((speedChrgBlckStat==0)&&(spc_stat==spcOFF)
+		#ifdef UKU_220_IPS_TERMOKOMPENSAT
+		&&(vz1_stat==vz1sOFF)&&(vz2_stat==vz2sOFF)
+		#endif
+		)
 		{
+		#ifdef UKU_220_IPS_TERMOKOMPENSAT
 		sp_ch_stat=scsSTEP1;
+		#else
+		sp_ch_stat=scsWRK;
+		#endif
 		speedz_mem_hndl(1);
 		}
 	else 
@@ -9121,6 +9146,12 @@ if(hv_vz_stat==hvsOFF)
 	{
 	if((sk_stat[1]==1)&&(sk_stat_old[1]=0))
 	} */
+if(hv_vz_stat!=hvsOFF)
+	{
+	hv_vz_stat=hvsOFF; 	
+	lc640_write(EE_HV_VZ_STAT,hvsOFF);
+	}
+
 if(hv_vz_stat==hvsSTEP1)
 	{
 	if(hv_vz_stat_old!=hv_vz_stat)
