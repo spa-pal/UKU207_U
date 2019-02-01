@@ -17359,13 +17359,13 @@ else if(ind==iMn_220_V2)
 	if(but==butD)
 		{
 		sub_ind++;
-		gran_char(&sub_ind,0,9+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0));
+		gran_char(&sub_ind,0,10+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0));
 		}
 		
 	else if(but==butU)
 		{
 		sub_ind--;
-		gran_char(&sub_ind,0,9+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0));
+		gran_char(&sub_ind,0,10+NUMBAT+NUMIST+NUMINV+(NUMEXT!=0));
 		}	
 
 	else if(but==butL)
