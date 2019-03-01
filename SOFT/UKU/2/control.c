@@ -7703,7 +7703,7 @@ if((speedChIsOn)||(sp_ch_stat==scsWRK))IZMAX_=speedChrgCurr;
 if(vz1_stat==vz1sWRK) IZMAX_=UZ_IMAX;
 if(vz2_stat==vz2sWRK1) IZMAX_=FZ_IMAX1;
 if(vz2_stat==vz2sWRK2) IZMAX_=FZ_IMAX2;
-if(spc_stat==spcVZ) IZMAX_=IMAX_VZ;
+//if(spc_stat==spcVZ) IZMAX_=IMAX_VZ;
 
 if(cntrl_stat_blok_cnt)cntrl_stat_blok_cnt--;
 if(cntrl_stat_blok_cnt_)cntrl_stat_blok_cnt_--;
@@ -7763,7 +7763,7 @@ if(mess_find_unvol(MESS2CNTRL_HNDL))
 		}
 	else if(mess_data[0]==PARAM_CNTRL_STAT_SET)
 		{
-		cntrl_stat=mess_data[1];
+		cntrl_stat_new=mess_data[1];
 		}
 
 	else if(mess_data[0]==PARAM_CNTRL_STAT_FAST_REG)

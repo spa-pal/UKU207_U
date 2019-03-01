@@ -823,7 +823,7 @@ else if(dt[0]=='S')
     	lcd_buffer[iii++]='Á';
     	lcd_buffer[iii++]='Ï';
     	lcd_buffer[iii++]='Ñ';
-		lcd_buffer[iii++]='#';
+		lcd_buffer[iii++]='N';
  	if(dt[1]<9)
     		{
     		lcd_buffer[iii++]=0x31+dt[1];

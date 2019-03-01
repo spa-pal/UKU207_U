@@ -64,6 +64,7 @@ ZV_ON=lc640_read_int(EE_ZV_ON);
 IKB=lc640_read_int(EE_IKB);
 UVZ=lc640_read_int(EE_UVZ);
 IMAX_VZ=lc640_read_int(EE_IMAX_VZ);
+SMART_SPC=lc640_read_int(EE_SMART_SPC);
 IMAX=lc640_read_int(EE_IMAX);
 IMIN=lc640_read_int(EE_IMIN);
 APV_ON=lc640_read_int(EE_APV_ON);

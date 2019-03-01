@@ -865,7 +865,7 @@ typedef enum {
 	iK_t_ext,iK_t_3U,iK_t_ext_6U,
 	iAv_view,
 	iBatLogKe,iJ_bat_ke,iBatLogVz,iJ_bat_vz,iBatLogWrk,
-	iExtern,iExtern_3U,iExtern_GLONASS,iExtern_KONTUR,iExtern_6U,iExtern_220,
+	iExtern,iExtern_3U,iExtern_GLONASS,iExtern_KONTUR,iExtern_6U,iExtern_220,iExtern_220_ZVU,
 	iK_power_net,
 	iExt_set,iExt_set_3U,iExt_set_GLONASS,iExt_set_TELECORE2015,
 	iExt_dt,
@@ -1021,6 +1021,7 @@ extern signed short NUMAVT;
 extern signed short NUMMAKB;
 extern signed short NUMBYPASS;
 extern signed short NUMBDR;
+extern signed short SMART_SPC;
 extern signed short U_OUT_KONTR_MAX;
 extern signed short U_OUT_KONTR_MIN;
 extern signed short U_OUT_KONTR_DELAY;

@@ -111,8 +111,8 @@ for(i=0;i<4;i++)
 	else	   		SET_REG(avar_stat,0,24+i,1);
 	}
 
-if(uout_av)			SET_REG(avar_stat,1,28,1);
-else	   			SET_REG(avar_stat,0,28,1);
+//if(uout_av)			SET_REG(avar_stat,1,28,1);
+//else	   			SET_REG(avar_stat,0,28,1);
 
 
 avar_stat_new=(avar_stat^avar_stat_old)&avar_stat;

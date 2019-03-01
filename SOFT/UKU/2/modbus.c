@@ -671,7 +671,27 @@ if(crc16_calculated==crc16_incapsulated)
 				//plazma1000[2]++;
 				}
 
-			modbus_hold_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,1,MODBUS_RTU_PROT);
+			//modbus_hold_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,1,MODBUS_RTU_PROT);
+				{
+			/*if(prot==MODBUS_RTU_PROT)
+				{*/
+				mem_copy(modbus_tx_buff,modbus_rx_buffer,8);
+	
+				for (i=0;i<(8);i++)
+					{
+					putchar0(modbus_tx_buff[i]);
+					}
+
+				for (i=0;i<(8);i++)
+					{
+					putchar_sc16is700(modbus_tx_buff[i]);
+					}
+			/*	}
+			else if(prot==MODBUS_TCP_PROT)
+				{
+				modbus_tcp_out_ptr=(char*)&modbus_registers[(reg_adr-1)*2];
+				}*/
+				}
 			}
 		} 
 	else if(modbus_an_buffer[0]==ICA_MODBUS_ADDRESS)
