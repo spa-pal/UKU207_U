@@ -886,7 +886,8 @@ typedef enum {
 	iRele_set,iRele_set_,
 	iFWabout, iSpecInf,
 	iHV_STEP2_1,iHV_STEP2_2,iVZ1_STEP2_1,iVZ1_STEP2_2,iVZ2_STEP2_1,iVZ2_STEP2_2,
-	iSet_load_off
+	iSet_load_off,
+	iSet_bat_point
 	}i_enum;
 
 typedef struct  
@@ -1162,6 +1163,16 @@ extern signed short RELE_VENT_LOGIC;
 extern signed short MODBUS_ADRESS;
 extern signed short MODBUS_BAUDRATE;
 extern signed short BAT_LINK;
+
+#ifdef UKU_ZVU
+extern signed short BAT_C_POINT_1_6;  	//Емкость батареи при разряде 1/6 часа
+extern signed short BAT_C_POINT_1_2;  	//Емкость батареи при разряде 1/2 часа
+extern signed short BAT_C_POINT_1;		//Емкость батареи при разряде 1 час
+extern signed short BAT_C_POINT_3;		//Емкость батареи при разряде 3 часа
+extern signed short BAT_C_POINT_5;		//Емкость батареи при разряде 5 часов
+extern signed short BAT_C_POINT_10;	//Емкость батареи при разряде 10 часов
+extern signed short BAT_C_POINT_20;	//Емкость батареи при разряде 20 часов
+#endif
 
 //***********************************************
 //Состояние батарей

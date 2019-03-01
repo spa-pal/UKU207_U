@@ -7898,7 +7898,7 @@
             <uThumb>0</uThumb>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>UKU_220_IPS_TERMOKOMPENSAT, UKU2071x</Define>
+              <Define>UKU_220_IPS_TERMOKOMPENSAT, UKU2071x, UKU_ZVU</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>

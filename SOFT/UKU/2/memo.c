@@ -341,6 +341,14 @@ hv_vz_stat=(enum_hv_vz_stat)lc640_read_int(EE_HV_VZ_STAT);
 vz1_stat=(enum_vz1_stat)lc640_read_int(EE_VZ1_STAT);
 vz2_stat=(enum_vz2_stat)lc640_read_int(EE_VZ2_STAT);
 VZ_KIND=lc640_read_int(EE_VZ_KIND);
+BAT_C_POINT_1_6=lc640_read_int(EE_BAT_C_POINT_1_6);
+BAT_C_POINT_1_2=lc640_read_int(EE_BAT_C_POINT_1_2);
+BAT_C_POINT_1=lc640_read_int(EE_BAT_C_POINT_1);				
+BAT_C_POINT_3=lc640_read_int(EE_BAT_C_POINT_3);
+BAT_C_POINT_5=lc640_read_int(EE_BAT_C_POINT_5);
+BAT_C_POINT_10=lc640_read_int(EE_BAT_C_POINT_10);
+BAT_C_POINT_20=lc640_read_int(EE_BAT_C_POINT_20);
+
 
 for(i=0;i<64;i++)
 	{

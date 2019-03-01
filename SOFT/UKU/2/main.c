@@ -335,6 +335,15 @@ signed short MODBUS_ADRESS;
 signed short MODBUS_BAUDRATE;
 signed short BAT_LINK;
 
+#ifdef UKU_ZVU
+signed short BAT_C_POINT_1_6;  	//Емкость батареи при разряде 1/6 часа
+signed short BAT_C_POINT_1_2;  	//Емкость батареи при разряде 1/2 часа
+signed short BAT_C_POINT_1;		//Емкость батареи при разряде 1 час
+signed short BAT_C_POINT_3;		//Емкость батареи при разряде 3 часа
+signed short BAT_C_POINT_5;		//Емкость батареи при разряде 5 часов
+signed short BAT_C_POINT_10;	//Емкость батареи при разряде 10 часов
+signed short BAT_C_POINT_20;	//Емкость батареи при разряде 20 часов
+#endif
 
 //***********************************************
 //Состояние батарей
@@ -8497,9 +8506,10 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	ptrs[62]=		" Сетевые вводы      ";
 	ptrs[63]=		" Спецзаряды с откл.-";
 	ptrs[64]=		" нием нагрузки W    ";	 
-	ptrs[65]=		" Выход              ";	
-    ptrs[66]=		" Калибровки         "; 
-    ptrs[67]=		"                    ";        
+	ptrs[65]=		" Батарея            ";	
+	ptrs[66]=		" Выход              ";
+    ptrs[67]=		" Калибровки         "; 
+    ptrs[68]=		"                    ";        
     
 	
 	if((sub_ind-index_set)>2)index_set=sub_ind-2;
@@ -16032,6 +16042,39 @@ else if(ind==iSet_load_off)
 	int2lcdyx(tloaddisable_cmnd,0,15,0);
 	int2lcdyx(load_off_stat,0,11,0);
 	}
+
+#ifdef UKU_ZVU
+else if(ind==iSet_bat_point)
+	{
+	char ptr_ptrs=0;
+	ptrs[ptr_ptrs++]=		" ПАРАМЕТРЫ БАТАРЕИ  ";
+    ptrs[ptr_ptrs++]=  	    " C1/6          !А*ч "; 
+	ptrs[ptr_ptrs++]=  	    " C1/2          @А*ч ";
+	ptrs[ptr_ptrs++]=		" C1            #А*ч ";	           
+	ptrs[ptr_ptrs++]=		" C3            $А*ч ";
+	ptrs[ptr_ptrs++]=  	    " C5            %А*ч ";
+	ptrs[ptr_ptrs++]=  	    " C10           ^А*ч ";
+	ptrs[ptr_ptrs++]=  	    " C20           &А*ч ";
+	ptrs[ptr_ptrs++]=  	    " Выход              ";
+
+	bgnd_par(	ptrs[0],
+				ptrs[index_set],
+				ptrs[index_set+1],
+				ptrs[index_set+2]);
+
+	if(sub_ind-index_set>1)index_set=sub_ind-1;
+	else if (sub_ind<index_set)index_set=sub_ind;
+	pointer_set(1);
+
+	int2lcd(BAT_C_POINT_1_6,'!',1);
+    int2lcd(BAT_C_POINT_1_2,'@',1);
+    int2lcd(BAT_C_POINT_1,'#',1);
+    int2lcd(BAT_C_POINT_3,'$',1);
+	int2lcd(BAT_C_POINT_5,'%',1);
+	int2lcd(BAT_C_POINT_10,'^',1);
+	int2lcd(BAT_C_POINT_20,'&',1);
+	}
+#endif
 
 if(show_mess_cnt)
 	{
@@ -24739,7 +24782,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
         	{
             sub_ind=65;
 		    }																				
-		gran_char(&sub_ind,0,66);
+		gran_char(&sub_ind,0,67);
 		//gran_char(&sub_ind,0,56+(num_rki!=0)+(num_net_in!=0));
 		}
 	else if(but==butU)
@@ -24799,7 +24842,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
         	{
             sub_ind=63;
 		    }
-		gran_char(&sub_ind,0,66);
+		gran_char(&sub_ind,0,67);
 		//gran_char(&sub_ind,0,54+(num_rki!=0)+(num_net_in!=0));
 		}
 	else if(but==butD_)
@@ -25362,7 +25405,15 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 		lc640_write_int(EE_SMART_SPC,SMART_SPC);
 		speed=1;
 		}
-	else if((sub_ind==65) || (sub_ind==5))
+	else if(sub_ind==65)
+		{
+		if(num_net_in) 
+			{ 
+			tree_up(iSet_bat_point,0,0,0); 
+			ret(1000);
+			}
+		}
+	else if((sub_ind==66) || (sub_ind==5))
 		{
 		if(but==butE)
 		     {
@@ -25370,7 +25421,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 		     ret(0);
 		     }
 		}
-	else if(sub_ind==66) 
+	else if(sub_ind==67) 
 		{
 		if(but==butE)
 		    {	
@@ -37760,6 +37811,98 @@ else if(ind==iSet_load_off)
 			ret(0);
 			}
 		}
+	}
+else if(ind==iSet_bat_point)
+	{
+	ret(1000);
+	if(but==butU)
+		{
+		sub_ind--;
+		gran_char(&sub_ind,0,7);
+		}
+	else if (but==butD)
+		{
+		sub_ind++;
+		gran_char(&sub_ind,0,7);
+		}
+	else if(but==butE)
+		{
+		if(sub_ind==7)
+			{
+			tree_down(0,0);
+          	ret(0);
+			}
+		}
+	else if(sub_ind==0)
+	     {
+	     if(but==butR)BAT_C_POINT_1_6++;
+	     else if(but==butR_)BAT_C_POINT_1_6=(BAT_C_POINT_1_6/10+1)*10;
+	     else if(but==butL)BAT_C_POINT_1_6--;
+	     else if(but==butL_)BAT_C_POINT_1_6=(BAT_C_POINT_1_6/10-1)*10;
+	     gran(&BAT_C_POINT_1_6,10,10000);
+	     lc640_write_int(EE_BAT_C_POINT_1_6,BAT_C_POINT_1_6);
+	     speed=1;
+	     }
+	else if(sub_ind==1)
+	     {
+	     if(but==butR)BAT_C_POINT_1_2++;
+	     else if(but==butR_)BAT_C_POINT_1_2=(BAT_C_POINT_1_2/10+1)*10;
+	     else if(but==butL)BAT_C_POINT_1_2--;
+	     else if(but==butL_)BAT_C_POINT_1_2=(BAT_C_POINT_1_2/10-1)*10;
+	     gran(&BAT_C_POINT_1_2,10,10000);
+	     lc640_write_int(EE_BAT_C_POINT_1_2,BAT_C_POINT_1_2);
+	     speed=1;
+	     }
+	else if(sub_ind==2)
+	     {
+	     if(but==butR)BAT_C_POINT_1++;
+	     else if(but==butR_)BAT_C_POINT_1=(BAT_C_POINT_1/10+1)*10;
+	     else if(but==butL)BAT_C_POINT_1--;
+	     else if(but==butL_)BAT_C_POINT_1=(BAT_C_POINT_1/10-1)*10;
+	     gran(&BAT_C_POINT_1,10,10000);
+	     lc640_write_int(EE_BAT_C_POINT_1,BAT_C_POINT_1);
+		 speed=1;
+	     }
+	else if(sub_ind==3)
+	     {
+	     if(but==butR)BAT_C_POINT_3++;
+	     else if(but==butR_)BAT_C_POINT_3=(BAT_C_POINT_3/10+1)*10;
+	     else if(but==butL)BAT_C_POINT_3--;
+	     else if(but==butL_)BAT_C_POINT_3=(BAT_C_POINT_3/10-1)*10;
+	     gran(&BAT_C_POINT_3,10,10000);
+	     lc640_write_int(EE_BAT_C_POINT_3,BAT_C_POINT_3);
+		 speed=1;
+	     }
+	else if(sub_ind==3)
+	     {
+	     if(but==butR)BAT_C_POINT_5++;
+	     else if(but==butR_)BAT_C_POINT_5=(BAT_C_POINT_5/10+1)*10;
+	     else if(but==butL)BAT_C_POINT_5--;
+	     else if(but==butL_)BAT_C_POINT_5=(BAT_C_POINT_5/10-1)*10;
+	     gran(&BAT_C_POINT_5,10,10000);
+	     lc640_write_int(EE_BAT_C_POINT_5,BAT_C_POINT_5);
+		 speed=1;
+	     }
+	else if(sub_ind==3)
+	     {
+	     if(but==butR)BAT_C_POINT_10++;
+	     else if(but==butR_)BAT_C_POINT_10=(BAT_C_POINT_10/10+1)*10;
+	     else if(but==butL)BAT_C_POINT_10--;
+	     else if(but==butL_)BAT_C_POINT_10=(BAT_C_POINT_10/10-1)*10;
+	     gran(&BAT_C_POINT_10,10,10000);
+	     lc640_write_int(EE_BAT_C_POINT_10,BAT_C_POINT_10);
+		 speed=1;
+	     }
+	else if(sub_ind==3)
+	     {
+	     if(but==butR)BAT_C_POINT_20++;
+	     else if(but==butR_)BAT_C_POINT_20=(BAT_C_POINT_20/10+1)*10;
+	     else if(but==butL)BAT_C_POINT_20--;
+	     else if(but==butL_)BAT_C_POINT_20=(BAT_C_POINT_3/20-1)*10;
+	     gran(&BAT_C_POINT_20,10,10000);
+	     lc640_write_int(EE_BAT_C_POINT_20,BAT_C_POINT_20);
+		 speed=1;
+	     }
 	}
 #endif		
 but_an_end:
