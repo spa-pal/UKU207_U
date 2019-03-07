@@ -174,6 +174,19 @@ extern long vz2_wrk_cnt;
 extern long vz2_up_cnt;
 extern signed short vz2_stat_ph2_cnt;
 
+//***********************************************
+//Обслуживание батареи ЗВУ
+extern short I_from_t_table[7];
+extern char bat_hndl_zvu_init;
+extern short bat_hndl_i;
+extern long bat_hndl_t_razr;
+extern long bat_hndl_zvu_Q;
+extern long bat_hndl_proc_razr;
+extern long bat_hndl_remain_time;
+extern short bat_hndl_t_razr_hour;
+extern short bat_hndl_t_razr_min;
+extern short bat_hndl_t_razr_mininhour;
+
 extern char cntrl_hndl_plazma;
 
 extern short plazma_ica1,plazma_ica2;

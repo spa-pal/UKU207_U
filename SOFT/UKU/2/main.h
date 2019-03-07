@@ -844,7 +844,7 @@ typedef enum {
 	iNET_IN, iSetNetIn, iK_Net_In,//oleg_start 
 	iSrv_sl,iNet,iNet3,iNetEM,iNet3LIN,iNet_IPS_SGEP_GAZPROM,
 	iSet,iSet_3U,iSet_RSTKM,iSet_GLONASS,iSet_KONTUR,iSet_6U,iSet_220,iSet_220_IPS_TERMOKOMPENSAT,iSet_220_V2,iInv_set_sel,
-	iBat, iBat_simple, iBat_li, iBat_SacredSun, iBat_universe, iInv_set, iSet_TELECORE2015, iSet_TELECORE2017, iSet_IPS_SGEP_GAZPROM,
+	iBat, iBat_simple, iBat_li, iBat_SacredSun, iBat_universe, iInv_set, iSet_TELECORE2015, iSet_TELECORE2017, iSet_IPS_SGEP_GAZPROM, iBat_ZVU,
 	iMakb,
 	iBps,iBps_elteh,iS2,iSet_prl,iK_prl,iDnd,iPrlVZ1,iPrlVZ2,
 	iK,iK_3U,iK_RSTKM,iK_GLONASS,iK_KONTUR,iK_6U,iK_220,iK_220_380,iK_220_IPS_TERMOKOMPENSAT,iK_220_IPS_TERMOKOMPENSAT_IB,iK_TELECORE,iK_IPS_SGEP_GAZPROM,
@@ -1170,8 +1170,15 @@ extern signed short BAT_C_POINT_1_2;  	//Емкость батареи при разряде 1/2 часа
 extern signed short BAT_C_POINT_1;		//Емкость батареи при разряде 1 час
 extern signed short BAT_C_POINT_3;		//Емкость батареи при разряде 3 часа
 extern signed short BAT_C_POINT_5;		//Емкость батареи при разряде 5 часов
-extern signed short BAT_C_POINT_10;	//Емкость батареи при разряде 10 часов
-extern signed short BAT_C_POINT_20;	//Емкость батареи при разряде 20 часов
+extern signed short BAT_C_POINT_10;		//Емкость батареи при разряде 10 часов
+extern signed short BAT_C_POINT_20;		//Емкость батареи при разряде 20 часов
+extern signed short BAT_U_END_1_6;  	//Конечное напряжение батареи при разряде 1/6 часа
+extern signed short BAT_U_END_1_2;  	//Конечное напряжение батареи при разряде 1/2 часа
+extern signed short BAT_U_END_1;  		//Конечное напряжение батареи при разряде 1 час
+extern signed short BAT_U_END_3;  		//Конечное напряжение батареи при разряде 3 часа
+extern signed short BAT_U_END_5;  		//Конечное напряжение батареи при разряде 5 часов
+extern signed short BAT_U_END_10;  		//Конечное напряжение батареи при разряде 10 часов
+extern signed short BAT_U_END_20;  		//Конечное напряжение батареи при разряде 20 часов
 #endif
 
 //***********************************************

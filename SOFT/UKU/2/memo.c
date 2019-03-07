@@ -86,6 +86,9 @@ IZMAX=lc640_read_int(EE_IZMAX);
 U0B=lc640_read_int(EE_U0B);
 TZAS=lc640_read_int(EE_TZAS);
 NUMIST=lc640_read_int(EE_NUMIST);
+#ifdef UKU_ZVU
+NUMBAT=lc640_read_int(EE_NUMBAT);
+#endif
 NUMBAT_TELECORE=lc640_read_int(EE_NUMBAT_TELECORE);
 //gran(&NUMIST,0,8);
 NUMINV=lc640_read_int(EE_NUMINV);
@@ -203,10 +206,12 @@ TELECORE2017_T4=lc640_read_int(EE_TELECORE2017_T4);
 TELECORE2017_USTART=lc640_read_int(EE_TELECORE2017_USTART);
 #endif
 BAT_IS_ON[0]=(enum_bat_is_on)lc640_read_int(EE_BAT1_IS_ON);
-BAT_IS_ON[1]=(enum_bat_is_on)lc640_read_int(EE_BAT2_IS_ON);
+BAT_IS_ON[1]=(enum_bat_is_on)lc640_read_int(EE_BAT2_IS_ON);	
+#ifndef UKU_ZVU
 NUMBAT=0;
 if(BAT_IS_ON[0]==bisON)NUMBAT+=1;
 if(BAT_IS_ON[1]==bisON)NUMBAT+=1;
+#endif
 
 BAT_DAY_OF_ON[0]=lc640_read_int(EE_BAT1_DAY_OF_ON);
 BAT_MONTH_OF_ON[0]=lc640_read_int(EE_BAT1_MONTH_OF_ON);
@@ -348,7 +353,13 @@ BAT_C_POINT_3=lc640_read_int(EE_BAT_C_POINT_3);
 BAT_C_POINT_5=lc640_read_int(EE_BAT_C_POINT_5);
 BAT_C_POINT_10=lc640_read_int(EE_BAT_C_POINT_10);
 BAT_C_POINT_20=lc640_read_int(EE_BAT_C_POINT_20);
-
+BAT_U_END_1_6=lc640_read_int(EE_BAT_U_END_1_6);
+BAT_U_END_1_2=lc640_read_int(EE_BAT_U_END_1_2);
+BAT_U_END_1=lc640_read_int(EE_BAT_U_END_1);				
+BAT_U_END_3=lc640_read_int(EE_BAT_U_END_3);
+BAT_U_END_5=lc640_read_int(EE_BAT_U_END_5);
+BAT_U_END_10=lc640_read_int(EE_BAT_U_END_10);
+BAT_U_END_20=lc640_read_int(EE_BAT_U_END_20);
 
 for(i=0;i<64;i++)
 	{

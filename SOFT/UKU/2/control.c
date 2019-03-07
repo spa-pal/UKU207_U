@@ -266,6 +266,20 @@ signed short vz2_stat_ph2_cnt;
 
 short plazma_ica1,plazma_ica2;
 char rele_hndl_plazma[3];
+
+//***********************************************
+//Обслуживание батареи ЗВУ
+short I_from_t_table[7];
+char bat_hndl_zvu_init=0;
+short bat_hndl_i;
+long bat_hndl_t_razr;
+long bat_hndl_zvu_Q;
+long bat_hndl_proc_razr;
+long bat_hndl_remain_time;
+short bat_hndl_t_razr_hour;
+short bat_hndl_t_razr_min;
+short bat_hndl_t_razr_mininhour;
+
 //-----------------------------------------------
 void ke_start(char in)
 {          
@@ -343,6 +357,161 @@ else
 	}
 }
 
+#ifdef UKU_ZVU
+//-----------------------------------------------
+void ke_drv(void)
+{
+static char ke_drv_cnt_10s;
+static short i_bat_buff[6];
+static char i_bat_buff_cnt;
+short ke_drv_i_temp;
+short ke_drv_i_avg;
+char i;
+short ke_drv_i_temp_temp;
+
+if(bat_hndl_zvu_ke_init==1)	  //Инициализация при включении контроля емкости 
+	{
+	
+	i_bat_buff[0]=0;
+	i_bat_buff[0]=0;
+	i_bat_buff[0]=0;
+	i_bat_buff[0]=0;
+	i_bat_buff[0]=0;
+	i_bat_buff[0]=0;
+	i_bat_buff_cnt=0;
+
+	bat_hndl_zvu_ke_init=0;
+	}
+
+
+
+
+if(spc_stat==spcKE)
+	{
+	ke_drv_i_temp=-Ib_ips_termokompensat/10;
+	if(ke_drv_i_temp<0)ke_drv_i_temp=0;
+
+	if(++ke_drv_cnt_10s>10)
+		{
+		ke_drv_cnt_10s=0;
+
+		i_bat_buff[i_bat_buff_cnt]=ke_drv_i_temp;
+		ke_drv_i_temp_temp=0;
+		for(i=0;i<6;i++)
+			{
+			ke_drv_i_temp_temp+=i_bat_buff[i];
+			}
+		ke_drv_i_avg=ke_drv_i_temp_temp/6;
+
+		I_from_t_table[0]=BAT_C_POINT_1_6*6; //Ток при котором батарея разрядится за 1/6 часа (0.1А)
+		I_from_t_table[1]=BAT_C_POINT_1_2*2; //Ток при котором батарея разрядится за 1/2 часа (0.1А)
+		I_from_t_table[2]=BAT_C_POINT_1; //Ток при котором батарея разрядится за 1 час (0.1А)
+		I_from_t_table[3]=BAT_C_POINT_3/3; //Ток при котором батарея разрядится за 3 часа (0.1А)
+		I_from_t_table[4]=BAT_C_POINT_5/5; //Ток при котором батарея разрядится за 5 часов (0.1А)
+		I_from_t_table[5]=BAT_C_POINT_10/10; //Ток при котором батарея разрядится за 10 часов (0.1А)
+		I_from_t_table[6]=BAT_C_POINT_20/20; //Ток при котором батарея разрядится за 20 часов (0.1А)
+		
+		bat_hndl_i_temp=ke_drv_i_avg;
+		for(i=0;i<7;i++)
+			{
+			if(bat_hndl_i_temp>=I_from_t_table[i])
+				{
+				break;
+				}
+			}
+		 if(i==0) bat_hndl_t_razr=bat_hndl_t_razr_const[0];
+		 else if((i>=1)&&(i<7))
+		 	{
+			short i1,i2;
+			i1=I_from_t_table[i-1]-bat_hndl_i_temp;
+			i2=I_from_t_table[i-1]-I_from_t_table[i];
+			bat_hndl_t_razr=bat_hndl_t_razr_const[i]-bat_hndl_t_razr_const[i-1];
+			bat_hndl_t_razr*=(long)i1;
+			bat_hndl_t_razr/=(long)i2;
+			bat_hndl_t_razr+=bat_hndl_t_razr_const[i-1];
+			}
+		else if(i>=7)
+			{
+			bat_hndl_t_razr=bat_hndl_t_razr_const[6];
+			}
+		bat_hndl_proc_razr=1000000L/bat_hndl_t_razr;
+
+		if(bat_hndl_zvu_Q)bat_hndl_zvu_Q-=bat_hndl_proc_razr;
+		else bat_hndl_zvu_Q=0L;
+
+		bat_hndl_t_razr_hour=(short)(bat_hndl_remain_time/3600L);
+		bat_hndl_t_razr_min=(short)(bat_hndl_remain_time/60L);
+		bat_hndl_t_razr_mininhour=bat_hndl_t_razr_min%60L;
+
+
+
+		if(++i_bat_buff_cnt==6)
+		}
+
+
+
+	if(spc_phase==0)
+		{
+		mess_send(MESS2BAT_HNDL,PARAM_BAT_MASK_OFF_AFTER_2SEC,(1<<(1-spc_bat)),20);
+		mess_send(MESS2BPS_HNDL,PARAM_BPS_ALL_OFF_AFTER_2SEC,0xffff,20);
+
+		bat[spc_bat]._zar_cnt_ke+=abs(bat[spc_bat]._Ib);
+	    	
+		if(bat[spc_bat]._zar_cnt_ke>=AH_CONSTANT)
+			{
+			bat[spc_bat]._zar_cnt_ke-=AH_CONSTANT;
+			lc640_write_int(ADR_EE_BAT_ZAR_CNT_KE[spc_bat],lc640_read_int(ADR_EE_BAT_ZAR_CNT_KE[spc_bat])+1);
+			}
+		}
+
+	else if(spc_phase==1)
+		{
+		mess_send(MESS2BAT_HNDL,PARAM_BAT_MASK_OFF_AFTER_2SEC,(1<<(1-spc_bat)),20);
+		}
+
+	if(bat[spc_bat]._Ub<(USIGN*10))
+		{
+		cnt_end_ke++;
+		if(cnt_end_ke>=30)
+			{
+			
+			if((spc_stat==spcKE)&&(spc_phase==0))
+				{
+				lc640_write_int(ADR_EE_BAT_C_REAL[spc_bat],lc640_read_int(ADR_EE_BAT_ZAR_CNT_KE[spc_bat]));
+				ke_mem_hndl(spc_bat,lc640_read_int(ADR_EE_BAT_ZAR_CNT_KE[spc_bat]));
+				lc640_write_int(ADR_EE_BAT_ZAR_CNT[spc_bat],0);
+				cntrl_stat=50;
+				cntrl_stat_old=50;
+				}
+
+			if((BAT_IS_ON[1-spc_bat]) == bisON)
+				{
+				spc_phase=1;
+				__ee_spc_phase=1;
+				lc640_write_int(EE_SPC_PHASE,1);
+				}			
+			else
+				{
+				spc_stat=spcOFF;
+				__ee_spc_stat=spcOFF;
+				lc640_write_int(EE_SPC_STAT,spcOFF);
+				}
+			}
+		}
+	else cnt_end_ke=0;
+
+	if((bat[spc_bat]._Ub>=bat[1-spc_bat]._Ub)&&(spc_phase==1))
+		{
+		spc_stat=spcOFF;
+		__ee_spc_stat=spcOFF;
+		lc640_write_int(EE_SPC_STAT,spcOFF);
+		}
+	}
+			
+}
+#endif
+
+#ifndef UKU_ZVU
 //-----------------------------------------------
 void ke_drv(void)
 {
@@ -408,6 +577,7 @@ if(spc_stat==spcKE)
 	}
 			
 }
+#endif
 
 //-----------------------------------------------
 char vz_start(char hour)
@@ -6947,6 +7117,90 @@ temp_SS=bat[in]._Ub/2;
 #endif
 
 }
+
+#ifdef UKU_ZVU
+//-----------------------------------------------
+void bat_hndl_zvu(void)
+{
+char i;
+short bat_hndl_i_temp;
+const long bat_hndl_t_razr_const[7]={600L,1800L,3600L,10800L,18000L,36000L,72000L};
+
+//Ib_ips_termokompensat=-1051;
+ 
+if(bat_hndl_zvu_init==0)
+	{
+	//Инициализация при включении системы
+	bat_hndl_zvu_Q=(long)lc640_read_int(EE_BAT1_ZAR_CNT);
+	if((bat_hndl_zvu_Q>100L)||(bat_hndl_zvu_Q<0L)) bat_hndl_zvu_Q=100L;
+	bat_hndl_zvu_Q*=10000L;
+
+	bat_hndl_zvu_init=1;
+	}
+else 
+	{
+	if(Ib_ips_termokompensat<-IKB)
+		{	
+		bat_hndl_i=-Ib_ips_termokompensat;
+		I_from_t_table[0]=BAT_C_POINT_1_6*6; //Ток при котором батарея разрядится за 1/6 часа (0.1А)
+		I_from_t_table[1]=BAT_C_POINT_1_2*2; //Ток при котором батарея разрядится за 1/2 часа (0.1А)
+		I_from_t_table[2]=BAT_C_POINT_1; //Ток при котором батарея разрядится за 1 час (0.1А)
+		I_from_t_table[3]=BAT_C_POINT_3/3; //Ток при котором батарея разрядится за 3 часа (0.1А)
+		I_from_t_table[4]=BAT_C_POINT_5/5; //Ток при котором батарея разрядится за 5 часов (0.1А)
+		I_from_t_table[5]=BAT_C_POINT_10/10; //Ток при котором батарея разрядится за 10 часов (0.1А)
+		I_from_t_table[6]=BAT_C_POINT_20/20; //Ток при котором батарея разрядится за 20 часов (0.1А)
+		
+		bat_hndl_i_temp=bat_hndl_i/10;
+		for(i=0;i<7;i++)
+			{
+			if(bat_hndl_i_temp>=I_from_t_table[i])
+				{
+				break;
+				}
+			}
+		 if(i==0) bat_hndl_t_razr=bat_hndl_t_razr_const[0];
+		 else if((i>=1)&&(i<7))
+		 	{
+			short i1,i2;
+			i1=I_from_t_table[i-1]-bat_hndl_i_temp;
+			i2=I_from_t_table[i-1]-I_from_t_table[i];
+			bat_hndl_t_razr=bat_hndl_t_razr_const[i]-bat_hndl_t_razr_const[i-1];
+			bat_hndl_t_razr*=(long)i1;
+			bat_hndl_t_razr/=(long)i2;
+			bat_hndl_t_razr+=bat_hndl_t_razr_const[i-1];
+			}
+		else if(i>=7)
+			{
+			bat_hndl_t_razr=bat_hndl_t_razr_const[6];
+			}
+		bat_hndl_proc_razr=1000000L/bat_hndl_t_razr;
+
+		if(bat_hndl_zvu_Q)bat_hndl_zvu_Q-=bat_hndl_proc_razr;
+		else bat_hndl_zvu_Q=0L;
+
+		bat_hndl_t_razr_hour=(short)(bat_hndl_remain_time/3600L);
+		bat_hndl_t_razr_min=(short)(bat_hndl_remain_time/60L);
+		bat_hndl_t_razr_mininhour=bat_hndl_t_razr_min%60L;
+
+		}
+	else if(Ib_ips_termokompensat>IKB)
+		{
+		bat_hndl_i=Ib_ips_termokompensat;
+		bat_hndl_t_razr=BAT_C_POINT_20*36000L/bat_hndl_i;
+		bat_hndl_proc_razr=1000000L/bat_hndl_t_razr;
+		if(bat_hndl_zvu_Q<1000000L)bat_hndl_zvu_Q+=bat_hndl_proc_razr;
+		else bat_hndl_zvu_Q=1000000L; 
+		}
+	if((bat_hndl_zvu_Q/10000L)!=lc640_read_int(EE_BAT1_ZAR_CNT)) lc640_write_int(EE_BAT1_ZAR_CNT,bat_hndl_zvu_Q/10000L);
+	bat_hndl_remain_time=bat_hndl_zvu_Q/bat_hndl_proc_razr;
+	}
+
+
+
+
+};
+#endif
+
 
 //-----------------------------------------------
 //Установка напряжения автономной работы в полуавтоматическом режиме

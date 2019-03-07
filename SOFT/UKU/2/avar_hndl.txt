@@ -3495,7 +3495,7 @@
 0017ea  f7fffffe          BL       lc640_write_long_ptr
 ;;;1331   
 ;;;1332   ke_date[0]=lc640_read_long(EE_SPC_KE_DATE0);
-0017ee  f44f70fc          MOV      r0,#0x1f8
+0017ee  f24020a2          MOV      r0,#0x2a2
 0017f2  f7fffffe          BL       lc640_read_long
 0017f6  4d92              LDR      r5,|L1.6720|
 0017f8  6028              STR      r0,[r5,#0]  ; ke_date
@@ -3504,7 +3504,7 @@
 0017fc  f1040008          ADD      r0,r4,#8
 001800  f7fffffe          BL       lc640_write_long_ptr
 ;;;1334   ke_date[1]=lc640_read_long(EE_SPC_KE_DATE1);	
-001804  f44f70fe          MOV      r0,#0x1fc
+001804  f24020a6          MOV      r0,#0x2a6
 001808  f7fffffe          BL       lc640_read_long
 00180c  6068              STR      r0,[r5,#4]  ; ke_date
 ;;;1335   lc640_write_long_ptr(lc640_adr+12,(char*)&ke_date[1]);
