@@ -1214,6 +1214,7 @@ typedef struct
 	signed short 	_cnt_as; 	//счетчик несимметрии, считает до 5 минут при выполнении условий несимметрии, когда досчитывает - пишет в журнал
      //signed short   _max_cell_volt;
 	//signed short   _min_cell_volt;
+	unsigned short _time_min_cnt_ke;
 	} BAT_STAT; 
 extern BAT_STAT bat[2],bat_ips;
 extern signed short		bat_u_old_cnt;

@@ -179,13 +179,19 @@ extern signed short vz2_stat_ph2_cnt;
 extern short I_from_t_table[7];
 extern char bat_hndl_zvu_init;
 extern short bat_hndl_i;
-extern long bat_hndl_t_razr;
+extern long bat_hndl_t_razr;				//предполагаемое время полного разряда батареи (от 100% до разряда)
+extern long bat_hndl_t_razr_ke;				//предполагаемое время полного разряда батареи (от 100% до разряда) при контроле емкости
 extern long bat_hndl_zvu_Q;
 extern long bat_hndl_proc_razr;
 extern long bat_hndl_remain_time;
 extern short bat_hndl_t_razr_hour;
 extern short bat_hndl_t_razr_min;
 extern short bat_hndl_t_razr_mininhour;
+extern char bat_hndl_zvu_ke_init;
+extern short bat_hndl_i_temp;
+extern short bat_hndl_u_end;
+extern short U_end_from_i_table[7];
+extern long bat_hndl_plazma[5];
 
 extern char cntrl_hndl_plazma;
 

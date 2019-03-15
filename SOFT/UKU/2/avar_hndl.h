@@ -38,6 +38,7 @@ void avar_bps_hndl(char bps, char v, char in);
 void avar_bat_hndl(char bat, char in);
 void avar_bat_as_hndl(char b, char in);
 void ke_mem_hndl(char b,unsigned short in);
+void ke_zvu_mem_hndl(char b,unsigned short in,unsigned short in1);
 void vz_mem_hndl(unsigned short in);
 void wrk_mem_hndl(char b);
 void avar_bat_ips_hndl(char in);

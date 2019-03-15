@@ -1292,6 +1292,60 @@ avar_bat_as_hndl_end:
 __nop();		
 }
 
+//-----------------------------------------------
+void ke_zvu_mem_hndl(char b,unsigned short in,unsigned short in1)
+{
+char data[4];
+unsigned int event_ptr=0,lc640_adr/*,event_ptr_find*/,event_cnt;
+//unsigned char temp,temp_;
+//unsigned int tempUI;
+//unsigned long tempUL; 
+signed temp_temp;
+
+temp_temp=bat[b]._u_old[bat_u_old_cnt+1]; 
+
+event_ptr=lc640_read_int(PTR_EVENT_LOG);
+event_ptr++;	
+if(event_ptr>63)event_ptr=0;	
+lc640_write_int(PTR_EVENT_LOG,event_ptr);	
+	
+event_cnt=lc640_read_int(CNT_EVENT_LOG);
+if(event_cnt!=63)event_cnt=event_ptr;
+lc640_write_int(CNT_EVENT_LOG,event_cnt); 
+	
+lc640_adr=EVENT_LOG+(lc640_read_int(PTR_EVENT_LOG)*32);
+	
+data[0]='B';
+data[1]=b; 
+data[2]='K';
+data[3]='Z';
+
+lc640_write_long_ptr(lc640_adr,data);
+
+data[0]=*((char*)&in);
+data[1]=*(((char*)(&in))+1);
+data[2]=*((char*)&temp_temp);
+data[3]=*(((char*)(&temp_temp))+1);
+lc640_write_long_ptr(lc640_adr+4,data);
+
+ke_date[0]=lc640_read_long(EE_SPC_KE_DATE0);
+lc640_write_long_ptr(lc640_adr+8,(char*)&ke_date[0]);
+ke_date[1]=lc640_read_long(EE_SPC_KE_DATE1);	
+lc640_write_long_ptr(lc640_adr+12,(char*)&ke_date[1]);
+
+data[0]=LPC_RTC->YEAR;
+data[1]=LPC_RTC->MONTH;
+data[2]=LPC_RTC->DOM;
+data[3]=*((char*)&in1);
+lc640_write_long_ptr(lc640_adr+16,data);
+
+data[0]=LPC_RTC->HOUR;
+data[1]=LPC_RTC->MIN;
+data[2]=LPC_RTC->SEC;
+data[3]=*(((char*)(&in1))+1);
+lc640_write_long_ptr(lc640_adr+20,data);
+ 
+}
 
 //-----------------------------------------------
 void ke_mem_hndl(char b,unsigned short in)
