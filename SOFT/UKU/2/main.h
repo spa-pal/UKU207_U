@@ -1627,6 +1627,7 @@ extern enum_avt_stat avt_stat[12],avt_stat_old[12];
 //Показания АЦП на плате измерения тока батареи
 extern signed long ibat_metr_buff_[2];
 extern short bIBAT_SMKLBR;
+extern char ibat_metr_cnt;
 
 //-----------------------------------------------
 //Управление низкоприоритетной нагрузкой

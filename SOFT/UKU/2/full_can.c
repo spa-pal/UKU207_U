@@ -1565,6 +1565,38 @@ if((RXBUFF[1]==PUTTM2BYPS))
 	byps._cnt=0;
    	}
 
+if((RXBUFF[0]==PUTTM_IBATMETER)&&(RXBUFF[1]==PUTTM_IBATMETER))
+ 	{
+    slave_num=RXBUFF[0]&0x1f;  
+
+    bps[20]._device=dIBAT_METR;
+         
+	bps[20]._buff[0]=RXBUFF[2]; 
+	bps[20]._buff[1]=RXBUFF[3];
+	bps[20]._buff[2]=RXBUFF[4];
+	bps[20]._buff[3]=RXBUFF[5];
+	bps[20]._buff[4]=RXBUFF[6];
+	bps[20]._buff[5]=RXBUFF[7];	
+
+
+/*	can_slot[slave_num,8]=RXBUFF[0];
+	can_slot[slave_num,9]=RXBUFF[1];
+	can_slot[slave_num,10]=RXBUFF[2];
+	can_slot[slave_num,11]=RXBUFF[3];
+	can_slot[slave_num,12]=RXBUFF[4];
+	can_slot[slave_num,13]=RXBUFF[5];
+	can_slot[slave_num,14]=RXBUFF[6];
+	can_slot[slave_num,15]=RXBUFF[7]; */
+	
+	bps[20]._cnt=0;
+	bps[20]._is_on_cnt=10; 
+
+	ibat_metr_cnt=0;
+
+   	//if((src[slave_num]._cnt==0)&&(src[slave_num]._av_net)) avar_s_hndl(slave_num,3,0); 
+	can_reset_cnt=0;
+   	}
+
 if((RXBUFF[1]==PUTTM_IBATMETER)&&((RXBUFF[0]&0x1f)>=0)&&((RXBUFF[0]&0x1f)<12))
  	{
     slave_num=RXBUFF[0]&0x1f;  

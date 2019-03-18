@@ -36,6 +36,7 @@
 #define PUTTM_NET 0xEA
 #define PUTTM_NET1 0xEB
 #define PUTTM_IBATMETER 0xD1
+#define GETTM_IBATMETER 0x1d
 #define PUTTM 0xDE
 #define GETTM 0xED 
 #define GETTM_INV 0xFD 

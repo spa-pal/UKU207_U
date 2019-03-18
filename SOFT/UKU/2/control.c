@@ -2317,11 +2317,11 @@ t_ext[2]=(signed short)temp_SL;
 
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
 //Ток батареи
-if(bps[8]._device==dIBAT_METR)
+if(bps[20]._device==dIBAT_METR)
 	{
-	ibat_metr_buff_[0]=((signed long)bps[8]._buff[0])+(((signed long)bps[8]._buff[1])<<8);
-	ibat_metr_buff_[1]=((signed long)bps[8]._buff[2])+(((signed long)bps[8]._buff[3])<<8);
-	bIBAT_SMKLBR=((signed short)bps[8]._buff[4])+(((signed short)bps[8]._buff[5])<<8);
+	ibat_metr_buff_[0]=((signed long)bps[20]._buff[0])+(((signed long)bps[20]._buff[1])<<8);
+	ibat_metr_buff_[1]=((signed long)bps[20]._buff[2])+(((signed long)bps[20]._buff[3])<<8);
+	bIBAT_SMKLBR=((signed short)bps[20]._buff[4])+(((signed short)bps[20]._buff[5])<<8);
 
 	if(!bIBAT_SMKLBR)
 		{

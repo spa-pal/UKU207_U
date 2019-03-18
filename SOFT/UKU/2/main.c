@@ -700,6 +700,7 @@ char max_net_slot;
 //Показания АЦП на плате измерения тока батареи
 signed long ibat_metr_buff_[2];
 short bIBAT_SMKLBR;
+char ibat_metr_cnt=0;
 
 
 //-----------------------------------------------
@@ -1319,7 +1320,7 @@ max_net_slot=MINIM_INV_ADRESS+NUMINV+8;
 
 if(++cnt_net_drv>max_net_slot) 
 	{
-	cnt_net_drv=-3;
+	cnt_net_drv=-4;
 	//LPC_GPIO2->FIODIR|=(1UL<<7);
 	//LPC_GPIO2->FIOPIN^=(1UL<<7);
 	if(bCAN_INV)bCAN_INV=0;
@@ -1468,7 +1469,11 @@ else if( num_rki && cnt_net_drv==-2) // запрос для РКИ
 		}
      }
 		
-
+else if(cnt_net_drv==-4)
+	{                 
+	if(!bCAN_OFF) can1_out(GETTM_IBATMETER,GETTM_IBATMETER,0,0,0,0,0,0);
+	ibat_metr_cnt++;
+	}
 
 
 
@@ -4303,9 +4308,9 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 /*			
 	int2lcdyx(cnt_net_drv,0,15,0);  */
 
-	int2lcdyx(kb_full_ver,0,3,0);
-	int2lcdyx(kb_cnt_2lev,0,8,0);
-	int2lcdyx(kb_cnt_1lev,0,19,0);   
+	//int2lcdyx(kb_full_ver,0,3,0);
+	//int2lcdyx(kb_cnt_2lev,0,8,0);
+	//int2lcdyx(kb_cnt_1lev,0,19,0);   
 	}
 
 else if(ind==iMn_TELECORE2015)
@@ -14164,7 +14169,7 @@ else if(ind==iBps_list)
 
 	int2lcd(bps[sub_ind1]._cnt,'@',0);
 	int2lcd(bps[sub_ind1+1]._cnt,'@',0);
-	if(sub_ind1==NUMIST-2)int2lcd(bps[8]._cnt,'@',0);
+	if(sub_ind1==NUMIST-2)int2lcd(bps[20]._cnt,'@',0);
 	else int2lcd(bps[sub_ind1+2]._cnt,'@',0);		
 		
 	int2lcd(bps[sub_ind1]._Uii/10,'^',0);
