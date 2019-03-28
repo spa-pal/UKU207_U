@@ -757,7 +757,7 @@ else if(dt[0]=='B')
     		lcd_buffer[iii++]='Á';
     		lcd_buffer[iii++]='à';
     		lcd_buffer[iii++]='ò';
-			lcd_buffer[iii++]='#';
+			//lcd_buffer[iii++]='#';
 		if(dt[1]<9)
     			{
     			lcd_buffer[iii++]=0x31+dt[1];

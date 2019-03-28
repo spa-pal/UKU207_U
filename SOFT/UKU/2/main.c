@@ -350,6 +350,7 @@ signed short BAT_U_END_3;  		//Конечное напряжение батареи при разряде 3 часа
 signed short BAT_U_END_5;  		//Конечное напряжение батареи при разряде 5 часов
 signed short BAT_U_END_10;  	//Конечное напряжение батареи при разряде 10 часов
 signed short BAT_U_END_20;  	//Конечное напряжение батареи при разряде 20 часов
+signed short BAT_C_POINT_NUM_ELEM;	//Количество элементов в батарее
 #endif
 
 //***********************************************
@@ -357,6 +358,7 @@ signed short BAT_U_END_20;  	//Конечное напряжение батареи при разряде 20 часов
 BAT_STAT bat[2],bat_ips;
 signed short		bat_u_old_cnt;
 signed short 		Ib_ips_termokompensat;
+signed short		Ib_ips_termokompensat_temp;
 
 //***********************************************
 //Мониторы АКБ
@@ -717,6 +719,7 @@ char max_net_slot;
 //Показания АЦП на плате измерения тока батареи
 signed long ibat_metr_buff_[2];
 short bIBAT_SMKLBR;
+short bIBAT_SMKLBR_cnt;
 
 
 //-----------------------------------------------
@@ -4093,6 +4096,9 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 	{
 	ptrs[0]	=	"                    ";
 
+	if((NUMBAT>5)||(NUMBAT<0))NUMBAT=0;
+	if((SMART_SPC!=0)&&(SMART_SPC!=1))SMART_SPC=0;
+
 	if(num_of_wrks_bps)	
 		{
 		ptrs[0]	=	"  В работе    rист. ";
@@ -4324,9 +4330,10 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 /*			
 	int2lcdyx(cnt_net_drv,0,15,0);  */
 
-	int2lcdyx(NUMBAT,0,3,0);
+	//int2lcdyx(NUMBAT,0,1,0);
 	//int2lcdyx(kb_cnt_2lev,0,8,0);
-	int2lcdyx(sub_ind,0,5,0);   
+	//int2lcdyx(sub_ind,0,3,0); 
+	//int2lcdyx(index_set,0,5,0);  
 	}
 
 else if(ind==iMn_TELECORE2015)
@@ -8524,70 +8531,52 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	ptrs[2]=		" Синхронизация      ";
 	ptrs[3]=		"   времени и даты   ";
     ptrs[4]=		" Структура          ";
-	ptrs[5]=		" Выход              ";
-	ptrs[6]=		" Зв.сигн.   (       ";
-	ptrs[7]=		" Отключение сигнала ";
-	ptrs[8]=		"  аварии    )       ";
-	ptrs[9]=		" АПВ источников     ";
-	ptrs[10]=		" Паралл.работа z    ";
-	ptrs[11]=		" T проверки   цепи  ";
-    ptrs[12]=		" батареи     qмин.  ";
-    ptrs[13]=		" Umaх=       !В     ";
-    ptrs[14]=		" Umin=       ZВ     ";
-    ptrs[15]=		" Uб0°=       @В     ";
-    ptrs[16]=		" Uб20°=      #В     ";
-    ptrs[17]=		" Uб.сигн=    ^В     ";
-    ptrs[18]=		" Umin.сети=  &В     ";
-	ptrs[19]=		" Iбк.=       jА     ";
-    ptrs[20]=		" Iз.мах.=    JА     ";
-    ptrs[21]=		" Imaх =      ]A     ";
-    ptrs[22]=		" Imin =      {A     ";
-    ptrs[23]=		" Tз.вкл.а.с. !с     ";
-	ptrs[24]=		" tи.maх=     $°C    ";
-	ptrs[25]=		" tи.сигн=    z°C    ";
-	ptrs[26]=		" tбат.maх=   b°C    ";
-	ptrs[27]=		" tбат.сигн=  X°C    ";
-    ptrs[28]=		" Uоткл.вент.=   [В  ";
-	ptrs[29]=		" Выравнивающий заряд";
-	ptrs[30]=		" Уравнительный заряд";
-	ptrs[31]=		"с ручным отключением";
-	ptrs[32]=		" нагрузки           ";
-	ptrs[33]=		" Формовочный заряд  ";
-	ptrs[34]=		"с ручным отключением";
-	ptrs[35]=		" нагрузки           ";
-    ptrs[36]=		" Внешние датчики    ";
-    ptrs[37]=      	" Контроль выходного ";
-    ptrs[38]=      	" напряжения         ";
-	ptrs[39]=      	" Термокомпенс.     q";
-	ptrs[40]=		" Ускоренный заряд   ";
-	ptrs[41]=      	" Время ротации      ";
-	ptrs[42]=      	" источников    lчас.";
-	ptrs[43]=      	" Автономная работа  ";
-	ptrs[44]=      	" источников         ";
-	ptrs[45]=      	" Дополнительное реле";
-	ptrs[46]=      	" Блокировка ИПС     ";
-	ptrs[47]=      	" Серийный N        w";
-	ptrs[48]=		" MODBUS ADRESS     <";
-	ptrs[49]=		" MODBUS BAUDRATE    ";
-	ptrs[50]=		"                  >0";
-	ptrs[51]=		" Ethernet           ";
-    ptrs[52]=		" Порог ресурса      ";
-    ptrs[53]=		" вентилятора      ^ч";
-    ptrs[54]=		" Выравнивание токов ";
-	ptrs[55]=		" Стартовый шим    (%";
-	ptrs[56]=		" Проверка цепи      ";
-	ptrs[57]=		" батареи - )        ";
-	ptrs[58]=		" Скорость регулир.  ";
-	ptrs[59]=		"    &               ";
-	ptrs[60]=		" Блок допреле       ";
-   	ptrs[61]=		" РКИ                "; 
-	ptrs[62]=		" Сетевые вводы      ";
-	ptrs[63]=		" Спецзаряды с откл.-";
-	ptrs[64]=		" нием нагрузки W    ";	 
-	ptrs[65]=		" Батарея            ";	
-	ptrs[66]=		" Выход              ";
-    ptrs[67]=		" Калибровки         "; 
-    ptrs[68]=		"                    ";        
+	ptrs[5]=		" Батарея            ";
+	ptrs[6]=		" Выход              ";
+	ptrs[7]=		" Зв.сигн.   (       ";
+	ptrs[8]=		" Отключение сигнала ";
+	ptrs[9]=		"  аварии    )       ";
+	ptrs[10]=		" АПВ источников     ";
+	ptrs[11]=		" Паралл.работа z    ";
+	ptrs[12]=		" Umaх=       !В     ";
+    ptrs[13]=		" Umin=       ZВ     ";
+	ptrs[14]=		" Umin.сети=  &В     ";
+	ptrs[15]=		" Imaх =      ]A     ";
+    ptrs[16]=		" Imin =      {A     ";
+    ptrs[17]=		" Tз.вкл.а.с. yс     ";
+	ptrs[18]=		" tи.maх=     $°C    ";
+	ptrs[19]=		" tи.сигн=    Y°C    ";
+	ptrs[20]=		" Внешние датчики    ";
+    ptrs[21]=      	" Контроль выходного ";
+    ptrs[22]=      	" напряжения         ";
+	ptrs[23]=      	" Термокомпенс.     q";
+	ptrs[24]=      	" Время ротации      ";
+	ptrs[25]=      	" источников    lчас.";
+	ptrs[26]=      	" Автономная работа  ";
+	ptrs[27]=      	" источников         ";
+	ptrs[28]=      	" Дополнительное реле";
+	ptrs[29]=      	" Блокировка ИПС     ";
+	ptrs[30]=      	" Серийный N        w";
+	ptrs[31]=		" MODBUS ADRESS     <";
+	ptrs[32]=		" MODBUS BAUDRATE    ";
+	ptrs[33]=		"                  >0";
+	ptrs[34]=		" Ethernet           ";
+    ptrs[35]=		" Порог ресурса      ";
+    ptrs[36]=		" вентилятора      ^ч";
+    ptrs[37]=		" Выравнивание токов ";
+	ptrs[38]=		" Стартовый шим    (%";
+	ptrs[39]=		" Проверка цепи      ";
+	ptrs[40]=		" батареи - )        ";
+	ptrs[41]=		" Скорость регулир.  ";
+	ptrs[42]=		"    &               ";
+	ptrs[43]=		" Блок допреле       ";
+   	ptrs[44]=		" РКИ                "; 
+	ptrs[45]=		" Сетевые вводы      ";
+	ptrs[46]=		" Спецзаряды с откл.-";
+	ptrs[47]=		" нием нагрузки W    ";	 
+	ptrs[48]=		" Выход              ";
+    ptrs[49]=		" Калибровки         "; 
+    ptrs[50]=		"                    ";        
     
 	
 	if((sub_ind-index_set)>2)index_set=sub_ind-2;
@@ -8598,7 +8587,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	pointer_set(1);	
 	
 	if(index_set<21)
-	     {
+	     {	
 	     if(ZV_ON)sub_bgnd("ВКЛ.",'(',0);
 	     else sub_bgnd("ВЫК.",'(',0);
 	     if(AV_OFF_AVT)sub_bgnd("автом.",')',0);
@@ -8615,22 +8604,20 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	     int2lcd((UB20-DU),'Z',1);
 	     int2lcd(UB0,'@',1);
 	     int2lcd(UB20,'#',1);
-	     int2lcd(USIGN,'^',0);
+
 	     int2lcd(UMN,'&',0);
-		if(TBAT==0)sub_bgnd("выкл.",'q',0);	
-		else int2lcd(TBAT,'q',0);
-	     } 
+
+	     }  
 	int2lcd(TMAX,'$',0);
-	int2lcd(IKB,'j',2);
-	int2lcd(UVENTOFF,'[',0);
+	
+	
 	int2lcd(IMAX,']',1);
 	int2lcd(IMIN,'{',1);
-	int2lcd(IZMAX,'J',1); 
-	int2lcd(TZAS,'!',0);
+
+	int2lcd(TZAS,'y',0);
 	
-	int2lcd(TSIGN,'z',0); 
-	int2lcd(TBATMAX,'b',0); 
-	int2lcd(TBATSIGN,'X',0);
+	int2lcd(TSIGN,'Y',0); 
+
      int2lcd(POWER_CNT_ADRESS,'+',0);
      if(UBM_AV)
           {
@@ -8655,7 +8642,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	}
 
 	//int2lcdyx(sub_ind,0,3,0);
-	//int2lcdyx(index_set,0,1,0);PWM_START
+	//int2lcdyx(index_set,0,1,0);
 	int2lcd(PWM_START,'(',0);
 	if(TVENTMAX==0)sub_bgnd("выкл.",'^',-3);
 	else int2lcd(TVENTMAX*10,'^',0);
@@ -11424,7 +11411,15 @@ if(ind==iDeb)
      	         "                    ",
      	         "                   ^",
      	         "                   &");
-
+ 
+ 	int2lcdyx(NUMBAT,0,5,0);
+	int2lcdyx(NUMIST,1,5,0); 	
+	int2lcdyx(num_net_in,2,5,0);
+	int2lcdyx(num_rki,3,5,0);
+	int2lcdyx(NUMEXT,0,10,0);
+	int2lcdyx(NUMBAT,1,10,0);
+	int2lcdyx(NUMBAT,2,10,0);
+	int2lcdyx(NUMBAT,3,10,0);
 /*	int2lcdyx(spc_stat,0,5,0);
 	int2lcdyx(__ee_spc_stat,0,9,0);
 	int2lcdyx(lc640_read_int(EE_SPC_STAT),0,13,0);
@@ -11433,7 +11428,7 @@ if(ind==iDeb)
 	int2lcdyx(__ee_spc_bat,1,9,0);
 	int2lcdyx(lc640_read_int(EE_SPC_BAT),1,13,0);
 
-	int2lcdyx(bat_u_old_cnt,0,19,0);
+	
 	
 	
 	int2lcdyx(bat[0]._zar_cnt_ke,2,5,0);
@@ -12122,8 +12117,11 @@ if(ind==iDeb)
 		int2lcdyx(spc_stat,0,6,0);
 		long2lcdyx_mmm(bat_hndl_t_razr_ke,1,5,0);
 		long2lcdyx_mmm(bat_hndl_u_end,2,5,0);	
-		/*int2lcdyx(Ib_ips_termokompensat,3,5,0);
-		long2lcdyx_mmm(bat_hndl_proc_razr,2,19,0);
+		int2lcdyx(bat_hndl_zvu_Q_cnt,1,19,0);
+		int2lcdyx(u_necc_dn,3,14,0);
+		int2lcdyx(u_necc_up,3,19,0);  
+		int2lcdyx(main_kb_cnt,2,19,0);
+		/*long2lcdyx_mmm(bat_hndl_proc_razr,2,19,0);
 		long2lcdyx_mmm(bat_hndl_zvu_Q,3,19,0);
 		long2lcdyx_mmm(bat_hndl_remain_time,0,19,0);
 		long2lcdyx_mmm(bat_hndl_t_razr_min,1,19,0);*/
@@ -15964,7 +15962,7 @@ else if(ind==iFWabout)
 	}
 else if(ind==iSpecInf)
 	{
-	simax=9;
+	simax=10;
 	
 	ptrs[0]=	" ШИМ               !";
 	ptrs[1]=	" Uподдерж.        @В";
@@ -15975,9 +15973,10 @@ else if(ind==iSpecInf)
 	ptrs[6]=	" Ранг              &";
 	ptrs[7]=	" Контр.выравн.     *";
 	ptrs[8]=	" Iбпс.сумм.       (А";
-    ptrs[9]=	sm_exit;
-    ptrs[10]=	sm_;
-    ptrs[11]=	sm_;     	     	    
+	ptrs[9]=	" Сумм.заряд      )Ач";
+    ptrs[10]=	sm_exit;
+    ptrs[11]=	sm_;
+    ptrs[12]=	sm_;     	     	    
 	
 
 	if((sub_ind-index_set)>2)index_set=sub_ind-2;
@@ -16013,7 +16012,7 @@ else if(ind==iSpecInf)
 
 	int2lcd_mmm(ica_u_necc,'*',1);
 	int2lcd(bps_I,'(',1);
-
+	int2lcd_mmm(lc640_read_int(EE_AMPER_CHAS_CNT),')',1);
 	//int2lcdyx(uart1_net_cnt,0,5,0); 
 	//int2lcdyx(ica_timer_cnt,0,10,0);
 	
@@ -16218,20 +16217,42 @@ else if(ind==iSet_load_off)
 else if(ind==iSet_bat_point)
 	{
 	char ptr_ptrs=0;
-    ptrs[ptr_ptrs++]=  	    " C1/6          !А*ч ";
-	ptrs[ptr_ptrs++]=  	    " U1/6          qВ   "; 
-	ptrs[ptr_ptrs++]=  	    " C1/2          @А*ч ";
-	ptrs[ptr_ptrs++]=  	    " U1/2          QВ   ";
-	ptrs[ptr_ptrs++]=		" C1            #А*ч ";
-	ptrs[ptr_ptrs++]=  	    " U1            wВ   ";		           
-	ptrs[ptr_ptrs++]=		" C3            $А*ч ";
-	ptrs[ptr_ptrs++]=  	    " U3            WВ   ";
+    ptrs[ptr_ptrs++]=  	    " Количество 2В      ";
+	ptrs[ptr_ptrs++]=  	    " элементов      n   ";
+	ptrs[ptr_ptrs++]=  	    " C20           &А*ч ";
+	ptrs[ptr_ptrs++]=  	    " U20           (В   "; 
+	ptrs[ptr_ptrs++]=  	    " C10           ^А*ч ";
+	ptrs[ptr_ptrs++]=  	    " U10           FВ   ";    
 	ptrs[ptr_ptrs++]=  	    " C5            %А*ч ";
 	ptrs[ptr_ptrs++]=  	    " U5            fВ   ";
-	ptrs[ptr_ptrs++]=  	    " C10           ^А*ч ";
-	ptrs[ptr_ptrs++]=  	    " U10           FВ   ";
-	ptrs[ptr_ptrs++]=  	    " C20           &А*ч ";
-	ptrs[ptr_ptrs++]=  	    " U20           (В   ";
+	ptrs[ptr_ptrs++]=		" C3            $А*ч ";
+	ptrs[ptr_ptrs++]=  	    " U3            WВ   ";
+	ptrs[ptr_ptrs++]=		" C1            #А*ч ";
+	ptrs[ptr_ptrs++]=  	    " U1            wВ   "; 
+	ptrs[ptr_ptrs++]=  	    " C1/2          @А*ч ";
+	ptrs[ptr_ptrs++]=  	    " U1/2          QВ   ";
+	ptrs[ptr_ptrs++]=  	    " C1/6          !А*ч ";
+	ptrs[ptr_ptrs++]=  	    " U1/6          qВ   ";		           
+    ptrs[ptr_ptrs++]=		" Uб0°=         LВ   ";
+    ptrs[ptr_ptrs++]=		" Uб20°=        lВ   ";
+	ptrs[ptr_ptrs++]=		" Uб.сигн=      KВ   ";
+    ptrs[ptr_ptrs++]=		" Iз.мах.=      kА   ";	 
+	ptrs[ptr_ptrs++]=		" Iбк.=         JА   ";
+	ptrs[ptr_ptrs++]=		" T проверки   цепи  ";
+    ptrs[ptr_ptrs++]=		" батареи     jмин.  ";
+	ptrs[ptr_ptrs++]=		" tбат.maх=      H°C ";
+	ptrs[ptr_ptrs++]=		" tбат.сигн=     h°C ";
+    ptrs[ptr_ptrs++]=		" Uоткл.вент.=   GВ  ";
+	ptrs[ptr_ptrs++]=		" Выравнивающий заряд";
+	ptrs[ptr_ptrs++]=		" Ускоренный заряд   ";
+	ptrs[ptr_ptrs++]=		" Уравнительный заряд";
+	ptrs[ptr_ptrs++]=		"с ручным отключением";
+	ptrs[ptr_ptrs++]=		" нагрузки           ";
+	ptrs[ptr_ptrs++]=		" Формовочный заряд  ";
+	ptrs[ptr_ptrs++]=		"с ручным отключением";
+	ptrs[ptr_ptrs++]=		" нагрузки           ";
+
+	     
 	ptrs[ptr_ptrs++]=  	    " Выход              ";
 
 	bgnd_par(	" ПАРАМЕТРЫ БАТАРЕИ  ",
@@ -16243,6 +16264,7 @@ else if(ind==iSet_bat_point)
 	else if (sub_ind<index_set)index_set=sub_ind;
 	pointer_set(1);
 
+ 	int2lcd(BAT_C_POINT_NUM_ELEM,'n',0);
 	int2lcd(BAT_C_POINT_1_6,'!',1);
     int2lcd(BAT_C_POINT_1_2,'@',1);
     int2lcd(BAT_C_POINT_1,'#',1);
@@ -16257,6 +16279,18 @@ else if(ind==iSet_bat_point)
 	int2lcd(BAT_U_END_5,'f',1);
 	int2lcd(BAT_U_END_10,'F',1);
 	int2lcd(BAT_U_END_20,'(',1);
+	int2lcd(UB0,'L',1);
+	int2lcd(UB20,'l',1);
+	int2lcd(USIGN,'K',0);
+	int2lcd(IZMAX,'k',1);
+	int2lcd(IKB,'J',2);
+	if(TBAT==0)sub_bgnd("выкл.",'j',0);	
+	else int2lcd(TBAT,'j',0);
+	int2lcd(TBATMAX,'H',0); 
+	int2lcd(TBATSIGN,'h',0);
+	int2lcd(UVENTOFF,'G',0);
+
+
 
 	//int2lcdyx(sub_ind,0,3,0);
 	//int2lcdyx(index_set,0,6,0);
@@ -17794,54 +17828,54 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 	if(but==butD)
 		{
 		sub_ind++;
-		if((sub_ind==(4+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)+NUMBAT))	 && (SMART_SPC))
+		if((sub_ind==(5+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)/*+NUMBAT*/))	 && (SMART_SPC))
 			{
 			index_set=sub_ind+2;
 			}
-		if((sub_ind==(5+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)+NUMBAT)) && (SMART_SPC))
+		else if((sub_ind==(6+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)/*+NUMBAT*/)) && (SMART_SPC))
 			{
 			sub_ind+=2;
 			index_set=sub_ind+2;
 			}
-		else if((sub_ind==(8+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)+NUMBAT)) && SMART_SPC)
+		else if((sub_ind==(9+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)/*+NUMBAT*/)) && SMART_SPC)
 			{
-			sub_ind++;
-			index_set=sub_ind+2;
+			sub_ind+=2;
+			//index_set=sub_ind+2;
 			}
-		if((sub_ind==(9+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)+NUMBAT))  && SMART_SPC)
+		else if((sub_ind==(10+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)/*+NUMBAT*/))  && SMART_SPC)
 			{
-			index_set=sub_ind+2;
+			//index_set=sub_ind+2;
 			}
 
-		if((sub_ind==(9+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0))) && SMART_SPC) sub_ind+=2;
+		else if((sub_ind==(9+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0))) && SMART_SPC) sub_ind+=2;
 		else if((sub_ind==(10+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0))) && SMART_SPC) sub_ind++;
 
-		gran_char(&sub_ind,0,13+NUMIST+(NUMEXT!=0)+(num_rki!=0)+(num_net_in!=0)+((SMART_SPC)*6));
+		gran_char(&sub_ind,0,12+NUMIST+(NUMEXT!=0)+(num_rki!=0)+(num_net_in!=0)+((SMART_SPC)*6)+NUMBAT);
 		}
 	else if(but==butU)
 		{
 		sub_ind--;
-		if((sub_ind==(7+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)+NUMBAT)) && SMART_SPC)
+		/*if((sub_ind==(7+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)+NUMBAT)) && SMART_SPC)
 			{
 			sub_ind--;
 			index_set=sub_ind+2;
 			}
-		else if((sub_ind==(8+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)+NUMBAT)) && SMART_SPC)
+		else*/ if((sub_ind==(7+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)/*+NUMBAT*/)) && SMART_SPC)
 			{
 			sub_ind-=2;
 			index_set=sub_ind+2;
 			}
-		if((sub_ind==(10+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)+NUMBAT)) && SMART_SPC)
+/*		else if((sub_ind==(10+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)+NUMBAT)) && SMART_SPC)
 			{
 			sub_ind--;
 			index_set=sub_ind+2;
-			}
-		else if((sub_ind==(11+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)+NUMBAT)) && SMART_SPC)
+			} */
+		else if((sub_ind==(10+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0)/*+NUMBAT*/)) && SMART_SPC)
 			{
 			sub_ind-=2;
 			index_set=sub_ind+2;
 			}
-		gran_char(&sub_ind,0,13+NUMIST+(NUMEXT!=0)+(num_rki!=0)+(num_net_in!=0)+((SMART_SPC)*6)+NUMBAT);
+		gran_char(&sub_ind,0,12+NUMIST+(NUMEXT!=0)+(num_rki!=0)+(num_net_in!=0)+((SMART_SPC)*6)+NUMBAT);
 		}		
  	else if(but==butR)
 		{
@@ -24933,15 +24967,25 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 			sub_ind=4;
 			index_set=3;
 			}
-		if(sub_ind==7)index_set=8;
-		if(sub_ind==8)sub_ind=9;
-		if(sub_ind==11)index_set=10;
-		if(sub_ind==12)sub_ind=13;
-		if(sub_ind==30)index_set=32;
-		if((sub_ind==31)||(sub_ind==32))sub_ind=33;
-		if(sub_ind==33)index_set=35;
-		if((sub_ind==34)||(sub_ind==35))sub_ind=36;
-        if(sub_ind==37)
+		if(sub_ind==8)index_set=7;
+		if(sub_ind==9)sub_ind=10;
+		if(sub_ind==21)index_set=20;
+		if(sub_ind==22)sub_ind=23;
+		if(sub_ind==24)index_set=23;
+		if(sub_ind==25)sub_ind=26;
+		if(sub_ind==26)index_set=25;
+		if(sub_ind==27)sub_ind=28;
+		if(sub_ind==32)index_set=31;
+		if(sub_ind==33)sub_ind=34;
+		if(sub_ind==35)index_set=34;
+		if(sub_ind==36)sub_ind=37;
+		if(sub_ind==39)index_set=38;
+		if(sub_ind==40)sub_ind=41;
+		if(sub_ind==41)index_set=40;
+		if(sub_ind==42)sub_ind=43;
+		if(sub_ind==46)index_set=45;
+		if(sub_ind==47)sub_ind=48;
+        /*if(sub_ind==37)
         	{
             index_set=36;
             }
@@ -24996,31 +25040,50 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
         if(sub_ind==64)
         	{
             sub_ind=65;
-		    }																				
-		gran_char(&sub_ind,0,67);
+		    }*/																				
+		gran_char(&sub_ind,0,49);
 		//gran_char(&sub_ind,0,56+(num_rki!=0)+(num_net_in!=0));
 		}
 	else if(but==butU)
 		{
 		sub_ind--;
-		if(sub_ind==8)
+		if(sub_ind==3)
 			{
-			sub_ind=7;
+			sub_ind=2;
 			}
-		if(sub_ind==12)
+		if(sub_ind==9)
 			{
-			sub_ind=9;
+			sub_ind=8;
+			}
+		if(sub_ind==10)
+			{
+			sub_ind=8;
 			} 
-		if((sub_ind==32)||(sub_ind==31))
+        if(sub_ind==22)
         	{
-            sub_ind=30;
+            sub_ind=21;
 		    }
-        if((sub_ind==35)||(sub_ind==34))
+        if(sub_ind==25)
         	{
-            sub_ind=33;
+            sub_ind=24;
+		    }
+        if(sub_ind==27)
+        	{
+            sub_ind=26;
 		    }
 
-        if(sub_ind==38)
+        if(sub_ind==33)
+        	{
+            sub_ind=32;
+		    }
+        if(sub_ind==36)
+        	{
+            sub_ind=35;
+		    }
+		if(sub_ind==40)sub_ind=39;
+		if(sub_ind==42)sub_ind=41;
+		if(sub_ind==47)sub_ind=46;
+   /*     if(sub_ind==38)
         	{
             sub_ind=37;
 		    }
@@ -25036,7 +25099,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
         if(sub_ind==44)
         	{
             sub_ind=43;
-		    }
+		    }	
         if(sub_ind==50)
             {
             sub_ind=49;
@@ -25056,13 +25119,13 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
         if(sub_ind==64)
         	{
             sub_ind=63;
-		    }
-		gran_char(&sub_ind,0,67);
+		    }			*/
+		gran_char(&sub_ind,0,49);
 		//gran_char(&sub_ind,0,54+(num_rki!=0)+(num_net_in!=0));
 		}
 	else if(but==butD_)
 		{
-		sub_ind=65;
+		sub_ind=49;
 		//sub_ind=53+(num_rki!=0)+(num_net_in!=0); // oleg_start было 51
 		}
 
@@ -25120,8 +25183,13 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 		     index_set=0;
  		     }
 		}	
+	else if(sub_ind==5)
+		{
+		tree_up(iSet_bat_point,0,0,0); 
+		ret(1000);
+		}
 	
-	else if(sub_ind==6)
+	else if(sub_ind==7)
 	     {
 		if(ZV_ON)ZV_ON=0;
 		else ZV_ON=1;
@@ -25129,7 +25197,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	     speed=1;
 	     }	
 	
-	else if(sub_ind==7)
+	else if(sub_ind==8)
 	     {
 		if(AV_OFF_AVT)AV_OFF_AVT=0;
 		else AV_OFF_AVT=1;
@@ -25137,7 +25205,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	     speed=1;
 	     }	
 
-	else if(sub_ind==9)
+	else if(sub_ind==10)
 	     {
 	     if(but==butE)
 	          {
@@ -25146,7 +25214,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	          }
 	     }	
 
-	else if(sub_ind==10)
+	else if(sub_ind==11)
 	     {
 		if(PAR)PAR=0;
 		else PAR=1;
@@ -25154,43 +25222,9 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	     speed=1;
 	     }
 
-	else if(sub_ind==11)
-	     {
-	     if(but==butR)
-			{
-			TBAT++;
-			if(TBAT<0)TBAT=0;
-			else if((TBAT>0)&&(TBAT<=5))TBAT=5;
-			else if(TBAT>=60)TBAT=60;
-			}
-	     else if(but==butR_)
-			{
-			TBAT+=10;
-			if(TBAT<0)TBAT=0;
-			else if((TBAT>0)&&(TBAT<=5))TBAT=5;
-			else if(TBAT>=60)TBAT=60;
-			}
-	     else if(but==butL)
-			{
-			TBAT--;
-			if(TBAT<0)TBAT=0;
-			else if((TBAT>0)&&(TBAT<=5))TBAT=0;
-			else if(TBAT>=60)TBAT=60;
-			}
-	     else if(but==butL_)
-			{
-			TBAT-=10;
-			if(TBAT<0)TBAT=0;
-			else if((TBAT>0)&&(TBAT<=5))TBAT=0;
-			else if(TBAT>=60)TBAT=60;
-			}
-	     //gran(&TBAT,5,60);
-		//if(TBAT>=60)TBAT=60;
-	     lc640_write_int(EE_TBAT,TBAT);
-	     speed=1;
-	     }	
+
 	                    	     	
-	else if(sub_ind==13)
+	else if(sub_ind==12)
 	     {
 	     if(but==butR)UMAX++;
 	     else if(but==butR_)UMAX+=10;
@@ -25202,7 +25236,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	     lc640_write_int(EE_UMAX,UMAX);
 	     speed=1;
 	     }
-	else if(sub_ind==14)
+	else if(sub_ind==13)
 	     {
 	     if(but==butL)DU++;
 	     else if(but==butL_)DU+=10;
@@ -25212,39 +25246,9 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	     lc640_write_int(EE_DU,DU);
 	     speed=1;
 	     }	     
-	else if(sub_ind==15)
-	     {
-	     if(but==butR)UB0++;
-	     else if(but==butR_)UB0+=10;
-	     else if(but==butL)UB0--;
-	     else if(but==butL_)UB0-=10;
-		gran(&UB0,100,3000);
-          lc640_write_int(EE_UB0,UB0);
-	     speed=1;
-	     }
-	     
-	else if(sub_ind==16)
-	     {
-	     if(but==butR)UB20++;
-	     else if(but==butR_)UB20+=10;
-	     else if(but==butL)UB20--;
-	     else if(but==butL_)UB20-=10;
-		gran(&UB20,100,3000);
-	     lc640_write_int(EE_UB20,UB20);
-	     speed=1;
-	     }	
 
-	else if(sub_ind==17)
-	     {
-	     if(but==butR)USIGN++;
-	     else if(but==butR_)USIGN+=10;
-	     else if(but==butL)USIGN--;
-	     else if(but==butL_)USIGN-=10;
-		gran(&USIGN,10,300);
-	     lc640_write_int(EE_USIGN,USIGN);
-	     speed=1;
-	     }	
-	else if(sub_ind==18)
+	
+	else if(sub_ind==14)
 	     {
 	     if(but==butR)UMN++;
 	     else if(but==butR_)UMN+=10;
@@ -25255,29 +25259,9 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	     speed=1;
 	     }	
 
-	else if(sub_ind==19)
-	     {
-	     if(but==butR)IKB++;
-	     else if(but==butR_)IKB+=10;
-	     else if(but==butL)IKB--;
-	     else if(but==butL_)IKB-=10;
-	     gran(&IKB,1,500);
-	     lc640_write_int(EE_IKB,IKB);
-	     speed=1;
-	     }		
-            
-	else if(sub_ind==20)
-	     {
-	     if(but==butR)IZMAX++;
-	     else if(but==butR_)IZMAX+=10;
-	     else if(but==butL)IZMAX--;
-	     else if(but==butL_)IZMAX-=10;
-		gran(&IZMAX,10,2000);
-	     lc640_write_int(EE_IZMAX,IZMAX);
-	     speed=1;
-	     }   
 
-	else if(sub_ind==21)
+
+	else if(sub_ind==15)
 	     {
 	     if(but==butR)IMAX++;
 	     else if(but==butR_)IMAX+=10;
@@ -25288,7 +25272,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	     speed=1;
 	     }		
 	     
-	else if(sub_ind==22)
+	else if(sub_ind==16)
 	     {
 	     if(but==butR)IMIN++;
 	     else if(but==butR_)IMIN+=10;
@@ -25301,7 +25285,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	
 
 			     
-	else if(sub_ind==23)
+	else if(sub_ind==17)
 		{
 		if ((but==butR)||(but==butR_))TZAS++;
 		if ((but==butL)||(but==butL_))TZAS--;
@@ -25310,7 +25294,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 		speed=1; 
 		}	
 					       	        
-	else if(sub_ind==24)
+	else if(sub_ind==18)
 	     {
 	     if(but==butR)TMAX++;
 	     else if(but==butR_)TMAX+=2;
@@ -25321,7 +25305,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	     speed=1;
 	     }	
 	
-	else if(sub_ind==25)
+	else if(sub_ind==19)
 	     {
 	     if(but==butR)TSIGN++;
 	     else if(but==butR_)TSIGN+=2;
@@ -25331,64 +25315,10 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	     lc640_write_int(EE_TSIGN,TSIGN);
 	     speed=1;
 	     }	     
-	else if(sub_ind==26)
-	     {
-	     if(but==butR)TBATMAX++;
-	     else if(but==butR_)TBATMAX+=2;
-	     else if(but==butL)TBATMAX--;
-	     else if(but==butL_)TBATMAX-=2;
-	     gran(&TBATMAX,10,100);
-	     lc640_write_int(EE_TBATMAX,TBATMAX);
-	     speed=1;
-	     }	
-	else if(sub_ind==27)
-	     {
-	     if(but==butR)TBATSIGN++;
-	     else if(but==butR_)TBATSIGN+=2;
-	     else if(but==butL)TBATSIGN--;
-	     else if(but==butL_)TBATSIGN-=2;
-	     gran(&TBATSIGN,10,100);
-	     lc640_write_int(EE_TBATSIGN,TBATSIGN);
-	     speed=1;
-	     }
-	else if(sub_ind==28)
-	     {
-	     if(but==butR)UVENTOFF++;
-	     else if(but==butR_)UVENTOFF+=2;
-	     else if(but==butL)UVENTOFF--;
-	     else if(but==butL_)UVENTOFF-=2;
-	     gran(&UVENTOFF,15,250);
-	     lc640_write_int(EE_UVENTOFF,UVENTOFF);
-	     speed=1;
-	     }
-    else if(sub_ind==29)
-		{
-		if(but==butE)
-		     {
-		     tree_up(iVZ_set,0,0,0);
-		     ret(1000);
-		     }
-		}	
 
-    else if(sub_ind==30)
-		{
-		if(but==butE)
-		     {
-		     tree_up(iVZ1_set,0,0,0);
-		     ret(1000);
-		     }
-		}
-		
-    else if(sub_ind==33)
-		{
-		if(but==butE)
-		     {
-		     tree_up(iVZ2_set,0,0,0);
-		     ret(1000);
-		     }
-		}			
+	
      	     	     		     	     
-    else if(sub_ind==36)
+    else if(sub_ind==20)
 		{
 		if(but==butE)
 		     {
@@ -25397,7 +25327,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 		     }
 		}
 
-	else if(sub_ind==37)
+	else if(sub_ind==21)
 	    {
 		if(but==butE) 
 			{
@@ -25406,7 +25336,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 		    }	     
 	    }
 
-	else if(sub_ind==39)
+	else if(sub_ind==23)
 	    {
 	    if ((but==butR)||(but==butR_))TERMOKOMPENS=1;
 		if ((but==butL)||(but==butL_))TERMOKOMPENS=0;
@@ -25414,15 +25344,8 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	    speed=0;
 	    }
 
-  	else if(sub_ind==40)
-		{
-		if(but==butE) 
-		     {
-		     tree_up(iSpch_set,0,0,0);
-		     ret(1000);
-		     }
-		} 
-  	else if(sub_ind==41)
+
+  	else if(sub_ind==24)
 	     {
 	     if(but==butR)FORVARDBPSCHHOUR++;
 	     else if(but==butR_)FORVARDBPSCHHOUR+=2;
@@ -25435,7 +25358,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	     }
 
 				
-	else if(sub_ind==43)
+	else if(sub_ind==26)
 		{
 		if(but==butE)
 		    {		
@@ -25443,27 +25366,27 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 			parol_init();
 			ret(50);
 			}						
-		}
+		} 
 
-	else if(sub_ind==45)
+	else if(sub_ind==28)
 		{
 		if(but==butE)
-		     {		
+		    {		
 			tree_up(iDop_rele_set,0,0,0);
 			parol_init();
 			ret(50);
 			}						
 		}
-	else if(sub_ind==46)
+	else if(sub_ind==29)
 		{
 		if(but==butE)
-		     {		
+		    {		
 			tree_up(iBlok_ips_set,0,0,0);
 			parol_init();
 			ret(50);
 			}						
 		}
-	else if(sub_ind==47)
+	else if(sub_ind==30)
 		{
 	    if(but==butR)AUSW_MAIN_NUMBER++;
 	    else if(but==butR_)AUSW_MAIN_NUMBER+=20;
@@ -25476,7 +25399,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 		lc640_write_int(EE_AUSW_MAIN_NUMBER+2,(short)((AUSW_MAIN_NUMBER&0xffff0000UL)>>16UL));
 	    speed=1;
 	    }         
-  	else if(sub_ind==48)
+  	else if(sub_ind==31)
 	    {
 	     if((but==butR)||(but==butR_))
 	     	{
@@ -25495,7 +25418,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	     	}
           }
 
-     else if(sub_ind==49)
+     else if(sub_ind==32)
 	     {
 	     if((but==butR)||(but==butR_))
 	     	{
@@ -25527,7 +25450,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	     	lc640_write_int(EE_MODBUS_BAUDRATE,MODBUS_BAUDRATE);
 	     	}
           }
-  	else if(sub_ind==51)
+  	else if(sub_ind==34)
 		{
 		if(but==butE) 
 		     {
@@ -25535,7 +25458,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 		     ret(1000);
 		     }
 		}
-	else if(sub_ind==52)
+	else if(sub_ind==35)
 		{
 	    if(but==butR)		TVENTMAX=((TVENTMAX/100)+1)*100;
 	    else if(but==butR_)	TVENTMAX=((TVENTMAX/100)+1)*100;
@@ -25547,7 +25470,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 		lc640_write_int(EE_TVENTMAX,TVENTMAX);
 	    speed=1;
 	    }
-	else if(sub_ind==54)
+	else if(sub_ind==37)
 	    {
 		if(but==butE) 
 			{
@@ -25556,7 +25479,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 		    }	     
 	    }		    
 
-	else if(sub_ind==55)
+	else if(sub_ind==38)
 	     {
 	     if(but==butR)PWM_START++;
 	     else if(but==butR_)PWM_START+=10;
@@ -25567,7 +25490,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	     speed=1;
 	     }   
 
-	else if(sub_ind==56)
+	else if(sub_ind==39)
 		{
 	    if(but==butR)KB_ALGORITM++;
 	    else if(but==butR_)KB_ALGORITM++;
@@ -25578,7 +25501,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	    speed=1;
 	    } 
 
-	else if(sub_ind==58)
+	else if(sub_ind==41)
 		{
 	    if(but==butR)REG_SPEED++;
 	    else if(but==butR_)REG_SPEED++;
@@ -25588,7 +25511,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	    lc640_write_int(EE_REG_SPEED,REG_SPEED);
 	    speed=1;
 	    }
-	else if(sub_ind==60)
+	else if(sub_ind==43)
 	    {
 		if((but==butE) && (NUMBDR))
 			{
@@ -25597,7 +25520,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 		    }	     
 	    }
 
-	else if(sub_ind==61)
+	else if(sub_ind==44)
 		{
 		if(num_rki) 
 			{ 
@@ -25605,7 +25528,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 			ret(1000);
 			}
 		}
-	else if(sub_ind==62)
+	else if(sub_ind==45)
 		{
 		if(num_net_in) 
 			{ 
@@ -25613,19 +25536,15 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 			ret(1000);
 			}
 		}
-	else if(sub_ind==63)
+	else if(sub_ind==46)
 		{
 		if(SMART_SPC)SMART_SPC=0;
 		else SMART_SPC=1;
 		lc640_write_int(EE_SMART_SPC,SMART_SPC);
 		speed=1;
 		}
-	else if(sub_ind==65)
-		{
-		tree_up(iSet_bat_point,0,0,0); 
-		ret(1000);
-		}
-	else if((sub_ind==66) || (sub_ind==5))
+
+	else if((sub_ind==48) || (sub_ind==6))
 		{
 		if(but==butE)
 		     {
@@ -25633,7 +25552,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 		     ret(0);
 		     }
 		}
-	else if(sub_ind==67) 
+	else if(sub_ind==49) 
 		{
 		if(but==butE)
 		    {	
@@ -37649,6 +37568,13 @@ else if(ind==iSpecInf)
 			ret(0);
 			}
 		}
+	else if(sub_ind==simax-1)
+		{
+		if(but==butE_)
+			{
+			lc640_write_int(EE_AMPER_CHAS_CNT,0);
+			}
+		}
 	}
 else if(ind==iVZ_set)
 	{
@@ -38049,16 +37975,36 @@ else if(ind==iSet_bat_point)
 	if(but==butU)
 		{
 		sub_ind--;
-		gran_char(&sub_ind,0,14);
+		gran_char(&sub_ind,0,34);
+		if(sub_ind==1)sub_ind--;
+		if(sub_ind==22)sub_ind--;
+		if((sub_ind==29)||(sub_ind==30))sub_ind=28;
+		if((sub_ind==32)||(sub_ind==33))sub_ind=31;
 		}
 	else if (but==butD)
 		{
 		sub_ind++;
-		gran_char(&sub_ind,0,14);
+		gran_char(&sub_ind,0,34);
+		if(sub_ind==1)sub_ind++;
+		if(sub_ind==21)index_set=20;
+		if(sub_ind==22)sub_ind++;
+		if(sub_ind==28)index_set=30;
+		if((sub_ind==29)||(sub_ind==30))sub_ind=31;
+        if(sub_ind==31)index_set=33;
+		if((sub_ind==32)||(sub_ind==33))sub_ind=34;
+		
 		}
-	else if(but==butE)
+	else if (but==butD_)
 		{
-		if(sub_ind==14)
+		sub_ind=34;
+		}
+	else if (but==butU_)
+		{
+		sub_ind=0;
+		}
+	else if(sub_ind==34)
+		{
+		if(but==butE)
 			{
 			tree_down(0,0);
           	ret(0);
@@ -38066,125 +38012,29 @@ else if(ind==iSet_bat_point)
 		}
 	else if(sub_ind==0)
 	     {
-	     if(but==butR)BAT_C_POINT_1_6++;
-	     else if(but==butR_)BAT_C_POINT_1_6=(BAT_C_POINT_1_6/10+1)*10;
-	     else if(but==butL)BAT_C_POINT_1_6--;
-	     else if(but==butL_)BAT_C_POINT_1_6=(BAT_C_POINT_1_6/10-1)*10;
-	     gran(&BAT_C_POINT_1_6,10,10000);
-	     lc640_write_int(EE_BAT_C_POINT_1_6,BAT_C_POINT_1_6);
+		 char bI=0;
+	     if((but==butR)||(but==butR_))
+		 	{
+			BAT_C_POINT_NUM_ELEM++;
+			bI=1;
+			}
+	     else if((but==butL)||(but==butL_))
+		 	{
+			BAT_C_POINT_NUM_ELEM--;
+			bI=1;
+			}
+	     gran(&BAT_C_POINT_NUM_ELEM,1,200);
+	     lc640_write_int(EE_BAT_C_POINT_NUM_ELEM,BAT_C_POINT_NUM_ELEM);
 	     speed=1;
-	     }
-	else if(sub_ind==1)
-	     {
-	     if(but==butR)BAT_U_END_1_6++;
-	     else if(but==butR_)BAT_U_END_1_6=(BAT_U_END_1_6/10+1)*10;
-	     else if(but==butL)BAT_U_END_1_6--;
-	     else if(but==butL_)BAT_U_END_1_6=(BAT_U_END_1_6/10-1)*10;
-	     gran(&BAT_U_END_1_6,10,10000);
-	     lc640_write_int(EE_BAT_U_END_1_6,BAT_U_END_1_6);
-	     speed=1;
+		 if(bI)
+		 	{
+			bI=0;
+			lc640_write_int(EE_UB0,(short)((long)BAT_C_POINT_NUM_ELEM*237L/10L));
+			lc640_write_int(EE_UB20,(short)((long)BAT_C_POINT_NUM_ELEM*227L/10L));
+			lc640_write_int(EE_USIGN,(short)((long)BAT_C_POINT_NUM_ELEM*180L/100L));
+			}
 	     }
 	else if(sub_ind==2)
-	     {
-	     if(but==butR)BAT_C_POINT_1_2++;
-	     else if(but==butR_)BAT_C_POINT_1_2=(BAT_C_POINT_1_2/10+1)*10;
-	     else if(but==butL)BAT_C_POINT_1_2--;
-	     else if(but==butL_)BAT_C_POINT_1_2=(BAT_C_POINT_1_2/10-1)*10;
-	     gran(&BAT_C_POINT_1_2,10,10000);
-	     lc640_write_int(EE_BAT_C_POINT_1_2,BAT_C_POINT_1_2);
-	     speed=1;
-	     }
-	else if(sub_ind==3)
-	     {
-	     if(but==butR)BAT_U_END_1_2++;
-	     else if(but==butR_)BAT_U_END_1_2=(BAT_U_END_1_2/10+1)*10;
-	     else if(but==butL)BAT_U_END_1_2--;
-	     else if(but==butL_)BAT_U_END_1_2=(BAT_U_END_1_2/10-1)*10;
-	     gran(&BAT_U_END_1_2,10,10000);
-	     lc640_write_int(EE_BAT_U_END_1_2,BAT_U_END_1_2);
-	     speed=1;
-	     }
-	else if(sub_ind==4)
-	     {
-	     if(but==butR)BAT_C_POINT_1++;
-	     else if(but==butR_)BAT_C_POINT_1=(BAT_C_POINT_1/10+1)*10;
-	     else if(but==butL)BAT_C_POINT_1--;
-	     else if(but==butL_)BAT_C_POINT_1=(BAT_C_POINT_1/10-1)*10;
-	     gran(&BAT_C_POINT_1,10,10000);
-	     lc640_write_int(EE_BAT_C_POINT_1,BAT_C_POINT_1);
-		 speed=1;
-	     }
-	else if(sub_ind==5)
-	     {
-	     if(but==butR)BAT_U_END_1++;
-	     else if(but==butR_)BAT_U_END_1=(BAT_U_END_1/10+1)*10;
-	     else if(but==butL)BAT_U_END_1--;
-	     else if(but==butL_)BAT_U_END_1=(BAT_U_END_1/10-1)*10;
-	     gran(&BAT_U_END_1,10,10000);
-	     lc640_write_int(EE_BAT_U_END_1,BAT_U_END_1);
-		 speed=1;
-	     }
-	else if(sub_ind==6)
-	     {
-	     if(but==butR)BAT_C_POINT_3++;
-	     else if(but==butR_)BAT_C_POINT_3=(BAT_C_POINT_3/10+1)*10;
-	     else if(but==butL)BAT_C_POINT_3--;
-	     else if(but==butL_)BAT_C_POINT_3=(BAT_C_POINT_3/10-1)*10;
-	     gran(&BAT_C_POINT_3,10,10000);
-	     lc640_write_int(EE_BAT_C_POINT_3,BAT_C_POINT_3);
-		 speed=1;
-	     }
-	else if(sub_ind==7)
-	     {
-	     if(but==butR)BAT_U_END_3++;
-	     else if(but==butR_)BAT_U_END_3=(BAT_U_END_3/10+1)*10;
-	     else if(but==butL)BAT_U_END_3--;
-	     else if(but==butL_)BAT_U_END_3=(BAT_U_END_3/10-1)*10;
-	     gran(&BAT_U_END_3,10,10000);
-	     lc640_write_int(EE_BAT_U_END_3,BAT_U_END_3);
-		 speed=1;
-	     }
-	else if(sub_ind==8)
-	     {
-	     if(but==butR)BAT_C_POINT_5++;
-	     else if(but==butR_)BAT_C_POINT_5=(BAT_C_POINT_5/10+1)*10;
-	     else if(but==butL)BAT_C_POINT_5--;
-	     else if(but==butL_)BAT_C_POINT_5=(BAT_C_POINT_5/10-1)*10;
-	     gran(&BAT_C_POINT_5,10,10000);
-	     lc640_write_int(EE_BAT_C_POINT_5,BAT_C_POINT_5);
-		 speed=1;
-	     }
-	else if(sub_ind==9)
-	     {
-	     if(but==butR)BAT_U_END_5++;
-	     else if(but==butR_)BAT_U_END_5=(BAT_U_END_5/10+1)*10;
-	     else if(but==butL)BAT_U_END_5--;
-	     else if(but==butL_)BAT_U_END_5=(BAT_U_END_5/10-1)*10;
-	     gran(&BAT_U_END_5,10,10000);
-	     lc640_write_int(EE_BAT_U_END_5,BAT_U_END_5);
-		 speed=1;
-	     }
-	else if(sub_ind==10)
-	     {
-	     if(but==butR)BAT_C_POINT_10++;
-	     else if(but==butR_)BAT_C_POINT_10=(BAT_C_POINT_10/10+1)*10;
-	     else if(but==butL)BAT_C_POINT_10--;
-	     else if(but==butL_)BAT_C_POINT_10=(BAT_C_POINT_10/10-1)*10;
-	     gran(&BAT_C_POINT_10,10,10000);
-	     lc640_write_int(EE_BAT_C_POINT_10,BAT_C_POINT_10);
-		 speed=1;
-	     }
-	else if(sub_ind==11)
-	     {
-	     if(but==butR)BAT_U_END_10++;
-	     else if(but==butR_)BAT_U_END_10=(BAT_U_END_10/10+1)*10;
-	     else if(but==butL)BAT_U_END_10--;
-	     else if(but==butL_)BAT_U_END_10=(BAT_U_END_10/10-1)*10;
-	     gran(&BAT_U_END_10,10,10000);
-	     lc640_write_int(EE_BAT_U_END_10,BAT_U_END_10);
-		 speed=1;
-	     }
-	else if(sub_ind==12)
 	     {
 	     if(but==butR)BAT_C_POINT_20++;
 	     else if(but==butR_)BAT_C_POINT_20=(BAT_C_POINT_20/10+1)*10;
@@ -38194,7 +38044,7 @@ else if(ind==iSet_bat_point)
 	     lc640_write_int(EE_BAT_C_POINT_20,BAT_C_POINT_20);
 		 speed=1;
 	     }
-	else if(sub_ind==13)
+	else if(sub_ind==3)
 	     {
 	     if(but==butR)BAT_U_END_20++;
 	     else if(but==butR_)BAT_U_END_20=(BAT_U_END_20/10+1)*10;
@@ -38204,7 +38054,298 @@ else if(ind==iSet_bat_point)
 	     lc640_write_int(EE_BAT_U_END_20,BAT_U_END_20);
 		 speed=1;
 	     }
-	}
+	else if(sub_ind==4)
+	     {
+		 char bI=0;
+	     if(but==butR)
+		 	{
+			BAT_C_POINT_10++;
+			bI=1;
+			}
+	     else if(but==butR_)
+		 	{
+		 	BAT_C_POINT_10=(BAT_C_POINT_10/10+1)*10;
+			bI=1;
+			}
+	     else if(but==butL)
+		 	{
+			BAT_C_POINT_10--;
+			bI=1;
+			}
+	     else if(but==butL_)
+		 	{
+			BAT_C_POINT_10=(BAT_C_POINT_10/10-1)*10;
+			bI=1;
+			}
+	     gran(&BAT_C_POINT_10,10,10000);
+	     lc640_write_int(EE_BAT_C_POINT_10,BAT_C_POINT_10);
+		 speed=1;
+		 if(bI)
+		 	{
+			bI=0;
+			lc640_write_int(EE_IZMAX,(short)((long)BAT_C_POINT_10/10L));
+			}
+	     }
+	else if(sub_ind==5)
+	     {
+	     if(but==butR)BAT_U_END_10++;
+	     else if(but==butR_)BAT_U_END_10=(BAT_U_END_10/10+1)*10;
+	     else if(but==butL)BAT_U_END_10--;
+	     else if(but==butL_)BAT_U_END_10=(BAT_U_END_10/10-1)*10;
+	     gran(&BAT_U_END_10,10,10000);
+	     lc640_write_int(EE_BAT_U_END_10,BAT_U_END_10);
+		 speed=1;
+	     }
+	else if(sub_ind==6)
+	     {
+	     if(but==butR)BAT_C_POINT_5++;
+	     else if(but==butR_)BAT_C_POINT_5=(BAT_C_POINT_5/10+1)*10;
+	     else if(but==butL)BAT_C_POINT_5--;
+	     else if(but==butL_)BAT_C_POINT_5=(BAT_C_POINT_5/10-1)*10;
+	     gran(&BAT_C_POINT_5,10,10000);
+	     lc640_write_int(EE_BAT_C_POINT_5,BAT_C_POINT_5);
+		 speed=1;
+	     }
+	else if(sub_ind==7)
+	     {
+	     if(but==butR)BAT_U_END_5++;
+	     else if(but==butR_)BAT_U_END_5=(BAT_U_END_5/10+1)*10;
+	     else if(but==butL)BAT_U_END_5--;
+	     else if(but==butL_)BAT_U_END_5=(BAT_U_END_5/10-1)*10;
+	     gran(&BAT_U_END_5,10,10000);
+	     lc640_write_int(EE_BAT_U_END_5,BAT_U_END_5);
+		 speed=1;
+	     }
+	else if(sub_ind==8)
+	     {
+	     if(but==butR)BAT_C_POINT_3++;
+	     else if(but==butR_)BAT_C_POINT_3=(BAT_C_POINT_3/10+1)*10;
+	     else if(but==butL)BAT_C_POINT_3--;
+	     else if(but==butL_)BAT_C_POINT_3=(BAT_C_POINT_3/10-1)*10;
+	     gran(&BAT_C_POINT_3,10,10000);
+	     lc640_write_int(EE_BAT_C_POINT_3,BAT_C_POINT_3);
+		 speed=1;
+	     }
+	else if(sub_ind==9)
+		{
+		if(but==butR)BAT_U_END_3++;
+		else if(but==butR_)BAT_U_END_3=(BAT_U_END_3/10+1)*10;
+		else if(but==butL)BAT_U_END_3--;
+		else if(but==butL_)BAT_U_END_3=(BAT_U_END_3/10-1)*10;
+		gran(&BAT_U_END_3,10,10000);
+		lc640_write_int(EE_BAT_U_END_3,BAT_U_END_3);
+		speed=1;
+		}
+	else if(sub_ind==10)
+	     {
+	     if(but==butR)BAT_C_POINT_1++;
+	     else if(but==butR_)BAT_C_POINT_1=(BAT_C_POINT_1/10+1)*10;
+	     else if(but==butL)BAT_C_POINT_1--;
+	     else if(but==butL_)BAT_C_POINT_1=(BAT_C_POINT_1/10-1)*10;
+	     gran(&BAT_C_POINT_1,10,10000);
+	     lc640_write_int(EE_BAT_C_POINT_1,BAT_C_POINT_1);
+		 speed=1;
+	     }
+	else if(sub_ind==11)
+	     {
+	     if(but==butR)BAT_U_END_1++;
+	     else if(but==butR_)BAT_U_END_1=(BAT_U_END_1/10+1)*10;
+	     else if(but==butL)BAT_U_END_1--;
+	     else if(but==butL_)BAT_U_END_1=(BAT_U_END_1/10-1)*10;
+	     gran(&BAT_U_END_1,10,10000);
+	     lc640_write_int(EE_BAT_U_END_1,BAT_U_END_1);
+		 speed=1;
+	     }
+	else if(sub_ind==12)
+	     {
+	     if(but==butR)BAT_C_POINT_1_2++;
+	     else if(but==butR_)BAT_C_POINT_1_2=(BAT_C_POINT_1_2/10+1)*10;
+	     else if(but==butL)BAT_C_POINT_1_2--;
+	     else if(but==butL_)BAT_C_POINT_1_2=(BAT_C_POINT_1_2/10-1)*10;
+	     gran(&BAT_C_POINT_1_2,10,10000);
+	     lc640_write_int(EE_BAT_C_POINT_1_2,BAT_C_POINT_1_2);
+	     speed=1;
+	     }
+	else if(sub_ind==13)
+	     {
+	     if(but==butR)BAT_U_END_1_2++;
+	     else if(but==butR_)BAT_U_END_1_2=(BAT_U_END_1_2/10+1)*10;
+	     else if(but==butL)BAT_U_END_1_2--;
+	     else if(but==butL_)BAT_U_END_1_2=(BAT_U_END_1_2/10-1)*10;
+	     gran(&BAT_U_END_1_2,10,10000);
+	     lc640_write_int(EE_BAT_U_END_1_2,BAT_U_END_1_2);
+	     speed=1;
+	     }
+	else if(sub_ind==14)
+	     {
+	     if(but==butR)BAT_C_POINT_1_6++;
+	     else if(but==butR_)BAT_C_POINT_1_6=(BAT_C_POINT_1_6/10+1)*10;
+	     else if(but==butL)BAT_C_POINT_1_6--;
+	     else if(but==butL_)BAT_C_POINT_1_6=(BAT_C_POINT_1_6/10-1)*10;
+	     gran(&BAT_C_POINT_1_6,10,10000);
+	     lc640_write_int(EE_BAT_C_POINT_1_6,BAT_C_POINT_1_6);
+	     speed=1;
+	     }
+	else if(sub_ind==15)
+	     {
+	     if(but==butR)BAT_U_END_1_6++;
+	     else if(but==butR_)BAT_U_END_1_6=(BAT_U_END_1_6/10+1)*10;
+	     else if(but==butL)BAT_U_END_1_6--;
+	     else if(but==butL_)BAT_U_END_1_6=(BAT_U_END_1_6/10-1)*10;
+	     gran(&BAT_U_END_1_6,10,10000);
+	     lc640_write_int(EE_BAT_U_END_1_6,BAT_U_END_1_6);
+	     speed=1;
+	     }
+	else if(sub_ind==16)
+	     {
+	     if(but==butR)UB0++;
+	     else if(but==butR_)UB0+=10;
+	     else if(but==butL)UB0--;
+	     else if(but==butL_)UB0-=10;
+		gran(&UB0,100,3000);
+          lc640_write_int(EE_UB0,UB0);
+	     speed=1;
+	     }
+	     
+	else if(sub_ind==17)
+	     {
+	     if(but==butR)UB20++;
+	     else if(but==butR_)UB20+=10;
+	     else if(but==butL)UB20--;
+	     else if(but==butL_)UB20-=10;
+		gran(&UB20,100,3000);
+	     lc640_write_int(EE_UB20,UB20);
+	     speed=1;
+	     }	
+	else if(sub_ind==18)
+	     {
+	     if(but==butR)USIGN++;
+	     else if(but==butR_)USIGN+=10;
+	     else if(but==butL)USIGN--;
+	     else if(but==butL_)USIGN-=10;
+		gran(&USIGN,10,300);
+	     lc640_write_int(EE_USIGN,USIGN);
+	     speed=1;
+	     }
+	else if(sub_ind==19)
+	     {
+	     if(but==butR)IZMAX++;
+	     else if(but==butR_)IZMAX+=10;
+	     else if(but==butL)IZMAX--;
+	     else if(but==butL_)IZMAX-=10;
+		gran(&IZMAX,10,2000);
+	     lc640_write_int(EE_IZMAX,IZMAX);
+	     speed=1;
+	     }	
+	else if(sub_ind==20)
+	     {
+	     if(but==butR)IKB++;
+	     else if(but==butR_)IKB+=10;
+	     else if(but==butL)IKB--;
+	     else if(but==butL_)IKB-=10;
+	     gran(&IKB,1,500);
+	     lc640_write_int(EE_IKB,IKB);
+	     speed=1;
+	     }
+	else if(sub_ind==21)
+	     {
+	     if(but==butR)
+			{
+			TBAT++;
+			if(TBAT<0)TBAT=0;
+			else if((TBAT>0)&&(TBAT<=5))TBAT=5;
+			else if(TBAT>=60)TBAT=60;
+			}
+	     else if(but==butR_)
+			{
+			TBAT+=10;
+			if(TBAT<0)TBAT=0;
+			else if((TBAT>0)&&(TBAT<=5))TBAT=5;
+			else if(TBAT>=60)TBAT=60;
+			}
+	     else if(but==butL)
+			{
+			TBAT--;
+			if(TBAT<0)TBAT=0;
+			else if((TBAT>0)&&(TBAT<=5))TBAT=0;
+			else if(TBAT>=60)TBAT=60;
+			}
+	     else if(but==butL_)
+			{
+			TBAT-=10;
+			if(TBAT<0)TBAT=0;
+			else if((TBAT>0)&&(TBAT<=5))TBAT=0;
+			else if(TBAT>=60)TBAT=60;
+			}
+	     //gran(&TBAT,5,60);
+		//if(TBAT>=60)TBAT=60;
+	     lc640_write_int(EE_TBAT,TBAT);
+	     speed=1;
+	     }
+	else if(sub_ind==23)
+	     {
+	     if(but==butR)TBATMAX++;
+	     else if(but==butR_)TBATMAX+=2;
+	     else if(but==butL)TBATMAX--;
+	     else if(but==butL_)TBATMAX-=2;
+	     gran(&TBATMAX,10,100);
+	     lc640_write_int(EE_TBATMAX,TBATMAX);
+	     speed=1;
+	     }	
+	else if(sub_ind==24)
+	     {
+	     if(but==butR)TBATSIGN++;
+	     else if(but==butR_)TBATSIGN+=2;
+	     else if(but==butL)TBATSIGN--;
+	     else if(but==butL_)TBATSIGN-=2;
+	     gran(&TBATSIGN,10,100);
+	     lc640_write_int(EE_TBATSIGN,TBATSIGN);
+	     speed=1;
+	     }
+	else if(sub_ind==25)
+	     {
+	     if(but==butR)UVENTOFF++;
+	     else if(but==butR_)UVENTOFF+=2;
+	     else if(but==butL)UVENTOFF--;
+	     else if(but==butL_)UVENTOFF-=2;
+	     gran(&UVENTOFF,15,250);
+	     lc640_write_int(EE_UVENTOFF,UVENTOFF);
+	     speed=1;
+	     }
+    else if(sub_ind==26)
+		{
+		if(but==butE)
+		     {
+		     tree_up(iVZ_set,0,0,0);
+		     ret(1000);
+		     }
+		}	
+   	else if(sub_ind==27)
+		{
+		if(but==butE) 
+		     {
+		     tree_up(iSpch_set,0,0,0);
+		     ret(1000);
+		     }
+		} 
+    else if(sub_ind==28)
+		{
+		if(but==butE)
+		     {
+		     tree_up(iVZ1_set,0,0,0);
+		     ret(1000);
+		     }
+		}
+		
+    else if(sub_ind==31)
+		{
+		if(but==butE)
+		     {
+		     tree_up(iVZ2_set,0,0,0);
+		     ret(1000);
+		     }
+		}				 		 			 		
+ 	}
 #endif
 #endif		
 but_an_end:
@@ -39110,6 +39251,7 @@ while (1)
 		u_avt_set_hndl();
 		#ifdef UKU_ZVU
 		bat_hndl_zvu();
+		amper_chas_cnt_drv();
 		#endif
 		}
 	if(b1min)

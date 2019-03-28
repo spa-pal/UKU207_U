@@ -361,6 +361,7 @@ BAT_U_END_3=lc640_read_int(EE_BAT_U_END_3);
 BAT_U_END_5=lc640_read_int(EE_BAT_U_END_5);
 BAT_U_END_10=lc640_read_int(EE_BAT_U_END_10);
 BAT_U_END_20=lc640_read_int(EE_BAT_U_END_20);
+BAT_C_POINT_NUM_ELEM=lc640_read_int(EE_BAT_C_POINT_NUM_ELEM);
 #endif
 
 for(i=0;i<64;i++)

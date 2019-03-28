@@ -192,6 +192,7 @@ extern short bat_hndl_i_temp;
 extern short bat_hndl_u_end;
 extern short U_end_from_i_table[7];
 extern long bat_hndl_plazma[5];
+extern char bat_hndl_zvu_Q_cnt;
 
 extern char cntrl_hndl_plazma;
 

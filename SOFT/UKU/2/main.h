@@ -1179,6 +1179,7 @@ extern signed short BAT_U_END_3;  		//Конечное напряжение батареи при разряде 3 
 extern signed short BAT_U_END_5;  		//Конечное напряжение батареи при разряде 5 часов
 extern signed short BAT_U_END_10;  		//Конечное напряжение батареи при разряде 10 часов
 extern signed short BAT_U_END_20;  		//Конечное напряжение батареи при разряде 20 часов
+extern signed short BAT_C_POINT_NUM_ELEM;	//Количество элементов в батарее
 #endif
 
 //***********************************************
@@ -1219,6 +1220,7 @@ typedef struct
 extern BAT_STAT bat[2],bat_ips;
 extern signed short		bat_u_old_cnt;
 extern signed short 	Ib_ips_termokompensat;
+extern signed short		Ib_ips_termokompensat_temp;
 
 //#ifdef UKU_TELECORE2015
 typedef enum {bsOFF=0,bsCOMM_ON,bsOK} enum_batStat;
@@ -1647,6 +1649,7 @@ extern enum_avt_stat avt_stat[12],avt_stat_old[12];
 //Показания АЦП на плате измерения тока батареи
 extern signed long ibat_metr_buff_[2];
 extern short bIBAT_SMKLBR;
+extern short bIBAT_SMKLBR_cnt;
 
 //-----------------------------------------------
 //Управление низкоприоритетной нагрузкой

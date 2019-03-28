@@ -285,6 +285,8 @@ short bat_hndl_i_temp;
 short bat_hndl_u_end;
 short U_end_from_i_table[7];
 long bat_hndl_plazma[5];
+char bat_hndl_zvu_Q_cnt;
+long amper_chas_cnt_drv_summ;
 
 #ifdef UKU_ZVU
 //-----------------------------------------------
@@ -731,6 +733,26 @@ spc_stat=spcOFF;
      }
 
 }
+
+#ifdef UKU_ZVU
+//-----------------------------------------------
+void amper_chas_cnt_drv(void)
+{
+
+amper_chas_cnt_drv_summ+=(long)Ib_ips_termokompensat;
+
+if(amper_chas_cnt_drv_summ>=36000L)
+	{
+	amper_chas_cnt_drv_summ-=36000L;
+	lc640_write_int(EE_AMPER_CHAS_CNT,lc640_read_int(EE_AMPER_CHAS_CNT)+1);
+	}
+else if(amper_chas_cnt_drv_summ<=-36000L)
+	{
+	amper_chas_cnt_drv_summ+=36000L;
+	lc640_write_int(EE_AMPER_CHAS_CNT,lc640_read_int(EE_AMPER_CHAS_CNT)-1);
+	}
+}
+#endif
 
 //-----------------------------------------------
 void avz_next_date_hndl(void)
@@ -2601,7 +2623,7 @@ if(bps[8]._device==dIBAT_METR)
 	ibat_metr_buff_[0]=((signed long)bps[8]._buff[0])+(((signed long)bps[8]._buff[1])<<8);
 	ibat_metr_buff_[1]=((signed long)bps[8]._buff[2])+(((signed long)bps[8]._buff[3])<<8);
 	bIBAT_SMKLBR=((signed short)bps[8]._buff[4])+(((signed short)bps[8]._buff[5])<<8);
-
+	if(bIBAT_SMKLBR) bIBAT_SMKLBR_cnt=50;
 	if(!bIBAT_SMKLBR)
 		{
 		signed long temp_SL;
@@ -2611,6 +2633,15 @@ if(bps[8]._device==dIBAT_METR)
 		if((AUSW_MAIN==22010)||(AUSW_MAIN==22011)||(AUSW_MAIN==22035)||(AUSW_MAIN==22033)||(AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043)||(AUSW_MAIN==22044))temp_SL/=2000L;
 	
 		Ib_ips_termokompensat =(signed short)temp_SL;
+		if(bIBAT_SMKLBR_cnt)
+			{
+			bIBAT_SMKLBR_cnt--;
+			Ib_ips_termokompensat=Ib_ips_termokompensat_temp;
+			}
+		else 
+			{
+			Ib_ips_termokompensat_temp=Ib_ips_termokompensat;
+			}
 		}
 	}
 
@@ -7304,6 +7335,26 @@ else
 	bat_hndl_remain_time=bat_hndl_zvu_Q/bat_hndl_proc_razr;
 	}
 
+
+
+if((Ib_ips_termokompensat/10<(2*IKB))&&(Ib_ips_termokompensat/10>(-2*IKB))&&(!(bat[0]._av&0x01))&& (out_U<=u_necc_up) && (out_U>u_necc_dn) && (main_kb_cnt>=10) && (main_kb_cnt<=200) /*(main_kb_cnt==((TBAT*60)-10))*//*&& ((TVENTMAX!=0))*/ )
+	{
+	if(bat_hndl_zvu_Q_cnt<60)
+		{
+		bat_hndl_zvu_Q_cnt++;
+		if(bat_hndl_zvu_Q_cnt>=60)
+			{
+			lc640_write_int(EE_BAT1_ZAR_CNT,100);
+			bat_hndl_zvu_Q=1000000L;
+
+
+			}
+		}
+	}
+else 
+	{
+	bat_hndl_zvu_Q_cnt=0;
+	}
 
 
 
