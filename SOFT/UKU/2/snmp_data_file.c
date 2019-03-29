@@ -341,6 +341,12 @@ if(((AUSW_MAIN==22063)||(AUSW_MAIN==22023))&&(bps[8]._device==dIBAT_METR))
 snmp_bat_temperature[0]=bat[0]._Tb;
 if(BAT_C_REAL[0]==0x5555)snmp_bat_capacity[0]=BAT_C_NOM[0];
 else snmp_bat_capacity[0]=BAT_C_REAL[0];
+#ifdef UKU_ZVU
+snmp_bat_charge[0]=(bat_hndl_zvu_Q/10000L);
+
+#else
+snmp_bat_charge[0]=bat[0]._zar;
+#endif
 snmp_bat_charge[0]=bat[0]._zar;
 snmp_bat_status[0]=bat[0]._av;
 if(BAT_IS_ON[0]!=bisON)snmp_bat_status[0]=0xff;

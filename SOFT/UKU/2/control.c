@@ -287,6 +287,9 @@ short U_end_from_i_table[7];
 long bat_hndl_plazma[5];
 char bat_hndl_zvu_Q_cnt;
 long amper_chas_cnt_drv_summ;
+char bat_hndl_i_vector=0,bat_hndl_i_vector_old=0;
+long bat_hndl_i_zar_price=0L;
+long bat_hndl_i_summ;
 
 #ifdef UKU_ZVU
 //-----------------------------------------------
@@ -2569,6 +2572,14 @@ temp_SL/=20000L;
 temp_SL-=273L;
 t_ext[0]=(signed short)temp_SL;
 
+//Внешний датчик температуры №2
+if((adc_buff_[5]>800)&&(adc_buff_[5]<3800))ND_EXT[1]=0;
+else ND_EXT[1]=1;
+temp_SL=(signed long)adc_buff_[5];
+temp_SL*=Ktext[1];
+temp_SL/=20000L;
+temp_SL-=273L;
+t_ext[1]=(signed short)temp_SL;
 #else
 
 
@@ -7280,7 +7291,10 @@ if(bat_hndl_zvu_init==0)
 else 
 	{
 	if(Ib_ips_termokompensat<-IKB)
-		{	
+		{
+		bat_hndl_i_vector=0;
+		bat_hndl_i_zar_price=0L;
+			
 		bat_hndl_i=-Ib_ips_termokompensat;
 		I_from_t_table[0]=BAT_C_POINT_1_6*6; //Ток при котором батарея разрядится за 1/6 часа (0.1А)
 		I_from_t_table[1]=BAT_C_POINT_1_2*2; //Ток при котором батарея разрядится за 1/2 часа (0.1А)
@@ -7325,12 +7339,34 @@ else
 		}
 	else if(Ib_ips_termokompensat>IKB)
 		{
+		bat_hndl_i_vector=1;
+
 		bat_hndl_i=Ib_ips_termokompensat;
-		bat_hndl_t_razr=BAT_C_POINT_20*36000L/bat_hndl_i;
-		bat_hndl_proc_razr=1000000L/bat_hndl_t_razr;
-		if(bat_hndl_zvu_Q<1000000L)bat_hndl_zvu_Q+=bat_hndl_proc_razr;
-		else bat_hndl_zvu_Q=1000000L; 
+		bat_hndl_i_summ+=(long)bat_hndl_i;
+		if(bat_hndl_i_summ>=36000L)
+
+		//bat_hndl_t_razr=BAT_C_POINT_20*36000L/bat_hndl_i;
+		//bat_hndl_proc_razr=1000000L/bat_hndl_t_razr;
+			{
+			bat_hndl_i_summ-=36000L;
+			if(bat_hndl_zvu_Q<1000000L)bat_hndl_zvu_Q+=bat_hndl_i_zar_price;
+			else bat_hndl_zvu_Q=1000000L; 
+			}
 		}
+
+
+	if(bat_hndl_i_vector!=bat_hndl_i_vector_old)
+		{
+		if(bat_hndl_i_vector==1)
+			{
+			signed short tempSS;
+			tempSS=lc640_read_int(EE_AMPER_CHAS_CNT);
+			bat_hndl_i_zar_price=(bat_hndl_zvu_Q-1000000L)/((long)tempSS);
+			bat_hndl_i_summ=0;
+			}
+		}
+	bat_hndl_i_vector_old=bat_hndl_i_vector;
+
 	if((bat_hndl_zvu_Q/10000L)!=lc640_read_int(EE_BAT1_ZAR_CNT)) lc640_write_int(EE_BAT1_ZAR_CNT,bat_hndl_zvu_Q/10000L);
 	bat_hndl_remain_time=bat_hndl_zvu_Q/bat_hndl_proc_razr;
 	}

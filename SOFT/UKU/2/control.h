@@ -193,6 +193,9 @@ extern short bat_hndl_u_end;
 extern short U_end_from_i_table[7];
 extern long bat_hndl_plazma[5];
 extern char bat_hndl_zvu_Q_cnt;
+extern char bat_hndl_i_vector,bat_hndl_i_vector_old;
+extern long bat_hndl_i_zar_price;
+extern long bat_hndl_i_summ;
 
 extern char cntrl_hndl_plazma;
 

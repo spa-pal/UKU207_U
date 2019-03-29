@@ -6388,14 +6388,14 @@ else if(ind==iExtern_220_ZVU)
 	else if (sub_ind<index_set)index_set=sub_ind;
 	pointer_set(1);
 
-    if(ND_EXT[1])sub_bgnd("íåèñïð.",'!',-3);
-    else int2lcd_mmm(t_ext[1],'!',0);
+    if(ND_EXT[0])sub_bgnd("íåèñïð.",'!',-3);
+    else int2lcd_mmm(t_ext[0],'!',0);
 
-    if(ND_EXT[2])sub_bgnd("íåèñïð.",'@',-3);
-    else int2lcd_mmm(t_ext[2],'@',0);
+    if(ND_EXT[1])sub_bgnd("íåèñïð.",'@',-3);
+    else int2lcd_mmm(t_ext[1],'@',0);
 
-    if(ND_EXT[3])sub_bgnd("íåèñïð.",'#',-3);
-    else int2lcd_mmm(t_ext[3],'#',0);
+    if(ND_EXT[2])sub_bgnd("íåèñïð.",'#',-3);
+    else int2lcd_mmm(t_ext[2],'#',0);
 
 	temp=-11;
 	if(sk_stat[0]==ssON)		temp=-9;
@@ -8994,11 +8994,11 @@ else if (ind==iDef_220_IPS_TERMOKOMPENSAT)
 	ptrs[2]=" ÈÏÑ220/220-10ÀÒÊÈ17";
 	ptrs[3]=" ÈÏÑ380/110-90ÀÒÊÈ9 ";
 	ptrs[4]=" ÈÏÑ380/220-ÒÊÈ18   ";
-	ptrs[5]=" ÓÊÓ 207.131        ";
+//	ptrs[5]=" ÓÊÓ 207.131        ";
 
-	ptrs[6]=sm_exit;
+	ptrs[5]=sm_exit;
+	ptrs[6]="                    ";
 	ptrs[7]="                    ";
-	ptrs[8]="                    ";
 	if(bFL5)ptrs[default_temp]=sm_;
 	
 	if(sub_ind<index_set) index_set=sub_ind;
@@ -12136,6 +12136,29 @@ if(ind==iDeb)
      		    	"                    ",
      		    	"                    ",
      		    	"                    ");
+		int2lcdyx(bat_hndl_i_vector,1,6,0);
+		int2lcdyx(bat_hndl_i_vector_old,2,6,0);
+		long2lcdyx_mmm(bat_hndl_i,3,6,0);
+		long2lcdyx_mmm(bat_hndl_i_summ,0,13,0);
+		long2lcdyx_mmm(bat_hndl_i_zar_price,1,13,0);
+		long2lcdyx_mmm(bat_hndl_zvu_Q,2,13,0); 
+		long2lcdyx_mmm(lc640_read_int(EE_AMPER_CHAS_CNT),3,13,0);
+		/*int2lcdyx(U_end_from_i_table[5],2,9,0);	
+		int2lcdyx(U_end_from_i_table[6],3,9,0);
+		int2lcdyx(lc640_read_int(EE_ZVU_BAT_MIN_CNT_KE),0,19,0);
+		int2lcdyx(bat[0]._time_min_cnt_ke,1,19,0);*/
+		//int2lcdyx(cntrl_stat,2,19,0);
+
+		/*int2lcdyx(u_necc,1,15,0);
+		int2lcdyx(bps_U,2,15,0);
+		int2lcdyx(uavt_set_error_cnt,3,19,0);*/ 			
+		}	
+    else if(sub_ind==23)
+     	{
+     	bgnd_par(	"KE3                 ",
+     		    	"                    ",
+     		    	"                    ",
+     		    	"                    ");
 		int2lcdyx(U_end_from_i_table[0],1,4,0);
 		int2lcdyx(U_end_from_i_table[1],2,4,0);
 		int2lcdyx(U_end_from_i_table[2],3,4,0);
@@ -12150,7 +12173,7 @@ if(ind==iDeb)
 		/*int2lcdyx(u_necc,1,15,0);
 		int2lcdyx(bps_U,2,15,0);
 		int2lcdyx(uavt_set_error_cnt,3,19,0);*/ 
-		}													     				     			
+		}															     				     			
 	}
 
 else if((ind==iAv_view)||(ind==iAv_view_avt))
@@ -16541,13 +16564,13 @@ else if(ind==iDeb)
 		{
 		sub_ind++;
 		index_set=0;
-		gran_ring_char(&sub_ind,0,22);
+		gran_ring_char(&sub_ind,0,23);
 		}
 	else if(but==butL)
 		{
 		sub_ind--;
 		index_set=0;
-		gran_ring_char(&sub_ind,0,22);
+		gran_ring_char(&sub_ind,0,23);
 		}
 		
 	else if(sub_ind==1)
