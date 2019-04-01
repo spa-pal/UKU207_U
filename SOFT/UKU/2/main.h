@@ -1180,6 +1180,7 @@ extern signed short BAT_U_END_5;  		//Конечное напряжение батареи при разряде 5 
 extern signed short BAT_U_END_10;  		//Конечное напряжение батареи при разряде 10 часов
 extern signed short BAT_U_END_20;  		//Конечное напряжение батареи при разряде 20 часов
 extern signed short BAT_C_POINT_NUM_ELEM;	//Количество элементов в батарее
+extern signed short BAT_K_OLD;			//Коэффициент старения батареи
 #endif
 
 //***********************************************

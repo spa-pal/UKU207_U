@@ -351,6 +351,7 @@ signed short BAT_U_END_5;  		//Конечное напряжение батареи при разряде 5 часов
 signed short BAT_U_END_10;  	//Конечное напряжение батареи при разряде 10 часов
 signed short BAT_U_END_20;  	//Конечное напряжение батареи при разряде 20 часов
 signed short BAT_C_POINT_NUM_ELEM;	//Количество элементов в батарее
+signed short BAT_K_OLD;			//Коэффициент старения батареи
 #endif
 
 //***********************************************
@@ -16274,7 +16275,8 @@ else if(ind==iSet_bat_point)
 	ptrs[ptr_ptrs++]=		" Формовочный заряд  ";
 	ptrs[ptr_ptrs++]=		"с ручным отключением";
 	ptrs[ptr_ptrs++]=		" нагрузки           ";
-
+	ptrs[ptr_ptrs++]=		" Коэфф.-ент старения";
+	ptrs[ptr_ptrs++]=		" батареи         g  ";
 	     
 	ptrs[ptr_ptrs++]=  	    " Выход              ";
 
@@ -16312,7 +16314,7 @@ else if(ind==iSet_bat_point)
 	int2lcd(TBATMAX,'H',0); 
 	int2lcd(TBATSIGN,'h',0);
 	int2lcd(UVENTOFF,'G',0);
-
+	int2lcd(BAT_K_OLD,'g',2);
 
 
 	//int2lcdyx(sub_ind,0,3,0);
@@ -37998,16 +38000,17 @@ else if(ind==iSet_bat_point)
 	if(but==butU)
 		{
 		sub_ind--;
-		gran_char(&sub_ind,0,34);
+		gran_char(&sub_ind,0,36);
 		if(sub_ind==1)sub_ind--;
 		if(sub_ind==22)sub_ind--;
 		if((sub_ind==29)||(sub_ind==30))sub_ind=28;
 		if((sub_ind==32)||(sub_ind==33))sub_ind=31;
+		if(sub_ind==35)sub_ind--;
 		}
 	else if (but==butD)
 		{
 		sub_ind++;
-		gran_char(&sub_ind,0,34);
+		gran_char(&sub_ind,0,36);
 		if(sub_ind==1)sub_ind++;
 		if(sub_ind==21)index_set=20;
 		if(sub_ind==22)sub_ind++;
@@ -38015,17 +38018,19 @@ else if(ind==iSet_bat_point)
 		if((sub_ind==29)||(sub_ind==30))sub_ind=31;
         if(sub_ind==31)index_set=33;
 		if((sub_ind==32)||(sub_ind==33))sub_ind=34;
+		if(sub_ind==34)index_set=33;
+		if(sub_ind==35)sub_ind++;
 		
 		}
 	else if (but==butD_)
 		{
-		sub_ind=34;
+		sub_ind=36;
 		}
 	else if (but==butU_)
 		{
 		sub_ind=0;
 		}
-	else if(sub_ind==34)
+	else if(sub_ind==36)
 		{
 		if(but==butE)
 			{
@@ -38367,7 +38372,17 @@ else if(ind==iSet_bat_point)
 		     tree_up(iVZ2_set,0,0,0);
 		     ret(1000);
 		     }
-		}				 		 			 		
+		}
+	else if(sub_ind==34)
+	     {
+	     if(but==butR)BAT_K_OLD++;
+	     else if(but==butR_)BAT_K_OLD+=10;
+	     else if(but==butL)BAT_K_OLD--;
+	     else if(but==butL_)BAT_K_OLD-=10;
+	     gran(&BAT_K_OLD,10,100);
+	     lc640_write_int(EE_BAT_K_OLD,BAT_K_OLD);
+	     speed=1;
+	     }						 		 			 		
  	}
 #endif
 #endif		

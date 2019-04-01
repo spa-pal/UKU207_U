@@ -7304,6 +7304,14 @@ else
 		I_from_t_table[5]=BAT_C_POINT_10/10; //Ток при котором батарея разрядится за 10 часов (0.1А)
 		I_from_t_table[6]=BAT_C_POINT_20/20; //Ток при котором батарея разрядится за 20 часов (0.1А)
 		
+		I_from_t_table[0]=(short)((((long)I_from_t_table[0])*((long)BAT_K_OLD))/100L);
+		I_from_t_table[1]=(short)((((long)I_from_t_table[1])*((long)BAT_K_OLD))/100L);
+		I_from_t_table[2]=(short)((((long)I_from_t_table[2])*((long)BAT_K_OLD))/100L);
+		I_from_t_table[3]=(short)((((long)I_from_t_table[3])*((long)BAT_K_OLD))/100L);
+		I_from_t_table[4]=(short)((((long)I_from_t_table[4])*((long)BAT_K_OLD))/100L);
+		I_from_t_table[5]=(short)((((long)I_from_t_table[5])*((long)BAT_K_OLD))/100L);
+		I_from_t_table[6]=(short)((((long)I_from_t_table[6])*((long)BAT_K_OLD))/100L);
+
 		bat_hndl_i_temp=bat_hndl_i/10;
 		for(i=0;i<7;i++)
 			{
