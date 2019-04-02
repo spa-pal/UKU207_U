@@ -364,6 +364,8 @@ BAT_U_END_20=lc640_read_int(EE_BAT_U_END_20);
 BAT_C_POINT_NUM_ELEM=lc640_read_int(EE_BAT_C_POINT_NUM_ELEM);
 BAT_K_OLD=lc640_read_int(EE_BAT_K_OLD);
 #endif
+SP_CH_VENT_BLOK=lc640_read_int(EE_SP_CH_VENT_BLOK);
+VZ_CH_VENT_BLOK=lc640_read_int(EE_VZ_CH_VENT_BLOK);
 
 for(i=0;i<64;i++)
 	{

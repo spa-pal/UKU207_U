@@ -807,7 +807,7 @@ void vz_drv(void)
 { 
 if(spc_stat==spcVZ)
 	{
-	if(sk_stat[0]==1)
+	if((sk_stat[0]==1)||(VZ_CH_VENT_BLOK==0))
 		{
 
 	if(vz_cnt_s_<3600)
@@ -7337,7 +7337,7 @@ else
 			}
 		bat_hndl_proc_razr=1000000L/bat_hndl_t_razr;
 
-		if(bat_hndl_zvu_Q)bat_hndl_zvu_Q-=bat_hndl_proc_razr;
+		if(bat_hndl_zvu_Q>bat_hndl_proc_razr)bat_hndl_zvu_Q-=bat_hndl_proc_razr;
 		else bat_hndl_zvu_Q=0L;
 
 		bat_hndl_t_razr_hour=(short)(bat_hndl_remain_time/3600L);
@@ -7654,7 +7654,7 @@ else
 		temp_SL/=200;
 		temp_SL+=UB0;
 		}
-	if((spc_stat==spcVZ)&&(sk_stat[0]==1))
+	if((spc_stat==spcVZ)&&((sk_stat[0]==1)||(VZ_CH_VENT_BLOK==0)))
 		{
 		temp_SL=UVZ;
 		}
@@ -9379,6 +9379,11 @@ if(sp_ch_stat==scsSTEP1)
 	if(sp_ch_stat_old!=sp_ch_stat)
 		{
 		sp_ch_stat_cnt=5;
+		if(SP_CH_VENT_BLOK==0)
+			{
+			sp_ch_stat_cnt=0;
+			sp_ch_stat=scsWRK;
+			}
 		}
 	if(sp_ch_stat_cnt)
 		{
@@ -9407,7 +9412,7 @@ if(sp_ch_stat==scsWRK)
 		speedz_mem_hndl(0);
 		}
 	#ifdef UKU_220_IPS_TERMOKOMPENSAT
-	if(sk_stat[0]==0)sp_ch_stat=scsERR2;
+	if((sk_stat[0]==0)&&(SP_CH_VENT_BLOK==1))sp_ch_stat=scsERR2;
 	#endif
 	}
 
@@ -9463,14 +9468,20 @@ if(speedChrgAvtEn==1)
 		&&(abs(Ib_ips_termokompensat/10-IZMAX)<5)
 		#endif
 		#ifdef UKU_220_V2
-		&&(abs(bat[0]._Ib/10-IZMAX)<5)
+		&&(abs(bat[0]._Ib/10-IZMAX)<10)
 		#endif
 		&&(!speedChrgBlckStat))
 			{
-			speedChargeStartStop();
-			speedz_mem_hndl(5);
+			speedChargeStartCnt++;
+			if(speedChargeStartCnt>=60)
+				{
+				speedChargeStartStop();
+				speedz_mem_hndl(5);
+				}
 			}
+		else speedChargeStartCnt=0;
 		}
+	else speedChargeStartCnt=0;
 	}
 
 

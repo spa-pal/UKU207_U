@@ -352,7 +352,11 @@ signed short BAT_U_END_10;  	//Конечное напряжение батареи при разряде 10 часов
 signed short BAT_U_END_20;  	//Конечное напряжение батареи при разряде 20 часов
 signed short BAT_C_POINT_NUM_ELEM;	//Количество элементов в батарее
 signed short BAT_K_OLD;			//Коэффициент старения батареи
+
 #endif
+
+signed short SP_CH_VENT_BLOK;
+signed short VZ_CH_VENT_BLOK;
 
 //***********************************************
 //Состояние батарей
@@ -818,6 +822,7 @@ char  	   speedChrgShowCnt;		//Счетчик показа информационного сообщения
 enum_sp_ch_stat sp_ch_stat=scsOFF,sp_ch_stat_old;
 short sp_ch_stat_cnt;
 long sp_ch_wrk_cnt;
+char speedChargeStartCnt=0;
 
 //-----------------------------------------------
 //Блокировка ИПС
@@ -9475,7 +9480,9 @@ else if (ind==iSpch_set)
 	ptrs[6]=	" Блокирование      ^";
 	ptrs[7]=	" Сигнал блокирования";
 	ptrs[8]=	"                   &";
-	ptrs[9]=	" Выход              ";
+	ptrs[9]=	" Блокирование       ";
+	ptrs[10]=	" вентиляцией       (";
+	ptrs[11]=	" Выход              ";
 
 	
 	if(sub_ind<index_set) index_set=sub_ind;
@@ -9501,7 +9508,9 @@ else if (ind==iSpch_set)
 	if(speedChrgBlckLog==0)sub_bgnd("РАЗОМКН.",'&',-7);
 	else if(speedChrgBlckLog==1) sub_bgnd("ЗАМКН.",'&',-5);  
     else sub_bgnd("НЕКОРР.",'&',-6); 	  
-
+	if(SP_CH_VENT_BLOK==1)sub_bgnd("ВКЛ",'(',-2);
+    else if(SP_CH_VENT_BLOK==0)sub_bgnd("ВЫКЛ.",'(',-4);
+	else sub_bgnd("НЕКОРР..",'(',-6);
 	
 	}
 
@@ -12071,6 +12080,7 @@ if(ind==iDeb)
 		long2lcdyx_mmm(bat_hndl_i,1,5,0);
 		long2lcdyx_mmm(bat_hndl_t_razr,2,5,0);	
 		int2lcdyx(Ib_ips_termokompensat,3,5,0);
+		int2lcdyx(speedChargeStartCnt,0,10,0);
 		long2lcdyx_mmm(bat_hndl_t_razr,2,14,0);
 		long2lcdyx_mmm(bat_hndl_proc_razr,2,19,0);
 		long2lcdyx_mmm(bat_hndl_zvu_Q,3,19,0);
@@ -16061,10 +16071,12 @@ else if(ind==iVZ_set)
 	//ptrs[0]=	" тип - специальный  ";
 	ptrs[0]=	" Uвыр.зар.=    [В   ";
 	ptrs[1]=	" Imax.выр.зар.=   ]А";
-	ptrs[2]=	" Tвыр.зар.=   (ч.   ";	
-    ptrs[3]=	sm_exit;
-    ptrs[4]=	sm_;
-    ptrs[5]=	sm_;     	     	    
+	ptrs[2]=	" Tвыр.зар.=   (ч.   ";
+	ptrs[3]=	" Блокирование       ";
+	ptrs[4]=	" вентиляцией       )";		
+    ptrs[5]=	sm_exit;
+    ptrs[6]=	sm_;
+    ptrs[7]=	sm_;     	     	    
 	
 
 	if((sub_ind-index_set)>2)index_set=sub_ind-2;
@@ -16081,6 +16093,9 @@ else if(ind==iVZ_set)
 	else int2lcd(VZ_HR,'(',0);
 	int2lcd(IMAX_VZ,']',1);
 	int2lcd(UVZ,'[',1);
+	if(VZ_CH_VENT_BLOK==1)sub_bgnd("ВКЛ",')',-2);
+    else if(VZ_CH_VENT_BLOK==0)sub_bgnd("ВЫКЛ.",')',-4);
+	else sub_bgnd("НЕКОРР..",')',-6);
 
 	}
 
@@ -29095,7 +29110,9 @@ else if (ind==iSpch_set)
 		if(sub_ind==3)index_set=2;
 		if(sub_ind==4)sub_ind=5;
 		if(sub_ind==8)sub_ind=9;
-		gran_char(&sub_ind,0,9);
+		if(sub_ind==9)index_set=8;
+		if(sub_ind==10)sub_ind=11;
+		gran_char(&sub_ind,0,11);
 		}
 	else if(but==butU)
 		{
@@ -29103,8 +29120,8 @@ else if (ind==iSpch_set)
 		if(sub_ind==4)sub_ind=3;
 		//if(sub_ind==3)index_set=2;
 		if(sub_ind==8)sub_ind=7;
-		
-		gran_char(&sub_ind,0,9);
+		if(sub_ind==10)sub_ind=9;
+		gran_char(&sub_ind,0,11);
 		}
 	else if(but==butD_)
 		{
@@ -29257,11 +29274,24 @@ else if (ind==iSpch_set)
 		speed=1;
 		}
 
+	else if(sub_ind==9)
+		{
+		if((but==butR)||(but==butR_))
+			{
+			SP_CH_VENT_BLOK=1;
+			lc640_write_int(EE_SP_CH_VENT_BLOK,SP_CH_VENT_BLOK);
+			}
+		else if((but==butL)||(but==butL_))
+			{
+			SP_CH_VENT_BLOK=0;
+			lc640_write_int(EE_SP_CH_VENT_BLOK,SP_CH_VENT_BLOK);
+			}
+		speed=1;
+		}
 
 
 
-
-	else if((sub_ind==9)&&(but==butE))
+	else if((sub_ind==11)&&(but==butE))
 		{
 	     tree_down(0,0);
 	     ret(0);
@@ -37608,16 +37638,19 @@ else if(ind==iVZ_set)
 	if(but==butD)
 		{
 		sub_ind++;
-		gran_char(&sub_ind,0,3);
+		gran_char(&sub_ind,0,5);
+		if(sub_ind==3)index_set=2;
+		if(sub_ind==4)sub_ind++;
 		}
 	else if(but==butU)
 		{
 		sub_ind--;
-		gran_char(&sub_ind,0,3);		
+		gran_char(&sub_ind,0,5);
+		if(sub_ind==4)sub_ind--;		
 		}
 	else if(but==butD_)
 		{
-		sub_ind=3;
+		sub_ind=5;
 		}
  if(sub_ind==0)
 	    {
@@ -37647,6 +37680,20 @@ else if(ind==iVZ_set)
 		speed=1; 
 		}
 	else if(sub_ind==3)
+		{
+		if((but==butR)||(but==butR_))
+			{
+			VZ_CH_VENT_BLOK=1;
+			lc640_write_int(EE_VZ_CH_VENT_BLOK,VZ_CH_VENT_BLOK);
+			}
+		else if((but==butL)||(but==butL_))
+			{
+			VZ_CH_VENT_BLOK=0;
+			lc640_write_int(EE_VZ_CH_VENT_BLOK,VZ_CH_VENT_BLOK);
+			}
+		speed=1;
+		}
+	else if(sub_ind==5)
 		{
 		if(but==butE)
 			{

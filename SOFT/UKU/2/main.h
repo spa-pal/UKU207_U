@@ -1182,6 +1182,8 @@ extern signed short BAT_U_END_20;  		//Конечное напряжение батареи при разряде 2
 extern signed short BAT_C_POINT_NUM_ELEM;	//Количество элементов в батарее
 extern signed short BAT_K_OLD;			//Коэффициент старения батареи
 #endif
+extern signed short SP_CH_VENT_BLOK;
+extern signed short VZ_CH_VENT_BLOK;
 
 //***********************************************
 //Состояние батарей
@@ -1761,6 +1763,7 @@ typedef enum  {scsOFF,scsSTEP1,scsWRK,scsERR1,scsERR2} enum_sp_ch_stat;
 extern enum_sp_ch_stat sp_ch_stat,sp_ch_stat_old;
 extern short sp_ch_stat_cnt;
 extern long sp_ch_wrk_cnt;
+extern char speedChargeStartCnt;
 
 //-----------------------------------------------
 //Блокировка ИПС
