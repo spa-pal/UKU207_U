@@ -6681,7 +6681,7 @@ else if(ind==iKe)
 	pointer_set(2);
 	int2lcd(sub_ind1+1,'{',0);
 
-	int2lcdyx(sub_ind1,0,4,0);
+	//int2lcdyx(sub_ind1,0,4,0);
 	}	  
 
 
@@ -17919,7 +17919,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 		//ind=iMn;
 		//sub_ind=0;
 		//speedz_mem_hndl(5);
-		tree_up(iAvt_comm_set,0,0,0);
+		//tree_up(iAvt_comm_set,0,0,0);
 		}
 	else if(but==butL)
 		{

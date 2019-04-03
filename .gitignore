@@ -27,3 +27,5 @@
 
 /SOFT/UKU/2/*.i
 /SOFT/UKU/2/*._ip
+/SOFT/UKU/2/EXE/*.sct
+*.sct

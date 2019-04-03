@@ -17,7 +17,7 @@
 
                           EXPORTAS ||area_number.5||, ||.constdata||
                   BUILD
-000000  0174              DCW      0x0174
+000000  0175              DCW      0x0175
 
                           AREA ||area_number.6||, DATA, READONLY, ALIGN=1
 
