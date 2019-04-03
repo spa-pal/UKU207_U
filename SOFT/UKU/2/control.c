@@ -8513,16 +8513,14 @@ for(i=0;i<NUMIST;i++)
      }
 
 if(iiii==0)
-     {
-     cntrl_stat=600;	
-     cntrl_stat_old=600;
-     cntrl_stat_new=600;
-	#ifdef UKU_TELECORE2015
-	//cntrl_stat=0;
-	//cntrl_stat_old=0;
-	//cntrl_stat_new=0;
-	#endif
-     }
+	{
+	cntrl_stat=600;	
+	cntrl_stat_old=600;
+	cntrl_stat_new=600;
+	cntrl_stat=10*PWM_START;
+	cntrl_stat_old=10*PWM_START;
+	cntrl_stat_new=10*PWM_START;
+	}
 
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
 if(ica_cntrl_hndl_cnt)	ica_cntrl_hndl_cnt--;

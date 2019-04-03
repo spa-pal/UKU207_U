@@ -4805,7 +4805,7 @@ else if (ind==iBat_simple)
 #ifdef UKU_ZVU
 else if (ind==iBat_ZVU)
 	{
-	if(bat[0]._av&1)
+	if(bat_ips._av&1)
 		{
 		if(bFL2)bgnd_par("       АВАРИЯ!        ",
 		                 "       Батарея        ",
@@ -8593,43 +8593,30 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	pointer_set(1);	
 	
 	if(index_set<21)
-	     {	
-	     if(ZV_ON)sub_bgnd("ВКЛ.",'(',0);
-	     else sub_bgnd("ВЫК.",'(',0);
-	     if(AV_OFF_AVT)sub_bgnd("автом.",')',0);
-	     else sub_bgnd("ручн.",')',0);
+		{	
+		if(ZV_ON)sub_bgnd("ВКЛ.",'(',0);
+		else sub_bgnd("ВЫК.",'(',0);
+		if(AV_OFF_AVT)sub_bgnd("автом.",')',0);
+		else sub_bgnd("ручн.",')',0);
 		if(PAR)sub_bgnd("ВКЛ.",'z',0);
-	     else sub_bgnd("ВЫК.",'z',0);
-	     if(MNEMO_ON==mnON)
-	     	{
-	     	sub_bgnd("через yс.",'y',-8);
-	     	int2lcd(MNEMO_TIME,'y',0);
-	     	}
-	     else sub_bgnd("выкл.",'y',-4);
-	     int2lcd(UMAX,'!',1);
-	     int2lcd((UB20-DU),'Z',1);
-	     int2lcd(UB0,'@',1);
-	     int2lcd(UB20,'#',1);
-
-	     int2lcd(UMN,'&',0);
-
-	     }  
+		else sub_bgnd("ВЫК.",'z',0);
+		int2lcd(UMAX,'!',1);
+		int2lcd((UB20-DU),'Z',1);
+		int2lcd(UB0,'@',1);
+		int2lcd(UB20,'#',1);
+		int2lcd(UMN,'&',0);
+		}  
 	int2lcd(TMAX,'$',0);
-	
-	
 	int2lcd(IMAX,']',1);
 	int2lcd(IMIN,'{',1);
-
 	int2lcd(TZAS,'y',0);
-	
 	int2lcd(TSIGN,'Y',0); 
-
-     int2lcd(POWER_CNT_ADRESS,'+',0);
-     if(UBM_AV)
-          {
-          int2lcd(UBM_AV,'Q',0);
-          } 
-     else sub_bgnd("ВЫКЛ.",'Q',-2);
+    int2lcd(POWER_CNT_ADRESS,'+',0);
+ 	if(UBM_AV)
+		{
+		int2lcd(UBM_AV,'Q',0);
+		} 
+	else sub_bgnd("ВЫКЛ.",'Q',-2);
 
 
 	long2lcd_mmm(AUSW_MAIN_NUMBER,'w',0);
@@ -12225,6 +12212,10 @@ if(uku_or_rki==0){	//oleg_start
 					sm_,sm_); 
 		
 		     }
+/*		else if(ips_bat_av_stat==1)
+			{
+
+			} */
 		int2lcd(sub_ind,'!',0);
 		} 
      
@@ -16514,7 +16505,7 @@ if(!n_but)goto but_an_end;
 av_beep=0x0000;
 av_rele=0x0000;
 mnemo_cnt=MNEMO_TIME;
-ips_bat_av_stat=0;
+
 //bat_ips._av&=~1;
 
 if((main_1Hz_cnt<10)&&((but==butU)||(but==butU_)||(but==butD)||(but==butD_)||(but==butL)||(but==butL_)||(but==butR)||(but==butR_)||(but==butE)||(but==butE_)))

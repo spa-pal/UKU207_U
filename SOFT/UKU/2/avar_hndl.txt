@@ -2149,7 +2149,7 @@
 ;;;875    	if(event_ptr>63)event_ptr=0;	
 ;;;876    	lc640_write_int(PTR_EVENT_LOG,event_ptr);	
 ;;;877    	
-;;;878         event_cnt=lc640_read_int(CNT_EVENT_LOG);
+;;;878    	event_cnt=lc640_read_int(CNT_EVENT_LOG);
 ;;;879    	if(event_cnt!=63)event_cnt=event_ptr;
 ;;;880    	lc640_write_int(CNT_EVENT_LOG,event_cnt); 
 ;;;881    	
@@ -5679,3 +5679,29 @@
                   av_inv
                           DCD      0x00000000
 000054  0000              DCB      0x00,0x00
+
+;*** Start embedded assembler ***
+
+#line 1 "avar_hndl.c"
+	AREA ||.emb_text||, CODE, READONLY
+	THUMB
+	EXPORT |__asm___11_avar_hndl_c_ef0810c9____REV16|
+#line 112 "C:\\Keil\\ARM\\CMSIS\\Include\\core_cmInstr.h"
+|__asm___11_avar_hndl_c_ef0810c9____REV16| PROC
+#line 113
+
+ rev16 r0, r0
+ bx lr
+	ENDP
+	AREA ||.emb_text||, CODE, READONLY
+	THUMB
+	EXPORT |__asm___11_avar_hndl_c_ef0810c9____REVSH|
+#line 130
+|__asm___11_avar_hndl_c_ef0810c9____REVSH| PROC
+#line 131
+
+ revsh r0, r0
+ bx lr
+	ENDP
+
+;*** End   embedded assembler ***

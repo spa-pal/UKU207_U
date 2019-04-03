@@ -875,7 +875,7 @@ if(in==1)
 	if(event_ptr>63)event_ptr=0;	
 	lc640_write_int(PTR_EVENT_LOG,event_ptr);	
 	
-     event_cnt=lc640_read_int(CNT_EVENT_LOG);
+	event_cnt=lc640_read_int(CNT_EVENT_LOG);
 	if(event_cnt!=63)event_cnt=event_ptr;
 	lc640_write_int(CNT_EVENT_LOG,event_cnt); 
 	
