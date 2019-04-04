@@ -8,6 +8,7 @@
 #include <string.h>
 #include "25lc640.h"
 #include "common_func.h"
+#include "avar_hndl.h" 
 
 char snmp_community[10];
 
@@ -271,6 +272,12 @@ snmp_mains_power_voltage_phaseA=net_Ua;
 snmp_mains_power_voltage_phaseB=net_Ub;
 snmp_mains_power_voltage_phaseC=net_Uc;
 
+
+if(avar_stat&0x0001)snmp_mains_power_alarm=1;
+else snmp_mains_power_alarm=0;
+if(avar_stat&0x0001)snmp_mains_power_status=1;
+else snmp_mains_power_status=0;
+
 /*
 snmp_mains_power_status=0; 
 #if(UKU_VERSION==900)
@@ -288,7 +295,7 @@ for(i=0;i<snmp_numofevents;i++)event2snmp(i);
 //snmp_bpsnumber[0]=1;
 //snmp_bpsnumber[1]=2;
 
-snmp_sernum=AUSW_MAIN_NUMBER;
+
 snmp_sernum_lsb=0x1122;
 snmp_sernum_msb=0x3344;
 snmp_device_code=AUSW_MAIN;
@@ -299,6 +306,7 @@ snmp_device_code=AUSW_MAIN;
 snmp_numofbat=1;
 
 */
+snmp_sernum=AUSW_MAIN_NUMBER;
 
 snmp_load_voltage=load_U;
 snmp_load_current=load_I;

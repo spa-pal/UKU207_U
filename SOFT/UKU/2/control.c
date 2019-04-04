@@ -2237,6 +2237,8 @@ temp_SL/=400L;
 bat[0]._Ub=(signed short)temp_SL;
 #endif
 
+//adc_buff_[4]=300;
+
 temp_SL=(signed long)adc_buff_[4];
 temp_SL*=Kubatm[0];
 temp_SL/=700L;
@@ -2267,6 +2269,8 @@ temp_SL*=Kubat[1];
 temp_SL/=400L;
 bat[1]._Ub=(signed short)temp_SL;
 #endif
+
+//adc_buff_[1]=300;
 
 temp_SL=(signed long)adc_buff_[1];
 temp_SL*=Kubatm[1];
@@ -7218,7 +7222,7 @@ else bat[in]._resurs_cnt=0;
 
 #ifndef UKU_220_V2
 #ifndef UKU_GLONASS
-#ifndef UKU_6U
+//#ifndef UKU_6U
 //#ifndef UKU_220
 if(UBM_AV)
      {
@@ -7263,7 +7267,7 @@ temp_SS=bat[in]._Ub/2;
 		}
      
      }
-#endif 
+//#endif 
 #endif 
 #endif
 

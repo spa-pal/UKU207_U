@@ -1221,8 +1221,13 @@ modbus_registers[14]=(signed char)(bat[0]._Ub>>8);				//Рег8	напряжение батареи 
 modbus_registers[15]=(signed char)(bat[0]._Ub);
 modbus_registers[16]=(signed char)(bat[0]._Ib>>8);				//Рег9   	ток батареи №1, 0.01А
 modbus_registers[17]=(signed char)(bat[0]._Ib);
+#ifdef UKU_ZVU
+modbus_registers[18]=(signed char)(t_ext[0]>>8);				//Рег10	температура батареи №1, 1Гц
+modbus_registers[19]=(signed char)(t_ext[0]);
+#else
 modbus_registers[18]=(signed char)(bat[0]._Tb>>8);				//Рег10	температура батареи №1, 1Гц
 modbus_registers[19]=(signed char)(bat[0]._Tb);
+#endif
 #ifdef UKU_ZVU
 modbus_registers[20]=(signed char)(((short)(bat_hndl_zvu_Q/10000L))>>8);			//Рег11	заряд батареи №1, %
 modbus_registers[21]=(signed char)(((short)(bat_hndl_zvu_Q/10000L)));
