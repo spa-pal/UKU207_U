@@ -10110,15 +10110,15 @@ else if(ind==iK_220_IPS_TERMOKOMPENSAT)
 	
 	ptrs[i++]=" Ñåòü               ";
 	if(NUMBAT)
-     ptrs[i++]=" Áàòàğåè            ";
+	ptrs[i++]=" Áàòàğåÿ            ";
 	if(NUMIST)
 	ptrs[i++]=" ÁÏÑ                ";
 	ptrs[i++]=" Âûõîäíûå ïàğàìåòğû ";
-     if(NUMDT)
-     ptrs[i++]=" Âíåøíèå äàò÷èêè    ";
-     ptrs[i++]=" Âûõîä              ";
-     ptrs[i++]=" Êâàğö RS485   !ÌÃÖ ";
-     ptrs[i++]="                    ";
+	if(NUMDT)
+	ptrs[i++]=" Âíåøíèå äàò÷èêè    ";
+	ptrs[i++]=" Âûõîä              ";
+	ptrs[i++]=" Êâàğö RS485   !ÌÃÖ ";
+	ptrs[i++]="                    ";
 
 	if((sub_ind-index_set)>2)index_set=sub_ind-2;
 	else if(sub_ind<index_set)index_set=sub_ind;
@@ -10396,28 +10396,28 @@ else if(ind==iK_t_ext_6U)
 	
 	if((sub_ind-index_set)>1)index_set=sub_ind-1;
 	else if(sub_ind<index_set)index_set=sub_ind;
-	bgnd_par(		" ÊÀËÈÁĞÎÂÊÀ ÂÍÅØÍÈÕ ",
+	bgnd_par(	" ÊÀËÈÁĞÎÂÊÀ ÂÍÅØÍÈÕ ",
 				" ÄÀÒ×ÈÊÎÂ ÒÅÌÏÅĞÀÒÓĞ",
 				ptrs[index_set],
 				ptrs[index_set+1]);
 
 	pointer_set(2);	
 	if(ND_EXT[0])sub_bgnd("íåèñïğ.",'!',-3);
-     else int2lcd_mmm(t_ext[0],'!',0);
+	else int2lcd_mmm(t_ext[0],'!',0);
 
 	if(ND_EXT[1])sub_bgnd("íåèñïğ.",'@',-3);
-     else int2lcd_mmm(t_ext[1],'@',0);
+	else int2lcd_mmm(t_ext[1],'@',0);
 
 	if(ND_EXT[2])sub_bgnd("íåèñïğ.",'#',-3);
-     else int2lcd_mmm(t_ext[2],'#',0);
-	//int2lcdyx(u_necc,3,18,0);
-     }
+	else int2lcd_mmm(t_ext[2],'#',0);
+
+	}
      
 else if(ind==iK_bat_sel)
 	{
 	ptrs[0]=						" Áàòàğåÿ N1         ";
-     ptrs[1]=						" Áàòàğåÿ N2         ";
-     if(BAT_IS_ON[0]!=bisON)ptrs[0]=	" Áàòàğåÿ N2         ";
+	ptrs[1]=						" Áàòàğåÿ N2         ";
+	if(BAT_IS_ON[0]!=bisON)ptrs[0]=	" Áàòàğåÿ N2         ";
 	ptrs[0+NUMBAT]=				" Âûõîä              ";
 	ptrs[1+NUMBAT]=				"                    ";
 	ptrs[2+NUMBAT]=				"                    ";
@@ -10426,8 +10426,22 @@ else if(ind==iK_bat_sel)
 	else if(sub_ind<index_set)index_set=sub_ind;
 	bgnd_par(" ÊÀËÈÁĞÎÂÊÀ ÁÀÒÀĞÅÉ ",ptrs[index_set],ptrs[index_set+1],ptrs[index_set+2]);
 	pointer_set(1);
-	
-     }     
+	}     
+
+/*else if(ind==iK_bat_sel_ZVU)
+	{
+	ptrs[0]=						" Áàòàğåÿ N1         ";
+	ptrs[1]=						" Áàòàğåÿ N2         ";
+	if(BAT_IS_ON[0]!=bisON)ptrs[0]=	" Áàòàğåÿ N2         ";
+	ptrs[0+NUMBAT]=				" Âûõîä              ";
+	ptrs[1+NUMBAT]=				"                    ";
+	ptrs[2+NUMBAT]=				"                    ";
+
+	if((sub_ind-index_set)>2)index_set=sub_ind-2;
+	else if(sub_ind<index_set)index_set=sub_ind;
+	bgnd_par(" ÊÀËÈÁĞÎÂÊÀ ÁÀÒÀĞÅÉ ",ptrs[index_set],ptrs[index_set+1],ptrs[index_set+2]);
+	pointer_set(1);
+	}*/     
 
 else if(ind==iK_bat_sel_TELECORE)
 	{
@@ -22717,7 +22731,7 @@ else if(ind==iSet_6U)
 	     {
 	     if(but==butE)
 	          {
-	          tree_up(3,0,0,0);
+	          tree_up(iDef_6U,0,0,0);
 	          ret(1000);
 	          default_temp=10;
 	          }

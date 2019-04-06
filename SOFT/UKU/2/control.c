@@ -2251,6 +2251,13 @@ temp_SL/=2000L;
 bat[0]._Ubm=(signed short)temp_SL;
 #endif
 
+#ifdef UKU_6U
+temp_SL=(signed long)adc_buff_[4];
+temp_SL*=Kubatm[0];
+temp_SL/=2000L;
+bat[0]._Ubm=(signed short)temp_SL;
+#endif
+
 temp_SL=(signed long)adc_buff_[12];
 temp_SL*=Kubat[1];
 temp_SL/=2000L;
@@ -2277,6 +2284,12 @@ temp_SL*=Kubatm[1];
 temp_SL/=700L;
 bat[1]._Ubm=(signed short)temp_SL;
 #ifdef UKU_KONTUR
+temp_SL=(signed long)adc_buff_[1];
+temp_SL*=Kubatm[1];
+temp_SL/=2000L;
+bat[1]._Ubm=(signed short)temp_SL;
+#endif
+#ifdef UKU_6U
 temp_SL=(signed long)adc_buff_[1];
 temp_SL*=Kubatm[1];
 temp_SL/=2000L;
