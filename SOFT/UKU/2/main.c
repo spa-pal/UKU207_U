@@ -4829,8 +4829,8 @@ else if (ind==iBat_ZVU)
 	//	if(UBM_AV)
 	//	ptrs[3]=       " Uбат.с.т.=(^%)   zВ";
 		
-		//if(bat[sub_ind1]._nd)ptrs[4]="    ДТ. неисправен  ";
-		//else ptrs[4]="   tбат =   ?°C     ";
+		if(bat[sub_ind1]._nd)ptrs[4]="    ДТ. неисправен  ";
+		else ptrs[4]="   tбат =   ?°C     ";
 		ptrs[5]="   Заряд=    w%     ";
 		ptrs[6]="   tост.=   <ч0>м   ";
 		ptrs[7]="   Cбат=     QА*ч   ";

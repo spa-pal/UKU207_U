@@ -87,7 +87,8 @@ signed short snmp_bat_current[2];
 signed short snmp_bat_temperature[2];
 signed short snmp_bat_capacity[2];
 signed short snmp_bat_charge[2];
-signed short snmp_bat_status[2]; 
+signed short snmp_bat_status[2];
+signed short snmp_bat_rem_time[2]; 
 
 //Спецфункции
 signed short snmp_spc_stat;
@@ -334,27 +335,45 @@ snmp_energy_total_energy=power_summary;
 snmp_energy_current_energy=power_current;
 snmp_energy_input_voltage=net_U;
 
+
+#ifdef UKU_ZVU
+snmp_bat_number[0]=1;
+snmp_bat_voltage[0]=out_U;
+snmp_bat_current[0]=Ib_ips_termokompensat;
+snmp_bat_rem_time[0]=bat_hndl_t_razr_min;
+snmp_bat_temperature[0]=t_ext[0];
+if(ND_EXT[0])snmp_bat_temperature[0]=-1000;
+snmp_bat_capacity[0]=BAT_C_POINT_20;
+snmp_bat_charge[0]=(bat_hndl_zvu_Q/10000L);
+snmp_bat_status[0]=bat_ips._av&1;
+#endif
+
+
 snmp_bat_number[0]=1;
 snmp_bat_voltage[0]=bat[0]._Ub;
 snmp_bat_part_voltage[0]=bat[0]._Ubm;
 snmp_bat_current[0]=bat[0]._Ib;
 
+/*
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
 if(((AUSW_MAIN==22063)||(AUSW_MAIN==22023))&&(bps[8]._device==dIBAT_METR))
 	{
 	snmp_bat_current[0]=Ib_ips_termokompensat;
 	}
-#endif
+#endif*/
 
 snmp_bat_temperature[0]=bat[0]._Tb;
+if(bat[0]._nd) snmp_bat_temperature[0]=-1000;
+
 if(BAT_C_REAL[0]==0x5555)snmp_bat_capacity[0]=BAT_C_NOM[0];
 else snmp_bat_capacity[0]=BAT_C_REAL[0];
+/*
 #ifdef UKU_ZVU
 snmp_bat_charge[0]=(bat_hndl_zvu_Q/10000L);
 
 #else
 snmp_bat_charge[0]=bat[0]._zar;
-#endif
+#endif */
 snmp_bat_charge[0]=bat[0]._zar;
 snmp_bat_status[0]=bat[0]._av;
 if(BAT_IS_ON[0]!=bisON)snmp_bat_status[0]=0xff;
@@ -364,6 +383,7 @@ snmp_bat_voltage[1]=bat[1]._Ub;
 snmp_bat_part_voltage[1]=bat[1]._Ubm;
 snmp_bat_current[1]=bat[1]._Ib;
 snmp_bat_temperature[1]=bat[1]._Tb;
+if(bat[1]._nd) snmp_bat_temperature[1]=-1000;
 if(BAT_C_REAL[1]==0x5555)snmp_bat_capacity[1]=BAT_C_NOM[1];
 else snmp_bat_capacity[1]=BAT_C_REAL[1];
 snmp_bat_charge[1]=bat[1]._zar;
