@@ -12252,7 +12252,39 @@ if(ind==iDeb)
 		/*int2lcdyx(u_necc,1,15,0);
 		int2lcdyx(bps_U,2,15,0);
 		int2lcdyx(uavt_set_error_cnt,3,19,0);*/ 
-		}															     				     			
+		}
+    else if(sub_ind==24)
+     	{
+     	bgnd_par(	"KB                  ",
+     		    	"                    ",
+     		    	"                    ",
+     		    	"                    ");
+		int2lcdyx(main_kb_cnt,1,4,0);
+		int2lcdyx(TBAT*60,2,4,0);
+		int2lcdyx(BAT_IS_ON[0],3,2,0);
+		int2lcdyx(BAT_IS_ON[1],3,5,0);
+		int2lcdyx(kb_start[0],0,16,0);
+		int2lcdyx(kb_start[1],1,16,0);
+		int2lcdyx(kb_start_ips,2,16,0);	
+		int2lcdyx(bat[0]._av,0,12,0);
+		int2lcdyx(bat[1]._av,1,12,0);
+		int2lcdyx(bat_ips._av,2,12,0);	
+		int2lcdyx(net_av,3,8,0);
+		int2lcdyx(num_of_wrks_bps,3,11,0);
+		int2lcdyx(spc_stat,3,14,0);
+		int2lcdyx(vz1_stat,3,16,0);
+		int2lcdyx(vz2_stat,3,18,0);
+		int2lcdyx(abs(Ib_ips_termokompensat),1,9,0);
+		int2lcdyx(IKB,2,9,0);
+		int2lcdyx(sp_ch_stat,2,7,0);
+		int2lcdyx(kb_cnt_1lev,0,19,0);
+		int2lcdyx(kb_cnt_2lev,1,19,0);
+		int2lcdyx(kb_full_ver,2,19,0);
+
+		/*int2lcdyx(u_necc,1,15,0);
+		int2lcdyx(bps_U,2,15,0);
+		int2lcdyx(uavt_set_error_cnt,3,19,0);*/ 
+		}																	     				     			
 	}
 
 else if((ind==iAv_view)||(ind==iAv_view_avt))
