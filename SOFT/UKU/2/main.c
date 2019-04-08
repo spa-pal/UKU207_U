@@ -2283,6 +2283,69 @@ if(bps[0]._av&(1<<4))
 	sub_ptrs[i++]=	"     исчерпан       ";
 	sub_cnt_max++;		
 	}
+if(bps[1]._av&(1<<4))
+	{
+	sub_ptrs[i++]=	"Ресурс вент. БПС2   ";
+	sub_cnt_max++;
+	sub_ptrs[i++]=	"     исчерпан       ";
+	sub_cnt_max++;		
+	}
+if(bps[2]._av&(1<<4))
+	{
+	sub_ptrs[i++]=	"Ресурс вент. БПС3   ";
+	sub_cnt_max++;
+	sub_ptrs[i++]=	"     исчерпан       ";
+	sub_cnt_max++;		
+	}
+if(bps[3]._av&(1<<4))
+	{
+	sub_ptrs[i++]=	"Ресурс вент. БПС4   ";
+	sub_cnt_max++;
+	sub_ptrs[i++]=	"     исчерпан       ";
+	sub_cnt_max++;		
+	}
+if(bps[4]._av&(1<<4))
+	{
+	sub_ptrs[i++]=	"Ресурс вент. БПС5   ";
+	sub_cnt_max++;
+	sub_ptrs[i++]=	"     исчерпан       ";
+	sub_cnt_max++;		
+	}
+if(bps[5]._av&(1<<4))
+	{
+	sub_ptrs[i++]=	"Ресурс вент. БПС6   ";
+	sub_cnt_max++;
+	sub_ptrs[i++]=	"     исчерпан       ";
+	sub_cnt_max++;		
+	}
+if(bps[6]._av&(1<<4))
+	{
+	sub_ptrs[i++]=	"Ресурс вент. БПС7   ";
+	sub_cnt_max++;
+	sub_ptrs[i++]=	"     исчерпан       ";
+	sub_cnt_max++;		
+	}
+if(bps[7]._av&(1<<4))
+	{
+	sub_ptrs[i++]=	"Ресурс вент. БПС8   ";
+	sub_cnt_max++;
+	sub_ptrs[i++]=	"     исчерпан       ";
+	sub_cnt_max++;		
+	}
+if(bps[8]._av&(1<<4))
+	{
+	sub_ptrs[i++]=	"Ресурс вент. БПС9   ";
+	sub_cnt_max++;
+	sub_ptrs[i++]=	"     исчерпан       ";
+	sub_cnt_max++;		
+	}
+if(bps[9]._av&(1<<4))
+	{
+	sub_ptrs[i++]=	"Ресурс вент. БПС10  ";
+	sub_cnt_max++;
+	sub_ptrs[i++]=	"     исчерпан       ";
+	sub_cnt_max++;		
+	}
 #endif
 
 // oleg_start
@@ -4848,7 +4911,7 @@ else if (ind==iBat_ZVU)
 		//int2lcd(bat[sub_ind1]._dUbm,'^',0);
 	     //if(BAT_C_REAL[sub_ind1]==0x5555)sub_bgnd("------",'Q',-1);
 	     //else int2lcd(BAT_C_REAL[sub_ind1],'Q',1);
-	     if(sub_ind==4)lcd_buffer[60]=1;
+	     if(sub_ind==5)lcd_buffer[60]=1;
 
 
 		if(bIBAT_SMKLBR)sub_bgnd("КЛБР. ",'#',-3);
@@ -18854,7 +18917,7 @@ else if(ind==iBat_ZVU)
 	     }
 	else if(but==butD_)
 		{
-		sub_ind=4;
+		sub_ind=5;
 		}		     
      }
 

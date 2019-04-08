@@ -341,14 +341,16 @@ snmp_bat_number[0]=1;
 snmp_bat_voltage[0]=out_U;
 snmp_bat_current[0]=Ib_ips_termokompensat;
 snmp_bat_rem_time[0]=bat_hndl_t_razr_min;
+if(Ib_ips_termokompensat>0)snmp_bat_rem_time[0]=-1;
 snmp_bat_temperature[0]=t_ext[0];
 if(ND_EXT[0])snmp_bat_temperature[0]=-1000;
 snmp_bat_capacity[0]=BAT_C_POINT_20;
 snmp_bat_charge[0]=(bat_hndl_zvu_Q/10000L);
 snmp_bat_status[0]=bat_ips._av&1;
+if(NUMBAT==0)snmp_bat_status[0]=0xff;
 #endif
 
-
+#ifndef UKU_ZVU
 snmp_bat_number[0]=1;
 snmp_bat_voltage[0]=bat[0]._Ub;
 snmp_bat_part_voltage[0]=bat[0]._Ubm;
@@ -378,6 +380,7 @@ snmp_bat_charge[0]=bat[0]._zar;
 snmp_bat_status[0]=bat[0]._av;
 if(BAT_IS_ON[0]!=bisON)snmp_bat_status[0]=0xff;
 
+
 snmp_bat_number[1]=2;
 snmp_bat_voltage[1]=bat[1]._Ub;
 snmp_bat_part_voltage[1]=bat[1]._Ubm;
@@ -389,7 +392,7 @@ else snmp_bat_capacity[1]=BAT_C_REAL[1];
 snmp_bat_charge[1]=bat[1]._zar;
 snmp_bat_status[1]=bat[1]._av;
 if(BAT_IS_ON[1]!=bisON)snmp_bat_status[1]=0xff;
-
+#endif
 
 
 snmp_bps_number[0]=1;

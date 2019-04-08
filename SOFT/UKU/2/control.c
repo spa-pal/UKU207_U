@@ -7396,7 +7396,8 @@ else
 	bat_hndl_remain_time=bat_hndl_zvu_Q/bat_hndl_proc_razr;
 	}
 
-
+if(bat_hndl_zvu_Q>1000000L)	bat_hndl_zvu_Q=1000000L;
+else if(bat_hndl_zvu_Q<0L)	bat_hndl_zvu_Q=0L;
 
 if((Ib_ips_termokompensat/10<(2*IKB))&&(Ib_ips_termokompensat/10>(-2*IKB))&&(!(bat[0]._av&0x01))&& (out_U<=u_necc_up) && (out_U>u_necc_dn) && (main_kb_cnt>=10) && (main_kb_cnt<=200) /*(main_kb_cnt==((TBAT*60)-10))*//*&& ((TVENTMAX!=0))*/ )
 	{
