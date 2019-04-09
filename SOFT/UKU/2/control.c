@@ -249,7 +249,7 @@ char cntrl_hndl_plazma;
 
 //***********************************************
 //Уравнительный заряд
-enum_vz1_stat vz1_stat, vz1_stat_old;
+enum_vz1_stat vz1_stat=vz1sOFF, vz1_stat_old=vz1sOFF;
 short vz1_stat_cnt;
 long vz1_wrk_cnt;
 long vz1_up_cnt;
@@ -258,7 +258,7 @@ short volt_region_cnt;
 
 //***********************************************
 //Формовочный заряд
-enum_vz2_stat vz2_stat, vz2_stat_old;
+enum_vz2_stat vz2_stat=vz2sOFF, vz2_stat_old=vz2sOFF;
 short vz2_stat_cnt;
 long vz2_wrk_cnt;
 long vz2_up_cnt;
@@ -8216,11 +8216,11 @@ if(mess_find_unvol(MESS2CNTRL_HNDL))
 	{
 	if(mess_data[0]==PARAM_CNTRL_STAT_PLUS)
 		{
-		cntrl_stat_new=cntrl_stat_old+mess_data[1];
+		cntrl_stat/*_new*/=cntrl_stat_old+mess_data[1];
 		}
 	else if(mess_data[0]==PARAM_CNTRL_STAT_MINUS)
 		{
-		cntrl_stat_new=cntrl_stat_old-mess_data[1];
+		cntrl_stat/*_new*/=cntrl_stat_old-mess_data[1];
 		}
 	else if(mess_data[0]==PARAM_CNTRL_STAT_STEP_DOWN)
 		{
@@ -8239,7 +8239,7 @@ if(mess_find_unvol(MESS2CNTRL_HNDL))
 		}
 	else if(mess_data[0]==PARAM_CNTRL_STAT_SET)
 		{
-		cntrl_stat_new=mess_data[1];
+		cntrl_stat/*_new*/=mess_data[1];
 		}
 
 	else if(mess_data[0]==PARAM_CNTRL_STAT_FAST_REG)
@@ -8248,61 +8248,61 @@ if(mess_find_unvol(MESS2CNTRL_HNDL))
 		if(bps_U>u_necc)
 			{
 			cntrl_hndl_plazma=11;
-			if(((bps_U-u_necc)>40)&&(cntrl_stat_new>0))cntrl_stat_new-=5;
-			else if((cntrl_stat_new)&&b1Hz_ch)cntrl_stat_new--;
+			if(((bps_U-u_necc)>40)&&(cntrl_stat/*_new*/>0))cntrl_stat/*_new*/-=5;
+			else if((cntrl_stat/*_new*/)&&b1Hz_ch)cntrl_stat/*_new*/--;
 			}
 		else if(bps_U<u_necc)
 			{
 			cntrl_hndl_plazma=12;	
-			if(((u_necc-bps_U)>40)&&(cntrl_stat_new<1015))cntrl_stat_new+=5;
-			else	if((cntrl_stat_new<1020)&&b1Hz_ch)cntrl_stat_new++;
+			if(((u_necc-bps_U)>40)&&(cntrl_stat/*_new*/<1015))cntrl_stat/*_new*/+=5;
+			else	if((cntrl_stat/*_new*/<1020)&&b1Hz_ch)cntrl_stat/*_new*/++;
 			}
 		#elif defined(UKU_220)
 		if(load_U>u_necc)
 			{
 			cntrl_hndl_plazma=13;
-			if(((load_U-u_necc)>40)&&(cntrl_stat_new>0))cntrl_stat_new-=5;
-			else if((cntrl_stat_new)&&b1Hz_ch)cntrl_stat_new--;
+			if(((load_U-u_necc)>40)&&(cntrl_stat/*_new*/>0))cntrl_stat/*_new*/-=5;
+			else if((cntrl_stat/*_new*/)&&b1Hz_ch)cntrl_stat/*_new*/--;
 			}
 		else if(load_U<u_necc)
 			{
 			cntrl_hndl_plazma=14;	
-			if(((u_necc-load_U)>40)&&(cntrl_stat_new<1015))cntrl_stat_new+=5;
-			else	if((cntrl_stat_new<1020)&&b1Hz_ch)cntrl_stat_new++;
+			if(((u_necc-load_U)>40)&&(cntrl_stat/*_new*/<1015))cntrl_stat/*_new*/+=5;
+			else	if((cntrl_stat/*_new*/<1020)&&b1Hz_ch)cntrl_stat/*_new*/++;
 			}
 		#elif defined(UKU_220_V2)
 		if(load_U>u_necc)
 			{
 			cntrl_hndl_plazma=15;
-			if(((load_U-u_necc)>40)&&(cntrl_stat_new>0))cntrl_stat_new-=5;
-			else if((cntrl_stat_new)&&b1Hz_ch)cntrl_stat_new--;
+			if(((load_U-u_necc)>40)&&(cntrl_stat/*_new*/>0))cntrl_stat/*_new*/-=5;
+			else if((cntrl_stat/*_new*/)&&b1Hz_ch)cntrl_stat/*_new*/--;
 			}
 		else if(load_U<u_necc)
 			{
 			cntrl_hndl_plazma=16;	
-			if(((u_necc-load_U)>40)&&(cntrl_stat_new<1015))cntrl_stat_new+=5;
-			else	if((cntrl_stat_new<1020)&&b1Hz_ch)cntrl_stat_new++;
+			if(((u_necc-load_U)>40)&&(cntrl_stat/*_new*/<1015))cntrl_stat/*_new*/+=5;
+			else	if((cntrl_stat/*_new*/<1020)&&b1Hz_ch)cntrl_stat/*_new*/++;
 			}
 		#else
 
 		if(load_U>u_necc)
 			{
 			cntrl_hndl_plazma=17;
-			if(((load_U-u_necc)>10)&&(cntrl_stat_new>0))cntrl_stat_new-=5;
-			else if((cntrl_stat_new)&&b1Hz_ch)cntrl_stat_new--;
+			if(((load_U-u_necc)>10)&&(cntrl_stat/*_new*/>0))cntrl_stat/*_new*/-=5;
+			else if((cntrl_stat/*_new*/)&&b1Hz_ch)cntrl_stat/*_new*/--;
 			}
 		else if(load_U<u_necc)
 			{
 			cntrl_hndl_plazma=18;	
-			if(((u_necc-load_U)>10)&&(cntrl_stat_new<1015))cntrl_stat_new+=5;
-			else	if((cntrl_stat_new<1020)&&b1Hz_ch)cntrl_stat_new++;
+			if(((u_necc-load_U)>10)&&(cntrl_stat/*_new*/<1015))cntrl_stat/*_new*/+=5;
+			else	if((cntrl_stat/*_new*/<1020)&&b1Hz_ch)cntrl_stat/*_new*/++;
 			}
 		#endif	
 	 	}
 
-	gran(&cntrl_stat_new,10,1010);			
+	/*gran(&cntrl_stat_new,10,1010);			
 	cntrl_stat_old=cntrl_stat_new;
-	cntrl_stat=cntrl_stat_new;
+	cntrl_stat=cntrl_stat_new;*/
 	}
 
 #ifdef UKU_220_IPS_TERMOKOMPENSAT

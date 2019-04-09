@@ -4782,10 +4782,10 @@ else if (ind==iBat)
 		     ptrs[4]=  " Iразр=      #А     ";
 		     }	
 		ptrs[2]=       " Uбат=            $В";
-          ptrs[3]=       " Uбат.с.т.=       zВ";
+		ptrs[3]=       " Uбат.с.т.=       zВ";
 		if(UBM_AV)
 		ptrs[3]=       " Uбат.с.т.=(^%)   zВ";
-		
+		if((bat[sub_ind1]._av&0x02)&&(bFL))ptrs[3]=sm_;
 		if(bat[sub_ind1]._nd)ptrs[5]="    ДТ. неисправен  ";
 		else ptrs[5]="   tбат =   ?°C     ";
 		ptrs[6]="   Заряд=    w%     ";
@@ -12271,9 +12271,9 @@ if(ind==iDeb)
 		int2lcdyx(bat_ips._av,2,12,0);	
 		int2lcdyx(net_av,3,8,0);
 		int2lcdyx(num_of_wrks_bps,3,11,0);
-		int2lcdyx(spc_stat,3,14,0);
-		int2lcdyx(vz1_stat,3,16,0);
-		int2lcdyx(vz2_stat,3,18,0);
+		int2lcdyx(spc_stat,0,9,0);
+		int2lcdyx(vz1_stat,3,15,0);
+		int2lcdyx(vz2_stat,3,19,0);
 		int2lcdyx(abs(Ib_ips_termokompensat),1,9,0);
 		int2lcdyx(IKB,2,9,0);
 		int2lcdyx(sp_ch_stat,2,7,0);
@@ -12438,10 +12438,22 @@ if(uku_or_rki==0){	//oleg_start
 
 		}
 
-	else if(sub_ind==5)
+	else if(sub_ind==29)
 		{
-
-		}
+		if(bat_ips._av)
+			{
+			bgnd_par(	"   Авария батареи   ",
+				    	"    не устранена    ",
+				    	sm_,sm_); 
+			}
+    	else 
+			{
+	    	bgnd_par(	"   Авария батареи   ",
+	    				"     устранена      ",
+					sm_,sm_); 
+		
+		    }
+		} 
 
 	else if(sub_ind==6)
 		{
@@ -16649,7 +16661,7 @@ if(but==butUD)
      if(ind!=iDeb)
 		{
 		c_ind=a_ind;
-		tree_up(iDeb,21,0,0);
+		tree_up(iDeb,24,0,0);
 		}
 	else 
 		{
@@ -16685,13 +16697,13 @@ else if(ind==iDeb)
 		{
 		sub_ind++;
 		index_set=0;
-		gran_ring_char(&sub_ind,0,23);
+		gran_ring_char(&sub_ind,0,24);
 		}
 	else if(but==butL)
 		{
 		sub_ind--;
 		index_set=0;
-		gran_ring_char(&sub_ind,0,23);
+		gran_ring_char(&sub_ind,0,24);
 		}
 		
 	else if(sub_ind==1)
@@ -18070,7 +18082,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 		if(sub_ind==0)
 			{ 
 			if(avar_ind_stat)
-			{	
+				{	
 				uku_or_rki=0;  //oleg_start
 				//ind=iAv_view;
 				//sub_ind=0;
@@ -18084,21 +18096,29 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 						avar_ind_stat=0;
 						}
 					}
-			}
+				}
+			else if(ips_bat_av_stat)
+				{
+				ips_bat_av_stat=0;	
+				uku_or_rki=0; 
+				tree_up(iAv_view,0,0,0); 
+				sub_ind=29;
+				}
 			//oleg_start
-			else if(rki_avar1_ind_stat){
-					uku_or_rki=1;
-					tree_up(iAv_view,0,0,0);
-					while(!(rki_avar1_ind_stat&(1<<(sub_ind) )))
+			else if(rki_avar1_ind_stat)
+				{
+				uku_or_rki=1;
+				tree_up(iAv_view,0,0,0);
+				while(!(rki_avar1_ind_stat&(1<<(sub_ind) )))
 					{
-						sub_ind++;
-						if(sub_ind>=32)
+					sub_ind++;
+					if(sub_ind>=32)
 						{
-							if(!avar_ind_stat) tree_down(0,0);
-							rki_avar1_ind_stat=0;
+						if(!avar_ind_stat) tree_down(0,0);
+						rki_avar1_ind_stat=0;
 						}
 					}
-			}
+				}
 				//oleg_end																								
 			}
 		else if((sub_ind==2)&&(NUMBAT))
@@ -27437,7 +27457,7 @@ else if(ind==iSet_T_avt)
 		{
 		if(SNTP_ENABLE==0)
 		 	{
-				if(but==butE)
+			if(but==butE)
 	          	{
 				tree_down(0,0);
 	          	}
@@ -27464,6 +27484,7 @@ else if(ind==iSet_T_avt)
 		{
 		if(but==butE)
 			{
+			sntp_requ();
 			tree_down(0,0);
 			}
 		}	          

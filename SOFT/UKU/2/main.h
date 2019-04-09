@@ -90,6 +90,7 @@
 #define DISPLAY_BAT_CHARGE				1,6
 #define DISPLAY_BAT_STATUS				1,7
 #define DISPLAY_BAT_REMTIME				1,8
+#define DISPLAY_BAT_PART_VOLTAGE		1,9
 
 #define DISPLAY_SPEC				6
 #define DISPLAY_SPEC_STAT				1

@@ -465,7 +465,7 @@ if(crc16_calculated==crc16_incapsulated)
 				}
 			if(modbus_rx_arg0==20)		//ток стабилизации для режима стабилизации тока
 				{
-				if((modbus_rx_arg1>0)&&(modbus_rx_arg1<=18))
+				if((modbus_rx_arg1>=0)&&(modbus_rx_arg1<=18))
 				lc640_write_int(EE_NUMIST,modbus_rx_arg1);  
 				}
 			if(modbus_rx_arg0==21)		//ток стабилизации для режима стабилизации тока
@@ -492,8 +492,7 @@ if(crc16_calculated==crc16_incapsulated)
 
 			if(modbus_rx_arg0==30)		//напряжение стабилизации для режима стабилизации напряжения
 				{
-				/*if(modbus_rx_arg1<0)TBAT=0;
-				else */if((modbus_rx_arg1>0)&&(modbus_rx_arg1<=5))modbus_rx_arg1=0;
+				if((modbus_rx_arg1>0)&&(modbus_rx_arg1<5))modbus_rx_arg1=0;
 				else if(modbus_rx_arg1>=60)TBAT=60;
 				else TBAT=modbus_rx_arg1;
 				lc640_write_int(EE_TBAT,TBAT);
@@ -550,7 +549,7 @@ if(crc16_calculated==crc16_incapsulated)
 	     		}
 			if(modbus_rx_arg0==43)		//
 				{
-				lc640_write_int(EE_TZAS,modbus_rx_arg1);
+				if((modbus_rx_arg1>=0)&&(modbus_rx_arg1<=3))lc640_write_int(EE_TZAS,modbus_rx_arg1);
 	     		}
 			if(modbus_rx_arg0==44)		//
 				{
@@ -590,7 +589,7 @@ if(crc16_calculated==crc16_incapsulated)
 	     		}
 			if(modbus_rx_arg0==53)		//
 				{
-				lc640_write_int(EE_U_OUT_KONTR_DELAY,modbus_rx_arg1);
+				if((modbus_rx_arg1>=5)&&(modbus_rx_arg1<=100))lc640_write_int(EE_U_OUT_KONTR_DELAY,modbus_rx_arg1);
 	     		}
 			if(modbus_rx_arg0==54)		//
 				{

@@ -88,7 +88,8 @@ signed short snmp_bat_temperature[2];
 signed short snmp_bat_capacity[2];
 signed short snmp_bat_charge[2];
 signed short snmp_bat_status[2];
-signed short snmp_bat_rem_time[2]; 
+signed short snmp_bat_rem_time[2];
+
 
 //Спецфункции
 signed short snmp_spc_stat;

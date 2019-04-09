@@ -201,6 +201,8 @@ char* aaa_="abc";
 #ifdef UKU_ZVU
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_BAT, DISPLAY_BAT_REMTIME, 1},  				MIB_INT(snmp_bat_rem_time[0]),  	NULL},	//Время прогнозируемого полного разряда батареи №1
 #endif
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_BAT, DISPLAY_BAT_PART_VOLTAGE, 1},  			MIB_INT(snmp_bat_part_voltage[0]),	NULL},	//Напряжение средней точки батареи №1
+
 
 #ifndef UKU_ZVU
 
@@ -211,6 +213,7 @@ char* aaa_="abc";
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_BAT, DISPLAY_BAT_CAPACITY, 2},  				MIB_INT(snmp_bat_capacity[1]),  	NULL},	//Ёмкость батареи №2
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_BAT, DISPLAY_BAT_CHARGE, 2},  					MIB_INT(snmp_bat_charge[1]),  	NULL},	//Заряд батареи №2
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_BAT, DISPLAY_BAT_STATUS, 2},  					MIB_INT(snmp_bat_status[1]),  	NULL},	//Статус батареи №2
+	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_BAT, DISPLAY_BAT_PART_VOLTAGE, 2},  			MIB_INT(snmp_bat_part_voltage[1]),	NULL},	//Напряжение средней точки батареи №2
 
 #endif
 

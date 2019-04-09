@@ -344,7 +344,9 @@ num_rki=(char)lc640_read_int(EE_NUM_RKI);
 num_net_in=(char)lc640_read_int(EE_NUM_NET_IN);
 hv_vz_stat=(enum_hv_vz_stat)lc640_read_int(EE_HV_VZ_STAT);
 vz1_stat=(enum_vz1_stat)lc640_read_int(EE_VZ1_STAT);
+if(vz1_stat==255)vz1_stat=vz1sOFF;
 vz2_stat=(enum_vz2_stat)lc640_read_int(EE_VZ2_STAT);
+if(vz2_stat==255)vz2_stat=vz2sOFF;
 VZ_KIND=lc640_read_int(EE_VZ_KIND);
 #ifdef UKU_ZVU
 BAT_C_POINT_1_6=lc640_read_int(EE_BAT_C_POINT_1_6);
