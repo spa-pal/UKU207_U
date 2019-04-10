@@ -7245,6 +7245,7 @@ temp_SS=bat[in]._Ub/2;
 #else
      if(U0B<600)
           {
+
           temp_SS=bat[in]._Ub/4;
           }
      else temp_SS=bat[in]._Ub/5;
