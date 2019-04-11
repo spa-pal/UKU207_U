@@ -7277,7 +7277,11 @@ temp_SS=bat[in]._Ub/2;
 		}
 	else 
 		{
-		bat[in]._cnt_as=0;
+		if(bat[in]._cnt_as)
+			{
+			bat[in]._cnt_as--;
+			if(bat[in]._cnt_as==0)avar_bat_as_hndl(in,0);
+			}
 		}
      
      }

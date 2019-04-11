@@ -84,8 +84,8 @@ else	   			SET_REG(avar_stat,0,0,1);
 
 for(i=0;i<2;i++)
 	{
-	if(bat[i]._av&1)	SET_REG(avar_stat,1,1+i,1);
-	else	   		SET_REG(avar_stat,0,1+i,1);
+	if(bat[i]._av&3)	SET_REG(avar_stat,1,1+i,1);
+	else	   			SET_REG(avar_stat,0,1+i,1);
 	}
 
 for(i=0;i<12;i++)
@@ -1229,7 +1229,7 @@ if(in==1)
 
 else if(in==0)
 	{
-	//bat[b]._av=0;
+	bat[b]._av&=~(1<<1);
 
      event_ptr=lc640_read_int(PTR_EVENT_LOG);
 	event_ptr_find=event_ptr;
