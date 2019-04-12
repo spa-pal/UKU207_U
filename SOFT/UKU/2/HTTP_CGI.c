@@ -539,7 +539,7 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
 		// журнал
 		switch (env[1]) {
 			case 'd':
-          		len = sprintf((char *)buf,(const char *)&env[3],10);
+          		len = sprintf((char *)buf,(const char *)&env[3],5/*http_get_log_deep()*/);
           		break;
 			case 'n':
           		len = sprintf((char *)buf,(const char *)&env[3],log_item_cnt);

@@ -4,81 +4,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Журнал событий УКУ</title>
 	<link href="uku.css" rel="stylesheet">
-	<!--
-	<style type="text/css" media="screen, print, projection">
-	body,
-	html {
-		margin:0;
-		padding:0;
-		color:#000;
-		background:#a7a09a;
-	}
-	#wrap {
-		width:750px;
-		margin:0 auto;
-		background:#99c;
-	}
-	#nav ul {
-		margin:0;
-		padding:0;
-		list-style:none;
-    }
-    #nav li {
-		display:inline;
-		margin:0;
-		padding:0;
-    }
-	#header {
-		padding:5px 10px;
-		background:#ddd;
-    }
-    h1 {
-		margin:0;
-    }
-    #nav {
-		padding:5px 10px;
-		background:#c99;
-    }
-    #main {
-		float:left;
-		width:480px;
-		padding:10px;
-		background:#9c9;
-    }
-    h2 {
-		margin:0 0 1em;
-    }
-    #sidebar {
-		float:right;
-		width:230px;
-		padding:10px;
-		background:#99c;
-    }
-    #footer {
-		clear:both;
-		padding:5px 10px;
-		background:#cc9;
-    }
-    #footer p {
-		margin:0;
-    }
-
-    #spa_adress {
-
-    }
-    
-	* html #footer {
-		height:1px;
-    }
-
-    .centerAligned {
-    text-align: center;
-    /*border: 1px solid blue;*/
-  }
-
-	</style>
-	-->
-
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script src="pal_decoder.js"></script>
 	<script>
@@ -86,7 +11,8 @@
 		var logTblIsPainted=0;
 		var logTblIsFilled=0;
 		var log_data= new Array(64);
-	  
+		var deepOfLog=0;
+
 	  	$( function() {
 			console.log("Страница загружена");
 	  	} );
@@ -108,6 +34,9 @@
 					log_data[numOfLogItem] = inputData.logItem.split("><");
 				}
 				if(numOfLogItem<deepOfLog-1)setTimeout(dataUpdate,500);
+			}
+			else {
+				$("#item1_head").text("ЖУРНАЛ СОБЫТИЙ ПУСТ");
 			}
 
 
@@ -183,10 +112,10 @@
 		</ul>
 	</div>
 	<div id="main">
-		<h2 align = "middle">Колонка 1</h2>
-		<div id= "result"></div>
-		<!--<p><a href="http://ruseller.com" target="_blank">RUSELLER.COM</a></p>
-		<h3>Consectetuer adipiscing elit</h3>-->
+		<p><h2 id="item1_head" align = "middle"></h2></p>
+		<div id= "item1"></div>
+		<p><h2 id="item2_head" align = "middle"></h2></p>
+		<div id= "item2"></div>		
 	</div>
 	<div id="sidebar">
 		<ul>

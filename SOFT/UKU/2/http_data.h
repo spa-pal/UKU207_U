@@ -6,3 +6,7 @@ extern char http_power_status;
 
 //-----------------------------------------------
 void http_data(void);
+//-----------------------------------------------
+short http_get_log_deep(void);
+//-----------------------------------------------
+char* http_get_log_rec(char num);
