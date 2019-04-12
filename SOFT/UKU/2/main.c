@@ -17583,14 +17583,16 @@ else if(ind==iMn_6U)
 
 	else if(but==butE_)
 		{
-		can1_init(BITRATE62_5K25MHZ);
+		//can1_init(BITRATE62_5K25MHZ);
 #ifndef MCP2515CAN
-		FullCAN_SetFilter(0,0x18e);
+		//FullCAN_SetFilter(0,0x18e);
 #endif
+		avar_bps_hndl(1,0,1);
 		}
 	else if(but==butDR_)
 		{
-		tree_up(iK_6U,0,0,0);
+		//tree_up(iK_6U,0,0,0);
+		avar_bps_hndl(1,0,0);
 		}
 	else if(but==butL)
 		{

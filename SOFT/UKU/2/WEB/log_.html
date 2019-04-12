@@ -80,16 +80,84 @@
 	-->
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script src="pal_decoder.js"></script>
+
 	<script>
 
-	  	var logTblIsPainted=0;
+		var logTblIsPainted=0;
 		var logTblIsFilled=0;
 		var log_data= new Array(64);
-		var deepOfLog=0;
-		var dataOfRec="";
-		var alarmArray= new Array(3);
+		var palDict = {
+			A : "А",
+			B : "Б",
+			C : "Ц",
+			D : "Д",
+			E : "Е",
+			F : "Ф",
+			G : "Г",
+			H : "Х",
+			I : "И",
+			J : "Й",
+			K : "К",
+			L : "Л",
+			M : "М",
+			N : "Н",
+			O : "О",
+			P : "П",
+			Q : "Я",
+			R : "Р",
+			S : "С",
+			T : "Т",
+			U : "У",
+			V : "Ю",
+			W : "В",
+			XA : "Ш",
+			Y : "Ч",
+			Z : "З",
+			XE : "Ё",
+			XC : "Ж",
+			XD : "Щ",
+			XB : "Ъ",
+			XF : "Ы",
+			XG : "Ь",
+			XH : "Э",
+			a : "а",
+			b : "б",
+			c : "ц",
+			d : "д",
+			e : "е",
+			f : "ф",
+			g : "г",
+			h : "х",
+			i : "и",
+			j : "й",
+			k : "к",
+			l : "л",
+			m : "м",
+			n : "н",
+			o : "о",
+			p : "п",
+			q : "я",
+			r : "р",
+			s : "с",
+			t : "т",
+			u : "у",
+			v : "ю",
+			w : "в",
+			Xa : "ш",
+			y : "ч",
+			z : "з",
+			Xe : "ё",
+			Xc : "ж",
+			Xd : "щ",
+			Xb : "ъ",
+			Xf : "ы",
+			Xg : "ь",
+			Xh : "э",
+			Xi : "°",
+			Xj : "№"
 
+		};
+	  
 	  	$( function() {
 			console.log("Страница загружена");
 	  	} );
@@ -99,49 +167,7 @@
 			$.getJSON( "log.cgx", data, success );
 		}
 		
-		function palStr2HexDecoder(input) {
-			var output = "",i=0;
-			while (input[i*2]&&input[i*2+1]){
-				output+= String.fromCharCode("0x"+input.substr(i*2,2)); 
-				i++;
-			}
-			return output;
-		}
-
-		function palAlarmDecoder(input) {
-			var mont_string=["   ","янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек"]; 
-			var output = ["abc","def","Vfv","",""];
-			var beg_time_y=input[8].charCodeAt(0);
-			var beg_time_mnth=input[9].charCodeAt(0);
-			var beg_time_d=input[10].charCodeAt(0);
-			var beg_time_h=input[12].charCodeAt(0);
-			var beg_time_m=input[13].charCodeAt(0);
-			var beg_time_s=input[14].charCodeAt(0);
-
-			output[1]=String(beg_time_h)+"-"+String(beg_time_m)+"-"+String(beg_time_s);
-			output[2]=String(beg_time_d)+"-"+mont_string[beg_time_mnth]+"-"+String(beg_time_y);
-
-			if(input[0]=='U'){
-				if(input[2]=='R'){
-					output[0]="Перезагрузка УКУ"	
-				}
-			}
-			else if(input[0]=='P'){
-				if(input[2]=='A'){
-					output[0]="Авария питающей сети"
-				}
-			}
-			else if(input[0]=='S'){
-				output[0]="Авария источника №"+String(input[1]);
-				if(input[2]=='A'){
-					
-				}
-			}
-
-			return output;
-		}
-
-	/*	function palDecoder(input) {
+		function palDecoder(input) {
 			var output = "",i=0;
 	        while (input[i]){
 	        	if(input[i]=='^'){
@@ -159,7 +185,7 @@
 	        	}
 	        }
 	        return output;
-		}*/
+		}
 
 	 	function success ( inputData ) {
 	 		deepOfLog=inputData.logDeep;
@@ -167,39 +193,29 @@
 			document.getElementById("dev_name").innerHTML=palDecoder(inputData.model);
 			document.getElementById("dev_serial").innerHTML="S№"+palDecoder(inputData.serial);
 			document.getElementById("dev_place").innerHTML=palDecoder(inputData.place);
-			dataOfRec=inputData.logItem;
-			dataOfRec=palStr2HexDecoder(dataOfRec);
 
-			alarmArray=palAlarmDecoder(dataOfRec);
-
-			log_data[numOfLogItem] = alarmArray;
-
-			if(deepOfLog!="0") {
-				$("#item1_head").text("ЖУРНАЛ СОБЫТИЙ");
-				/*for(var i=0; i<deepOfLog; i++) {
+			if(deepOfLog) {
+				for(var i=0; i<deepOfLog; i++) {
 					log_data[numOfLogItem] = inputData.logItem.split("><");
-				}*/
+				}
 				if(numOfLogItem<deepOfLog-1)setTimeout(dataUpdate,500);
 			}
-			else {
-				$("#item1_head").text("ЖУРНАЛ СОБЫТИЙ ПУСТ");
-			}
 
 
-			if (deepOfLog!="0") {
+			if (deepOfLog) {
 				if (logTblIsPainted==0) {
 					var myTable = '' ;
 					myTable += '<table id="logTable"  cellspacing=0 cellpadding=2 border=1>' ;
-					myTable += '<col width="5" valign="middle" align="left">' ;
-					myTable += '<col width="10%" valign="middle" align="left">' ;
-   					myTable += '<col width="10%" valign="middle" text-align="right" class = "abc">' ;
-   					myTable += '<col width="75%" valign="middle" align="justify">' ;
+					myTable += '<col width="50" valign="middle" align="left">' ;
+					myTable += '<col width="20%" valign="middle" align="left">' ;
+   					myTable += '<col width="12%" valign="middle" text-align="right" class = "abc">' ;
+   					myTable += '<col width="60%" valign="middle" align="justify">' ;
  
 					myTable +=  "<thead>" ;
 					myTable +=   "<tr>";
-					myTable +=    "<th>"     + " № " + 	"</th>";
-					myTable +=    "<th>"     + "Начало" +     "</th>";
-					myTable +=    "<th>"     + "Окончание" +     "</th>";
+					myTable +=    "<th>"     + " № п/п " + 	"</th>";
+					myTable +=    "<th>"     + /*"Начало"*/"1" +     "</th>";
+					myTable +=    "<th>"     + /*"Окончание"*/"2" +     "</th>";
 					myTable +=    "<th>"     + "Событие" +     "</th>";
 					myTable +=   "</tr>" ;
 					myTable +=  "</thead>" ;
@@ -217,27 +233,22 @@
 					    myTable += "</div>";
 					    myTable += "</td>";
 					    myTable += '<td class="rightAligned" id = "log_item_end_time'+i+'" >';
-					    myTable += '<div class="centerAligned" id = "log_item_end_time_'+i+'" >';
-					    myTable += "</div>";
-					    myTable += '<div class="centerAligned" id = "log_item_end_data_'+i+'" >';
-					    myTable += "</div>";					    
 					    myTable += "</td>";
 					    myTable += '<td class="rightAligned" id = "log_item_string'+i+'" >';
 					}
 					myTable +=  "</tbody>" ;
 					myTable += "</table>" ;
 
-					$("#item1").append(myTable) ;
+					$("#result").append(myTable) ;
 					logTblIsPainted=1;
 					logTblIsFilled=0;
 				} 
 				else {
 					for(i=0;i<deepOfLog;i++) {
-						$("#log_item_beg_time_"+i).text(log_data[i][1]);
-						$("#log_item_beg_data_"+i).text(log_data[i][2]);
-						$("#log_item_end_time_"+i).text(log_data[i][3]);
-						$("#log_item_end_data_"+i).text(log_data[i][4]);
-						$("#log_item_string"+i).text(log_data[i][0]);
+						$("#log_item_beg_time_"+i).text(palDecoder(log_data[i][0]));
+						$("#log_item_beg_data_"+i).text(palDecoder(log_data[i][1]));
+						$("#log_item_end_time"+i).text(palDecoder(log_data[i][2]));
+						$("#log_item_string"+i).text(palDecoder(log_data[i][3]));
 					}
 				}
 			}
@@ -273,14 +284,18 @@
 		</ul>
 	</div>
 	<div id="main">
-		<p><h2 id="item1_head" align = "middle"></h2></p>
-		<div id= "item1"></div>
-		<p><h2 id="item2_head" align = "middle"></h2></p>
-		<div id= "item2"></div>	
+		<h2 align = "middle">Колонка 1</h2>
+		<div id= "result"></div>
+		<p><a href="http://ruseller.com" target="_blank">RUSELLER.COM</a></p>
+		
+		
+		<h3>Consectetuer adipiscing elit</h3>
+
+
 	</div>
 	<div id="sidebar">
 		<ul>
-			<li><a href="index.htm">Главная</a></li>
+			<li><a href="uku.html">Главная</a></li>
 			<li><a href="set.html">Установки</a></li>
 			<li><a href="log.html">Журнал событий</a></li>
 		</ul>

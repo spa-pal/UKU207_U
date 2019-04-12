@@ -40,6 +40,7 @@ extern signed mat_temper;
 
 
 
+
 //***********************************************
 //Аварии
 typedef struct  
