@@ -44,6 +44,7 @@
 #include "curr_version.h"
 #include "sc16is7xx.h"
 #include "sntp.h"
+#include "http_data.h"
 #ifdef IPS_SGEP_GAZPROM
 #include "ips_sgep_gazprom.h"
 #endif
@@ -3817,7 +3818,9 @@ else if(ind==iMn_6U)
 	//int2lcdyx(read_power_cnt_main_cnt/*rx_buffer1[rx_wr_index1-1]*/,0,15,0);
 	//int2lcdyx(volta_short,0,19,0);
 	//int2lcdyx(curr_short,1,5,0);
-	//int2lcdyx(power_int,2,5,0);	
+	int2lcdyx(bps[0]._Uii,0,3,0);
+	int2lcdyx(bps[1]._Uii,0,7,0);
+	int2lcdyx(bps[2]._Uii,0,11,0);	
 	}
 #ifndef UKU_6U_WEB
 else if(ind==iMn_220)
@@ -6756,7 +6759,7 @@ else if(ind==iKe)
 	//int2lcdyx(sub_ind1,0,4,0);
 	}	  
 
-
+#endif	//UKU_6U_WEB	
 
 else if(ind==iLog)
 	{
@@ -7301,7 +7304,7 @@ else if(ind==iLog_)
 
 	
 	}
-		 
+#ifndef UKU_6U_WEB				 
 else if(ind==iBatLog)
 	{
 	if(BAT_IS_ON[sub_ind1]==bisON)ptrs[0]=" Введена  0!/@  /0# ";
@@ -9216,7 +9219,7 @@ else if(ind==iStr_3U)
 	int2lcd(NUMDT,'#',0);
 	int2lcd(NUMSK,'$',0);
 	}  
-
+#endif	//UKU_6U_WEB
 else if(ind==iStr_6U)
 	{
 	ptrs[0]=" Батарей           @";
@@ -9242,7 +9245,7 @@ else if(ind==iStr_6U)
 	int2lcd(NUMSK,'$',0);
 	int2lcd(NUMMAKB,'%',0);
 	}    
-
+#ifndef UKU_6U_WEB		
 else if(ind==iStr_220_IPS_TERMOKOMPENSAT)
 	{
 	ptrs[0]=" Батарей           @";
@@ -16724,8 +16727,9 @@ else if(but==butLR)
 	bSILENT=1;
 	beep_init(0x00000000,'S');
 	}
+
 else if(but==butUD_)
-     {
+    {
 	avar_bat_as_hndl(0,1);
 	}
 
@@ -20768,7 +20772,7 @@ else if(ind==iKe)
  	else sub_ind=0;     
 	}
 
-
+#endif	//UKU_6U_WEB	
 else if(ind==iLog)
 	{
 	ret_ind_sec(0,0);
@@ -20868,7 +20872,7 @@ else if(ind==iLog_)
 		tree_down(0,0/*sub_ind1-sub_ind*/);
 		}		
 	}	
-
+#ifndef UKU_6U_WEB		
 else if(ind==iSet)
 	{
 	ret(1000);
@@ -27920,7 +27924,7 @@ else if(ind==iStr_KONTUR)
 	          }
           }	          
 	}     
-
+#endif	//UKU_6U_WEB	
 else if(ind==iStr_6U)
 	{
 	ret(1000);
@@ -28163,7 +28167,7 @@ else if(ind==iStr_220_IPS_TERMOKOMPENSAT)
 	        }
          }
 	}*/
-
+#ifndef UKU_6U_WEB	
 else if(ind==iStr_220_IPS_TERMOKOMPENSAT)
 	{
 	ret(1000);
@@ -39823,7 +39827,7 @@ while (1)
 	if(b2Hz)
 		{
 		b2Hz=0;
-
+		http_data();
 		
 				//uart_out_adr1(dig,150);
 		//sc16is700_wr_buff(CS16IS7xx_THR, 20);
@@ -39836,6 +39840,7 @@ while (1)
 		bMODBUS_TIMEOUT=0;
 		//modbus_plazma++;;
 		modbus_in();
+		
 		}
 
 	if(b1Hz)

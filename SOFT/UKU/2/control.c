@@ -291,6 +291,9 @@ char bat_hndl_i_vector=0,bat_hndl_i_vector_old=0;
 long bat_hndl_i_zar_price=0L;
 long bat_hndl_i_summ;
 
+
+short spirit_wrk_cnt;
+
 #ifdef UKU_ZVU
 //-----------------------------------------------
 void ke_start(char in)
@@ -1913,6 +1916,7 @@ else if(net_U>UMN)
 
 }
 
+#ifndef UKU_6U_WEB
 //-----------------------------------------------
 void matemat(void)
 {
@@ -3474,10 +3478,34 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE[0]==1)&&(BAT_LINK==0))
 
 
 	}*/
-
-
-
 }
+#endif	//UKU_6U_WEB
+
+#ifdef UKU_6U_WEB		
+//-----------------------------------------------
+void matemat(void)
+{
+char i;
+
+
+spirit_wrk_cnt++;
+if(spirit_wrk_cnt>20)spirit_wrk_cnt=0;
+
+
+for(i=0;i<20;i++)
+	{
+
+     	bps[i]._Ii=i+spirit_wrk_cnt;
+     	//bps[i]._Uin=bps[i]._buff[2]+(bps[i]._buff[3]*256);
+     	bps[i]._Uii=500+(i*10)+spirit_wrk_cnt;
+     	bps[i]._Ti=20+i+spirit_wrk_cnt;
+     //	bps[i]._adr_ee=bps[i]._buff[7];
+     	//bps[i]._flags_tm=bps[i]._buff[8];
+	     //bps[i]._rotor=bps[i]._buff[10]+(bps[i]._buff[11]*256);    
+
+	}
+}
+#endif	//UKU_6U_WEB	
 
 //-----------------------------------------------
 void mnemo_hndl(void)

@@ -13,6 +13,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "main.h"
+#include "control.h"
+#include "http_data.h"
 
 /* ---------------------------------------------------------------------------
  * The HTTP server provides a small scripting language.
@@ -76,15 +78,29 @@ typedef struct {
 #define MYBUF(p)        ((MY_BUF *)p)
 
 
+//-----------------------------------------------
+char bps_status2number(char number)
+{
+return number+spirit_wrk_cnt;
+if((bps[number]._state==bsWRK)&&(!bps[number]._flags_tm)) 		return 1;
+if((bps[number]._state==bsRDY)) 								return 2;
+if((bps[number]._state==bsWRK)&&(bps[number]._flags_tm&0x08)) 	return 3;
+if((bps[number]._state==bsBL)) 									return 4;
+if((bps[number]._state==bsAPV)) 								return 5;
+if((bps[number]._av&(1<<0))) 									return 6;
+if((bps[number]._av&(1<<2))) 									return 7;
+if((bps[number]._av&(1<<1))) 									return 8;
+if((bps[number]._av&(1<<3))) 									return 9;
+if((bps[number]._state==bsOFF_AV_NET)) 							return 10;
+}
 
-
-
+//-----------------------------------------------
 char* http_tm_src_output(char numOfSrc)
 {
 char buffer[100];
 
 //char* buffer;
-sprintf(buffer,"%d %d %d %d 0x%02x", bps[numOfSrc]._Uii, bps[numOfSrc]._Ii, bps[numOfSrc]._Ti, bps[numOfSrc]._state, bps[numOfSrc]._flags_tm );
+sprintf(buffer,"%d %d %d %d 0x%02x", bps[numOfSrc]._Uii, bps[numOfSrc]._Ii, bps[numOfSrc]._Ti, bps_status2number(numOfSrc), bps[numOfSrc]._flags_tm );
 
 return buffer;
 }
@@ -375,7 +391,7 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
 			          	len = sprintf((char *)buf,(const char *)&env[4],2);
 					break;
 			        case '5':	//количество источников
-						len = sprintf((char *)buf,(const char *)&env[4],7);
+						len = sprintf((char *)buf,(const char *)&env[4],NUMIST);
 					break;
 			        case '6':	//количество инверторов
 			          	len = sprintf((char *)buf,(const char *)&env[4],5);
@@ -494,6 +510,29 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
 				else 	   	len = sprintf((char *)buf,(const char *)&env[3],"good");
           		break;
 		}
+		break;
+
+    case 'p':
+		//Первичное питание, сеть
+      	switch (env[1]) {
+        	case 'n':
+          		len = sprintf((char *)buf,(const char *)&env[3],http_power_num_of_phases);
+          		break;
+     		case 'A':
+          		len = sprintf((char *)buf,(const char *)&env[3],http_power_voltage_of_phase[0]);
+          		break;
+     		case 'B':
+          		len = sprintf((char *)buf,(const char *)&env[3],http_power_voltage_of_phase[1]);
+          		break;       		
+     		case 'C':
+          		len = sprintf((char *)buf,(const char *)&env[3],http_power_voltage_of_phase[2]);
+          		break;
+			case 'F':
+          		len = sprintf((char *)buf,(const char *)&env[3],http_power_frequncy);
+          		break;
+     		case 'S':
+				len = sprintf((char *)buf,(const char *)&env[3],http_power_status);
+          		break;		}
 		break;
 
 	case 'l':

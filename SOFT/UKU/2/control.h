@@ -202,6 +202,8 @@ extern char cntrl_hndl_plazma;
 extern short plazma_ica1,plazma_ica2;
 extern char rele_hndl_plazma[3];
 
+extern short spirit_wrk_cnt;
+
 void zar_superviser_drv(void);
 void zar_superviser_start(void);
 void vent_hndl(void);

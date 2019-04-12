@@ -601,6 +601,11 @@
               <FileType>1</FileType>
               <FilePath>.\uart1.c</FilePath>
             </File>
+            <File>
+              <FileName>http_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\http_data.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1217,6 +1222,11 @@
               <FileName>uart1.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\uart1.c</FilePath>
+            </File>
+            <File>
+              <FileName>http_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\http_data.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1835,6 +1845,11 @@
               <FileType>1</FileType>
               <FilePath>.\uart1.c</FilePath>
             </File>
+            <File>
+              <FileName>http_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\http_data.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2451,6 +2466,11 @@
               <FileName>uart1.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\uart1.c</FilePath>
+            </File>
+            <File>
+              <FileName>http_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\http_data.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3069,6 +3089,11 @@
               <FileType>1</FileType>
               <FilePath>.\uart1.c</FilePath>
             </File>
+            <File>
+              <FileName>http_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\http_data.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3685,6 +3710,11 @@
               <FileName>uart1.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\uart1.c</FilePath>
+            </File>
+            <File>
+              <FileName>http_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\http_data.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4321,6 +4351,11 @@
               <FileType>1</FileType>
               <FilePath>.\uart1.c</FilePath>
             </File>
+            <File>
+              <FileName>http_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\http_data.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4937,6 +4972,11 @@
               <FileName>uart1.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\uart1.c</FilePath>
+            </File>
+            <File>
+              <FileName>http_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\http_data.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5690,6 +5730,11 @@
               <FileType>1</FileType>
               <FilePath>.\uart1.c</FilePath>
             </File>
+            <File>
+              <FileName>http_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\http_data.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6364,6 +6409,11 @@
               <FileType>1</FileType>
               <FilePath>.\uart1.c</FilePath>
             </File>
+            <File>
+              <FileName>http_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\http_data.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6981,6 +7031,11 @@
               <FileType>1</FileType>
               <FilePath>.\uart1.c</FilePath>
             </File>
+            <File>
+              <FileName>http_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\http_data.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -7597,6 +7652,11 @@
               <FileName>uart1.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\uart1.c</FilePath>
+            </File>
+            <File>
+              <FileName>http_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\http_data.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8350,6 +8410,11 @@
               <FileType>1</FileType>
               <FilePath>.\uart1.c</FilePath>
             </File>
+            <File>
+              <FileName>http_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\http_data.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -8984,6 +9049,11 @@
               <FileName>uart1.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\uart1.c</FilePath>
+            </File>
+            <File>
+              <FileName>http_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\http_data.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9893,6 +9963,11 @@
               <FileType>1</FileType>
               <FilePath>.\uart1.c</FilePath>
             </File>
+            <File>
+              <FileName>http_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\http_data.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -10702,6 +10777,11 @@
               <FileType>1</FileType>
               <FilePath>.\uart1.c</FilePath>
             </File>
+            <File>
+              <FileName>http_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\http_data.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -11453,6 +11533,11 @@
               <FileName>uart1.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\uart1.c</FilePath>
+            </File>
+            <File>
+              <FileName>http_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\http_data.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -12206,6 +12291,11 @@
               <FileType>1</FileType>
               <FilePath>.\uart1.c</FilePath>
             </File>
+            <File>
+              <FileName>http_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\http_data.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -12957,6 +13047,11 @@
               <FileName>uart1.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\uart1.c</FilePath>
+            </File>
+            <File>
+              <FileName>http_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\http_data.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -13710,6 +13805,11 @@
               <FileType>1</FileType>
               <FilePath>.\uart1.c</FilePath>
             </File>
+            <File>
+              <FileName>http_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\http_data.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -14461,6 +14561,11 @@
               <FileName>uart1.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\uart1.c</FilePath>
+            </File>
+            <File>
+              <FileName>http_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\http_data.c</FilePath>
             </File>
           </Files>
         </Group>
