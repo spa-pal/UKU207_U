@@ -17,3 +17,6 @@ var bps_status_string = [
 	"АВАРИЯ!!! Потеряна связь",
 	"Отсутствует первичное питание"
 ];
+function pad(a,b){return(1e15+a+"").slice(-b)};
+
+console.log("dict.js загружен");

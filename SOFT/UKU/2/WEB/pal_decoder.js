@@ -89,3 +89,5 @@ function palDecoder(input) {
 	}
 	return output;
 }
+
+console.log("pal_decoder.js загружен");

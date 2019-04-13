@@ -4,82 +4,8 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Журнал событий УКУ</title>
 	<link href="uku.css" rel="stylesheet">
-	<!--
-	<style type="text/css" media="screen, print, projection">
-	body,
-	html {
-		margin:0;
-		padding:0;
-		color:#000;
-		background:#a7a09a;
-	}
-	#wrap {
-		width:750px;
-		margin:0 auto;
-		background:#99c;
-	}
-	#nav ul {
-		margin:0;
-		padding:0;
-		list-style:none;
-    }
-    #nav li {
-		display:inline;
-		margin:0;
-		padding:0;
-    }
-	#header {
-		padding:5px 10px;
-		background:#ddd;
-    }
-    h1 {
-		margin:0;
-    }
-    #nav {
-		padding:5px 10px;
-		background:#c99;
-    }
-    #main {
-		float:left;
-		width:480px;
-		padding:10px;
-		background:#9c9;
-    }
-    h2 {
-		margin:0 0 1em;
-    }
-    #sidebar {
-		float:right;
-		width:230px;
-		padding:10px;
-		background:#99c;
-    }
-    #footer {
-		clear:both;
-		padding:5px 10px;
-		background:#cc9;
-    }
-    #footer p {
-		margin:0;
-    }
-
-    #spa_adress {
-
-    }
-    
-	* html #footer {
-		height:1px;
-    }
-
-    .centerAligned {
-    text-align: center;
-    /*border: 1px solid blue;*/
-  }
-
-	</style>
-	-->
-
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="dict.js"></script>
 	<script src="pal_decoder.js"></script>
 	<script>
 
@@ -117,9 +43,27 @@
 			var beg_time_h=input[12].charCodeAt(0);
 			var beg_time_m=input[13].charCodeAt(0);
 			var beg_time_s=input[14].charCodeAt(0);
+			var end_time_y=input[16].charCodeAt(0);
+			var end_time_mnth=input[17].charCodeAt(0);
+			var end_time_d=input[18].charCodeAt(0);
+			var end_time_h=input[20].charCodeAt(0);
+			var end_time_m=input[21].charCodeAt(0);
+			var end_time_s=input[22].charCodeAt(0);			
 
-			output[1]=String(beg_time_h)+"-"+String(beg_time_m)+"-"+String(beg_time_s);
-			output[2]=String(beg_time_d)+"-"+mont_string[beg_time_mnth]+"-"+String(beg_time_y);
+			/*output[1]=String(beg_time_h)+"-"+String(beg_time_m)+"-"+String(beg_time_s);*/
+			/*output[2]=String(beg_time_d)+"-"+mont_string[beg_time_mnth]+"-"+String(beg_time_y);*/
+			output[1]=pad(beg_time_h,2)+"-"+pad(beg_time_m,2)+"-"+pad(beg_time_s,2);
+			output[2]=pad(beg_time_d,2)+"-"+mont_string[beg_time_mnth]+"-"+pad(beg_time_y,2);
+
+			if(input.substr(16,16)=="AAAAAAAAAAAAAAAA"){
+				output[3]="Не";
+				output[4]="устранена";
+			}
+			else{
+				output[3]=pad(end_time_h,2)+"-"+pad(end_time_m,2)+"-"+pad(end_time_s,2);
+				output[4]=pad(end_time_d,2)+"-"+mont_string[end_time_mnth]+"-"+pad(end_time_y,2);
+			}
+
 
 			if(input[0]=='U'){
 				if(input[2]=='R'){
@@ -132,10 +76,12 @@
 				}
 			}
 			else if(input[0]=='S'){
-				output[0]="Авария источника №"+String(input[1]);
-				if(input[2]=='A'){
-					
-				}
+				output[0]="Авария источника №";
+				output[0]+=(input[1].charCodeAt(0)+1)+". ";
+				if(input[2]=='T')output[0]+="Перегрев.";
+				else if(input[2]=='U')output[0]+="Завышено выходное напряжение";
+				else if(input[2]=='u')output[0]+="Занижено выходное напряжение";
+				else if(input[2]=='L')output[0]+="Потеряна связь с источником";	
 			}
 
 			return output;
@@ -179,7 +125,7 @@
 				/*for(var i=0; i<deepOfLog; i++) {
 					log_data[numOfLogItem] = inputData.logItem.split("><");
 				}*/
-				if(numOfLogItem<deepOfLog-1)setTimeout(dataUpdate,500);
+				if(numOfLogItem<deepOfLog-1)setTimeout(dataUpdate,100);
 			}
 			else {
 				$("#item1_head").text("ЖУРНАЛ СОБЫТИЙ ПУСТ");
@@ -207,14 +153,8 @@
 
 					for (var i = 0; i < deepOfLog; i++) {
 					    myTable +=    '<tr>';
-					    myTable += '<td>';
-					    myTable += i+1;
-					    myTable += "</td>";
-					    myTable += '<td class="rightAligned" id = "log_item_beg_time'+i+'" >';
-					    myTable += '<div class="centerAligned" id = "log_item_beg_time_'+i+'" >';
-					    myTable += "</div>";
-					    myTable += '<div class="centerAligned" id = "log_item_beg_data_'+i+'" >';
-					    myTable += "</div>";
+					    myTable += '<td class="centerAligned">'+(i+1)+'</td><td class="rightAligned" id = "log_item_beg_time'+i+'" >';
+					    myTable += '<div class="centerAligned" id = "log_item_beg_time_'+i+'" ></div><div class="centerAligned" id = "log_item_beg_data_'+i+'" ></div>';
 					    myTable += "</td>";
 					    myTable += '<td class="rightAligned" id = "log_item_end_time'+i+'" >';
 					    myTable += '<div class="centerAligned" id = "log_item_end_time_'+i+'" >';
@@ -222,7 +162,7 @@
 					    myTable += '<div class="centerAligned" id = "log_item_end_data_'+i+'" >';
 					    myTable += "</div>";					    
 					    myTable += "</td>";
-					    myTable += '<td class="rightAligned" id = "log_item_string'+i+'" >';
+					    myTable += '<td><div style="padding-left:10px" class="rightAligned" id = "log_item_string'+i+'" ></div></td>';
 					}
 					myTable +=  "</tbody>" ;
 					myTable += "</table>" ;
