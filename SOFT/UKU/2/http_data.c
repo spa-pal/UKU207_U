@@ -3,6 +3,7 @@
 #include "eeprom_map.h"
 #include "25lc640.h"
 #include "common_func.h"
+#include "main.h"
 
 //Телеметрия сети
 char http_power_num_of_phases;
@@ -63,6 +64,34 @@ http_output_buff[64]=0;
 return http_output_buff;
 }
 
+//-----------------------------------------------
+char* http_tm_dt_output(char numOfDt)
+{
+char buffer[100];
+
+sprintf(buffer,"%d %d", t_ext[numOfDt], ND_EXT[numOfDt]);
+
+return buffer;
+}
+
+//-----------------------------------------------
+char* http_tm_sk_output(char numOfSk)
+{
+char buffer[100];
+char temp1=0;
+char temp2=0;
+
+if(sk_stat[numOfSk]==ssON)temp1=1;
+if(sk_av_stat[numOfSk]==sasON)temp2=1;
+
+sprintf(buffer,"%d %d", temp1, temp2);
+
+return buffer;
+}
+
+
+
+
 /*
 
  char iii;
@@ -76,4 +105,9 @@ lc640_read_long_ptr(tempii,dt);
 lc640_read_long_ptr(tempii+8,dt_);
 lc640_read_long_ptr(tempii+12,dt__);
 */
+
+void demo_avar_vrite(void)
+{
+
+}
 

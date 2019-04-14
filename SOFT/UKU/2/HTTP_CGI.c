@@ -387,17 +387,22 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
 			          	len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("Новосибирск, Новолуговое 123456789012345678901234"));
 					break;
 			        case '4':  	//количество батарей
-						web_plazma[4]++;
-			          	len = sprintf((char *)buf,(const char *)&env[4],2);
+			          	len = sprintf((char *)buf,(const char *)&env[4],NUMBAT);
 					break;
 			        case '5':	//количество источников
 						len = sprintf((char *)buf,(const char *)&env[4],NUMIST);
 					break;
 			        case '6':	//количество инверторов
-			          	len = sprintf((char *)buf,(const char *)&env[4],5);
+			          	len = sprintf((char *)buf,(const char *)&env[4],NUMINV);
 					break;
 			        case '7': 	//количество байпасов
-			          	len = sprintf((char *)buf,(const char *)&env[4],3);
+			          	len = sprintf((char *)buf,(const char *)&env[4],NUMBYPASS);
+					break;
+			        case '8': 	//количество сухих контактов
+			          	len = sprintf((char *)buf,(const char *)&env[4],NUMSK);
+					break;
+			        case '9': 	//количество внешних датчиков температуры
+			          	len = sprintf((char *)buf,(const char *)&env[4],NUMDT);
 					break;
 				}
 		  	break;
@@ -422,19 +427,6 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
 		}
 	break;
 
-/*   case 'd':
-      // System password - file 'system.cgi' 
-	    switch (env[2]) {
-        case '1':
-          len = sprintf((char *)buf,(const char *)&env[4],
-                        http_EnAuth ? "Enabled" : "Disabled");
-          break;
-        case '2':
-          len = sprintf((char *)buf,(const char *)&env[4],http_auth_passw);
-          break;
-      }
-      break;
-*/
     case 'e':
       /* Browser Language - file 'language.cgi' */
       lang = http_get_lang();
@@ -497,6 +489,24 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
       }
       break;
 
+    case 'k':
+		//сухие контакты
+      	switch (env[1]) {
+        	case '1':
+          		len = sprintf((char *)buf,(const char *)&env[3],http_tm_sk_output(0));
+          		break;
+     		case '2':
+          		len = sprintf((char *)buf,(const char *)&env[3],http_tm_sk_output(1));
+          		break;
+         	case '3':
+          		len = sprintf((char *)buf,(const char *)&env[3],http_tm_sk_output(2));
+          		break;
+     		case '4':
+          		len = sprintf((char *)buf,(const char *)&env[3],http_tm_sk_output(3));
+          		break;
+		}
+		break;
+
     case 'm':
       	switch (env[1]) {
         	case '1':
@@ -533,6 +543,21 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
      		case 'S':
 				len = sprintf((char *)buf,(const char *)&env[3],http_power_status);
           		break;		}
+		break;
+
+    case 't':
+		//Датчики температуры
+		switch (env[1]) {
+        	case '1':
+          		len = sprintf((char *)buf,(const char *)&env[3],http_tm_dt_output(0));
+          		break;
+     		case '2':
+          		len = sprintf((char *)buf,(const char *)&env[3],http_tm_dt_output(1));
+          		break;
+         	case '3':
+          		len = sprintf((char *)buf,(const char *)&env[3],http_tm_dt_output(2));
+          		break;
+ 		}
 		break;
 
 	case 'l':

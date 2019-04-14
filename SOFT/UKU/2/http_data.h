@@ -12,4 +12,8 @@ void http_data(void);
 short http_get_log_deep(void);
 //-----------------------------------------------
 char* http_get_log_rec(char num);
+//-----------------------------------------------
+char* http_tm_dt_output(char numOfDt);
+//-----------------------------------------------
+char* http_tm_sk_output(char numOfSk);
 

@@ -3505,7 +3505,22 @@ for(i=0;i<20;i++)
 	     //bps[i]._rotor=bps[i]._buff[10]+(bps[i]._buff[11]*256);    
 
 	}
+
+for(i=0;i<3;i++)
+	{
+	t_ext[i]=30+i+spirit_wrk_cnt;
+	ND_EXT[i]=(i+spirit_wrk_cnt)%2;
+	}
+
+for(i=0;i<4;i++)
+	{
+	sk_stat[i]=ssOFF;
+	if((i+spirit_wrk_cnt)%2)sk_stat[i]=ssON;
+	sk_av_stat[i]=sasOFF;
+	if((i+spirit_wrk_cnt)%2)sk_av_stat[i]=sasON;
+	}
 }
+
 #endif	//UKU_6U_WEB	
 
 //-----------------------------------------------
