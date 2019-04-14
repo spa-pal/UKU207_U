@@ -11,6 +11,7 @@ short http_power_frequncy;
 char http_power_status;
 char http_output_buff[70];
 const char hex_alfa[16]={'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+char log_item_cnt=0;
 
 //-----------------------------------------------
 void http_data(void)

@@ -163,9 +163,10 @@ rki_avarI2_stat_old=rki_avarI2_stat;
 //-----------------------------------------------
 void reload_hndl(void)
 {
+
 char data[4];
 unsigned int event_ptr,lc640_adr/*,event_ptr_find*/,event_cnt;
-
+return;
 event_ptr=lc640_read_int(PTR_EVENT_LOG);
 event_ptr++;	
 if(event_ptr>63)event_ptr=0;	
@@ -235,7 +236,7 @@ void avar_unet_hndl(char in)
 
 char data[4];
 unsigned int event_ptr,lc640_adr,event_ptr_find,event_cnt;
-
+return;
 
 if(in==1)
 	{
@@ -627,7 +628,7 @@ if(in==1)
 	if(event_ptr>63)event_ptr=0;	
 	lc640_write_int(PTR_EVENT_LOG,event_ptr);	
 	
-     event_cnt=lc640_read_int(CNT_EVENT_LOG);
+    event_cnt=lc640_read_int(CNT_EVENT_LOG);
 	if(event_cnt!=63)event_cnt=event_ptr;
 	lc640_write_int(CNT_EVENT_LOG,event_cnt); 
 	

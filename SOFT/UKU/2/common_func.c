@@ -646,15 +646,15 @@ else if(dt[0]=='B')
     		
     		if((dt_[0]==LPC_RTC->YEAR)&&(dt_[1]==LPC_RTC->MONTH)&&(dt_[2]==LPC_RTC->DOM))
     			{
-    	    		lcd_buffer[iii++]='0';
+				lcd_buffer[iii++]='0';
     			lcd_buffer[iii++]='!';
-    	    		lcd_buffer[iii++]=':'; 
+				lcd_buffer[iii++]=':'; 
     			lcd_buffer[iii++]='0';
     			lcd_buffer[iii++]='@';
     			lcd_buffer[iii++]=':';
     			lcd_buffer[iii++]='0';
     			lcd_buffer[iii++]='#';
-    	    		int2lcd(dt__[0],'!',0);
+    	    	int2lcd(dt__[0],'!',0);
     			int2lcd(dt__[1],'@',0);
     			int2lcd(dt__[2],'#',0);    		     		
     			}	                   

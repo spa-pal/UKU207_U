@@ -3818,7 +3818,7 @@ else if(ind==iMn_6U)
 	//int2lcdyx(read_power_cnt_main_cnt/*rx_buffer1[rx_wr_index1-1]*/,0,15,0);
 	//int2lcdyx(volta_short,0,19,0);
 	//int2lcdyx(curr_short,1,5,0);
-	int2lcdyx(bps[0]._Uii,0,3,0);
+	int2lcdyx(log_item_cnt,0,3,0);
 	int2lcdyx(bps[1]._Uii,0,7,0);
 	int2lcdyx(bps[2]._Uii,0,11,0);	
 	}

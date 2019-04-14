@@ -83,29 +83,17 @@
 				else if(input[2]=='u')output[0]+="Занижено выходное напряжение";
 				else if(input[2]=='L')output[0]+="Потеряна связь с источником";	
 			}
+			else if(input[0]=='B'){
+				var batNum=(input[1].charCodeAt(0)+1);
+				if(input[2]=='C'){output[0]="Авария батареи №" + batNum + ". Батарея неопределена";}
+				else if(input[2]=='S'){output[0]="Авария ассимметрии батареи №" + batNum + ".";}
+				else if(input[2]=='W'){output[0]="Разряд батареи №" + batNum + ".";}
+				else if(input[2]=='Z'){output[0]="Выравнивающий заряд батареи №" + batNum + ".";}
+				else if(input[2]=='K'){output[0]="Контроль емкости батареи №" + batNum + ".";}
+			}			
 
 			return output;
 		}
-
-	/*	function palDecoder(input) {
-			var output = "",i=0;
-	        while (input[i]){
-	        	if(input[i]=='^'){
-	        		if(input[++i]=='X'){
-	        			output+=palDict[input[i]+input[i+1]];
-	        			i++;
-	        			i++;
-	        		}
-	        		else {output += palDict[input[i]];
-	        		i++;
-	        		}
-	        	}
-	        	else {
-	        		output +=input[i++];
-	        	}
-	        }
-	        return output;
-		}*/
 
 	 	function success ( inputData ) {
 	 		deepOfLog=inputData.logDeep;
@@ -171,7 +159,7 @@
 					logTblIsPainted=1;
 					logTblIsFilled=0;
 				} 
-				else {
+				if (logTblIsPainted==1) {
 					for(i=0;i<deepOfLog;i++) {
 						$("#log_item_beg_time_"+i).text(log_data[i][1]);
 						$("#log_item_beg_data_"+i).text(log_data[i][2]);
