@@ -3519,6 +3519,23 @@ for(i=0;i<4;i++)
 	sk_av_stat[i]=sasOFF;
 	if((i+spirit_wrk_cnt)%2)sk_av_stat[i]=sasON;
 	}
+
+for(i=0;i<2;i++)
+	{
+	bat[i]._Ub=500+(i*10)+spirit_wrk_cnt;
+	bat[i]._Ib=-10+(i*5)+spirit_wrk_cnt;
+	bat[i]._Tb=-10+(i*5)+spirit_wrk_cnt;
+	bat[i]._nd=(spirit_wrk_cnt/10)%2;
+	if(spirit_wrk_cnt<10)BAT_C_REAL[i]=0x5555;
+	else BAT_C_REAL[i]=50+(spirit_wrk_cnt*(i+1));
+	bat[i]._zar= 60+(spirit_wrk_cnt*(i+1));
+	BAT_RESURS[i]=100*spirit_wrk_cnt*(i+1);
+	bat[i]._Ubm=600+i+spirit_wrk_cnt;
+	}
+
+load_U=345;
+load_I=542;
+
 }
 
 #endif	//UKU_6U_WEB	

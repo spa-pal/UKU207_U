@@ -15,6 +15,7 @@
 #include "main.h"
 #include "control.h"
 #include "http_data.h"
+#include "eeprom_map.h"
 
 /* ---------------------------------------------------------------------------
  * The HTTP server provides a small scripting language.
@@ -78,22 +79,8 @@ typedef struct {
 #define MYBUF(p)        ((MY_BUF *)p)
 
 
-//-----------------------------------------------
-char bps_status2number(char number)
-{
-return number+spirit_wrk_cnt;
-if((bps[number]._state==bsWRK)&&(!bps[number]._flags_tm)) 		return 1;
-if((bps[number]._state==bsRDY)) 								return 2;
-if((bps[number]._state==bsWRK)&&(bps[number]._flags_tm&0x08)) 	return 3;
-if((bps[number]._state==bsBL)) 									return 4;
-if((bps[number]._state==bsAPV)) 								return 5;
-if((bps[number]._av&(1<<0))) 									return 6;
-if((bps[number]._av&(1<<2))) 									return 7;
-if((bps[number]._av&(1<<1))) 									return 8;
-if((bps[number]._av&(1<<3))) 									return 9;
-if((bps[number]._state==bsOFF_AV_NET)) 							return 10;
-}
 
+/*
 //-----------------------------------------------
 char* http_tm_src_output(char numOfSrc)
 {
@@ -103,7 +90,7 @@ char buffer[100];
 sprintf(buffer,"%d %d %d %d 0x%02x", bps[numOfSrc]._Uii, bps[numOfSrc]._Ii, bps[numOfSrc]._Ti, bps_status2number(numOfSrc), bps[numOfSrc]._flags_tm );
 
 return buffer;
-}
+}*/
 
 
 
@@ -195,9 +182,13 @@ void cgi_process_data (U8 code, U8 *dat, U16 len) {
   /*   dat   - pointer to POST received data                                */
   /*   len   - received data length                                         */
   U8 passw[12],retyped[12];
-  U8 *var,stpassw;
+  U8 *var,stpassw; 
+U8 *varr[3];
+U8 i;
+
 web_plazma[2]++;
 web_plazma[3]+=len;
+
 
 
   switch (code) {
@@ -217,31 +208,72 @@ web_plazma[3]+=len;
     /////LED_out (P2);
     return;
   }
-  stpassw = 0;
-  var = (U8 *)alloc_mem (40);
-  do {
-    /* Parse all returned parameters. */
-    dat = http_get_var (dat, var, 40);
+  
+  
+stpassw = 0;
+var = (U8 *)alloc_mem (40);
+varr[0] = (U8 *)alloc_mem (40);
+varr[1] = (U8 *)alloc_mem (150);
+varr[2] = (U8 *)alloc_mem (40);
 
-    if (var[0] != 0) {
-      /* Parameter found, returned string is non 0-length. */
-      if (str_scomp (var, "parol=") == __TRUE) {
-        web_plazma[1]++;
-		if ((str_scomp (var+6, "123") == __TRUE)&&(len == 9)) 
+i=0;
+
+do 
+	{
+    /* Parse all returned parameters. */
+	if(i==1)dat = http_get_var (dat, varr[i++], 150);
+    else dat = http_get_var (dat, varr[i++], 40);
+	web_plazma[0]++;
+	}
+while (dat);
+
+//return;
+    if (varr[0,0] != 0) 
+		{
+		/* Parameter found, returned string is non 0-length. */
+		if (str_scomp (varr[0], "parol") == __TRUE)
 			{
-			uku_set_autorized=1;
+        	web_plazma[1]++;
+			if ((str_scomp (varr[0]+6, "123") == __TRUE)&&(len == 9)) 
+				{
+				uku_set_autorized=1;
+				}
+			else
+				{
+				psw_err=1;
+				uku_set_autorized=0;
+				}
 			}
-		else
+		else if (str_scomp (varr[0], "param=") == __TRUE) 
 			{
-			psw_err=1;
-			uku_set_autorized=0;
+			if(strstr (varr[1], "value="))
+				{
+				
+				web_plazma[4]=22;
+				if(strstr (varr[0], "serno"))
+					{
+					sscanf ((const char *)varr[1]+6, "%d",&web_param_input);
+					lc640_write_int(EE_AUSW_MAIN_NUMBER,(short)(web_param_input&0x0000ffffUL));
+					lc640_write_int(EE_AUSW_MAIN_NUMBER+2,(short)((web_param_input&0xffff0000UL)>>16UL));
+					}
+				else if(strstr (varr[0], "place"))
+					{
+					char i = 0;
+					str_copy(place_holder,pal_cyr_decoder(varr[1]+6));
+					//str_copy(place_holder,varr[1]+6);
+					while(place_holder[i]) 
+						{
+						lc640_write(EE_HTTP_LOCATION+i,place_holder[i]);
+						i++;
+						}
+					}
+
+				
+				}
+
+			//if(strstr(var, "pl"))web_plazma[1]++;
+			//else if(strstr(var, "mi"))web_plazma[1]--;
 			}
-      }
-      else if (str_scomp (var, "but=but1") == __TRUE) {
-        //web_plazma[4]=1;
-		//if(strstr(var, "pl"))web_plazma[1]++;
-		//else if(strstr(var, "mi"))web_plazma[1]--;
-      }
       else if (str_scomp (var, "but=but2") == __TRUE) {
         //web_plazma[4]=2;
       }
@@ -267,10 +299,13 @@ web_plazma[3]+=len;
         /* LCD Module Line 2 text. */
         /////str_copy (lcd_text[1], var+5);
         /////LCDupdate = __TRUE;
-      }
-    }
-  }while (dat);
-  free_mem ((OS_FRAME *)var);
+			}
+		}
+
+free_mem ((OS_FRAME *)var);
+free_mem ((OS_FRAME *)varr[0]);
+free_mem ((OS_FRAME *)varr[1]);
+free_mem ((OS_FRAME *)varr[2]);
   /////LED_out (P2);
 
   if (stpassw == 0x03) {
@@ -281,6 +316,7 @@ web_plazma[3]+=len;
     }
   }
 }
+
 
 
 /*--------------------------- cgi_func --------------------------------------*/
@@ -313,22 +349,33 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
     /* Analyze the environment string. It is the script 'c' line starting */
     /* at position 2. What you write to the script file is returned here. */
 
+	case 'a':
+		// Аварии
+		switch (env[1]) {
+			case '0':
+				switch (env[2]) {
+					case '1':
+						len = sprintf((char *)buf,(const char *)&env[4],"normal");
+						break;
+			        case '2':
+			          	len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("Авария БПС №1"));
+						break;
+				}
+		  		break;
+		}
+		break;
+
     case 'b':
-      /* LED control - file 'led.cgi' */
-      if (env[2] == 'c') {
-        /* Select Control */
-        /////len = sprintf((char *)buf,(const char *)&env[4],LEDrun ? "" : "selected",
-        /////                                                LEDrun ? "selected" : "");
-        break;
-      }
-      /* LED CheckBoxes */
-      id = env[2] - '0';
-      if (id > 7) {
-        id = 0;
-      }
-      id = 1 << id;
-      len = sprintf((char *)buf,(const char *)&env[4],(P2 & id) ? "checked" : "");
-      break;
+		//Батареи
+		switch (env[1]) {
+			case '1':
+				len = sprintf((char *)buf,(const char *)&env[3],http_tm_bat_output(0));
+		  		break;
+			case '2':
+				len = sprintf((char *)buf,(const char *)&env[3],http_tm_bat_output(1));
+		  		break;
+		}
+		break;
 
     case 'c':
       /* TCP status - file 'tcp.cgi' */
@@ -381,10 +428,10 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
 						len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("ИБЭП220/48-80А-4/4"));
 					break;
 			        case '2':
-			          	len = sprintf((char *)buf,(const char *)&env[4],/*pal_cyr_coder(*/11234856);
+			          	len = sprintf((char *)buf,(const char *)&env[4],AUSW_MAIN_NUMBER);
 					break;
 			        case '3':
-			          	len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("Новосибирск, Новолуговое 123456789012345678901234"));
+			          	len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder(place_holder));
 					break;
 			        case '4':  	//количество батарей
 			          	len = sprintf((char *)buf,(const char *)&env[4],NUMBAT);
@@ -403,24 +450,6 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
 					break;
 			        case '9': 	//количество внешних датчиков температуры
 			          	len = sprintf((char *)buf,(const char *)&env[4],NUMDT);
-					break;
-				}
-		  	break;
-		}
-	break;
-
-	case 'a':
-		// Аварии
-		
-		switch (env[1]) {
-			case '0':
-				
-				switch (env[2]) {
-					case '1':
-						len = sprintf((char *)buf,(const char *)&env[4],"normal");
-					break;
-			        case '2':
-			          	len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("Авария БПС №1"));
 					break;
 				}
 		  	break;
@@ -472,9 +501,9 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
       }
       break;
 
-    case 'g':
+	case 'g':
       /* AD Input - file 'ad.cgi' */
-      switch (env[2]) {
+		switch (env[2]) {
         case '1':
           //adv = web_cnt_main;
           len = sprintf((char *)buf,(const char *)&env[4],adv);
@@ -586,6 +615,17 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
 		
 		break;
 
+    case 'o':
+		//нагрузка
+		switch (env[1]) {
+			case 'u':
+				len = sprintf((char *)buf,(const char *)&env[3],load_U);
+		  		break;
+			case 'i':
+				len = sprintf((char *)buf,(const char *)&env[3],load_I);
+		  		break;
+		}
+		break;
 
     case 's':
 		/* телеметрия источников */
@@ -665,15 +705,15 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
 		/* меню установок */
       	switch (env[1]) {
         	case 'n':
-          		len = sprintf((char *)buf,(const char *)&env[3],NUMOFSETTINGS);
+          		len = sprintf((char *)buf,(const char *)&env[3],2);
           		break;
         	case '0':
           		switch (env[2]) {
 		        	case '1':
-		          		len = sprintf((char *)buf,(const char *)&env[4],web_plazma[0]," ");
+		          		len = sprintf((char *)buf,(const char *)&env[4],AUSW_MAIN_NUMBER," ");
 		          		break;
 		     		case '2':
-		          		len = sprintf((char *)buf,(const char *)&env[4],web_plazma[1]," ");
+		          		len = sprintf((char *)buf,(const char *)&env[4],0,pal_cyr_coder(place_holder));
 		          		break;
 		     		case '3':
 		          		len = sprintf((char *)buf,(const char *)&env[4],22954," ");

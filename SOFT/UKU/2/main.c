@@ -595,6 +595,7 @@ char content[63];
 
 //unsigned short YEAR_AVZ,MONTH_AVZ,DATE_AVZ,HOUR_AVZ,MIN_AVZ,SEC_AVZ;
 
+char place_holder[70]="Новосибирск.Новолуговое";
 
 //**********************************************
 //Самокалиброввка
@@ -907,7 +908,8 @@ short web_cnt_main;
 short web_cnt_2hz;
 const char* web_str= "plazma";
 char uku_set_autorized=0;
-char pal_cyr_coder_output[200];
+long web_param_input;
+
 
 //-----------------------------------------------
 void rtc_init (void) 
@@ -3818,9 +3820,14 @@ else if(ind==iMn_6U)
 	//int2lcdyx(read_power_cnt_main_cnt/*rx_buffer1[rx_wr_index1-1]*/,0,15,0);
 	//int2lcdyx(volta_short,0,19,0);
 	//int2lcdyx(curr_short,1,5,0);
-	int2lcdyx(log_item_cnt,0,3,0);
-	int2lcdyx(bps[1]._Uii,0,7,0);
-	int2lcdyx(bps[2]._Uii,0,11,0);	
+	/*int2lcdyx(web_plazma[0],0,3,0);
+	int2lcdyx(web_plazma[1],0,7,0);
+	int2lcdyx(web_plazma[2],0,10,0);
+	int2lcdyx(web_plazma[3],0,13,0);
+	int2lcdyx(web_plazma[4],0,16,0);
+	int2lcdyx(web_param_input,0,19,0);*/
+	long2lcdyx_mmm(1234567,0,8,0);
+	long2lcdyx_mmm(web_param_input,0,19,0);	
 	}
 #ifndef UKU_6U_WEB
 else if(ind==iMn_220)
@@ -7304,7 +7311,7 @@ else if(ind==iLog_)
 
 	
 	}
-#ifndef UKU_6U_WEB				 
+				 
 else if(ind==iBatLog)
 	{
 	if(BAT_IS_ON[sub_ind1]==bisON)ptrs[0]=" Введена  0!/@  /0# ";
@@ -7335,7 +7342,7 @@ else if(ind==iBatLog)
 	int2lcdyx(lc640_read_int(EE_BAT1_IS_ON),0,10,0);
 	int2lcdyx(lc640_read_int(EE_BAT2_IS_ON),0,14,0);*/
 	}
-
+#ifndef UKU_6U_WEB
 else if(ind==iBatLogKe)
 	{             
 	if(av_j_si_max==0)
@@ -7486,7 +7493,7 @@ else if((ind==iSet_prl)||(ind==iK_prl)||(ind==iSpc_prl_vz)
      int2lcdyx(parol[2],1,10,0);
      lcd_buffer[48+sub_ind]='¤';
 	}	
-#ifndef UKU_6U_WEB		
+		
 else if(ind==iPrl_bat_in_out)
 	{
 	if(BAT_IS_ON[sub_ind1]==bisON)ptrs[0]="Для выведения бат.-и";
@@ -7498,7 +7505,7 @@ else if(ind==iPrl_bat_in_out)
      int2lcdyx(parol[2],2,10,0);
      lcd_buffer[68+sub_ind]='¤';	
 	}
-
+#ifndef UKU_6U_WEB
 else if(ind==iPrl_bat_in_sel)
 	{
 	
@@ -33240,7 +33247,7 @@ else if(ind==iK_t_ext_6U)
 			}
 		}			
 	}
-			
+#endif	//UKU_6U_WEB			
 else if(ind==iBatLog)
 	{
 	if(but==butD)
@@ -33426,7 +33433,7 @@ else if(ind==iBatLog)
 	     }		     
 		
 	} 
-
+#ifndef UKU_6U_WEB
 else if(ind==iBatLogVz)
 	{
 	if(but==butD)
@@ -38646,460 +38653,7 @@ LPC_WDT->WDFEED=0xaa;
 LPC_WDT->WDFEED=0x55;
 }
 
-//-----------------------------------------------
-char* pal_cyr_coder(char* in)
-{
-char* output;
-short i=0,ii=0;
-output = pal_cyr_coder_output;
 
-while(in[i])
-	{
-	if(in[i]=='А')
-		{
-		output[ii++]='^';
-		output[ii++]='A';
-		i++;
-		}
-	else if(in[i]=='Б')
-		{
-		output[ii++]='^';
-		output[ii++]='B';
-		i++;
-		}
-	else if(in[i]=='В')
-		{
-		output[ii++]='^';
-		output[ii++]='W';
-		i++;
-		}
-	else if(in[i]=='Г')
-		{
-		output[ii++]='^';
-		output[ii++]='G';
-		i++;
-		}
-	else if(in[i]=='Д')
-		{
-		output[ii++]='^';
-		output[ii++]='D';
-		i++;
-		}
-	else if(in[i]=='Е')
-		{
-		output[ii++]='^';
-		output[ii++]='E';
-		i++;
-		}
-	else if(in[i]=='Ё')
-		{
-		output[ii++]='^';
-		output[ii++]='X';
-		output[ii++]='E';
-		i++;
-		}
-	else if(in[i]=='Ж')
-		{
-		output[ii++]='^';
-		output[ii++]='X';
-		output[ii++]='C';
-		i++;
-		}
-	else if(in[i]=='З')
-		{
-		output[ii++]='^';
-		output[ii++]='Z';
-		i++;
-		}
-	else if(in[i]=='И')
-		{
-		output[ii++]='^';
-		output[ii++]='I';
-		i++;
-		}
-	else if(in[i]=='Й')
-		{
-		output[ii++]='^';
-		output[ii++]='J';
-		i++;
-		}
-	else if(in[i]=='К')
-		{
-		output[ii++]='^';
-		output[ii++]='K';
-		i++;
-		}
-	else if(in[i]=='Л')
-		{
-		output[ii++]='^';
-		output[ii++]='L';
-		i++;
-		}
-	else if(in[i]=='М')
-		{
-		output[ii++]='^';
-		output[ii++]='M';
-		i++;
-		}
-	else if(in[i]=='Н')
-		{
-		output[ii++]='^';
-		output[ii++]='N';
-		i++;
-		}
-	else if(in[i]=='О')
-		{
-		output[ii++]='^';
-		output[ii++]='O';
-		i++;
-		}
-	else if(in[i]=='П')
-		{
-		output[ii++]='^';
-		output[ii++]='P';
-		i++;
-		}
-	else if(in[i]=='Р')
-		{
-		output[ii++]='^';
-		output[ii++]='R';
-		i++;
-		}
-	else if(in[i]=='С')
-		{
-		output[ii++]='^';
-		output[ii++]='S';
-		i++;
-		}
-	else if(in[i]=='Т')
-		{
-		output[ii++]='^';
-		output[ii++]='T';
-		i++;
-		}
-	else if(in[i]=='У')
-		{
-		output[ii++]='^';
-		output[ii++]='U';
-		i++;
-		}
-	else if(in[i]=='Ф')
-		{
-		output[ii++]='^';
-		output[ii++]='F';
-		i++;
-		}
-	else if(in[i]=='Х')
-		{
-		output[ii++]='^';
-		output[ii++]='H';
-		i++;
-		}
-	else if(in[i]=='Ц')
-		{
-		output[ii++]='^';
-		output[ii++]='C';
-		i++;
-		}
-	else if(in[i]=='Ч')
-		{
-		output[ii++]='^';
-		output[ii++]='Y';
-		i++;
-		}
-	else if(in[i]=='Ш')
-		{
-		output[ii++]='^';
-		output[ii++]='X';
-		output[ii++]='A';
-		i++;
-		}
-	else if(in[i]=='Щ')
-		{
-		output[ii++]='^';
-		output[ii++]='X';
-		output[ii++]='D';
-		i++;
-		}
-	else if(in[i]=='Ъ')
-		{
-		output[ii++]='^';
-		output[ii++]='X';
-		output[ii++]='B';
-		i++;
-		}
-	else if(in[i]=='Ы')
-		{
-		output[ii++]='^';
-		output[ii++]='X';
-		output[ii++]='F';
-		i++;
-		}
-	else if(in[i]=='Ь')
-		{
-		output[ii++]='^';
-		output[ii++]='X';
-		output[ii++]='G';
-		i++;
-		}
-	else if(in[i]=='Э')
-		{
-		output[ii++]='^';
-		output[ii++]='X';
-		output[ii++]='H';
-		i++;
-		}
-	else if(in[i]=='Ю')
-		{
-		output[ii++]='^';
-		output[ii++]='V';
-		i++;
-		}
-	else if(in[i]=='Я')
-		{
-		output[ii++]='^';
-		output[ii++]='Q';
-		i++;
-		}
-	else if(in[i]=='а')
-		{
-		output[ii++]='^';
-		output[ii++]='a';
-		i++;
-		}
-	else if(in[i]=='б')
-		{
-		output[ii++]='^';
-		output[ii++]='b';
-		i++;
-		}
-	else if(in[i]=='в')
-		{
-		output[ii++]='^';
-		output[ii++]='w';
-		i++;
-		}
-	else if(in[i]=='г')
-		{
-		output[ii++]='^';
-		output[ii++]='g';
-		i++;
-		}
-	else if(in[i]=='д')
-		{
-		output[ii++]='^';
-		output[ii++]='d';
-		i++;
-		}
-	else if(in[i]=='е')
-		{
-		output[ii++]='^';
-		output[ii++]='e';
-		i++;
-		}
-	else if(in[i]=='ё')
-		{
-		output[ii++]='^';
-		output[ii++]='X';
-		output[ii++]='e';
-		i++;
-		}
-	else if(in[i]=='ж')
-		{
-		output[ii++]='^';
-		output[ii++]='X';
-		output[ii++]='c';
-		i++;
-		}
-	else if(in[i]=='з')
-		{
-		output[ii++]='^';
-		output[ii++]='z';
-		i++;
-		}
-	else if(in[i]=='и')
-		{
-		output[ii++]='^';
-		output[ii++]='i';
-		i++;
-		}
-	else if(in[i]=='й')
-		{
-		output[ii++]='^';
-		output[ii++]='j';
-		i++;
-		}
-	else if(in[i]=='к')
-		{
-		output[ii++]='^';
-		output[ii++]='k';
-		i++;
-		}
-	else if(in[i]=='л')
-		{
-		output[ii++]='^';
-		output[ii++]='l';
-		i++;
-		}
-	else if(in[i]=='м')
-		{
-		output[ii++]='^';
-		output[ii++]='m';
-		i++;
-		}
-	else if(in[i]=='н')
-		{
-		output[ii++]='^';
-		output[ii++]='n';
-		i++;
-		}
-	else if(in[i]=='о')
-		{
-		output[ii++]='^';
-		output[ii++]='o';
-		i++;
-		}
-	else if(in[i]=='п')
-		{
-		output[ii++]='^';
-		output[ii++]='p';
-		i++;
-		}
-	else if(in[i]=='р')
-		{
-		output[ii++]='^';
-		output[ii++]='r';
-		i++;
-		}
-	else if(in[i]=='с')
-		{
-		output[ii++]='^';
-		output[ii++]='s';
-		i++;
-		}
-	else if(in[i]=='т')
-		{
-		output[ii++]='^';
-		output[ii++]='t';
-		i++;
-		}
-	else if(in[i]=='у')
-		{
-		output[ii++]='^';
-		output[ii++]='u';
-		i++;
-		}
-	else if(in[i]=='ф')
-		{
-		output[ii++]='^';
-		output[ii++]='f';
-		i++;
-		}
-	else if(in[i]=='х')
-		{
-		output[ii++]='^';
-		output[ii++]='h';
-		i++;
-		}
-	else if(in[i]=='ц')
-		{
-		output[ii++]='^';
-		output[ii++]='c';
-		i++;
-		}
-	else if(in[i]=='ч')
-		{
-		output[ii++]='^';
-		output[ii++]='y';
-		i++;
-		}
-	else if(in[i]=='ш')
-		{
-		output[ii++]='^';
-		output[ii++]='X';
-		output[ii++]='a';
-		i++;
-		}
-	else if(in[i]=='щ')
-		{
-		output[ii++]='^';
-		output[ii++]='X';
-		output[ii++]='d';
-		i++;
-		}
-	else if(in[i]=='ъ')
-		{
-		output[ii++]='^';
-		output[ii++]='X';
-		output[ii++]='b';
-		i++;
-		}
-	else if(in[i]=='ы')
-		{
-		output[ii++]='^';
-		output[ii++]='X';
-		output[ii++]='f';
-		i++;
-		}
-	else if(in[i]=='ь')
-		{
-		output[ii++]='^';
-		output[ii++]='X';
-		output[ii++]='g';
-		i++;
-		}
-	else if(in[i]=='э')
-		{
-		output[ii++]='^';
-		output[ii++]='X';
-		output[ii++]='h';
-		i++;
-		}
-	else if(in[i]=='ю')
-		{
-		output[ii++]='^';
-		output[ii++]='v';
-		i++;
-		}
-	else if(in[i]=='я')
-		{
-		output[ii++]='^';
-		output[ii++]='q';
-		i++;
-		}
-	else if(in[i]=='°')
-		{
-		output[ii++]='^';
-		output[ii++]='X';
-		output[ii++]='i';
-		i++;
-		}
-	else if(in[i]=='№')
-		{
-		output[ii++]='^';
-		output[ii++]='X';
-		output[ii++]='j';
-		i++;
-		}
-	else
-		{
-		output[ii++]=in[i++];
-		}
-	}
-
-/*while(in[i])
-	{
-	output[ii++]=in[i++];
-	}*/
-
-output[ii++]=0;	
-/*
-for(i=0;i<4;i++)
-	{
-	output[ii++]=in[i++];
-	}  */
-return output;
-}
 
 //***********************************************
 //***********************************************

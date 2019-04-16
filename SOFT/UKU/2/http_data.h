@@ -16,4 +16,10 @@ char* http_get_log_rec(char num);
 char* http_tm_dt_output(char numOfDt);
 //-----------------------------------------------
 char* http_tm_sk_output(char numOfSk);
+//-----------------------------------------------
+char* http_tm_src_output(char numOfSrc);
+//-----------------------------------------------
+char* http_tm_bat_output(char numOfSrc);
+//-----------------------------------------------
+char* pal_cyr_decoder(char* input);
 

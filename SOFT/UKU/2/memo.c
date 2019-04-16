@@ -377,6 +377,11 @@ for(i=0;i<10;i++)
 	{
 	snmp_community[i]=lc640_read(EE_COMMUNITY+(i*2));
 	}
+for(i=0;i<64;i++)
+	{
+	place_holder[i]=lc640_read(EE_HTTP_LOCATION+i);
+	}
+
 
 __ee_vz_cnt=lc640_read_int(EE_VZ_CNT);
 __ee_spc_stat=lc640_read_int(EE_SPC_STAT);

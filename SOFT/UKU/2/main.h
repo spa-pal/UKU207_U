@@ -1081,7 +1081,7 @@ extern signed short BAT_C_REAL[2];
 //extern signed short BAT_TYPE[2];
 
 extern unsigned short AUSW_MAIN;
-extern unsigned long 	AUSW_MAIN_NUMBER;
+extern unsigned long AUSW_MAIN_NUMBER;
 extern unsigned short AUSW_DAY;
 extern unsigned short AUSW_MONTH;
 extern unsigned short AUSW_YEAR;
@@ -1839,6 +1839,9 @@ extern short web_cnt_main;
 extern short web_cnt_2hz;
 extern const char* web_str;
 extern char uku_set_autorized;
+extern long web_param_input;
+
+extern char place_holder[70];
 //-----------------------------------------------
 //Ресурс вентиляторов
 //extern char vent_resurs_temp[4];
