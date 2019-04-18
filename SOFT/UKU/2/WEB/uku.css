@@ -21,6 +21,18 @@
 		min-height: 50px;
 		overflow: hidden;
     }
+    #nav {
+    	padding:10px 5px;
+		background:#f00;
+		height: auto;
+		min-height: 30px;		
+    } 
+           #nav1 {
+    	padding:10px 5px;
+		background:#f00;
+		height: auto;
+		min-height: 30px;		
+    }
     #dev_header #dev_name {
     	width: max-content;
     	//display: inline-block;
@@ -62,10 +74,7 @@
     h1 {
 		margin:0;
     }
-    #nav {
-    	padding:5px 10px;
-		background:#c99;
-    }
+
     #main {
 		float:left;
 		width:980px;
