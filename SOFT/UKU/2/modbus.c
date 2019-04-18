@@ -1,4 +1,5 @@
 
+#include "snmp_data_file.h" 
 #include <lpc17xx.h>
 #include "modbus.h"
 //#include "LPC17xx.H"
@@ -258,6 +259,24 @@ return crc;
 }
 
 //-----------------------------------------------
+void modbus_zapros_ENMV (void){	 //o_2_s
+unsigned short crc_temp;
+unsigned char i_cnt;
+	modbus_tx_buff[0]=MODBUS_ADRESS;
+	modbus_tx_buff[1]=1;
+	modbus_tx_buff[2]=0;
+	modbus_tx_buff[3]=0;
+	modbus_tx_buff[4]=0;
+	modbus_tx_buff[5]=64;
+	crc_temp=CRC16_2(modbus_tx_buff,6);
+	modbus_tx_buff[6]=(char)crc_temp;
+	modbus_tx_buff[7]=crc_temp>>8;
+	for (i_cnt=0;i_cnt<8;i_cnt++)	putchar_sc16is700(modbus_tx_buff[i_cnt]);
+	if(enmv_on<5)enmv_on++;
+   	else {for (i_cnt=0;i_cnt<64;i_cnt++) snmp_enmv_data[i_cnt]=0xFF;}
+} //o_2_e
+
+//-----------------------------------------------
 void modbus_in(void)
 {
 short crc16_calculated;		//вычисляемая из принятых данных CRC
@@ -267,7 +286,7 @@ unsigned short modbus_rx_arg1;		//встроенный в посылку второй аргумент
 //unsigned short modbus_rx_arg2;		//встроенный в посылку третий аргумент
 //unsigned short modbus_rx_arg3;		//встроенный в посылку четвертый аргумент
 unsigned char modbus_func;			//встроенный в посылку код функции
-
+char i_cnt, j_cnt; //o_2
 
 
 mem_copy(modbus_an_buffer,modbus_rx_buffer,modbus_rx_buffer_ptr);
@@ -692,6 +711,17 @@ if(crc16_calculated==crc16_incapsulated)
 				}*/
 				}
 			}
+			else if(modbus_func==1) {	
+				if(modbus_an_buffer[2]==8){
+				  for(i_cnt=0;i_cnt<8;i_cnt++) {
+				  	for(j_cnt=0;j_cnt<8;j_cnt++){
+					   snmp_enmv_data[i_cnt*8+j_cnt]=(modbus_an_buffer[3+i_cnt]>>j_cnt)&0x01;
+					}				   
+				  }
+				  enmv_on=0;
+				}
+			} 
+
 		} 
 	else if(modbus_an_buffer[0]==ICA_MODBUS_ADDRESS)
 		{
@@ -1202,10 +1232,23 @@ short tempS;
 //tempS=(MODBUS_INPUT_REGS[0]);
 //bps_I=bps_I_phantom;
 
+#if defined(UKU_6U) || defined(UKU_220_V2)
+modbus_registers[0]=(signed char)(load_U>>8);					//Рег1   	напряжение выходной шины, 0.1В
+modbus_registers[1]=(signed char)(load_U);
+modbus_registers[2]=(signed char)(load_I>>8);					//Рег2   	ток выпрямителей, 0.1А
+modbus_registers[3]=(signed char)(load_I);
+#else
 modbus_registers[0]=(signed char)(out_U>>8);					//Рег1   	напряжение выходной шины, 0.1В
 modbus_registers[1]=(signed char)(out_U);
 modbus_registers[2]=(signed char)(bps_I>>8);					//Рег2   	ток выпрямителей, 0.1А
 modbus_registers[3]=(signed char)(bps_I);
+#endif
+/*
+modbus_registers[0]=(signed char)(out_U>>8);					//Рег1   	напряжение выходной шины, 0.1В
+modbus_registers[1]=(signed char)(out_U);
+modbus_registers[2]=(signed char)(bps_I>>8);					//Рег2   	ток выпрямителей, 0.1А
+modbus_registers[3]=(signed char)(bps_I);
+*/
 modbus_registers[4]=(signed char)(net_U>>8);					//Рег3   	напряжение сети питания, 1В
 modbus_registers[5]=(signed char)(net_U);
 modbus_registers[6]=(signed char)(net_F>>8);					//Рег4   	частота сети питания, 0.1Гц

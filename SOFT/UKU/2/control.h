@@ -94,6 +94,7 @@ extern short __ee_vz_cnt;
 extern short __ee_spc_stat;
 extern short __ee_spc_bat;
 extern short __ee_spc_phase;
+extern char vz_error;   // устанавливается, если выр. заряд заблокирован
 
 //***********************************************
 //Управление ШИМом

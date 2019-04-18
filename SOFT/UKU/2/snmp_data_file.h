@@ -51,6 +51,8 @@ extern signed short snmp_bat_capacity[2];
 extern signed short snmp_bat_charge[2];
 extern signed short snmp_bat_status[2];
 extern signed short snmp_bat_rem_time[2];
+extern signed short snmp_bat_flag[2];
+extern signed short snmp_bat_flag_puts[2];
 
 
 //Мониторы состояния Батарей
@@ -208,7 +210,11 @@ extern signed char	snmp_cool_60_dtemper;		//^^номер первого бпса
 extern signed char	snmp_cool_40_dtemper;		//^^номер первого бпса 
 extern signed char	snmp_cool_20_dtemper;		//^^номер первого бпса 
 extern signed char 	snmp_warm_stat;				//^^
-  
+//Данные с модуля дискретных входов ЭНМВ-1	    //o_2
+extern unsigned char enmv_on; // если 1, то есть связь с модулем	 //o_2
+extern unsigned char snmp_enmv_number[64];  //o_2
+extern unsigned char snmp_enmv_data[64]; //данные с модуля     //o_2 
+ 
 //-----------------------------------------------
 void snmp_data (void);
 void snmp_sernum_write (int mode); 

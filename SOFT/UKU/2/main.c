@@ -197,6 +197,8 @@ signed short NUMAVT;
 signed short NUMMAKB;
 signed short NUMBYPASS;
 signed short NUMBDR;
+signed short NUMENMV;
+signed short NUMPHASE;
 signed short SMART_SPC = 1;
 signed short U_OUT_KONTR_MAX;
 signed short U_OUT_KONTR_MIN;
@@ -3826,8 +3828,8 @@ else if(ind==iMn_6U)
 	int2lcdyx(web_plazma[3],0,13,0);
 	int2lcdyx(web_plazma[4],0,16,0);
 	int2lcdyx(web_param_input,0,19,0);*/
-	long2lcdyx_mmm(1234567,0,8,0);
-	long2lcdyx_mmm(web_param_input,0,19,0);	
+	//long2lcdyx_mmm(1234567,0,8,0);
+	//long2lcdyx_mmm(web_param_input,0,19,0);	
 	}
 #ifndef UKU_6U_WEB
 else if(ind==iMn_220)
@@ -8116,9 +8118,12 @@ else if(ind==iSet_6U)
 	ptrs[41]=      	" источников    lчас.";
 	ptrs[42]=      	" Контроль ср.точки  ";
 	ptrs[43]=      	" батареи         Q% ";
-	ptrs[44]=		" Выход              ";
-	ptrs[45]=		" Калибровки         "; 
-	ptrs[46]=		"                    ";        
+	ptrs[44]=		" MODBUS ADRESS     d"; 
+	ptrs[45]=		" MODBUS BAUDRATE    ";
+	ptrs[46]=		"                  f0";
+	ptrs[47]=		" Выход              ";
+	ptrs[48]=		" Калибровки         "; 
+	ptrs[49]=		"                    ";        
 	
 	if((sub_ind-index_set)>2)index_set=sub_ind-2;
 	else if(sub_ind<index_set)index_set=sub_ind;
@@ -8183,7 +8188,8 @@ else if(ind==iSet_6U)
 		{
 		int2lcd(FORVARDBPSCHHOUR,'l',0);	
 		}
-
+  	int2lcd(MODBUS_ADRESS,'d',0);
+	int2lcd(MODBUS_BAUDRATE,'f',0);
 	//int2lcdyx(sub_ind,0,3,0);
 	//int2lcdyx(index_set,0,1,0);
 	}
@@ -9231,12 +9237,13 @@ else if(ind==iStr_6U)
 	{
 	ptrs[0]=" Батарей           @";
 	ptrs[1]=" Источников        !";
-	ptrs[2]=" Инверторов        ^";
-	ptrs[3]=" Байпасов          [";		
-	ptrs[4]=" Датчиков темпер.  #";
-	ptrs[5]=" Сухих контактов   $";
+	ptrs[2]=" Датчиков темпер.  #";
+	ptrs[3]=" Сухих контактов   $";
+	ptrs[4]=" Фазность питающей  ";
+	ptrs[5]=" сети              [";
 	ptrs[6]=" Мониторов АКБ     %";
-	ptrs[7]=" Выход              ";
+	ptrs[7]=" Модуль ЭНМВ-1-24  ]";
+	ptrs[8]=" Выход              ";
 	
 	if(sub_ind<index_set) index_set=sub_ind;
 	else if((sub_ind-index_set)>2) index_set=sub_ind-2;
@@ -9246,11 +9253,11 @@ else if(ind==iStr_6U)
 
 	int2lcd(NUMBAT,'@',0);		
 	int2lcd(NUMIST,'!',0); 
-	int2lcd(NUMINV,'^',0);
-	int2lcd(NUMBYPASS,'[',0);
 	int2lcd(NUMDT,'#',0);
 	int2lcd(NUMSK,'$',0);
 	int2lcd(NUMMAKB,'%',0);
+	int2lcd(NUMENMV,']',0);
+	int2lcd(NUMPHASE,'[',0);
 	}    
 #ifndef UKU_6U_WEB		
 else if(ind==iStr_220_IPS_TERMOKOMPENSAT)
@@ -17666,7 +17673,18 @@ else if(ind==iMn_6U)
 		    	}
 		else if(sub_ind==(1+NUMBAT+NUMIST/*+NUMBYPASS+NUMINV*/+NUMMAKB/*+(NUMINV!=0)*/))
 			{
+			/*
 			if(AUSW_MAIN%10)
+				{
+				tree_up(iNet3,0,0,0);
+		     	ret(1000);
+				}
+			else 
+				{
+				tree_up(iNet,0,0,0);
+		     	ret(1000);
+				} */
+			if(NUMPHASE==3)
 				{
 				tree_up(iNet3,0,0,0);
 		     	ret(1000);
@@ -22886,7 +22904,9 @@ else if(ind==iSet_6U)
 		if(sub_ind==41)sub_ind=42;
 		if(sub_ind==42)	index_set=41;
         if(sub_ind==43)	sub_ind=44;
-		gran_char(&sub_ind,0,45);
+        if(sub_ind==45)index_set=44;
+        if(sub_ind==46)sub_ind=47;
+		gran_char(&sub_ind,0,48);
 		}
 	else if(but==butU)
 		{
@@ -22901,11 +22921,12 @@ else if(ind==iSet_6U)
         if(sub_ind==33)sub_ind=32;
         if(sub_ind==32)index_set=32;
         if(sub_ind==43)sub_ind=42;
-		gran_char(&sub_ind,0,45);
+        if(sub_ind==46)sub_ind=45;
+		gran_char(&sub_ind,0,48);
 		}
 	else if(but==butD_)
 		{
-		sub_ind=44;
+		sub_ind=47;
 		}
 		
 	else if(sub_ind==0)
@@ -23303,7 +23324,58 @@ else if(ind==iSet_6U)
 		lc640_write_int(EE_UBM_AV,UBM_AV);
 		speed=1;
 		}
-     else if((sub_ind==44) || (sub_ind==5))
+	else if(sub_ind==44)
+	     {
+	     if((but==butR)||(but==butR_))
+	     	{
+	     	MODBUS_ADRESS++;
+	     	gran(&MODBUS_ADRESS,1,100);
+	     	lc640_write_int(EE_MODBUS_ADRESS,MODBUS_ADRESS);
+			speed=1;
+	     	}
+	     
+	     else if((but==butL)||(but==butL_))
+	     	{
+	     	MODBUS_ADRESS--;
+	     	gran(&MODBUS_ADRESS,1,100);
+	     	lc640_write_int(EE_MODBUS_ADRESS,MODBUS_ADRESS);
+			speed=1;
+	     	}
+          }
+     else if(sub_ind==45)
+	     {
+	     if((but==butR)||(but==butR_))
+	     	{
+			if(MODBUS_BAUDRATE==120)MODBUS_BAUDRATE=240;
+			else if(MODBUS_BAUDRATE==240)MODBUS_BAUDRATE=480;
+	     	else if(MODBUS_BAUDRATE==480)MODBUS_BAUDRATE=960;
+			else if(MODBUS_BAUDRATE==960)MODBUS_BAUDRATE=1920;
+			else if(MODBUS_BAUDRATE==1920)MODBUS_BAUDRATE=3840;
+			else if(MODBUS_BAUDRATE==3840)MODBUS_BAUDRATE=5760;
+			else if(MODBUS_BAUDRATE==3840)MODBUS_BAUDRATE=5760;
+			else if(MODBUS_BAUDRATE==5760)MODBUS_BAUDRATE=11520;
+			else MODBUS_BAUDRATE=120;
+	     	gran(&MODBUS_BAUDRATE,120,11520);
+	     	lc640_write_int(EE_MODBUS_BAUDRATE,MODBUS_BAUDRATE);
+	     	}
+	     
+	     else if((but==butL)||(but==butL_))
+	     	{
+			if(MODBUS_BAUDRATE==120)MODBUS_BAUDRATE=11520;
+			else if(MODBUS_BAUDRATE==240)MODBUS_BAUDRATE=120;
+	     	else if(MODBUS_BAUDRATE==480)MODBUS_BAUDRATE=240;
+			else if(MODBUS_BAUDRATE==960)MODBUS_BAUDRATE=480;
+			else if(MODBUS_BAUDRATE==1920)MODBUS_BAUDRATE=960;
+			else if(MODBUS_BAUDRATE==3840)MODBUS_BAUDRATE=1920;
+			else if(MODBUS_BAUDRATE==3840)MODBUS_BAUDRATE=3840;
+			else if(MODBUS_BAUDRATE==5760)MODBUS_BAUDRATE=3840;
+			else MODBUS_BAUDRATE=11520;
+	     	gran(&MODBUS_BAUDRATE,120,11520);
+	     	lc640_write_int(EE_MODBUS_BAUDRATE,MODBUS_BAUDRATE);
+	     	}
+        }  
+	//o_2_e
+     else if((sub_ind==47) || (sub_ind==5))
 		{
 		if(but==butE)
 		     {
@@ -23311,7 +23383,7 @@ else if(ind==iSet_6U)
 		     ret(0);
 		     }
 		}
-	else if(sub_ind==45)
+	else if(sub_ind==48)
 		{
 		if(but==butE)
 		     {		
@@ -27940,12 +28012,15 @@ else if(ind==iStr_6U)
 	if(but==butD)
 		{
 		sub_ind++;
-		gran_char(&sub_ind,1,7);
+		if(sub_ind==4)index_set=3;
+		if(sub_ind==5)sub_ind++;
+		gran_char(&sub_ind,1,8);
 		}
 	else if(but==butU)
 		{
 		sub_ind--;
-		gran_char(&sub_ind,1,7);
+		if(sub_ind==5)sub_ind--;
+		gran_char(&sub_ind,1,8);
 		}
 	else if(but==butD_)
 		{
@@ -27970,7 +28045,7 @@ else if(ind==iStr_6U)
 	     	}
           }	
           
-     else if(sub_ind==2)
+ /*    else if(sub_ind==2)
 	     {
 	     if((but==butR)||(but==butR_))
 	     	{
@@ -28001,8 +28076,8 @@ else if(ind==iStr_6U)
 	     	gran(&NUMBYPASS,0,1);
 	     	lc640_write_int(EE_NUMBYPASS,NUMBYPASS);
 	     	}
-          }	     			          
-     else if(sub_ind==4)
+          }	*/     			          
+     else if(sub_ind==2)
 	     {
 	     if((but==butR)||(but==butR_))
 	     	{
@@ -28018,7 +28093,7 @@ else if(ind==iStr_6U)
 	     	lc640_write_int(EE_NUMDT,NUMDT);
 	     	}
           }	
-     else if(sub_ind==5)
+     else if(sub_ind==3)
 	     {
 	     if((but==butR)||(but==butR_))
 	     	{
@@ -28034,6 +28109,20 @@ else if(ind==iStr_6U)
 	     	lc640_write_int(EE_NUMSK,NUMSK);
 	     	}
           }
+	else if(sub_ind==4) 
+		{
+		if((but==butR)||(but==butR_))
+			{
+	     	NUMPHASE=3;
+	     	lc640_write_int(EE_NUMPHASE,NUMPHASE);
+	     	}
+	     
+		else if((but==butL)||(but==butL_))
+	     	{
+			NUMPHASE=1;
+	     	lc640_write_int(EE_NUMPHASE,NUMPHASE);
+	     	}
+		}
      else if(sub_ind==6)
 	     {
 	     if((but==butR)||(but==butR_))
@@ -28053,8 +28142,24 @@ else if(ind==iStr_6U)
 	     	gran(&NUMMAKB,0,4);
 	     	lc640_write_int(EE_NUMMAKB,NUMMAKB);
 	     	}
-          }	  			                 
-    else if(sub_ind==7)
+          }
+	else if(sub_ind==7) 
+		{
+		if((but==butR)||(but==butR_))
+			{
+	     	if(NUMENMV) NUMENMV=0;
+			else NUMENMV=1;
+	     	lc640_write_int(EE_NUMENMV,NUMENMV);
+	     	}
+	     
+		else if((but==butL)||(but==butL_))
+	     	{
+	     	if(NUMENMV) NUMENMV=0;
+			else NUMENMV=1;
+	     	lc640_write_int(EE_NUMENMV,NUMENMV);
+	     	}
+		}		  			                 
+    else if(sub_ind==8)
 	     {
 	     if(but==butE)
 	          {
@@ -39402,6 +39507,12 @@ while (1)
 	if(b1Hz)
 		{
 		b1Hz=0;
+
+		bat_flag();	 
+		
+	    #ifdef UKU_6U
+	    if(NUMENMV==1) modbus_zapros_ENMV();
+		#endif
 
 		bps_I_phantom++;
 

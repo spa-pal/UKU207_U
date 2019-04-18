@@ -89,6 +89,8 @@ signed short snmp_bat_capacity[2];
 signed short snmp_bat_charge[2];
 signed short snmp_bat_status[2];
 signed short snmp_bat_rem_time[2];
+signed short snmp_bat_flag[2];
+signed short snmp_bat_flag_puts[2]; 	
 
 
 //Спецфункции
@@ -254,6 +256,10 @@ signed char	snmp_cool_40_dtemper;		//^^номер первого бпса
 signed char	snmp_cool_20_dtemper;		//^^номер первого бпса 
 signed char snmp_warm_stat;				//^^
 
+//Данные с модуля дискретных входов ЭНМВ-1	   //o_2
+unsigned char enmv_on; // если 1, то есть связь с модулем	 //o_2
+unsigned char snmp_enmv_number[64]; //o_2
+unsigned char snmp_enmv_data[64]; //данные с модуля     //o_2
 
 U16 obj[10];
 U8 temp_ip[4];
@@ -263,6 +269,8 @@ char snmp_trap_send_i,snmp_trap_send_ii;
 void snmp_data (void) 
 {
 char i;
+
+for(i=0;i<64;i++) snmp_enmv_number[i]=i+1;
 
 snmp_mains_power_voltage=net_U;
 #ifdef UKU_220_IPS_TERMOKOMPENSAT

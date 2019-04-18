@@ -187,6 +187,7 @@ short __ee_vz_cnt;
 short __ee_spc_stat;
 short __ee_spc_bat;
 short __ee_spc_phase;
+char vz_error;  // устанавливается, если выр. заряд заблокирован
 
 //***********************************************
 //Аварии
@@ -294,6 +295,193 @@ long bat_hndl_i_summ;
 
 
 short spirit_wrk_cnt;
+
+
+void bat_flag (void){ // заполнение флагов для АКБ , надо проверить цыфры в snmp_trap_send
+if(spc_stat!=spcVZ) vz_error=0;
+	if(!snmp_bat_status[0]){
+		if((bat[0]._Ub<(USIGN*10))) {
+			snmp_bat_flag[0]|=0x01; 
+			if((snmp_bat_flag_puts[0]&0x01)==0) {
+				snmp_trap_send("BAT #1 Alarm, battery is low",5,8,0); 
+				snmp_bat_flag_puts[0]|=0x01;
+			}
+		}
+		else {
+			snmp_bat_flag[0]&=~0x01; 
+			if(snmp_bat_flag_puts[0]&0x01) {
+			   	snmp_trap_send("BAT #1 Alarm clear, battery is not low",5,8,1);
+				snmp_bat_flag_puts[0]&=~0x01;
+			}
+		}
+		if(bat[0]._temper_stat&0x01) {
+			snmp_bat_flag[0]|=0x02;
+			if((snmp_bat_flag_puts[0]&0x02)==0) {
+				snmp_trap_send("BAT #1 Alarm, high battery temperature",5,8,2); 
+				snmp_bat_flag_puts[0]|=0x02;
+			}
+		}
+		else {
+			snmp_bat_flag[0]&=~0x02;
+			if(snmp_bat_flag_puts[0]&0x02) {
+			   	snmp_trap_send("BAT #1 Alarm clear, battery temperature is normal",5,8,3);
+				snmp_bat_flag_puts[0]&=~0x02;
+			}
+		}
+		if(bat[0]._temper_stat&0x02) {
+			snmp_bat_flag[0]|=0x04;
+			if((snmp_bat_flag_puts[0]&0x04)==0) {
+				snmp_trap_send("BAT #1 Alarm, maximum battery temperature",5,8,4); 
+				snmp_bat_flag_puts[0]|=0x04;
+			}
+		}
+		else {
+			snmp_bat_flag[0]&=~0x04;
+			if(snmp_bat_flag_puts[0]&0x04) {
+			   	snmp_trap_send("BAT #1 Alarm clear, battery temperature is normal",5,8,5);
+				snmp_bat_flag_puts[0]&=~0x04;
+			}
+		}
+		if(bat[0]._Ib<0) snmp_bat_flag[0]|=0x08;
+		else snmp_bat_flag[0]&=~0x08;
+		if((spc_stat==spcKE)&&(spc_bat==0)) {
+			snmp_bat_flag[0]|=0x10;
+			if((snmp_bat_flag_puts[0]&0x10)==0) {
+				snmp_trap_send("BAT #1, capacity check enabled",5,8,6); 
+				snmp_bat_flag_puts[0]|=0x10;
+			}
+		}
+		else {
+			snmp_bat_flag[0]&=~0x10;
+			if(snmp_bat_flag_puts[0]&0x10) {
+			   	snmp_trap_send("BAT #1, capacity check disabled",5,8,7);
+				snmp_bat_flag_puts[0]&=~0x10;
+			}
+		}
+		if(spc_stat==spcVZ) {
+			snmp_bat_flag[0]|=0x20;
+		   	if((snmp_bat_flag_puts[0]&0x20)==0) {
+				snmp_trap_send("BAT #1,equalizing charge is on",5,8,8); 
+				snmp_bat_flag_puts[0]|=0x20;
+			}
+		}
+		else {
+			snmp_bat_flag[0]&=~0x20;
+			if(snmp_bat_flag_puts[0]&0x20) {
+			   	snmp_trap_send("BAT #1,equalizing charge is off",5,8,9);
+				snmp_bat_flag_puts[0]&=~0x20;
+			}
+		}
+		if(vz_error) {
+			snmp_bat_flag[0]|=0x40;
+			if((snmp_bat_flag_puts[0]&0x40)==0) {
+				snmp_trap_send("BAT #1,equalizing charge blocked",5,8,10); 
+				snmp_bat_flag_puts[0]|=0x40;
+			}
+		}
+		else {
+			snmp_bat_flag[0]&=~0x40;
+			if(snmp_bat_flag_puts[0]&0x40) {
+			   	snmp_trap_send("BAT #1,equalizing charge is not blocked",5,8,11);
+				snmp_bat_flag_puts[0]&=~0x40;
+			} 
+		}
+		
+	}
+	else {snmp_bat_flag[0]=0; snmp_bat_flag_puts[0]=0;}
+
+	if(!snmp_bat_status[1]){
+		if((bat[1]._Ub<(USIGN*10))) {
+			snmp_bat_flag[1]|=0x01; 
+			if((snmp_bat_flag_puts[1]&0x01)==0) {
+				snmp_trap_send("BAT #2 Alarm, battery is low",5,8,0); 
+				snmp_bat_flag_puts[1]|=0x01;
+			}
+		}
+		else {
+			snmp_bat_flag[1]&=~0x01; 
+			if(snmp_bat_flag_puts[1]&0x01) {
+			   	snmp_trap_send("BAT #2 Alarm clear, battery is not low",5,8,1);
+				snmp_bat_flag_puts[1]&=~0x01;
+			}
+		}
+		if(bat[1]._temper_stat&0x01) {
+			snmp_bat_flag[1]|=0x02;
+			if((snmp_bat_flag_puts[1]&0x02)==0) {
+				snmp_trap_send("BAT #2 Alarm, high battery temperature",5,8,2); 
+				snmp_bat_flag_puts[1]|=0x02;
+			}
+		}
+		else {
+			snmp_bat_flag[1]&=~0x02;
+			if(snmp_bat_flag_puts[1]&0x02) {
+			   	snmp_trap_send("BAT #2 Alarm clear, battery temperature is normal",5,8,3);
+				snmp_bat_flag_puts[1]&=~0x02;
+			}
+		}
+		if(bat[1]._temper_stat&0x02) {
+			snmp_bat_flag[1]|=0x04;
+			if((snmp_bat_flag_puts[1]&0x04)==0) {
+				snmp_trap_send("BAT #2 Alarm, maximum battery temperature",5,8,4); 
+				snmp_bat_flag_puts[1]|=0x04;
+			}
+		}
+		else {
+			snmp_bat_flag[1]&=~0x04;
+			if(snmp_bat_flag_puts[1]&0x04) {
+			   	snmp_trap_send("BAT #2 Alarm clear, battery temperature is normal",5,8,5);
+				snmp_bat_flag_puts[1]&=~0x04;
+			}
+		}
+		if(bat[1]._Ib<0)	snmp_bat_flag[1]|=0x80;
+		else snmp_bat_flag[1]&=~0x80;
+		if((spc_stat==spcKE)&&(spc_bat==1)) {
+			snmp_bat_flag[1]|=0x10;
+			if((snmp_bat_flag_puts[1]&0x10)==0) {
+				snmp_trap_send("BAT #2, capacity check enabled",5,8,6); 
+				snmp_bat_flag_puts[1]|=0x10;
+			}
+		}
+		else {
+			snmp_bat_flag[1]&=~0x10;
+			if(snmp_bat_flag_puts[1]&0x10) {
+			   	snmp_trap_send("BAT #2, capacity check disabled",5,8,7);
+				snmp_bat_flag_puts[1]&=~0x10;
+			}
+		}
+		if(spc_stat==spcVZ) {
+			snmp_bat_flag[1]|=0x20;
+		   	if((snmp_bat_flag_puts[1]&0x20)==0) {
+				snmp_trap_send("BAT #2,equalizing charge is on",5,8,8); 
+				snmp_bat_flag_puts[1]|=0x20;
+			}
+		}
+		else {
+			snmp_bat_flag[1]&=~0x20;
+			if(snmp_bat_flag_puts[1]&0x20) {
+			   	snmp_trap_send("BAT #2,equalizing charge is off",5,8,9);
+				snmp_bat_flag_puts[1]&=~0x20;
+			}
+		}
+		if(vz_error) {
+			snmp_bat_flag[1]|=0x40;
+			if((snmp_bat_flag_puts[1]&0x40)==0) {
+				snmp_trap_send("BAT #2,equalizing charge blocked",5,8,10); 
+				snmp_bat_flag_puts[1]|=0x40;
+			}
+		}
+		else {
+			snmp_bat_flag[1]&=~0x40;
+			if(snmp_bat_flag_puts[1]&0x40) {
+			   	snmp_trap_send("BAT #2,equalizing charge is not blocked",5,8,11);
+				snmp_bat_flag_puts[1]&=~0x40;
+			} 
+		}
+		
+   }
+   else {snmp_bat_flag[1]=0; snmp_bat_flag_puts[1]=0;}
+}
+
 
 #ifdef UKU_ZVU
 //-----------------------------------------------
@@ -850,10 +1038,11 @@ if(spc_stat==spcVZ)
 				}
 			}
 		}
-
+		vz_error=0; 
 		}
 	else 
 		{
+		vz_error=1; 
 		if(((LPC_RTC->SEC)%10)==0)
 			{
 			show_mess(	"ВЫРАВНИВАЮЩИЙ ЗАРЯД ",

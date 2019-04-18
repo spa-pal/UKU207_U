@@ -91,8 +91,9 @@
 #define DISPLAY_BAT_CAPACITY				1,5
 #define DISPLAY_BAT_CHARGE				1,6
 #define DISPLAY_BAT_STATUS				1,7
-#define DISPLAY_BAT_REMTIME				1,8
-#define DISPLAY_BAT_PART_VOLTAGE		1,9
+#define DISPLAY_BAT_FLAG				1,8
+#define DISPLAY_BAT_REMTIME				1,9
+#define DISPLAY_BAT_PART_VOLTAGE		1,10
 
 #define DISPLAY_SPEC				6
 #define DISPLAY_SPEC_STAT				1
@@ -244,7 +245,11 @@
 #define DISPLAY_KLIMAT_COOL_20_DTEMPER	15
 #define DISPLAY_KLIMAT_WARM_STAT		16
 #define DISPLAY_KLIMAT_INT_VENT_PWM_STAT	17
-#define DISPLAY_KLIMAT_EXT_VENT_PWM_STAT	18	
+#define DISPLAY_KLIMAT_EXT_VENT_PWM_STAT	18
+
+#define DISPLAY_ENMV				21  //o_2
+#define DISPLAY_ENMV_NUMBER		   1,1  //o_2
+#define DISPLAY_ENMV_DATA		   1,2  //o_2	
 
 
 #define COMMAND_OK		0x5555
@@ -1026,6 +1031,8 @@ extern signed short NUMAVT;
 extern signed short NUMMAKB;
 extern signed short NUMBYPASS;
 extern signed short NUMBDR;
+extern signed short NUMENMV;
+extern signed short NUMPHASE;  
 extern signed short SMART_SPC;
 extern signed short U_OUT_KONTR_MAX;
 extern signed short U_OUT_KONTR_MIN;
