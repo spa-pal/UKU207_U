@@ -425,7 +425,7 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
 				switch (env[2]) {
 					case '1':
 						//len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ1?°абвгдеёжзийклмнопрстуфхцчшщьыъэюя"));
-						len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("ИБЭП220/48-80А-4/4"));
+						len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("ИБЭП220/48-120А-4/4"));
 					break;
 			        case '2':
 			          	len = sprintf((char *)buf,(const char *)&env[4],AUSW_MAIN_NUMBER);
@@ -705,7 +705,7 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
 		/* меню установок */
       	switch (env[1]) {
         	case 'n':
-          		len = sprintf((char *)buf,(const char *)&env[3],2);
+          		len = sprintf((char *)buf,(const char *)&env[3],3);
           		break;
         	case '0':
           		switch (env[2]) {
@@ -716,7 +716,7 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
 		          		len = sprintf((char *)buf,(const char *)&env[4],0,pal_cyr_coder(place_holder));
 		          		break;
 		     		case '3':
-		          		len = sprintf((char *)buf,(const char *)&env[4],22954," ");
+		          		len = sprintf((char *)buf,(const char *)&env[4],(PAR==1)?1:0," ");
 		          		break;
 		     		case '4':
 		          		len = sprintf((char *)buf,(const char *)&env[4],0,pal_cyr_coder("Новосибирск Новолуговое 123456789012345678901234"));

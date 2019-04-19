@@ -89,6 +89,10 @@
     h2 {
 		margin:0 0 1em;
     }
+
+    button {
+		float:right;
+	}    
     #sidebar {
 		float:right;
 		width:230px;
