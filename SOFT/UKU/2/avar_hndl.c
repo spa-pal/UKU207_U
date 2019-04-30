@@ -417,7 +417,7 @@ void avar_uout_hndl(char in)
 
 char data[4];
 unsigned int event_ptr,lc640_adr,event_ptr_find,event_cnt;
-
+char avar_data=0;
 
 if(in==1)
 	{
@@ -431,6 +431,8 @@ if(in==1)
 
 	if(load_U>U_OUT_KONTR_MAX)uout_av=1;
 	if(load_U<U_OUT_KONTR_MIN)uout_av=2;
+	
+	avar_data=uout_av;
 		 
 	event_ptr=lc640_read_int(PTR_EVENT_LOG);
 	event_ptr++;	
@@ -446,11 +448,13 @@ if(in==1)
 	data[0]='Q';
 	data[1]=0;
 	data[2]='A';
-	data[3]=0;
+	data[3]=avar_data;
 	lc640_write_long_ptr(lc640_adr,data);
 
-	data[0]=0;//*((char*)&Unet_store);
-	data[1]=0;//*(((char*)&Unet_store)+1);
+	 //load_U=4321;
+
+	data[0]=*((char*)&load_U);
+	data[1]=*(((char*)&load_U)+1);
 	data[2]=0;
 	data[3]=0;
 	lc640_write_long_ptr(lc640_adr+4,data);

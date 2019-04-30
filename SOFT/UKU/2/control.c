@@ -187,7 +187,10 @@ short __ee_vz_cnt;
 short __ee_spc_stat;
 short __ee_spc_bat;
 short __ee_spc_phase;
-char vz_error;  // устанавливается, если выр. заряд заблокирован
+char vz_error=0;  		// устанавливается, если выравнивающий заряд заблокирован по вентиляции
+char sp_ch_error=0;		// устанавливается, если ускоренный заряд заблокирован по вентиляции
+char vz1_error=0;		// устанавливается, если уравнительный заряд заблокирован по вентиляции
+char vz2_error=0;		// устанавливается, если формовочный заряд заблокирован по вентиляции
 
 //***********************************************
 //Аварии
@@ -297,189 +300,618 @@ long bat_hndl_i_summ;
 short spirit_wrk_cnt;
 
 
-void bat_flag (void){ // заполнение флагов для АКБ , надо проверить цыфры в snmp_trap_send
-if(spc_stat!=spcVZ) vz_error=0;
-	if(!snmp_bat_status[0]){
-		if((bat[0]._Ub<(USIGN*10))) {
-			snmp_bat_flag[0]|=0x01; 
-			if((snmp_bat_flag_puts[0]&0x01)==0) {
-				snmp_trap_send("BAT #1 Alarm, battery is low",5,8,0); 
-				snmp_bat_flag_puts[0]|=0x01;
-			}
-		}
-		else {
-			snmp_bat_flag[0]&=~0x01; 
-			if(snmp_bat_flag_puts[0]&0x01) {
-			   	snmp_trap_send("BAT #1 Alarm clear, battery is not low",5,8,1);
-				snmp_bat_flag_puts[0]&=~0x01;
-			}
-		}
-		if(bat[0]._temper_stat&0x01) {
-			snmp_bat_flag[0]|=0x02;
-			if((snmp_bat_flag_puts[0]&0x02)==0) {
-				snmp_trap_send("BAT #1 Alarm, high battery temperature",5,8,2); 
-				snmp_bat_flag_puts[0]|=0x02;
-			}
-		}
-		else {
-			snmp_bat_flag[0]&=~0x02;
-			if(snmp_bat_flag_puts[0]&0x02) {
-			   	snmp_trap_send("BAT #1 Alarm clear, battery temperature is normal",5,8,3);
-				snmp_bat_flag_puts[0]&=~0x02;
-			}
-		}
-		if(bat[0]._temper_stat&0x02) {
-			snmp_bat_flag[0]|=0x04;
-			if((snmp_bat_flag_puts[0]&0x04)==0) {
-				snmp_trap_send("BAT #1 Alarm, maximum battery temperature",5,8,4); 
-				snmp_bat_flag_puts[0]|=0x04;
-			}
-		}
-		else {
-			snmp_bat_flag[0]&=~0x04;
-			if(snmp_bat_flag_puts[0]&0x04) {
-			   	snmp_trap_send("BAT #1 Alarm clear, battery temperature is normal",5,8,5);
-				snmp_bat_flag_puts[0]&=~0x04;
-			}
-		}
-		if(bat[0]._Ib<0) snmp_bat_flag[0]|=0x08;
-		else snmp_bat_flag[0]&=~0x08;
-		if((spc_stat==spcKE)&&(spc_bat==0)) {
-			snmp_bat_flag[0]|=0x10;
-			if((snmp_bat_flag_puts[0]&0x10)==0) {
-				snmp_trap_send("BAT #1, capacity check enabled",5,8,6); 
-				snmp_bat_flag_puts[0]|=0x10;
-			}
-		}
-		else {
-			snmp_bat_flag[0]&=~0x10;
-			if(snmp_bat_flag_puts[0]&0x10) {
-			   	snmp_trap_send("BAT #1, capacity check disabled",5,8,7);
-				snmp_bat_flag_puts[0]&=~0x10;
-			}
-		}
-		if(spc_stat==spcVZ) {
-			snmp_bat_flag[0]|=0x20;
-		   	if((snmp_bat_flag_puts[0]&0x20)==0) {
-				snmp_trap_send("BAT #1,equalizing charge is on",5,8,8); 
-				snmp_bat_flag_puts[0]|=0x20;
-			}
-		}
-		else {
-			snmp_bat_flag[0]&=~0x20;
-			if(snmp_bat_flag_puts[0]&0x20) {
-			   	snmp_trap_send("BAT #1,equalizing charge is off",5,8,9);
-				snmp_bat_flag_puts[0]&=~0x20;
-			}
-		}
-		if(vz_error) {
-			snmp_bat_flag[0]|=0x40;
-			if((snmp_bat_flag_puts[0]&0x40)==0) {
-				snmp_trap_send("BAT #1,equalizing charge blocked",5,8,10); 
-				snmp_bat_flag_puts[0]|=0x40;
-			}
-		}
-		else {
-			snmp_bat_flag[0]&=~0x40;
-			if(snmp_bat_flag_puts[0]&0x40) {
-			   	snmp_trap_send("BAT #1,equalizing charge is not blocked",5,8,11);
-				snmp_bat_flag_puts[0]&=~0x40;
-			} 
-		}
-		
+//-----------------------------------------------
+// заполнение флагов для АКБ
+void bat_flag (void)
+{  
+if(spc_stat!=spcVZ) 
+	{
+	vz_error=0;
+	sp_ch_error=0;
+	vz1_error=0;
+	vz2_error=0;
 	}
-	else {snmp_bat_flag[0]=0; snmp_bat_flag_puts[0]=0;}
 
-	if(!snmp_bat_status[1]){
-		if((bat[1]._Ub<(USIGN*10))) {
-			snmp_bat_flag[1]|=0x01; 
-			if((snmp_bat_flag_puts[1]&0x01)==0) {
-				snmp_trap_send("BAT #2 Alarm, battery is low",5,8,0); 
-				snmp_bat_flag_puts[1]|=0x01;
+if(!snmp_bat_status[0])	 			//Батарея №1
+	{
+	if((bat[0]._Ub<(USIGN*10)))		//Снижение напряжения батареи ниже Uбсигн 
+		{
+		snmp_bat_flag[0]|=0x0001; 
+		if((snmp_bat_flag_puts[0]&0x0001)==0) 
+			{
+			snmp_trap_send("BAT #1 Alarm, battery is low",5,8,0); 
+			snmp_bat_flag_puts[0]|=0x0001;
 			}
 		}
-		else {
-			snmp_bat_flag[1]&=~0x01; 
-			if(snmp_bat_flag_puts[1]&0x01) {
-			   	snmp_trap_send("BAT #2 Alarm clear, battery is not low",5,8,1);
-				snmp_bat_flag_puts[1]&=~0x01;
+	else 
+		{
+		snmp_bat_flag[0]&=~0x0001; 
+		if(snmp_bat_flag_puts[0]&0x0001) 
+			{
+			snmp_trap_send("BAT #1 Alarm clear, battery is not low",5,8,1);
+			snmp_bat_flag_puts[0]&=~0x0001;
 			}
 		}
-		if(bat[1]._temper_stat&0x01) {
-			snmp_bat_flag[1]|=0x02;
-			if((snmp_bat_flag_puts[1]&0x02)==0) {
-				snmp_trap_send("BAT #2 Alarm, high battery temperature",5,8,2); 
-				snmp_bat_flag_puts[1]|=0x02;
+
+	if(bat[0]._temper_stat&0x01)	//Повышенная температура батареи, первый порог - предупреждение
+		{
+		snmp_bat_flag[0]|=0x0002;
+		if((snmp_bat_flag_puts[0]&0x0002)==0) 
+			{
+			snmp_trap_send("BAT #1 Warning, high battery temperature",5,8,2); 
+			snmp_bat_flag_puts[0]|=0x0002;
 			}
 		}
-		else {
-			snmp_bat_flag[1]&=~0x02;
-			if(snmp_bat_flag_puts[1]&0x02) {
-			   	snmp_trap_send("BAT #2 Alarm clear, battery temperature is normal",5,8,3);
-				snmp_bat_flag_puts[1]&=~0x02;
+	else 
+		{
+		snmp_bat_flag[0]&=~0x0002;
+		if(snmp_bat_flag_puts[0]&0x0002) 
+			{
+			snmp_trap_send("BAT #1 Warning clear, battery temperature is normal",5,8,3);
+			snmp_bat_flag_puts[0]&=~0x02;
 			}
 		}
-		if(bat[1]._temper_stat&0x02) {
-			snmp_bat_flag[1]|=0x04;
-			if((snmp_bat_flag_puts[1]&0x04)==0) {
-				snmp_trap_send("BAT #2 Alarm, maximum battery temperature",5,8,4); 
-				snmp_bat_flag_puts[1]|=0x04;
+
+	if(bat[0]._temper_stat&0x02)  	//Повышенная температура батареи, второй порог - авария
+		{
+		snmp_bat_flag[0]|=0x0004;
+		if((snmp_bat_flag_puts[0]&0x0004)==0) 
+			{
+			snmp_trap_send("BAT #1 Alarm, high battery temperature",5,8,4); 
+			snmp_bat_flag_puts[0]|=0x0004;
 			}
 		}
-		else {
-			snmp_bat_flag[1]&=~0x04;
-			if(snmp_bat_flag_puts[1]&0x04) {
-			   	snmp_trap_send("BAT #2 Alarm clear, battery temperature is normal",5,8,5);
-				snmp_bat_flag_puts[1]&=~0x04;
+	else 
+		{
+		snmp_bat_flag[0]&=~0x0004;
+		if(snmp_bat_flag_puts[0]&0x0004) 
+			{
+			snmp_trap_send("BAT #1 Alarm clear, battery temperature is normal",5,8,5);
+			snmp_bat_flag_puts[0]&=~0x0004;
 			}
 		}
-		if(bat[1]._Ib<0)	snmp_bat_flag[1]|=0x80;
-		else snmp_bat_flag[1]&=~0x80;
-		if((spc_stat==spcKE)&&(spc_bat==1)) {
-			snmp_bat_flag[1]|=0x10;
-			if((snmp_bat_flag_puts[1]&0x10)==0) {
-				snmp_trap_send("BAT #2, capacity check enabled",5,8,6); 
-				snmp_bat_flag_puts[1]|=0x10;
+
+	if(bat[0]._Ib<(-IKB)) snmp_bat_flag[0]|=0x0008;		//Разряд батареи
+	else if(bat[0]._Ib>IKB) snmp_bat_flag[0]&=~0x0008;	//Заряд батареи
+
+	if((spc_stat==spcKE)&&(spc_bat==0))					//Контроль емкости батареи №1 
+		{
+		snmp_bat_flag[0]|=0x0010;
+		if((snmp_bat_flag_puts[0]&0x0010)==0) 
+			{
+			snmp_trap_send("BAT #1, capacity test started",5,8,6); 
+			snmp_bat_flag_puts[0]|=0x0010;
 			}
 		}
-		else {
-			snmp_bat_flag[1]&=~0x10;
-			if(snmp_bat_flag_puts[1]&0x10) {
-			   	snmp_trap_send("BAT #2, capacity check disabled",5,8,7);
-				snmp_bat_flag_puts[1]&=~0x10;
+	else 
+		{
+		snmp_bat_flag[0]&=~0x0010;
+		if(snmp_bat_flag_puts[0]&0x0010) 
+			{
+			snmp_trap_send("BAT #1, capacity test stopped",5,8,7);
+			snmp_bat_flag_puts[0]&=~0x0010;
 			}
-		}
-		if(spc_stat==spcVZ) {
-			snmp_bat_flag[1]|=0x20;
-		   	if((snmp_bat_flag_puts[1]&0x20)==0) {
-				snmp_trap_send("BAT #2,equalizing charge is on",5,8,8); 
-				snmp_bat_flag_puts[1]|=0x20;
-			}
-		}
-		else {
-			snmp_bat_flag[1]&=~0x20;
-			if(snmp_bat_flag_puts[1]&0x20) {
-			   	snmp_trap_send("BAT #2,equalizing charge is off",5,8,9);
-				snmp_bat_flag_puts[1]&=~0x20;
-			}
-		}
-		if(vz_error) {
-			snmp_bat_flag[1]|=0x40;
-			if((snmp_bat_flag_puts[1]&0x40)==0) {
-				snmp_trap_send("BAT #2,equalizing charge blocked",5,8,10); 
-				snmp_bat_flag_puts[1]|=0x40;
-			}
-		}
-		else {
-			snmp_bat_flag[1]&=~0x40;
-			if(snmp_bat_flag_puts[1]&0x40) {
-			   	snmp_trap_send("BAT #2,equalizing charge is not blocked",5,8,11);
-				snmp_bat_flag_puts[1]&=~0x40;
-			} 
 		}
 		
+	if(spc_stat==spcVZ)									//Выравнивающий заряд 
+		{
+		snmp_bat_flag[0]|=0x0020;
+		if((snmp_bat_flag_puts[0]&0x0020)==0) 
+			{
+			snmp_trap_send("BAT #1,leveling charge is started",5,8,8); 
+			snmp_bat_flag_puts[0]|=0x0020;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[0]&=~0x0020;
+		if(snmp_bat_flag_puts[0]&0x0020) 
+			{
+			snmp_trap_send("BAT #1,leveling charge is stopped",5,8,9);
+			snmp_bat_flag_puts[0]&=~0x0020;
+			}
+		}
+
+	if(vz_error)										 //Выравнивающий заряд заблокирован по вентиляции
+		{
+		snmp_bat_flag[0]|=0x0040;
+		if((snmp_bat_flag_puts[0]&0x0040)==0) 
+			{
+			snmp_trap_send("BAT #1,leveling charge is blocked",5,8,10); 
+			snmp_bat_flag_puts[0]|=0x0040;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[0]&=~0x0040;
+		if(snmp_bat_flag_puts[0]&0x0040) 
+			{
+			snmp_trap_send("BAT #1,leveling charge is unblocked",5,8,11);
+			snmp_bat_flag_puts[0]&=~0x0040;
+			} 
+		}
+
+	if(sp_ch_stat==scsWRK) 								//Ускореннный заряд
+		{
+		snmp_bat_flag[0]|=0x0080;
+		if((snmp_bat_flag_puts[0]&0x0080)==0) 
+			{
+			snmp_trap_send("BAT #1,speed charge is started",5,8,10); 
+			snmp_bat_flag_puts[0]|=0x0080;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[0]&=~0x0080;
+		if(snmp_bat_flag_puts[0]&0x0080) 
+			{
+			snmp_trap_send("BAT #1,speed charge is stopped",5,8,11);
+			snmp_bat_flag_puts[0]&=~0x0080;
+			}
+		}
+
+	if(sp_ch_error) 									//Ускореннный заряд заблокирован по вентиляции
+		{
+		snmp_bat_flag[0]|=0x0100;
+		if((snmp_bat_flag_puts[0]&0x0100)==0) 
+			{
+			snmp_trap_send("BAT #1,speed charge is blocked",5,8,12); 
+			snmp_bat_flag_puts[0]|=0x0100;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[0]&=~0x0100;
+		if(snmp_bat_flag_puts[0]&0x0100) 
+			{
+			snmp_trap_send("BAT #1,speed charge is unblocked",5,8,13);
+			snmp_bat_flag_puts[0]&=~0x0100;
+			} 
+		}
+
+	if(vz1_stat!=vz1sOFF)								//Уравнительный заряд 
+		{
+		snmp_bat_flag[0]|=0x0200;
+		if((snmp_bat_flag_puts[0]&0x0200)==0) 
+			{
+			snmp_trap_send("BAT #1,equalising charge is on",5,8,14); 
+			snmp_bat_flag_puts[0]|=0x0200;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[0]&=~0x0200;
+		if(snmp_bat_flag_puts[0]&0x0200) 
+			{
+			snmp_trap_send("BAT #1,equalising charge is off",5,8,15);
+			snmp_bat_flag_puts[0]&=~0x0200;
+			}
+		}
+
+	if(vz1_error)										//Уравнительный заряд заблокирован по вентиляции 
+		{
+		snmp_bat_flag[0]|=0x0400;
+		if((snmp_bat_flag_puts[0]&0x0400)==0) 
+			{
+			snmp_trap_send("BAT #1,equalising charge is blocked",5,8,16); 
+			snmp_bat_flag_puts[0]|=0x0400;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[0]&=~0x0400;
+		if(snmp_bat_flag_puts[0]&0x0400) 
+			{
+			snmp_trap_send("BAT #1,equalising charge is unblocked",5,8,17);
+			snmp_bat_flag_puts[0]&=~0x0400;
+			} 
+		}
+
+	if(vz2_stat!=vz2sOFF)								//Формовочный заряд 
+		{
+		snmp_bat_flag[0]|=0x0800;
+		if((snmp_bat_flag_puts[0]&0x0800)==0) 
+			{
+			snmp_trap_send("BAT #1,molding charge is on",5,8,18); 
+			snmp_bat_flag_puts[0]|=0x0800;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[0]&=~0x0800;
+		if(snmp_bat_flag_puts[0]&0x0800) 
+			{
+			snmp_trap_send("BAT #1,molding charge is off",5,8,19);
+			snmp_bat_flag_puts[0]&=~0x0800;
+			}
+		}
+
+	if(vz2_error) 										//Формовочный заряд заблокирован по вентиляции
+		{
+		snmp_bat_flag[0]|=0x1000;
+		if((snmp_bat_flag_puts[0]&0x1000)==0) 
+			{
+			snmp_trap_send("BAT #1,molding charge is blocked",5,8,20); 
+			snmp_bat_flag_puts[0]|=0x1000;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[0]&=~0x1000;
+		if(snmp_bat_flag_puts[0]&0x1000) 
+			{
+			snmp_trap_send("BAT #1,molding charge is unblocked",5,8,21);
+			snmp_bat_flag_puts[0]&=~0x1000;
+			} 
+		}
+	}
+else 
+	{
+	snmp_bat_flag[0]=0; 
+	snmp_bat_flag_puts[0]=0;
+	}
+
+if(!snmp_bat_status[1])	 			//Батарея №2
+	{
+	if((bat[1]._Ub<(USIGN*10)))		//Снижение напряжения батареи ниже Uбсигн 
+		{
+		snmp_bat_flag[1]|=0x0001; 
+		if((snmp_bat_flag_puts[1]&0x0001)==0) 
+			{
+			snmp_trap_send("BAT #1 Alarm, battery is low",5,8,22); 
+			snmp_bat_flag_puts[1]|=0x0001;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[1]&=~0x0001; 
+		if(snmp_bat_flag_puts[1]&0x0001) 
+			{
+			snmp_trap_send("BAT #1 Alarm clear, battery is not low",5,8,23);
+			snmp_bat_flag_puts[1]&=~0x0001;
+			}
+		}
+
+	if(bat[1]._temper_stat&0x01)	//Повышенная температура батареи, первый порог - предупреждение
+		{
+		snmp_bat_flag[1]|=0x0002;
+		if((snmp_bat_flag_puts[0]&0x0002)==0) 
+			{
+			snmp_trap_send("BAT #1 Warning, high battery temperature",5,8,24); 
+			snmp_bat_flag_puts[1]|=0x0002;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[1]&=~0x0002;
+		if(snmp_bat_flag_puts[1]&0x0002) 
+			{
+			snmp_trap_send("BAT #1 Warning clear, battery temperature is normal",5,8,25);
+			snmp_bat_flag_puts[1]&=~0x02;
+			}
+		}
+
+	if(bat[1]._temper_stat&0x02)  	//Повышенная температура батареи, второй порог - авария
+		{
+		snmp_bat_flag[1]|=0x0004;
+		if((snmp_bat_flag_puts[1]&0x0004)==0) 
+			{
+			snmp_trap_send("BAT #1 Alarm, high battery temperature",5,8,26); 
+			snmp_bat_flag_puts[1]|=0x0004;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[1]&=~0x0004;
+		if(snmp_bat_flag_puts[1]&0x0004) 
+			{
+			snmp_trap_send("BAT #1 Alarm clear, battery temperature is normal",5,8,27);
+			snmp_bat_flag_puts[1]&=~0x0004;
+			}
+		}
+
+	if(bat[1]._Ib<(-IKB)) snmp_bat_flag[1]|=0x0008;		//Разряд батареи
+	else if(bat[1]._Ib>IKB) snmp_bat_flag[1]&=~0x0008;	//Заряд батареи
+
+	if((spc_stat==spcKE)&&(spc_bat==0))					//Контроль емкости батареи №1 
+		{
+		snmp_bat_flag[1]|=0x0010;
+		if((snmp_bat_flag_puts[1]&0x0010)==0) 
+			{
+			snmp_trap_send("BAT #1, capacity test started",5,8,28); 
+			snmp_bat_flag_puts[1]|=0x0010;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[1]&=~0x0010;
+		if(snmp_bat_flag_puts[1]&0x0010) 
+			{
+			snmp_trap_send("BAT #1, capacity test stopped",5,8,29);
+			snmp_bat_flag_puts[1]&=~0x0010;
+			}
+		}
+		
+	if(spc_stat==spcVZ)									//Выравнивающий заряд 
+		{
+		snmp_bat_flag[1]|=0x0020;
+		if((snmp_bat_flag_puts[1]&0x0020)==0) 
+			{
+			snmp_trap_send("BAT #1,leveling charge is started",5,8,30); 
+			snmp_bat_flag_puts[1]|=0x0020;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[1]&=~0x0020;
+		if(snmp_bat_flag_puts[1]&0x0020) 
+			{
+			snmp_trap_send("BAT #1,leveling charge is stopped",5,8,31);
+			snmp_bat_flag_puts[1]&=~0x0020;
+			}
+		}
+
+	if(vz_error)										 //Выравнивающий заряд заблокирован по вентиляции
+		{
+		snmp_bat_flag[1]|=0x0040;
+		if((snmp_bat_flag_puts[1]&0x0040)==0) 
+			{
+			snmp_trap_send("BAT #1,leveling charge is blocked",5,8,32); 
+			snmp_bat_flag_puts[1]|=0x0040;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[1]&=~0x0040;
+		if(snmp_bat_flag_puts[1]&0x0040) 
+			{
+			snmp_trap_send("BAT #1,leveling charge is unblocked",5,8,33);
+			snmp_bat_flag_puts[1]&=~0x0040;
+			} 
+		}
+
+	if(sp_ch_stat==scsWRK) 								//Ускореннный заряд
+		{
+		snmp_bat_flag[1]|=0x0080;
+		if((snmp_bat_flag_puts[1]&0x0080)==0) 
+			{
+			snmp_trap_send("BAT #1,speed charge is started",5,8,34); 
+			snmp_bat_flag_puts[1]|=0x0080;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[1]&=~0x0080;
+		if(snmp_bat_flag_puts[1]&0x0080) 
+			{
+			snmp_trap_send("BAT #1,speed charge is stopped",5,8,35);
+			snmp_bat_flag_puts[1]&=~0x0080;
+			}
+		}
+
+	if(sp_ch_error) 									//Ускореннный заряд заблокирован по вентиляции
+		{
+		snmp_bat_flag[1]|=0x0100;
+		if((snmp_bat_flag_puts[1]&0x0100)==0) 
+			{
+			snmp_trap_send("BAT #1,speed charge is blocked",5,8,36); 
+			snmp_bat_flag_puts[1]|=0x0100;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[1]&=~0x0100;
+		if(snmp_bat_flag_puts[1]&0x0100) 
+			{
+			snmp_trap_send("BAT #1,speed charge is unblocked",5,8,37);
+			snmp_bat_flag_puts[1]&=~0x0100;
+			} 
+		}
+
+	if(vz1_stat!=vz1sOFF)								//Уравнительный заряд 
+		{
+		snmp_bat_flag[1]|=0x0200;
+		if((snmp_bat_flag_puts[1]&0x0200)==0) 
+			{
+			snmp_trap_send("BAT #1,equalising charge is on",5,8,38); 
+			snmp_bat_flag_puts[1]|=0x0200;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[1]&=~0x0200;
+		if(snmp_bat_flag_puts[1]&0x0200) 
+			{
+			snmp_trap_send("BAT #1,equalising charge is off",5,8,39);
+			snmp_bat_flag_puts[1]&=~0x0200;
+			}
+		}
+
+	if(vz1_error)										//Уравнительный заряд заблокирован по вентиляции 
+		{
+		snmp_bat_flag[1]|=0x0400;
+		if((snmp_bat_flag_puts[1]&0x0400)==0) 
+			{
+			snmp_trap_send("BAT #1,equalising charge is blocked",5,8,40); 
+			snmp_bat_flag_puts[1]|=0x0400;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[1]&=~0x0400;
+		if(snmp_bat_flag_puts[1]&0x0400) 
+			{
+			snmp_trap_send("BAT #1,equalising charge is unblocked",5,8,41);
+			snmp_bat_flag_puts[1]&=~0x0400;
+			} 
+		}
+
+	if(vz2_stat!=vz2sOFF)								//Формовочный заряд 
+		{
+		snmp_bat_flag[1]|=0x0800;
+		if((snmp_bat_flag_puts[1]&0x0800)==0) 
+			{
+			snmp_trap_send("BAT #1,molding charge is on",5,8,42); 
+			snmp_bat_flag_puts[1]|=0x0800;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[1]&=~0x0800;
+		if(snmp_bat_flag_puts[1]&0x0800) 
+			{
+			snmp_trap_send("BAT #1,molding charge is off",5,8,43);
+			snmp_bat_flag_puts[1]&=~0x0800;
+			}
+		}
+
+	if(vz2_error) 										//Формовочный заряд заблокирован по вентиляции
+		{
+		snmp_bat_flag[1]|=0x1000;
+		if((snmp_bat_flag_puts[1]&0x1000)==0) 
+			{
+			snmp_trap_send("BAT #1,molding charge is blocked",5,8,44); 
+			snmp_bat_flag_puts[1]|=0x1000;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[1]&=~0x1000;
+		if(snmp_bat_flag_puts[1]&0x1000) 
+			{
+			snmp_trap_send("BAT #1,molding charge is unblocked",5,8,45);
+			snmp_bat_flag_puts[1]&=~0x1000;
+			} 
+		}
+	}
+else 
+	{
+	snmp_bat_flag[1]=0; 
+	snmp_bat_flag_puts[1]=0;
+	}
+/*
+if(!snmp_bat_status[1])
+	{
+	if((bat[1]._Ub<(USIGN*10))) 
+		{
+		snmp_bat_flag[1]|=0x01; 
+		if((snmp_bat_flag_puts[1]&0x01)==0) 
+			{
+			snmp_trap_send("BAT #2 Alarm, battery is low",5,8,0); 
+			snmp_bat_flag_puts[1]|=0x01;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[1]&=~0x01; 
+		if(snmp_bat_flag_puts[1]&0x01) 
+			{
+			snmp_trap_send("BAT #2 Alarm clear, battery is not low",5,8,1);
+			snmp_bat_flag_puts[1]&=~0x01;
+			}
+		}
+	if(bat[1]._temper_stat&0x01) 
+		{
+		snmp_bat_flag[1]|=0x02;
+		if((snmp_bat_flag_puts[1]&0x02)==0) 
+			{
+			snmp_trap_send("BAT #2 Alarm, high battery temperature",5,8,2); 
+			snmp_bat_flag_puts[1]|=0x02;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[1]&=~0x02;
+		if(snmp_bat_flag_puts[1]&0x02) 
+			{
+			snmp_trap_send("BAT #2 Alarm clear, battery temperature is normal",5,8,3);
+			snmp_bat_flag_puts[1]&=~0x02;
+			}
+		}
+	if(bat[1]._temper_stat&0x02) 
+		{
+		snmp_bat_flag[1]|=0x04;
+		if((snmp_bat_flag_puts[1]&0x04)==0) 
+			{
+			snmp_trap_send("BAT #2 Alarm, maximum battery temperature",5,8,4); 
+			snmp_bat_flag_puts[1]|=0x04;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[1]&=~0x04;
+		if(snmp_bat_flag_puts[1]&0x04) 
+			{
+			snmp_trap_send("BAT #2 Alarm clear, battery temperature is normal",5,8,5);
+			snmp_bat_flag_puts[1]&=~0x04;
+			}
+		}
+		
+	if(bat[1]._Ib<(-IKB))	snmp_bat_flag[1]|=0x80;
+	else if(bat[1]._Ib>IKB)snmp_bat_flag[1]&=~0x80;
+
+	if((spc_stat==spcKE)&&(spc_bat==1)) 
+		{
+		snmp_bat_flag[1]|=0x10;
+		if((snmp_bat_flag_puts[1]&0x10)==0) 
+			{
+			snmp_trap_send("BAT #2, capacity check enabled",5,8,6); 
+			snmp_bat_flag_puts[1]|=0x10;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[1]&=~0x10;
+		if(snmp_bat_flag_puts[1]&0x10) 
+			{
+			snmp_trap_send("BAT #2, capacity check disabled",5,8,7);
+			snmp_bat_flag_puts[1]&=~0x10;
+			}
+		}
+		
+	if(spc_stat==spcVZ) 
+		{
+		snmp_bat_flag[1]|=0x20;
+		if((snmp_bat_flag_puts[1]&0x20)==0) 
+			{
+			snmp_trap_send("BAT #2,equalizing charge is on",5,8,8); 
+			snmp_bat_flag_puts[1]|=0x20;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[1]&=~0x20;
+		if(snmp_bat_flag_puts[1]&0x20) 
+			{
+			snmp_trap_send("BAT #2,equalizing charge is off",5,8,9);
+			snmp_bat_flag_puts[1]&=~0x20;
+			}
+		}
+
+	if(vz_error) 
+		{
+		snmp_bat_flag[1]|=0x40;
+		if((snmp_bat_flag_puts[1]&0x40)==0) 
+			{
+			snmp_trap_send("BAT #2,equalizing charge blocked",5,8,10); 
+			snmp_bat_flag_puts[1]|=0x40;
+			}
+		}
+	else 
+		{
+		snmp_bat_flag[1]&=~0x40;
+		if(snmp_bat_flag_puts[1]&0x40) 
+			{
+			snmp_trap_send("BAT #2,equalizing charge is not blocked",5,8,11);
+			snmp_bat_flag_puts[1]&=~0x40;
+			} 
+		}
    }
-   else {snmp_bat_flag[1]=0; snmp_bat_flag_puts[1]=0;}
+else 
+	{
+	snmp_bat_flag[1]=0; 
+	snmp_bat_flag_puts[1]=0;
+	} */
 }
 
 
@@ -1825,7 +2257,7 @@ void kb_hndl(void)
 
 static signed short ibat[2],ibat_[2];
 #ifdef UKU_TELECORE2015
-if(((++main_kb_cnt>=TBAT*60)&&(TBAT))&&(BAT_TYPE==0))
+if(((++main_kb_cnt>=TBAT*60)&&(TBAT))&&(BAT_TYPE==0 ))
 #else 
 if(((++main_kb_cnt>=TBAT*60)&&(TBAT)))
 #endif
@@ -1842,7 +2274,10 @@ if(((++main_kb_cnt>=TBAT*60)&&(TBAT)))
 	if( (!ips_bat_av_vzvod)                      && ((abs(Ib_ips_termokompensat)<IKB) || (bat_ips._av&1) ) ) kb_start_ips=1;
 #endif	
 	if( (net_av) || (num_of_wrks_bps==0) || ( (spc_stat!=spcOFF) && (spc_stat!=spcVZ) ) 
-	  ||(vz1_stat!=vz1sOFF)||(vz2_stat!=vz2sOFF)||(sp_ch_stat!=scsOFF) 	)
+#ifdef UKU_220_IPS_TERMOKOMPENSAT
+	  ||(((vz1_stat!=vz1sOFF)||(vz2_stat!=vz2sOFF))&&SMART_SPC)
+#endif
+	  ||(sp_ch_stat!=scsOFF) 	)
  
 		{
 		kb_start[0]=0;
@@ -7485,6 +7920,7 @@ else bat[in]._resurs_cnt=0;
 
 #ifndef UKU_220_V2
 #ifndef UKU_GLONASS
+#ifndef UKU_220_IPS_TERMOKOMPENSAT
 //#ifndef UKU_6U
 //#ifndef UKU_220
 if(UBM_AV)
@@ -7537,6 +7973,7 @@ temp_SS=bat[in]._Ub/2;
      }
 //#endif 
 #endif 
+#endif
 #endif
 
 }
@@ -9826,6 +10263,7 @@ else speedChrgShowCnt=0;  */
 //-----------------------------------------------
 void speedChargeStartStop(void)
 {
+spch_plazma[1]++;
 /*if(speedChIsOn)
 	{
 	speedChIsOn=0;
@@ -9851,10 +10289,12 @@ if(sp_ch_stat!=scsOFF)
 	{
 	sp_ch_stat=scsOFF;
 	speedz_mem_hndl(10);
+	spch_plazma[1]=10;
 	}
 
 else
 	{
+	spch_plazma[1]=20;
 	if((speedChrgBlckStat==0)&&(spc_stat==spcOFF)
 		#ifdef UKU_220_IPS_TERMOKOMPENSAT
 		&&(vz1_stat==vz1sOFF)&&(vz2_stat==vz2sOFF)

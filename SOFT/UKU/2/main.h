@@ -142,6 +142,21 @@
 #define SYSPARAMS_BAT_PART_ALARM			21
 #define SYSPARAMS_POWER_CNT_ADRESS			22
 #define SYSPARAMS_U_IPS_SET					23
+#define SYSPARAMS_U_OUT_KONTR_MAX			24
+#define SYSPARAMS_U_OUT_KONTR_MIN			25
+#define SYSPARAMS_U_OUT_KONTR_DELAY			26
+#define SYSPARAMS_VZ_U						27
+#define SYSPARAMS_VZ_I_MAX					28
+#define SYSPARAMS_VZ_TIME					29
+#define SYSPARAMS_VZ_VENTBLOCKING			30
+#define SYSPARAMS_SPZ_I_MAX					31
+#define SYSPARAMS_SPZ_U						32
+#define SYSPARAMS_SPZ_TIME					33
+#define SYSPARAMS_SPZ_AVT_EN				34
+#define SYSPARAMS_SPZ_AVT_DELTA				35
+#define SYSPARAMS_SPZ_BLOCK_EN_SRC			36
+#define SYSPARAMS_SPZ_BLOCK_SIGN			37
+#define SYSPARAMS_SPZ_VENTBLOCKING			38
 
 #define DISPLAY_AVT					11
 #define DISPLAY_AVT_ENTRY_NUMBER			1,1
@@ -262,6 +277,7 @@
 #define SNMP_SPEC_VZ		3
 #define SNMP_SPEC_KE		4
 #define SNMP_SPEC_DISABLE	7
+#define SNMP_SPEC_SPZ		13
 
 
 #define DISPLAY_LOG					9
@@ -1799,6 +1815,7 @@ extern short plazma_numOfPacks;
 
 extern char plazma_ztt[2];
 extern char plazma_stark[32];
+extern char spch_plazma[2];
 
 extern U8 socket_tcp;
 

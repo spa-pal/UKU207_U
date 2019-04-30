@@ -242,7 +242,7 @@ char* aaa_="abc";
 
 #endif
 
-//	{ MIB_INTEGER | MIB_ATR_RO, 	12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_SPEC,DISPLAY_SPEC_STAT , 0},					MIB_INT(snmp_spc_stat),     NULL},
+	{ MIB_INTEGER | MIB_ATR_RO, 	12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_SPEC,DISPLAY_SPEC_STAT , 0},					MIB_INT(snmp_spc_stat),     NULL},
 //	{ MIB_OCTET_STR | MIB_ATR_RO, 12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_SPEC,DISPLAY_SPEC_TRAP_MESSAGE , 0},			MIB_STR(snmp_spc_trap_message),     NULL},
 //	{ MIB_INTEGER | MIB_ATR_RO, 	12, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_SPEC,DISPLAY_SPEC_TRAP_VALUE , 0},			MIB_INT(snmp_spc_trap_value),     NULL},
 
@@ -476,8 +476,23 @@ char* aaa_="abc";
 	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_TSIGN_BPS, 0},					MIB_INT(snmp_tsign_bps),			snmp_tsign_bps_write},		//номер первого бпса 
 	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_TMAX_BPS, 0},					MIB_INT(snmp_tmax_bps),			snmp_tmax_bps_write},		//номер первого бпса 
 	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_BAT_PART_ALARM, 0},				MIB_INT(snmp_bat_part_alarm),		snmp_bat_part_alarm_write},		//номер первого бпса 
-	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_POWER_CNT_ADRESS, 0},			MIB_INT(snmp_power_cnt_adress),	snmp_power_cnt_adress_write},		//номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_POWER_CNT_ADRESS, 0},				MIB_INT(snmp_power_cnt_adress),	snmp_power_cnt_adress_write},		//номер первого бпса 
 	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_U_IPS_SET, 0},					MIB_INT(snmp_u_0_grad),			snmp_u_ips_set_write},		//номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_U_OUT_KONTR_MAX, 0},				MIB_INT(U_OUT_KONTR_MAX),		snmp_u_out_kontr_max_write},		//номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_U_OUT_KONTR_MIN, 0},				MIB_INT(U_OUT_KONTR_MIN),		snmp_u_out_kontr_min_write},		//номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_U_OUT_KONTR_DELAY, 0},			MIB_INT(U_OUT_KONTR_DELAY),		snmp_u_out_kontr_delay_write},		//номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_VZ_U, 0},							MIB_INT(UVZ),					snmp_uvz_write},					//номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_VZ_I_MAX, 0},						MIB_INT(IMAX_VZ),				snmp_imax_vz_write},				//номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_VZ_TIME, 0},						MIB_INT(VZ_HR),					snmp_vz_hr_write},					//номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_VZ_VENTBLOCKING, 0},				MIB_INT(VZ_CH_VENT_BLOK),		snmp_vz_ch_vent_block_write},		//номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_SPZ_I_MAX, 0},					MIB_INT(speedChrgCurr),			snmp_spz_i_max_write},				//номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_SPZ_U, 0},						MIB_INT(speedChrgVolt),			snmp_spz_u_write},					//номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_SPZ_TIME, 0},						MIB_INT(speedChrgTimeInHour),	snmp_spz_time_write},				//номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_SPZ_AVT_EN, 0},					MIB_INT(speedChrgAvtEn),		snmp_spz_avt_en_write},				//номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_SPZ_AVT_DELTA, 0},				MIB_INT(speedChrgDU),			snmp_spz_delta_write},				//номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_SPZ_BLOCK_EN_SRC, 0},				MIB_INT(speedChrgBlckSrc),		snmp_spz_block_en_src_write},		//номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_SPZ_BLOCK_SIGN, 0},				MIB_INT(speedChrgBlckLog),		snmp_spz_block_log_write},			//номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_SPZ_VENTBLOCKING, 0},				MIB_INT(SP_CH_VENT_BLOK),		snmp_spz_vent_block_write},			//номер первого бпса 
 
 #ifdef UKU_ZVU
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_SK, DISPLAY_SK_ENTRY_NUMBER, 1},  			MIB_INT(snmp_sk_number[0]),  	NULL},	//Номер БПСа
