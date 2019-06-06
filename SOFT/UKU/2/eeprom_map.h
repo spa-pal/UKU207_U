@@ -3,7 +3,7 @@
 #define RESET_CNT	0x08
 
 #define SECTOR_KOEF 0x10
-
+						  
 #define EE_KUBAT1		SECTOR_KOEF
 #define EE_KUBAT2		SECTOR_KOEF+2
 #define EE_KI0BAT1		SECTOR_KOEF+4

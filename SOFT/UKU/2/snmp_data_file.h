@@ -1,7 +1,7 @@
 extern char snmp_community[10];
 
 //Информация об устройстве
-extern signed short snmp_device_code;
+extern unsigned int snmp_device_code;
 extern signed 	   snmp_sernum;
 extern signed short snmp_sernum_lsb;
 extern signed short snmp_sernum_msb;

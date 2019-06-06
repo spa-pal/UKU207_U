@@ -1680,6 +1680,7 @@ extern enum_avt_stat avt_stat[12],avt_stat_old[12];
 extern signed long ibat_metr_buff_[2];
 extern short bIBAT_SMKLBR;
 extern short bIBAT_SMKLBR_cnt;
+extern short ibat_metr_cnt;
 
 //-----------------------------------------------
 //”правление низкоприоритетной нагрузкой

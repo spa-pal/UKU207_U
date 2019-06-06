@@ -13,7 +13,7 @@
 char snmp_community[10];
 
 //Информация об устройстве
-signed short snmp_device_code;
+unsigned int snmp_device_code;
 signed 	   snmp_sernum;
 signed short snmp_sernum_lsb;
 signed short snmp_sernum_msb;
@@ -310,7 +310,7 @@ if(St&0x01)snmp_mains_power_alarm=1;
 
 snmp_sernum_lsb=0x1122;
 snmp_sernum_msb=0x3344;
-snmp_device_code=AUSW_MAIN;
+
 
 //memcpy(snmp_location,"lkhg;la",);
 
@@ -318,6 +318,8 @@ snmp_device_code=AUSW_MAIN;
 snmp_numofbat=1;
 
 */
+snmp_device_code=AUSW_MAIN;
+
 snmp_sernum=AUSW_MAIN_NUMBER;
 
 snmp_load_voltage=load_U;
