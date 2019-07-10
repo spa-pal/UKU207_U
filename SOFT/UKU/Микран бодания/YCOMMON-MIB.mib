@@ -1,0 +1,637 @@
+YCOMMON-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    OBJECT-TYPE, MODULE-IDENTITY,
+    Integer32
+        FROM SNMPv2-SMI
+    TEXTUAL-CONVENTION, 
+    TestAndIncr,RowStatus, DisplayString, 
+    TruthValue, DateAndTime            
+        FROM SNMPv2-TC
+    OBJECT-GROUP, MODULE-COMPLIANCE
+        FROM SNMPv2-CONF 
+            
+    YAlarmSeverity 
+        FROM YNOT-MIB
+    yMib
+        FROM Y-MIB;
+    
+yCommonMib MODULE-IDENTITY
+    LAST-UPDATED "201510301000Z"
+    ORGANIZATION 
+        "Youncta S.r.l."
+    CONTACT-INFO 
+        "Youncta Customer Support
+	  techsupport@youncta.com
+      Agrate Brianza (MB)
+
+
+
+
+      Italy"
+    DESCRIPTION 
+        "This MIB contains objects for Youncta Module"
+    REVISION "201212101700Z"
+    DESCRIPTION 
+        "Initial version"
+::= { yMib 80 }
+
+-- --------------------------------------------
+-- --------------------------------------------        
+--  TEXTUAL CONVENTION
+-- --------------------------------------------
+-- --------------------------------------------
+
+YEnabledDisabled ::= TEXTUAL-CONVENTION
+   STATUS  current
+   DESCRIPTION
+       "The enable/disable variable."
+   SYNTAX  INTEGER {
+                   enabled(1),
+                   disabled(2)
+                   }
+
+YGenericIndex ::= TEXTUAL-CONVENTION
+    DISPLAY-HINT "d"
+    STATUS       current
+    DESCRIPTION
+            "Restricted range for Integer32, to be used for integer indexes."
+    SYNTAX       Integer32 (0..2147483647)
+
+YTimeServerStatus ::= TEXTUAL-CONVENTION
+   STATUS  current
+   DESCRIPTION
+       "Current status of the corresponding NTP server or NE's capability to
+        communicate with the NTP server. Value ok(1) means that NE is able to
+        communicate with this NTP server, value notReachable(2) means that
+        this NTP server is not reachable, value clockNotInSynch(3) means that
+        this NTP server is currently unsynchronized (has just come up, has
+        been too long without external time source or its clock has been
+        reset), value diffTooBig(4)means that the NE cannot synchronize with
+        this NTP server because the difference between NTP server and NE's RTC
+        is too big (> 1000 seconds), and value otherError(5) is reserved for
+        any other errors."
+   SYNTAX  INTEGER {
+                   ok(1),
+                   notReachable(2),
+                   clockNotInSynch(3),
+                   diffTooBig(4),
+                   otherError(5)
+                   }
+
+
+-- --------------------------------------------
+-- --------------------------------------------        
+--  TRANSMISSION CONFIGURATION OBJECTS
+-- --------------------------------------------
+-- --------------------------------------------    
+
+ySwManagement             OBJECT IDENTIFIER ::= { yCommonMib 10 }
+yConfigManagement         OBJECT IDENTIFIER ::= { yCommonMib 20 }
+yTime                     OBJECT IDENTIFIER ::= { yCommonMib 30}
+yNtpSettings              OBJECT IDENTIFIER ::= { yTime 10 }
+yEventsHistoryMng         OBJECT IDENTIFIER ::= { yCommonMib 40 }
+yEquipmentManagement      OBJECT IDENTIFIER ::= { yCommonMib 50 }
+yInventoryManagement      OBJECT IDENTIFIER ::= { yCommonMib 90 }
+yCommonConformance        OBJECT IDENTIFIER ::= { yCommonMib 100 }
+yCommonGroups             OBJECT IDENTIFIER ::= { yCommonConformance 1 }
+yCommonCompliances        OBJECT IDENTIFIER ::= { yCommonConformance 2 }
+
+yConfigBackupFilename OBJECT-TYPE
+	SYNTAX     OCTET STRING (SIZE(1..128))
+	MAX-ACCESS read-write
+	STATUS     current
+	DESCRIPTION 
+		"The system automatically sets this object with a filename; the equipment will 
+		then save its configuration with this filename"
+	::= { yConfigManagement 20 }
+
+yConfigRestoreFilename OBJECT-TYPE
+	SYNTAX     OCTET STRING (SIZE(1..128))
+	MAX-ACCESS read-write
+	STATUS     current
+	DESCRIPTION 
+		"Set this object with a desired path/filename and the equipment will
+		restore its configuration from this file"
+	::= { yConfigManagement 30 }
+
+ySwApsActivate OBJECT-TYPE
+        SYNTAX     INTEGER {
+                activate (1),
+                none (2),
+                ongoing (10)
+        }
+        MAX-ACCESS read-write
+        STATUS     current
+        DESCRIPTION
+                "Setting it to activate(1) triggers the switch of APS SW banks"
+        DEFVAL  { none }
+        ::= { ySwManagement 10 }
+
+ySwDownloadSpinlock OBJECT-TYPE
+        SYNTAX     TestAndIncr
+        MAX-ACCESS read-write
+        STATUS     current
+        DESCRIPTION
+                "OS software download spinlock. A SNMP-get on this node returns 
+                a numeric value. Setting the node to the same numeric value 
+                retrieved, then setting ySwApsActivate to 
+                activate(1), performs a SW upgrade"
+        ::= { ySwManagement 20 }
+
+yRtcCurrentTime OBJECT-TYPE
+	SYNTAX     DateAndTime
+	MAX-ACCESS read-write
+	STATUS     current
+	DESCRIPTION 
+		"Reading this variable gives the current local time of NEs RTC
+		        including the time zone information. NEs local time can be set by
+		        updating this variable. The time is always returned and must be
+		        always set in a format
+		        of full 11 octects as DateAndTime in RFC 1514, as follows:
+		        octets  contents              range
+		          1-2     year                0..65536  (in network byte order)
+		          3       month               1..12
+		          4       day                 1..31
+		          5       hour                0..23
+		          6       minutes             0..59
+		          7       seconds             0..60     (use 60 for leap-second)
+		          8       deci-seconds        0..9
+		          9       direction from UTC  + or -    (in ascii notation)
+		          10      hours from UTC      0..13
+		          11      minutes from UTC    0..59"
+	::= { yTime 1 }
+
+--    SYNTAX      OCTET STRING (SIZE (8..11))
+
+yRtcTimeZone OBJECT-TYPE
+	SYNTAX     DisplayString
+	MAX-ACCESS read-write
+	STATUS     current
+	DESCRIPTION 
+		"Reading this variable gives the time zone where the NE is located. NEs
+		        time zone can be set by updating this variable. If the first character
+		        is + or - then the variable is interpreted as the direction from UTC
+		        (+ means east from UTC and - means west from UTC), and the next 4
+		        characters are the hours and minutes values of the timezone
+		        (eg. +0300).
+		        Otherwise the string is an implementation specific name of the
+		        timezone (eg. EET, Europe/Helsinki or GMT+3)."
+	::= { yTime 2 }
+
+
+yNtpEnabled OBJECT-TYPE
+	SYNTAX     YEnabledDisabled
+	MAX-ACCESS read-write
+	STATUS     current
+	DESCRIPTION 
+		"Used to determine if the NE is using NTP (Network Time Protocol)
+		        to update it's internal RTC. Possible values are 'enabled' (1)
+		        and 'disabled' (2), and the NTP is turned on or off
+		        according to this setting. If the variable is set to 'enabled' (1)
+		        while it is already 'enabled' (1), then program implementing
+		        NTP (e.g. xntpd) is restarted."
+	DEFVAL  { disabled }
+	::= { yNtpSettings 1 }
+
+yNtpServerTable OBJECT-TYPE
+	SYNTAX SEQUENCE OF YNtpServerEntry
+	MAX-ACCESS not-accessible
+	STATUS     current
+	DESCRIPTION 
+		"The table of NTP servers available for Date&Time synchronization of the equipment."
+	::= { yNtpSettings 3 }
+
+yNtpServerEntry OBJECT-TYPE
+	SYNTAX 	YNtpServerEntry
+	MAX-ACCESS not-accessible
+	STATUS     current
+	DESCRIPTION 
+		"The table of NTP servers available for Date&Time synchronization of the equipment."
+	INDEX { yNtpServerIndex }
+	::= { yNtpServerTable 1 }
+
+YNtpServerEntry ::= SEQUENCE {
+	yNtpServerIndex
+		YGenericIndex,
+	yNtpServerEnable
+		YEnabledDisabled,	
+        yNtpServerAddress
+		OCTET STRING,
+	yNtpServerPort
+		Integer32,
+	yNtpServerStatus
+		YTimeServerStatus,
+	yNtpServerPreferred
+		TruthValue,
+	yNtpServerRowStatus
+		RowStatus
+}
+
+yNtpServerIndex OBJECT-TYPE
+	SYNTAX     YGenericIndex
+	MAX-ACCESS not-accessible
+	STATUS     current
+	DESCRIPTION 
+		"A unique value, greater than zero, for each NTP server.
+		 It is recommended that values are assigned continuously starting
+		 from 1."
+	::= { yNtpServerEntry 1 }
+
+yNtpServerEnable OBJECT-TYPE
+	SYNTAX     YEnabledDisabled
+	MAX-ACCESS read-write
+	STATUS     current
+	DESCRIPTION 
+		"Enable/Disable the NTP server."
+    DEFVAL  { disabled }
+	::= { yNtpServerEntry 2 }
+    
+
+yNtpServerAddress OBJECT-TYPE
+	SYNTAX     OCTET STRING
+	MAX-ACCESS read-create
+	STATUS     current
+	DESCRIPTION 
+		"Address of NTP server from which time is requested. This shall be
+		 either absolute IP address (eg. 131.228.32.41); no host name
+		 (eg. ntpserver1.time.com) is accepted."
+	::= { yNtpServerEntry 3 }
+    
+yNtpServerPort OBJECT-TYPE
+	SYNTAX     Integer32 (1..65535)
+	MAX-ACCESS read-create
+	STATUS     current
+	DESCRIPTION 
+		"Port number used in NTP communication with NTP server.
+		 The default value of this variable shall be 123.
+		 This value is fixed and cannot be changed."
+	::= { yNtpServerEntry 4 }
+
+yNtpServerStatus OBJECT-TYPE
+	SYNTAX     YTimeServerStatus
+	MAX-ACCESS read-only
+	STATUS     current
+	DESCRIPTION 
+		"Current status of the corresponding NTP server or equipment capability to
+		 communicate with the NTP server. "
+	::= { yNtpServerEntry 5 }
+
+yNtpServerPreferred OBJECT-TYPE
+	SYNTAX     TruthValue
+	MAX-ACCESS read-create
+	STATUS     current
+	DESCRIPTION 
+		"This boolean variable marks the server as preferred ('true' (1)) or
+		 non-preferred ('false' (2))."
+	::= { yNtpServerEntry 6 }
+
+yNtpServerRowStatus OBJECT-TYPE
+	SYNTAX     RowStatus
+	MAX-ACCESS read-create
+	STATUS     current
+	DESCRIPTION 
+		"This object is used to create new rows in this table,
+		 modify existing rows, and to delete existing rows.
+		 For further details see RowStatus defined in RFC1903"
+	::= { yNtpServerEntry 7 }
+
+
+yEventsHistoryTable  OBJECT-TYPE
+	SYNTAX SEQUENCE OF YeventsHistoryEntry
+	MAX-ACCESS not-accessible
+	STATUS     current
+	DESCRIPTION 
+		"The table of all equipment events."
+	::= { yEventsHistoryMng 1 }
+
+yEventsHistoryEntry  OBJECT-TYPE
+	SYNTAX 	YeventsHistoryEntry
+	MAX-ACCESS not-accessible
+	STATUS     current
+	DESCRIPTION 
+		"The entries of all equipment events."
+	INDEX { yEventsHistoryIndex }
+	::= { yEventsHistoryTable 1 }
+
+YeventsHistoryEntry ::= SEQUENCE {
+	yEventsHistoryIndex
+		Integer32,
+	yEventsHistoryUser
+		OCTET STRING,
+	yEventsHistoryDate
+		OCTET STRING,
+	yEventsHistoryTime
+		OCTET STRING,
+	yEventsHistoryIpv4Source
+		OCTET STRING,
+	yEventsHistoryIpv6Source
+		OCTET STRING,
+	yEventsHistoryType
+		INTEGER,
+    yEventsHistorySeverity
+        YAlarmSeverity,
+    yEventsHistoryStatus
+        INTEGER,
+	yEventsHistoryDescription
+		OCTET STRING
+   
+}
+
+yEventsHistoryIndex  OBJECT-TYPE
+	SYNTAX     Integer32 (0..2147483647)
+	MAX-ACCESS not-accessible
+	STATUS     current
+	DESCRIPTION 
+		" "
+	::= { yEventsHistoryEntry 1 }
+
+yEventsHistoryUser  OBJECT-TYPE
+	SYNTAX     OCTET STRING
+	MAX-ACCESS read-only
+	STATUS     current
+	DESCRIPTION 
+		" "
+	::= { yEventsHistoryEntry 2 }
+
+yEventsHistoryDate  OBJECT-TYPE
+	SYNTAX     OCTET STRING
+	MAX-ACCESS read-only
+	STATUS     current
+	DESCRIPTION 
+		" "
+	::= { yEventsHistoryEntry 3 }
+
+yEventsHistoryTime  OBJECT-TYPE
+	SYNTAX     OCTET STRING
+	MAX-ACCESS read-only
+	STATUS     current
+	DESCRIPTION 
+		" "
+	::= { yEventsHistoryEntry 4 }
+yEventsHistoryIpv4Source  OBJECT-TYPE
+	SYNTAX     OCTET STRING
+	MAX-ACCESS read-only
+	STATUS     current
+	DESCRIPTION 
+		" "
+	::= { yEventsHistoryEntry 5 }
+
+yEventsHistoryIpv6Source  OBJECT-TYPE
+	SYNTAX     OCTET STRING 
+	MAX-ACCESS read-only
+	STATUS     current
+	DESCRIPTION 
+		" "
+	::= { yEventsHistoryEntry 6 }
+
+yEventsHistoryType  OBJECT-TYPE
+	SYNTAX     INTEGER {
+                event (0),
+		        alarm (1)
+	}
+	MAX-ACCESS read-only
+	STATUS     current
+	DESCRIPTION 
+		" "
+	::= { yEventsHistoryEntry 7 }
+
+yEventsHistorySeverity  OBJECT-TYPE
+	SYNTAX     YAlarmSeverity
+	MAX-ACCESS read-only
+	STATUS     current
+	DESCRIPTION 
+		" "
+	::= { yEventsHistoryEntry 8 }
+
+yEventsHistoryStatus  OBJECT-TYPE
+	SYNTAX     INTEGER {
+                cleared (0),
+                raised  (1)	
+	        }
+	MAX-ACCESS read-only
+	STATUS     current
+	DESCRIPTION 
+		" "
+	::= { yEventsHistoryEntry 9 }
+
+
+yEventsHistoryDescription  OBJECT-TYPE
+	SYNTAX     OCTET STRING (SIZE(0..256))
+	MAX-ACCESS read-only
+	STATUS     current
+	DESCRIPTION 
+		" "
+	::= { yEventsHistoryEntry 10 }
+
+yOduTemp OBJECT-TYPE
+	SYNTAX      Integer32 (-128..127) 
+	MAX-ACCESS read-write
+	STATUS     current
+	DESCRIPTION 
+		"The equipment temperature measured in centigrade degrees, 
+         in the range -128/+127."
+	::= { yEquipmentManagement 1 }
+
+
+yInventoryTable OBJECT-TYPE
+	SYNTAX SEQUENCE OF YinventoryEntry
+	MAX-ACCESS not-accessible
+	STATUS     current
+	DESCRIPTION 
+		"The HW info table."
+	::= { yInventoryManagement 1 }
+
+yInventoryEntry OBJECT-TYPE
+	SYNTAX 	YinventoryEntry
+	MAX-ACCESS not-accessible
+	STATUS     current
+	DESCRIPTION 
+		"The HW info entries."
+	INDEX { yInventoryIndex }
+	::= { yInventoryTable 1 }
+
+YinventoryEntry ::= SEQUENCE {
+	yInventoryIndex
+		YGenericIndex,
+	yInventoryCardType
+		DisplayString,
+	yInventorySerialNum
+		DisplayString,
+	yInventoryPartNum
+		DisplayString,
+	yInventorySwApsVersion
+		DisplayString,
+	yInventorySwCopyright
+		DisplayString,
+	yInventoryCustomerData
+		DisplayString,
+	yInventorySwChecksum
+		DisplayString,
+	yInventorySwSbyApsVersion
+		DisplayString,
+	yInventorySwSbyCopyright
+		DisplayString,
+	yInventorySwSbyChecksum
+		DisplayString
+}
+
+yInventoryIndex OBJECT-TYPE
+	SYNTAX     YGenericIndex
+	MAX-ACCESS not-accessible
+	STATUS     current
+	DESCRIPTION 
+		"The index of HW parameters. A unique value, greater than zero, 
+		for each HW parameter. It is recommended that values are assigned 
+		continuously starting from 1."
+	::= { yInventoryEntry 1 }
+
+yInventoryCardType OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE(16))
+	MAX-ACCESS read-only
+	STATUS     current
+	DESCRIPTION 
+		"The Card Type of the equipment."
+	::= { yInventoryEntry 2 }
+
+yInventorySerialNum OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE(16))
+	MAX-ACCESS read-only
+	STATUS     current
+	DESCRIPTION 
+		"The vendor-specific Serial Number string of the equipment."
+	::= { yInventoryEntry 3 }
+
+yInventoryPartNum OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE(16))
+	MAX-ACCESS read-only
+	STATUS     current
+	DESCRIPTION 
+		"The vendor-specific hardware code number of the equipment.
+		This field consists of: HW allocation, Configuration,
+		Variant, and Parts List Issue, separated by a dash (-)."
+	::= { yInventoryEntry 4 }
+
+yInventorySwApsVersion OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE(17))
+	MAX-ACCESS read-only
+	STATUS     current
+	DESCRIPTION 
+		"This field consists of Database Scheme Version,
+		 Feature Version, Correction Version, and
+		 Daily Production Number.
+		 Unused positions are filled with blank."
+	::= { yInventoryEntry 5 }
+
+yInventorySwCopyright OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE(38))
+	MAX-ACCESS read-only
+	STATUS     current
+	DESCRIPTION 
+		"LABEL {SW Copyright}
+		 This field is for the APS release date (yyyymmdd) and Copyright Remark."
+	::= { yInventoryEntry 6 }
+
+yInventoryCustomerData OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE(34))
+	MAX-ACCESS read-only
+	STATUS     current
+	DESCRIPTION 
+		"LABEL {Customer Data}
+		 This field contains the customer specific inventory data."
+	::= { yInventoryEntry 7 }
+
+yInventorySwChecksum OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE(8))
+	MAX-ACCESS read-only
+	STATUS     current
+	DESCRIPTION 
+		"LABEL {Checksum }
+		 This field contains the software checksum."
+	::= { yInventoryEntry 8 }
+
+yInventorySwSbyApsVersion OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE(17))
+	MAX-ACCESS read-only
+	STATUS     current
+	DESCRIPTION 
+		"LABEL {SW Standby Aps Version}
+		 This field consists of Database Scheme Version,
+		 Feature Version, Correction Version, and
+		 Daily Production Number.
+		 Unused positions are filled with blank."
+	::= { yInventoryEntry 9 }
+
+yInventorySwSbyCopyright OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE(38))
+	MAX-ACCESS read-only
+	STATUS     current
+	DESCRIPTION 
+		"LABEL {SW Standby Copyright}
+		 This field is for the Standby APS release date (yyyymmdd) and Copyright Remark."
+	::= { yInventoryEntry 10 }
+
+yInventorySwSbyChecksum OBJECT-TYPE
+	SYNTAX     DisplayString (SIZE(8))
+	MAX-ACCESS read-only
+	STATUS     current
+	DESCRIPTION 
+		"LABEL {Standby Aps Checksum }
+		 This field contains standby software checksum."
+	::= { yInventoryEntry 11 }
+
+
+yCommonDefaultGroup    OBJECT-GROUP
+    OBJECTS { yConfigBackupFilename,
+              yConfigRestoreFilename,
+              ySwApsActivate,
+              ySwDownloadSpinlock,
+              yOduTemp,
+              yInventoryCardType,
+              yInventorySerialNum,
+              yInventoryPartNum,
+              yInventorySwApsVersion,
+              yInventorySwCopyright,
+              yInventoryCustomerData,
+              yInventorySwChecksum,
+              yInventorySwSbyApsVersion,
+              yInventorySwSbyCopyright,
+              yInventorySwSbyChecksum,
+              yRtcCurrentTime,
+              yRtcTimeZone,
+              yNtpEnabled,
+              yNtpServerEnable,
+              yNtpServerAddress,
+              yNtpServerPort,
+              yNtpServerStatus,
+              yNtpServerPreferred,
+              yNtpServerRowStatus,
+              yEventsHistoryUser,
+              yEventsHistoryDate,
+              yEventsHistoryTime,
+              yEventsHistoryIpv4Source,
+              yEventsHistoryIpv6Source,
+              yEventsHistoryType,
+              yEventsHistoryDescription,
+              yEventsHistorySeverity,
+              yEventsHistoryStatus
+		
+            }
+ STATUS  current
+    DESCRIPTION
+            "A collection of objects providing control of equipment."
+    ::= { yCommonGroups 1 }
+
+    
+yCommonCompliance MODULE-COMPLIANCE
+    STATUS  current
+    DESCRIPTION
+            "The compliance statement."
+
+    MODULE  -- this module
+        MANDATORY-GROUPS { yCommonDefaultGroup
+                           
+                         }
+    ::= { yCommonCompliances 1 }
+
+END

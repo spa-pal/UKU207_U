@@ -4415,6 +4415,10 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 	//int2lcdyx(kb_cnt_2lev,0,8,0);
 	//int2lcdyx(sub_ind,0,4,0); 
 	//int2lcdyx(index_set,0,10,0);  
+	/*int2lcdyx(lc640_read_int(EE_ETH_IS_ON),0,5,0);
+	int2lcdyx(LPC_SC->RSID,0,10,0); 
+	int2lcdyx(cntrl_stat,0,15,0);
+	int2lcdyx(cntrl_stat_new,0,19,0);*/
 	}
 
 else if(ind==iMn_TELECORE2015)
@@ -39184,11 +39188,11 @@ T0IR = 0xff;*/
 int main (void) 
 {
 char ind_reset_cnt=0;
-//long i;
+long i;
 char mac_adr[6] = { 0x00,0x73,0x04,50,60,70 };
-
-//i=200000;
-//while(--i){};
+/*
+i=2000000;
+while(--i){}; */
 
 SystemInit();
 
@@ -39197,6 +39201,10 @@ bTPS=1;
 SysTick->LOAD = (SystemFrequency / 2000) - 1;
 SysTick->CTRL = 0x07;
 
+//if(!(LPC_SC->RSID&0x00000004L))bRESET_INT_WDT=1;
+if(LPC_SC->RSID&0x00000001L)bRESET_INT_WDT=1;
+
+LPC_SC->RSID=LPC_SC->RSID;
 //init_timer( 0,SystemFrequency/2000/4 - 1 ); // 1ms	
 //enable_timer( 0 );
 

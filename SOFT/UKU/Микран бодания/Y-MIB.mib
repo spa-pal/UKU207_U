@@ -1,0 +1,28 @@
+
+Y-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+   MODULE-IDENTITY, enterprises
+      FROM SNMPv2-SMI;
+
+
+yMib MODULE-IDENTITY
+   LAST-UPDATED "201508040100Z"
+   ORGANIZATION
+      "Youncta S.r.l."
+   CONTACT-INFO
+      "Youncta Customer Support
+	  techsupport@youncta.com
+      Agrate Brianza (MB)
+      Italy"
+   DESCRIPTION
+      "This MIB supports common objects to several modules."
+   REVISION "201309061400Z"
+   DESCRIPTION
+      "Issue 0"
+
+::= { enterprises 43499 }
+
+
+END
+

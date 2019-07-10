@@ -1,0 +1,587 @@
+YNOT-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    NOTIFICATION-TYPE, OBJECT-TYPE, MODULE-IDENTITY,
+    Integer32
+        FROM SNMPv2-SMI
+    TEXTUAL-CONVENTION,
+    TimeStamp     
+        FROM SNMPv2-TC
+    NOTIFICATION-GROUP, OBJECT-GROUP, MODULE-COMPLIANCE
+        FROM SNMPv2-CONF        
+    
+    yMib
+        FROM Y-MIB;
+    
+yNotMib MODULE-IDENTITY
+    LAST-UPDATED "201510231000Z"
+    ORGANIZATION 
+        "Youncta S.r.l."
+    CONTACT-INFO 
+        "Youncta Customer Support
+	  techsupport@youncta.com
+      Agrate Brianza (MB)
+      Italy"
+    DESCRIPTION 
+        "This MIB contains objects for Youncta Module"
+    REVISION "201212101700Z"
+    DESCRIPTION 
+        "Initial version"
+::= { yMib 60 }
+
+-- --------------------------------------------
+-- --------------------------------------------        
+--  TEXTUAL CONVENTION
+-- --------------------------------------------
+-- --------------------------------------------
+YAlarmSeverity ::= TEXTUAL-CONVENTION
+    STATUS current
+    DESCRIPTION
+            "Alarm severity values"
+    SYNTAX         INTEGER {
+            critical      (0),
+	        major	      (1),
+	        minor	      (2),
+	        warning       (3),
+	        indeterminate (4),
+	        none	 	  (5),
+	        undefined	  (6)
+           }
+
+    YAlarmStatus ::= TEXTUAL-CONVENTION
+    STATUS current
+    DESCRIPTION
+            "Alarm Status"
+    SYNTAX     INTEGER {
+        cleared (0),
+        raised (1)
+    }
+-- --------------------------------------------
+-- --------------------------------------------        
+--  TRANSMISSION CONFIGURATION OBJECTS
+-- --------------------------------------------
+-- --------------------------------------------    
+
+
+yAlarms                 OBJECT IDENTIFIER ::= { yNotMib 10 }
+yNotification           OBJECT IDENTIFIER ::= { yNotMib 20 }
+yTraps                  OBJECT IDENTIFIER ::= { yNotification 10 }
+yRfTraps                OBJECT IDENTIFIER ::= { yNotification 20 }
+yEthTraps	        	OBJECT IDENTIFIER ::= { yNotification 30 }
+yOduIpTraps             OBJECT IDENTIFIER ::= { yNotification 40 }
+yMaintenanceTraps       OBJECT IDENTIFIER ::= { yNotification 50 }
+yCommonTraps            OBJECT IDENTIFIER ::= { yNotification 60 }
+
+yTrapAlarmInstance OBJECT-TYPE
+    SYNTAX     Integer32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION 
+        "The instance for each outstanding alarm.
+		Currently not used."
+    ::= { yTraps 1 }
+
+yTrapAlarmStatus OBJECT-TYPE
+    SYNTAX     YAlarmStatus
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION 
+        "The status for each outstanding alarm.
+		Can be raised(1) or cleared(0)."
+    ::= { yTraps 2 }
+
+yTrapAlarmSeverity OBJECT-TYPE
+    SYNTAX     YAlarmSeverity 
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION 
+        "The severity for each outstanding alarm.
+		Can be any value compliant to ITUPerceivedSeverity standard (RFC3877)."
+    ::= { yTraps 3 }
+
+yTrapAlarmTimeStamp OBJECT-TYPE
+    SYNTAX     TimeStamp
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION 
+        "The timestamp for each outstanding alarm."
+    ::= { yTraps 4 }
+
+yTrapAlarmAdditionalInfo OBJECT-TYPE
+    SYNTAX     OCTET STRING (SIZE(0..256))
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION 
+        "The textual description for each outstanding alarm."
+    ::= { yTraps 5 }
+
+yTrapSequenceNumber OBJECT-TYPE
+	SYNTAX     Integer32
+	MAX-ACCESS read-only
+	STATUS     current
+	DESCRIPTION 
+		"Global counter increased every time a new trap is generated. 
+		It doesn't depend on the number of registered managers."
+	::= { yTraps 6 }
+
+yRfLoAlmTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance, 
+              yTrapAlarmSeverity, 
+              yTrapAlarmStatus, 
+              yTrapAlarmAdditionalInfo, 
+              yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+        "Synthesizer alarm (VCO): reports problems on the LO."
+    ::= { yRfTraps 1}
+
+yRfTxPwAlmTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance, 
+              yTrapAlarmSeverity, 
+              yTrapAlarmStatus, 
+              yTrapAlarmAdditionalInfo, 
+              yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+       "Transmitted Power alarm: reports that the Tx power differs more than 6 dB 
+		against the operator defined value, or is above threshold when Tx is squelched."
+    ::= { yRfTraps 2 }
+
+	
+yRfRxPwAlmTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance, 
+              yTrapAlarmSeverity, 
+              yTrapAlarmStatus, 
+              yTrapAlarmAdditionalInfo, 
+              yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+        "Received Power alarm: reports that the RX power is below threshold."
+    ::= { yRfTraps 3 }
+	
+	
+yRfDemAlmTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance, 
+              yTrapAlarmSeverity, 
+              yTrapAlarmStatus, 
+              yTrapAlarmAdditionalInfo, 
+              yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+        "Demodulator alarm: reports that the demodulator is unlocked."
+    ::= { yRfTraps 4 }
+	
+yRfHighBerTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance, 
+              yTrapAlarmSeverity, 
+              yTrapAlarmStatus, 
+              yTrapAlarmAdditionalInfo, 
+              yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+        "High BER alarm: reports that the BitErrorRate=10-3 or higher (based on MSE evaluation)."
+    ::= { yRfTraps 5 }
+	
+yRfLowBerTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance, 
+              yTrapAlarmSeverity, 
+              yTrapAlarmStatus, 
+              yTrapAlarmAdditionalInfo, 
+              yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+        "Low BER alarm: reports that the BitErrorRate=10-6 or higher (based on MSE evaluation)."
+    ::= { yRfTraps 6 }
+
+yRfdelineationAlmTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance, 
+              yTrapAlarmSeverity, 
+              yTrapAlarmStatus, 
+              yTrapAlarmAdditionalInfo, 
+              yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+        "Received Frame alarm: reports Loss of Frames in case of
+     	misalignment on received radio signal."
+    ::= { yRfTraps 7 }
+
+yRfRemRxPwTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance, 
+              yTrapAlarmSeverity, 
+              yTrapAlarmStatus, 
+              yTrapAlarmAdditionalInfo, 
+              yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+        "Far End Received Power alarm: reports that the RX power 
+		is below threshold on the Far End."
+    ::= { yRfTraps 8 }
+
+yRfPowerControlModeNotificationTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance,
+              yTrapAlarmAdditionalInfo,
+              yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+        "Power Control Mode Change notification: reports that the administrative
+		status on the radio interface has been changed from/to Up/ATPC/Down."
+    ::= { yRfTraps 9 }
+
+yRfTimeoutAlmTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance, 
+              yTrapAlarmSeverity, 
+              yTrapAlarmStatus, 
+              yTrapAlarmAdditionalInfo, 
+              yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+        "ANSI ATPC timeout notification"
+    ::= { yRfTraps 10 }
+yRfPowerFailureTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance,
+        yTrapAlarmSeverity,
+        yTrapAlarmStatus,
+        yTrapAlarmAdditionalInfo,
+        yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION
+        "Rf Power Failure."
+    ::= { yRfTraps 11 }
+
+yEthLinkDownTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance, 
+              yTrapAlarmSeverity, 
+              yTrapAlarmStatus, 
+              yTrapAlarmAdditionalInfo, 
+              yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+        "Link Down alarm: reports that the PHY of local Ethernet interface is down.
+		The local Ethernet has not established a valid connection with the Link Partner."
+    ::= { yEthTraps 1 }
+ySFPLinkDownTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance, 
+              yTrapAlarmSeverity, 
+              yTrapAlarmStatus, 
+              yTrapAlarmAdditionalInfo, 
+              yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+        "SFP Link Down alarm: reports that the PHY of local Ethernet interface is down.
+		The local Ethernet has not established a valid connection with the Link Partner."
+    ::= { yEthTraps 2 }
+
+yEthAutoNegFailureTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance, 
+              yTrapAlarmSeverity, 
+              yTrapAlarmStatus, 
+              yTrapAlarmAdditionalInfo, 
+              yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+        "Autonegotiation Failure alarm: reports that the local Ethernet interface
+		has not established a valid connection with the Link Partner because
+		Link Partner is not capable of autonegotiating."
+    ::= { yEthTraps 3 }
+
+yEthSfpMissingTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance, 
+              yTrapAlarmSeverity, 
+              yTrapAlarmStatus, 
+              yTrapAlarmAdditionalInfo, 
+              yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+        "SFP Missing alarm: reports that no SFP module is present."
+    ::= { yEthTraps 4 }
+
+yServiceChannelTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance, 
+              yTrapAlarmSeverity, 
+              yTrapAlarmStatus, 
+              yTrapAlarmAdditionalInfo, 
+              yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+        "Remote Channel alarm: reports communication service channel out of service,
+		and that no information about alarms and status from Far End is being received."
+    ::= { yOduIpTraps 1 }
+
+yRfXpicSignalLossTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance, 
+              yTrapAlarmSeverity, 
+              yTrapAlarmStatus, 
+              yTrapAlarmAdditionalInfo, 
+              yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+        "XPIC signal loss: reports that ODU-to-ODU XPIC data channel is 
+		out-of-service in 2+0 XPIC System Type."
+    ::= { yOduIpTraps 2 }
+
+yRfRlaSignalLossTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance,
+              yTrapAlarmSeverity,
+              yTrapAlarmStatus,
+              yTrapAlarmAdditionalInfo,
+              yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION
+        "RLA signal loss: reports that ODU-to-ODU RLA data channel is 
+		out-of-service in 2+0 RLA System Type."
+    ::= { yOduIpTraps 3 }
+
+yMateChannelErrorTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance, 
+              yTrapAlarmSeverity, 
+              yTrapAlarmStatus, 
+              yTrapAlarmAdditionalInfo, 
+              yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+        "Mate Channel alarm: reports that ODU-to-ODU data channel is 
+		out-of-service in 1+1 HSB System Type."
+    ::= { yOduIpTraps 4 }
+
+yRemotePeerUnreachableTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance, 
+              yTrapAlarmSeverity, 
+              yTrapAlarmStatus, 
+              yTrapAlarmAdditionalInfo, 
+              yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+        "Remote peer unreachable trap"
+    ::= { yOduIpTraps 5 }
+
+ySwMismatchTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance, 
+              yTrapAlarmSeverity, 
+              yTrapAlarmStatus, 
+              yTrapAlarmAdditionalInfo, 
+              yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+        "Software mismatch trap"
+    ::= { yOduIpTraps 6 }
+
+yRFBoardFailureTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance,
+        yTrapAlarmSeverity,
+        yTrapAlarmStatus,
+        yTrapAlarmAdditionalInfo,
+        yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION
+        "Rf Not present."
+    ::= { yOduIpTraps 7 }
+
+yNtpServerUnreachableTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance,
+              yTrapAlarmSeverity,
+              yTrapAlarmStatus,
+              yTrapAlarmAdditionalInfo,
+              yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION
+        "NTP Server Unreachable Trap: reports that the equipment has
+		lost synchronization with all configured NTP Servers."
+    ::= { yCommonTraps 1 }
+	
+yTempAlarmTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance, 
+              yTrapAlarmSeverity, 
+              yTrapAlarmStatus, 
+              yTrapAlarmAdditionalInfo, 
+              yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+        "Temperature alarm: reports that the equipment temperature is out of range."
+    ::= { yCommonTraps 2 }
+	
+ySyncEUnlockedTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance, 
+        yTrapAlarmSeverity, 
+        yTrapAlarmStatus, 
+        yTrapAlarmAdditionalInfo, 
+        yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+        "SyncE Unlocked alarm: reports that the recovered clock is not locked to the incoming Rx Clock."
+    ::= { yCommonTraps 3 }
+
+yManualOperationTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance, 
+        yTrapAlarmSeverity, 
+        yTrapAlarmStatus, 
+        yTrapAlarmAdditionalInfo, 
+        yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+        "Manual operation alarm."
+    ::= { yCommonTraps 4 }
+
+yDigitalBoardFailureTrap NOTIFICATION-TYPE
+    OBJECTS { yTrapAlarmInstance, 
+        yTrapAlarmSeverity, 
+        yTrapAlarmStatus, 
+        yTrapAlarmAdditionalInfo, 
+        yTrapSequenceNumber }
+    STATUS     current
+    DESCRIPTION 
+        "Digital board failure alarm."
+    ::= { yCommonTraps 5 }
+
+yAlarmsTable OBJECT-TYPE
+    SYNTAX SEQUENCE OF YAlarmsEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION 
+        "The table of outstanding Radio, Ethernet and Equipment alarms."
+    ::= { yAlarms 1 }
+
+yAlarmsEntry OBJECT-TYPE
+    SYNTAX     YAlarmsEntry
+    MAX-ACCESS not-accessible
+    STATUS     current
+    DESCRIPTION 
+        "The entries of outstanding Radio, Ethernet and Equipment alarms."
+    INDEX { yAlarmTrapOid, yAlarmInstance }
+    ::= { yAlarmsTable 1 }
+
+YAlarmsEntry ::= SEQUENCE {
+    yAlarmTrapOid
+        OBJECT IDENTIFIER,
+    yAlarmInstance
+        Integer32,        
+    yAlarmStatus
+        YAlarmStatus,
+    yAlarmSeverity
+        YAlarmSeverity,
+    yAlarmTimeStamp
+        TimeStamp,
+    yAlarmAdditionalInfo
+        OCTET STRING
+}
+
+yAlarmTrapOid OBJECT-TYPE
+    SYNTAX     OBJECT IDENTIFIER
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION 
+        "The trap OID for each outstanding alarm."
+    ::= { yAlarmsEntry 1 }
+
+yAlarmInstance OBJECT-TYPE
+    SYNTAX     Integer32
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION 
+        "The instance for each outstanding alarm.
+		Currently not used."
+    ::= { yAlarmsEntry 2 }
+
+yAlarmStatus OBJECT-TYPE
+    SYNTAX     YAlarmStatus
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION 
+        "The status for each outstanding alarm.
+		Can be raised(1) or cleared(0)."
+    ::= { yAlarmsEntry 3 }
+
+yAlarmSeverity OBJECT-TYPE
+    SYNTAX     YAlarmSeverity 
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION 
+        "The severity for each outstanding alarm.
+		Can be any value compliant to ITUPerceivedSeverity standard (RFC3877)."
+    ::= { yAlarmsEntry 4 }
+
+yAlarmTimeStamp OBJECT-TYPE
+    SYNTAX     TimeStamp
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION 
+        "The timestamp for each outstanding alarm."
+    ::= { yAlarmsEntry 5 }
+
+yAlarmAdditionalInfo OBJECT-TYPE
+    SYNTAX     OCTET STRING (SIZE(0..256))
+    MAX-ACCESS read-only
+    STATUS     current
+    DESCRIPTION 
+        "The textual description for each outstanding alarm."
+    ::= { yAlarmsEntry 6 }
+
+yConformance OBJECT IDENTIFIER ::= { yNotMib 100 }
+yGroups      OBJECT IDENTIFIER ::= { yConformance 1 }
+yCompliances OBJECT IDENTIFIER ::= { yConformance 2 }
+
+yDefaultGroup    OBJECT-GROUP
+    OBJECTS { 
+            yTrapAlarmInstance,
+	        yTrapAlarmStatus,
+            yTrapAlarmSeverity,
+	        yTrapAlarmTimeStamp,
+	        yTrapAlarmAdditionalInfo,
+	        yTrapSequenceNumber,
+            yAlarmTrapOid,
+            yAlarmInstance,
+		    yAlarmStatus,
+		    yAlarmSeverity,
+		    yAlarmTimeStamp,
+		    yAlarmAdditionalInfo
+           }
+    STATUS  current
+    DESCRIPTION
+            "A collection of objects providing control of equipment."
+    ::= { yGroups 1 }
+
+yNotificationsGroup NOTIFICATION-GROUP
+    NOTIFICATIONS { 
+                    yRfLoAlmTrap,
+					yRfTxPwAlmTrap,
+					yRfRxPwAlmTrap,
+					yRfDemAlmTrap,
+					yRfHighBerTrap,
+					yRfLowBerTrap,
+                    yRfdelineationAlmTrap,
+                    yRfRemRxPwTrap,	
+                    yRfPowerControlModeNotificationTrap,					
+					yRfTimeoutAlmTrap,
+                    yRFBoardFailureTrap,
+                    yRfPowerFailureTrap,
+                    yEthLinkDownTrap,
+                    ySFPLinkDownTrap,
+                    yEthAutoNegFailureTrap,
+                    yEthSfpMissingTrap,					
+                    yServiceChannelTrap,
+					yRfXpicSignalLossTrap,
+					yRfRlaSignalLossTrap,                 
+					yMateChannelErrorTrap,
+                    yRemotePeerUnreachableTrap,
+                    ySwMismatchTrap,			                                   
+					yNtpServerUnreachableTrap,
+                    yTempAlarmTrap,
+                    ySyncEUnlockedTrap,
+                    yManualOperationTrap,
+                    yDigitalBoardFailureTrap					
+                  }
+    STATUS        current
+    DESCRIPTION
+            "The notifications group."
+    ::= { yGroups 2 }
+
+yCompliance MODULE-COMPLIANCE
+    STATUS  current
+    DESCRIPTION
+            "The compliance statement."
+
+    MODULE  -- this module
+        MANDATORY-GROUPS { yDefaultGroup,
+                           yNotificationsGroup }
+    ::= { yCompliances 1 }   
+
+END
