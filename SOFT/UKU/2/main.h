@@ -759,14 +759,16 @@ extern unsigned short r_iz_plus, r_iz_minus, r_iz_porog_pred, r_iz_porog_error;
 extern unsigned char v_plus, v_minus, asymmetry;
 #define u_in_rki 	v_plus+v_minus
 extern unsigned int sk1_24;
-extern unsigned short Iddt_porog_pred, Iddt_porog_error, Iddt[24], Rddt[24];
+extern unsigned short Iddt_porog_pred, Iddt_porog_error; 
+extern unsigned char n_error_ddt_uku, u_rki;  
+extern unsigned short Rddt[8][4];  
 extern unsigned char count_Iddt; // количество датчиков тока
 extern unsigned char count_mess_rki;  // номер запроса пакетов	 РКИ
 extern unsigned char no_rki;  // нет связи с РКИ
 extern unsigned char num_rki; // количество РКИ
 extern unsigned char command_rki; //команда для РКИ
 #define NO_RKI 15 // количество посылок без ответа для отсутствия связи с РКИ
-extern unsigned int ddt_error, ddt_error_temp; // нет связи с дат тока
+extern unsigned char ddt_error;
 extern unsigned short status_izm_r;	// аварии измерения изоляции
 extern unsigned int sk_alarm, status_di1, status_di2; // авария СК, ток пред, ток аварии
 extern unsigned char type_rki; // 0-маленькое РКИ, 1-большое РКИ

@@ -1152,7 +1152,8 @@ char slave_num;
 can_rotor[1]++;
 
 // oleg_start
-if (RXBUFF[0]==0xE7) {
+//rki_1_s
+if (RXBUFF[0]==0xE7) { 
 	no_rki=0;
 	if(RXBUFF[1]==0) { type_rki=1;
 		r_iz_plus=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
@@ -1170,54 +1171,61 @@ if (RXBUFF[0]==0xE7) {
 		sk1_24=sk1_24<<16;
 		sk1_24=sk1_24+((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
 		count_Iddt=RXBUFF[6];
-		ddt_error_temp=RXBUFF[7];
-		ddt_error=(ddt_error&0x0000FFFF) | (ddt_error_temp<<16);
+		ddt_error=RXBUFF[7];
 	}
 	else if(RXBUFF[1]==3) {
 		Iddt_porog_pred=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
 		Iddt_porog_error=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Iddt[0]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+		n_error_ddt_uku=RXBUFF[6];
+		u_rki=RXBUFF[7];
 	}
 	else if(RXBUFF[1]==4) {
-		Iddt[1]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
-		Iddt[2]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Iddt[3]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+		Rddt[0][0]=RXBUFF[2];
+		Rddt[0][1]=RXBUFF[3];
+		Rddt[0][2]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[0][3]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
 	}
 	else if(RXBUFF[1]==5) {
-		Iddt[4]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
-		Iddt[5]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Iddt[6]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+		Rddt[1][0]=RXBUFF[2];
+		Rddt[1][1]=RXBUFF[3];
+		Rddt[1][2]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[1][3]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
 	}
 	else if(RXBUFF[1]==6) {
-		Iddt[7]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
-		Iddt[8]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Iddt[9]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+		Rddt[2][0]=RXBUFF[2];
+		Rddt[2][1]=RXBUFF[3];
+		Rddt[2][2]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[2][3]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
 	}
 	else if(RXBUFF[1]==7) {
-		Iddt[10]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
-		Iddt[11]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Iddt[12]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+		Rddt[3][0]=RXBUFF[2];
+		Rddt[3][1]=RXBUFF[3];
+		Rddt[3][2]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[3][3]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
 	}
 	else if(RXBUFF[1]==8) {
-		Iddt[13]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
-		Iddt[14]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Iddt[15]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+		Rddt[4][0]=RXBUFF[2];
+		Rddt[4][1]=RXBUFF[3];
+		Rddt[4][2]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[4][3]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
 	}
 	else if(RXBUFF[1]==9) {
-		Iddt[16]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
-		Iddt[17]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Iddt[18]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+		Rddt[5][0]=RXBUFF[2];
+		Rddt[5][1]=RXBUFF[3];
+		Rddt[5][2]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[5][3]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
 	}
 	else if(RXBUFF[1]==10) {
-		Iddt[19]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
-		Iddt[20]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Iddt[21]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+		Rddt[6][0]=RXBUFF[2];
+		Rddt[6][1]=RXBUFF[3];
+		Rddt[6][2]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[6][3]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
 	}
 	else if(RXBUFF[1]==11) {
-		Iddt[22]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
-		Iddt[23]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		ddt_error_temp=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
-		ddt_error=(ddt_error&0x00FF0000) | ddt_error_temp;
+		Rddt[7][0]=RXBUFF[2];
+		Rddt[7][1]=RXBUFF[3];
+		Rddt[7][2]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[7][3]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
 	}
 	else if(RXBUFF[1]==12) {
 		status_izm_r=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
@@ -1225,59 +1233,13 @@ if (RXBUFF[0]==0xE7) {
 		asymmetry_porog=RXBUFF[7];
 	}
 	else if(RXBUFF[1]==13) {
-		status_di1=((unsigned int)RXBUFF[2]<<16)+((unsigned int)RXBUFF[3]<<8) + RXBUFF[4];
-		status_di2=((unsigned int)RXBUFF[5]<<16)+((unsigned int)RXBUFF[6]<<8) + RXBUFF[7];
-		
-	}
-	else if(RXBUFF[1]==14) {
 		porog_u_in=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
 		u_asymmetry_porog_up=RXBUFF[4];
 		u_asymmetry_porog=RXBUFF[5];
 		u_asymmetry_porog_down=RXBUFF[6];
+		ver_soft=RXBUFF[7];
 	}
-	else if(RXBUFF[1]==15) {
-		Rddt[0]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
-		Rddt[1]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Rddt[2]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
-	}
-	else if(RXBUFF[1]==16) {
-		Rddt[3]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
-		Rddt[4]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Rddt[5]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
-	}
-	else if(RXBUFF[1]==17) {
-		Rddt[6]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
-		Rddt[7]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Rddt[8]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
-	}
-	else if(RXBUFF[1]==18) {
-		Rddt[9]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
-		Rddt[10]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Rddt[11]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
-	}
-	else if(RXBUFF[1]==19) {
-		Rddt[12]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
-		Rddt[13]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Rddt[14]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
-	}
-	else if(RXBUFF[1]==20) {
-		Rddt[15]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
-		Rddt[16]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Rddt[17]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
-	}
-	else if(RXBUFF[1]==21) {
-		Rddt[18]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
-		Rddt[19]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Rddt[20]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
-	}
-	else if(RXBUFF[1]==22) {
-		Rddt[21]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
-		Rddt[22]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Rddt[23]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
-	}
-
-
-
+	
 	//***************************
 	else if(RXBUFF[1]==200) { type_rki=0;
 		r_iz_plus=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
@@ -1299,6 +1261,8 @@ if (RXBUFF[0]==0xE7) {
 		u_asymmetry_porog_up=RXBUFF[2];
 		u_asymmetry_porog=RXBUFF[3];
 		u_asymmetry_porog_down=RXBUFF[4];
+		ver_soft=RXBUFF[5];
+		u_rki=RXBUFF[6];
 	}
 	
 	
@@ -1306,7 +1270,7 @@ if (RXBUFF[0]==0xE7) {
 //sk_alarm=0xFFffff;
 //status_di1=0xFFffff;
 //status_di2=0xFFffff;	
-}
+}  //rki_1_e
 else if (RXBUFF[0]==0xE6) {	  // прием от сетевых входов
 	no_net_in=0;
 	if(RXBUFF[1]==0) {
