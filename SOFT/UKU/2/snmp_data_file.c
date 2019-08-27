@@ -11,6 +11,7 @@
 #include "avar_hndl.h" 
 
 char snmp_community[10];
+char snmp_web_passw[4];
 
 //Информация об устройстве
 unsigned int snmp_device_code;

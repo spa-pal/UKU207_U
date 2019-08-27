@@ -16,6 +16,7 @@
 #include "control.h"
 #include "http_data.h"
 #include "eeprom_map.h"
+#include "snmp_data_file.h"
 
 /* ---------------------------------------------------------------------------
  * The HTTP server provides a small scripting language.
@@ -233,10 +234,13 @@ while (dat);
 		/* Parameter found, returned string is non 0-length. */
 		if (str_scomp (varr[0], "parol") == __TRUE)
 			{
+			char str_buff[4];
         	web_plazma[1]++;
-			if ((str_scomp (varr[0]+6, "123") == __TRUE)&&(len == 9)) 
+			
+			if ((str_scomp (varr[0]+6, snmp_web_passw/*"123"*/) == __TRUE)&&(len == 9)) 
 				{
 				uku_set_autorized=1;
+				psw_err=0;
 				}
 			else
 				{
@@ -259,15 +263,23 @@ while (dat);
 				else if(strstr (varr[0], "place"))
 					{
 					char i = 0;
+					str_copy(place_holder,"                                                                      ");
 					str_copy(place_holder,pal_cyr_decoder(varr[1]+6));
 					//str_copy(place_holder,varr[1]+6);
-					while(place_holder[i]) 
+					/*while(place_holder[i]) 
 						{
 						lc640_write(EE_HTTP_LOCATION+i,place_holder[i]);
 						i++;
-						}
+						}*/
+					for (i=0;i<70;i++)lc640_write(EE_HTTP_LOCATION+i,place_holder[i]);
 					}
 
+				else if(strstr (varr[0], "par_"))
+					{
+					sscanf ((const char *)varr[1]+6, "%d",&web_param_input);
+					lc640_write_int(EE_PAR,(short)(web_param_input&0x00000001UL));
+
+					}
 				
 				}
 
@@ -425,7 +437,30 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
 				switch (env[2]) {
 					case '1':
 						//len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("ÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÜÛÚÝÞß1?°àáâãäå¸æçèéêëìíîïðñòóôõö÷øùüûúýþÿ"));
-						len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("ÈÁÝÏ220/48-120À-4/4"));
+						if(AUSW_MAIN==24120)
+							{
+							if(NUMIST==2)			len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("ÈÁÝÏ220/24-120À-2/4"));
+							else if(NUMIST==3)		len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("ÈÁÝÏ220/24-120À-3/4"));
+							else					len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("ÈÁÝÏ220/24-120À-4/4"));
+							}
+						else if(AUSW_MAIN==24210)
+							{
+							if(NUMIST==3)			len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("ÈÁÝÏ220/24-210À-3/7"));
+							else if(NUMIST==4)		len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("ÈÁÝÏ220/24-210À-4/7"));
+							else if(NUMIST==5)		len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("ÈÁÝÏ220/24-210À-5/7"));
+							else if(NUMIST==6)		len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("ÈÁÝÏ220/24-210À-6/7"));
+							else					len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("ÈÁÝÏ220/24-210À-7/7"));
+							}
+						else if(AUSW_MAIN==4880)
+							{
+							if(NUMIST==3)			len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("ÈÁÝÏ220/48-80À-3/4 "));
+							else					len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("ÈÁÝÏ220/48-80À-4/4 "));
+							}
+
+						else if(AUSW_MAIN==4883)	len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("ÈÁÝÏ380/48-80À-4/4 "));
+						else if(AUSW_MAIN==48123)	len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("ÈÁÝÏ380/48-120À-4/4"));
+						else if(AUSW_MAIN==48123)	len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("ÈÁÝÏ380/48-120À-4/4"));
+						else 						len = sprintf((char *)buf,(const char *)&env[4],pal_cyr_coder("ÈÁÝÏ220/48-120À-4/4"));
 					break;
 			        case '2':
 			          	len = sprintf((char *)buf,(const char *)&env[4],AUSW_MAIN_NUMBER);
@@ -597,7 +632,7 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
           		break;
 			case 'n':
           		len = sprintf((char *)buf,(const char *)&env[3],log_item_cnt);
-				
+				uku_set_autorized=0;
 				break;
 			case '0':
 				if(NUMMAKB==0)	len = sprintf((char *)buf,(const char *)&env[3],http_get_log_rec(log_item_cnt));
@@ -750,6 +785,7 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
     case 'z':
 		/* êîíåö ôàéëà */
       	len = sprintf((char *)buf,(const char *)&env[2],"end");
+		uku_set_autorized=0;
    		break;
   }
   return ((U16)len);

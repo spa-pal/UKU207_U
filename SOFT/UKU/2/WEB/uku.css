@@ -9,18 +9,23 @@
 	#wrap {
 		width:1250px;
 		margin:0 auto;
-		background:#99c;
+		//background:#99c;
+		background:#17F0E8
 		min-height: 100%;
-   		margin-bottom: -35px;
+   		margin-bottom: -60px;
    		padding:0px 0px;
 	}
 	#dev_header {
 		padding:5px 10px;
-		background:#ddd;
+		//background:#ddd;
+		background: linear-gradient(to right, #CCEEFF, #17F0E8);
 		height: auto;
 		min-height: 50px;
 		overflow: hidden;
     }
+    #dev_name {
+    	text-decoration: underline;
+	}
     #nav {
     	padding:10px 5px;
 		background:#f00;
@@ -79,7 +84,8 @@
 		float:left;
 		width:980px;
 		padding:10px;
-		background:#9c9;
+		//background:#9c9;
+		background:#CCEEFF;
 		//height: 700px;
 		height: calc(100vh - 140px);
 		//height: auto;
@@ -97,7 +103,7 @@
 		float:right;
 		width:230px;
 		padding:10px;
-		background:#99c;
+		background:#17F0E8;
 		height: calc(100vh - 140px);
 		overflow-y:auto;
     }
@@ -106,8 +112,9 @@
     	margin:0 auto;
 		clear:both;
 		padding:5px 0px;
-		background:#cc9;
-		height: 25px;
+		//background:#cc9;
+		background: linear-gradient(to right, #CCEEFF, #17F0E8);
+		height: 30px;
 		//display: flex;
 		text-align: center;
 		//justify-content: center;

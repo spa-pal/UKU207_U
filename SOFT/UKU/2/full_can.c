@@ -1142,7 +1142,7 @@ bIN=0;
 //-----------------------------------------------
 void can_in_an1(void)
 {
-//char i;
+char i;
 //signed short temp_SS;
 char slave_num;
 
@@ -1164,6 +1164,9 @@ if (RXBUFF[0]==0xE7) {
 		r_iz_porog_error=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
 		v_plus=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
 		v_minus=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+		if(v_plus>v_minus) u_asymmetry=v_plus-v_minus; //o_3
+		else u_asymmetry=v_minus-v_plus;			   //o_3
+		Ubus=v_minus+v_plus;			   				//o_3
 	} 
 	else if(RXBUFF[1]==2) {
 		asymmetry=RXBUFF[2];
@@ -1178,6 +1181,16 @@ if (RXBUFF[0]==0xE7) {
 		Iddt_porog_error=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
 		n_error_ddt_uku=RXBUFF[6];
 		u_rki=RXBUFF[7];
+		//o_3_s
+		for(i=0;i<24;i++){
+			if(sk1_24 & 0x01UL<<i) sk1_24_table[i]=1;
+			else sk1_24_table[i]=0;
+		}
+		for(i=0;i<8;i++){
+			if(ddt_error & 0x01UL<<i) ddt_error_table[i]=1;
+			else ddt_error_table[i]=0;
+		}
+		//o_3_e
 	}
 	else if(RXBUFF[1]==4) {
 		Rddt[0][0]=RXBUFF[2];
@@ -1230,6 +1243,13 @@ if (RXBUFF[0]==0xE7) {
 	else if(RXBUFF[1]==12) {
 		status_izm_r=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
 		sk_alarm=((unsigned int)RXBUFF[4]<<16)+((unsigned int)RXBUFF[5]<<8) + RXBUFF[6];
+
+		//o_3_s
+		for(i=0;i<24;i++){
+			if(sk_alarm & 0x01UL<<i) sk_alarm_table[i]=1;
+			else sk_alarm_table[i]=0;
+		}
+		//o_3_e	 
 		asymmetry_porog=RXBUFF[7];
 	}
 	else if(RXBUFF[1]==13) {
@@ -1250,6 +1270,9 @@ if (RXBUFF[0]==0xE7) {
 		r_iz_porog_error=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
 		v_plus=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
 		v_minus=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+		if(v_plus>v_minus) u_asymmetry=v_plus-v_minus; //o_3
+		else u_asymmetry=v_minus-v_plus;			   //o_3
+		Ubus=v_minus+v_plus;			   				//o_3
 	}
 	else if(RXBUFF[1]==202) {
 		asymmetry=RXBUFF[2];

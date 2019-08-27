@@ -39,7 +39,7 @@ if(num_of_cell==17)
 	{
 	lc640_write_int(EE_UB0,2363);
 	lc640_write_int(EE_UB20,2295);
-	lc640_write_int(EE_USIGN,1785);
+	lc640_write_int(EE_USIGN,178);
 	}
 else if(num_of_cell==18)
 	{

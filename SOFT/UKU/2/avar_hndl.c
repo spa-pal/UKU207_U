@@ -31,6 +31,7 @@ unsigned rki_avar1_ind_stat; 	//"Отображение" всех не просмотренных аварийных ус
 unsigned rki_avar1_stat_old;
 unsigned rki_avar1_stat_new, rki_avar1_stat_offed;
 
+/*
 unsigned rki_avarI1_stat;	 	//"Отображение" всех аварийных в данный момент устройств в одном месте
 unsigned rki_avarI1_ind_stat; 	//"Отображение" всех не просмотренных аварийных устройств в одном месте
 unsigned rki_avarI1_stat_old;
@@ -40,6 +41,7 @@ unsigned rki_avarI2_stat;	 	//"Отображение" всех аварийных в данный момент устро
 unsigned rki_avarI2_ind_stat; 	//"Отображение" всех не просмотренных аварийных устройств в одном месте
 unsigned rki_avarI2_stat_old;
 unsigned rki_avarI2_stat_new, rki_avarI2_stat_offed;
+*/
 // oleg_end
 
 extern char bOUT_FREE2;	
@@ -143,7 +145,7 @@ rki_avar1_ind_stat|=rki_avar1_stat_new;
 rki_avar1_stat_offed=~((rki_avar1_stat^rki_avar1_stat_old)&rki_avar1_stat_old);
 rki_avar1_ind_stat&=rki_avar1_stat_offed;
 rki_avar1_stat_old=rki_avar1_stat;
-
+/*
 rki_avarI1_stat=status_di1;
 rki_avarI1_stat_new=(rki_avarI1_stat^rki_avarI1_stat_old)&rki_avarI1_stat;
 rki_avarI1_ind_stat|=rki_avarI1_stat_new;
@@ -157,6 +159,7 @@ rki_avarI2_ind_stat|=rki_avarI2_stat_new;
 rki_avarI2_stat_offed=~((rki_avarI2_stat^rki_avarI2_stat_old)&rki_avarI2_stat_old);
 rki_avarI2_ind_stat&=rki_avarI2_stat_offed;
 rki_avarI2_stat_old=rki_avarI2_stat;
+*/
 //oleg_end
 }
 
@@ -318,6 +321,78 @@ if(in==1)
 	memo_out0[7]=crc_95(memo_out0,6);
      usart_out_adr0(memo_out0,8); 
 	*/
+	snmp_trap_send("Main power alarm",2,1,0);
+	}
+
+else if(in==2)
+	{
+	net_av=2;
+
+	//beep_init(0x01L,'O');
+	//a.av.bAN=1;
+
+
+	//beep_init(0x33333333,'A');
+	 
+	event_ptr=lc640_read_int(PTR_EVENT_LOG);
+	event_ptr++;	
+	if(event_ptr>63)event_ptr=0;	
+	lc640_write_int(PTR_EVENT_LOG,event_ptr);	
+	
+     event_cnt=lc640_read_int(CNT_EVENT_LOG);
+	if(event_cnt!=63)event_cnt=event_ptr;
+	lc640_write_int(CNT_EVENT_LOG,event_cnt); 
+	
+	lc640_adr=EVENT_LOG+(lc640_read_int(PTR_EVENT_LOG)*32);
+	
+	data[0]='P';
+	data[1]=0;
+	data[2]='B';
+	data[3]=0;
+	lc640_write_long_ptr(lc640_adr,data);
+
+	data[0]=0;//*((char*)&Unet_store);
+	data[1]=0;//*(((char*)&Unet_store)+1);
+	data[2]=0;
+	data[3]=0;
+	lc640_write_long_ptr(lc640_adr+4,data);
+
+	data[0]=LPC_RTC->YEAR;
+	data[1]=LPC_RTC->MONTH;
+	data[2]=LPC_RTC->DOM;
+	data[3]=0;
+	lc640_write_long_ptr(lc640_adr+8,data);
+
+	data[0]=LPC_RTC->HOUR;
+	data[1]=LPC_RTC->MIN;
+	data[2]=LPC_RTC->SEC;
+	data[3]=0;
+	lc640_write_long_ptr(lc640_adr+12,data);
+	
+	data[0]='A';
+	data[1]='A';
+	data[2]='A';
+	data[3]='A';
+	lc640_write_long_ptr(lc640_adr+16,data);
+	
+	data[0]='A';
+	data[1]='A';
+	data[2]='A';
+	data[3]='A';
+	lc640_write_long_ptr(lc640_adr+20,data);
+	
+	data[0]='A';
+	data[1]='A';
+	data[2]='A';
+	data[3]='A';
+	lc640_write_long_ptr(lc640_adr+24,data);
+	
+	data[0]='A';
+	data[1]='A';
+	data[2]='A';
+	data[3]='A';
+	lc640_write_long_ptr(lc640_adr+28,data);				
+	
 	snmp_trap_send("Main power alarm",2,1,0);
 	}
 

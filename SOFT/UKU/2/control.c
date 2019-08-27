@@ -2538,7 +2538,38 @@ else if(net_U>UMN)
 	else if(unet_drv_cnt<0)unet_drv_cnt=0;
 	
 	}
+#ifdef UKU_6U
+if(net_U>UMAXN)
+	{
+	if((unet_max_drv_cnt<10)&&(main_1Hz_cnt>15))
+		{
+		unet_max_drv_cnt++;
+		if(unet_max_drv_cnt>=10)
+			{
+			net_Ustore=net_U;
+		 	avar_unet_hndl(2);
+			
+			}
+		}
+	else if(unet_max_drv_cnt>=10)unet_max_drv_cnt=10;
 
+	if(net_U>net_Ustore) net_Ustore=net_U;	
+	}
+
+else if(net_U<UMAXN)
+	{                 
+	if(unet_max_drv_cnt)
+		{
+		unet_max_drv_cnt--;
+		if(unet_max_drv_cnt<=0)
+			{
+			avar_unet_hndl(0);
+			}
+		}
+	else if(unet_max_drv_cnt<0)unet_max_drv_cnt=0;
+	
+	}
+#endif /*UKU_6U*/
 }
 
 #ifndef UKU_6U_WEB
@@ -3630,7 +3661,7 @@ for(i=0;i<NUMIST;i++)
      	bps[i]._Ti=(signed)(bps[i]._buff[6]);
      	bps[i]._adr_ee=bps[i]._buff[7];
      	bps[i]._flags_tm=bps[i]._buff[8];
-	     bps[i]._rotor=bps[i]._buff[10]+(bps[i]._buff[11]*256);    
+	    bps[i]._rotor=bps[i]._buff[10]+(bps[i]._buff[11]*256);    
      	} 
 	else 
      	{

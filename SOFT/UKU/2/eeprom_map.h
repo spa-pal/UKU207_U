@@ -248,6 +248,7 @@
 #define EE_SP_CH_VENT_BLOK				SECTOR_SETS2+96
 #define EE_VZ_CH_VENT_BLOK				SECTOR_SETS2+98
 
+
 #define SECTOR_BAT  		SECTOR_KOEF+450
 
 #define EE_BAT1_IS_ON         SECTOR_BAT
@@ -490,7 +491,9 @@
 
 #define EE_NUMENMV		4352
 #define EE_NUMPHASE	4354
-
+#define EE_WEB_PASSWORD				4360 
+#define EE_HTTP_LOCATION			4370
+#define EE_UMAXN					4470
 //#define WRK	4352
 //#define WRK_AH	5376  
 // массив данных разрядов батареи {(8*128)+(2*128)}
@@ -509,7 +512,8 @@
 // затем 4 байта с полным временем завершения процесса
 // и в 2 байта данных записывается колличество отданных амперчасов 
 
-#define EE_HTTP_LOCATION			1664
+
+
 
 extern const unsigned short ADR_EE_BAT_ZAR_CNT[2];
 extern const unsigned short ADR_EE_BAT_ZAR_CNT_KE[2];

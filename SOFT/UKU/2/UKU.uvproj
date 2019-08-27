@@ -5431,13 +5431,13 @@
                   <RVCTZI>0</RVCTZI>
                   <RVCTOtherData>0</RVCTOtherData>
                   <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>0</AlwaysBuild>
+                  <IncludeInBuild>2</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
                   <GenerateAssemblyFile>2</GenerateAssemblyFile>
                   <AssembleAssemblyFile>2</AssembleAssemblyFile>
                   <PublicsOnly>2</PublicsOnly>
                   <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
+                  <CustomArgument>C:\Keil\ARM\bin\fcarm @@Web\Web.inp</CustomArgument>
                   <IncludeLibraryModules></IncludeLibraryModules>
                 </CommonProperty>
                 <FileArmAds/>
@@ -8078,7 +8078,7 @@
             <uThumb>0</uThumb>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>UKU_220_IPS_TERMOKOMPENSAT, UKU2071x, UKU_ZVU, APSENERGIA</Define>
+              <Define>UKU_220_IPS_TERMOKOMPENSAT, UKU2071x, UKU_ZVU</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>

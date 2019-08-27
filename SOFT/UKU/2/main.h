@@ -266,6 +266,20 @@
 #define DISPLAY_ENMV_NUMBER		   1,1  //o_2
 #define DISPLAY_ENMV_DATA		   1,2  //o_2	
 
+#define DISPLAY_RKI					22  
+
+#define DISPLAY_RKI_SK				23
+#define DISPLAY_RKI_SK_NUMBER		1,1
+#define DISPLAY_RKI_SK_DATA			1,2
+#define DISPLAY_RKI_SK_ERROR		1,3
+
+#define DISPLAY_RKI_DDT				24
+#define DISPLAY_RKI_DDT_NUMBER		1,1
+#define DISPLAY_RKI_DDT_NUM_ALARM	1,2
+#define DISPLAY_RKI_DDT_ALARM		1,3
+#define DISPLAY_RKI_DDT_Rplus		1,4
+#define DISPLAY_RKI_DDT_Rminus		1,5
+#define DISPLAY_RKI_DDT_Rparal		1,6
 
 #define COMMAND_OK		0x5555
 #define COMAND_FAIL		0xaaaa
@@ -756,8 +770,9 @@
 // oleg_stard*
 extern unsigned char ver_soft;
 extern unsigned short r_iz_plus, r_iz_minus, r_iz_porog_pred, r_iz_porog_error;
-extern unsigned char v_plus, v_minus, asymmetry;
-#define u_in_rki 	v_plus+v_minus
+extern unsigned char asymmetry;						//o_3
+extern unsigned short v_plus, v_minus, u_asymmetry, Ubus;	//o_3
+//#define u_in_rki 	v_plus+v_minus	//o_3
 extern unsigned int sk1_24;
 extern unsigned short Iddt_porog_pred, Iddt_porog_error; 
 extern unsigned char n_error_ddt_uku, u_rki;  
@@ -770,13 +785,14 @@ extern unsigned char command_rki; //команда для РКИ
 #define NO_RKI 15 // количество посылок без ответа для отсутствия связи с РКИ
 extern unsigned char ddt_error;
 extern unsigned short status_izm_r;	// аварии измерения изоляции
-extern unsigned int sk_alarm, status_di1, status_di2; // авария СК, ток пред, ток аварии
+extern unsigned int sk_alarm/*, status_di1, status_di2*/; // авария СК, ток пред, ток аварии
 extern unsigned char type_rki; // 0-маленькое РКИ, 1-большое РКИ
 extern unsigned char asymmetry_porog;
 extern unsigned short porog_u_in;
 extern unsigned char uku_or_rki; //индикация аварий уку или рки
 extern unsigned char u_asymmetry_porog_up, u_asymmetry_porog, u_asymmetry_porog_down;
 extern unsigned char kalibr_r_most;
+extern unsigned char sk1_24_table[24], sk_alarm_table[24], ddt_error_table[8]; //o_3 
 
 						// сетевые вводы
 #define NO_NET_IN  10 // количество посылок без ответа для отсутствия связи с сетевым вводом
@@ -983,6 +999,7 @@ extern signed short TSIGN;
 extern signed short AV_OFF_AVT;
 extern signed short USIGN;
 extern signed short UMN;
+extern signed short UMAXN;
 extern signed short ZV_ON;
 extern signed short IKB;
 extern signed short UVZ;
@@ -1525,9 +1542,9 @@ extern signed short bps_I_phantom;
 extern signed short net_U,net_Ustore,net_Ua,net_Ub,net_Uc;
 extern char bFF,bFF_;
 extern signed short net_F,hz_out,hz_out_cnt,net_F3;
-extern signed char unet_drv_cnt;
+extern signed char unet_drv_cnt;	 //Счетчик на снижение первичного наряжеия
+extern signed char unet_max_drv_cnt; //Счетчик на превышение первичного наряжеия
 extern char net_av;
-
 
 extern char plazma_plazma_plazma;
 
