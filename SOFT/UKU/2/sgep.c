@@ -130,23 +130,26 @@ lc640_write_int(EE_TZAS,3);
 lc640_write_int(EE_TMAX,80);
 lc640_write_int(EE_TSIGN,70);
 
-if(num_of_cell==18)
+if(num_of_cell==17)
 	{
 	lc640_write_int(EE_U_OUT_KONTR_MAX,2600);
 	lc640_write_int(EE_U_OUT_KONTR_MIN,1750);
 	lc640_write_int(EE_U_OUT_KONTR_DELAY,100);
+	lc640_write_int(EE_AUSW_MAIN,22011);
 	}
 else if(num_of_cell==18)
 	{
 	lc640_write_int(EE_U_OUT_KONTR_MAX,2600);
 	lc640_write_int(EE_U_OUT_KONTR_MIN,1870);
 	lc640_write_int(EE_U_OUT_KONTR_DELAY,100);
+	lc640_write_int(EE_AUSW_MAIN,22011);
 	}
 else if(num_of_cell==20)
 	{
 	lc640_write_int(EE_U_OUT_KONTR_MAX,2900);
 	lc640_write_int(EE_U_OUT_KONTR_MIN,1870);
 	lc640_write_int(EE_U_OUT_KONTR_DELAY,100);
+	lc640_write_int(EE_AUSW_MAIN,22011);
 	}
 lc640_write_int(EE_TERMOKOMP,1);
 lc640_write_int(EE_FORVARDBPSCHHOUR,24);

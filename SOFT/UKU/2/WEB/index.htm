@@ -117,7 +117,7 @@
 			load_data[1]=inputData.loadITm;
 
 			if(loadTblIsPainted==0){
-				$("#item1_head").text("Нагрузка");
+				$("#item6_head").text("Нагрузка");
 				var myTable = '' ;
 				myTable += '<table id="loadTable" width="100%" style="table-layout: fixed" cellspacing=0 cellpadding=2 border=1>' ;
 				myTable += '<col width="500" valign="middle" align="left">' ;
@@ -130,7 +130,7 @@
 				myTable +=  "</tbody>" ;
 				myTable += "</table>" ;
 
-				$("#item1").append(myTable);
+				$("#item6").append(myTable);
 				loadTblIsPainted=1;
 			} 
 			else {
@@ -141,7 +141,7 @@
 
 			if (numOfBat!="0") {
 				if (batTblIsPainted==0) {
-					$("#item2_head").text("Батареи");
+					$("#item3_head").text("Аккумуляторные батареи");
 					var myTable = '' ;
 					myTable += '<table id="batTable" width="100%" style="table-layout: fixed" cellspacing=0 cellpadding=2 border=1>' ;
 					myTable += '<col width="200px" valign="middle" align="left" >' ;
@@ -204,7 +204,7 @@
 					myTable +=  "</tbody>" ;
 					myTable += "</table>" ;
 
-					$("#item2").append(myTable) ;
+					$("#item3").append(myTable) ;
 					batTblIsPainted=1;
 				} 
 				else {
@@ -226,7 +226,7 @@
 
 			if (numOfSrc!="0") {
 				if (srcTblIsPainted==0) {
-					$("#item3_head").text("БПСы");
+					$("#item2_head").text("Выпрямители");
 					var myTable = '' ;
 					myTable += '<table id="srcTable" width="100%" style="table-layout: fixed" cellspacing=0 cellpadding=2 border=1>' ;
 					myTable += '<col width="50px" valign="middle" align="left" >' ;
@@ -267,7 +267,7 @@
 					myTable +=  "</tbody>" ;
 					myTable += "</table>" ;
 
-					$("#item3").append(myTable) ;
+					$("#item2").append(myTable) ;
 					srcTblIsPainted=1;
 				} 
 				else {
@@ -284,7 +284,7 @@
 
 			if (numOfPow) {
 				if (powTblIsPainted==0) {
-					$("#item4_head").text("СЕТЬ");
+					$("#item1_head").text("СЕТЬ");
 					var myTable = '' ;
 					myTable += '<table id="powTable" width="100%" style="table-layout: fixed" cellspacing=0 cellpadding=2 border=1>' ;
 					myTable += '<col width="500" valign="middle" align="left">' ;
@@ -313,7 +313,7 @@
 					myTable +=  "</tbody>" ;
 					myTable += "</table>" ;
 
-					$("#item4").append(myTable) ;
+					$("#item1").append(myTable) ;
 					powTblIsPainted=1;
 				} 
 				else {
@@ -331,7 +331,7 @@
 
 			if (numOfSk!="0") {
 				if (skTblIsPainted==0) {
-					$("#item5_head").text("Логические входы");
+					$("#item4_head").text("Логические входы");
 					var myTable = '' ;
 					myTable += '<table id="skTable" width="100%" style="table-layout: fixed" cellspacing=0 cellpadding=2 border=1>' ;
 					myTable += '<col width="50px" valign="middle" align="left">' ;
@@ -361,7 +361,7 @@
 					myTable +=  "</tbody>" ;
 					myTable += "</table>" ;
 
-					$("#item5").append(myTable) ;
+					$("#item4").append(myTable) ;
 					skTblIsPainted=1;
 				} 
 				else {
@@ -376,7 +376,7 @@
 
 			if (numOfDt!="0") {
 				if (dtTblIsPainted==0) {
-					$("#item6_head").text("Датчики температуры");
+					$("#item5_head").text("Датчики температуры");
 					var myTable = '' ;
 					myTable += '<table id="dtTable" width="100%" style="table-layout: fixed" cellspacing=0 cellpadding=2 border=1>' ;
 					myTable += '<col width="50px" valign="middle" align="left">' ;
@@ -406,7 +406,7 @@
 					myTable +=  "</tbody>" ;
 					myTable += "</table>" ;
 
-					$("#item6").append(myTable) ;
+					$("#item5").append(myTable) ;
 					dtTblIsPainted=1;
 				} 
 				else {
@@ -439,15 +439,15 @@
 		</ul>
 	</div>-->
 	<div id="main">
-		<p><h2 id="item1_head" align = "middle" style="text-decoration: underline"></h2></p>
+		<p><h2 id="item1_head" align = "middle" <!--style="text-decoration: underline"-->></h2></p>
 		<div id= "item1"></div>
-		<p><h2 id="item2_head" align = "middle" style="text-decoration: underline"></h2></p>
+		<p><h2 id="item2_head" align = "middle" <!--style="text-decoration: underline"-->></h2></p>
 		<div id= "item2"></div>
-		<p><h2 id="item3_head" align = "middle" style="text-decoration: underline"></h2></p>
+		<p><h2 id="item3_head" align = "middle" <!--style="text-decoration: underline"-->></h2></p>
 		<div id= "item3"></div>
-		<p><h2 id="item4_head" align = "middle" style="text-decoration: underline"></h2></p>
+		<p><h2 id="item4_head" align = "middle" <!--style="text-decoration: underline"-->></h2></p>
 		<div id= "item4"></div>
-		<p><h2 id="item5_head" align = "middle" style="text-decoration: underline"></h2><p>
+		<p><h2 id="item5_head" align = "middle" <!--style="text-decoration: underline"-->></h2><p>
 		<div id= "item5"></div>
 		<p><h2 id="item6_head" align = "middle" style="text-decoration: underline"></h2><p>
 		<div id= "item6"></div>
@@ -472,7 +472,7 @@
 	</div>
 </div>
 <div id="footer">
-	<a class="spa_adress" href="http://vorpostnsk.ru" target="_blank">"Системы промавтоматики"</a>
+	<a class="spa_adress" href="http://vorpostnsk.ru" target="_blank">ООО "Системы промавтоматики"</a>
 </div>
 
 </body></html>

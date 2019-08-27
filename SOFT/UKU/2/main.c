@@ -1437,7 +1437,7 @@ else if(cnt_net_drv==10)
 else if(cnt_net_drv==-4)
 	{
     if(!bCAN_OFF)can1_out(GETTM_IBATMETER,GETTM_IBATMETER,0,0,0,0,0,0);
-    ibat_metr_cnt++;
+    if(ibat_metr_cnt<60)ibat_metr_cnt++;
 	}
 
 else if(cnt_net_drv==-1)
@@ -4436,7 +4436,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 	/*int2lcdyx(lc640_read_int(EE_ETH_IS_ON),0,5,0);
 	int2lcdyx(LPC_SC->RSID,0,10,0); 
 	int2lcdyx(cntrl_stat,0,15,0);	 */
-	//int2lcdyx(count_Iddt,0,19,0);
+	//int2lcdyx(AUSW_MAIN,0,19,0);
 	}
 
 else if(ind==iMn_TELECORE2015)
@@ -17887,7 +17887,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 		    	} 
 		else if((sub_ind>1+NUMBAT)&&(sub_ind<=(NUMIST+NUMBAT+1)))
 		    	{
-		    	tree_up(iBps_elteh,0,0,sub_ind-3);
+		    	tree_up(iBps_elteh,0,0,sub_ind-2-NUMBAT);
 		    	}
 		else if(sub_ind==(2+NUMIST+NUMBAT/*+NUMINV*/))
 			{

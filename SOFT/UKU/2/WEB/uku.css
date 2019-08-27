@@ -18,13 +18,13 @@
 	#dev_header {
 		padding:5px 10px;
 		//background:#ddd;
-		background: linear-gradient(to right, #CCEEFF, #17F0E8);
+		background: linear-gradient(to left, #CCEEFF, #17F0E8);
 		height: auto;
 		min-height: 50px;
 		overflow: hidden;
     }
     #dev_name {
-    	text-decoration: underline;
+    	..text-decoration: underline;
 	}
     #nav {
     	padding:10px 5px;
@@ -81,11 +81,12 @@
     }
 
     #main {
-		float:left;
+		float:right;
 		width:980px;
 		padding:10px;
 		//background:#9c9;
-		background:#CCEEFF;
+		//background:#CCEEFF;
+		background:#EEEEEE;
 		//height: 700px;
 		height: calc(100vh - 140px);
 		//height: auto;
@@ -100,7 +101,7 @@
 		float:right;
 	}    
     #sidebar {
-		float:right;
+		float:left;
 		width:230px;
 		padding:10px;
 		background:#17F0E8;
@@ -111,12 +112,12 @@
     	width:1250px;
     	margin:0 auto;
 		clear:both;
-		padding:5px 0px;
+		padding:5px 10px;
 		//background:#cc9;
-		background: linear-gradient(to right, #CCEEFF, #17F0E8);
+		background: linear-gradient(to left, #CCEEFF, #17F0E8);
 		height: 30px;
 		//display: flex;
-		text-align: center;
+		text-align: left;
 		//justify-content: center;
 		//display: table-cell;
 		vertical-align: middle;
