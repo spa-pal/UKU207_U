@@ -3831,9 +3831,9 @@ else if(ind==iMn_6U)
 	//int2lcdyx(main_kb_cnt,0,5,0);
 	/*int2lcdyx(web_plazma[0],0,3,0);
 	int2lcdyx(web_plazma[1],0,7,0);		*/
-/*	int2lcdyx(unet_ότ_drv_cnt,0,10,0);
+	/*int2lcdyx(unet_max_drv_cnt,0,10,0);
 	int2lcdyx(unet_drv_cnt,0,13,0);   
-	int2lcdyx(net_av,0,19,0);  */ 
+	int2lcdyx(net_av,0,19,0); */ 
 	//int2lcdyx(http_power_num_of_phases,0,19,0);
 	//long2lcdyx_mmm(1234567,0,8,0);
 	//long2lcdyx_mmm(AUSW_MAIN,0,19,0);	

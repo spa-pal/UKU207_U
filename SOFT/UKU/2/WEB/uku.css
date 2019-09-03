@@ -5,6 +5,8 @@
 		color:#000;
 		background:#a7a09a;
 		height: 100%;
+		font-size : 14px;
+		font-family: "Segoe UI";
 	}
 	#wrap {
 		width:1250px;
@@ -18,13 +20,20 @@
 	#dev_header {
 		padding:5px 10px;
 		//background:#ddd;
-		background: linear-gradient(to left, #CCEEFF, #17F0E8);
+		//background: linear-gradient(to left, #CCEEFF, #17F0E8);
+		background:#DDDDee;
 		height: auto;
 		min-height: 50px;
 		overflow: hidden;
     }
+
+    #batTable {
+		font-size : 14px;
+		font-family: "Segoe UI";
+	}
+
     #dev_name {
-    	..text-decoration: underline;
+    	//text-decoration: underline;
 	}
     #nav {
     	padding:10px 5px;
@@ -63,6 +72,8 @@
     	//font-weight: bold;
     	//text-align: center;
     	//font-size: 20px;
+    	font-size : 14px;
+		font-family: "Segoe UI";
     }    
 	#nav ul {
 		margin:0;
@@ -92,6 +103,8 @@
 		//height: auto;
 		//max-height: 100%;
 		overflow-y:auto;
+		font-size : 14px;
+		font-family: "Segoe UI";
     }
     h2 {
 		margin:0 0 1em;
@@ -104,7 +117,8 @@
 		float:left;
 		width:230px;
 		padding:10px;
-		background:#17F0E8;
+		//background:#17F0E8;
+		background:#DDDDDD;
 		height: calc(100vh - 140px);
 		overflow-y:auto;
     }
@@ -112,9 +126,10 @@
     	width:1250px;
     	margin:0 auto;
 		clear:both;
-		padding:5px 10px;
+		padding:5px 0px;
 		//background:#cc9;
-		background: linear-gradient(to left, #CCEEFF, #17F0E8);
+		//background: linear-gradient(to left, #CCEEFF, #17F0E8);
+		background:#DDDDDD;
 		height: 30px;
 		//display: flex;
 		text-align: left;
@@ -133,7 +148,7 @@
 
     .spa_adress {
     	display: inline-block;
-    	margin: 0 auto;
+    	margin: auto 30px;
     	font-weight: bold;
     	
     }

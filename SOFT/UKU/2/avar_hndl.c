@@ -425,7 +425,7 @@ avar_unet_hndl_lbl1:
 
      lc640_read_long_ptr(lc640_adr,data);
      
-     if(!((data[0]=='P')&&(data[1]==0)&&(data[2]=='A')))
+     if(!((data[0]=='P')&&(data[1]==0)&&((data[2]=='A')||(data[2]=='B'))))
      	{        
      	if(event_ptr_find)event_ptr_find--;
      	else event_ptr_find=63;
