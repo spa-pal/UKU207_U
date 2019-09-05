@@ -494,6 +494,12 @@
 #define EE_WEB_PASSWORD				4360 
 #define EE_HTTP_LOCATION			4370
 #define EE_UMAXN					4470
+#define EE_SNTP_WEB_ENABLE			4472
+#define EE_SNTP_IP1					4474
+#define EE_SNTP_IP2					4476
+#define EE_SNTP_IP3					4478
+#define EE_SNTP_IP4					4480
+
 //#define WRK	4352
 //#define WRK_AH	5376  
 // массив данных разрядов батареи {(8*128)+(2*128)}

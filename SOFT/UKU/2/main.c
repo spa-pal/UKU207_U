@@ -4434,9 +4434,9 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 	//int2lcdyx(sub_ind,0,4,0); 
 	//int2lcdyx(index_set,0,10,0);  
 	/*int2lcdyx(lc640_read_int(EE_ETH_IS_ON),0,5,0);
-	int2lcdyx(LPC_SC->RSID,0,10,0); 
-	int2lcdyx(cntrl_stat,0,15,0);	 */
-	//int2lcdyx(AUSW_MAIN,0,19,0);
+	int2lcdyx(LPC_SC->RSID,0,10,0); 	 */
+	int2lcdyx(udp_callback_cnt,0,15,0);	 
+	int2lcdyx(time_sinc_hndl_main_cnt,0,19,0);
 	}
 
 else if(ind==iMn_TELECORE2015)
@@ -9253,11 +9253,23 @@ else if(ind==iSet_T_avt)
 		else if((SNTP_GMT>=10)&&(SNTP_GMT<=13))		ptrs[1]=	" Часовой пояс GMT+ !";
 		else if((SNTP_GMT<0)&&(SNTP_GMT>-10))		ptrs[1]=	" Часовой пояс GMT-! ";
 		else if((SNTP_GMT<=-10)&&(SNTP_GMT>=-12))	ptrs[1]=	" Часовой пояс GMT- !";
-													ptrs[2]=	sm_exit;
-													ptrs[3]=	sm_;
 		}
 	if(sub_ind<index_set) index_set=sub_ind;
 	else if((sub_ind-index_set)>1) index_set=sub_ind-1;
+
+	if(lc640_read_int(EE_SNTP_WEB_ENABLE)==1)
+		{
+		ptrs[2]=	" Синхронизация через";
+		ptrs[3]=	"     ИНТЕРНЕТ       ";
+		}
+	else
+		{
+		ptrs[2]=	" Синхронизация через";
+		ptrs[3]=	" IP 000.000.000.00# ";
+		}
+	ptrs[4]=	" Синхронизировать   ";
+	ptrs[5]=	sm_exit;
+	ptrs[6]=	sm_;
 	
 	bgnd_par(	"    СИНХРОНИЗАЦИЯ   ",
 				"    ВРЕМЕНИ (SNTP)  ",
@@ -9265,8 +9277,12 @@ else if(ind==iSet_T_avt)
 				ptrs[index_set+1]);
   
  	int2lcd(abs(SNTP_GMT),'!',0);
+	if(sub_ind==2)		ip2lcd(lc640_read_int(EE_SNTP_IP1),lc640_read_int(EE_SNTP_IP2),lc640_read_int(EE_SNTP_IP3),lc640_read_int(EE_SNTP_IP4),'#',(sub_ind1+1));
+	else 				ip2lcd(lc640_read_int(EE_SNTP_IP1),lc640_read_int(EE_SNTP_IP2),lc640_read_int(EE_SNTP_IP3),lc640_read_int(EE_SNTP_IP4),'#',0);
 
 	pointer_set(2);
+	int2lcdyx(udp_callback_cnt,0,3,0);
+	
 	}  
 
 else if(ind==iStr)
@@ -27275,13 +27291,27 @@ else if(ind==iSet_T_avt)
 		{
 		sub_ind++;
 		if(SNTP_ENABLE==0)gran_char(&sub_ind,0,1);
-		else gran_char(&sub_ind,0,2); 
+		else gran_char(&sub_ind,0,5);
+		if(sub_ind==2)
+			{
+			index_set=2;
+			}
+		if(sub_ind==3)
+			{
+			sub_ind=4; 
+			index_set=3;
+			}
 		}
 	else if(but==butU)
 		{
 		sub_ind--;
 		if(SNTP_ENABLE==0)gran_char(&sub_ind,0,1);
-		else gran_char(&sub_ind,0,2); 
+		else gran_char(&sub_ind,0,5);
+		if(sub_ind==3)
+			{
+			sub_ind=2;
+			index_set=2;
+			} 
 		}
 /*	else if(but==butD_)
 		{
@@ -27330,14 +27360,133 @@ else if(ind==iSet_T_avt)
 			}
 		}	     			  
           
-	else if(sub_ind==2)
+/*	else if(sub_ind==2)
 		{
 		if(but==butE)
 			{
 			sntp_requ();
 			tree_down(0,0);
 			}
-		}	          
+		}  */
+     else if(sub_ind==2)
+		{
+		if(but==butE)
+	     	{
+	     	if(lc640_read_int(EE_SNTP_WEB_ENABLE)==1)lc640_write_int(EE_SNTP_WEB_ENABLE,0);
+			else lc640_write_int(EE_SNTP_WEB_ENABLE,1);
+	     	}
+		else if(but==butE_)
+	     	{
+	     	sub_ind1++;
+			gran_ring_char(&sub_ind1,0,3);
+	     	}
+		else if(sub_ind1==0)
+			{
+			short _temp;
+			if((but==butR)||(but==butR_))
+				{
+				_temp=lc640_read_int(EE_SNTP_IP1);
+				_temp++;
+				gran_ring(&_temp,0,255);
+				lc640_write_int(EE_SNTP_IP1,_temp);
+				}
+			else if((but==butL)||(but==butL_))
+				{
+				_temp=lc640_read_int(EE_SNTP_IP1);
+				_temp--;
+				gran_ring(&_temp,0,255);
+				lc640_write_int(EE_SNTP_IP1,_temp);
+				}
+			speed=1;
+			}
+		else if(sub_ind1==1)
+			{
+			short _temp;
+			if((but==butR)||(but==butR_))
+				{
+				_temp=lc640_read_int(EE_SNTP_IP2);
+				_temp++;
+				gran_ring(&_temp,0,255);
+				lc640_write_int(EE_SNTP_IP2,_temp);
+				}
+			else if((but==butL)||(but==butL_))
+				{
+				_temp=lc640_read_int(EE_SNTP_IP2);
+				_temp--;
+				gran_ring(&_temp,0,255);
+				lc640_write_int(EE_SNTP_IP2,_temp);
+				}
+			speed=1;
+			}
+		else if(sub_ind1==2)
+			{
+			short _temp;
+			if((but==butR)||(but==butR_))
+				{
+				_temp=lc640_read_int(EE_SNTP_IP3);
+				_temp++;
+				gran_ring(&_temp,0,255);
+				lc640_write_int(EE_SNTP_IP3,_temp);
+				}
+			else if((but==butL)||(but==butL_))
+				{
+				_temp=lc640_read_int(EE_SNTP_IP3);
+				_temp--;
+				gran_ring(&_temp,0,255);
+				lc640_write_int(EE_SNTP_IP3,_temp);
+				}
+			speed=1;
+			}
+		else if(sub_ind1==3)
+			{
+			short _temp;
+			if((but==butR)||(but==butR_))
+				{
+				_temp=lc640_read_int(EE_SNTP_IP4);
+				_temp++;
+				gran_ring(&_temp,0,255);
+				lc640_write_int(EE_SNTP_IP4,_temp);
+				}
+			else if((but==butL)||(but==butL_))
+				{
+				_temp=lc640_read_int(EE_SNTP_IP4);
+				_temp--;
+				gran_ring(&_temp,0,255);
+				lc640_write_int(EE_SNTP_IP4,_temp);
+				}
+			speed=1;
+			}
+    	}
+     else if(sub_ind==4)
+		{
+		if(but==butE_)
+	        {
+			if(lc640_read_int(EE_SNTP_WEB_ENABLE)==1)
+				{
+				Rem_IP[0]=SNTP_IP1;
+				Rem_IP[1]=SNTP_IP2;
+				Rem_IP[2]=SNTP_IP3;
+				Rem_IP[3]=SNTP_IP4;
+				}
+			else
+				{
+				Rem_IP[0]=(char)lc640_read_int(EE_SNTP_IP1);
+				Rem_IP[1]=(char)lc640_read_int(EE_SNTP_IP2);
+				Rem_IP[2]=(char)lc640_read_int(EE_SNTP_IP3);
+				Rem_IP[3]=(char)lc640_read_int(EE_SNTP_IP4);
+				}
+			sntp_requ();
+	        }
+		}	
+     else if(sub_ind==5)
+		{
+
+			if(but==butE)
+	          	{
+				tree_down(0,0);
+	          	}
+	
+		}					          
 	}     
 
 else if(ind==iStr)

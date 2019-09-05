@@ -1414,6 +1414,9 @@ if(ND_EXT[3])tempS=-1000;
 modbus_registers[406]=(signed char)(tempS>>8);				//Рег204	Внешний датчик температуры №4
 modbus_registers[407]=(signed char)(tempS);   */
 
+modbus_registers[406]=(signed char)(bat_hndl_t_razr_min>>8);
+modbus_registers[407]=(signed char)(bat_hndl_t_razr_min>>8);
+
 tempS=0;
 if(sk_stat[0]==ssON) tempS|=0x0001;
 if(sk_av_stat[0]==sasON) tempS|=0x0002;
