@@ -1,0 +1,175 @@
+/*
+Project: NGS
+URL: 
+Date: 31 August, 2012
+Comment: AgeLimit CSS
+*/
+
+/* Styles NGS AgeLimit
+-----------------------------------------------------------------------------------------------------*/
+
+/* Кнопка */
+
+.ngs-age-limit {
+	display: inline-block;
+	width: 100px;
+	cursor: pointer;
+	vertical-align: top;
+	padding: 0 0 5px 0;
+	margin: 0 20px 0 0;
+	text-align: center;
+}
+
+	.ngs-age-limit-icon {
+		display: block;
+		width: 100px;
+		height: 70px;
+		background: url('//static.ngs.ru/shared/agelimit/img/age_limit_ngs.gif') 0 0 no-repeat;
+		margin: 0;
+		padding: 0;
+	}
+	
+	.ngs-age-limit_16 .ngs-age-limit-icon {
+		background-position: 0 0;
+	}
+	
+	.ngs-age-limit_18 .ngs-age-limit-icon {
+		background-position: 0 -70px;
+	}
+	
+	.ngs-age-limit-text {
+		display: inline-block;
+		text-decoration: none;
+		color: #000;
+		font-family: Arial, "Helvetica CY", "Nimbus Sans L", sans-serif;
+		font-size: 12px;
+		text-align: left;
+		border-bottom: 1px dotted #000;
+		
+		margin: 0;
+		padding: 3px 0 0 0;
+	}
+
+/* /Кнопка */
+
+/* Всплывающий слой "Ограничения по возрасту" */
+
+.ngs-age-limit-popup {
+	display: block;
+	
+	-moz-box-shadow: 3px 3px 3px #9e9e9e;
+	-o-box-shadow: 3px 3px 3px #9e9e9e;
+	-webkit-box-shadow: 3px 3px 3px #9e9e9e;
+	box-shadow: 3px 3px 3px #9e9e9e;
+	
+	background: #f0f0f0;
+	border: 1px solid #bababa;
+	
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
+	border-radius: 1px;
+	
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 99;
+	
+	padding: 0;
+	margin: 0;
+	
+	text-align: left !important;
+	line-height: normal;
+	white-space: normal;
+	
+	width: 300px;
+	
+	font-family: Arial, "Helvetica CY", "Nimbus Sans L", sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	color: #333;
+}
+
+* html .ngs-age-limit-popup {
+	/*overflow: hidden;*/
+}
+
+	.ngs-age-limit-popup-info { 
+		display: block;
+		margin: 0;
+		padding: 12px 15px 12px 15px !important;
+		line-height: normal;
+	}
+	
+		.ngs-age-limit-popup-corner {
+			display: block;
+			position: relative;
+			margin: 0;
+			padding: 0;
+		}
+		
+		* html .ngs-age-limit-popup-corner {
+			width: 100%;
+		}
+
+			.ngs-age-limit-popup-corner-elem {
+				display: block;
+				position: absolute;
+				top: 0;
+				left: 50%;
+				
+				margin: 0;
+				padding: 0;
+				
+				width: 19px;
+				height: 13px;
+				margin: 0 0 0 -9px;
+				background: url('//static.ngs.ru/shared/agelimit/img/age_limit_ngs_corner.png') 0 0 no-repeat;
+			}
+			
+			* html .ngs-age-limit-popup-corner-elem {
+				display: none;
+			}
+			
+			
+			.ngs-age-limit-popup p {
+				margin: 0 0 9px 0 !important;
+				padding: 0 !important;
+				
+				font-family: Arial, "Helvetica CY", "Nimbus Sans L", sans-serif;
+				font-size: 12px;
+				font-weight: normal;
+				color: #333;
+				line-height: 1.3;
+				
+				text-align: left;
+			}
+			
+				.ngs-age-limit-popup p a:link, 
+				.ngs-age-limit-popup p a:visited, 
+				.ngs-age-limit-popup p a:hover,
+				.ngs-age-limit-popup p a:active {
+					font-family: Arial, "Helvetica CY", "Nimbus Sans L", sans-serif;
+					font-size: 12px;
+					font-weight: normal;
+					color: #333;
+				}
+			
+			.ngs-age-limit-popup .ngs-age-limit-popup-important {
+				margin: 0 !important;
+				padding: 0 !important;
+				
+				font-size: 16px;
+				font-weight: bold;
+				color: #333;
+				line-height: normal;
+			}
+			
+				.ngs-age-limit-popup .ngs-age-limit-popup-important a:link, 
+				.ngs-age-limit-popup .ngs-age-limit-popup-important a:visited, 
+				.ngs-age-limit-popup .ngs-age-limit-popup-important a:hover,
+				.ngs-age-limit-popup .ngs-age-limit-popup-important a:active {
+					font-size: 16px;
+					font-weight: bold;
+				}
+			
+/* /Всплывающий слой "Ограничения по возрасту" */

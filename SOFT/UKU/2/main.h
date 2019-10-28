@@ -619,6 +619,7 @@
 #define PAROL_TST 999 
 #define PAROL_DEFAULT 295
 #define PAROL_AUSW 949
+#define PAROL_DEF 295
 #endif                
 
 #ifdef PAROL_ALL_ZERO
@@ -905,7 +906,7 @@ typedef enum {
 	iDeb,iBat_link_set,iK_inv,iK_inv_sel,iK_byps,
 	iPrl_bat_in_out,iPrl_bat_in_sel,iPdp1,iJAv_sel,iJAv_net_sel,iJAv_net,iJAv_src1,
 	iTst_bps,/*iJAv_bat,iJAv_bat_sel,*/iAusw,iAusw_prl,iAusw_set,
-	iK_t_ext,iK_t_3U,iK_t_ext_6U,
+	iK_t_ext,iK_t_3U,iK_t_ext_6U, iPrl_Def_220_IPS_TERMOKOMPENSAT,
 	iAv_view,
 	iBatLogKe,iJ_bat_ke,iBatLogVz,iJ_bat_vz,iBatLogWrk,
 	iExtern,iExtern_3U,iExtern_GLONASS,iExtern_KONTUR,iExtern_6U,iExtern_220,iExtern_220_ZVU,
@@ -1258,6 +1259,8 @@ typedef struct
 	char 		_temper_stat;
 	//0бит - подогрев
 	//1бит - перегрев
+	//4бит - подогрев(отставание на цикл(_old))
+	//5бит - перегрев (отставание на цикл(_old))
 	signed short 	_sign_temper_cnt;
 	signed short 	_max_temper_cnt;
 	signed long 	_resurs_cnt;
@@ -1884,6 +1887,7 @@ extern short web_cnt_2hz;
 extern const char* web_str;
 extern char uku_set_autorized;
 extern long web_param_input;
+extern short cntrl_stat_pwm;
 
 extern char place_holder[70];
 //-----------------------------------------------

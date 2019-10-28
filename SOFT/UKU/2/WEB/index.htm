@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>УКУ</title>
 	<link href="uku.css" rel="stylesheet">
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="jquery-1.7.min.js"></script>
 	<script src="dict.js"></script>
 	<script src="pal_decoder.js"></script>
 
@@ -210,7 +210,7 @@
 				else {
 					for(i=0;i<2;i++) {
 						$("#u_bat_"+(i+1)).text(bat_data[i][1]/10 + "В");
-						$("#i_bat_"+(i+1)).text(bat_data[i][2]/10 + "А");
+						$("#i_bat_"+(i+1)).text(bat_data[i][2]/100 + "А");
 						if(bat_data[i][4]=='1') $("#t_bat_"+(i+1)).text("Датчик неисправен");
 						else 					$("#t_bat_"+(i+1)).text(bat_data[i][3] + "°C");
 						if(bat_data[i][5]==-1)	$("#c_bat_"+(i+1)).text("Контроль емкости не проводился");

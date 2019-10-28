@@ -154,6 +154,7 @@ signed int avg;
 char bAVG;
 char avg_cnt;  
 char avg_num; 
+char avg_vektor;
 
 //**********************************************
 //Контроль наличия батарей
@@ -4650,9 +4651,11 @@ char i;
 if(avg_main_cnt)
 	{
 	avg_main_cnt--;
-	goto avg_hndl_end;
+	//goto avg_hndl_end;
+	return;
 	}                 
 
+avg_main_cnt=5;
 avg_num=0;
 
 for(i=0;i<NUMIST;i++)
@@ -4664,10 +4667,13 @@ for(i=0;i<NUMIST;i++)
 if((K[NUMI]>=2)&&(bps_state[1]==ssWRK))	avg_num++;
 if((K[NUMI]>=3)&&(bps_state[2]==ssWRK))	avg_num++;*/
 
+if(avg_vektor) avg_vektor=0;
+else avg_vektor=1;
 	
 if(avg_num<2)
 	{
-	goto avg_hndl_end;
+	//goto avg_hndl_end;
+	return;
 	}
 	
 else
@@ -4693,8 +4699,8 @@ else
 	avg*=100;
 	avg/=i_avg_min;
 
-	if(avg>160) bAVG=1;
-	if(avg<120) bAVG=0;
+	if(avg>130) bAVG=1;
+	if(avg<110) bAVG=0;
 
 	if(bAVG==1)
 		{
@@ -4702,8 +4708,8 @@ else
 			{
 			if(bps[i]._state==bsWRK)
 				{
-				if(bps[i]._Ii>i_avg)bps[i]._x_--;
-				if(bps[i]._Ii<i_avg)bps[i]._x_++;
+				if((bps[i]._Ii>i_avg)&&(!avg_vektor))bps[i]._x_--;
+				if((bps[i]._Ii<i_avg)&&(avg_vektor))bps[i]._x_++;
 			
 				if(bps[i]._x_<-50)bps[i]._x_=-50;
 				if(bps[i]._x_>50)bps[i]._x_=50;	
@@ -6421,7 +6427,7 @@ if((ica_timer_cnt==0) && (num_of_wrks_bps)&&((spc_stat==spcOFF)&&(vz1_stat==vz1s
 	}
 
 
-if((ICA_EN==1)&&((spc_stat==spcOFF)&&(vz1_stat==vz1sOFF)&&(vz2_stat==vz2sOFF)&&(sp_ch_stat==scsOFF)) /*&& (num_of_wrks_bps)*/)
+if((ICA_EN==1)&&((spc_stat==spcOFF)&&(vz1_stat==vz1sOFF)&&(vz2_stat==vz2sOFF)&&(sp_ch_stat==scsOFF)) && (num_of_wrks_bps))
 	{
 	
 	if(ica_timer_cnt==8)
@@ -6751,7 +6757,9 @@ if(bps[in]._cnt>=10) bps[in]._flags_tu|=BIN8(10000000);
 else bps[in]._flags_tu&=BIN8(1111111);
 	
 bps[in]._vol_u=cntrl_stat+bps[in]._x_;	
-bps[in]._vol_i=1000; 
+bps[in]._vol_i=1000;
+//bps[0]._vol_u=500;
+//bps[1]._vol_u=cntrl_stat_pwm; 
 }
 
 //-----------------------------------------------
@@ -7910,6 +7918,12 @@ gran(&bat[in]._sign_temper_cnt,0,600);
 if(bat[in]._sign_temper_cnt>=590)	bat[in]._temper_stat|=(1<<0);
 if(bat[in]._sign_temper_cnt<=10)	bat[in]._temper_stat&=~(1<<0);
 
+if((bat[in]._temper_stat&(1<<0))&&(!(bat[in]._temper_stat&(1<<4))))	avar_bat_temper_hndl(in,1);
+if((!(bat[in]._temper_stat&(1<<0)))&&(bat[in]._temper_stat&(1<<4)))	avar_bat_temper_hndl(in,0);
+
+if(bat[in]._temper_stat&(1<<0))		bat[in]._temper_stat|=(1<<4);
+else 								bat[in]._temper_stat&=~(1<<4);
+
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
 if((t_ext[0]>TBATMAX)&&(!ND_EXT[0]))	
 	{
@@ -7934,7 +7948,11 @@ gran(&bat[in]._max_temper_cnt,0,600);
 if(bat[in]._max_temper_cnt>=590)	bat[in]._temper_stat|=(1<<1);
 if(bat[in]._max_temper_cnt<=10)	bat[in]._temper_stat&=~(1<<1);
 
+if((bat[in]._temper_stat&(1<<1))&&(!(bat[in]._temper_stat&(1<<5))))	avar_bat_temper_hndl(in,3);
+if((!(bat[in]._temper_stat&(1<<1)))&&(bat[in]._temper_stat&(1<<5)))	avar_bat_temper_hndl(in,2);
 
+if(bat[in]._temper_stat&(1<<1))		bat[in]._temper_stat|=(1<<5);
+else 								bat[in]._temper_stat&=~(1<<5);
 
 //Подсчет наработки батареи
 if(bat[in]._resurs_cnt<36000)
