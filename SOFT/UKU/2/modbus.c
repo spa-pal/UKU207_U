@@ -1450,6 +1450,10 @@ tempS=bat[1]._av;
 modbus_registers[430]=(signed char)(tempS>>8);				//Рег216	Байт статуса батареи №2(0x01 - авария цепи батареи, 0x02 - авария средней точки батареи)
 modbus_registers[431]=(signed char)(tempS);
 
+tempS=bat_hndl_t_razr_min;
+modbus_registers[432]=(signed char)(tempS>>8);				//Рег217	Остаточное время работы батареи в минутах
+modbus_registers[433]=(signed char)(tempS);
+
 
 //modbus_registers[
 

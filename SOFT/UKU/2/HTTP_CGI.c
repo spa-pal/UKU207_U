@@ -280,7 +280,12 @@ while (dat);
 					lc640_write_int(EE_PAR,(short)(web_param_input&0x00000001UL));
 
 					}
-				
+				else if(strstr (varr[0], "zv_on_"))
+					{
+					sscanf ((const char *)varr[1]+6, "%d",&web_param_input);
+					lc640_write_int(EE_ZV_ON,(short)(web_param_input&0x00000001UL));
+
+					}				
 				}
 
 			//if(strstr(var, "pl"))web_plazma[1]++;
@@ -740,7 +745,7 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
 		/* меню установок */
       	switch (env[1]) {
         	case 'n':
-          		len = sprintf((char *)buf,(const char *)&env[3],3);
+          		len = sprintf((char *)buf,(const char *)&env[3],6);
           		break;
         	case '0':
           		switch (env[2]) {
@@ -751,14 +756,17 @@ U16 cgi_func (U8 *env, U8 *buf, U16 buflen, U32 *pcgi) {
 		          		len = sprintf((char *)buf,(const char *)&env[4],0,pal_cyr_coder(place_holder));
 		          		break;
 		     		case '3':
-		          		len = sprintf((char *)buf,(const char *)&env[4],(PAR==1)?1:0," ");
+		          		len = sprintf((char *)buf,(const char *)&env[4],(ZV_ON==1)?1:0," ");
 		          		break;
 		     		case '4':
-		          		len = sprintf((char *)buf,(const char *)&env[4],0,pal_cyr_coder("Новосибирск Новолуговое 123456789012345678901234"));
+		          		len = sprintf((char *)buf,(const char *)&env[4],(PAR==1)?1:0," ");
 		          		break;
 		     		case '5':
-		          		len = sprintf((char *)buf,(const char *)&env[4],0,"ghij");
+		          		len = sprintf((char *)buf,(const char *)&env[4],(AV_OFF_AVT==1)?1:0," ");
 		          		break;
+		     		case '6':
+		         		len = sprintf((char *)buf,(const char *)&env[4],0,pal_cyr_coder("Новосибирск Новолуговое 123456789012345678901234"));
+		          		break;								   
 				}
 				break;
 		}

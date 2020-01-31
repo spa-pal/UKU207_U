@@ -690,9 +690,13 @@ else if(dt[0]=='B')
     	if(dt[2]=='Z')
     		{
     		lcd_buffer[iii++]='Â';
-    		lcd_buffer[iii++]='Ç';
-    		lcd_buffer[iii++]=' ';    		
-    		lcd_buffer[iii++]=' ';
+    		lcd_buffer[iii++]='û';
+    		lcd_buffer[iii++]='ð';    		
+    		lcd_buffer[iii++]='.';
+    		lcd_buffer[iii++]='Ç';  
+    		lcd_buffer[iii++]='à';
+    		lcd_buffer[iii++]='ð';
+			lcd_buffer[iii++]='.';
     		lcd_buffer[iii++]=' ';  
     		lcd_buffer[iii++]=' ';
     		lcd_buffer[iii++]=' ';
@@ -750,9 +754,14 @@ else if(dt[0]=='B')
     			{
     			lcd_buffer[iii++]=' ';
     			lcd_buffer[iii++]=' '; 
-    			lcd_buffer[iii++]=' ';    		
+    			lcd_buffer[iii++]=' '; 
+
     			} 
-    		lcd_buffer[iii++]=' ';    		
+    		lcd_buffer[iii++]=' '; 
+    			lcd_buffer[iii++]=' ';
+    			lcd_buffer[iii++]=' '; 
+    			lcd_buffer[iii++]=' ';
+    			lcd_buffer[iii++]=' ';			   		
     		
     		
  /*   		lcd_buffer[iii++]='Á';

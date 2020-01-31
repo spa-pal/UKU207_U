@@ -1465,14 +1465,20 @@ typedef struct
 	signed short _overload_av_cnt;     
      signed short _temp_av_cnt;
      signed short _umax_av_cnt;
-     signed short _umin_av_cnt;
+     signed short _umin_av_cnt;		//счетчик аварии по заниженному напряжению когда сам БПС прислал бит аварии 
+	 signed short _umin_av_cnt_uku;	//счетчик аварии по заниженному напряжению когда уку видит снижение напряжения на выходе БПС
      signed _rotor;
      signed  short _x_; 
      char _adr_ee;
 	char _last_avar;
 	char _vent_resurs_temp[4];
 	unsigned short _vent_resurs;
-     } BPS_STAT; 
+	unsigned char _apv_timer_1_lev;		//таймер апв 1-го уровня, считает минуту
+	unsigned char _apv_cnt_1_lev;		//счетчик апв 1-го уровня, считает 3 запуска
+	unsigned short _apv_timer_2_lev;	//таймер апв 2-го уровня, считает установленный для АПВ2 период
+	unsigned char _apv_reset_av_timer;	//таймер для сброса аварий БПСа(пока он ненулевой на БПС шлется сигнал сбросить)
+	unsigned char _apv_succes_timer;	//таймер подсчета времени успешной работы БПС, при достижении порога сбрасывает АПВ 
+	} BPS_STAT; 
 extern BPS_STAT bps[29];
 
 //***********************************************

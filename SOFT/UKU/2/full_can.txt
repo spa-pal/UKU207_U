@@ -2157,10 +2157,10 @@
 000e06  e025              B        |L1.3668|
                   |L1.3592|
 000e08  48a6              LDR      r0,|L1.4260|
-000e0a  f890105e          LDRB     r1,[r0,#0x5e]         ;799  ; bps
+000e0a  f8901066          LDRB     r1,[r0,#0x66]         ;799  ; bps
 000e0e  2901              CMP      r1,#1                 ;799
 000e10  d007              BEQ      |L1.3618|
-000e12  f890005d          LDRB     r0,[r0,#0x5d]         ;800  ; bps
+000e12  f8900065          LDRB     r0,[r0,#0x65]         ;800  ; bps
 000e16  0701              LSLS     r1,r0,#28             ;800
 000e18  d507              BPL      |L1.3626|
 000e1a  f04f00f4          MOV      r0,#0xf4              ;800
@@ -2193,7 +2193,7 @@
 000e52  7220              STRB     r0,[r4,#8]            ;804
                   |L1.3668|
 000e54  4893              LDR      r0,|L1.4260|
-000e56  3078              ADDS     r0,r0,#0x78           ;806
+000e56  3080              ADDS     r0,r0,#0x80           ;806
 000e58  7801              LDRB     r1,[r0,#0]            ;806  ; bps
 000e5a  7261              STRB     r1,[r4,#9]            ;806
 000e5c  7841              LDRB     r1,[r0,#1]            ;807  ; bps
@@ -2285,10 +2285,10 @@
 000eda  e025              B        |L1.3880|
                   |L1.3804|
 000edc  4871              LDR      r0,|L1.4260|
-000ede  f89010ba          LDRB     r1,[r0,#0xba]         ;836  ; bps
+000ede  f89010ca          LDRB     r1,[r0,#0xca]         ;836  ; bps
 000ee2  2901              CMP      r1,#1                 ;836
 000ee4  d007              BEQ      |L1.3830|
-000ee6  f89000b9          LDRB     r0,[r0,#0xb9]         ;837  ; bps
+000ee6  f89000c9          LDRB     r0,[r0,#0xc9]         ;837  ; bps
 000eea  0701              LSLS     r1,r0,#28             ;837
 000eec  d507              BPL      |L1.3838|
 000eee  f04f00f4          MOV      r0,#0xf4              ;837
@@ -2321,7 +2321,7 @@
 000f26  7220              STRB     r0,[r4,#8]            ;841
                   |L1.3880|
 000f28  485e              LDR      r0,|L1.4260|
-000f2a  30d4              ADDS     r0,r0,#0xd4           ;843
+000f2a  30e4              ADDS     r0,r0,#0xe4           ;843
 000f2c  7801              LDRB     r1,[r0,#0]            ;843  ; bps
 000f2e  7261              STRB     r1,[r4,#9]            ;843
 000f30  7841              LDRB     r1,[r0,#1]            ;844  ; bps
@@ -2413,10 +2413,10 @@
 000fae  e025              B        |L1.4092|
                   |L1.4016|
 000fb0  483c              LDR      r0,|L1.4260|
-000fb2  f8901116          LDRB     r1,[r0,#0x116]        ;872  ; bps
+000fb2  f890112e          LDRB     r1,[r0,#0x12e]        ;872  ; bps
 000fb6  2901              CMP      r1,#1                 ;872
 000fb8  d007              BEQ      |L1.4042|
-000fba  f8900115          LDRB     r0,[r0,#0x115]        ;873  ; bps
+000fba  f890012d          LDRB     r0,[r0,#0x12d]        ;873  ; bps
 000fbe  0701              LSLS     r1,r0,#28             ;873
 000fc0  d507              BPL      |L1.4050|
 000fc2  f04f00f4          MOV      r0,#0xf4              ;873
@@ -2534,7 +2534,7 @@
                   |L1.4260|
                           DCD      bps
                   |L1.4264|
-                          DCD      bps+0x130
+                          DCD      bps+0x148
                   |L1.4268|
 0010ac  f8dfa42c          LDR      r10,|L1.5340|
 ;;;914    
@@ -2895,7 +2895,7 @@
 0012f2  e02e              B        |L1.4946|
                   |L1.4852|
 0012f4  487c              LDR      r0,|L1.5352|
-0012f6  f8c01098          STR      r1,[r0,#0x98]         ;1022  ; bps
+0012f6  f8c010a0          STR      r1,[r0,#0xa0]         ;1022  ; bps
 0012fa  7027              STRB     r7,[r4,#0]            ;1023
 0012fc  f04f0023          MOV      r0,#0x23              ;1024
 001300  7060              STRB     r0,[r4,#1]            ;1024
@@ -2957,7 +2957,7 @@
 001356  e02f              B        |L1.5048|
                   |L1.4952|
 001358  4863              LDR      r0,|L1.5352|
-00135a  f8c010f4          STR      r1,[r0,#0xf4]         ;1042  ; bps
+00135a  f8c01104          STR      r1,[r0,#0x104]        ;1042  ; bps
 00135e  7027              STRB     r7,[r4,#0]            ;1043
 001360  f04f0023          MOV      r0,#0x23              ;1044
 001364  7060              STRB     r0,[r4,#1]            ;1044
@@ -3019,7 +3019,7 @@
 0013bc  e02b              B        |L1.5142|
                   |L1.5054|
 0013be  484a              LDR      r0,|L1.5352|
-0013c0  f8c01150          STR      r1,[r0,#0x150]        ;1063  ; bps
+0013c0  f8c01168          STR      r1,[r0,#0x168]        ;1063  ; bps
 0013c4  7027              STRB     r7,[r4,#0]            ;1064
 0013c6  f04f0023          MOV      r0,#0x23              ;1065
 0013ca  7060              STRB     r0,[r4,#1]            ;1065
@@ -3081,9 +3081,9 @@
 00141c  4932              LDR      r1,|L1.5352|
 00141e  f04f0000          MOV      r0,#0                 ;1083
 001422  63c8              STR      r0,[r1,#0x3c]         ;1083  ; bps
-001424  f8c10098          STR      r0,[r1,#0x98]         ;1084  ; bps
-001428  f8c100f4          STR      r0,[r1,#0xf4]         ;1085  ; bps
-00142c  f8c10150          STR      r0,[r1,#0x150]        ;1086  ; bps
+001424  f8c100a0          STR      r0,[r1,#0xa0]         ;1084  ; bps
+001428  f8c10104          STR      r0,[r1,#0x104]        ;1085  ; bps
+00142c  f8c10168          STR      r0,[r1,#0x168]        ;1086  ; bps
 001430  7027              STRB     r7,[r4,#0]            ;1087
 001432  f04f0022          MOV      r0,#0x22              ;1088
 001436  7060              STRB     r0,[r4,#1]            ;1088
@@ -4074,13 +4074,13 @@
 ;;;1373       else if((RXBUFF[0]&0xe0)==0x40)bps[slave_num]._device=dINV;
 001a5e  ebb51f51          CMP      r5,r1,LSR #5
 001a62  d105              BNE      |L1.6768|
-001a64  ebc001c0          RSB      r1,r0,r0,LSL #3
+001a64  eb0001c0          ADD      r1,r0,r0,LSL #3
 001a68  eb011100          ADD      r1,r1,r0,LSL #4
 001a6c  f8089021          STRB     r9,[r8,r1,LSL #2]
                   |L1.6768|
 ;;;1374        	
 ;;;1375   	bps[slave_num]._buff[0]=RXBUFF[2]; 
-001a70  ebc001c0          RSB      r1,r0,r0,LSL #3
+001a70  eb0001c0          ADD      r1,r0,r0,LSL #3
 001a74  eb011100          ADD      r1,r1,r0,LSL #4
 001a78  eb080181          ADD      r1,r8,r1,LSL #2
 001a7c  f89a2002          LDRB     r2,[r10,#2]  ; RXBUFF
@@ -4136,7 +4136,7 @@
 001abc  d007              BEQ      |L1.6862|
 001abe  e033              B        |L1.6952|
                   |L1.6848|
-001ac0  ebc001c0          RSB      r1,r0,r0,LSL #3       ;1372
+001ac0  eb0001c0          ADD      r1,r0,r0,LSL #3       ;1372
 001ac4  eb011100          ADD      r1,r1,r0,LSL #4       ;1372
 001ac8  f808b021          STRB     r11,[r8,r1,LSL #2]    ;1372
 001acc  e7d0              B        |L1.6768|
@@ -4154,13 +4154,13 @@
 ;;;1405       else if((RXBUFF[0]&0xe0)==0x40)bps[slave_num]._device=dINV;
 001ade  ebb51f52          CMP      r5,r2,LSR #5
 001ae2  d105              BNE      |L1.6896|
-001ae4  ebc002c0          RSB      r2,r0,r0,LSL #3
+001ae4  eb0002c0          ADD      r2,r0,r0,LSL #3
 001ae8  eb021200          ADD      r2,r2,r0,LSL #4
 001aec  f8089022          STRB     r9,[r8,r2,LSL #2]
                   |L1.6896|
 ;;;1406        
 ;;;1407   	bps[slave_num]._buff[6]=RXBUFF[2]; 
-001af0  ebc003c0          RSB      r3,r0,r0,LSL #3
+001af0  eb0003c0          ADD      r3,r0,r0,LSL #3
 001af4  eb031000          ADD      r0,r3,r0,LSL #4
 001af8  eb080080          ADD      r0,r8,r0,LSL #2
 001afc  f89a2002          LDRB     r2,[r10,#2]  ; RXBUFF
@@ -4207,7 +4207,7 @@
 001b2a  d007              BEQ      |L1.6972|
 001b2c  e045              B        |L1.7098|
                   |L1.6958|
-001b2e  ebc002c0          RSB      r2,r0,r0,LSL #3       ;1404
+001b2e  eb0002c0          ADD      r2,r0,r0,LSL #3       ;1404
 001b32  eb021200          ADD      r2,r2,r0,LSL #4       ;1404
 001b36  f808b022          STRB     r11,[r8,r2,LSL #2]    ;1404
 001b3a  e7d9              B        |L1.6896|
@@ -4237,13 +4237,13 @@
 ;;;1439       else if((RXBUFF[0]&0xe0)==0x40)bps[slave_num]._device=dINV;
 001b62  ebb51f51          CMP      r5,r1,LSR #5
 001b66  d105              BNE      |L1.7028|
-001b68  ebc001c0          RSB      r1,r0,r0,LSL #3
+001b68  eb0001c0          ADD      r1,r0,r0,LSL #3
 001b6c  eb011100          ADD      r1,r1,r0,LSL #4
 001b70  f8089021          STRB     r9,[r8,r1,LSL #2]
                   |L1.7028|
 ;;;1440        	
 ;;;1441   	bps[slave_num]._buff[0]=RXBUFF[2]; 
-001b74  ebc001c0          RSB      r1,r0,r0,LSL #3
+001b74  eb0001c0          ADD      r1,r0,r0,LSL #3
 001b78  eb011100          ADD      r1,r1,r0,LSL #4
 001b7c  eb080181          ADD      r1,r8,r1,LSL #2
 001b80  f89a2002          LDRB     r2,[r10,#2]  ; RXBUFF
@@ -4300,7 +4300,7 @@
 001bc2  d007              BEQ      |L1.7124|
 001bc4  e03d              B        |L1.7234|
                   |L1.7110|
-001bc6  ebc001c0          RSB      r1,r0,r0,LSL #3       ;1438
+001bc6  eb0001c0          ADD      r1,r0,r0,LSL #3       ;1438
 001bca  eb011100          ADD      r1,r1,r0,LSL #4       ;1438
 001bce  f808b021          STRB     r11,[r8,r1,LSL #2]    ;1438
 001bd2  e7cf              B        |L1.7028|
@@ -4329,13 +4329,13 @@
 ;;;1473       else if((RXBUFF[0]&0xe0)==0x40)bps[slave_num]._device=dINV;
 001c04  ebb51f52          CMP      r5,r2,LSR #5
 001c08  d105              BNE      |L1.7190|
-001c0a  ebc102c1          RSB      r2,r1,r1,LSL #3
+001c0a  eb0102c1          ADD      r2,r1,r1,LSL #3
 001c0e  eb021201          ADD      r2,r2,r1,LSL #4
 001c12  f8089022          STRB     r9,[r8,r2,LSL #2]
                   |L1.7190|
 ;;;1474        
 ;;;1475   	bps[slave_num]._buff[6]=RXBUFF[2]; 
-001c16  ebc10cc1          RSB      r12,r1,r1,LSL #3
+001c16  eb010cc1          ADD      r12,r1,r1,LSL #3
 001c1a  eb0c1101          ADD      r1,r12,r1,LSL #4
 001c1e  eb080181          ADD      r1,r8,r1,LSL #2
 001c22  789a              LDRB     r2,[r3,#2]  ; RXBUFF
@@ -4382,7 +4382,7 @@
 001c44  d007              BEQ      |L1.7254|
 001c46  e03d              B        |L1.7364|
                   |L1.7240|
-001c48  ebc102c1          RSB      r2,r1,r1,LSL #3       ;1472
+001c48  eb0102c1          ADD      r2,r1,r1,LSL #3       ;1472
 001c4c  eb021201          ADD      r2,r2,r1,LSL #4       ;1472
 001c50  f808b022          STRB     r11,[r8,r2,LSL #2]    ;1472
 001c54  e7df              B        |L1.7190|
@@ -4411,13 +4411,13 @@
 ;;;1506       else if((RXBUFF[0]&0xe0)==0x40)bps[slave_num]._device=dINV;
 001c86  ebb51f52          CMP      r5,r2,LSR #5
 001c8a  d105              BNE      |L1.7320|
-001c8c  ebc102c1          RSB      r2,r1,r1,LSL #3
+001c8c  eb0102c1          ADD      r2,r1,r1,LSL #3
 001c90  eb021201          ADD      r2,r2,r1,LSL #4
 001c94  f8089022          STRB     r9,[r8,r2,LSL #2]
                   |L1.7320|
 ;;;1507        
 ;;;1508   	bps[slave_num]._buff[12]=RXBUFF[2]; 
-001c98  ebc105c1          RSB      r5,r1,r1,LSL #3
+001c98  eb0105c1          ADD      r5,r1,r1,LSL #3
 001c9c  eb051101          ADD      r1,r5,r1,LSL #4
 001ca0  eb080181          ADD      r1,r8,r1,LSL #2
 001ca4  789a              LDRB     r2,[r3,#2]  ; RXBUFF
@@ -4468,7 +4468,7 @@
 001cc8  d007              BEQ      |L1.7386|
 001cca  e01a              B        |L1.7426|
                   |L1.7372|
-001ccc  ebc102c1          RSB      r2,r1,r1,LSL #3       ;1505
+001ccc  eb0102c1          ADD      r2,r1,r1,LSL #3       ;1505
 001cd0  eb021201          ADD      r2,r2,r1,LSL #4       ;1505
 001cd4  f808b022          STRB     r11,[r8,r2,LSL #2]    ;1505
 001cd8  e7de              B        |L1.7320|
@@ -4561,7 +4561,7 @@
 001d2e  f001011f          AND      r1,r1,#0x1f           ;1555
 001d32  290c              CMP      r1,#0xc               ;1555
 001d34  d21b              BCS      |L1.7534|
-001d36  ebc105c1          RSB      r5,r1,r1,LSL #3       ;1559
+001d36  eb0105c1          ADD      r5,r1,r1,LSL #3       ;1559
 001d3a  eb051101          ADD      r1,r5,r1,LSL #4       ;1559
 001d3e  f04f0209          MOV      r2,#9                 ;1559
 001d42  f8082021          STRB     r2,[r8,r1,LSL #2]     ;1559
@@ -4768,7 +4768,7 @@
 ;;;1616       slave_num=RXBUFF[0]&0x1f;  
 ;;;1617   
 ;;;1618       bps[slave_num]._device=dNET_METR;
-001ed8  ebc10cc1          RSB      r12,r1,r1,LSL #3
+001ed8  eb010cc1          ADD      r12,r1,r1,LSL #3
 001edc  eb0c1101          ADD      r1,r12,r1,LSL #4
 001ee0  f04f0207          MOV      r2,#7
 001ee4  f8082021          STRB     r2,[r8,r1,LSL #2]
@@ -4826,7 +4826,7 @@
 ;;;1647       slave_num=RXBUFF[0]&0x1f;  
 ;;;1648   
 ;;;1649       bps[slave_num]._device=dNET_METR;
-001f1a  ebc10cc1          RSB      r12,r1,r1,LSL #3
+001f1a  eb010cc1          ADD      r12,r1,r1,LSL #3
 001f1e  eb0c1101          ADD      r1,r12,r1,LSL #4
 001f22  f04f0207          MOV      r2,#7
 001f26  f8082021          STRB     r2,[r8,r1,LSL #2]

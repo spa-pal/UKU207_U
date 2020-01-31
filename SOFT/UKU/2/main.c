@@ -884,6 +884,7 @@ signed short ica_your_current;
 signed short ica_u_necc;
 signed short ica_cntrl_hndl;
 signed short ica_cntrl_hndl_cnt;
+signed short ica_connect_cnt;
 U8 tcp_soc_avg;
 U8 tcp_connect_stat;
 
@@ -1400,7 +1401,9 @@ if((cnt_net_drv>=0)&&(cnt_net_drv<=7)) // с 1 по 12 посылки адресные
 			}
 		}
 			   
-	if(!bCAN_OFF)can1_out(cnt_net_drv,cnt_net_drv,GETTM,bps[cnt_net_drv]._flags_tu,*((char*)(&bps[cnt_net_drv]._vol_u)),*((char*)((&bps[cnt_net_drv]._vol_u))+1),*((char*)(&bps[cnt_net_drv]._vol_i)),*((char*)((&bps[cnt_net_drv]._vol_i))+1));
+	if(!bCAN_OFF)
+		if(avar_bps_reset_cnt || bps[cnt_net_drv]._apv_reset_av_timer)  can1_out(cnt_net_drv,cnt_net_drv,CMND,ALRM_RES,0,0,0,0);
+		else can1_out(cnt_net_drv,cnt_net_drv,GETTM,bps[cnt_net_drv]._flags_tu,*((char*)(&bps[cnt_net_drv]._vol_u)),*((char*)((&bps[cnt_net_drv]._vol_u))+1),*((char*)(&bps[cnt_net_drv]._vol_i)),*((char*)((&bps[cnt_net_drv]._vol_i))+1));
      
 	if(cnt_net_drv<=11)
 	     {
@@ -6874,20 +6877,32 @@ else if(ind==iLog_)
 		
 		bgnd_par(	"    Перезагрузка    ",
 				"   или включение    ",
+#ifdef UKU_ZVU
+				"        ИПС         ",
+#else
 				"        ИБЭП        ",
+#endif
 				"  0%(  0^ 0@:0#:0$  ");
 		} else if(index_set==1) {
 
 		bgnd_par(	"    Перезагрузка    ",
 				"   или включение    ",
+#ifdef UKU_ZVU
+				"        ИПС         ",
+#else
 				"        ИБЭП        ",
+#endif
 				"  код источника  [  ");		
 		
 		} else if(index_set==2) {
 
 		bgnd_par(	"    Перезагрузка    ",
 				"   или включение    ",
+#ifdef UKU_ZVU
+				"        ИПС         ",
+#else
 				"        ИБЭП        ",
+#endif
 				"                 ]  ");		
 		
 		}					
@@ -12149,14 +12164,14 @@ if(ind==iDeb)
      	int2lcdyx(ica_timer_cnt,1,14,0);
 
 
-		int2lcdyx(ica_plazma[0],0,15,0);
+	/*	int2lcdyx(ica_plazma[0],0,15,0);
      	int2lcdyx(ica_plazma[1],1,15,0);
      	int2lcdyx(ica_plazma[2],2,15,0);
      	int2lcdyx(ica_plazma[3],3,15,0);
      	int2lcdyx(ica_plazma[4],0,19,0);
 		int2lcdyx(ica_plazma[5],1,19,0);
      	int2lcdyx(ica_plazma[6],2,19,0);
-     	int2lcdyx(ica_plazma[7],3,19,0);
+     	int2lcdyx(ica_plazma[7],3,19,0); */
 
  
 		int2lcdyx(ica_u_necc+50,0,10,0);
@@ -12165,7 +12180,7 @@ if(ind==iDeb)
 		int2lcdyx(bps_U,2,10,0);
 
 
-     	//int2lcdyx(ica_plazma[8],3,15,0);
+     	int2lcdyx(uart1_net_cnt,3,15,0);
      	//int2lcdyx(ica_plazma[9],3,19,0); */
  
 		
@@ -12518,7 +12533,56 @@ if(ind==iDeb)
 		/*int2lcdyx(u_necc,1,15,0);
 		int2lcdyx(bps_U,2,15,0);
 		int2lcdyx(uavt_set_error_cnt,3,19,0);*/ 
-		}																								     				     			
+		}
+    else if(sub_ind==26)
+     	{
+     	bgnd_par(	"A                   ",
+     		    	"                    ",
+     		    	"                    ",
+     		    	"                    ");
+
+		int2lcdyx(UB20-DU,0,5,0);
+		int2lcdyx(bps[0]._Uii,0,10,0);
+		int2lcdyx(bps[1]._Uii,0,15,0);
+		int2lcdyx(APV_ON1,0,17,0);
+		int2lcdyx(APV_ON2,0,19,0);
+
+		char2lcdhyx(bps[0]._flags_tm,1,2);
+		char2lcdhyx(bps[1]._flags_tm,1,12);
+		char2lcdhyx(bps[0]._av,1,5);
+		char2lcdhyx(bps[1]._av,1,15);
+		int2lcdyx(bps[0]._umax_av_cnt,2,2,0);
+		int2lcdyx(bps[0]._apv_succes_timer,2,6,0);
+		int2lcdyx(bps[1]._umax_av_cnt,2,12,0);
+		int2lcdyx(bps[1]._apv_succes_timer,2,16,0);
+		int2lcdyx(bps[0]._apv_timer_1_lev,3,2,0);
+		int2lcdyx(bps[0]._apv_cnt_1_lev,3,4,0);
+		int2lcdyx(bps[0]._apv_timer_2_lev,3,8,0);
+		int2lcdyx(bps[1]._apv_timer_1_lev,3,12,0);
+		int2lcdyx(bps[1]._apv_cnt_1_lev,3,14,0);
+		int2lcdyx(bps[1]._apv_timer_2_lev,3,18,0);
+
+		/*int2lcdyx(kb_start[1],1,16,0);
+		int2lcdyx(kb_start_ips,2,16,0);	
+		int2lcdyx(bat[0]._av,0,12,0);
+		int2lcdyx(bat[1]._av,1,12,0);
+		int2lcdyx(bat_ips._av,2,12,0);	
+		int2lcdyx(net_av,3,8,0);
+		int2lcdyx(num_of_wrks_bps,3,11,0);
+		int2lcdyx(spc_stat,0,9,0);
+		int2lcdyx(vz1_stat,3,15,0);
+		int2lcdyx(vz2_stat,3,19,0);
+		int2lcdyx(abs(Ib_ips_termokompensat),1,9,0);
+		int2lcdyx(IKB,2,9,0);
+		int2lcdyx(sp_ch_stat,2,7,0);
+		int2lcdyx(kb_cnt_1lev,0,19,0);
+		int2lcdyx(kb_cnt_2lev,1,19,0);
+		int2lcdyx(kb_full_ver,2,19,0);*/
+
+		/*int2lcdyx(u_necc,1,15,0);
+		int2lcdyx(bps_U,2,15,0);
+		int2lcdyx(uavt_set_error_cnt,3,19,0);*/ 
+		}																												     				     			
 	}
 
 else if((ind==iAv_view)||(ind==iAv_view_avt))
@@ -16495,13 +16559,13 @@ else if(ind==iDeb)
 		{
 		sub_ind++;
 		index_set=0;
-		gran_ring_char(&sub_ind,0,25);
+		gran_ring_char(&sub_ind,0,26);
 		}
 	else if(but==butL)
 		{
 		sub_ind--;
 		index_set=0;
-		gran_ring_char(&sub_ind,0,25);
+		gran_ring_char(&sub_ind,0,26);
 		}
 		
 	else if(sub_ind==1)
@@ -22850,7 +22914,7 @@ else if(ind==iSet_6U)
 	     else if(but==butL_)DU+=10;
 	     else if(but==butR)DU--;
 	     else if(but==butR_)DU-=10;
-	     gran(&DU,50,UB20-250);
+	     gran(&DU,50,UB20-100);
 	     lc640_write_int(EE_DU,DU);
 	     speed=1;
 	     }	     
@@ -38064,12 +38128,12 @@ else if(ind==iVZ1_set)
 
 	else if(sub_ind==1)
 	    {
-		if(but==butR)IMAX_VZ++;//((IMAX_VZ/10)+1)*10;
-	    else if(but==butR_)IMAX_VZ+=10;//((IMAX_VZ/10)+2)*10;
-	    else if(but==butL)IMAX_VZ--;//((IMAX_VZ/10)-1)*10;
-	    else if(but==butL_)IMAX_VZ-=10;//((IMAX_VZ/10)-2)*10;
-		gran(&IMAX_VZ,10,10000); 	          
-		lc640_write_int(EE_IMAX_VZ,IMAX_VZ);
+		if(but==butR)UZ_IMAX++;//((UZ_IMAX/10)+1)*10;
+	    else if(but==butR_)UZ_IMAX+=10;//((UZ_IMAX/10)+2)*10;
+	    else if(but==butL)UZ_IMAX--;//((UZ_IMAX/10)-1)*10;
+	    else if(but==butL_)UZ_IMAX-=10;//((UZ_IMAX/10)-2)*10;
+		gran(&UZ_IMAX,10,10000); 	          
+		lc640_write_int(EE_UZ_IMAX,UZ_IMAX);
 	    speed=1;
 	    }
 
@@ -39872,7 +39936,7 @@ while (1)
 		vent_resurs_hndl();
 		#endif
 
-		ips_current_average_hndl();
+		ips_current_average_hndl();	  	//процедура выравнивания токов между комплектами ЗВУ
 		
 
 		//SET_REG(LPC_GPIO2->FIODIR,1,2,1);
@@ -39892,6 +39956,7 @@ while (1)
 		bat_hndl_zvu();
 		amper_chas_cnt_drv();
 		#endif
+		apv_drv();
 		}
 	if(b1min)
 		{

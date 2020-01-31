@@ -2722,7 +2722,7 @@
                   http_bps_status2number PROC
 ;;;676    //-----------------------------------------------
 ;;;677    char http_bps_status2number(char number)
-00120c  ebc001c0          RSB      r1,r0,r0,LSL #3
+00120c  eb0001c0          ADD      r1,r0,r0,LSL #3
 ;;;678    {
 ;;;679    //return number+spirit_wrk_cnt;
 ;;;680    if((bps[number]._state==bsWRK)&&(!bps[number]._flags_tm)) 		return 1;
@@ -2814,7 +2814,7 @@
 001282  4618              MOV      r0,r3
 001284  f7fffffe          BL       http_bps_status2number
 001288  4601              MOV      r1,r0
-00128a  ebc300c3          RSB      r0,r3,r3,LSL #3
+00128a  eb0300c3          ADD      r0,r3,r3,LSL #3
 00128e  eb001203          ADD      r2,r0,r3,LSL #4
 001292  4846              LDR      r0,|L1.5036|
 001294  eb000082          ADD      r0,r0,r2,LSL #2

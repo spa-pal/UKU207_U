@@ -197,110 +197,110 @@
 0001e0  f88dc030          STRB     r12,[sp,#0x30]
 0001e4  f8949001          LDRB     r9,[r4,#1]  ; bps
 0001e8  f88d9031          STRB     r9,[sp,#0x31]
-0001ec  f8d49078          LDR      r9,[r4,#0x78]  ; bps
+0001ec  f8d49080          LDR      r9,[r4,#0x80]  ; bps
 0001f0  ea4f2a29          ASR      r10,r9,#8
 0001f4  f88da032          STRB     r10,[sp,#0x32]
 0001f8  f88d9033          STRB     r9,[sp,#0x33]
-0001fc  f8d49080          LDR      r9,[r4,#0x80]  ; bps
+0001fc  f8d49088          LDR      r9,[r4,#0x88]  ; bps
 000200  ea4f2a29          ASR      r10,r9,#8
 000204  f88da034          STRB     r10,[sp,#0x34]
 000208  f88d9035          STRB     r9,[sp,#0x35]
-00020c  f8d49084          LDR      r9,[r4,#0x84]  ; bps
+00020c  f8d4908c          LDR      r9,[r4,#0x8c]  ; bps
 000210  ea4f2a29          ASR      r10,r9,#8
 000214  f88da036          STRB     r10,[sp,#0x36]
 000218  f88d9037          STRB     r9,[sp,#0x37]
 00021c  f88dc038          STRB     r12,[sp,#0x38]
-000220  f894905d          LDRB     r9,[r4,#0x5d]  ; bps
+000220  f8949065          LDRB     r9,[r4,#0x65]  ; bps
 000224  f88d9039          STRB     r9,[sp,#0x39]
-000228  f8d490d4          LDR      r9,[r4,#0xd4]  ; bps
+000228  f8d490e4          LDR      r9,[r4,#0xe4]  ; bps
 00022c  ea4f2a29          ASR      r10,r9,#8
 000230  f88da03a          STRB     r10,[sp,#0x3a]
 000234  f88d903b          STRB     r9,[sp,#0x3b]
-000238  f8d490dc          LDR      r9,[r4,#0xdc]  ; bps
+000238  f8d490ec          LDR      r9,[r4,#0xec]  ; bps
 00023c  ea4f2a29          ASR      r10,r9,#8
 000240  f88da03c          STRB     r10,[sp,#0x3c]
 000244  f88d903d          STRB     r9,[sp,#0x3d]
-000248  f8d490e0          LDR      r9,[r4,#0xe0]  ; bps
+000248  f8d490f0          LDR      r9,[r4,#0xf0]  ; bps
 00024c  ea4f2a29          ASR      r10,r9,#8
 000250  f88da03e          STRB     r10,[sp,#0x3e]
 000254  f88d903f          STRB     r9,[sp,#0x3f]
 000258  f88dc040          STRB     r12,[sp,#0x40]
-00025c  f89490b9          LDRB     r9,[r4,#0xb9]  ; bps
+00025c  f89490c9          LDRB     r9,[r4,#0xc9]  ; bps
 000260  f88d9041          STRB     r9,[sp,#0x41]
-000264  f8d49130          LDR      r9,[r4,#0x130]  ; bps
+000264  f8d49148          LDR      r9,[r4,#0x148]  ; bps
 000268  ea4f2a29          ASR      r10,r9,#8
 00026c  f88da042          STRB     r10,[sp,#0x42]
 000270  f88d9043          STRB     r9,[sp,#0x43]
-000274  f8d49138          LDR      r9,[r4,#0x138]  ; bps
+000274  f8d49150          LDR      r9,[r4,#0x150]  ; bps
 000278  ea4f2a29          ASR      r10,r9,#8
 00027c  f88da044          STRB     r10,[sp,#0x44]
 000280  f88d9045          STRB     r9,[sp,#0x45]
-000284  f8d4913c          LDR      r9,[r4,#0x13c]  ; bps
+000284  f8d49154          LDR      r9,[r4,#0x154]  ; bps
 000288  ea4f2a29          ASR      r10,r9,#8
 00028c  f88da046          STRB     r10,[sp,#0x46]
 000290  f88d9047          STRB     r9,[sp,#0x47]
 000294  f88dc048          STRB     r12,[sp,#0x48]
-000298  f8949115          LDRB     r9,[r4,#0x115]  ; bps
+000298  f894912d          LDRB     r9,[r4,#0x12d]  ; bps
 00029c  f88d9049          STRB     r9,[sp,#0x49]
-0002a0  f8d4918c          LDR      r9,[r4,#0x18c]  ; bps
+0002a0  f8d491ac          LDR      r9,[r4,#0x1ac]  ; bps
 0002a4  ea4f2a29          ASR      r10,r9,#8
 0002a8  f88da04a          STRB     r10,[sp,#0x4a]
 0002ac  f88d904b          STRB     r9,[sp,#0x4b]
-0002b0  f8d49194          LDR      r9,[r4,#0x194]  ; bps
+0002b0  f8d491b4          LDR      r9,[r4,#0x1b4]  ; bps
 0002b4  ea4f2a29          ASR      r10,r9,#8
 0002b8  f88da04c          STRB     r10,[sp,#0x4c]
 0002bc  f88d904d          STRB     r9,[sp,#0x4d]
-0002c0  f8d49198          LDR      r9,[r4,#0x198]  ; bps
+0002c0  f8d491b8          LDR      r9,[r4,#0x1b8]  ; bps
 0002c4  ea4f2a29          ASR      r10,r9,#8
 0002c8  f88da04e          STRB     r10,[sp,#0x4e]
 0002cc  f88d904f          STRB     r9,[sp,#0x4f]
 0002d0  f88dc050          STRB     r12,[sp,#0x50]
-0002d4  f8949171          LDRB     r9,[r4,#0x171]  ; bps
+0002d4  f8949191          LDRB     r9,[r4,#0x191]  ; bps
 0002d8  f88d9051          STRB     r9,[sp,#0x51]
-0002dc  f8d491e8          LDR      r9,[r4,#0x1e8]  ; bps
+0002dc  f8d49210          LDR      r9,[r4,#0x210]  ; bps
 0002e0  ea4f2a29          ASR      r10,r9,#8
 0002e4  f88da052          STRB     r10,[sp,#0x52]
 0002e8  f88d9053          STRB     r9,[sp,#0x53]
-0002ec  f8d491f0          LDR      r9,[r4,#0x1f0]  ; bps
+0002ec  f8d49218          LDR      r9,[r4,#0x218]  ; bps
 0002f0  ea4f2a29          ASR      r10,r9,#8
 0002f4  f88da054          STRB     r10,[sp,#0x54]
 0002f8  f88d9055          STRB     r9,[sp,#0x55]
-0002fc  f8d491f4          LDR      r9,[r4,#0x1f4]  ; bps
+0002fc  f8d4921c          LDR      r9,[r4,#0x21c]  ; bps
 000300  ea4f2a29          ASR      r10,r9,#8
 000304  f88da056          STRB     r10,[sp,#0x56]
 000308  f88d9057          STRB     r9,[sp,#0x57]
 00030c  f88dc058          STRB     r12,[sp,#0x58]
-000310  f89491cd          LDRB     r9,[r4,#0x1cd]  ; bps
+000310  f89491f5          LDRB     r9,[r4,#0x1f5]  ; bps
 000314  f88d9059          STRB     r9,[sp,#0x59]
-000318  f8d49244          LDR      r9,[r4,#0x244]  ; bps
+000318  f8d49274          LDR      r9,[r4,#0x274]  ; bps
 00031c  ea4f2a29          ASR      r10,r9,#8
 000320  f88da05a          STRB     r10,[sp,#0x5a]
 000324  f88d905b          STRB     r9,[sp,#0x5b]
-000328  f8d4924c          LDR      r9,[r4,#0x24c]  ; bps
+000328  f8d4927c          LDR      r9,[r4,#0x27c]  ; bps
 00032c  ea4f2a29          ASR      r10,r9,#8
 000330  f88da05c          STRB     r10,[sp,#0x5c]
 000334  f88d905d          STRB     r9,[sp,#0x5d]
-000338  f8d49250          LDR      r9,[r4,#0x250]  ; bps
+000338  f8d49280          LDR      r9,[r4,#0x280]  ; bps
 00033c  ea4f2a29          ASR      r10,r9,#8
 000340  f88da05e          STRB     r10,[sp,#0x5e]
 000344  f88d905f          STRB     r9,[sp,#0x5f]
 000348  f88dc060          STRB     r12,[sp,#0x60]
-00034c  f8949229          LDRB     r9,[r4,#0x229]  ; bps
+00034c  f8949259          LDRB     r9,[r4,#0x259]  ; bps
 000350  f88d9061          STRB     r9,[sp,#0x61]
-000354  f8d492a0          LDR      r9,[r4,#0x2a0]  ; bps
+000354  f8d492d8          LDR      r9,[r4,#0x2d8]  ; bps
 000358  ea4f2a29          ASR      r10,r9,#8
 00035c  f88da062          STRB     r10,[sp,#0x62]
 000360  f88d9063          STRB     r9,[sp,#0x63]
-000364  f8d492a8          LDR      r9,[r4,#0x2a8]  ; bps
+000364  f8d492e0          LDR      r9,[r4,#0x2e0]  ; bps
 000368  ea4f2a29          ASR      r10,r9,#8
 00036c  f88da064          STRB     r10,[sp,#0x64]
 000370  f88d9065          STRB     r9,[sp,#0x65]
-000374  f8d492ac          LDR      r9,[r4,#0x2ac]  ; bps
+000374  f8d492e4          LDR      r9,[r4,#0x2e4]  ; bps
 000378  ea4f2a29          ASR      r10,r9,#8
 00037c  f88da066          STRB     r10,[sp,#0x66]
 000380  f88d9067          STRB     r9,[sp,#0x67]
 000384  f88dc068          STRB     r12,[sp,#0x68]
-000388  f8944285          LDRB     r4,[r4,#0x285]  ; bps
+000388  f89442bd          LDRB     r4,[r4,#0x2bd]  ; bps
 00038c  f88d4069          STRB     r4,[sp,#0x69]
 000390  4c3a              LDR      r4,|L1.1148|
 000392  8824              LDRH     r4,[r4,#0]  ; bps_U
@@ -470,352 +470,346 @@
 00055e  f88d4194          STRB     r4,[sp,#0x194]
 000562  f88dc195          STRB     r12,[sp,#0x195]
 000566  4cd5              LDR      r4,|L1.2236|
-000568  8824              LDRH     r4,[r4,#0]  ; bat_hndl_t_razr_min
-00056a  ea4f2724          ASR      r7,r4,#8
-00056e  f88d7196          STRB     r7,[sp,#0x196]
-000572  f88d4197          STRB     r4,[sp,#0x197]
-000576  f04f0400          MOV      r4,#0
-00057a  4fd1              LDR      r7,|L1.2240|
-00057c  f897c000          LDRB     r12,[r7,#0]  ; sk_stat
-000580  f1bc0f01          CMP      r12,#1
-000584  d101              BNE      |L1.1418|
-000586  f04f0401          MOV      r4,#1
-                  |L1.1418|
-00058a  f8dfc338          LDR      r12,|L1.2244|
-00058e  f89c8000          LDRB     r8,[r12,#0]  ; sk_av_stat
-000592  f1b80f01          CMP      r8,#1
-000596  d101              BNE      |L1.1436|
-000598  f0440402          ORR      r4,r4,#2
-                  |L1.1436|
-00059c  ea4f2824          ASR      r8,r4,#8
-0005a0  f88d81a4          STRB     r8,[sp,#0x1a4]
-0005a4  f88d41a5          STRB     r4,[sp,#0x1a5]
-0005a8  f04f0400          MOV      r4,#0
-0005ac  f8978001          LDRB     r8,[r7,#1]  ; sk_stat
-0005b0  f1b80f01          CMP      r8,#1
-0005b4  d101              BNE      |L1.1466|
-0005b6  f04f0401          MOV      r4,#1
-                  |L1.1466|
-0005ba  f89c8001          LDRB     r8,[r12,#1]  ; sk_av_stat
-0005be  f1b80f01          CMP      r8,#1
-0005c2  d101              BNE      |L1.1480|
-0005c4  f0440402          ORR      r4,r4,#2
-                  |L1.1480|
-0005c8  ea4f2824          ASR      r8,r4,#8
-0005cc  f88d81a6          STRB     r8,[sp,#0x1a6]
-0005d0  f88d41a7          STRB     r4,[sp,#0x1a7]
-0005d4  f04f0400          MOV      r4,#0
-0005d8  f8978002          LDRB     r8,[r7,#2]  ; sk_stat
-0005dc  f1b80f01          CMP      r8,#1
-0005e0  d101              BNE      |L1.1510|
-0005e2  f04f0401          MOV      r4,#1
-                  |L1.1510|
-0005e6  f89c8002          LDRB     r8,[r12,#2]  ; sk_av_stat
-0005ea  f1b80f01          CMP      r8,#1
-0005ee  d101              BNE      |L1.1524|
-0005f0  f0440402          ORR      r4,r4,#2
-                  |L1.1524|
-0005f4  ea4f2824          ASR      r8,r4,#8
-0005f8  f88d81a8          STRB     r8,[sp,#0x1a8]
-0005fc  f88d41a9          STRB     r4,[sp,#0x1a9]
-000600  f04f0400          MOV      r4,#0
-000604  78ff              LDRB     r7,[r7,#3]  ; sk_stat
-000606  2f01              CMP      r7,#1
-000608  d101              BNE      |L1.1550|
-00060a  f04f0401          MOV      r4,#1
-                  |L1.1550|
-00060e  f89c7003          LDRB     r7,[r12,#3]  ; sk_av_stat
-000612  2f01              CMP      r7,#1
+000568  f9b44000          LDRSH    r4,[r4,#0]  ; bat_hndl_t_razr_min
+00056c  ea4f2724          ASR      r7,r4,#8
+000570  f88d7196          STRB     r7,[sp,#0x196]
+000574  fa4ffc84          SXTB     r12,r4
+000578  f88dc197          STRB     r12,[sp,#0x197]
+00057c  f04f0400          MOV      r4,#0
+000580  f8df833c          LDR      r8,|L1.2240|
+000584  f8989000          LDRB     r9,[r8,#0]  ; sk_stat
+000588  f1b90f01          CMP      r9,#1
+00058c  d101              BNE      |L1.1426|
+00058e  f04f0401          MOV      r4,#1
+                  |L1.1426|
+000592  f8df9330          LDR      r9,|L1.2244|
+000596  f899a000          LDRB     r10,[r9,#0]  ; sk_av_stat
+00059a  f1ba0f01          CMP      r10,#1
+00059e  d101              BNE      |L1.1444|
+0005a0  f0440402          ORR      r4,r4,#2
+                  |L1.1444|
+0005a4  ea4f2a24          ASR      r10,r4,#8
+0005a8  f88da1a4          STRB     r10,[sp,#0x1a4]
+0005ac  f88d41a5          STRB     r4,[sp,#0x1a5]
+0005b0  f04f0400          MOV      r4,#0
+0005b4  f898a001          LDRB     r10,[r8,#1]  ; sk_stat
+0005b8  f1ba0f01          CMP      r10,#1
+0005bc  d101              BNE      |L1.1474|
+0005be  f04f0401          MOV      r4,#1
+                  |L1.1474|
+0005c2  f899a001          LDRB     r10,[r9,#1]  ; sk_av_stat
+0005c6  f1ba0f01          CMP      r10,#1
+0005ca  d101              BNE      |L1.1488|
+0005cc  f0440402          ORR      r4,r4,#2
+                  |L1.1488|
+0005d0  ea4f2a24          ASR      r10,r4,#8
+0005d4  f88da1a6          STRB     r10,[sp,#0x1a6]
+0005d8  f88d41a7          STRB     r4,[sp,#0x1a7]
+0005dc  f04f0400          MOV      r4,#0
+0005e0  f898a002          LDRB     r10,[r8,#2]  ; sk_stat
+0005e4  f1ba0f01          CMP      r10,#1
+0005e8  d101              BNE      |L1.1518|
+0005ea  f04f0401          MOV      r4,#1
+                  |L1.1518|
+0005ee  f899a002          LDRB     r10,[r9,#2]  ; sk_av_stat
+0005f2  f1ba0f01          CMP      r10,#1
+0005f6  d101              BNE      |L1.1532|
+0005f8  f0440402          ORR      r4,r4,#2
+                  |L1.1532|
+0005fc  ea4f2a24          ASR      r10,r4,#8
+000600  f88da1a8          STRB     r10,[sp,#0x1a8]
+000604  f88d41a9          STRB     r4,[sp,#0x1a9]
+000608  f04f0400          MOV      r4,#0
+00060c  f8988003          LDRB     r8,[r8,#3]  ; sk_stat
+000610  f1b80f01          CMP      r8,#1
 000614  d101              BNE      |L1.1562|
-000616  f0440402          ORR      r4,r4,#2
+000616  f04f0401          MOV      r4,#1
                   |L1.1562|
-00061a  ea4f2724          ASR      r7,r4,#8
-00061e  f88d71aa          STRB     r7,[sp,#0x1aa]
-000622  f88d41ab          STRB     r4,[sp,#0x1ab]
-000626  4ca8              LDR      r4,|L1.2248|
-000628  7824              LDRB     r4,[r4,#0]  ; ips_bat_av_stat
-00062a  ea4f2714          LSR      r7,r4,#8
-00062e  f88d71ac          STRB     r7,[sp,#0x1ac]
-000632  f88d41ad          STRB     r4,[sp,#0x1ad]
-000636  f8933089          LDRB     r3,[r3,#0x89]  ; bat
-00063a  ea4f2413          LSR      r4,r3,#8
-00063e  f88d41ae          STRB     r4,[sp,#0x1ae]
-000642  f88d31af          STRB     r3,[sp,#0x1af]
-000646  466b              MOV      r3,sp
-000648  f1a20201          SUB      r2,r2,#1
-00064c  4f9f              LDR      r7,|L1.2252|
-00064e  eb030342          ADD      r3,r3,r2,LSL #1
-000652  ea4f0245          LSL      r2,r5,#1
-000656  b156              CBZ      r6,|L1.1646|
-000658  2e01              CMP      r6,#1
-00065a  d105              BNE      |L1.1640|
-00065c  4619              MOV      r1,r3
-00065e  4638              MOV      r0,r7
-000660  f7fffffe          BL       mem_copy
-000664  489a              LDR      r0,|L1.2256|
-000666  6007              STR      r7,[r0,#0]  ; modbus_tcp_out_ptr
-                  |L1.1640|
-000668  b07d              ADD      sp,sp,#0x1f4
-                  |L1.1642|
-00066a  e8bd8ff0          POP      {r4-r11,pc}
-                  |L1.1646|
-00066e  7038              STRB     r0,[r7,#0]
-000670  7079              STRB     r1,[r7,#1]
-000672  70ba              STRB     r2,[r7,#2]
-000674  4619              MOV      r1,r3
-000676  1cf8              ADDS     r0,r7,#3
-000678  f7fffffe          BL       mem_copy
-00067c  2003              MOVS     r0,#3
-00067e  eb000045          ADD      r0,r0,r5,LSL #1
-000682  b201              SXTH     r1,r0
-000684  4891              LDR      r0,|L1.2252|
-000686  f7fffffe          BL       CRC16_2
-00068a  eb070145          ADD      r1,r7,r5,LSL #1
-00068e  70c8              STRB     r0,[r1,#3]
-000690  ea4f2010          LSR      r0,r0,#8
-000694  7108              STRB     r0,[r1,#4]
-000696  f04f0400          MOV      r4,#0
-00069a  f04f0005          MOV      r0,#5
-00069e  eb000545          ADD      r5,r0,r5,LSL #1
-0006a2  e005              B        |L1.1712|
-                  |L1.1700|
-0006a4  5d38              LDRB     r0,[r7,r4]
-0006a6  f7fffffe          BL       putchar0
-0006aa  f1040401          ADD      r4,r4,#1
-0006ae  b2e4              UXTB     r4,r4
-                  |L1.1712|
-0006b0  42a5              CMP      r5,r4
-0006b2  d8f7              BHI      |L1.1700|
-0006b4  f04f0400          MOV      r4,#0
+00061a  f8998003          LDRB     r8,[r9,#3]  ; sk_av_stat
+00061e  f1b80f01          CMP      r8,#1
+000622  d101              BNE      |L1.1576|
+000624  f0440402          ORR      r4,r4,#2
+                  |L1.1576|
+000628  ea4f2824          ASR      r8,r4,#8
+00062c  f88d81aa          STRB     r8,[sp,#0x1aa]
+000630  f88d41ab          STRB     r4,[sp,#0x1ab]
+000634  4ca4              LDR      r4,|L1.2248|
+000636  7824              LDRB     r4,[r4,#0]  ; ips_bat_av_stat
+000638  ea4f2814          LSR      r8,r4,#8
+00063c  f88d81ac          STRB     r8,[sp,#0x1ac]
+000640  f88d41ad          STRB     r4,[sp,#0x1ad]
+000644  f8933089          LDRB     r3,[r3,#0x89]  ; bat
+000648  ea4f2413          LSR      r4,r3,#8
+00064c  f88d41ae          STRB     r4,[sp,#0x1ae]
+000650  f88d31af          STRB     r3,[sp,#0x1af]
+000654  f88d71b0          STRB     r7,[sp,#0x1b0]
+000658  f88dc1b1          STRB     r12,[sp,#0x1b1]
+00065c  466b              MOV      r3,sp
+00065e  f1a20201          SUB      r2,r2,#1
+000662  4f9a              LDR      r7,|L1.2252|
+000664  eb030342          ADD      r3,r3,r2,LSL #1
+000668  ea4f0245          LSL      r2,r5,#1
+00066c  b156              CBZ      r6,|L1.1668|
+00066e  2e01              CMP      r6,#1
+000670  d105              BNE      |L1.1662|
+000672  4619              MOV      r1,r3
+000674  4638              MOV      r0,r7
+000676  f7fffffe          BL       mem_copy
+00067a  4895              LDR      r0,|L1.2256|
+00067c  6007              STR      r7,[r0,#0]  ; modbus_tcp_out_ptr
+                  |L1.1662|
+00067e  b07d              ADD      sp,sp,#0x1f4
+                  |L1.1664|
+000680  e8bd8ff0          POP      {r4-r11,pc}
+                  |L1.1668|
+000684  7038              STRB     r0,[r7,#0]
+000686  7079              STRB     r1,[r7,#1]
+000688  70ba              STRB     r2,[r7,#2]
+00068a  4619              MOV      r1,r3
+00068c  1cf8              ADDS     r0,r7,#3
+00068e  f7fffffe          BL       mem_copy
+000692  2003              MOVS     r0,#3
+000694  eb000045          ADD      r0,r0,r5,LSL #1
+000698  b201              SXTH     r1,r0
+00069a  488c              LDR      r0,|L1.2252|
+00069c  f7fffffe          BL       CRC16_2
+0006a0  eb070145          ADD      r1,r7,r5,LSL #1
+0006a4  70c8              STRB     r0,[r1,#3]
+0006a6  ea4f2010          LSR      r0,r0,#8
+0006aa  7108              STRB     r0,[r1,#4]
+0006ac  f04f0400          MOV      r4,#0
+0006b0  f04f0005          MOV      r0,#5
+0006b4  eb000545          ADD      r5,r0,r5,LSL #1
 0006b8  e005              B        |L1.1734|
                   |L1.1722|
 0006ba  5d38              LDRB     r0,[r7,r4]
-0006bc  f7fffffe          BL       putchar_sc16is700
+0006bc  f7fffffe          BL       putchar0
 0006c0  f1040401          ADD      r4,r4,#1
 0006c4  b2e4              UXTB     r4,r4
                   |L1.1734|
 0006c6  42a5              CMP      r5,r4
 0006c8  d8f7              BHI      |L1.1722|
-0006ca  e7cd              B        |L1.1640|
+0006ca  f04f0400          MOV      r4,#0
+0006ce  e005              B        |L1.1756|
+                  |L1.1744|
+0006d0  5d38              LDRB     r0,[r7,r4]
+0006d2  f7fffffe          BL       putchar_sc16is700
+0006d6  f1040401          ADD      r4,r4,#1
+0006da  b2e4              UXTB     r4,r4
+                  |L1.1756|
+0006dc  42a5              CMP      r5,r4
+0006de  d8f7              BHI      |L1.1744|
+0006e0  e7cd              B        |L1.1662|
 ;;;278    
                           ENDP
 
                   modbus_hold_registers_transmit PROC
 ;;;1113   //-----------------------------------------------
 ;;;1114   void modbus_hold_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot)
-0006cc  b5f0              PUSH     {r4-r7,lr}
+0006e2  b5f0              PUSH     {r4-r7,lr}
 ;;;1115   {
-0006ce  b0a7              SUB      sp,sp,#0x9c
-0006d0  4604              MOV      r4,r0
-0006d2  9e2c              LDR      r6,[sp,#0xb0]
-0006d4  460f              MOV      r7,r1
-0006d6  461d              MOV      r5,r3
+0006e4  b0a7              SUB      sp,sp,#0x9c
+0006e6  4604              MOV      r4,r0
+0006e8  9e2c              LDR      r6,[sp,#0xb0]
+0006ea  460f              MOV      r7,r1
+0006ec  461d              MOV      r5,r3
 ;;;1116   signed char modbus_registers[150];
 ;;;1117   //char modbus_tx_buff[150];
 ;;;1118   unsigned short crc_temp;
 ;;;1119   char i;
 ;;;1120   
 ;;;1121   modbus_registers[20]=(char)((LPC_RTC->YEAR)>>8);			//Рег11  Время, год
-0006d8  487e              LDR      r0,|L1.2260|
-0006da  8b81              LDRH     r1,[r0,#0x1c]
-0006dc  ea4f2111          LSR      r1,r1,#8
-0006e0  f88d1018          STRB     r1,[sp,#0x18]
+0006ee  4879              LDR      r0,|L1.2260|
+0006f0  8b81              LDRH     r1,[r0,#0x1c]
+0006f2  ea4f2111          LSR      r1,r1,#8
+0006f6  f88d1018          STRB     r1,[sp,#0x18]
 ;;;1122   modbus_registers[21]=(char)((LPC_RTC->YEAR));
-0006e4  8b81              LDRH     r1,[r0,#0x1c]
-0006e6  f88d1019          STRB     r1,[sp,#0x19]
+0006fa  8b81              LDRH     r1,[r0,#0x1c]
+0006fc  f88d1019          STRB     r1,[sp,#0x19]
 ;;;1123   modbus_registers[22]=(char)((LPC_RTC->MONTH)>>8);		//Рег12  Время, месяц
-0006ea  7e01              LDRB     r1,[r0,#0x18]
-0006ec  f04f0100          MOV      r1,#0
-0006f0  f88d101a          STRB     r1,[sp,#0x1a]
+000700  7e01              LDRB     r1,[r0,#0x18]
+000702  f04f0100          MOV      r1,#0
+000706  f88d101a          STRB     r1,[sp,#0x1a]
 ;;;1124   modbus_registers[23]=(char)((LPC_RTC->MONTH));
-0006f4  7e03              LDRB     r3,[r0,#0x18]
-0006f6  f88d301b          STRB     r3,[sp,#0x1b]
+00070a  7e03              LDRB     r3,[r0,#0x18]
+00070c  f88d301b          STRB     r3,[sp,#0x1b]
 ;;;1125   modbus_registers[24]=(char)((LPC_RTC->DOM)>>8);			//Рег13  Время, день месяца
-0006fa  7b03              LDRB     r3,[r0,#0xc]
-0006fc  f88d101c          STRB     r1,[sp,#0x1c]
+000710  7b03              LDRB     r3,[r0,#0xc]
+000712  f88d101c          STRB     r1,[sp,#0x1c]
 ;;;1126   modbus_registers[25]=(char)((LPC_RTC->DOM));
-000700  7b03              LDRB     r3,[r0,#0xc]
-000702  f88d301d          STRB     r3,[sp,#0x1d]
+000716  7b03              LDRB     r3,[r0,#0xc]
+000718  f88d301d          STRB     r3,[sp,#0x1d]
 ;;;1127   modbus_registers[26]=(char)((LPC_RTC->HOUR)>>8);			//Рег14  Время, час
-000706  7a03              LDRB     r3,[r0,#8]
-000708  f88d101e          STRB     r1,[sp,#0x1e]
+00071c  7a03              LDRB     r3,[r0,#8]
+00071e  f88d101e          STRB     r1,[sp,#0x1e]
 ;;;1128   modbus_registers[27]=(char)((LPC_RTC->HOUR));
-00070c  7a03              LDRB     r3,[r0,#8]
-00070e  f88d301f          STRB     r3,[sp,#0x1f]
+000722  7a03              LDRB     r3,[r0,#8]
+000724  f88d301f          STRB     r3,[sp,#0x1f]
 ;;;1129   modbus_registers[28]=(char)((LPC_RTC->MIN)>>8);			//Рег15  Время, минуты
-000712  7903              LDRB     r3,[r0,#4]
-000714  f88d1020          STRB     r1,[sp,#0x20]
+000728  7903              LDRB     r3,[r0,#4]
+00072a  f88d1020          STRB     r1,[sp,#0x20]
 ;;;1130   modbus_registers[29]=(char)((LPC_RTC->MIN));
-000718  7903              LDRB     r3,[r0,#4]
-00071a  f88d3021          STRB     r3,[sp,#0x21]
+00072e  7903              LDRB     r3,[r0,#4]
+000730  f88d3021          STRB     r3,[sp,#0x21]
 ;;;1131   modbus_registers[30]=(char)((LPC_RTC->SEC)>>8);			//Рег16  Время, секунды
-00071e  7803              LDRB     r3,[r0,#0]
-000720  f88d1022          STRB     r1,[sp,#0x22]
+000734  7803              LDRB     r3,[r0,#0]
+000736  f88d1022          STRB     r1,[sp,#0x22]
 ;;;1132   modbus_registers[31]=(char)((LPC_RTC->SEC));
-000724  7800              LDRB     r0,[r0,#0]
-000726  f88d0023          STRB     r0,[sp,#0x23]
+00073a  7800              LDRB     r0,[r0,#0]
+00073c  f88d0023          STRB     r0,[sp,#0x23]
 ;;;1133   modbus_registers[38]=(char)(NUMIST>>8);				//Рег20  Количество выпрямителей в структуре
-00072a  486b              LDR      r0,|L1.2264|
-00072c  8800              LDRH     r0,[r0,#0]  ; NUMIST
-00072e  ea4f2120          ASR      r1,r0,#8
-000732  f88d102a          STRB     r1,[sp,#0x2a]
+000740  4865              LDR      r0,|L1.2264|
+000742  8800              LDRH     r0,[r0,#0]  ; NUMIST
+000744  ea4f2120          ASR      r1,r0,#8
+000748  f88d102a          STRB     r1,[sp,#0x2a]
 ;;;1134   modbus_registers[39]=(char)(NUMIST);
-000736  f88d002b          STRB     r0,[sp,#0x2b]
+00074c  f88d002b          STRB     r0,[sp,#0x2b]
 ;;;1135   modbus_registers[40]=(char)(PAR>>8);					//Рег21  Параллельная работа выпрямителей вкл./выкл.
-00073a  4868              LDR      r0,|L1.2268|
-00073c  8800              LDRH     r0,[r0,#0]  ; PAR
-00073e  ea4f2120          ASR      r1,r0,#8
-000742  f88d102c          STRB     r1,[sp,#0x2c]
+000750  4862              LDR      r0,|L1.2268|
+000752  8800              LDRH     r0,[r0,#0]  ; PAR
+000754  ea4f2120          ASR      r1,r0,#8
+000758  f88d102c          STRB     r1,[sp,#0x2c]
 ;;;1136   modbus_registers[41]=(char)(PAR);
-000746  f88d002d          STRB     r0,[sp,#0x2d]
+00075c  f88d002d          STRB     r0,[sp,#0x2d]
 ;;;1137   modbus_registers[42]=(char)(ZV_ON>>8);					//Рег22  Звуковая аварийная сигнализация вкл./выкл.
-00074a  4865              LDR      r0,|L1.2272|
-00074c  8800              LDRH     r0,[r0,#0]  ; ZV_ON
-00074e  ea4f2120          ASR      r1,r0,#8
-000752  f88d102e          STRB     r1,[sp,#0x2e]
+000760  485f              LDR      r0,|L1.2272|
+000762  8800              LDRH     r0,[r0,#0]  ; ZV_ON
+000764  ea4f2120          ASR      r1,r0,#8
+000768  f88d102e          STRB     r1,[sp,#0x2e]
 ;;;1138   modbus_registers[43]=(char)(ZV_ON);
-000756  f88d002f          STRB     r0,[sp,#0x2f]
+00076c  f88d002f          STRB     r0,[sp,#0x2f]
 ;;;1139   modbus_registers[46]=(char)(UBM_AV>>8);				//Рег24  Аварийный уровень отклонения напряжения средней точки батареи, %
-00075a  4862              LDR      r0,|L1.2276|
-00075c  8800              LDRH     r0,[r0,#0]  ; UBM_AV
-00075e  ea4f2120          ASR      r1,r0,#8
-000762  f88d1032          STRB     r1,[sp,#0x32]
+000770  485c              LDR      r0,|L1.2276|
+000772  8800              LDRH     r0,[r0,#0]  ; UBM_AV
+000774  ea4f2120          ASR      r1,r0,#8
+000778  f88d1032          STRB     r1,[sp,#0x32]
 ;;;1140   modbus_registers[47]=(char)(UBM_AV);
-000766  f88d0033          STRB     r0,[sp,#0x33]
+00077c  f88d0033          STRB     r0,[sp,#0x33]
 ;;;1141   modbus_registers[58]=(char)(TBAT>>8);					//Рег30  Период проверки цепи батареи, минут.
-00076a  4850              LDR      r0,|L1.2220|
-00076c  8800              LDRH     r0,[r0,#0]  ; TBAT
-00076e  ea4f2120          ASR      r1,r0,#8
-000772  f88d103e          STRB     r1,[sp,#0x3e]
+000780  484a              LDR      r0,|L1.2220|
+000782  8800              LDRH     r0,[r0,#0]  ; TBAT
+000784  ea4f2120          ASR      r1,r0,#8
+000788  f88d103e          STRB     r1,[sp,#0x3e]
 ;;;1142   modbus_registers[59]=(char)(TBAT);
-000776  f88d003f          STRB     r0,[sp,#0x3f]
+00078c  f88d003f          STRB     r0,[sp,#0x3f]
 ;;;1143   modbus_registers[60]=(char)(UMAX>>8);					//Рег31  Максимальное (аварийное) напряжение выпрямителей, 0.1В
-00077a  485b              LDR      r0,|L1.2280|
-00077c  8800              LDRH     r0,[r0,#0]  ; UMAX
-00077e  ea4f2120          ASR      r1,r0,#8
-000782  f88d1040          STRB     r1,[sp,#0x40]
+000790  4855              LDR      r0,|L1.2280|
+000792  8800              LDRH     r0,[r0,#0]  ; UMAX
+000794  ea4f2120          ASR      r1,r0,#8
+000798  f88d1040          STRB     r1,[sp,#0x40]
 ;;;1144   modbus_registers[61]=(char)(UMAX);
-000786  f88d0041          STRB     r0,[sp,#0x41]
+00079c  f88d0041          STRB     r0,[sp,#0x41]
 ;;;1145   modbus_registers[62]=(char)((UB20-DU)>>8);				//Рег32  Минимальное (аварийное) напряжение выпрямителей, 0.1В
-00078a  4858              LDR      r0,|L1.2284|
-00078c  4958              LDR      r1,|L1.2288|
-00078e  8800              LDRH     r0,[r0,#0]  ; UB20
-000790  8809              LDRH     r1,[r1,#0]  ; DU
-000792  eba00101          SUB      r1,r0,r1
-000796  ea4f2321          ASR      r3,r1,#8
-00079a  f88d3042          STRB     r3,[sp,#0x42]
+0007a0  4852              LDR      r0,|L1.2284|
+0007a2  4953              LDR      r1,|L1.2288|
+0007a4  8800              LDRH     r0,[r0,#0]  ; UB20
+0007a6  8809              LDRH     r1,[r1,#0]  ; DU
+0007a8  eba00101          SUB      r1,r0,r1
+0007ac  ea4f2321          ASR      r3,r1,#8
+0007b0  f88d3042          STRB     r3,[sp,#0x42]
 ;;;1146   modbus_registers[63]=(char)((UB20-DU));
-00079e  f88d1043          STRB     r1,[sp,#0x43]
+0007b4  f88d1043          STRB     r1,[sp,#0x43]
 ;;;1147   modbus_registers[64]=(char)(UB0>>8);					//Рег33  Напряжение содержания батареи при 0гЦ, 0.1В
-0007a2  4954              LDR      r1,|L1.2292|
-0007a4  8809              LDRH     r1,[r1,#0]  ; UB0
-0007a6  ea4f2321          ASR      r3,r1,#8
-0007aa  f88d3044          STRB     r3,[sp,#0x44]
+0007b8  494e              LDR      r1,|L1.2292|
+0007ba  8809              LDRH     r1,[r1,#0]  ; UB0
+0007bc  ea4f2321          ASR      r3,r1,#8
+0007c0  f88d3044          STRB     r3,[sp,#0x44]
 ;;;1148   modbus_registers[65]=(char)(UB0);
-0007ae  f88d1045          STRB     r1,[sp,#0x45]
+0007c4  f88d1045          STRB     r1,[sp,#0x45]
 ;;;1149   modbus_registers[66]=(char)(UB20>>8);					//Рег34  Напряжение содержания батареи при 20гЦ, 0.1В
-0007b2  ea4f2c20          ASR      r12,r0,#8
-0007b6  f88dc046          STRB     r12,[sp,#0x46]
+0007c8  ea4f2c20          ASR      r12,r0,#8
+0007cc  f88dc046          STRB     r12,[sp,#0x46]
 ;;;1150   modbus_registers[67]=(char)(UB20);
-0007ba  f88d0047          STRB     r0,[sp,#0x47]
+0007d0  f88d0047          STRB     r0,[sp,#0x47]
 ;;;1151   modbus_registers[68]=(char)(USIGN>>8);					//Рег35  Минимальное (сигнальное) напряжение батареи, 1В
-0007be  484e              LDR      r0,|L1.2296|
-0007c0  8800              LDRH     r0,[r0,#0]  ; USIGN
-0007c2  ea4f2c20          ASR      r12,r0,#8
-0007c6  f88dc048          STRB     r12,[sp,#0x48]
+0007d4  4848              LDR      r0,|L1.2296|
+0007d6  8800              LDRH     r0,[r0,#0]  ; USIGN
+0007d8  ea4f2c20          ASR      r12,r0,#8
+0007dc  f88dc048          STRB     r12,[sp,#0x48]
 ;;;1152   modbus_registers[69]=(char)(USIGN);
-0007ca  f88d0049          STRB     r0,[sp,#0x49]
+0007e0  f88d0049          STRB     r0,[sp,#0x49]
 ;;;1153   modbus_registers[70]=(char)(UMN>>8);					//Рег36  Минимальное (аварийное) напряжение питающей сети, 1В
-0007ce  484b              LDR      r0,|L1.2300|
-0007d0  8800              LDRH     r0,[r0,#0]  ; UMN
-0007d2  ea4f2c20          ASR      r12,r0,#8
-0007d6  f88dc04a          STRB     r12,[sp,#0x4a]
+0007e4  4845              LDR      r0,|L1.2300|
+0007e6  8800              LDRH     r0,[r0,#0]  ; UMN
+0007e8  ea4f2c20          ASR      r12,r0,#8
+0007ec  f88dc04a          STRB     r12,[sp,#0x4a]
 ;;;1154   modbus_registers[71]=(char)(UMN);
-0007da  f88d004b          STRB     r0,[sp,#0x4b]
+0007f0  f88d004b          STRB     r0,[sp,#0x4b]
 ;;;1155   modbus_registers[72]=(char)(U0B>>8);					//Рег37  Рабочее напряжение при невведенных батареях, 0.1В
-0007de  4848              LDR      r0,|L1.2304|
-0007e0  8800              LDRH     r0,[r0,#0]  ; U0B
-0007e2  ea4f2c20          ASR      r12,r0,#8
-0007e6  f88dc04c          STRB     r12,[sp,#0x4c]
+0007f4  4842              LDR      r0,|L1.2304|
+0007f6  8800              LDRH     r0,[r0,#0]  ; U0B
+0007f8  ea4f2c20          ASR      r12,r0,#8
+0007fc  f88dc04c          STRB     r12,[sp,#0x4c]
 ;;;1156   modbus_registers[73]=(char)(U0B);
-0007ea  f88d004d          STRB     r0,[sp,#0x4d]
+000800  f88d004d          STRB     r0,[sp,#0x4d]
 ;;;1157   modbus_registers[74]=(char)(IKB>>8);					//Рег38  Ток контроля наличия батареи, 0.1а
-0007ee  4845              LDR      r0,|L1.2308|
-0007f0  8800              LDRH     r0,[r0,#0]  ; IKB
-0007f2  ea4f2c20          ASR      r12,r0,#8
-0007f6  f88dc04e          STRB     r12,[sp,#0x4e]
+000804  483f              LDR      r0,|L1.2308|
+000806  8800              LDRH     r0,[r0,#0]  ; IKB
+000808  ea4f2c20          ASR      r12,r0,#8
+00080c  f88dc04e          STRB     r12,[sp,#0x4e]
 ;;;1158   modbus_registers[75]=(char)(IKB);
-0007fa  f88d004f          STRB     r0,[sp,#0x4f]
+000810  f88d004f          STRB     r0,[sp,#0x4f]
 ;;;1159   modbus_registers[76]=(char)(IZMAX>>8);					//Рег39  Ток заряда батареи максимальный, 0.1А
-0007fe  4842              LDR      r0,|L1.2312|
-000800  8800              LDRH     r0,[r0,#0]  ; IZMAX
-000802  ea4f2c20          ASR      r12,r0,#8
-000806  f88dc050          STRB     r12,[sp,#0x50]
+000814  483c              LDR      r0,|L1.2312|
+000816  8800              LDRH     r0,[r0,#0]  ; IZMAX
+000818  ea4f2c20          ASR      r12,r0,#8
+00081c  f88dc050          STRB     r12,[sp,#0x50]
 ;;;1160   modbus_registers[77]=(char)(IZMAX);
-00080a  f88d0051          STRB     r0,[sp,#0x51]
+000820  f88d0051          STRB     r0,[sp,#0x51]
 ;;;1161   modbus_registers[78]=(char)(IMAX>>8);					//Рег40  Ток переключения на большее кол-во выпрямителей, 0.1А
-00080e  483f              LDR      r0,|L1.2316|
-000810  8800              LDRH     r0,[r0,#0]  ; IMAX
-000812  ea4f2c20          ASR      r12,r0,#8
-000816  f88dc052          STRB     r12,[sp,#0x52]
+000824  4839              LDR      r0,|L1.2316|
+000826  8800              LDRH     r0,[r0,#0]  ; IMAX
+000828  ea4f2c20          ASR      r12,r0,#8
+00082c  f88dc052          STRB     r12,[sp,#0x52]
 ;;;1162   modbus_registers[79]=(char)(IMAX);
-00081a  f88d0053          STRB     r0,[sp,#0x53]
+000830  f88d0053          STRB     r0,[sp,#0x53]
 ;;;1163   modbus_registers[80]=(char)(IMIN>>8);					//Рег41  Ток переключения на меньшее кол-во выпрямителей, 0.1А
-00081e  483c              LDR      r0,|L1.2320|
-000820  8800              LDRH     r0,[r0,#0]  ; IMIN
-000822  ea4f2c20          ASR      r12,r0,#8
-000826  f88dc054          STRB     r12,[sp,#0x54]
+000834  4836              LDR      r0,|L1.2320|
+000836  8800              LDRH     r0,[r0,#0]  ; IMIN
+000838  ea4f2c20          ASR      r12,r0,#8
+00083c  f88dc054          STRB     r12,[sp,#0x54]
 ;;;1164   modbus_registers[81]=(char)(IMIN);
-00082a  f88d0055          STRB     r0,[sp,#0x55]
+000840  f88d0055          STRB     r0,[sp,#0x55]
 ;;;1165   modbus_registers[82]=(char)(UVZ>>8);					//Рег42  Напряжение выравнивающего заряда, 0.1В
-00082e  4839              LDR      r0,|L1.2324|
-000830  8800              LDRH     r0,[r0,#0]  ; UVZ
-000832  ea4f2c20          ASR      r12,r0,#8
-000836  f88dc056          STRB     r12,[sp,#0x56]
+000844  4833              LDR      r0,|L1.2324|
+000846  8800              LDRH     r0,[r0,#0]  ; UVZ
+000848  ea4f2c20          ASR      r12,r0,#8
+00084c  f88dc056          STRB     r12,[sp,#0x56]
 ;;;1166   modbus_registers[83]=(char)(UVZ);
-00083a  f88d0057          STRB     r0,[sp,#0x57]
+000850  f88d0057          STRB     r0,[sp,#0x57]
 ;;;1167   modbus_registers[84]=(char)(TZAS>>8);					//Рег43  Время задержки включения выпрямителей, сек
-00083e  4836              LDR      r0,|L1.2328|
-000840  8800              LDRH     r0,[r0,#0]  ; TZAS
-000842  ea4f2c20          ASR      r12,r0,#8
-000846  f88dc058          STRB     r12,[sp,#0x58]
+000854  4830              LDR      r0,|L1.2328|
+000856  8800              LDRH     r0,[r0,#0]  ; TZAS
+000858  ea4f2c20          ASR      r12,r0,#8
+00085c  f88dc058          STRB     r12,[sp,#0x58]
 ;;;1168   modbus_registers[85]=(char)(TZAS);
-00084a  f88d0059          STRB     r0,[sp,#0x59]
+000860  f88d0059          STRB     r0,[sp,#0x59]
 ;;;1169   modbus_registers[86]=(char)(TMAX>>8);					//Рег44  Температура выпрямителей аварийная, 1гЦ
-00084e  4833              LDR      r0,|L1.2332|
-000850  8800              LDRH     r0,[r0,#0]  ; TMAX
-000852  ea4f2c20          ASR      r12,r0,#8
-000856  f88dc05a          STRB     r12,[sp,#0x5a]
+000864  482d              LDR      r0,|L1.2332|
+000866  8800              LDRH     r0,[r0,#0]  ; TMAX
+000868  ea4f2c20          ASR      r12,r0,#8
+00086c  f88dc05a          STRB     r12,[sp,#0x5a]
 ;;;1170   modbus_registers[87]=(char)(TMAX);
-00085a  f88d005b          STRB     r0,[sp,#0x5b]
+000870  f88d005b          STRB     r0,[sp,#0x5b]
 ;;;1171   modbus_registers[88]=(char)(TSIGN>>8);					//Рег45  Температура выпрямителей сигнальная, 1гЦ
-00085e  4830              LDR      r0,|L1.2336|
-000860  8800              LDRH     r0,[r0,#0]  ; TSIGN
-000862  ea4f2c20          ASR      r12,r0,#8
-000866  f88dc05c          STRB     r12,[sp,#0x5c]
+000874  482a              LDR      r0,|L1.2336|
+000876  8800              LDRH     r0,[r0,#0]  ; TSIGN
+000878  ea4f2c20          ASR      r12,r0,#8
+00087c  f88dc05c          STRB     r12,[sp,#0x5c]
 ;;;1172   modbus_registers[89]=(char)(TSIGN);
-00086a  f88d005d          STRB     r0,[sp,#0x5d]
+000880  f88d005d          STRB     r0,[sp,#0x5d]
 ;;;1173   modbus_registers[90]=(char)(TBATMAX>>8);				//Рег46  Температура батареи аварийная, 1гЦ
-00086e  482d              LDR      r0,|L1.2340|
-000870  8800              LDRH     r0,[r0,#0]  ; TBATMAX
-000872  ea4f2c20          ASR      r12,r0,#8
-000876  f88dc05e          STRB     r12,[sp,#0x5e]
+000884  4827              LDR      r0,|L1.2340|
+000886  8800              LDRH     r0,[r0,#0]  ; TBATMAX
+000888  ea4f2c20          ASR      r12,r0,#8
+00088c  f88dc05e          STRB     r12,[sp,#0x5e]
 ;;;1174   modbus_registers[91]=(char)(TBATMAX);
-00087a  f88d005f          STRB     r0,[sp,#0x5f]
+000890  f88d005f          STRB     r0,[sp,#0x5f]
 ;;;1175   modbus_registers[92]=(char)(TBATSIGN>>8);				//Рег47  Температура батареи сигнальная, 1гЦ
-00087e  482a              LDR      r0,|L1.2344|
-000880  8800              LDRH     r0,[r0,#0]  ; TBATSIGN
-000882  ea4f2c20          ASR      r12,r0,#8
-000886  f88dc060          STRB     r12,[sp,#0x60]
-;;;1176   modbus_registers[93]=(char)(TBATSIGN);
-00088a  f88d0061          STRB     r0,[sp,#0x61]
-;;;1177   modbus_registers[94]=(char)(speedChrgCurr>>8);					//Рег48  Ток ускоренного заряда, 0.1А
-00088e  4827              LDR      r0,|L1.2348|
-000890  8800              LDRH     r0,[r0,#0]  ; speedChrgCurr
-000892  ea4f2c20          ASR      r12,r0,#8
-000896  f88dc062          STRB     r12,[sp,#0x62]
-;;;1178   modbus_registers[95]=(char)(speedChrgCurr);
-00089a  e049              B        |L1.2352|
+000894  4824              LDR      r0,|L1.2344|
+000896  8800              LDRH     r0,[r0,#0]  ; TBATSIGN
+000898  e048              B        |L1.2348|
+00089a  0000              DCW      0x0000
                   |L1.2204|
                           DCD      volta_short
                   |L1.2208|
@@ -889,48 +883,56 @@
                   |L1.2344|
                           DCD      TBATSIGN
                   |L1.2348|
-                          DCD      speedChrgCurr
-                  |L1.2352|
-000930  f88d0063          STRB     r0,[sp,#0x63]
+00092c  ea4f2c20          ASR      r12,r0,#8
+000930  f88dc060          STRB     r12,[sp,#0x60]
+;;;1176   modbus_registers[93]=(char)(TBATSIGN);
+000934  f88d0061          STRB     r0,[sp,#0x61]
+;;;1177   modbus_registers[94]=(char)(speedChrgCurr>>8);					//Рег48  Ток ускоренного заряда, 0.1А
+000938  48ff              LDR      r0,|L1.3384|
+00093a  8800              LDRH     r0,[r0,#0]  ; speedChrgCurr
+00093c  ea4f2c20          ASR      r12,r0,#8
+000940  f88dc062          STRB     r12,[sp,#0x62]
+;;;1178   modbus_registers[95]=(char)(speedChrgCurr);
+000944  f88d0063          STRB     r0,[sp,#0x63]
 ;;;1179   modbus_registers[96]=(char)(speedChrgVolt>>8);				//Рег49	 Напряжение ускоренного заряда, 0.1В 
-000934  48ff              LDR      r0,|L1.3380|
-000936  8800              LDRH     r0,[r0,#0]  ; speedChrgVolt
-000938  ea4f2c20          ASR      r12,r0,#8
-00093c  f88dc064          STRB     r12,[sp,#0x64]
+000948  48fc              LDR      r0,|L1.3388|
+00094a  8800              LDRH     r0,[r0,#0]  ; speedChrgVolt
+00094c  ea4f2c20          ASR      r12,r0,#8
+000950  f88dc064          STRB     r12,[sp,#0x64]
 ;;;1180   modbus_registers[97]=(char)(speedChrgVolt);
-000940  f88d0065          STRB     r0,[sp,#0x65]
+000954  f88d0065          STRB     r0,[sp,#0x65]
 ;;;1181   modbus_registers[98]=(char)(speedChrgTimeInHour>>8);				//Рег50	 Время ускоренного заряда, 1ч
-000944  48fc              LDR      r0,|L1.3384|
-000946  8800              LDRH     r0,[r0,#0]  ; speedChrgTimeInHour
-000948  ea4f2c20          ASR      r12,r0,#8
-00094c  f88dc066          STRB     r12,[sp,#0x66]
+000958  48f9              LDR      r0,|L1.3392|
+00095a  8800              LDRH     r0,[r0,#0]  ; speedChrgTimeInHour
+00095c  ea4f2c20          ASR      r12,r0,#8
+000960  f88dc066          STRB     r12,[sp,#0x66]
 ;;;1182   modbus_registers[99]=(char)(speedChrgTimeInHour);
-000950  f88d0067          STRB     r0,[sp,#0x67]
+000964  f88d0067          STRB     r0,[sp,#0x67]
 ;;;1183   modbus_registers[100]=(char)(U_OUT_KONTR_MAX>>8);					//Рег51	 Контроль выходного напряжения, Umax, 0.1В
-000954  48f9              LDR      r0,|L1.3388|
-000956  8800              LDRH     r0,[r0,#0]  ; U_OUT_KONTR_MAX
-000958  ea4f2c20          ASR      r12,r0,#8
-00095c  f88dc068          STRB     r12,[sp,#0x68]
+000968  48f6              LDR      r0,|L1.3396|
+00096a  8800              LDRH     r0,[r0,#0]  ; U_OUT_KONTR_MAX
+00096c  ea4f2c20          ASR      r12,r0,#8
+000970  f88dc068          STRB     r12,[sp,#0x68]
 ;;;1184   modbus_registers[101]=(char)(U_OUT_KONTR_MAX);
-000960  f88d0069          STRB     r0,[sp,#0x69]
+000974  f88d0069          STRB     r0,[sp,#0x69]
 ;;;1185   modbus_registers[102]=(char)(U_OUT_KONTR_MIN>>8);					//Рег52	 Контроль выходного напряжения, Umin, 0.1В
-000964  48f6              LDR      r0,|L1.3392|
-000966  8800              LDRH     r0,[r0,#0]  ; U_OUT_KONTR_MIN
-000968  ea4f2c20          ASR      r12,r0,#8
-00096c  f88dc06a          STRB     r12,[sp,#0x6a]
+000978  48f3              LDR      r0,|L1.3400|
+00097a  8800              LDRH     r0,[r0,#0]  ; U_OUT_KONTR_MIN
+00097c  ea4f2c20          ASR      r12,r0,#8
+000980  f88dc06a          STRB     r12,[sp,#0x6a]
 ;;;1186   modbus_registers[103]=(char)(U_OUT_KONTR_MIN);
-000970  f88d006b          STRB     r0,[sp,#0x6b]
+000984  f88d006b          STRB     r0,[sp,#0x6b]
 ;;;1187   modbus_registers[104]=(char)(U_OUT_KONTR_DELAY>>8);				//Рег53	 Контроль выходного напряжения, Tзадержки, 1сек.
-000974  48f3              LDR      r0,|L1.3396|
-000976  8800              LDRH     r0,[r0,#0]  ; U_OUT_KONTR_DELAY
-000978  ea4f2c20          ASR      r12,r0,#8
-00097c  f88dc06c          STRB     r12,[sp,#0x6c]
+000988  48f0              LDR      r0,|L1.3404|
+00098a  8800              LDRH     r0,[r0,#0]  ; U_OUT_KONTR_DELAY
+00098c  ea4f2c20          ASR      r12,r0,#8
+000990  f88dc06c          STRB     r12,[sp,#0x6c]
 ;;;1188   modbus_registers[105]=(char)(U_OUT_KONTR_DELAY);
-000980  f88d006d          STRB     r0,[sp,#0x6d]
+000994  f88d006d          STRB     r0,[sp,#0x6d]
 ;;;1189   modbus_registers[106]=(char)(UB0>>8);							//Рег54	 Установка выходного напряжения для ИПС без батареи(СГЕП-ГАЗПРОМ)
-000984  f88d306e          STRB     r3,[sp,#0x6e]
+000998  f88d306e          STRB     r3,[sp,#0x6e]
 ;;;1190   modbus_registers[107]=(char)(UB0);
-000988  f88d106f          STRB     r1,[sp,#0x6f]
+00099c  f88d106f          STRB     r1,[sp,#0x6f]
 ;;;1191   
 ;;;1192   
 ;;;1193   
@@ -941,10 +943,10 @@
 ;;;1198   	modbus_tx_buff[1]=func;
 ;;;1199   	modbus_tx_buff[2]=(char)(reg_quantity*2);
 ;;;1200   	mem_copy((char*)&modbus_tx_buff[3],(char*)&modbus_registers[(reg_adr-1)*2],reg_quantity*2);
-00098c  f1a20201          SUB      r2,r2,#1
-000990  a801              ADD      r0,sp,#4              ;1116
-000992  eb000142          ADD      r1,r0,r2,LSL #1
-000996  b12e              CBZ      r6,|L1.2468|
+0009a0  f1a20201          SUB      r2,r2,#1
+0009a4  a801              ADD      r0,sp,#4              ;1116
+0009a6  eb000142          ADD      r1,r0,r2,LSL #1
+0009aa  b12e              CBZ      r6,|L1.2488|
 ;;;1201   	
 ;;;1202   	crc_temp=CRC16_2(modbus_tx_buff,(reg_quantity*2)+3);
 ;;;1203   
@@ -962,66 +964,66 @@
 ;;;1215   		}
 ;;;1216   	}
 ;;;1217   else if(prot==MODBUS_TCP_PROT)
-000998  2e01              CMP      r6,#1
-00099a  d101              BNE      |L1.2464|
+0009ac  2e01              CMP      r6,#1
+0009ae  d101              BNE      |L1.2484|
 ;;;1218   	{
 ;;;1219   	modbus_tcp_out_ptr=(char*)&modbus_registers[(reg_adr-1)*2];
-00099c  48ea              LDR      r0,|L1.3400|
-00099e  6001              STR      r1,[r0,#0]  ; modbus_tcp_out_ptr
-                  |L1.2464|
+0009b0  48e7              LDR      r0,|L1.3408|
+0009b2  6001              STR      r1,[r0,#0]  ; modbus_tcp_out_ptr
+                  |L1.2484|
 ;;;1220   	}
 ;;;1221   }
-0009a0  b027              ADD      sp,sp,#0x9c
-0009a2  bdf0              POP      {r4-r7,pc}
-                  |L1.2468|
-0009a4  4ee9              LDR      r6,|L1.3404|
-0009a6  7034              STRB     r4,[r6,#0]            ;1197
-0009a8  7077              STRB     r7,[r6,#1]            ;1198
-0009aa  ea4f0245          LSL      r2,r5,#1              ;1199
-0009ae  70b2              STRB     r2,[r6,#2]            ;1199
-0009b0  f1060003          ADD      r0,r6,#3              ;1200
-0009b4  f7fffffe          BL       mem_copy
-0009b8  2003              MOVS     r0,#3                 ;1202
-0009ba  eb000045          ADD      r0,r0,r5,LSL #1       ;1202
-0009be  b201              SXTH     r1,r0                 ;1202
-0009c0  4630              MOV      r0,r6                 ;1202
-0009c2  f7fffffe          BL       CRC16_2
-0009c6  eb060145          ADD      r1,r6,r5,LSL #1       ;1204
-0009ca  70c8              STRB     r0,[r1,#3]            ;1204
-0009cc  ea4f2010          LSR      r0,r0,#8              ;1205
-0009d0  7108              STRB     r0,[r1,#4]            ;1205
-0009d2  f04f0400          MOV      r4,#0                 ;1207
-0009d6  f04f0005          MOV      r0,#5                 ;1207
-0009da  eb000545          ADD      r5,r0,r5,LSL #1       ;1207
-0009de  e005              B        |L1.2540|
-                  |L1.2528|
-0009e0  5d30              LDRB     r0,[r6,r4]            ;1209
-0009e2  f7fffffe          BL       putchar0
-0009e6  f1040401          ADD      r4,r4,#1              ;1207
-0009ea  b2e4              UXTB     r4,r4                 ;1207
-                  |L1.2540|
-0009ec  42a5              CMP      r5,r4                 ;1207
-0009ee  d8f7              BHI      |L1.2528|
-0009f0  f04f0400          MOV      r4,#0                 ;1212
-0009f4  e005              B        |L1.2562|
-                  |L1.2550|
-0009f6  5d30              LDRB     r0,[r6,r4]            ;1214
-0009f8  f7fffffe          BL       putchar_sc16is700
-0009fc  f1040401          ADD      r4,r4,#1              ;1212
-000a00  b2e4              UXTB     r4,r4                 ;1212
-                  |L1.2562|
-000a02  42a5              CMP      r5,r4                 ;1212
-000a04  d8f7              BHI      |L1.2550|
-000a06  e7cb              B        |L1.2464|
+0009b4  b027              ADD      sp,sp,#0x9c
+0009b6  bdf0              POP      {r4-r7,pc}
+                  |L1.2488|
+0009b8  4ee6              LDR      r6,|L1.3412|
+0009ba  7034              STRB     r4,[r6,#0]            ;1197
+0009bc  7077              STRB     r7,[r6,#1]            ;1198
+0009be  ea4f0245          LSL      r2,r5,#1              ;1199
+0009c2  70b2              STRB     r2,[r6,#2]            ;1199
+0009c4  f1060003          ADD      r0,r6,#3              ;1200
+0009c8  f7fffffe          BL       mem_copy
+0009cc  2003              MOVS     r0,#3                 ;1202
+0009ce  eb000045          ADD      r0,r0,r5,LSL #1       ;1202
+0009d2  b201              SXTH     r1,r0                 ;1202
+0009d4  4630              MOV      r0,r6                 ;1202
+0009d6  f7fffffe          BL       CRC16_2
+0009da  eb060145          ADD      r1,r6,r5,LSL #1       ;1204
+0009de  70c8              STRB     r0,[r1,#3]            ;1204
+0009e0  ea4f2010          LSR      r0,r0,#8              ;1205
+0009e4  7108              STRB     r0,[r1,#4]            ;1205
+0009e6  f04f0400          MOV      r4,#0                 ;1207
+0009ea  f04f0005          MOV      r0,#5                 ;1207
+0009ee  eb000545          ADD      r5,r0,r5,LSL #1       ;1207
+0009f2  e005              B        |L1.2560|
+                  |L1.2548|
+0009f4  5d30              LDRB     r0,[r6,r4]            ;1209
+0009f6  f7fffffe          BL       putchar0
+0009fa  f1040401          ADD      r4,r4,#1              ;1207
+0009fe  b2e4              UXTB     r4,r4                 ;1207
+                  |L1.2560|
+000a00  42a5              CMP      r5,r4                 ;1207
+000a02  d8f7              BHI      |L1.2548|
+000a04  f04f0400          MOV      r4,#0                 ;1212
+000a08  e005              B        |L1.2582|
+                  |L1.2570|
+000a0a  5d30              LDRB     r0,[r6,r4]            ;1214
+000a0c  f7fffffe          BL       putchar_sc16is700
+000a10  f1040401          ADD      r4,r4,#1              ;1212
+000a14  b2e4              UXTB     r4,r4                 ;1212
+                  |L1.2582|
+000a16  42a5              CMP      r5,r4                 ;1212
+000a18  d8f7              BHI      |L1.2570|
+000a1a  e7cb              B        |L1.2484|
 ;;;1222   
                           ENDP
 
                   modbus_in PROC
 ;;;279    //-----------------------------------------------
 ;;;280    void modbus_in(void)
-000a08  e92d4ff0          PUSH     {r4-r11,lr}
+000a1c  e92d4ff0          PUSH     {r4-r11,lr}
 ;;;281    {
-000a0c  b089              SUB      sp,sp,#0x24
+000a20  b089              SUB      sp,sp,#0x24
 ;;;282    short crc16_calculated;		//вычисляемая из принятых данных CRC
 ;;;283    short crc16_incapsulated;	//встроеннная в посылку CRC
 ;;;284    unsigned short modbus_rx_arg0;		//встроенный в посылку первый аргумент
@@ -1033,53 +1035,53 @@
 ;;;290    
 ;;;291    
 ;;;292    mem_copy(modbus_an_buffer,modbus_rx_buffer,modbus_rx_buffer_ptr);
-000a0e  4cd0              LDR      r4,|L1.3408|
-000a10  49ce              LDR      r1,|L1.3404|
-000a12  393c              SUBS     r1,r1,#0x3c
-000a14  7862              LDRB     r2,[r4,#1]  ; modbus_rx_buffer_ptr
-000a16  f101001e          ADD      r0,r1,#0x1e
-000a1a  f7fffffe          BL       mem_copy
+000a22  4ccd              LDR      r4,|L1.3416|
+000a24  49cb              LDR      r1,|L1.3412|
+000a26  393c              SUBS     r1,r1,#0x3c
+000a28  7862              LDRB     r2,[r4,#1]  ; modbus_rx_buffer_ptr
+000a2a  f101001e          ADD      r0,r1,#0x1e
+000a2e  f7fffffe          BL       mem_copy
 ;;;293    modbus_rx_counter=modbus_rx_buffer_ptr;
-000a1e  7861              LDRB     r1,[r4,#1]  ; modbus_rx_buffer_ptr
-000a20  70a1              STRB     r1,[r4,#2]
+000a32  7861              LDRB     r1,[r4,#1]  ; modbus_rx_buffer_ptr
+000a34  70a1              STRB     r1,[r4,#2]
 ;;;294    modbus_rx_buffer_ptr=0;
-000a22  f04f0800          MOV      r8,#0
-000a26  f8848001          STRB     r8,[r4,#1]
+000a36  f04f0800          MOV      r8,#0
+000a3a  f8848001          STRB     r8,[r4,#1]
 ;;;295    bMODBUS_TIMEOUT=0;
-000a2a  f8848000          STRB     r8,[r4,#0]
+000a3e  f8848000          STRB     r8,[r4,#0]
 ;;;296    	
 ;;;297    crc16_calculated  = CRC16_2((char*)modbus_an_buffer, modbus_rx_counter-2);
-000a2e  48c7              LDR      r0,|L1.3404|
-000a30  f1a10102          SUB      r1,r1,#2
-000a34  f1a0001e          SUB      r0,r0,#0x1e
-000a38  f7fffffe          BL       CRC16_2
-000a3c  fa0ffa80          SXTH     r10,r0
+000a42  48c4              LDR      r0,|L1.3412|
+000a44  f1a10102          SUB      r1,r1,#2
+000a48  f1a0001e          SUB      r0,r0,#0x1e
+000a4c  f7fffffe          BL       CRC16_2
+000a50  fa0ffa80          SXTH     r10,r0
 ;;;298    crc16_incapsulated = *((short*)&modbus_an_buffer[modbus_rx_counter-2]);
-000a40  48c2              LDR      r0,|L1.3404|
-000a42  78a1              LDRB     r1,[r4,#2]  ; modbus_rx_counter
-000a44  381e              SUBS     r0,r0,#0x1e
-000a46  eb000201          ADD      r2,r0,r1
-000a4a  f932bc02          LDRSH    r11,[r2,#-2]
+000a54  48bf              LDR      r0,|L1.3412|
+000a56  78a1              LDRB     r1,[r4,#2]  ; modbus_rx_counter
+000a58  381e              SUBS     r0,r0,#0x1e
+000a5a  eb000201          ADD      r2,r0,r1
+000a5e  f932bc02          LDRSH    r11,[r2,#-2]
 ;;;299    
 ;;;300    modbus_plazma1=modbus_rx_counter;
-000a4e  80e1              STRH     r1,[r4,#6]
+000a62  80e1              STRH     r1,[r4,#6]
 ;;;301    modbus_plazma2=crc16_calculated;
-000a50  f8a4a008          STRH     r10,[r4,#8]
+000a64  f8a4a008          STRH     r10,[r4,#8]
 ;;;302    modbus_plazma3=crc16_incapsulated;
-000a54  f8a4b00a          STRH     r11,[r4,#0xa]
+000a68  f8a4b00a          STRH     r11,[r4,#0xa]
 ;;;303    
 ;;;304    modbus_func=modbus_an_buffer[1];
-000a58  7846              LDRB     r6,[r0,#1]  ; modbus_an_buffer
+000a6c  7846              LDRB     r6,[r0,#1]  ; modbus_an_buffer
 ;;;305    modbus_rx_arg0=(((unsigned short)modbus_an_buffer[2])*((unsigned short)256))+((unsigned short)modbus_an_buffer[3]);
-000a5a  78c1              LDRB     r1,[r0,#3]  ; modbus_an_buffer
-000a5c  7882              LDRB     r2,[r0,#2]  ; modbus_an_buffer
-000a5e  eb012302          ADD      r3,r1,r2,LSL #8
-000a62  b29d              UXTH     r5,r3
+000a6e  78c1              LDRB     r1,[r0,#3]  ; modbus_an_buffer
+000a70  7882              LDRB     r2,[r0,#2]  ; modbus_an_buffer
+000a72  eb012302          ADD      r3,r1,r2,LSL #8
+000a76  b29d              UXTH     r5,r3
 ;;;306    modbus_rx_arg1=(((unsigned short)modbus_an_buffer[4])*((unsigned short)256))+((unsigned short)modbus_an_buffer[5]);
-000a64  7943              LDRB     r3,[r0,#5]  ; modbus_an_buffer
-000a66  7904              LDRB     r4,[r0,#4]  ; modbus_an_buffer
-000a68  eb032304          ADD      r3,r3,r4,LSL #8
-000a6c  b29c              UXTH     r4,r3
+000a78  7943              LDRB     r3,[r0,#5]  ; modbus_an_buffer
+000a7a  7904              LDRB     r4,[r0,#4]  ; modbus_an_buffer
+000a7c  eb032304          ADD      r3,r3,r4,LSL #8
+000a80  b29c              UXTH     r4,r3
 ;;;307    //modbus_rx_arg2=(((unsigned short)modbus_an_buffer[6])*((unsigned short)256))+((unsigned short)modbus_an_buffer[7]);
 ;;;308    //modbus_rx_arg3=(((unsigned short)modbus_an_buffer[8])*((unsigned short)256))+((unsigned short)modbus_an_buffer[9]);
 ;;;309    
@@ -1087,7 +1089,7 @@
 ;;;311    
 ;;;312    
 ;;;313    if(modbus_an_buffer[0]=='r')
-000a6e  7800              LDRB     r0,[r0,#0]  ; modbus_an_buffer
+000a82  7800              LDRB     r0,[r0,#0]  ; modbus_an_buffer
 ;;;314    	{
 ;;;315    	pvlk=1;
 ;;;316    	if(modbus_an_buffer[1]=='e')
@@ -1133,128 +1135,128 @@
 ;;;356    							
 ;;;357    							temp_out[17]=0;
 ;;;358    							for (i=0;i<16;i++)
-000a70  4fb8              LDR      r7,|L1.3412|
-000a72  2872              CMP      r0,#0x72              ;313
-000a74  d17d              BNE      |L1.2930|
-000a76  48b8              LDR      r0,|L1.3416|
-000a78  f04f0301          MOV      r3,#1                 ;315
-000a7c  8003              STRH     r3,[r0,#0]            ;315
-000a7e  f8df92cc          LDR      r9,|L1.3404|
-000a82  2e65              CMP      r6,#0x65              ;316
-000a84  f1a9091e          SUB      r9,r9,#0x1e           ;316
-000a88  d173              BNE      |L1.2930|
-000a8a  f04f0302          MOV      r3,#2                 ;318
-000a8e  8003              STRH     r3,[r0,#0]            ;318
-000a90  2a61              CMP      r2,#0x61              ;319
-000a92  d16e              BNE      |L1.2930|
-000a94  f04f0203          MOV      r2,#3                 ;321
-000a98  8002              STRH     r2,[r0,#0]            ;321
-000a9a  2964              CMP      r1,#0x64              ;322
-000a9c  d169              BNE      |L1.2930|
-000a9e  f04f0104          MOV      r1,#4                 ;324
-000aa2  8001              STRH     r1,[r0,#0]            ;324
-000aa4  f04f0106          MOV      r1,#6                 ;325
-000aa8  4648              MOV      r0,r9                 ;325
-000aaa  f7fffffe          BL       crc_87
-000aae  f8991006          LDRB     r1,[r9,#6]            ;325  ; modbus_an_buffer
-000ab2  4288              CMP      r0,r1                 ;325
-000ab4  d15d              BNE      |L1.2930|
-000ab6  48a8              LDR      r0,|L1.3416|
-000ab8  f04f0105          MOV      r1,#5                 ;327
-000abc  8001              STRH     r1,[r0,#0]            ;327
-000abe  f04f0106          MOV      r1,#6                 ;328
-000ac2  4648              MOV      r0,r9                 ;328
-000ac4  f7fffffe          BL       crc_95
-000ac8  f8991007          LDRB     r1,[r9,#7]            ;328  ; modbus_an_buffer
-000acc  4288              CMP      r0,r1                 ;328
-000ace  d150              BNE      |L1.2930|
-000ad0  48a1              LDR      r0,|L1.3416|
-000ad2  f04f0107          MOV      r1,#7                 ;336
-000ad6  8001              STRH     r1,[r0,#0]            ;336
-000ad8  f8990004          LDRB     r0,[r9,#4]            ;337  ; modbus_an_buffer
-000adc  f8991005          LDRB     r1,[r9,#5]            ;337  ; modbus_an_buffer
-000ae0  eb002001          ADD      r0,r0,r1,LSL #8       ;337
-000ae4  b280              UXTH     r0,r0                 ;337
-000ae6  4681              MOV      r9,r0                 ;337
-000ae8  9008              STR      r0,[sp,#0x20]         ;337
-000aea  4648              MOV      r0,r9                 ;338
-000aec  f7fffffe          BL       lc640_read_long
-000af0  9007              STR      r0,[sp,#0x1c]         ;338
-000af2  f1090004          ADD      r0,r9,#4              ;339
-000af6  f7fffffe          BL       lc640_read_long
-000afa  9006              STR      r0,[sp,#0x18]         ;339
-000afc  f04f0072          MOV      r0,#0x72              ;340
-000b00  f88d0004          STRB     r0,[sp,#4]            ;340
-000b04  4630              MOV      r0,r6                 ;341
-000b06  f88d0005          STRB     r0,[sp,#5]            ;341
-000b0a  f04f0061          MOV      r0,#0x61              ;342
-000b0e  f88d0006          STRB     r0,[sp,#6]            ;342
-000b12  f04f0064          MOV      r0,#0x64              ;343
-000b16  f88d0007          STRB     r0,[sp,#7]            ;343
-000b1a  f89d0020          LDRB     r0,[sp,#0x20]         ;344
-000b1e  f88d0008          STRB     r0,[sp,#8]            ;344
-000b22  f89d0021          LDRB     r0,[sp,#0x21]         ;345
-000b26  f88d0009          STRB     r0,[sp,#9]            ;345
-000b2a  f89d001c          LDRB     r0,[sp,#0x1c]         ;346
-000b2e  f88d000a          STRB     r0,[sp,#0xa]          ;346
-000b32  f89d001d          LDRB     r0,[sp,#0x1d]         ;347
-000b36  f88d000b          STRB     r0,[sp,#0xb]          ;347
-000b3a  f89d001e          LDRB     r0,[sp,#0x1e]         ;348
-000b3e  f88d000c          STRB     r0,[sp,#0xc]          ;348
-000b42  f89d001f          LDRB     r0,[sp,#0x1f]         ;349
-000b46  f88d000d          STRB     r0,[sp,#0xd]          ;349
-000b4a  f89d0018          LDRB     r0,[sp,#0x18]         ;350
-000b4e  f88d000e          STRB     r0,[sp,#0xe]          ;350
-000b52  f89d0019          LDRB     r0,[sp,#0x19]         ;351
-000b56  f88d000f          STRB     r0,[sp,#0xf]          ;351
-000b5a  f89d001a          LDRB     r0,[sp,#0x1a]         ;352
-000b5e  f88d0010          STRB     r0,[sp,#0x10]         ;352
-000b62  f89d001b          LDRB     r0,[sp,#0x1b]         ;353
-000b66  f88d0011          STRB     r0,[sp,#0x11]         ;353
-000b6a  f04f010e          MOV      r1,#0xe               ;354
-000b6e  a801              ADD      r0,sp,#4              ;354
-000b70  e000              B        |L1.2932|
-                  |L1.2930|
-000b72  e02f              B        |L1.3028|
-                  |L1.2932|
-000b74  f7fffffe          BL       crc_87
-000b78  f88d0012          STRB     r0,[sp,#0x12]         ;354
-000b7c  210e              MOVS     r1,#0xe               ;355
-000b7e  a801              ADD      r0,sp,#4              ;355
-000b80  f7fffffe          BL       crc_95
-000b84  f88d0013          STRB     r0,[sp,#0x13]         ;355
-000b88  f88d8015          STRB     r8,[sp,#0x15]         ;357
-000b8c  f8878000          STRB     r8,[r7,#0]
-000b90  f10d0904          ADD      r9,sp,#4              ;335
-                  |L1.2964|
+000a84  4fb5              LDR      r7,|L1.3420|
+000a86  2872              CMP      r0,#0x72              ;313
+000a88  d17d              BNE      |L1.2950|
+000a8a  48b5              LDR      r0,|L1.3424|
+000a8c  f04f0301          MOV      r3,#1                 ;315
+000a90  8003              STRH     r3,[r0,#0]            ;315
+000a92  f8df92c0          LDR      r9,|L1.3412|
+000a96  2e65              CMP      r6,#0x65              ;316
+000a98  f1a9091e          SUB      r9,r9,#0x1e           ;316
+000a9c  d173              BNE      |L1.2950|
+000a9e  f04f0302          MOV      r3,#2                 ;318
+000aa2  8003              STRH     r3,[r0,#0]            ;318
+000aa4  2a61              CMP      r2,#0x61              ;319
+000aa6  d16e              BNE      |L1.2950|
+000aa8  f04f0203          MOV      r2,#3                 ;321
+000aac  8002              STRH     r2,[r0,#0]            ;321
+000aae  2964              CMP      r1,#0x64              ;322
+000ab0  d169              BNE      |L1.2950|
+000ab2  f04f0104          MOV      r1,#4                 ;324
+000ab6  8001              STRH     r1,[r0,#0]            ;324
+000ab8  f04f0106          MOV      r1,#6                 ;325
+000abc  4648              MOV      r0,r9                 ;325
+000abe  f7fffffe          BL       crc_87
+000ac2  f8991006          LDRB     r1,[r9,#6]            ;325  ; modbus_an_buffer
+000ac6  4288              CMP      r0,r1                 ;325
+000ac8  d15d              BNE      |L1.2950|
+000aca  48a5              LDR      r0,|L1.3424|
+000acc  f04f0105          MOV      r1,#5                 ;327
+000ad0  8001              STRH     r1,[r0,#0]            ;327
+000ad2  f04f0106          MOV      r1,#6                 ;328
+000ad6  4648              MOV      r0,r9                 ;328
+000ad8  f7fffffe          BL       crc_95
+000adc  f8991007          LDRB     r1,[r9,#7]            ;328  ; modbus_an_buffer
+000ae0  4288              CMP      r0,r1                 ;328
+000ae2  d150              BNE      |L1.2950|
+000ae4  489e              LDR      r0,|L1.3424|
+000ae6  f04f0107          MOV      r1,#7                 ;336
+000aea  8001              STRH     r1,[r0,#0]            ;336
+000aec  f8990004          LDRB     r0,[r9,#4]            ;337  ; modbus_an_buffer
+000af0  f8991005          LDRB     r1,[r9,#5]            ;337  ; modbus_an_buffer
+000af4  eb002001          ADD      r0,r0,r1,LSL #8       ;337
+000af8  b280              UXTH     r0,r0                 ;337
+000afa  4681              MOV      r9,r0                 ;337
+000afc  9008              STR      r0,[sp,#0x20]         ;337
+000afe  4648              MOV      r0,r9                 ;338
+000b00  f7fffffe          BL       lc640_read_long
+000b04  9007              STR      r0,[sp,#0x1c]         ;338
+000b06  f1090004          ADD      r0,r9,#4              ;339
+000b0a  f7fffffe          BL       lc640_read_long
+000b0e  9006              STR      r0,[sp,#0x18]         ;339
+000b10  f04f0072          MOV      r0,#0x72              ;340
+000b14  f88d0004          STRB     r0,[sp,#4]            ;340
+000b18  4630              MOV      r0,r6                 ;341
+000b1a  f88d0005          STRB     r0,[sp,#5]            ;341
+000b1e  f04f0061          MOV      r0,#0x61              ;342
+000b22  f88d0006          STRB     r0,[sp,#6]            ;342
+000b26  f04f0064          MOV      r0,#0x64              ;343
+000b2a  f88d0007          STRB     r0,[sp,#7]            ;343
+000b2e  f89d0020          LDRB     r0,[sp,#0x20]         ;344
+000b32  f88d0008          STRB     r0,[sp,#8]            ;344
+000b36  f89d0021          LDRB     r0,[sp,#0x21]         ;345
+000b3a  f88d0009          STRB     r0,[sp,#9]            ;345
+000b3e  f89d001c          LDRB     r0,[sp,#0x1c]         ;346
+000b42  f88d000a          STRB     r0,[sp,#0xa]          ;346
+000b46  f89d001d          LDRB     r0,[sp,#0x1d]         ;347
+000b4a  f88d000b          STRB     r0,[sp,#0xb]          ;347
+000b4e  f89d001e          LDRB     r0,[sp,#0x1e]         ;348
+000b52  f88d000c          STRB     r0,[sp,#0xc]          ;348
+000b56  f89d001f          LDRB     r0,[sp,#0x1f]         ;349
+000b5a  f88d000d          STRB     r0,[sp,#0xd]          ;349
+000b5e  f89d0018          LDRB     r0,[sp,#0x18]         ;350
+000b62  f88d000e          STRB     r0,[sp,#0xe]          ;350
+000b66  f89d0019          LDRB     r0,[sp,#0x19]         ;351
+000b6a  f88d000f          STRB     r0,[sp,#0xf]          ;351
+000b6e  f89d001a          LDRB     r0,[sp,#0x1a]         ;352
+000b72  f88d0010          STRB     r0,[sp,#0x10]         ;352
+000b76  f89d001b          LDRB     r0,[sp,#0x1b]         ;353
+000b7a  f88d0011          STRB     r0,[sp,#0x11]         ;353
+000b7e  f04f010e          MOV      r1,#0xe               ;354
+000b82  a801              ADD      r0,sp,#4              ;354
+000b84  e000              B        |L1.2952|
+                  |L1.2950|
+000b86  e02f              B        |L1.3048|
+                  |L1.2952|
+000b88  f7fffffe          BL       crc_87
+000b8c  f88d0012          STRB     r0,[sp,#0x12]         ;354
+000b90  210e              MOVS     r1,#0xe               ;355
+000b92  a801              ADD      r0,sp,#4              ;355
+000b94  f7fffffe          BL       crc_95
+000b98  f88d0013          STRB     r0,[sp,#0x13]         ;355
+000b9c  f88d8015          STRB     r8,[sp,#0x15]         ;357
+000ba0  f8878000          STRB     r8,[r7,#0]
+000ba4  f10d0904          ADD      r9,sp,#4              ;335
+                  |L1.2984|
 ;;;359    								{
 ;;;360    								putchar_sc16is700(temp_out[i]);
-000b94  7838              LDRB     r0,[r7,#0]  ; i
-000b96  f8190000          LDRB     r0,[r9,r0]
-000b9a  f7fffffe          BL       putchar_sc16is700
+000ba8  7838              LDRB     r0,[r7,#0]  ; i
+000baa  f8190000          LDRB     r0,[r9,r0]
+000bae  f7fffffe          BL       putchar_sc16is700
 ;;;361    								temp_out[17]^=temp_out[i];
-000b9e  7838              LDRB     r0,[r7,#0]  ; i
-000ba0  f89d1015          LDRB     r1,[sp,#0x15]
-000ba4  f8192000          LDRB     r2,[r9,r0]
-000ba8  ea810102          EOR      r1,r1,r2
-000bac  f88d1015          STRB     r1,[sp,#0x15]
-000bb0  f1000001          ADD      r0,r0,#1              ;358
-000bb4  b2c0              UXTB     r0,r0                 ;358
-000bb6  7038              STRB     r0,[r7,#0]            ;358
-000bb8  2810              CMP      r0,#0x10              ;358
-000bba  d3eb              BCC      |L1.2964|
+000bb2  7838              LDRB     r0,[r7,#0]  ; i
+000bb4  f89d1015          LDRB     r1,[sp,#0x15]
+000bb8  f8192000          LDRB     r2,[r9,r0]
+000bbc  ea810102          EOR      r1,r1,r2
+000bc0  f88d1015          STRB     r1,[sp,#0x15]
+000bc4  f1000001          ADD      r0,r0,#1              ;358
+000bc8  b2c0              UXTB     r0,r0                 ;358
+000bca  7038              STRB     r0,[r7,#0]            ;358
+000bcc  2810              CMP      r0,#0x10              ;358
+000bce  d3eb              BCC      |L1.2984|
 ;;;362    								}
 ;;;363    							putchar_sc16is700(16);
-000bbc  2010              MOVS     r0,#0x10
-000bbe  f7fffffe          BL       putchar_sc16is700
+000bd0  2010              MOVS     r0,#0x10
+000bd2  f7fffffe          BL       putchar_sc16is700
 ;;;364    							putchar_sc16is700(temp_out[17]^16);
-000bc2  f89d0015          LDRB     r0,[sp,#0x15]
-000bc6  f0800010          EOR      r0,r0,#0x10
-000bca  f7fffffe          BL       putchar_sc16is700
+000bd6  f89d0015          LDRB     r0,[sp,#0x15]
+000bda  f0800010          EOR      r0,r0,#0x10
+000bde  f7fffffe          BL       putchar_sc16is700
 ;;;365    							putchar_sc16is700(0x0a);
-000bce  200a              MOVS     r0,#0xa
-000bd0  f7fffffe          BL       putchar_sc16is700
-                  |L1.3028|
+000be2  200a              MOVS     r0,#0xa
+000be4  f7fffffe          BL       putchar_sc16is700
+                  |L1.3048|
 ;;;366    							}
 ;;;367    						}
 ;;;368    					}
@@ -1264,55 +1266,55 @@
 ;;;372    	} 
 ;;;373    
 ;;;374    if(modbus_an_buffer[0]=='w')
-000bd4  485d              LDR      r0,|L1.3404|
-000bd6  381e              SUBS     r0,r0,#0x1e
-000bd8  7800              LDRB     r0,[r0,#0]  ; modbus_an_buffer
-000bda  2877              CMP      r0,#0x77
-000bdc  d17d              BNE      |L1.3290|
+000be8  485a              LDR      r0,|L1.3412|
+000bea  381e              SUBS     r0,r0,#0x1e
+000bec  7800              LDRB     r0,[r0,#0]  ; modbus_an_buffer
+000bee  2877              CMP      r0,#0x77
+000bf0  d17d              BNE      |L1.3310|
 ;;;375    	{
 ;;;376    //	pvlk=1;
 ;;;377    	if(modbus_an_buffer[1]=='r')
-000bde  f8df916c          LDR      r9,|L1.3404|
-000be2  f1a9091e          SUB      r9,r9,#0x1e
-000be6  f8990001          LDRB     r0,[r9,#1]  ; modbus_an_buffer
-000bea  2872              CMP      r0,#0x72
-000bec  d175              BNE      |L1.3290|
+000bf2  f8df9160          LDR      r9,|L1.3412|
+000bf6  f1a9091e          SUB      r9,r9,#0x1e
+000bfa  f8990001          LDRB     r0,[r9,#1]  ; modbus_an_buffer
+000bfe  2872              CMP      r0,#0x72
+000c00  d175              BNE      |L1.3310|
 ;;;378    		{
 ;;;379    //		pvlk=2;
 ;;;380    		if(modbus_an_buffer[2]=='i')
-000bee  f8990002          LDRB     r0,[r9,#2]  ; modbus_an_buffer
-000bf2  2869              CMP      r0,#0x69
-000bf4  d171              BNE      |L1.3290|
+000c02  f8990002          LDRB     r0,[r9,#2]  ; modbus_an_buffer
+000c06  2869              CMP      r0,#0x69
+000c08  d171              BNE      |L1.3310|
 ;;;381    			{
 ;;;382    //			pvlk=3;
 ;;;383    			if(modbus_an_buffer[3]=='t')
-000bf6  f8990003          LDRB     r0,[r9,#3]  ; modbus_an_buffer
-000bfa  2874              CMP      r0,#0x74
-000bfc  d16d              BNE      |L1.3290|
+000c0a  f8990003          LDRB     r0,[r9,#3]  ; modbus_an_buffer
+000c0e  2874              CMP      r0,#0x74
+000c10  d16d              BNE      |L1.3310|
 ;;;384    				{
 ;;;385    //				pvlk=4;
 ;;;386    				if(modbus_an_buffer[4]=='e')
-000bfe  f8990004          LDRB     r0,[r9,#4]  ; modbus_an_buffer
-000c02  2865              CMP      r0,#0x65
-000c04  d169              BNE      |L1.3290|
+000c12  f8990004          LDRB     r0,[r9,#4]  ; modbus_an_buffer
+000c16  2865              CMP      r0,#0x65
+000c18  d169              BNE      |L1.3310|
 ;;;387    					{
 ;;;388    //					pvlk=5;
 ;;;389    					if(modbus_an_buffer[15]==crc_87(modbus_an_buffer,15))
-000c06  210f              MOVS     r1,#0xf
-000c08  4648              MOV      r0,r9
-000c0a  f7fffffe          BL       crc_87
-000c0e  f899100f          LDRB     r1,[r9,#0xf]  ; modbus_an_buffer
-000c12  4288              CMP      r0,r1
-000c14  d161              BNE      |L1.3290|
+000c1a  210f              MOVS     r1,#0xf
+000c1c  4648              MOV      r0,r9
+000c1e  f7fffffe          BL       crc_87
+000c22  f899100f          LDRB     r1,[r9,#0xf]  ; modbus_an_buffer
+000c26  4288              CMP      r0,r1
+000c28  d161              BNE      |L1.3310|
 ;;;390    						{
 ;;;391    //						pvlk=6;
 ;;;392    						if(modbus_an_buffer[16]==crc_95(modbus_an_buffer,15))
-000c16  210f              MOVS     r1,#0xf
-000c18  4648              MOV      r0,r9
-000c1a  f7fffffe          BL       crc_95
-000c1e  f8992010          LDRB     r2,[r9,#0x10]  ; modbus_an_buffer
-000c22  4290              CMP      r0,r2
-000c24  d17c              BNE      |L1.3360|
+000c2a  210f              MOVS     r1,#0xf
+000c2c  4648              MOV      r0,r9
+000c2e  f7fffffe          BL       crc_95
+000c32  f8992010          LDRB     r2,[r9,#0x10]  ; modbus_an_buffer
+000c36  4290              CMP      r0,r2
+000c38  d17c              BNE      |L1.3380|
 ;;;393    
 ;;;394    							{
 ;;;395    							unsigned short ptr;
@@ -1320,118 +1322,118 @@
 ;;;397    							char temp_out[20];
 ;;;398    //							pvlk=7;
 ;;;399    							ptr=modbus_an_buffer[5]+(modbus_an_buffer[6]*256U);
-000c26  f8991005          LDRB     r1,[r9,#5]  ; modbus_an_buffer
-000c2a  f8992006          LDRB     r2,[r9,#6]  ; modbus_an_buffer
-000c2e  4648              MOV      r0,r9
-000c30  eb012102          ADD      r1,r1,r2,LSL #8
-000c34  fa1ff981          UXTH     r9,r1
-000c38  f8cd9020          STR      r9,[sp,#0x20]
+000c3a  f8991005          LDRB     r1,[r9,#5]  ; modbus_an_buffer
+000c3e  f8992006          LDRB     r2,[r9,#6]  ; modbus_an_buffer
+000c42  4648              MOV      r0,r9
+000c44  eb012102          ADD      r1,r1,r2,LSL #8
+000c48  fa1ff981          UXTH     r9,r1
+000c4c  f8cd9020          STR      r9,[sp,#0x20]
 ;;;400    							*((char*)&data1)=modbus_an_buffer[7];
-000c3c  79c1              LDRB     r1,[r0,#7]  ; modbus_an_buffer
-000c3e  f88d101c          STRB     r1,[sp,#0x1c]
+000c50  79c1              LDRB     r1,[r0,#7]  ; modbus_an_buffer
+000c52  f88d101c          STRB     r1,[sp,#0x1c]
 ;;;401    							*(((char*)&data1)+1)=modbus_an_buffer[8];
-000c42  7a01              LDRB     r1,[r0,#8]  ; modbus_an_buffer
-000c44  f88d101d          STRB     r1,[sp,#0x1d]
+000c56  7a01              LDRB     r1,[r0,#8]  ; modbus_an_buffer
+000c58  f88d101d          STRB     r1,[sp,#0x1d]
 ;;;402    							*(((char*)&data1)+2)=modbus_an_buffer[9];
-000c48  7a41              LDRB     r1,[r0,#9]  ; modbus_an_buffer
-000c4a  f88d101e          STRB     r1,[sp,#0x1e]
+000c5c  7a41              LDRB     r1,[r0,#9]  ; modbus_an_buffer
+000c5e  f88d101e          STRB     r1,[sp,#0x1e]
 ;;;403    							*(((char*)&data1)+3)=modbus_an_buffer[10];
-000c4e  7a81              LDRB     r1,[r0,#0xa]  ; modbus_an_buffer
-000c50  f88d101f          STRB     r1,[sp,#0x1f]
+000c62  7a81              LDRB     r1,[r0,#0xa]  ; modbus_an_buffer
+000c64  f88d101f          STRB     r1,[sp,#0x1f]
 ;;;404    							*((char*)&data2)=modbus_an_buffer[11];
-000c54  7ac1              LDRB     r1,[r0,#0xb]  ; modbus_an_buffer
-000c56  f88d1018          STRB     r1,[sp,#0x18]
+000c68  7ac1              LDRB     r1,[r0,#0xb]  ; modbus_an_buffer
+000c6a  f88d1018          STRB     r1,[sp,#0x18]
 ;;;405    							*(((char*)&data2)+1)=modbus_an_buffer[12];
-000c5a  7b01              LDRB     r1,[r0,#0xc]  ; modbus_an_buffer
-000c5c  f88d1019          STRB     r1,[sp,#0x19]
+000c6e  7b01              LDRB     r1,[r0,#0xc]  ; modbus_an_buffer
+000c70  f88d1019          STRB     r1,[sp,#0x19]
 ;;;406    							*(((char*)&data2)+2)=modbus_an_buffer[13];
-000c60  7b41              LDRB     r1,[r0,#0xd]  ; modbus_an_buffer
-000c62  f88d101a          STRB     r1,[sp,#0x1a]
+000c74  7b41              LDRB     r1,[r0,#0xd]  ; modbus_an_buffer
+000c76  f88d101a          STRB     r1,[sp,#0x1a]
 ;;;407    							*(((char*)&data2)+3)=modbus_an_buffer[14];	
-000c66  7b80              LDRB     r0,[r0,#0xe]  ; modbus_an_buffer
-000c68  f88d001b          STRB     r0,[sp,#0x1b]
+000c7a  7b80              LDRB     r0,[r0,#0xe]  ; modbus_an_buffer
+000c7c  f88d001b          STRB     r0,[sp,#0x1b]
 ;;;408    							lc640_write_long(ptr,data1);
-000c6c  4648              MOV      r0,r9
-000c6e  9907              LDR      r1,[sp,#0x1c]
-000c70  f7fffffe          BL       lc640_write_long
+000c80  4648              MOV      r0,r9
+000c82  9907              LDR      r1,[sp,#0x1c]
+000c84  f7fffffe          BL       lc640_write_long
 ;;;409    							lc640_write_long(ptr+4,data2);
-000c74  f1090004          ADD      r0,r9,#4
-000c78  9906              LDR      r1,[sp,#0x18]
-000c7a  f7fffffe          BL       lc640_write_long
+000c88  f1090004          ADD      r0,r9,#4
+000c8c  9906              LDR      r1,[sp,#0x18]
+000c8e  f7fffffe          BL       lc640_write_long
 ;;;410    							
 ;;;411    							//data1=lc640_read_long(ptr);
 ;;;412    							//data2=lc640_read_long(ptr+4);
 ;;;413    							temp_out[0]='w';
-000c7e  f04f0077          MOV      r0,#0x77
-000c82  f88d0004          STRB     r0,[sp,#4]
+000c92  f04f0077          MOV      r0,#0x77
+000c96  f88d0004          STRB     r0,[sp,#4]
 ;;;414    							temp_out[1]='r';
-000c86  f04f0072          MOV      r0,#0x72
-000c8a  f88d0005          STRB     r0,[sp,#5]
+000c9a  f04f0072          MOV      r0,#0x72
+000c9e  f88d0005          STRB     r0,[sp,#5]
 ;;;415    							temp_out[2]='i';
-000c8e  f04f0069          MOV      r0,#0x69
-000c92  f88d0006          STRB     r0,[sp,#6]
+000ca2  f04f0069          MOV      r0,#0x69
+000ca6  f88d0006          STRB     r0,[sp,#6]
 ;;;416    							temp_out[3]='t';
-000c96  f04f0074          MOV      r0,#0x74
-000c9a  f88d0007          STRB     r0,[sp,#7]
+000caa  f04f0074          MOV      r0,#0x74
+000cae  f88d0007          STRB     r0,[sp,#7]
 ;;;417    							temp_out[4]='e';
-000c9e  f04f0065          MOV      r0,#0x65
-000ca2  f88d0008          STRB     r0,[sp,#8]
+000cb2  f04f0065          MOV      r0,#0x65
+000cb6  f88d0008          STRB     r0,[sp,#8]
 ;;;418    							temp_out[5]=*((char*)&ptr);
-000ca6  f89d0020          LDRB     r0,[sp,#0x20]
-000caa  f88d0009          STRB     r0,[sp,#9]
+000cba  f89d0020          LDRB     r0,[sp,#0x20]
+000cbe  f88d0009          STRB     r0,[sp,#9]
 ;;;419    							temp_out[6]=*(((char*)&ptr)+1);	
-000cae  f89d0021          LDRB     r0,[sp,#0x21]
-000cb2  f88d000a          STRB     r0,[sp,#0xa]
+000cc2  f89d0021          LDRB     r0,[sp,#0x21]
+000cc6  f88d000a          STRB     r0,[sp,#0xa]
 ;;;420    						
 ;;;421    							temp_out[7]=crc_87(temp_out,7);	
-000cb6  f04f0107          MOV      r1,#7
-000cba  a801              ADD      r0,sp,#4
-000cbc  f7fffffe          BL       crc_87
-000cc0  f88d000b          STRB     r0,[sp,#0xb]
+000cca  f04f0107          MOV      r1,#7
+000cce  a801              ADD      r0,sp,#4
+000cd0  f7fffffe          BL       crc_87
+000cd4  f88d000b          STRB     r0,[sp,#0xb]
 ;;;422    							temp_out[8]=crc_95(temp_out,7);			
-000cc4  2107              MOVS     r1,#7
-000cc6  a801              ADD      r0,sp,#4
-000cc8  f7fffffe          BL       crc_95
-000ccc  f88d000c          STRB     r0,[sp,#0xc]
+000cd8  2107              MOVS     r1,#7
+000cda  a801              ADD      r0,sp,#4
+000cdc  f7fffffe          BL       crc_95
+000ce0  f88d000c          STRB     r0,[sp,#0xc]
 ;;;423    							
 ;;;424    							temp_out[10]=0;
-000cd0  f88d800e          STRB     r8,[sp,#0xe]
+000ce4  f88d800e          STRB     r8,[sp,#0xe]
 ;;;425    							for (i=0;i<9;i++)
-000cd4  f8878000          STRB     r8,[r7,#0]
-000cd8  e000              B        |L1.3292|
-                  |L1.3290|
-000cda  e021              B        |L1.3360|
-                  |L1.3292|
-000cdc  f10d0904          ADD      r9,sp,#4              ;397
-                  |L1.3296|
+000ce8  f8878000          STRB     r8,[r7,#0]
+000cec  e000              B        |L1.3312|
+                  |L1.3310|
+000cee  e021              B        |L1.3380|
+                  |L1.3312|
+000cf0  f10d0904          ADD      r9,sp,#4              ;397
+                  |L1.3316|
 ;;;426    								{
 ;;;427    								putchar_sc16is700(temp_out[i]);
-000ce0  7838              LDRB     r0,[r7,#0]  ; i
-000ce2  f8190000          LDRB     r0,[r9,r0]
-000ce6  f7fffffe          BL       putchar_sc16is700
+000cf4  7838              LDRB     r0,[r7,#0]  ; i
+000cf6  f8190000          LDRB     r0,[r9,r0]
+000cfa  f7fffffe          BL       putchar_sc16is700
 ;;;428    								temp_out[10]^=temp_out[i];
-000cea  7838              LDRB     r0,[r7,#0]  ; i
-000cec  f89d100e          LDRB     r1,[sp,#0xe]
-000cf0  f8192000          LDRB     r2,[r9,r0]
-000cf4  ea810102          EOR      r1,r1,r2
-000cf8  f88d100e          STRB     r1,[sp,#0xe]
-000cfc  f1000001          ADD      r0,r0,#1              ;425
-000d00  b2c0              UXTB     r0,r0                 ;425
-000d02  7038              STRB     r0,[r7,#0]            ;425
-000d04  2809              CMP      r0,#9                 ;425
-000d06  d3eb              BCC      |L1.3296|
+000cfe  7838              LDRB     r0,[r7,#0]  ; i
+000d00  f89d100e          LDRB     r1,[sp,#0xe]
+000d04  f8192000          LDRB     r2,[r9,r0]
+000d08  ea810102          EOR      r1,r1,r2
+000d0c  f88d100e          STRB     r1,[sp,#0xe]
+000d10  f1000001          ADD      r0,r0,#1              ;425
+000d14  b2c0              UXTB     r0,r0                 ;425
+000d16  7038              STRB     r0,[r7,#0]            ;425
+000d18  2809              CMP      r0,#9                 ;425
+000d1a  d3eb              BCC      |L1.3316|
 ;;;429    								}
 ;;;430    							putchar_sc16is700(9);
-000d08  2009              MOVS     r0,#9
-000d0a  f7fffffe          BL       putchar_sc16is700
+000d1c  2009              MOVS     r0,#9
+000d1e  f7fffffe          BL       putchar_sc16is700
 ;;;431    							putchar_sc16is700(temp_out[10]^9);
-000d0e  f89d000e          LDRB     r0,[sp,#0xe]
-000d12  f0800009          EOR      r0,r0,#9
-000d16  f7fffffe          BL       putchar_sc16is700
+000d22  f89d000e          LDRB     r0,[sp,#0xe]
+000d26  f0800009          EOR      r0,r0,#9
+000d2a  f7fffffe          BL       putchar_sc16is700
 ;;;432    							putchar_sc16is700(0x0a);
-000d1a  200a              MOVS     r0,#0xa
-000d1c  f7fffffe          BL       putchar_sc16is700
-                  |L1.3360|
+000d2e  200a              MOVS     r0,#0xa
+000d30  f7fffffe          BL       putchar_sc16is700
+                  |L1.3380|
 ;;;433    							}
 ;;;434    						}
 ;;;435    					}
@@ -1441,82 +1443,81 @@
 ;;;439    	}
 ;;;440    
 ;;;441    if(crc16_calculated==crc16_incapsulated)
-000d20  45da              CMP      r10,r11
-000d22  d161              BNE      |L1.3560|
+000d34  45da              CMP      r10,r11
+000d36  e015              B        |L1.3428|
+                  |L1.3384|
+                          DCD      speedChrgCurr
+                  |L1.3388|
+                          DCD      speedChrgVolt
+                  |L1.3392|
+                          DCD      speedChrgTimeInHour
+                  |L1.3396|
+                          DCD      U_OUT_KONTR_MAX
+                  |L1.3400|
+                          DCD      U_OUT_KONTR_MIN
+                  |L1.3404|
+                          DCD      U_OUT_KONTR_DELAY
+                  |L1.3408|
+                          DCD      modbus_tcp_out_ptr
+                  |L1.3412|
+                          DCD      ||area_number.5||+0x3c
+                  |L1.3416|
+                          DCD      ||area_number.9||
+                  |L1.3420|
+                          DCD      i
+                  |L1.3424|
+                          DCD      pvlk
+                  |L1.3428|
+000d64  d148              BNE      |L1.3576|
 ;;;442    	{
 ;;;443    	ica_plazma[4]++;
-000d24  4a0d              LDR      r2,|L1.3420|
-000d26  7910              LDRB     r0,[r2,#4]  ; ica_plazma
-000d28  f1000001          ADD      r0,r0,#1
-000d2c  7110              STRB     r0,[r2,#4]
+000d66  4ae8              LDR      r2,|L1.4360|
+000d68  7910              LDRB     r0,[r2,#4]  ; ica_plazma
+000d6a  f1000001          ADD      r0,r0,#1
+000d6e  7110              STRB     r0,[r2,#4]
 ;;;444     	if(modbus_an_buffer[0]==MODBUS_ADRESS)
-000d2e  f8df901c          LDR      r9,|L1.3404|
-000d32  e015              B        |L1.3424|
-                  |L1.3380|
-                          DCD      speedChrgVolt
-                  |L1.3384|
-                          DCD      speedChrgTimeInHour
-                  |L1.3388|
-                          DCD      U_OUT_KONTR_MAX
-                  |L1.3392|
-                          DCD      U_OUT_KONTR_MIN
-                  |L1.3396|
-                          DCD      U_OUT_KONTR_DELAY
-                  |L1.3400|
-                          DCD      modbus_tcp_out_ptr
-                  |L1.3404|
-                          DCD      ||area_number.5||+0x3c
-                  |L1.3408|
-                          DCD      ||area_number.9||
-                  |L1.3412|
-                          DCD      i
-                  |L1.3416|
-                          DCD      pvlk
-                  |L1.3420|
-                          DCD      ica_plazma
-                  |L1.3424|
-000d60  f8dfa390          LDR      r10,|L1.4340|
-000d64  f1a9091e          SUB      r9,r9,#0x1e
-000d68  f8991000          LDRB     r1,[r9,#0]  ; modbus_an_buffer
-000d6c  f9ba0000          LDRSH    r0,[r10,#0]  ; MODBUS_ADRESS
-000d70  4281              CMP      r1,r0
-000d72  d17e              BNE      |L1.3698|
+000d70  f8df9398          LDR      r9,|L1.4364|
+000d74  f8dfa398          LDR      r10,|L1.4368|
+000d78  f8991000          LDRB     r1,[r9,#0]  ; modbus_an_buffer
+000d7c  f9ba0000          LDRSH    r0,[r10,#0]  ; MODBUS_ADRESS
+000d80  4281              CMP      r1,r0
+000d82  d17e              BNE      |L1.3714|
 ;;;445    		{
 ;;;446    		modbus_modbus_adress_eq++;
-000d74  4ae0              LDR      r2,|L1.4344|
-000d76  8811              LDRH     r1,[r2,#0]  ; modbus_modbus_adress_eq
-000d78  f1010101          ADD      r1,r1,#1
-000d7c  8011              STRH     r1,[r2,#0]
+000d84  4ae3              LDR      r2,|L1.4372|
+000d86  8811              LDRH     r1,[r2,#0]  ; modbus_modbus_adress_eq
+000d88  f1010101          ADD      r1,r1,#1
+000d8c  8011              STRH     r1,[r2,#0]
 ;;;447    		if(modbus_func==3)		//чтение произвольного кол-ва регистров хранения
-000d7e  2e03              CMP      r6,#3
-000d80  d10c              BNE      |L1.3484|
+000d8e  2e03              CMP      r6,#3
+000d90  d10c              BNE      |L1.3500|
 ;;;448    			{
 ;;;449    			modbus_plazma++;
-000d82  49de              LDR      r1,|L1.4348|
-000d84  888a              LDRH     r2,[r1,#4]  ; modbus_plazma
-000d86  f1020201          ADD      r2,r2,#1
-000d8a  808a              STRH     r2,[r1,#4]
+000d92  49e1              LDR      r1,|L1.4376|
+000d94  888a              LDRH     r2,[r1,#4]  ; modbus_plazma
+000d96  f1020201          ADD      r2,r2,#1
+000d9a  808a              STRH     r2,[r1,#4]
 ;;;450    			modbus_hold_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,modbus_rx_arg1,MODBUS_RTU_PROT);
-000d8c  4623              MOV      r3,r4
-000d8e  462a              MOV      r2,r5
-000d90  4631              MOV      r1,r6
-000d92  b2c0              UXTB     r0,r0
-000d94  f8cd8000          STR      r8,[sp,#0]
-000d98  f7fffffe          BL       modbus_hold_registers_transmit
-                  |L1.3484|
+000d9c  4623              MOV      r3,r4
+000d9e  462a              MOV      r2,r5
+000da0  4631              MOV      r1,r6
+000da2  b2c0              UXTB     r0,r0
+000da4  f8cd8000          STR      r8,[sp,#0]
+000da8  f7fffffe          BL       modbus_hold_registers_transmit
+                  |L1.3500|
 ;;;451    			}
 ;;;452    
 ;;;453    		if(modbus_func==4)		//чтение произвольного кол-ва регистров	входов
-000d9c  2e04              CMP      r6,#4
-000d9e  d025              BEQ      |L1.3564|
+000dac  2e04              CMP      r6,#4
+000dae  d025              BEQ      |L1.3580|
 ;;;454    			{
 ;;;455    			modbus_input_registers_transmit(MODBUS_ADRESS,modbus_func,modbus_rx_arg0,modbus_rx_arg1,MODBUS_RTU_PROT);
 ;;;456    			modbus_modbus4f_cnt++;
 ;;;457    			}
 ;;;458    
 ;;;459    		else if(modbus_func==6) 	//запись регистров хранения
-000da0  2e06              CMP      r6,#6
-000da2  d033              BEQ      |L1.3596|
+000db0  2e06              CMP      r6,#6
+000db2  d033              BEQ      |L1.3612|
 ;;;460    			{
 ;;;461    			if(modbus_rx_arg0==11)		//Установка времени 
 ;;;462    				{
@@ -1772,40 +1773,40 @@
 ;;;712    				}
 ;;;713    			}
 ;;;714    			else if(modbus_func==1) {	
-000da4  2e01              CMP      r6,#1
-000da6  d11f              BNE      |L1.3560|
+000db4  2e01              CMP      r6,#1
+000db6  d11f              BNE      |L1.3576|
 ;;;715    				if(modbus_an_buffer[2]==8){
-000da8  f8990002          LDRB     r0,[r9,#2]  ; modbus_an_buffer
-000dac  2808              CMP      r0,#8
-000dae  d11b              BNE      |L1.3560|
+000db8  f8990002          LDRB     r0,[r9,#2]  ; modbus_an_buffer
+000dbc  2808              CMP      r0,#8
+000dbe  d11b              BNE      |L1.3576|
 ;;;716    				  for(i_cnt=0;i_cnt<8;i_cnt++) {
-000db0  f04f0100          MOV      r1,#0
+000dc0  f04f0100          MOV      r1,#0
 ;;;717    				  	for(j_cnt=0;j_cnt<8;j_cnt++){
 ;;;718    					   snmp_enmv_data[i_cnt*8+j_cnt]=(modbus_an_buffer[3+i_cnt]>>j_cnt)&0x01;
-000db4  4bd2              LDR      r3,|L1.4352|
-                  |L1.3510|
-000db6  f04f0000          MOV      r0,#0                 ;717
-000dba  eb090201          ADD      r2,r9,r1
-000dbe  78d4              LDRB     r4,[r2,#3]
-                  |L1.3520|
-000dc0  eb0005c1          ADD      r5,r0,r1,LSL #3
-000dc4  fa24f200          LSR      r2,r4,r0
-000dc8  f0020201          AND      r2,r2,#1
-000dcc  555a              STRB     r2,[r3,r5]
-000dce  f1000001          ADD      r0,r0,#1              ;717
-000dd2  b2c0              UXTB     r0,r0                 ;717
-000dd4  2808              CMP      r0,#8                 ;717
-000dd6  d3f3              BCC      |L1.3520|
-000dd8  f1010101          ADD      r1,r1,#1              ;716
-000ddc  b2c9              UXTB     r1,r1                 ;716
-000dde  2908              CMP      r1,#8                 ;716
-000de0  d3e9              BCC      |L1.3510|
+000dc4  4bd5              LDR      r3,|L1.4380|
+                  |L1.3526|
+000dc6  f04f0000          MOV      r0,#0                 ;717
+000dca  eb090201          ADD      r2,r9,r1
+000dce  78d4              LDRB     r4,[r2,#3]
+                  |L1.3536|
+000dd0  eb0005c1          ADD      r5,r0,r1,LSL #3
+000dd4  fa24f200          LSR      r2,r4,r0
+000dd8  f0020201          AND      r2,r2,#1
+000ddc  555a              STRB     r2,[r3,r5]
+000dde  f1000001          ADD      r0,r0,#1              ;717
+000de2  b2c0              UXTB     r0,r0                 ;717
+000de4  2808              CMP      r0,#8                 ;717
+000de6  d3f3              BCC      |L1.3536|
+000de8  f1010101          ADD      r1,r1,#1              ;716
+000dec  b2c9              UXTB     r1,r1                 ;716
+000dee  2908              CMP      r1,#8                 ;716
+000df0  d3e9              BCC      |L1.3526|
 ;;;719    					}				   
 ;;;720    				  }
 ;;;721    				  enmv_on=0;
-000de2  48c8              LDR      r0,|L1.4356|
-000de4  f8808000          STRB     r8,[r0,#0]
-                  |L1.3560|
+000df2  48cb              LDR      r0,|L1.4384|
+000df4  f8808000          STRB     r8,[r0,#0]
+                  |L1.3576|
 ;;;722    				}
 ;;;723    			} 
 ;;;724    
@@ -1827,403 +1828,407 @@
 ;;;740    
 ;;;741    
 ;;;742    }
-000de8  b009              ADD      sp,sp,#0x24
-000dea  e43e              B        |L1.1642|
-                  |L1.3564|
-000dec  f8cd8000          STR      r8,[sp,#0]            ;455
-000df0  f8ba0000          LDRH     r0,[r10,#0]           ;455  ; MODBUS_ADRESS
-000df4  4623              MOV      r3,r4                 ;455
-000df6  462a              MOV      r2,r5                 ;455
-000df8  4631              MOV      r1,r6                 ;455
-000dfa  b2c0              UXTB     r0,r0                 ;455
-000dfc  f7fffffe          BL       modbus_input_registers_transmit
-000e00  49c1              LDR      r1,|L1.4360|
-000e02  8808              LDRH     r0,[r1,#0]            ;456  ; modbus_modbus4f_cnt
-000e04  f1000001          ADD      r0,r0,#1              ;456
-000e08  8008              STRH     r0,[r1,#0]            ;456
-000e0a  e7ed              B        |L1.3560|
-                  |L1.3596|
-000e0c  48bf              LDR      r0,|L1.4364|
-000e0e  2d0b              CMP      r5,#0xb               ;461
-000e10  d100              BNE      |L1.3604|
-000e12  8784              STRH     r4,[r0,#0x3c]         ;463
-                  |L1.3604|
-000e14  2d0c              CMP      r5,#0xc               ;465
-000e16  d101              BNE      |L1.3612|
-000e18  f8804038          STRB     r4,[r0,#0x38]         ;467
+000df8  b009              ADD      sp,sp,#0x24
+000dfa  e441              B        |L1.1664|
+                  |L1.3580|
+000dfc  f8cd8000          STR      r8,[sp,#0]            ;455
+000e00  f8ba0000          LDRH     r0,[r10,#0]           ;455  ; MODBUS_ADRESS
+000e04  4623              MOV      r3,r4                 ;455
+000e06  462a              MOV      r2,r5                 ;455
+000e08  4631              MOV      r1,r6                 ;455
+000e0a  b2c0              UXTB     r0,r0                 ;455
+000e0c  f7fffffe          BL       modbus_input_registers_transmit
+000e10  49c4              LDR      r1,|L1.4388|
+000e12  8808              LDRH     r0,[r1,#0]            ;456  ; modbus_modbus4f_cnt
+000e14  f1000001          ADD      r0,r0,#1              ;456
+000e18  8008              STRH     r0,[r1,#0]            ;456
+000e1a  e7ed              B        |L1.3576|
                   |L1.3612|
-000e1c  2d0d              CMP      r5,#0xd               ;469
-000e1e  d101              BNE      |L1.3620|
-000e20  f880402c          STRB     r4,[r0,#0x2c]         ;471
+000e1c  48c2              LDR      r0,|L1.4392|
+000e1e  2d0b              CMP      r5,#0xb               ;461
+000e20  d100              BNE      |L1.3620|
+000e22  8784              STRH     r4,[r0,#0x3c]         ;463
                   |L1.3620|
-000e24  2d0e              CMP      r5,#0xe               ;473
+000e24  2d0c              CMP      r5,#0xc               ;465
 000e26  d101              BNE      |L1.3628|
-000e28  f8804028          STRB     r4,[r0,#0x28]         ;475
+000e28  f8804038          STRB     r4,[r0,#0x38]         ;467
                   |L1.3628|
-000e2c  2d0f              CMP      r5,#0xf               ;477
+000e2c  2d0d              CMP      r5,#0xd               ;469
 000e2e  d101              BNE      |L1.3636|
-000e30  f8804024          STRB     r4,[r0,#0x24]         ;479
+000e30  f880402c          STRB     r4,[r0,#0x2c]         ;471
                   |L1.3636|
-000e34  2d10              CMP      r5,#0x10              ;481
+000e34  2d0e              CMP      r5,#0xe               ;473
 000e36  d101              BNE      |L1.3644|
-000e38  f8804020          STRB     r4,[r0,#0x20]         ;483
+000e38  f8804028          STRB     r4,[r0,#0x28]         ;475
                   |L1.3644|
-000e3c  2d14              CMP      r5,#0x14              ;485
-000e3e  d105              BNE      |L1.3660|
-000e40  2c12              CMP      r4,#0x12              ;487
-000e42  d803              BHI      |L1.3660|
-000e44  b221              SXTH     r1,r4                 ;488
-000e46  2098              MOVS     r0,#0x98              ;488
-000e48  f7fffffe          BL       lc640_write_int
+000e3c  2d0f              CMP      r5,#0xf               ;477
+000e3e  d101              BNE      |L1.3652|
+000e40  f8804024          STRB     r4,[r0,#0x24]         ;479
+                  |L1.3652|
+000e44  2d10              CMP      r5,#0x10              ;481
+000e46  d101              BNE      |L1.3660|
+000e48  f8804020          STRB     r4,[r0,#0x20]         ;483
                   |L1.3660|
-000e4c  2d15              CMP      r5,#0x15              ;490
-000e4e  d106              BNE      |L1.3678|
-000e50  b10c              CBZ      r4,|L1.3670|
-000e52  2c01              CMP      r4,#1                 ;492
-000e54  d103              BNE      |L1.3678|
-                  |L1.3670|
-000e56  b221              SXTH     r1,r4                 ;493
-000e58  20ca              MOVS     r0,#0xca              ;493
-000e5a  f7fffffe          BL       lc640_write_int
-                  |L1.3678|
-000e5e  2d16              CMP      r5,#0x16              ;495
-000e60  d106              BNE      |L1.3696|
-000e62  b10c              CBZ      r4,|L1.3688|
-000e64  2c01              CMP      r4,#1                 ;497
-000e66  d103              BNE      |L1.3696|
-                  |L1.3688|
-000e68  b221              SXTH     r1,r4                 ;498
-000e6a  2086              MOVS     r0,#0x86              ;498
-000e6c  f7fffffe          BL       lc640_write_int
-                  |L1.3696|
-000e70  e000              B        |L1.3700|
-                  |L1.3698|
-000e72  e123              B        |L1.4284|
-                  |L1.3700|
-000e74  2d17              CMP      r5,#0x17              ;500
-000e76  d106              BNE      |L1.3718|
-000e78  b10c              CBZ      r4,|L1.3710|
-000e7a  2c01              CMP      r4,#1                 ;502
-000e7c  d103              BNE      |L1.3718|
-                  |L1.3710|
-000e7e  b221              SXTH     r1,r4                 ;503
-000e80  20f2              MOVS     r0,#0xf2              ;503
-000e82  f7fffffe          BL       lc640_write_int
-                  |L1.3718|
-000e86  2d18              CMP      r5,#0x18              ;505
-000e88  d106              BNE      |L1.3736|
-000e8a  2c14              CMP      r4,#0x14              ;507
-000e8c  d804              BHI      |L1.3736|
-000e8e  b221              SXTH     r1,r4                 ;508
-000e90  f44f7019          MOV      r0,#0x264             ;508
-000e94  f7fffffe          BL       lc640_write_int
-                  |L1.3736|
-000e98  4e9d              LDR      r6,|L1.4368|
-000e9a  f8dfa278          LDR      r10,|L1.4372|
-000e9e  f06f0913          MVN      r9,#0x13              ;519
-000ea2  2d1e              CMP      r5,#0x1e              ;512
-000ea4  d118              BNE      |L1.3800|
-000ea6  1e60              SUBS     r0,r4,#1              ;514
-000ea8  2804              CMP      r0,#4                 ;514
-000eaa  d202              BCS      |L1.3762|
-000eac  f04f0400          MOV      r4,#0                 ;514
-000eb0  e006              B        |L1.3776|
-                  |L1.3762|
-000eb2  2c3c              CMP      r4,#0x3c              ;515
-000eb4  d303              BCC      |L1.3774|
-000eb6  f04f003c          MOV      r0,#0x3c              ;515
-000eba  8030              STRH     r0,[r6,#0]            ;515
-000ebc  e000              B        |L1.3776|
-                  |L1.3774|
-000ebe  8034              STRH     r4,[r6,#0]            ;516
-                  |L1.3776|
-000ec0  f9b61000          LDRSH    r1,[r6,#0]            ;517  ; TBAT
-000ec4  20c2              MOVS     r0,#0xc2              ;517
-000ec6  f7fffffe          BL       lc640_write_int
-000eca  8830              LDRH     r0,[r6,#0]            ;519  ; TBAT
-000ecc  ebc01000          RSB      r0,r0,r0,LSL #4       ;519
-000ed0  eb090080          ADD      r0,r9,r0,LSL #2       ;519
-000ed4  f8aa0000          STRH     r0,[r10,#0]           ;519
-                  |L1.3800|
-000ed8  2d1f              CMP      r5,#0x1f              ;521
-000eda  d103              BNE      |L1.3812|
-000edc  b221              SXTH     r1,r4                 ;523
-000ede  2078              MOVS     r0,#0x78              ;523
-000ee0  f7fffffe          BL       lc640_write_int
-                  |L1.3812|
-000ee4  2d20              CMP      r5,#0x20              ;525
-000ee6  d106              BNE      |L1.3830|
-000ee8  488b              LDR      r0,|L1.4376|
-000eea  8800              LDRH     r0,[r0,#0]            ;527  ; UB20
-000eec  1b00              SUBS     r0,r0,r4              ;527
-000eee  b201              SXTH     r1,r0                 ;527
-000ef0  20c8              MOVS     r0,#0xc8              ;527
-000ef2  f7fffffe          BL       lc640_write_int
-                  |L1.3830|
-000ef6  2d21              CMP      r5,#0x21              ;529
-000ef8  d103              BNE      |L1.3842|
-000efa  b221              SXTH     r1,r4                 ;531
-000efc  207a              MOVS     r0,#0x7a              ;531
-000efe  f7fffffe          BL       lc640_write_int
-                  |L1.3842|
-000f02  2d22              CMP      r5,#0x22              ;533
-000f04  d103              BNE      |L1.3854|
-000f06  b221              SXTH     r1,r4                 ;535
-000f08  207c              MOVS     r0,#0x7c              ;535
-000f0a  f7fffffe          BL       lc640_write_int
-                  |L1.3854|
-000f0e  2d23              CMP      r5,#0x23              ;537
-000f10  d103              BNE      |L1.3866|
-000f12  b221              SXTH     r1,r4                 ;539
-000f14  2082              MOVS     r0,#0x82              ;539
-000f16  f7fffffe          BL       lc640_write_int
-                  |L1.3866|
-000f1a  2d24              CMP      r5,#0x24              ;541
-000f1c  d103              BNE      |L1.3878|
-000f1e  b221              SXTH     r1,r4                 ;543
-000f20  2084              MOVS     r0,#0x84              ;543
-000f22  f7fffffe          BL       lc640_write_int
-                  |L1.3878|
-000f26  2d25              CMP      r5,#0x25              ;545
-000f28  d103              BNE      |L1.3890|
-000f2a  b221              SXTH     r1,r4                 ;547
-000f2c  2094              MOVS     r0,#0x94              ;547
-000f2e  f7fffffe          BL       lc640_write_int
-                  |L1.3890|
-000f32  2d26              CMP      r5,#0x26              ;549
-000f34  d103              BNE      |L1.3902|
-000f36  b221              SXTH     r1,r4                 ;551
-000f38  2088              MOVS     r0,#0x88              ;551
-000f3a  f7fffffe          BL       lc640_write_int
-                  |L1.3902|
-000f3e  2d27              CMP      r5,#0x27              ;553
-000f40  d103              BNE      |L1.3914|
-000f42  b221              SXTH     r1,r4                 ;555
-000f44  2092              MOVS     r0,#0x92              ;555
-000f46  f7fffffe          BL       lc640_write_int
-                  |L1.3914|
-000f4a  2d28              CMP      r5,#0x28              ;557
-000f4c  d103              BNE      |L1.3926|
-000f4e  b221              SXTH     r1,r4                 ;559
-000f50  208c              MOVS     r0,#0x8c              ;559
-000f52  f7fffffe          BL       lc640_write_int
-                  |L1.3926|
-000f56  2d29              CMP      r5,#0x29              ;561
-000f58  d103              BNE      |L1.3938|
-000f5a  b221              SXTH     r1,r4                 ;563
-000f5c  208e              MOVS     r0,#0x8e              ;563
-000f5e  f7fffffe          BL       lc640_write_int
-                  |L1.3938|
-000f62  2d2a              CMP      r5,#0x2a              ;565
-000f64  d103              BNE      |L1.3950|
-000f66  b221              SXTH     r1,r4                 ;567
-000f68  20de              MOVS     r0,#0xde              ;567
-000f6a  f7fffffe          BL       lc640_write_int
-                  |L1.3950|
-000f6e  2d2b              CMP      r5,#0x2b              ;569
-000f70  d105              BNE      |L1.3966|
-000f72  2c03              CMP      r4,#3                 ;571
-000f74  d803              BHI      |L1.3966|
-000f76  b221              SXTH     r1,r4                 ;571
-000f78  2096              MOVS     r0,#0x96              ;571
+000e4c  2d14              CMP      r5,#0x14              ;485
+000e4e  d105              BNE      |L1.3676|
+000e50  2c12              CMP      r4,#0x12              ;487
+000e52  d803              BHI      |L1.3676|
+000e54  b221              SXTH     r1,r4                 ;488
+000e56  2098              MOVS     r0,#0x98              ;488
+000e58  f7fffffe          BL       lc640_write_int
+                  |L1.3676|
+000e5c  2d15              CMP      r5,#0x15              ;490
+000e5e  d106              BNE      |L1.3694|
+000e60  b10c              CBZ      r4,|L1.3686|
+000e62  2c01              CMP      r4,#1                 ;492
+000e64  d103              BNE      |L1.3694|
+                  |L1.3686|
+000e66  b221              SXTH     r1,r4                 ;493
+000e68  20ca              MOVS     r0,#0xca              ;493
+000e6a  f7fffffe          BL       lc640_write_int
+                  |L1.3694|
+000e6e  2d16              CMP      r5,#0x16              ;495
+000e70  d106              BNE      |L1.3712|
+000e72  b10c              CBZ      r4,|L1.3704|
+000e74  2c01              CMP      r4,#1                 ;497
+000e76  d103              BNE      |L1.3712|
+                  |L1.3704|
+000e78  b221              SXTH     r1,r4                 ;498
+000e7a  2086              MOVS     r0,#0x86              ;498
+000e7c  f7fffffe          BL       lc640_write_int
+                  |L1.3712|
+000e80  e000              B        |L1.3716|
+                  |L1.3714|
+000e82  e124              B        |L1.4302|
+                  |L1.3716|
+000e84  2d17              CMP      r5,#0x17              ;500
+000e86  d106              BNE      |L1.3734|
+000e88  b10c              CBZ      r4,|L1.3726|
+000e8a  2c01              CMP      r4,#1                 ;502
+000e8c  d103              BNE      |L1.3734|
+                  |L1.3726|
+000e8e  b221              SXTH     r1,r4                 ;503
+000e90  20f2              MOVS     r0,#0xf2              ;503
+000e92  f7fffffe          BL       lc640_write_int
+                  |L1.3734|
+000e96  2d18              CMP      r5,#0x18              ;505
+000e98  d106              BNE      |L1.3752|
+000e9a  2c14              CMP      r4,#0x14              ;507
+000e9c  d804              BHI      |L1.3752|
+000e9e  b221              SXTH     r1,r4                 ;508
+000ea0  f44f7019          MOV      r0,#0x264             ;508
+000ea4  f7fffffe          BL       lc640_write_int
+                  |L1.3752|
+000ea8  4ea0              LDR      r6,|L1.4396|
+000eaa  f8dfa284          LDR      r10,|L1.4400|
+000eae  f06f0913          MVN      r9,#0x13              ;519
+000eb2  2d1e              CMP      r5,#0x1e              ;512
+000eb4  d118              BNE      |L1.3816|
+000eb6  1e60              SUBS     r0,r4,#1              ;514
+000eb8  2804              CMP      r0,#4                 ;514
+000eba  d202              BCS      |L1.3778|
+000ebc  f04f0400          MOV      r4,#0                 ;514
+000ec0  e006              B        |L1.3792|
+                  |L1.3778|
+000ec2  2c3c              CMP      r4,#0x3c              ;515
+000ec4  d303              BCC      |L1.3790|
+000ec6  f04f003c          MOV      r0,#0x3c              ;515
+000eca  8030              STRH     r0,[r6,#0]            ;515
+000ecc  e000              B        |L1.3792|
+                  |L1.3790|
+000ece  8034              STRH     r4,[r6,#0]            ;516
+                  |L1.3792|
+000ed0  f9b61000          LDRSH    r1,[r6,#0]            ;517  ; TBAT
+000ed4  20c2              MOVS     r0,#0xc2              ;517
+000ed6  f7fffffe          BL       lc640_write_int
+000eda  8830              LDRH     r0,[r6,#0]            ;519  ; TBAT
+000edc  ebc01000          RSB      r0,r0,r0,LSL #4       ;519
+000ee0  eb090080          ADD      r0,r9,r0,LSL #2       ;519
+000ee4  f8aa0000          STRH     r0,[r10,#0]           ;519
+                  |L1.3816|
+000ee8  2d1f              CMP      r5,#0x1f              ;521
+000eea  d103              BNE      |L1.3828|
+000eec  b221              SXTH     r1,r4                 ;523
+000eee  2078              MOVS     r0,#0x78              ;523
+000ef0  f7fffffe          BL       lc640_write_int
+                  |L1.3828|
+000ef4  2d20              CMP      r5,#0x20              ;525
+000ef6  d106              BNE      |L1.3846|
+000ef8  488e              LDR      r0,|L1.4404|
+000efa  8800              LDRH     r0,[r0,#0]            ;527  ; UB20
+000efc  1b00              SUBS     r0,r0,r4              ;527
+000efe  b201              SXTH     r1,r0                 ;527
+000f00  20c8              MOVS     r0,#0xc8              ;527
+000f02  f7fffffe          BL       lc640_write_int
+                  |L1.3846|
+000f06  2d21              CMP      r5,#0x21              ;529
+000f08  d103              BNE      |L1.3858|
+000f0a  b221              SXTH     r1,r4                 ;531
+000f0c  207a              MOVS     r0,#0x7a              ;531
+000f0e  f7fffffe          BL       lc640_write_int
+                  |L1.3858|
+000f12  2d22              CMP      r5,#0x22              ;533
+000f14  d103              BNE      |L1.3870|
+000f16  b221              SXTH     r1,r4                 ;535
+000f18  207c              MOVS     r0,#0x7c              ;535
+000f1a  f7fffffe          BL       lc640_write_int
+                  |L1.3870|
+000f1e  2d23              CMP      r5,#0x23              ;537
+000f20  d103              BNE      |L1.3882|
+000f22  b221              SXTH     r1,r4                 ;539
+000f24  2082              MOVS     r0,#0x82              ;539
+000f26  f7fffffe          BL       lc640_write_int
+                  |L1.3882|
+000f2a  2d24              CMP      r5,#0x24              ;541
+000f2c  d103              BNE      |L1.3894|
+000f2e  b221              SXTH     r1,r4                 ;543
+000f30  2084              MOVS     r0,#0x84              ;543
+000f32  f7fffffe          BL       lc640_write_int
+                  |L1.3894|
+000f36  2d25              CMP      r5,#0x25              ;545
+000f38  d103              BNE      |L1.3906|
+000f3a  b221              SXTH     r1,r4                 ;547
+000f3c  2094              MOVS     r0,#0x94              ;547
+000f3e  f7fffffe          BL       lc640_write_int
+                  |L1.3906|
+000f42  2d26              CMP      r5,#0x26              ;549
+000f44  d103              BNE      |L1.3918|
+000f46  b221              SXTH     r1,r4                 ;551
+000f48  2088              MOVS     r0,#0x88              ;551
+000f4a  f7fffffe          BL       lc640_write_int
+                  |L1.3918|
+000f4e  2d27              CMP      r5,#0x27              ;553
+000f50  d103              BNE      |L1.3930|
+000f52  b221              SXTH     r1,r4                 ;555
+000f54  2092              MOVS     r0,#0x92              ;555
+000f56  f7fffffe          BL       lc640_write_int
+                  |L1.3930|
+000f5a  2d28              CMP      r5,#0x28              ;557
+000f5c  d103              BNE      |L1.3942|
+000f5e  b221              SXTH     r1,r4                 ;559
+000f60  208c              MOVS     r0,#0x8c              ;559
+000f62  f7fffffe          BL       lc640_write_int
+                  |L1.3942|
+000f66  2d29              CMP      r5,#0x29              ;561
+000f68  d103              BNE      |L1.3954|
+000f6a  b221              SXTH     r1,r4                 ;563
+000f6c  208e              MOVS     r0,#0x8e              ;563
+000f6e  f7fffffe          BL       lc640_write_int
+                  |L1.3954|
+000f72  2d2a              CMP      r5,#0x2a              ;565
+000f74  d103              BNE      |L1.3966|
+000f76  b221              SXTH     r1,r4                 ;567
+000f78  20de              MOVS     r0,#0xde              ;567
 000f7a  f7fffffe          BL       lc640_write_int
                   |L1.3966|
-000f7e  2d2c              CMP      r5,#0x2c              ;573
-000f80  d103              BNE      |L1.3978|
-000f82  b221              SXTH     r1,r4                 ;575
-000f84  207e              MOVS     r0,#0x7e              ;575
-000f86  f7fffffe          BL       lc640_write_int
-                  |L1.3978|
-000f8a  2d2d              CMP      r5,#0x2d              ;577
-000f8c  d103              BNE      |L1.3990|
-000f8e  b221              SXTH     r1,r4                 ;579
-000f90  20c6              MOVS     r0,#0xc6              ;579
-000f92  f7fffffe          BL       lc640_write_int
-                  |L1.3990|
-000f96  2d2e              CMP      r5,#0x2e              ;581
-000f98  d103              BNE      |L1.4002|
-000f9a  b221              SXTH     r1,r4                 ;583
-000f9c  20cc              MOVS     r0,#0xcc              ;583
-000f9e  f7fffffe          BL       lc640_write_int
-                  |L1.4002|
-000fa2  2d2f              CMP      r5,#0x2f              ;585
-000fa4  d103              BNE      |L1.4014|
-000fa6  b221              SXTH     r1,r4                 ;587
-000fa8  20ce              MOVS     r0,#0xce              ;587
-000faa  f7fffffe          BL       lc640_write_int
-                  |L1.4014|
-000fae  2d30              CMP      r5,#0x30              ;589
-000fb0  d104              BNE      |L1.4028|
-000fb2  b221              SXTH     r1,r4                 ;591
-000fb4  f44f708b          MOV      r0,#0x116             ;591
-000fb8  f7fffffe          BL       lc640_write_int
-                  |L1.4028|
-000fbc  2d31              CMP      r5,#0x31              ;593
-000fbe  d104              BNE      |L1.4042|
-000fc0  b221              SXTH     r1,r4                 ;595
-000fc2  f44f708c          MOV      r0,#0x118             ;595
-000fc6  f7fffffe          BL       lc640_write_int
-                  |L1.4042|
-000fca  2d32              CMP      r5,#0x32              ;597
-000fcc  d104              BNE      |L1.4056|
-000fce  b221              SXTH     r1,r4                 ;599
-000fd0  f44f708d          MOV      r0,#0x11a             ;599
-000fd4  f7fffffe          BL       lc640_write_int
-                  |L1.4056|
-000fd8  2d33              CMP      r5,#0x33              ;601
-000fda  d104              BNE      |L1.4070|
-000fdc  b221              SXTH     r1,r4                 ;603
-000fde  f44f7095          MOV      r0,#0x12a             ;603
-000fe2  f7fffffe          BL       lc640_write_int
-                  |L1.4070|
-000fe6  2d34              CMP      r5,#0x34              ;605
-000fe8  d104              BNE      |L1.4084|
-000fea  b221              SXTH     r1,r4                 ;607
-000fec  f44f7096          MOV      r0,#0x12c             ;607
-000ff0  f7fffffe          BL       lc640_write_int
-                  |L1.4084|
-000ff4  2d35              CMP      r5,#0x35              ;609
-000ff6  d107              BNE      |L1.4104|
-000ff8  1f60              SUBS     r0,r4,#5              ;611
-000ffa  285f              CMP      r0,#0x5f              ;611
-000ffc  d804              BHI      |L1.4104|
-000ffe  b221              SXTH     r1,r4                 ;611
-001000  f44f7097          MOV      r0,#0x12e             ;611
-001004  f7fffffe          BL       lc640_write_int
-                  |L1.4104|
-001008  2d36              CMP      r5,#0x36              ;613
-00100a  d108              BNE      |L1.4126|
-00100c  b221              SXTH     r1,r4                 ;615
-00100e  468b              MOV      r11,r1                ;615
-001010  207a              MOVS     r0,#0x7a              ;615
-001012  f7fffffe          BL       lc640_write_int
-001016  4659              MOV      r1,r11                ;616
-001018  207c              MOVS     r0,#0x7c              ;616
-00101a  f7fffffe          BL       lc640_write_int
-                  |L1.4126|
-00101e  f04f0bc8          MOV      r11,#0xc8             ;527
-001022  2d64              CMP      r5,#0x64              ;664
-001024  d122              BNE      |L1.4204|
-001026  0460              LSLS     r0,r4,#17             ;667
-001028  d51b              BPL      |L1.4194|
-00102a  f3c4040d          UBFX     r4,r4,#0,#14          ;671
-00102e  f1a40001          SUB      r0,r4,#1              ;673
-001032  2804              CMP      r0,#4                 ;673
-001034  d202              BCS      |L1.4156|
-001036  f04f0400          MOV      r4,#0                 ;673
-00103a  e003              B        |L1.4164|
-                  |L1.4156|
-00103c  2c3c              CMP      r4,#0x3c              ;674
-00103e  db01              BLT      |L1.4164|
-001040  f04f043c          MOV      r4,#0x3c              ;674
-                  |L1.4164|
-001044  f9b60000          LDRSH    r0,[r6,#0]            ;676  ; TBAT
-001048  42a0              CMP      r0,r4                 ;676
-00104a  d003              BEQ      |L1.4180|
-00104c  4621              MOV      r1,r4                 ;676
-00104e  20c2              MOVS     r0,#0xc2              ;676
-001050  f7fffffe          BL       lc640_write_int
+000f7e  2d2b              CMP      r5,#0x2b              ;569
+000f80  d105              BNE      |L1.3982|
+000f82  2c03              CMP      r4,#3                 ;571
+000f84  d803              BHI      |L1.3982|
+000f86  b221              SXTH     r1,r4                 ;571
+000f88  2096              MOVS     r0,#0x96              ;571
+000f8a  f7fffffe          BL       lc640_write_int
+                  |L1.3982|
+000f8e  2d2c              CMP      r5,#0x2c              ;573
+000f90  d103              BNE      |L1.3994|
+000f92  b221              SXTH     r1,r4                 ;575
+000f94  207e              MOVS     r0,#0x7e              ;575
+000f96  f7fffffe          BL       lc640_write_int
+                  |L1.3994|
+000f9a  2d2d              CMP      r5,#0x2d              ;577
+000f9c  d103              BNE      |L1.4006|
+000f9e  b221              SXTH     r1,r4                 ;579
+000fa0  20c6              MOVS     r0,#0xc6              ;579
+000fa2  f7fffffe          BL       lc640_write_int
+                  |L1.4006|
+000fa6  2d2e              CMP      r5,#0x2e              ;581
+000fa8  d103              BNE      |L1.4018|
+000faa  b221              SXTH     r1,r4                 ;583
+000fac  20cc              MOVS     r0,#0xcc              ;583
+000fae  f7fffffe          BL       lc640_write_int
+                  |L1.4018|
+000fb2  2d2f              CMP      r5,#0x2f              ;585
+000fb4  d103              BNE      |L1.4030|
+000fb6  b221              SXTH     r1,r4                 ;587
+000fb8  20ce              MOVS     r0,#0xce              ;587
+000fba  f7fffffe          BL       lc640_write_int
+                  |L1.4030|
+000fbe  2d30              CMP      r5,#0x30              ;589
+000fc0  d104              BNE      |L1.4044|
+000fc2  b221              SXTH     r1,r4                 ;591
+000fc4  f44f708b          MOV      r0,#0x116             ;591
+000fc8  f7fffffe          BL       lc640_write_int
+                  |L1.4044|
+000fcc  2d31              CMP      r5,#0x31              ;593
+000fce  d104              BNE      |L1.4058|
+000fd0  b221              SXTH     r1,r4                 ;595
+000fd2  f44f708c          MOV      r0,#0x118             ;595
+000fd6  f7fffffe          BL       lc640_write_int
+                  |L1.4058|
+000fda  2d32              CMP      r5,#0x32              ;597
+000fdc  d104              BNE      |L1.4072|
+000fde  b221              SXTH     r1,r4                 ;599
+000fe0  f44f708d          MOV      r0,#0x11a             ;599
+000fe4  f7fffffe          BL       lc640_write_int
+                  |L1.4072|
+000fe8  2d33              CMP      r5,#0x33              ;601
+000fea  d104              BNE      |L1.4086|
+000fec  b221              SXTH     r1,r4                 ;603
+000fee  f44f7095          MOV      r0,#0x12a             ;603
+000ff2  f7fffffe          BL       lc640_write_int
+                  |L1.4086|
+000ff6  2d34              CMP      r5,#0x34              ;605
+000ff8  d104              BNE      |L1.4100|
+000ffa  b221              SXTH     r1,r4                 ;607
+000ffc  f44f7096          MOV      r0,#0x12c             ;607
+001000  f7fffffe          BL       lc640_write_int
+                  |L1.4100|
+001004  2d35              CMP      r5,#0x35              ;609
+001006  d107              BNE      |L1.4120|
+001008  1f60              SUBS     r0,r4,#5              ;611
+00100a  285f              CMP      r0,#0x5f              ;611
+00100c  d804              BHI      |L1.4120|
+00100e  b221              SXTH     r1,r4                 ;611
+001010  f44f7097          MOV      r0,#0x12e             ;611
+001014  f7fffffe          BL       lc640_write_int
+                  |L1.4120|
+001018  2d36              CMP      r5,#0x36              ;613
+00101a  d108              BNE      |L1.4142|
+00101c  b221              SXTH     r1,r4                 ;615
+00101e  468b              MOV      r11,r1                ;615
+001020  207a              MOVS     r0,#0x7a              ;615
+001022  f7fffffe          BL       lc640_write_int
+001026  4659              MOV      r1,r11                ;616
+001028  207c              MOVS     r0,#0x7c              ;616
+00102a  f7fffffe          BL       lc640_write_int
+                  |L1.4142|
+00102e  f04f0bc8          MOV      r11,#0xc8             ;527
+001032  2d64              CMP      r5,#0x64              ;664
+001034  d122              BNE      |L1.4220|
+001036  0460              LSLS     r0,r4,#17             ;667
+001038  d51b              BPL      |L1.4210|
+00103a  f3c4040d          UBFX     r4,r4,#0,#14          ;671
+00103e  f1a40001          SUB      r0,r4,#1              ;673
+001042  2804              CMP      r0,#4                 ;673
+001044  d202              BCS      |L1.4172|
+001046  f04f0400          MOV      r4,#0                 ;673
+00104a  e003              B        |L1.4180|
+                  |L1.4172|
+00104c  2c3c              CMP      r4,#0x3c              ;674
+00104e  db01              BLT      |L1.4180|
+001050  f04f043c          MOV      r4,#0x3c              ;674
                   |L1.4180|
-001054  ebc41004          RSB      r0,r4,r4,LSL #4       ;678
-001058  eb090080          ADD      r0,r9,r0,LSL #2       ;678
-00105c  f8aa0000          STRH     r0,[r10,#0]           ;678
-001060  e001              B        |L1.4198|
-                  |L1.4194|
-001062  482e              LDR      r0,|L1.4380|
-001064  8004              STRH     r4,[r0,#0]            ;680
-                  |L1.4198|
-001066  482e              LDR      r0,|L1.4384|
-001068  f8a0b000          STRH     r11,[r0,#0]           ;681
-                  |L1.4204|
-00106c  2d65              CMP      r5,#0x65              ;685
-00106e  d102              BNE      |L1.4214|
-001070  482b              LDR      r0,|L1.4384|
-001072  f8a0b000          STRH     r11,[r0,#0]           ;688
+001054  f9b60000          LDRSH    r0,[r6,#0]            ;676  ; TBAT
+001058  42a0              CMP      r0,r4                 ;676
+00105a  d003              BEQ      |L1.4196|
+00105c  4621              MOV      r1,r4                 ;676
+00105e  20c2              MOVS     r0,#0xc2              ;676
+001060  f7fffffe          BL       lc640_write_int
+                  |L1.4196|
+001064  ebc41004          RSB      r0,r4,r4,LSL #4       ;678
+001068  eb090080          ADD      r0,r9,r0,LSL #2       ;678
+00106c  f8aa0000          STRH     r0,[r10,#0]           ;678
+001070  e001              B        |L1.4214|
+                  |L1.4210|
+001072  4831              LDR      r0,|L1.4408|
+001074  8004              STRH     r4,[r0,#0]            ;680
                   |L1.4214|
-001076  492b              LDR      r1,|L1.4388|
-001078  2208              MOVS     r2,#8                 ;696
-00107a  f101003c          ADD      r0,r1,#0x3c           ;696
-00107e  f7fffffe          BL       mem_copy
-001082  f8878000          STRB     r8,[r7,#0]            ;698
-001086  4c27              LDR      r4,|L1.4388|
-001088  343c              ADDS     r4,r4,#0x3c           ;696
-                  |L1.4234|
-00108a  7838              LDRB     r0,[r7,#0]            ;700  ; i
-00108c  5c20              LDRB     r0,[r4,r0]            ;700
-00108e  f7fffffe          BL       putchar0
-001092  7838              LDRB     r0,[r7,#0]            ;698  ; i
-001094  f1000001          ADD      r0,r0,#1              ;698
-001098  b2c0              UXTB     r0,r0                 ;698
-00109a  7038              STRB     r0,[r7,#0]            ;698
-00109c  2808              CMP      r0,#8                 ;698
-00109e  d3f4              BCC      |L1.4234|
-0010a0  f8878000          STRB     r8,[r7,#0]            ;703
-                  |L1.4260|
-0010a4  7838              LDRB     r0,[r7,#0]            ;705  ; i
-0010a6  5c20              LDRB     r0,[r4,r0]            ;705
-0010a8  f7fffffe          BL       putchar_sc16is700
-0010ac  7838              LDRB     r0,[r7,#0]            ;703  ; i
-0010ae  f1000001          ADD      r0,r0,#1              ;703
-0010b2  b2c0              UXTB     r0,r0                 ;703
-0010b4  7038              STRB     r0,[r7,#0]            ;703
-0010b6  2808              CMP      r0,#8                 ;703
-0010b8  d3f4              BCC      |L1.4260|
-                  |L1.4282|
-0010ba  e695              B        |L1.3560|
-                  |L1.4284|
-0010bc  481a              LDR      r0,|L1.4392|
-0010be  f9b00000          LDRSH    r0,[r0,#0]            ;726  ; ICA_MODBUS_ADDRESS
-0010c2  4281              CMP      r1,r0                 ;726
-0010c4  d1f9              BNE      |L1.4282|
-0010c6  78d0              LDRB     r0,[r2,#3]            ;728  ; ica_plazma
-0010c8  f1000001          ADD      r0,r0,#1              ;728
-0010cc  70d0              STRB     r0,[r2,#3]            ;728
-0010ce  2e04              CMP      r6,#4                 ;729
-0010d0  d1f3              BNE      |L1.4282|
-0010d2  7890              LDRB     r0,[r2,#2]            ;731  ; ica_plazma
-0010d4  f1000001          ADD      r0,r0,#1              ;731
-0010d8  7090              STRB     r0,[r2,#2]            ;731
-0010da  f8990002          LDRB     r0,[r9,#2]            ;732  ; modbus_an_buffer
-0010de  2802              CMP      r0,#2                 ;732
-0010e0  d1eb              BNE      |L1.4282|
-0010e2  f8990004          LDRB     r0,[r9,#4]            ;734  ; modbus_an_buffer
-0010e6  f8991003          LDRB     r1,[r9,#3]            ;734  ; modbus_an_buffer
-0010ea  eb002001          ADD      r0,r0,r1,LSL #8       ;734
-0010ee  490f              LDR      r1,|L1.4396|
-0010f0  8008              STRH     r0,[r1,#0]            ;734
-0010f2  e679              B        |L1.3560|
+001076  4831              LDR      r0,|L1.4412|
+001078  f8a0b000          STRH     r11,[r0,#0]           ;681
+                  |L1.4220|
+00107c  2d65              CMP      r5,#0x65              ;685
+00107e  d102              BNE      |L1.4230|
+001080  482e              LDR      r0,|L1.4412|
+001082  f8a0b000          STRH     r11,[r0,#0]           ;688
+                  |L1.4230|
+001086  4921              LDR      r1,|L1.4364|
+001088  2208              MOVS     r2,#8                 ;696
+00108a  391e              SUBS     r1,r1,#0x1e           ;696
+00108c  f101003c          ADD      r0,r1,#0x3c           ;696
+001090  f7fffffe          BL       mem_copy
+001094  f8878000          STRB     r8,[r7,#0]            ;698
+001098  4c1c              LDR      r4,|L1.4364|
+00109a  341e              ADDS     r4,r4,#0x1e           ;696
+                  |L1.4252|
+00109c  7838              LDRB     r0,[r7,#0]            ;700  ; i
+00109e  5c20              LDRB     r0,[r4,r0]            ;700
+0010a0  f7fffffe          BL       putchar0
+0010a4  7838              LDRB     r0,[r7,#0]            ;698  ; i
+0010a6  f1000001          ADD      r0,r0,#1              ;698
+0010aa  b2c0              UXTB     r0,r0                 ;698
+0010ac  7038              STRB     r0,[r7,#0]            ;698
+0010ae  2808              CMP      r0,#8                 ;698
+0010b0  d3f4              BCC      |L1.4252|
+0010b2  f8878000          STRB     r8,[r7,#0]            ;703
+                  |L1.4278|
+0010b6  7838              LDRB     r0,[r7,#0]            ;705  ; i
+0010b8  5c20              LDRB     r0,[r4,r0]            ;705
+0010ba  f7fffffe          BL       putchar_sc16is700
+0010be  7838              LDRB     r0,[r7,#0]            ;703  ; i
+0010c0  f1000001          ADD      r0,r0,#1              ;703
+0010c4  b2c0              UXTB     r0,r0                 ;703
+0010c6  7038              STRB     r0,[r7,#0]            ;703
+0010c8  2808              CMP      r0,#8                 ;703
+0010ca  d3f4              BCC      |L1.4278|
+                  |L1.4300|
+0010cc  e694              B        |L1.3576|
+                  |L1.4302|
+0010ce  481c              LDR      r0,|L1.4416|
+0010d0  f9b00000          LDRSH    r0,[r0,#0]            ;726  ; ICA_MODBUS_ADDRESS
+0010d4  4281              CMP      r1,r0                 ;726
+0010d6  d1f9              BNE      |L1.4300|
+0010d8  78d0              LDRB     r0,[r2,#3]            ;728  ; ica_plazma
+0010da  f1000001          ADD      r0,r0,#1              ;728
+0010de  70d0              STRB     r0,[r2,#3]            ;728
+0010e0  2e04              CMP      r6,#4                 ;729
+0010e2  d1f3              BNE      |L1.4300|
+0010e4  7890              LDRB     r0,[r2,#2]            ;731  ; ica_plazma
+0010e6  f1000001          ADD      r0,r0,#1              ;731
+0010ea  7090              STRB     r0,[r2,#2]            ;731
+0010ec  f8990002          LDRB     r0,[r9,#2]            ;732  ; modbus_an_buffer
+0010f0  2802              CMP      r0,#2                 ;732
+0010f2  d1eb              BNE      |L1.4300|
+0010f4  f8990004          LDRB     r0,[r9,#4]            ;734  ; modbus_an_buffer
+0010f8  f8991003          LDRB     r1,[r9,#3]            ;734  ; modbus_an_buffer
+0010fc  eb002001          ADD      r0,r0,r1,LSL #8       ;734
+001100  4910              LDR      r1,|L1.4420|
+001102  8008              STRH     r0,[r1,#0]            ;734
+001104  e678              B        |L1.3576|
 ;;;743    /*
                           ENDP
 
-                  |L1.4340|
-                          DCD      MODBUS_ADRESS
-                  |L1.4344|
-                          DCD      modbus_modbus_adress_eq
-                  |L1.4348|
-                          DCD      ||area_number.9||
-                  |L1.4352|
-                          DCD      snmp_enmv_data
-                  |L1.4356|
-                          DCD      enmv_on
+001106  0000              DCW      0x0000
                   |L1.4360|
-                          DCD      modbus_modbus4f_cnt
+                          DCD      ica_plazma
                   |L1.4364|
-                          DCD      0x40024000
+                          DCD      ||area_number.5||+0x1e
                   |L1.4368|
-                          DCD      TBAT
+                          DCD      MODBUS_ADRESS
                   |L1.4372|
-                          DCD      main_kb_cnt
+                          DCD      modbus_modbus_adress_eq
                   |L1.4376|
-                          DCD      UB20
+                          DCD      ||area_number.9||
                   |L1.4380|
-                          DCD      ica_cntrl_hndl
+                          DCD      snmp_enmv_data
                   |L1.4384|
-                          DCD      ica_cntrl_hndl_cnt
+                          DCD      enmv_on
                   |L1.4388|
-                          DCD      ||area_number.5||
+                          DCD      modbus_modbus4f_cnt
                   |L1.4392|
-                          DCD      ICA_MODBUS_ADDRESS
+                          DCD      0x40024000
                   |L1.4396|
+                          DCD      TBAT
+                  |L1.4400|
+                          DCD      main_kb_cnt
+                  |L1.4404|
+                          DCD      UB20
+                  |L1.4408|
+                          DCD      ica_cntrl_hndl
+                  |L1.4412|
+                          DCD      ica_cntrl_hndl_cnt
+                  |L1.4416|
+                          DCD      ICA_MODBUS_ADDRESS
+                  |L1.4420|
                           DCD      ica_your_current
 
                           AREA ||area_number.2||, CODE, READONLY, ALIGN=2

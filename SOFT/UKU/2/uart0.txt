@@ -1462,30 +1462,31 @@
 000036  8800              LDRH     r0,[r0,#0]  ; t_ext
 000038  f8ad000c          STRH     r0,[sp,#0xc]
 00003c  4817              LDR      r0,|L5.156|
-00003e  69c1              LDR      r1,[r0,#0x1c]  ; bps
+00003e  6801              LDR      r1,[r0,#0]  ; bps
 000040  f8ad100e          STRH     r1,[sp,#0xe]
-000044  6a41              LDR      r1,[r0,#0x24]  ; bps
+000044  6881              LDR      r1,[r0,#8]  ; bps
 000046  f8ad1010          STRH     r1,[sp,#0x10]
-00004a  6a81              LDR      r1,[r0,#0x28]  ; bps
+00004a  68c1              LDR      r1,[r0,#0xc]  ; bps
 00004c  f8ad1012          STRH     r1,[sp,#0x12]
-000050  7841              LDRB     r1,[r0,#1]  ; bps
-000052  f8ad1014          STRH     r1,[sp,#0x14]
-000056  6f81              LDR      r1,[r0,#0x78]  ; bps
-000058  f8ad1016          STRH     r1,[sp,#0x16]
-00005c  f8d01080          LDR      r1,[r0,#0x80]  ; bps
+000050  f8101c1b          LDRB     r1,[r0,#-0x1b]  ; bps
+000054  f8ad1014          STRH     r1,[sp,#0x14]
+000058  6e41              LDR      r1,[r0,#0x64]  ; bps
+00005a  f8ad1016          STRH     r1,[sp,#0x16]
+00005e  6ec1              LDR      r1,[r0,#0x6c]  ; bps
 000060  f8ad1018          STRH     r1,[sp,#0x18]
-000064  f8d01084          LDR      r1,[r0,#0x84]  ; bps
-000068  f8ad101a          STRH     r1,[sp,#0x1a]
-00006c  f890005d          LDRB     r0,[r0,#0x5d]  ; bps
-000070  f8ad001c          STRH     r0,[sp,#0x1c]
-000074  211e              MOVS     r1,#0x1e
-000076  4668              MOV      r0,sp
-000078  f7fffffe          BL       uart_out_adr0
-00007c  b00f              ADD      sp,sp,#0x3c
-00007e  bd00              POP      {pc}
+000064  6f01              LDR      r1,[r0,#0x70]  ; bps
+000066  f8ad101a          STRH     r1,[sp,#0x1a]
+00006a  f8900049          LDRB     r0,[r0,#0x49]  ; bps
+00006e  f8ad001c          STRH     r0,[sp,#0x1c]
+000072  211e              MOVS     r1,#0x1e
+000074  4668              MOV      r0,sp
+000076  f7fffffe          BL       uart_out_adr0
+00007a  b00f              ADD      sp,sp,#0x3c
+00007c  bd00              POP      {pc}
 ;;;91     
                           ENDP
 
+00007e  0000              DCW      0x0000
                   |L5.128|
                           DCD      avar_stat
                   |L5.132|
@@ -1501,7 +1502,7 @@
                   |L5.152|
                           DCD      t_ext
                   |L5.156|
-                          DCD      bps
+                          DCD      bps+0x1c
 
                           AREA ||area_number.6||, CODE, READONLY, ALIGN=2
 
@@ -1551,30 +1552,31 @@
 000046  8800              LDRH     r0,[r0,#0]  ; t_ext
 000048  f8ad0010          STRH     r0,[sp,#0x10]
 00004c  4819              LDR      r0,|L6.180|
-00004e  69c1              LDR      r1,[r0,#0x1c]  ; bps
+00004e  6801              LDR      r1,[r0,#0]  ; bps
 000050  f8ad1012          STRH     r1,[sp,#0x12]
-000054  6a41              LDR      r1,[r0,#0x24]  ; bps
+000054  6881              LDR      r1,[r0,#8]  ; bps
 000056  f8ad1014          STRH     r1,[sp,#0x14]
-00005a  6a81              LDR      r1,[r0,#0x28]  ; bps
+00005a  68c1              LDR      r1,[r0,#0xc]  ; bps
 00005c  f8ad1016          STRH     r1,[sp,#0x16]
-000060  7841              LDRB     r1,[r0,#1]  ; bps
-000062  f8ad1018          STRH     r1,[sp,#0x18]
-000066  6f81              LDR      r1,[r0,#0x78]  ; bps
-000068  f8ad101a          STRH     r1,[sp,#0x1a]
-00006c  f8d01080          LDR      r1,[r0,#0x80]  ; bps
+000060  f8101c1b          LDRB     r1,[r0,#-0x1b]  ; bps
+000064  f8ad1018          STRH     r1,[sp,#0x18]
+000068  6e41              LDR      r1,[r0,#0x64]  ; bps
+00006a  f8ad101a          STRH     r1,[sp,#0x1a]
+00006e  6ec1              LDR      r1,[r0,#0x6c]  ; bps
 000070  f8ad101c          STRH     r1,[sp,#0x1c]
-000074  f8d01084          LDR      r1,[r0,#0x84]  ; bps
-000078  f8ad101e          STRH     r1,[sp,#0x1e]
-00007c  f890005d          LDRB     r0,[r0,#0x5d]  ; bps
-000080  f8ad0020          STRH     r0,[sp,#0x20]
-000084  2122              MOVS     r1,#0x22
-000086  4668              MOV      r0,sp
-000088  f7fffffe          BL       uart_out_adr0
-00008c  b00f              ADD      sp,sp,#0x3c
-00008e  bd00              POP      {pc}
+000074  6f01              LDR      r1,[r0,#0x70]  ; bps
+000076  f8ad101e          STRH     r1,[sp,#0x1e]
+00007a  f8900049          LDRB     r0,[r0,#0x49]  ; bps
+00007e  f8ad0020          STRH     r0,[sp,#0x20]
+000082  2122              MOVS     r1,#0x22
+000084  4668              MOV      r0,sp
+000086  f7fffffe          BL       uart_out_adr0
+00008a  b00f              ADD      sp,sp,#0x3c
+00008c  bd00              POP      {pc}
 ;;;91     
                           ENDP
 
+00008e  0000              DCW      0x0000
                   |L6.144|
                           DCD      avar_stat
                   |L6.148|
@@ -1594,7 +1596,7 @@
                   |L6.176|
                           DCD      t_ext
                   |L6.180|
-                          DCD      bps
+                          DCD      bps+0x1c
 
                           AREA ||area_number.7||, CODE, READONLY, ALIGN=2
 
@@ -1644,49 +1646,50 @@
 000046  8800              LDRH     r0,[r0,#0]  ; t_ext
 000048  f8ad0010          STRH     r0,[sp,#0x10]
 00004c  482b              LDR      r0,|L7.252|
-00004e  69c1              LDR      r1,[r0,#0x1c]  ; bps
+00004e  6801              LDR      r1,[r0,#0]  ; bps
 000050  f8ad1012          STRH     r1,[sp,#0x12]
-000054  6a41              LDR      r1,[r0,#0x24]  ; bps
+000054  6881              LDR      r1,[r0,#8]  ; bps
 000056  f8ad1014          STRH     r1,[sp,#0x14]
-00005a  6a81              LDR      r1,[r0,#0x28]  ; bps
+00005a  68c1              LDR      r1,[r0,#0xc]  ; bps
 00005c  f8ad1016          STRH     r1,[sp,#0x16]
-000060  7841              LDRB     r1,[r0,#1]  ; bps
-000062  f8ad1018          STRH     r1,[sp,#0x18]
-000066  6f81              LDR      r1,[r0,#0x78]  ; bps
-000068  f8ad101a          STRH     r1,[sp,#0x1a]
-00006c  f8d01080          LDR      r1,[r0,#0x80]  ; bps
+000060  f8101c1b          LDRB     r1,[r0,#-0x1b]  ; bps
+000064  f8ad1018          STRH     r1,[sp,#0x18]
+000068  6e41              LDR      r1,[r0,#0x64]  ; bps
+00006a  f8ad101a          STRH     r1,[sp,#0x1a]
+00006e  6ec1              LDR      r1,[r0,#0x6c]  ; bps
 000070  f8ad101c          STRH     r1,[sp,#0x1c]
-000074  f8d01084          LDR      r1,[r0,#0x84]  ; bps
-000078  f8ad101e          STRH     r1,[sp,#0x1e]
-00007c  f890105d          LDRB     r1,[r0,#0x5d]  ; bps
-000080  f8ad1020          STRH     r1,[sp,#0x20]
-000084  f8d010d4          LDR      r1,[r0,#0xd4]  ; bps
-000088  f8ad1022          STRH     r1,[sp,#0x22]
-00008c  f8d010dc          LDR      r1,[r0,#0xdc]  ; bps
-000090  f8ad1024          STRH     r1,[sp,#0x24]
-000094  f8d010e0          LDR      r1,[r0,#0xe0]  ; bps
-000098  f8ad1026          STRH     r1,[sp,#0x26]
-00009c  f89010b9          LDRB     r1,[r0,#0xb9]  ; bps
-0000a0  f8ad1028          STRH     r1,[sp,#0x28]
-0000a4  f8d01130          LDR      r1,[r0,#0x130]  ; bps
-0000a8  f8ad102a          STRH     r1,[sp,#0x2a]
-0000ac  f8d01138          LDR      r1,[r0,#0x138]  ; bps
-0000b0  f8ad102c          STRH     r1,[sp,#0x2c]
-0000b4  f8d0113c          LDR      r1,[r0,#0x13c]  ; bps
-0000b8  f8ad102e          STRH     r1,[sp,#0x2e]
-0000bc  f8900115          LDRB     r0,[r0,#0x115]  ; bps
-0000c0  f8ad0030          STRH     r0,[sp,#0x30]
-0000c4  480e              LDR      r0,|L7.256|
-0000c6  8800              LDRH     r0,[r0,#0]  ; Ib_ips_termokompensat
-0000c8  f8ad0032          STRH     r0,[sp,#0x32]
-0000cc  2134              MOVS     r1,#0x34
-0000ce  4668              MOV      r0,sp
-0000d0  f7fffffe          BL       uart_out_adr0
-0000d4  b00f              ADD      sp,sp,#0x3c
-0000d6  bd00              POP      {pc}
+000074  6f01              LDR      r1,[r0,#0x70]  ; bps
+000076  f8ad101e          STRH     r1,[sp,#0x1e]
+00007a  f8901049          LDRB     r1,[r0,#0x49]  ; bps
+00007e  f8ad1020          STRH     r1,[sp,#0x20]
+000082  f8d010c8          LDR      r1,[r0,#0xc8]  ; bps
+000086  f8ad1022          STRH     r1,[sp,#0x22]
+00008a  f8d010d0          LDR      r1,[r0,#0xd0]  ; bps
+00008e  f8ad1024          STRH     r1,[sp,#0x24]
+000092  f8d010d4          LDR      r1,[r0,#0xd4]  ; bps
+000096  f8ad1026          STRH     r1,[sp,#0x26]
+00009a  f89010ad          LDRB     r1,[r0,#0xad]  ; bps
+00009e  f8ad1028          STRH     r1,[sp,#0x28]
+0000a2  f8d0112c          LDR      r1,[r0,#0x12c]  ; bps
+0000a6  f8ad102a          STRH     r1,[sp,#0x2a]
+0000aa  f8d01134          LDR      r1,[r0,#0x134]  ; bps
+0000ae  f8ad102c          STRH     r1,[sp,#0x2c]
+0000b2  f8d01138          LDR      r1,[r0,#0x138]  ; bps
+0000b6  f8ad102e          STRH     r1,[sp,#0x2e]
+0000ba  f8900111          LDRB     r0,[r0,#0x111]  ; bps
+0000be  f8ad0030          STRH     r0,[sp,#0x30]
+0000c2  480f              LDR      r0,|L7.256|
+0000c4  8800              LDRH     r0,[r0,#0]  ; Ib_ips_termokompensat
+0000c6  f8ad0032          STRH     r0,[sp,#0x32]
+0000ca  2134              MOVS     r1,#0x34
+0000cc  4668              MOV      r0,sp
+0000ce  f7fffffe          BL       uart_out_adr0
+0000d2  b00f              ADD      sp,sp,#0x3c
+0000d4  bd00              POP      {pc}
 ;;;91     
                           ENDP
 
+0000d6  0000              DCW      0x0000
                   |L7.216|
                           DCD      avar_stat
                   |L7.220|
@@ -1706,7 +1709,7 @@
                   |L7.248|
                           DCD      t_ext
                   |L7.252|
-                          DCD      bps
+                          DCD      bps+0x1c
                   |L7.256|
                           DCD      Ib_ips_termokompensat
 

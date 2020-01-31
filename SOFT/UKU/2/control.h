@@ -198,6 +198,8 @@ extern char bat_hndl_i_vector,bat_hndl_i_vector_old;
 extern long bat_hndl_i_zar_price;
 extern long bat_hndl_i_summ;
 
+extern char avar_bps_reset_cnt;
+
 extern char cntrl_hndl_plazma;
 
 extern short plazma_ica1,plazma_ica2;

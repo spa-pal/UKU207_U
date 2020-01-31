@@ -2,7 +2,7 @@
 
 const short HARDVARE_VERSION = 10;
 const short SOFT_VERSION = 19;
-const short BUILD = 533;
-const short BUILD_YEAR = 2019;
-const short BUILD_MONTH = 10;
-const short BUILD_DAY = 28;
+const short BUILD = 573;
+const short BUILD_YEAR = 2020;
+const short BUILD_MONTH = 1;
+const short BUILD_DAY = 22;

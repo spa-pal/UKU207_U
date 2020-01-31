@@ -1576,16 +1576,16 @@
 00092c  f04f0502          MOV      r5,#2
 000930  f8aa5002          STRH     r5,[r10,#2]
 ;;;427    snmp_bps_voltage[1]=bps[1]._Uii;
-000934  f8d95078          LDR      r5,[r9,#0x78]  ; bps
+000934  f8d95080          LDR      r5,[r9,#0x80]  ; bps
 000938  f8ab5002          STRH     r5,[r11,#2]
 ;;;428    snmp_bps_current[1]=bps[1]._Ii;
-00093c  f8d95080          LDR      r5,[r9,#0x80]  ; bps
+00093c  f8d95088          LDR      r5,[r9,#0x88]  ; bps
 000940  f8ae5002          STRH     r5,[lr,#2]
 ;;;429    snmp_bps_temperature[1]=bps[1]._Ti;
-000944  f8d95084          LDR      r5,[r9,#0x84]  ; bps
+000944  f8d9508c          LDR      r5,[r9,#0x8c]  ; bps
 000948  f8a85002          STRH     r5,[r8,#2]
 ;;;430    snmp_bps_stat[1]=bps[1]._av;
-00094c  f899505d          LDRB     r5,[r9,#0x5d]  ; bps
+00094c  f8995065          LDRB     r5,[r9,#0x65]  ; bps
 000950  f8ac5002          STRH     r5,[r12,#2]
 ;;;431    if(!(NUMIST>1))snmp_bps_stat[1]=0xff;												//Байт состояния БПСа.
 000954  2801              CMP      r0,#1
@@ -1604,13 +1604,13 @@
 000960  f8aa5004          STRH     r5,[r10,#4]
 ;;;440    snmp_bps_voltage[2]=bps[2]._Uii;
 000964  4d52              LDR      r5,|L1.2736|
-000966  f8d590d4          LDR      r9,[r5,#0xd4]  ; bps
+000966  f8d590e4          LDR      r9,[r5,#0xe4]  ; bps
 00096a  f8ab9004          STRH     r9,[r11,#4]
 ;;;441    snmp_bps_current[2]=bps[2]._Ii;
-00096e  f8d590dc          LDR      r9,[r5,#0xdc]  ; bps
+00096e  f8d590ec          LDR      r9,[r5,#0xec]  ; bps
 000972  f8ae9004          STRH     r9,[lr,#4]
 ;;;442    snmp_bps_temperature[2]=bps[2]._Ti;
-000976  f8d590e0          LDR      r9,[r5,#0xe0]  ; bps
+000976  f8d590f0          LDR      r9,[r5,#0xf0]  ; bps
 00097a  f8a89004          STRH     r9,[r8,#4]
 ;;;443    snmp_bps_stat[2]=bps[2]._av;
 00097e  e099              B        |L1.2740|
@@ -1746,7 +1746,7 @@
                   |L1.2736|
                           DCD      bps
                   |L1.2740|
-000ab4  f89550b9          LDRB     r5,[r5,#0xb9]  ; bps
+000ab4  f89550c9          LDRB     r5,[r5,#0xc9]  ; bps
 000ab8  f8ac5004          STRH     r5,[r12,#4]
 ;;;444    if(!(NUMIST>2))snmp_bps_stat[2]=0xff;
 000abc  2802              CMP      r0,#2
@@ -1759,16 +1759,16 @@
 000ac8  f8aa5006          STRH     r5,[r10,#6]
 ;;;447    snmp_bps_voltage[3]=bps[3]._Uii;
 000acc  4dff              LDR      r5,|L1.3788|
-000ace  f8d59130          LDR      r9,[r5,#0x130]  ; bps
+000ace  f8d59148          LDR      r9,[r5,#0x148]  ; bps
 000ad2  f8ab9006          STRH     r9,[r11,#6]
 ;;;448    snmp_bps_current[3]=bps[3]._Ii;
-000ad6  f8d59138          LDR      r9,[r5,#0x138]  ; bps
+000ad6  f8d59150          LDR      r9,[r5,#0x150]  ; bps
 000ada  f8ae9006          STRH     r9,[lr,#6]
 ;;;449    snmp_bps_temperature[3]=bps[3]._Ti;
-000ade  f8d5913c          LDR      r9,[r5,#0x13c]  ; bps
+000ade  f8d59154          LDR      r9,[r5,#0x154]  ; bps
 000ae2  f8a89006          STRH     r9,[r8,#6]
 ;;;450    snmp_bps_stat[3]=bps[3]._av;
-000ae6  f8959115          LDRB     r9,[r5,#0x115]  ; bps
+000ae6  f895912d          LDRB     r9,[r5,#0x12d]  ; bps
 000aea  f8ac9006          STRH     r9,[r12,#6]
 ;;;451    if(!(NUMIST>3))snmp_bps_stat[3]=0xff;
 000aee  2803              CMP      r0,#3
@@ -1780,16 +1780,16 @@
 000af6  f04f0905          MOV      r9,#5
 000afa  f8aa9008          STRH     r9,[r10,#8]
 ;;;454    snmp_bps_voltage[4]=bps[4]._Uii;
-000afe  f8d5918c          LDR      r9,[r5,#0x18c]  ; bps
+000afe  f8d591ac          LDR      r9,[r5,#0x1ac]  ; bps
 000b02  f8ab9008          STRH     r9,[r11,#8]
 ;;;455    snmp_bps_current[4]=bps[4]._Ii;
-000b06  f8d59194          LDR      r9,[r5,#0x194]  ; bps
+000b06  f8d591b4          LDR      r9,[r5,#0x1b4]  ; bps
 000b0a  f8ae9008          STRH     r9,[lr,#8]
 ;;;456    snmp_bps_temperature[4]=bps[4]._Ti;
-000b0e  f8d59198          LDR      r9,[r5,#0x198]  ; bps
+000b0e  f8d591b8          LDR      r9,[r5,#0x1b8]  ; bps
 000b12  f8a89008          STRH     r9,[r8,#8]
 ;;;457    snmp_bps_stat[4]=bps[4]._av;
-000b16  f8959171          LDRB     r9,[r5,#0x171]  ; bps
+000b16  f8959191          LDRB     r9,[r5,#0x191]  ; bps
 000b1a  f8ac9008          STRH     r9,[r12,#8]
 ;;;458    if(!(NUMIST>4))snmp_bps_stat[4]=0xff;
 000b1e  2804              CMP      r0,#4
@@ -1801,16 +1801,16 @@
 000b26  f04f0906          MOV      r9,#6
 000b2a  f8aa900a          STRH     r9,[r10,#0xa]
 ;;;461    snmp_bps_voltage[5]=bps[5]._Uii;
-000b2e  f8d591e8          LDR      r9,[r5,#0x1e8]  ; bps
+000b2e  f8d59210          LDR      r9,[r5,#0x210]  ; bps
 000b32  f8ab900a          STRH     r9,[r11,#0xa]
 ;;;462    snmp_bps_current[5]=bps[5]._Ii;
-000b36  f8d591f0          LDR      r9,[r5,#0x1f0]  ; bps
+000b36  f8d59218          LDR      r9,[r5,#0x218]  ; bps
 000b3a  f8ae900a          STRH     r9,[lr,#0xa]
 ;;;463    snmp_bps_temperature[5]=bps[5]._Ti;
-000b3e  f8d591f4          LDR      r9,[r5,#0x1f4]  ; bps
+000b3e  f8d5921c          LDR      r9,[r5,#0x21c]  ; bps
 000b42  f8a8900a          STRH     r9,[r8,#0xa]
 ;;;464    snmp_bps_stat[5]=bps[5]._av;
-000b46  f89591cd          LDRB     r9,[r5,#0x1cd]  ; bps
+000b46  f89591f5          LDRB     r9,[r5,#0x1f5]  ; bps
 000b4a  f8ac900a          STRH     r9,[r12,#0xa]
 ;;;465    if(!(NUMIST>5))snmp_bps_stat[5]=0xff;
 000b4e  2805              CMP      r0,#5
@@ -1822,16 +1822,16 @@
 000b56  f04f0907          MOV      r9,#7
 000b5a  f8aa900c          STRH     r9,[r10,#0xc]
 ;;;468    snmp_bps_voltage[6]=bps[6]._Uii;
-000b5e  f8d59244          LDR      r9,[r5,#0x244]  ; bps
+000b5e  f8d59274          LDR      r9,[r5,#0x274]  ; bps
 000b62  f8ab900c          STRH     r9,[r11,#0xc]
 ;;;469    snmp_bps_current[6]=bps[6]._Ii;
-000b66  f8d5924c          LDR      r9,[r5,#0x24c]  ; bps
+000b66  f8d5927c          LDR      r9,[r5,#0x27c]  ; bps
 000b6a  f8ae900c          STRH     r9,[lr,#0xc]
 ;;;470    snmp_bps_temperature[6]=bps[6]._Ti;
-000b6e  f8d59250          LDR      r9,[r5,#0x250]  ; bps
+000b6e  f8d59280          LDR      r9,[r5,#0x280]  ; bps
 000b72  f8a8900c          STRH     r9,[r8,#0xc]
 ;;;471    snmp_bps_stat[6]=bps[6]._av;
-000b76  f8959229          LDRB     r9,[r5,#0x229]  ; bps
+000b76  f8959259          LDRB     r9,[r5,#0x259]  ; bps
 000b7a  f8ac900c          STRH     r9,[r12,#0xc]
 ;;;472    if(!(NUMIST>6))snmp_bps_stat[6]=0xff;
 000b7e  2806              CMP      r0,#6
@@ -1843,16 +1843,16 @@
 000b86  f04f0908          MOV      r9,#8
 000b8a  f8aa900e          STRH     r9,[r10,#0xe]
 ;;;475    snmp_bps_voltage[7]=bps[7]._Uii;
-000b8e  f8d592a0          LDR      r9,[r5,#0x2a0]  ; bps
+000b8e  f8d592d8          LDR      r9,[r5,#0x2d8]  ; bps
 000b92  f8ab900e          STRH     r9,[r11,#0xe]
 ;;;476    snmp_bps_current[7]=bps[7]._Ii;
-000b96  f8d592a8          LDR      r9,[r5,#0x2a8]  ; bps
+000b96  f8d592e0          LDR      r9,[r5,#0x2e0]  ; bps
 000b9a  f8ae900e          STRH     r9,[lr,#0xe]
 ;;;477    snmp_bps_temperature[7]=bps[7]._Ti;
-000b9e  f8d592ac          LDR      r9,[r5,#0x2ac]  ; bps
+000b9e  f8d592e4          LDR      r9,[r5,#0x2e4]  ; bps
 000ba2  f8a8900e          STRH     r9,[r8,#0xe]
 ;;;478    snmp_bps_stat[7]=bps[7]._av;
-000ba6  f8955285          LDRB     r5,[r5,#0x285]  ; bps
+000ba6  f89552bd          LDRB     r5,[r5,#0x2bd]  ; bps
 000baa  f8ac500e          STRH     r5,[r12,#0xe]
 ;;;479    if(!(NUMIST>7))snmp_bps_stat[7]=0xff;
 000bae  2807              CMP      r0,#7
