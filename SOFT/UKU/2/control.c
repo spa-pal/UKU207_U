@@ -2510,6 +2510,8 @@ bat[1]._u_old[bat_u_old_cnt]=bat[1]._Ub;
 //-----------------------------------------------
 void unet_drv(void)
 {
+if(net_av_2min_timer)net_av_2min_timer--;
+
 if(net_U<UMN)
 	{
 	if((unet_drv_cnt<10)&&(main_1Hz_cnt>15))
@@ -9341,7 +9343,8 @@ else if((b1Hz_ch)&&((!bIBAT_SMKLBR)||(bps[8]._cnt>40)))
 		if(((sk_stat[1]==1)&&(sk_stat_old[1]==0))&&(VZ_KIND==1))cntrl_stat_new=50;
 		}
 
-	gran(&cntrl_stat_new,10,1010);			
+	gran(&cntrl_stat_new,10,1010);
+	if(net_av_2min_timer)cntrl_stat_new=cntrl_stat_old;			
 	cntrl_stat_old=cntrl_stat_new;
 	cntrl_stat=cntrl_stat_new;
 	
@@ -9455,7 +9458,8 @@ else if((b1Hz_ch)&&((!bIBAT_SMKLBR)||(bps[8]._cnt>40)))
 			}					
 		}
 
-	gran(&cntrl_stat_new,10,1022);			
+	gran(&cntrl_stat_new,10,1022);
+				
 	cntrl_stat_old=cntrl_stat_new;
 	cntrl_stat=cntrl_stat_new;	
 	}

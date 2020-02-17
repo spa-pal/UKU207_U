@@ -472,6 +472,7 @@ signed short net_F,hz_out,hz_out_cnt,net_F3;
 signed char unet_drv_cnt;	//Счетчик на снижение первичного наряжеия
 signed char unet_max_drv_cnt; //Счетчик на превышение первичного наряжеия
 char net_av;
+short net_av_2min_timer=0;
 
 //***********************************************
 //Состояние внешних датчиков
@@ -4440,7 +4441,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 	/*int2lcdyx(lc640_read_int(EE_ETH_IS_ON),0,5,0);
 	int2lcdyx(LPC_SC->RSID,0,10,0); 	 */
 	//int2lcdyx(udp_callback_cnt,0,15,0);	 
-	//int2lcdyx(time_sinc_hndl_main_cnt,0,19,0);
+	int2lcdyx(Ktext[0],0,19,0);
 	}
 
 else if(ind==iMn_TELECORE2015)

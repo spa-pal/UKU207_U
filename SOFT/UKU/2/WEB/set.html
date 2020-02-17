@@ -54,11 +54,16 @@
 			var parametrSet="";
 			var inp;
 			var inpSelector;
+			var mult=set_dict[input][3];
 
 			if(mainSelector=="INTINPUT"){
 				inpSelector="#text_input_"+input;
 				inp=$(inpSelector).val();
 				parametrSet=inp;
+				if(mult=="INT/10")parametrSet=inp*10;
+				else if(mult=="INT/100")parametrSet=inp*100;
+				else if(mult=="INT/1000")parametrSet=inp*1000;
+				/*parametrSet=inp;*/
 			}
 			else if(mainSelector=="STRINGINPUT"){
 				inpSelector="#text_input_"+input;
@@ -87,8 +92,10 @@
 				output += 	'<button id="but' + num +'pl" style="width:50px"  value="+' + num + '" type="button" onclick="buttonPressing(this.id,this.value)" class = "btn"> + </button>';
 			}
 			else if(set_dict[num][4]=="INTINPUT") {
+				var mmult =1;
+				if(set_dict[num][3]=="INT/10")mmult =10;
 				output +=	'<input id="text_input_' + num + '" type="text" size="42">';
-				output += 	'<button id="but_enter_' + num + '" style="width:50px margin: 0 10px" onclick="button_enter_press(' + num + ')">Ввести</button>';
+				output += 	'<button id="but_enter_' + num + '" style="width:50px margin: 0 10px" onclick="button_enter_press(' + num + ')">Ввести</button>';/*,' + mmult + '*/
 			}
 			else if(set_dict[num][4]=="STRINGINPUT") {
 				output +=	'<input id="text_input_' + num + '" type="text" size="42">';
@@ -155,13 +162,46 @@
 				if(div[0]) div[0].parentNode.removeChild(div[0]);
 				
 
-				var numOfSets = inputData.numOfSet ;
-				var set = new Array(10);
-				set[0] = inputData.s01.split(",");
-				set[1] = inputData.s02.split(",");
-				set[2] = inputData.s03.split(",");
-				set[3] = inputData.s04.split(",");
-				set[4] = inputData.s05.split(",");      
+				var numOfSets = inputData.numOfSet ;/*set_dict.length-1;*/
+				var set = new Array(100);
+				set[0] = inputData.s01.split(",");/*серийный номер*/ 
+				set[1] = inputData.s02.split(",");/*расположение*/
+				set[2] = inputData.s03.split(",");/*звуковая сигнализация*/
+				set[3] = inputData.s04.split(",");/*параллельная работа источников*/
+				set[4] = inputData.s05.split(",");/*автоматическое снятие сигнала аварий*/ 
+				set[5] = inputData.s06.split(",");/*Umin.сети*/ 
+				set[6] = inputData.s07.split(",");/*Umax.сети*/ 
+				set[7] = inputData.s08.split(",");/*время ротации*/ 
+				set[8] = inputData.s10.split(",");/*Imax*/  
+				set[9] = inputData.s11.split(",");/*Imin*/
+				set[12] = inputData.s14.split(",");/*Uб20*/  
+				set[13] = inputData.s15.split(",");/*Uб0*/    
+				set[10] = inputData.s12.split(",");/*Umax.ист*/  
+				set[11] = inputData.s13.split(",");/*Umin.ист*/ 
+				set[14] = inputData.s16.split(",");/*Uсигн*/
+				set[15] = inputData.s17.split(",");/*Iзmax*/
+				set[16] = inputData.s18.split(",");/*Tбатсигн*/
+				set[17] = inputData.s19.split(",");/*Tбатмакс*/	
+				set[18] = inputData.s20.split(",");/*Uвз*/
+				set[19] = inputData.s21.split(",");/*Tвз*/
+				set[20] = inputData.s22.split(",");/*tи.сигн*/
+				set[21] = inputData.s23.split(",");/*tи.max*/
+				set[22] = inputData.s24.split(",");/*TZAS*/
+				set[23] = inputData.s25.split(",");/*APV1*/
+				set[24] = inputData.s26.split(",");/*APV2*/
+				set[25] = inputData.s27.split(",");/*APV2 период*/
+				set[26] = inputData.s28.split(",");/*U0б*/
+				set[27] = inputData.s29.split(",");/*Tбат*/
+				set[28] = inputData.s30.split(",");/*Iкб*/
+				set[29] = inputData.s31.split(",");/*год*/
+				set[30] = inputData.s32.split(",");/*месяц*/
+				set[31] = inputData.s33.split(",");/*день*/
+				set[32] = inputData.s34.split(",");/*час*/
+				set[33] = inputData.s35.split(",");/*минуты*/
+				set[34] = inputData.s36.split(",");/*секунды*/
+				/*set[35] = inputData.s37.split(",");/*Iкб*/				  
+
+				  
 				console.log("Данные получены");
 
 			  	if(isPainted==0) {
@@ -173,7 +213,7 @@
 			   		myTable += '<col width="55%" valign="middle" align="justify">' ;
 					myTable +=  "<thead>" ;
 					myTable +=   "<tr>";
-					myTable +=    "<th>"     + "Параметр1" +       "</th>";
+					myTable +=    "<th>"     + "Параметр33" +       "</th>";
 					myTable +=    "<th>"     + "Значение" +       "</th>";
 					myTable +=    "<th>"     + "Изменение" +       "</th>";
 					myTable +=   "</tr>" ;
@@ -185,40 +225,50 @@
 						var titleOfParam=set_dict[i][1];
 						var unit=set_dict[i][2];
 						var valueOfParam;
-						if(set_dict[i][5]=="DIAP"){
-							var _min=set_dict[i][6][0];
-							var _max=set_dict[i][6][1];
-							if(set_dict[i][3]=="INT/10"){
-								_min/=10;
-								_max/=10;
+						if(set_dict[i][8]=="s00"){
+							myTable += '<tr>';
+						    myTable += '<td text-align="right">';
+						    myTable += nameOfParam;
+						    myTable += "</td>";
+						    myTable += "</tr>";
+						}
+						else{
+							if(set_dict[i][5]=="DIAP"){
+								var _min=set_dict[i][6][0];
+								var _max=set_dict[i][6][1];
+								if(set_dict[i][3]=="INT/10"){
+									_min/=10;
+									_max/=10;
+								}
+								else if(set_dict[i][3]=="INT/100"){
+									_min/=100;
+									_max/=100;
+								} 
+								titleOfParam+=" Предельные значения " + _min + unit + " - " + _max + unit + ".";
 							}
-							else if(set_dict[i][3]=="INT/100"){
-								_min/=100;
-								_max/=100;
-							} 
-							titleOfParam+=" Предельные значения " + _min + unit + " - " + _max + unit + ".";
-						}
-						else if(set_dict[i][5]=="MAXLENGTH"){ 
-							titleOfParam+=" Не более " + set_dict[i][6] + " символов, без запятых";
-						}
+							else if(set_dict[i][5]=="MAXLENGTH"){ 
+								titleOfParam+=" Не более " + set_dict[i][6] + " символов, без запятых";
+							}
 
-						if(set_dict[i][3]=="INT") valueOfParam = set[i][0] + unit;
-					    else if(set_dict[i][3]=="INT/10") valueOfParam = set[i][0]/10 + unit;
-					    else if(set_dict[i][3]=="INT/100") valueOfParam = set[i][0]/100 + unit;
-					    else if(set_dict[i][3]=="STRING") valueOfParam = set[i][1];
-					    else if(set_dict[i][3]=="SET") valueOfParam = set_dict[i][6][set[i][0]];
+							if(set_dict[i][0]=="Umin") valueOfParam = (set[set_dict[12][8]][0]/10-set[set_dict[i][8]][0]/10) + unit;
+							else if(set_dict[i][3]=="INT") valueOfParam = set[set_dict[i][8]][0] + unit;
+						    else if(set_dict[i][3]=="INT/10") valueOfParam = set[set_dict[i][8]][0]/10 + unit;
+						    else if(set_dict[i][3]=="INT/100") valueOfParam = set[set_dict[i][8]][0]/100 + unit;
+						    else if(set_dict[i][3]=="STRING") valueOfParam = set[set_dict[i][8]][1];
+						    else if(set_dict[i][3]=="SET") valueOfParam = set_dict[i][6][set[set_dict[i][8]][0]];
 
-					    myTable += '<tr>';
-					    myTable += '<td title = "' + titleOfParam + '">';
-					    myTable += nameOfParam;
-					    myTable += "</td>";
-					    myTable += '<td class="rightAligned" id = "data'+i+'">';
-					   	myTable += valueOfParam;
-					    myTable += "</td>";
-					    myTable += '<td>';
-					    myTable += controlGenerator(i);
-					    myTable += "</td>";
-					    myTable += "</tr>";
+						    myTable += '<tr>';
+						    myTable += '<td title = "' + titleOfParam + '">';
+						    myTable += nameOfParam;
+						    myTable += "</td>";
+						    myTable += '<td class="rightAligned" id = "data'+i+'">';
+						   	myTable += valueOfParam;
+						    myTable += "</td>";
+						    myTable += '<td>';
+						    myTable += controlGenerator(i);
+						    myTable += "</td>";
+						    myTable += "</tr>";
+						}
 					}
 				myTable +=  "</tbody>" ;
 				myTable += "</table>" ;
@@ -229,12 +279,12 @@
 				else {
 					for(i=0;i<numOfSets;i++) {
 						var idFild="#data"+i;
-						if(set_dict[i][3]=="INT") $(idFild).text(set[i][0]+set_dict[i][2]);
-					    else if(set_dict[i][3]=="INT/10") $(idFild).text(set[i][0]/10+set_dict[i][2]);
-					    else if(set_dict[i][3]=="INT/100") $(idFild).text(set[i][0]/100+set_dict[i][2]);
-					    else if(set_dict[i][3]=="STRING") $(idFild).text(palDecoder(set[i][1]));
-					    else if(set_dict[i][3]=="ONOFF") $(idFild).text(set_dict[i][6][set[i][0]]);
-					    else if(set_dict[i][3]=="STRING") $(idFild).text(palDecoder(set[i][1]));
+						if(set_dict[i][3]=="INT") $(idFild).text(set[set_dict[i][8]][0]+set_dict[i][2]);
+					    else if(set_dict[i][3]=="INT/10") $(idFild).text(set[set_dict[i][8]][0]/10+set_dict[i][2]);
+					    else if(set_dict[i][3]=="INT/100") $(idFild).text(set[set_dict[i][8]][0]/100+set_dict[i][2]);
+					    else if(set_dict[i][3]=="STRING") $(idFild).text(palDecoder(set[set_dict[i][8]][1]));
+					    else if(set_dict[i][3]=="ONOFF") $(idFild).text(set_dict[i][6][set[set_dict[i][8]][0]]);
+					    else if(set_dict[i][3]=="STRING") $(idFild).text(palDecoder(set[set_dict[i][8]][1]));
 						
 					}
 				}

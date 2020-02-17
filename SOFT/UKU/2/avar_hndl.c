@@ -244,6 +244,7 @@ unsigned int event_ptr,lc640_adr,event_ptr_find,event_cnt;
 if(in==1)
 	{
 	net_av=1;
+	net_av_2min_timer=1200;
 
 	//beep_init(0x01L,'O');
 	//a.av.bAN=1;

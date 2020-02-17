@@ -1554,6 +1554,7 @@ extern signed short net_F,hz_out,hz_out_cnt,net_F3;
 extern signed char unet_drv_cnt;	 //Счетчик на снижение первичного наряжеия
 extern signed char unet_max_drv_cnt; //Счетчик на превышение первичного наряжеия
 extern char net_av;
+extern short net_av_2min_timer;
 
 extern char plazma_plazma_plazma;
 
