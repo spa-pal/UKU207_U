@@ -3,7 +3,6 @@
 #include "rtl.h"
 #include "sntp.h"
 #include "main.h"
-#include "eeprom_map.h"
 
 U8 socket_udp;
 U16 udp_callback_cnt,udp_callback_cnt1;
@@ -188,20 +187,6 @@ if(SNTP_ENABLE)
 			{
 			time_sinc_hndl_req_cnt=5;
 
-			if(lc640_read_int(EE_SNTP_WEB_ENABLE)==1)
-				{
-				Rem_IP[0]=SNTP_IP1;
-				Rem_IP[1]=SNTP_IP2;
-				Rem_IP[2]=SNTP_IP3;
-				Rem_IP[3]=SNTP_IP4;
-				}
-			else
-				{
-				Rem_IP[0]=(char)lc640_read_int(EE_SNTP_IP1);
-				Rem_IP[1]=(char)lc640_read_int(EE_SNTP_IP2);
-				Rem_IP[2]=(char)lc640_read_int(EE_SNTP_IP3);
-				Rem_IP[3]=(char)lc640_read_int(EE_SNTP_IP4);
-				}
 			sntp_requ();
 
 			if(SNTP_ENABLE==1)time_sinc_hndl_main_cnt=3600L;

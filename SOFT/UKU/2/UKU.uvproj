@@ -491,11 +491,6 @@
               <FileType>1</FileType>
               <FilePath>.\HTTP_CGI.c</FilePath>
             </File>
-            <File>
-              <FileName>sgep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sgep.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -1117,11 +1112,6 @@
               <FileName>HTTP_CGI.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HTTP_CGI.c</FilePath>
-            </File>
-            <File>
-              <FileName>sgep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sgep.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1745,11 +1735,6 @@
               <FileType>1</FileType>
               <FilePath>.\HTTP_CGI.c</FilePath>
             </File>
-            <File>
-              <FileName>sgep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sgep.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -2371,11 +2356,6 @@
               <FileName>HTTP_CGI.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HTTP_CGI.c</FilePath>
-            </File>
-            <File>
-              <FileName>sgep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sgep.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2999,11 +2979,6 @@
               <FileType>1</FileType>
               <FilePath>.\HTTP_CGI.c</FilePath>
             </File>
-            <File>
-              <FileName>sgep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sgep.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -3625,11 +3600,6 @@
               <FileName>HTTP_CGI.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HTTP_CGI.c</FilePath>
-            </File>
-            <File>
-              <FileName>sgep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sgep.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4271,11 +4241,6 @@
               <FileType>1</FileType>
               <FilePath>.\HTTP_CGI.c</FilePath>
             </File>
-            <File>
-              <FileName>sgep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sgep.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -4898,11 +4863,6 @@
               <FileType>1</FileType>
               <FilePath>.\HTTP_CGI.c</FilePath>
             </File>
-            <File>
-              <FileName>sgep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sgep.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -5378,7 +5338,7 @@
             <uThumb>0</uThumb>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>UKU_6U, CE102M_ENABLED, UKU2071x, UKU_6U_WEB</Define>
+              <Define>UKU_6U, CE102M_ENABLED, UKU2071x</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -5431,13 +5391,13 @@
                   <RVCTZI>0</RVCTZI>
                   <RVCTOtherData>0</RVCTOtherData>
                   <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>2</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
+                  <IncludeInBuild>0</IncludeInBuild>
+                  <AlwaysBuild>0</AlwaysBuild>
                   <GenerateAssemblyFile>2</GenerateAssemblyFile>
                   <AssembleAssemblyFile>2</AssembleAssemblyFile>
                   <PublicsOnly>2</PublicsOnly>
                   <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument>C:\Keil\ARM\bin\fcarm @@Web\Web.inp</CustomArgument>
+                  <CustomArgument></CustomArgument>
                   <IncludeLibraryModules></IncludeLibraryModules>
                 </CommonProperty>
                 <FileArmAds/>
@@ -5542,11 +5502,6 @@
               <FileName>HTTP_CGI.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HTTP_CGI.c</FilePath>
-            </File>
-            <File>
-              <FileName>sgep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sgep.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6305,11 +6260,6 @@
               <FileType>1</FileType>
               <FilePath>.\HTTP_CGI.c</FilePath>
             </File>
-            <File>
-              <FileName>sgep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sgep.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -6971,11 +6921,6 @@
               <FileType>1</FileType>
               <FilePath>.\HTTP_CGI.c</FilePath>
             </File>
-            <File>
-              <FileName>sgep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sgep.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -7598,11 +7543,6 @@
               <FileType>1</FileType>
               <FilePath>.\HTTP_CGI.c</FilePath>
             </File>
-            <File>
-              <FileName>sgep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sgep.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -7862,7 +7802,7 @@
           <Target>
             <UseTarget>0</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
+            <RunToMain>0</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
             <RestoreWatchpoints>1</RestoreWatchpoints>
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
@@ -7889,10 +7829,10 @@
         </DebugOption>
         <Utilities>
           <Flash1>
-            <UseTargetDll>1</UseTargetDll>
+            <UseTargetDll>0</UseTargetDll>
             <UseExternalTool>1</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
@@ -8242,11 +8182,6 @@
               <FileName>HTTP_CGI.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HTTP_CGI.c</FilePath>
-            </File>
-            <File>
-              <FileName>sgep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sgep.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9005,11 +8940,6 @@
               <FileType>1</FileType>
               <FilePath>.\HTTP_CGI.c</FilePath>
             </File>
-            <File>
-              <FileName>sgep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sgep.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -9766,11 +9696,6 @@
               <FileName>HTTP_CGI.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HTTP_CGI.c</FilePath>
-            </File>
-            <File>
-              <FileName>sgep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sgep.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -10625,11 +10550,6 @@
               <FileType>1</FileType>
               <FilePath>.\HTTP_CGI.c</FilePath>
             </File>
-            <File>
-              <FileName>sgep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sgep.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -11386,11 +11306,6 @@
               <FileName>HTTP_CGI.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HTTP_CGI.c</FilePath>
-            </File>
-            <File>
-              <FileName>sgep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sgep.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -12149,11 +12064,6 @@
               <FileType>1</FileType>
               <FilePath>.\HTTP_CGI.c</FilePath>
             </File>
-            <File>
-              <FileName>sgep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sgep.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -12910,11 +12820,6 @@
               <FileName>HTTP_CGI.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HTTP_CGI.c</FilePath>
-            </File>
-            <File>
-              <FileName>sgep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sgep.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -13673,11 +13578,6 @@
               <FileType>1</FileType>
               <FilePath>.\HTTP_CGI.c</FilePath>
             </File>
-            <File>
-              <FileName>sgep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sgep.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -14270,7 +14170,7 @@
             <uThumb>0</uThumb>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>UKU_6U, CE102M_ENABLED, UKU2071x, UKU_WEB, UKU_6U_WEB</Define>
+              <Define>UKU_6U, CE102M_ENABLED, UKU2071x, UKU_WEB</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -14434,11 +14334,6 @@
               <FileName>HTTP_CGI.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\HTTP_CGI.c</FilePath>
-            </File>
-            <File>
-              <FileName>sgep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sgep.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -1142,7 +1142,7 @@ bIN=0;
 //-----------------------------------------------
 void can_in_an1(void)
 {
-char i;
+//char i;
 //signed short temp_SS;
 char slave_num;
 
@@ -1152,8 +1152,7 @@ char slave_num;
 can_rotor[1]++;
 
 // oleg_start
-//rki_1_s
-if (RXBUFF[0]==0xE7) { 
+if (RXBUFF[0]==0xE7) {
 	no_rki=0;
 	if(RXBUFF[1]==0) { type_rki=1;
 		r_iz_plus=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
@@ -1164,9 +1163,6 @@ if (RXBUFF[0]==0xE7) {
 		r_iz_porog_error=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
 		v_plus=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
 		v_minus=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
-		if(v_plus>v_minus) u_asymmetry=v_plus-v_minus; //o_3
-		else u_asymmetry=v_minus-v_plus;			   //o_3
-		Ubus=v_minus+v_plus;			   				//o_3
 	} 
 	else if(RXBUFF[1]==2) {
 		asymmetry=RXBUFF[2];
@@ -1174,92 +1170,114 @@ if (RXBUFF[0]==0xE7) {
 		sk1_24=sk1_24<<16;
 		sk1_24=sk1_24+((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
 		count_Iddt=RXBUFF[6];
-		ddt_error=RXBUFF[7];
+		ddt_error_temp=RXBUFF[7];
+		ddt_error=(ddt_error&0x0000FFFF) | (ddt_error_temp<<16);
 	}
 	else if(RXBUFF[1]==3) {
 		Iddt_porog_pred=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
 		Iddt_porog_error=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		n_error_ddt_uku=RXBUFF[6];
-		u_rki=RXBUFF[7];
-		//o_3_s
-		for(i=0;i<24;i++){
-			if(sk1_24 & 0x01UL<<i) sk1_24_table[i]=1;
-			else sk1_24_table[i]=0;
-		}
-		for(i=0;i<8;i++){
-			if(ddt_error & 0x01UL<<i) ddt_error_table[i]=1;
-			else ddt_error_table[i]=0;
-		}
-		//o_3_e
+		Iddt[0]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
 	}
 	else if(RXBUFF[1]==4) {
-		Rddt[0][0]=RXBUFF[2];
-		Rddt[0][1]=RXBUFF[3];
-		Rddt[0][2]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Rddt[0][3]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+		Iddt[1]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Iddt[2]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Iddt[3]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
 	}
 	else if(RXBUFF[1]==5) {
-		Rddt[1][0]=RXBUFF[2];
-		Rddt[1][1]=RXBUFF[3];
-		Rddt[1][2]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Rddt[1][3]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+		Iddt[4]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Iddt[5]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Iddt[6]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
 	}
 	else if(RXBUFF[1]==6) {
-		Rddt[2][0]=RXBUFF[2];
-		Rddt[2][1]=RXBUFF[3];
-		Rddt[2][2]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Rddt[2][3]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+		Iddt[7]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Iddt[8]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Iddt[9]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
 	}
 	else if(RXBUFF[1]==7) {
-		Rddt[3][0]=RXBUFF[2];
-		Rddt[3][1]=RXBUFF[3];
-		Rddt[3][2]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Rddt[3][3]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+		Iddt[10]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Iddt[11]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Iddt[12]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
 	}
 	else if(RXBUFF[1]==8) {
-		Rddt[4][0]=RXBUFF[2];
-		Rddt[4][1]=RXBUFF[3];
-		Rddt[4][2]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Rddt[4][3]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+		Iddt[13]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Iddt[14]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Iddt[15]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
 	}
 	else if(RXBUFF[1]==9) {
-		Rddt[5][0]=RXBUFF[2];
-		Rddt[5][1]=RXBUFF[3];
-		Rddt[5][2]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Rddt[5][3]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+		Iddt[16]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Iddt[17]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Iddt[18]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
 	}
 	else if(RXBUFF[1]==10) {
-		Rddt[6][0]=RXBUFF[2];
-		Rddt[6][1]=RXBUFF[3];
-		Rddt[6][2]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Rddt[6][3]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+		Iddt[19]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Iddt[20]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Iddt[21]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
 	}
 	else if(RXBUFF[1]==11) {
-		Rddt[7][0]=RXBUFF[2];
-		Rddt[7][1]=RXBUFF[3];
-		Rddt[7][2]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
-		Rddt[7][3]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+		Iddt[22]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Iddt[23]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		ddt_error_temp=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+		ddt_error=(ddt_error&0x00FF0000) | ddt_error_temp;
 	}
 	else if(RXBUFF[1]==12) {
 		status_izm_r=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
 		sk_alarm=((unsigned int)RXBUFF[4]<<16)+((unsigned int)RXBUFF[5]<<8) + RXBUFF[6];
-
-		//o_3_s
-		for(i=0;i<24;i++){
-			if(sk_alarm & 0x01UL<<i) sk_alarm_table[i]=1;
-			else sk_alarm_table[i]=0;
-		}
-		//o_3_e	 
 		asymmetry_porog=RXBUFF[7];
 	}
 	else if(RXBUFF[1]==13) {
+		status_di1=((unsigned int)RXBUFF[2]<<16)+((unsigned int)RXBUFF[3]<<8) + RXBUFF[4];
+		status_di2=((unsigned int)RXBUFF[5]<<16)+((unsigned int)RXBUFF[6]<<8) + RXBUFF[7];
+		
+	}
+	else if(RXBUFF[1]==14) {
 		porog_u_in=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
 		u_asymmetry_porog_up=RXBUFF[4];
 		u_asymmetry_porog=RXBUFF[5];
 		u_asymmetry_porog_down=RXBUFF[6];
-		ver_soft=RXBUFF[7];
 	}
-	
+	else if(RXBUFF[1]==15) {
+		Rddt[0]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Rddt[1]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[2]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==16) {
+		Rddt[3]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Rddt[4]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[5]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==17) {
+		Rddt[6]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Rddt[7]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[8]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==18) {
+		Rddt[9]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Rddt[10]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[11]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==19) {
+		Rddt[12]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Rddt[13]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[14]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==20) {
+		Rddt[15]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Rddt[16]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[17]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==21) {
+		Rddt[18]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Rddt[19]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[20]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==22) {
+		Rddt[21]=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		Rddt[22]=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		Rddt[23]=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+
+
+
 	//***************************
 	else if(RXBUFF[1]==200) { type_rki=0;
 		r_iz_plus=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
@@ -1270,9 +1288,6 @@ if (RXBUFF[0]==0xE7) {
 		r_iz_porog_error=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
 		v_plus=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
 		v_minus=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
-		if(v_plus>v_minus) u_asymmetry=v_plus-v_minus; //o_3
-		else u_asymmetry=v_minus-v_plus;			   //o_3
-		Ubus=v_minus+v_plus;			   				//o_3
 	}
 	else if(RXBUFF[1]==202) {
 		asymmetry=RXBUFF[2];
@@ -1284,8 +1299,6 @@ if (RXBUFF[0]==0xE7) {
 		u_asymmetry_porog_up=RXBUFF[2];
 		u_asymmetry_porog=RXBUFF[3];
 		u_asymmetry_porog_down=RXBUFF[4];
-		ver_soft=RXBUFF[5];
-		u_rki=RXBUFF[6];
 	}
 	
 	
@@ -1293,7 +1306,7 @@ if (RXBUFF[0]==0xE7) {
 //sk_alarm=0xFFffff;
 //status_di1=0xFFffff;
 //status_di2=0xFFffff;	
-}  //rki_1_e
+}
 else if (RXBUFF[0]==0xE6) {	  // прием от сетевых входов
 	no_net_in=0;
 	if(RXBUFF[1]==0) {
@@ -1580,35 +1593,6 @@ if((RXBUFF[1]==PUTTM_IBATMETER)&&((RXBUFF[0]&0x1f)>=0)&&((RXBUFF[0]&0x1f)<12))
 
    	//if((src[slave_num]._cnt==0)&&(src[slave_num]._av_net)) avar_s_hndl(slave_num,3,0); 
 	can_reset_cnt=0;
-	ibat_metr_cnt=0;
-   	}
-
-if((RXBUFF[1]==PUTTM_IBATMETER)&&(RXBUFF[0]==PUTTM_IBATMETER))
- 	{
-	ibat_metr_buff_[0]=((signed long)RXBUFF[2])+(((signed long)RXBUFF[3])<<8);
-	ibat_metr_buff_[1]=((signed long)RXBUFF[4])+(((signed long)RXBUFF[5])<<8);
-	bIBAT_SMKLBR=((signed short)RXBUFF[6])+(((signed short)RXBUFF[7])<<8);
-	if(bIBAT_SMKLBR) bIBAT_SMKLBR_cnt=50;
-	if(!bIBAT_SMKLBR)
-		{
-		signed long temp_SL;
-		temp_SL=(signed long)ibat_metr_buff_[0];
-		temp_SL-=(signed long)ibat_metr_buff_[1];
-		temp_SL*=(signed long)Kibat1[0];
-		if((AUSW_MAIN==22010)||(AUSW_MAIN==22011)||(AUSW_MAIN==22035)||(AUSW_MAIN==22033)||(AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043)||(AUSW_MAIN==22044))temp_SL/=2000L;
-	
-		Ib_ips_termokompensat =(signed short)temp_SL;
-		if(bIBAT_SMKLBR_cnt)
-			{
-			bIBAT_SMKLBR_cnt--;
-			Ib_ips_termokompensat=Ib_ips_termokompensat_temp;
-			}
-		else 
-			{
-			Ib_ips_termokompensat_temp=Ib_ips_termokompensat;
-			}
-		}
-	ibat_metr_cnt=0;
    	}
 
 if((RXBUFF[1]==PUTTM_NET)&&((RXBUFF[0]&0x1f)>=0)&&((RXBUFF[0]&0x1f)<12))

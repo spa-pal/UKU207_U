@@ -5,8 +5,6 @@ extern short http_power_frequncy;
 extern char http_power_status;
 extern char http_output_buff[70];
 extern char log_item_cnt;
-extern char http_string_of_model[50];
-extern char* http_model;
 
 //-----------------------------------------------
 void http_data(void);

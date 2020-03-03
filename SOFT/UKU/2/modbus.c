@@ -1414,9 +1414,6 @@ if(ND_EXT[3])tempS=-1000;
 modbus_registers[406]=(signed char)(tempS>>8);				//Рег204	Внешний датчик температуры №4
 modbus_registers[407]=(signed char)(tempS);   */
 
-modbus_registers[406]=(signed char)(bat_hndl_t_razr_min>>8);
-modbus_registers[407]=(signed char)(bat_hndl_t_razr_min);
-
 tempS=0;
 if(sk_stat[0]==ssON) tempS|=0x0001;
 if(sk_av_stat[0]==sasON) tempS|=0x0002;
@@ -1437,23 +1434,6 @@ if(sk_stat[3]==ssON) tempS|=0x0001;
 if(sk_av_stat[3]==sasON) tempS|=0x0002;
 modbus_registers[426]=(signed char)(tempS>>8);				//Рег214	Состояние  сухого контакта №1, (нулевой бит - физическое состояние, 1 - замкнут, 0 - разомкнут, первый бит - аварийность, 1 - авария, 0 - норма)
 modbus_registers[427]=(signed char)(tempS);
-
-tempS=bat[0]._av;
-#ifdef UKU_220_IPS_TERMOKOMPENSAT 
-tempS=ips_bat_av_stat;
-#endif
-
-modbus_registers[428]=(signed char)(tempS>>8);				//Рег215	Байт статуса батареи №1(0x01 - авария цепи батареи, 0x02 - авария средней точки батареи)
-modbus_registers[429]=(signed char)(tempS);
-
-tempS=bat[1]._av;
-modbus_registers[430]=(signed char)(tempS>>8);				//Рег216	Байт статуса батареи №2(0x01 - авария цепи батареи, 0x02 - авария средней точки батареи)
-modbus_registers[431]=(signed char)(tempS);
-
-tempS=bat_hndl_t_razr_min;
-modbus_registers[432]=(signed char)(tempS>>8);				//Рег217	Остаточное время работы батареи в минутах
-modbus_registers[433]=(signed char)(tempS);
-
 
 //modbus_registers[
 

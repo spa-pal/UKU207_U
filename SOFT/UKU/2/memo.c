@@ -60,7 +60,6 @@ TSIGN=lc640_read_int(EE_TSIGN);
 DU=lc640_read_int(EE_DU);
 USIGN=lc640_read_int(EE_USIGN);
 UMN=lc640_read_int(EE_UMN);
-UMAXN=lc640_read_int(EE_UMAXN);
 ZV_ON=lc640_read_int(EE_ZV_ON);
 IKB=lc640_read_int(EE_IKB);
 UVZ=lc640_read_int(EE_UVZ);
@@ -384,11 +383,7 @@ for(i=0;i<64;i++)
 	{
 	place_holder[i]=lc640_read(EE_HTTP_LOCATION+i);
 	}
-for(i=0;i<3;i++)
-	{
-	snmp_web_passw[i]=lc640_read(EE_WEB_PASSWORD+(i*2));
-	snmp_web_passw[3]=0;
-	}
+
 
 __ee_vz_cnt=lc640_read_int(EE_VZ_CNT);
 __ee_spc_stat=lc640_read_int(EE_SPC_STAT);

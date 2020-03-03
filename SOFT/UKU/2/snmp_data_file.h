@@ -1,8 +1,7 @@
 extern char snmp_community[10];
-extern char snmp_web_passw[4];
 
 //Информация об устройстве
-extern unsigned int snmp_device_code;
+extern signed short snmp_device_code;
 extern signed 	   snmp_sernum;
 extern signed short snmp_sernum_lsb;
 extern signed short snmp_sernum_msb;
@@ -262,7 +261,7 @@ void snmp_tsign_bps_write(int mode);
 void snmp_tmax_bps_write(int mode);
 void snmp_bat_part_alarm_write(int mode);
 void snmp_power_cnt_adress_write(int mode);
-//void snmp_uvz_write(int mode);
+void snmp_uvz_write(int mode);
 void snmp_warm_sign_write(int mode);
 void snmp_cool_sign_write(int mode);
 void snmp_warm_on_temper_write(int mode);
@@ -278,21 +277,7 @@ void snmp_cool_80_dtemper_write(int mode);
 void snmp_cool_60_dtemper_write(int mode);
 void snmp_cool_40_dtemper_write(int mode);
 void snmp_cool_20_dtemper_write(int mode);
-void snmp_u_out_kontr_max_write (int mode);
-void snmp_u_out_kontr_min_write (int mode);
-void snmp_u_out_kontr_delay_write (int mode);
-void snmp_uvz_write (int mode);
-void snmp_imax_vz_write (int mode);
-void snmp_vz_hr_write (int mode);
-void snmp_vz_ch_vent_block_write (int mode);
-void snmp_spz_i_max_write (int mode);
-void snmp_spz_u_write (int mode);
-void snmp_spz_time_write (int mode);
-void snmp_spz_avt_en_write (int mode);
-void snmp_spz_delta_write (int mode);
-void snmp_spz_block_en_src_write (int mode);
-void snmp_spz_block_log_write (int mode);
-void snmp_spz_vent_block_write (int mode);
+
 
 
 
