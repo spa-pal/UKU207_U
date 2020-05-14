@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>УКУ</title>
 	<link href="uku.css" rel="stylesheet">
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="jquery-1.7.min.js"></script>
 	<script src="dict.js"></script>
 	<script src="pal_decoder.js"></script>
 
@@ -53,6 +53,23 @@
 		function dataUpdate(){
 			var data = {};
 			$.getJSON( "uku.cgx", data, success );
+			/*$.ajax({
+			    type: "get", 
+			    url: "uku.cgx",
+			    datatype: "text/json",
+			    success: function (data, text) {
+			        alert('HERE');
+			        console.log(data);
+			        $.each(data.library, function(k,v){
+			            console.log(k + "/" + v);
+
+			        });
+			    },
+			    error: function (request, status, error) {
+			        console.log(status, error);
+			    }
+			});*/
+
 		}
 		
 
@@ -78,7 +95,7 @@
 			if(numOfBat) {
 				for(var i=0; i<2; i++) {
 					var finder= "bat" + (i + 1) + "Tm";
-					bat_data[i] = inputData[finder].split(" ");
+					bat_data[i] = inputData[finder].split(", ");
 				}
 			}
 
@@ -100,7 +117,7 @@
 			load_data[1]=inputData.loadITm;
 
 			if(loadTblIsPainted==0){
-				$("#item1_head").text("Нагрузка");
+				$("#item6_head").text("Нагрузка");
 				var myTable = '' ;
 				myTable += '<table id="loadTable" width="100%" style="table-layout: fixed" cellspacing=0 cellpadding=2 border=1>' ;
 				myTable += '<col width="500" valign="middle" align="left">' ;
@@ -113,7 +130,7 @@
 				myTable +=  "</tbody>" ;
 				myTable += "</table>" ;
 
-				$("#item1").append(myTable);
+				$("#item6").append(myTable);
 				loadTblIsPainted=1;
 			} 
 			else {
@@ -124,7 +141,7 @@
 
 			if (numOfBat!="0") {
 				if (batTblIsPainted==0) {
-					$("#item2_head").text("Батареи");
+					$("#item3_head").text("Аккумуляторные батареи");
 					var myTable = '' ;
 					myTable += '<table id="batTable" width="100%" style="table-layout: fixed" cellspacing=0 cellpadding=2 border=1>' ;
 					myTable += '<col width="200px" valign="middle" align="left" >' ;
@@ -150,55 +167,66 @@
 					if(bat_data[0][0]!="0")myTable += '<td class="centerAligned" id = "i_bat_1" ></td>';
 					if(bat_data[1][0]!="0")myTable += '<td class="centerAligned" id = "i_bat_2" ></td>';
 				    myTable += "</tr>";
+				    myTable +='<tr>';
 					myTable +='<td>Температура</td>';
 					if(bat_data[0][0]!="0")myTable += '<td class="centerAligned" id = "t_bat_1" ></td>';
 					if(bat_data[1][0]!="0")myTable += '<td class="centerAligned" id = "t_bat_2" ></td>';
 				    myTable += "</tr>";
-				    myTable += "</tr>";
+				    myTable += "<tr>";
 					myTable +='<td>Емкость</td>';
 					if(bat_data[0][0]!="0")myTable += '<td class="centerAligned" id = "c_bat_1" ></td>';
 					if(bat_data[1][0]!="0")myTable += '<td class="centerAligned" id = "c_bat_2" ></td>';
 				    myTable += "</tr>";	
+				    myTable += "<tr>";
 				    myTable +='<td>Заряд</td>';
 					if(bat_data[0][0]!="0")myTable += '<td class="centerAligned" id = "q_bat_1" ></td>';
 					if(bat_data[1][0]!="0")myTable += '<td class="centerAligned" id = "q_bat_2" ></td>';
 				    myTable += "</tr>";
 				    if((bat_data[0][7]!=-1)&&(bat_data[1][7]!=-1)){
+				    myTable += "<tr>";
 				    myTable +='<td>Наработка</td>';
 					if(bat_data[0][0]!="0")myTable += '<td class="centerAligned" id = "r_bat_1" ></td>';
 					if(bat_data[1][0]!="0")myTable += '<td class="centerAligned" id = "r_bat_2" ></td>';
 				    myTable += "</tr>";	
 				    }
 				    if((bat_data[0][8]!=-1)&&(bat_data[1][8]!=-1)){
+				    myTable += "<tr>";
 				    myTable +='<td>Напряжение средней точки</td>';
 					if(bat_data[0][0]!="0")myTable += '<td class="centerAligned" id = "um_bat_1" ></td>';
 					if(bat_data[1][0]!="0")myTable += '<td class="centerAligned" id = "um_bat_2" ></td>';
 				    myTable += "</tr>";	
-				    }				    
+				    }
+				    myTable += "<tr>";
+				    myTable +='<td>Статус</td>';
+					if(bat_data[0][0]!="0")myTable += '<td class="centerAligned" id = "stat_bat_1" ></td>';
+					if(bat_data[1][0]!="0")myTable += '<td class="centerAligned" id = "stat_bat_2" ></td>';
+				    myTable += "</tr>";				    
 					myTable +=  "</tbody>" ;
 					myTable += "</table>" ;
 
-					$("#item2").append(myTable) ;
+					$("#item3").append(myTable) ;
 					batTblIsPainted=1;
 				} 
 				else {
 					for(i=0;i<2;i++) {
 						$("#u_bat_"+(i+1)).text(bat_data[i][1]/10 + "В");
-						$("#i_bat_"+(i+1)).text(bat_data[i][2]/10 + "А");
+						$("#i_bat_"+(i+1)).text(bat_data[i][2]/100 + "А");
 						if(bat_data[i][4]=='1') $("#t_bat_"+(i+1)).text("Датчик неисправен");
 						else 					$("#t_bat_"+(i+1)).text(bat_data[i][3] + "°C");
 						if(bat_data[i][5]==-1)	$("#c_bat_"+(i+1)).text("Контроль емкости не проводился");
+						if(bat_data[i][5]<0)	$("#c_bat_"+(i+1)).text(-(bat_data[i][5]/10) + "А*ч (номинальная)");
 						else 					$("#c_bat_"+(i+1)).text(bat_data[i][5]/10 + "А*ч");
 						$("#q_bat_"+(i+1)).text(bat_data[i][6] + "%");
 						$("#r_bat_"+(i+1)).text(bat_data[i][7] + "ч.");
 						$("#um_bat_"+(i+1)).text(bat_data[i][8]/10 + "В");
+						$("#stat_bat_"+(i+1)).text(palDecoder(bat_data[i][9]));
 					}
 				}
 			}
 
 			if (numOfSrc!="0") {
 				if (srcTblIsPainted==0) {
-					$("#item3_head").text("БПСы");
+					$("#item2_head").text("Выпрямители");
 					var myTable = '' ;
 					myTable += '<table id="srcTable" width="100%" style="table-layout: fixed" cellspacing=0 cellpadding=2 border=1>' ;
 					myTable += '<col width="50px" valign="middle" align="left" >' ;
@@ -239,7 +267,7 @@
 					myTable +=  "</tbody>" ;
 					myTable += "</table>" ;
 
-					$("#item3").append(myTable) ;
+					$("#item2").append(myTable) ;
 					srcTblIsPainted=1;
 				} 
 				else {
@@ -256,7 +284,7 @@
 
 			if (numOfPow) {
 				if (powTblIsPainted==0) {
-					$("#item4_head").text("СЕТЬ");
+					$("#item1_head").text("СЕТЬ");
 					var myTable = '' ;
 					myTable += '<table id="powTable" width="100%" style="table-layout: fixed" cellspacing=0 cellpadding=2 border=1>' ;
 					myTable += '<col width="500" valign="middle" align="left">' ;
@@ -285,7 +313,7 @@
 					myTable +=  "</tbody>" ;
 					myTable += "</table>" ;
 
-					$("#item4").append(myTable) ;
+					$("#item1").append(myTable) ;
 					powTblIsPainted=1;
 				} 
 				else {
@@ -295,14 +323,15 @@
 					$("#u_pow_C").text(inputData.powVoltC + "В");
 					$("#u_pow_freq").text(inputData.powFreq/10 + "Гц");
 					var pow_status_string = "норма";
-					if(inputData.powStat) pow_status_string = "авария";
+					if(inputData.powStat=="1") pow_status_string = "Авария! Заниженное напряжение!";
+					if(inputData.powStat=="2") pow_status_string = "Авария! Повышенное напряжение!";
 					$("#u_pow_stat").text(pow_status_string); 
 				}
 			}
 
 			if (numOfSk!="0") {
 				if (skTblIsPainted==0) {
-					$("#item5_head").text("Логические входы");
+					$("#item4_head").text("Логические входы");
 					var myTable = '' ;
 					myTable += '<table id="skTable" width="100%" style="table-layout: fixed" cellspacing=0 cellpadding=2 border=1>' ;
 					myTable += '<col width="50px" valign="middle" align="left">' ;
@@ -313,7 +342,7 @@
 					myTable +=   "<tr>";
 					myTable +=    "<th>"     + " № " + 	"</th>";
 					myTable +=    "<th>"     + " Физическое состояние " +     "</th>";
-					myTable +=    "<th>"     + " Аварийность " +     "</th>";
+					myTable +=    "<th>"     + " Активность " +     "</th>";
 					myTable +=   "</tr>" ;
 					myTable +=  "</thead>" ;
 					myTable +=  "<tbody>" ;
@@ -332,22 +361,22 @@
 					myTable +=  "</tbody>" ;
 					myTable += "</table>" ;
 
-					$("#item5").append(myTable) ;
+					$("#item4").append(myTable) ;
 					skTblIsPainted=1;
 				} 
 				else {
 					for(i=0;i<numOfSk;i++) {
 						if(sk_data[i][0]==1)$("#sk_stat_"+i).text("Включен");
 						else				$("#sk_stat_"+i).text("Выключен"); 
-						if(sk_data[i][1]==1)$("#sk_av_stat_"+i).text("Авария");
-						else				$("#sk_av_stat_"+i).text("Норма");						
+						if(sk_data[i][1]==1)$("#sk_av_stat_"+i).text("Активен");
+						else				$("#sk_av_stat_"+i).text("Пассивен");						
 					}
 				}
 			}
 
 			if (numOfDt!="0") {
 				if (dtTblIsPainted==0) {
-					$("#item6_head").text("Датчики температуры");
+					$("#item5_head").text("Датчики температуры");
 					var myTable = '' ;
 					myTable += '<table id="dtTable" width="100%" style="table-layout: fixed" cellspacing=0 cellpadding=2 border=1>' ;
 					myTable += '<col width="50px" valign="middle" align="left">' ;
@@ -377,7 +406,7 @@
 					myTable +=  "</tbody>" ;
 					myTable += "</table>" ;
 
-					$("#item6").append(myTable) ;
+					$("#item5").append(myTable) ;
 					dtTblIsPainted=1;
 				} 
 				else {
@@ -390,7 +419,7 @@
 	    }
 		
 		setInterval(dataUpdate,500);
-		//setInterval(alarmOnOff,500);
+
 	</script>	
 </head>
 <body>
@@ -400,37 +429,29 @@
 		<div id="dev_place"> </div>
 		<div id="dev_serial"> </div>
 	</div>
-<!--	<div id="nav">
-		<ul>
-			<li><a href="http://ruseller.com">Опция 1</a></li>
-			<li><a href="http://ruseller.com">Опция 2</a></li>
-			<li><a href="http://ruseller.com">Опция 3</a></li>
-			<li><a href="http://ruseller.com">Опция 4</a></li>
-			<li><a href="http://ruseller.com">Опция 5</a></li>
-		</ul>
-	</div>-->
+
 	<div id="main">
-		<p><h2 id="item1_head" align = "middle" style="text-decoration: underline"></h2></p>
+		<p><h2 id="item1_head" align = "middle" ></h2></p>
 		<div id= "item1"></div>
-		<p><h2 id="item2_head" align = "middle" style="text-decoration: underline"></h2></p>
+		<p><h2 id="item2_head" align = "middle" ></h2></p>
 		<div id= "item2"></div>
-		<p><h2 id="item3_head" align = "middle" style="text-decoration: underline"></h2></p>
+		<p><h2 id="item3_head" align = "middle" ></h2></p>
 		<div id= "item3"></div>
-		<p><h2 id="item4_head" align = "middle" style="text-decoration: underline"></h2></p>
+		<p><h2 id="item4_head" align = "middle" ></h2></p>
 		<div id= "item4"></div>
-		<p><h2 id="item5_head" align = "middle" style="text-decoration: underline"></h2><p>
+		<p><h2 id="item5_head" align = "middle" ></h2><p>
 		<div id= "item5"></div>
-		<p><h2 id="item6_head" align = "middle" style="text-decoration: underline"></h2><p>
+		<p><h2 id="item6_head" align = "middle" ></h2><p>
 		<div id= "item6"></div>
-		<p><h2 id="item7_head" align = "middle" style="text-decoration: underline"></h2><p>
+		<p><h2 id="item7_head" align = "middle" ></h2><p>
 		<div id= "item7"></div>
-		<p><h2 id="item8_head" align = "middle" style="text-decoration: underline"></h2><p>
+		<p><h2 id="item8_head" align = "middle" ></h2><p>
 		<div id= "item8"></div>
-		<p><h2 id="item9_head" align = "middle" style="text-decoration: underline"></h2><p>
+		<p><h2 id="item9_head" align = "middle" ></h2><p>
 		<div id= "item9"></div>
-		<p><h2 id="item10_head" align = "middle" style="text-decoration: underline"></h2><p>
+		<p><h2 id="item10_head" align = "middle" ></h2><p>
 		<div id= "item10"></div>
-		<p><h2 id="item11_head" align = "middle" style="text-decoration: underline"></h2><p>
+		<p><h2 id="item11_head" align = "middle" ></h2><p>
 		<div id= "item11"></div>
 
 	</div>
@@ -439,11 +460,12 @@
 			<li><a href="index.htm">Главная</a></li>
 			<li><a href="set.html">Установки</a></li>
 			<li><a href="log.html">Журнал событий</a></li>
+			<li><a href="bww.html">Блок внешних вводов</a></li>
 		</ul>
 	</div>
 </div>
 <div id="footer">
-	<a class="spa_adress" href="http://vorpostnsk.ru">"Системы промавтоматики"</a>
+
 </div>
 
 </body></html>

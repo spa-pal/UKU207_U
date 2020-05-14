@@ -31,7 +31,10 @@ extern U16 sec_in_this_min;
 extern U16 time_sinc_hndl_req_cnt;
 extern U32 time_sinc_hndl_main_cnt;
 
+extern char sntp_plazma;
+
 U16 udp_callback (U8 soc, U8 *rip, U16 rport, U8 *buf, U16 len);
 void sntp_requ (void);
 void time_sinc_hndl(void);
+
 

@@ -142,6 +142,21 @@
 #define SYSPARAMS_BAT_PART_ALARM			21
 #define SYSPARAMS_POWER_CNT_ADRESS			22
 #define SYSPARAMS_U_IPS_SET					23
+#define SYSPARAMS_U_OUT_KONTR_MAX			24
+#define SYSPARAMS_U_OUT_KONTR_MIN			25
+#define SYSPARAMS_U_OUT_KONTR_DELAY			26
+#define SYSPARAMS_VZ_U						27
+#define SYSPARAMS_VZ_I_MAX					28
+#define SYSPARAMS_VZ_TIME					29
+#define SYSPARAMS_VZ_VENTBLOCKING			30
+#define SYSPARAMS_SPZ_I_MAX					31
+#define SYSPARAMS_SPZ_U						32
+#define SYSPARAMS_SPZ_TIME					33
+#define SYSPARAMS_SPZ_AVT_EN				34
+#define SYSPARAMS_SPZ_AVT_DELTA				35
+#define SYSPARAMS_SPZ_BLOCK_EN_SRC			36
+#define SYSPARAMS_SPZ_BLOCK_SIGN			37
+#define SYSPARAMS_SPZ_VENTBLOCKING			38
 
 #define DISPLAY_AVT					11
 #define DISPLAY_AVT_ENTRY_NUMBER			1,1
@@ -251,6 +266,20 @@
 #define DISPLAY_ENMV_NUMBER		   1,1  //o_2
 #define DISPLAY_ENMV_DATA		   1,2  //o_2	
 
+#define DISPLAY_RKI					22  
+
+#define DISPLAY_RKI_SK				23
+#define DISPLAY_RKI_SK_NUMBER		1,1
+#define DISPLAY_RKI_SK_DATA			1,2
+#define DISPLAY_RKI_SK_ERROR		1,3
+
+#define DISPLAY_RKI_DDT				24
+#define DISPLAY_RKI_DDT_NUMBER		1,1
+#define DISPLAY_RKI_DDT_NUM_ALARM	1,2
+#define DISPLAY_RKI_DDT_ALARM		1,3
+#define DISPLAY_RKI_DDT_Rplus		1,4
+#define DISPLAY_RKI_DDT_Rminus		1,5
+#define DISPLAY_RKI_DDT_Rparal		1,6
 
 #define COMMAND_OK		0x5555
 #define COMAND_FAIL		0xaaaa
@@ -262,6 +291,7 @@
 #define SNMP_SPEC_VZ		3
 #define SNMP_SPEC_KE		4
 #define SNMP_SPEC_DISABLE	7
+#define SNMP_SPEC_SPZ		13
 
 
 #define DISPLAY_LOG					9
@@ -589,6 +619,7 @@
 #define PAROL_TST 999 
 #define PAROL_DEFAULT 295
 #define PAROL_AUSW 949
+#define PAROL_DEF 295
 #endif                
 
 #ifdef PAROL_ALL_ZERO
@@ -740,25 +771,29 @@
 // oleg_stard*
 extern unsigned char ver_soft;
 extern unsigned short r_iz_plus, r_iz_minus, r_iz_porog_pred, r_iz_porog_error;
-extern unsigned char v_plus, v_minus, asymmetry;
-#define u_in_rki 	v_plus+v_minus
+extern unsigned char asymmetry;						//o_3
+extern unsigned short v_plus, v_minus, u_asymmetry, Ubus;	//o_3
+//#define u_in_rki 	v_plus+v_minus	//o_3
 extern unsigned int sk1_24;
-extern unsigned short Iddt_porog_pred, Iddt_porog_error, Iddt[24], Rddt[24];
+extern unsigned short Iddt_porog_pred, Iddt_porog_error; 
+extern unsigned char n_error_ddt_uku, u_rki;  
+extern unsigned short Rddt[8][4];  
 extern unsigned char count_Iddt; // количество датчиков тока
 extern unsigned char count_mess_rki;  // номер запроса пакетов	 РКИ
 extern unsigned char no_rki;  // нет связи с РКИ
 extern unsigned char num_rki; // количество РКИ
 extern unsigned char command_rki; //команда для РКИ
 #define NO_RKI 15 // количество посылок без ответа для отсутствия связи с РКИ
-extern unsigned int ddt_error, ddt_error_temp; // нет связи с дат тока
+extern unsigned char ddt_error;
 extern unsigned short status_izm_r;	// аварии измерения изоляции
-extern unsigned int sk_alarm, status_di1, status_di2; // авария СК, ток пред, ток аварии
+extern unsigned int sk_alarm/*, status_di1, status_di2*/; // авария СК, ток пред, ток аварии
 extern unsigned char type_rki; // 0-маленькое РКИ, 1-большое РКИ
 extern unsigned char asymmetry_porog;
 extern unsigned short porog_u_in;
 extern unsigned char uku_or_rki; //индикация аварий уку или рки
 extern unsigned char u_asymmetry_porog_up, u_asymmetry_porog, u_asymmetry_porog_down;
 extern unsigned char kalibr_r_most;
+extern unsigned char sk1_24_table[24], sk_alarm_table[24], ddt_error_table[8]; //o_3 
 
 						// сетевые вводы
 #define NO_NET_IN  10 // количество посылок без ответа для отсутствия связи с сетевым вводом
@@ -871,7 +906,7 @@ typedef enum {
 	iDeb,iBat_link_set,iK_inv,iK_inv_sel,iK_byps,
 	iPrl_bat_in_out,iPrl_bat_in_sel,iPdp1,iJAv_sel,iJAv_net_sel,iJAv_net,iJAv_src1,
 	iTst_bps,/*iJAv_bat,iJAv_bat_sel,*/iAusw,iAusw_prl,iAusw_set,
-	iK_t_ext,iK_t_3U,iK_t_ext_6U,
+	iK_t_ext,iK_t_3U,iK_t_ext_6U, iPrl_Def_220_IPS_TERMOKOMPENSAT,
 	iAv_view,
 	iBatLogKe,iJ_bat_ke,iBatLogVz,iJ_bat_vz,iBatLogWrk,
 	iExtern,iExtern_3U,iExtern_GLONASS,iExtern_KONTUR,iExtern_6U,iExtern_220,iExtern_220_ZVU,
@@ -965,6 +1000,7 @@ extern signed short TSIGN;
 extern signed short AV_OFF_AVT;
 extern signed short USIGN;
 extern signed short UMN;
+extern signed short UMAXN;
 extern signed short ZV_ON;
 extern signed short IKB;
 extern signed short UVZ;
@@ -1223,6 +1259,8 @@ typedef struct
 	char 		_temper_stat;
 	//0бит - подогрев
 	//1бит - перегрев
+	//4бит - подогрев(отставание на цикл(_old))
+	//5бит - перегрев (отставание на цикл(_old))
 	signed short 	_sign_temper_cnt;
 	signed short 	_max_temper_cnt;
 	signed long 	_resurs_cnt;
@@ -1427,14 +1465,20 @@ typedef struct
 	signed short _overload_av_cnt;     
      signed short _temp_av_cnt;
      signed short _umax_av_cnt;
-     signed short _umin_av_cnt;
+     signed short _umin_av_cnt;		//счетчик аварии по заниженному напряжению когда сам БПС прислал бит аварии 
+	 signed short _umin_av_cnt_uku;	//счетчик аварии по заниженному напряжению когда уку видит снижение напряжения на выходе БПС
      signed _rotor;
      signed  short _x_; 
      char _adr_ee;
 	char _last_avar;
 	char _vent_resurs_temp[4];
 	unsigned short _vent_resurs;
-     } BPS_STAT; 
+	unsigned char _apv_timer_1_lev;		//таймер апв 1-го уровня, считает минуту
+	unsigned char _apv_cnt_1_lev;		//счетчик апв 1-го уровня, считает 3 запуска
+	unsigned short _apv_timer_2_lev;	//таймер апв 2-го уровня, считает установленный для АПВ2 период
+	unsigned char _apv_reset_av_timer;	//таймер для сброса аварий БПСа(пока он ненулевой на БПС шлется сигнал сбросить)
+	unsigned char _apv_succes_timer;	//таймер подсчета времени успешной работы БПС, при достижении порога сбрасывает АПВ 
+	} BPS_STAT; 
 extern BPS_STAT bps[29];
 
 //***********************************************
@@ -1507,9 +1551,10 @@ extern signed short bps_I_phantom;
 extern signed short net_U,net_Ustore,net_Ua,net_Ub,net_Uc;
 extern char bFF,bFF_;
 extern signed short net_F,hz_out,hz_out_cnt,net_F3;
-extern signed char unet_drv_cnt;
+extern signed char unet_drv_cnt;	 //Счетчик на снижение первичного наряжеия
+extern signed char unet_max_drv_cnt; //Счетчик на превышение первичного наряжеия
 extern char net_av;
-
+extern short net_av_2min_timer;
 
 extern char plazma_plazma_plazma;
 
@@ -1664,6 +1709,7 @@ extern enum_avt_stat avt_stat[12],avt_stat_old[12];
 extern signed long ibat_metr_buff_[2];
 extern short bIBAT_SMKLBR;
 extern short bIBAT_SMKLBR_cnt;
+extern short ibat_metr_cnt;
 
 //-----------------------------------------------
 //Управление низкоприоритетной нагрузкой
@@ -1799,6 +1845,7 @@ extern short plazma_numOfPacks;
 
 extern char plazma_ztt[2];
 extern char plazma_stark[32];
+extern char spch_plazma[2];
 
 extern U8 socket_tcp;
 
@@ -1847,8 +1894,11 @@ extern short web_cnt_2hz;
 extern const char* web_str;
 extern char uku_set_autorized;
 extern long web_param_input;
+extern short cntrl_stat_pwm;
 
 extern char place_holder[70];
+
+extern unsigned char count_reg_enmv, count_bit_enmv, enmv_puts_en, delay_enmv_puts; //o_7
 //-----------------------------------------------
 //Ресурс вентиляторов
 //extern char vent_resurs_temp[4];

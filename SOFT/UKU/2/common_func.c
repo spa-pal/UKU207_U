@@ -634,12 +634,69 @@ else if(dt[0]=='B')
     			}
     		}
 
+    	if(dt[2]=='T')
+    		{
+    		lcd_buffer[iii++]='Á';
+    		lcd_buffer[iii++]='à';
+    		lcd_buffer[iii++]='ò';
+			lcd_buffer[iii++]='N';
+
+			if(dt[1]<9)
+    			{
+    			lcd_buffer[iii++]=0x31+dt[1];
+    			}
+    		else 
+    			{
+    			lcd_buffer[iii++]=' ';
+    			} 
+    		lcd_buffer[iii++]='í';
+    		lcd_buffer[iii++]='à';
+    		lcd_buffer[iii++]='ã';
+    		lcd_buffer[iii++]='ð';
+    		lcd_buffer[iii++]='.';
+    		lcd_buffer[iii++]=' ';
+     	
+    		if((dt_[0]==LPC_RTC->YEAR)&&(dt_[1]==LPC_RTC->MONTH)&&(dt_[2]==LPC_RTC->DOM))
+    			{
+    		    lcd_buffer[iii++]='0';
+   	 			lcd_buffer[iii++]='!';
+				lcd_buffer[iii++]=':'; 
+    			lcd_buffer[iii++]='0';
+    			lcd_buffer[iii++]='@';
+				lcd_buffer[iii++]=':';
+				lcd_buffer[iii++]='0';
+				lcd_buffer[iii++]='#';
+   	 	    	int2lcd(dt__[0],'!',0);
+				int2lcd(dt__[1],'@',0);
+				int2lcd(dt__[2],'#',0);    		     		
+    			}	                   
+    		else      	
+    			{
+    	 		lcd_buffer[iii++]=' ';
+    			lcd_buffer[iii++]='0';
+    			lcd_buffer[iii++]='!';
+    	    	lcd_buffer[iii++]='@'; 
+    			lcd_buffer[iii++]=' ';
+    			lcd_buffer[iii++]=' ';
+    			lcd_buffer[iii++]='0';
+    			lcd_buffer[iii++]='#';
+    			int2lcd(dt_[2],'!',0);
+    			int2lcd(dt_[0],'#',0);   
+    	    		if(!((dt_[1]>=1)&&(dt_[1]<=12)))dt_[1]=1;
+			sub_bgnd(sm_mont[dt_[1]],'@',0);  
+    			}
+    		}
+
     	if(dt[2]=='Z')
     		{
     		lcd_buffer[iii++]='Â';
-    		lcd_buffer[iii++]='Ç';
-    		lcd_buffer[iii++]=' ';    		
-    		lcd_buffer[iii++]=' ';
+    		lcd_buffer[iii++]='û';
+    		lcd_buffer[iii++]='ð';    		
+    		lcd_buffer[iii++]='.';
+    		lcd_buffer[iii++]='Ç';  
+    		lcd_buffer[iii++]='à';
+    		lcd_buffer[iii++]='ð';
+			lcd_buffer[iii++]='.';
     		lcd_buffer[iii++]=' ';  
     		lcd_buffer[iii++]=' ';
     		lcd_buffer[iii++]=' ';
@@ -697,9 +754,14 @@ else if(dt[0]=='B')
     			{
     			lcd_buffer[iii++]=' ';
     			lcd_buffer[iii++]=' '; 
-    			lcd_buffer[iii++]=' ';    		
+    			lcd_buffer[iii++]=' '; 
+
     			} 
-    		lcd_buffer[iii++]=' ';    		
+    		lcd_buffer[iii++]=' '; 
+    			lcd_buffer[iii++]=' ';
+    			lcd_buffer[iii++]=' '; 
+    			lcd_buffer[iii++]=' ';
+    			lcd_buffer[iii++]=' ';			   		
     		
     		
  /*   		lcd_buffer[iii++]='Á';

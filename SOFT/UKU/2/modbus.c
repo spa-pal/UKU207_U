@@ -273,7 +273,11 @@ unsigned char i_cnt;
 	modbus_tx_buff[7]=crc_temp>>8;
 	for (i_cnt=0;i_cnt<8;i_cnt++)	putchar_sc16is700(modbus_tx_buff[i_cnt]);
 	if(enmv_on<5)enmv_on++;
-   	else {for (i_cnt=0;i_cnt<64;i_cnt++) snmp_enmv_data[i_cnt]=0xFF;}
+   	else {
+		for (i_cnt=0;i_cnt<64;i_cnt++) snmp_enmv_data[i_cnt]=0xFF;
+		for (i_cnt=0;i_cnt<7;i_cnt++) {enmv_data[i_cnt]=0; enmv_data_pred[i_cnt]=0;}	 //o_7
+		enmv_puts_en=0;				 //o_7
+	}
 } //o_2_e
 
 //-----------------------------------------------
@@ -615,7 +619,10 @@ if(crc16_calculated==crc16_incapsulated)
 				lc640_write_int(EE_UB0,modbus_rx_arg1);
 				lc640_write_int(EE_UB20,modbus_rx_arg1);
 	     		}
-
+			if(modbus_rx_arg0==55)		//
+				{
+				lc640_write_int(EE_UMAXN,modbus_rx_arg1);
+	     		}
 			if(modbus_rx_arg0==19)		//вкл/выкл источника напр.
 				{
 	/*			if(modbus_rx_arg1==1)
@@ -716,9 +723,11 @@ if(crc16_calculated==crc16_incapsulated)
 				  for(i_cnt=0;i_cnt<8;i_cnt++) {
 				  	for(j_cnt=0;j_cnt<8;j_cnt++){
 					   snmp_enmv_data[i_cnt*8+j_cnt]=(modbus_an_buffer[3+i_cnt]>>j_cnt)&0x01;
-					}				   
+					}
+					enmv_data[i_cnt]=modbus_an_buffer[3+i_cnt];				   
 				  }
 				  enmv_on=0;
+				  enmv_puts_en=1;
 				}
 			} 
 
@@ -1113,7 +1122,7 @@ for (i=0;i<8;i++)
 //-----------------------------------------------
 void modbus_hold_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot)
 {
-signed char modbus_registers[150];
+signed char modbus_registers[250];
 //char modbus_tx_buff[150];
 unsigned short crc_temp;
 char i;
@@ -1174,20 +1183,24 @@ modbus_registers[90]=(char)(TBATMAX>>8);				//Рег46  Температура батареи аварийн
 modbus_registers[91]=(char)(TBATMAX);
 modbus_registers[92]=(char)(TBATSIGN>>8);				//Рег47  Температура батареи сигнальная, 1гЦ
 modbus_registers[93]=(char)(TBATSIGN);
-modbus_registers[94]=(char)(speedChrgCurr>>8);					//Рег48  Ток ускоренного заряда, 0.1А
+modbus_registers[94]=(char)(speedChrgCurr>>8);			//Рег48  Ток ускоренного заряда, 0.1А
 modbus_registers[95]=(char)(speedChrgCurr);
-modbus_registers[96]=(char)(speedChrgVolt>>8);				//Рег49	 Напряжение ускоренного заряда, 0.1В 
+modbus_registers[96]=(char)(speedChrgVolt>>8);			//Рег49	 Напряжение ускоренного заряда, 0.1В 
 modbus_registers[97]=(char)(speedChrgVolt);
-modbus_registers[98]=(char)(speedChrgTimeInHour>>8);				//Рег50	 Время ускоренного заряда, 1ч
+modbus_registers[98]=(char)(speedChrgTimeInHour>>8);	//Рег50	 Время ускоренного заряда, 1ч
 modbus_registers[99]=(char)(speedChrgTimeInHour);
-modbus_registers[100]=(char)(U_OUT_KONTR_MAX>>8);					//Рег51	 Контроль выходного напряжения, Umax, 0.1В
+modbus_registers[100]=(char)(U_OUT_KONTR_MAX>>8);		//Рег51	 Контроль выходного напряжения, Umax, 0.1В
 modbus_registers[101]=(char)(U_OUT_KONTR_MAX);
-modbus_registers[102]=(char)(U_OUT_KONTR_MIN>>8);					//Рег52	 Контроль выходного напряжения, Umin, 0.1В
+modbus_registers[102]=(char)(U_OUT_KONTR_MIN>>8);		//Рег52	 Контроль выходного напряжения, Umin, 0.1В
 modbus_registers[103]=(char)(U_OUT_KONTR_MIN);
-modbus_registers[104]=(char)(U_OUT_KONTR_DELAY>>8);				//Рег53	 Контроль выходного напряжения, Tзадержки, 1сек.
+modbus_registers[104]=(char)(U_OUT_KONTR_DELAY>>8);		//Рег53	 Контроль выходного напряжения, Tзадержки, 1сек.
 modbus_registers[105]=(char)(U_OUT_KONTR_DELAY);
-modbus_registers[106]=(char)(UB0>>8);							//Рег54	 Установка выходного напряжения для ИПС без батареи(СГЕП-ГАЗПРОМ)
+modbus_registers[106]=(char)(UB0>>8);					//Рег54	 Установка выходного напряжения для ИПС без батареи(СГЕП-ГАЗПРОМ)
 modbus_registers[107]=(char)(UB0);
+modbus_registers[108]=(char)(UMAXN>>8);					//Рег55  Максимальное (аварийное) напряжение питающей сети, 1В
+modbus_registers[109]=(char)(UMAXN);
+
+
 
 
 
@@ -1373,13 +1386,38 @@ modbus_registers[110]=(signed char)(tempS>>8);					//Рег56   	Выравнивающий заря
 modbus_registers[111]=(signed char)(tempS);
 modbus_registers[112]=(signed char)(uout_av>>8);					//Рег57   Контроль выходного напряжения, (0 - норма, 1 - завышено, 2 - занижено)
 modbus_registers[113]=(signed char)(uout_av);
-
+/*
 tempS=0;													 //Рег60	Регистр флагов состояния системы
 if(bat_ips._av)			tempS|=(1<<0);						 // Бит 0	Авария батареи
 if(avar_stat&0x0001)   	tempS|=(1<<1);						 //	Бит 1	Авария питающей сети 
 if(avar_stat&(1<<(3+0)))tempS|=(1<<2);						 //	Бит 2	Авария выпрямителя №1
 if(avar_stat&(1<<(3+1)))tempS|=(1<<3);						 //	Бит 3	Авария выпрямителя №2
-if(avar_stat&(1<<(3+2)))tempS|=(1<<4);						 //	Бит 4	Авария выпрямителя №2
+if(avar_stat&(1<<(3+2)))tempS|=(1<<4);						 //	Бит 4	Авария выпрямителя №3
+if(avar_stat&(1<<(3+3)))tempS|=(1<<5);						 	//	Бит 5	Авария выпрямителя №4
+if(avar_stat&(1<<(3+4)))tempS|=(1<<6);						 	//	Бит 6	Авария выпрямителя №5
+if(avar_stat&(1<<(3+5)))tempS|=(1<<7);						 	//	Бит 7	Авария выпрямителя №6
+if(avar_stat&(1<<(3+6)))tempS|=(1<<8);						 	//	Бит 8	Авария выпрямителя №7
+if(avar_stat&(1<<(3+6)))tempS|=(1<<9);						 	//	Бит 8	Авария выпрямителя №8
+*/
+tempS=0;
+tempS=avar_stat;
+#ifdef UKU_ZVU
+if(bat_ips._av)			tempS|=(1<<1);
+else 					tempS&=~(1<<1);
+#endif
+//Рег60	Регистр флагов состояния системы
+// 	Бит 0	Авария питающей сети 
+//	Бит 1	Авария батареи №1(Авария батареи для ЗВУ)
+//	Бит 2	Авария батареи №2
+//	Бит 3	Авария выпрямителя №1
+//	Бит 4	Авария выпрямителя №2
+//	Бит 5	Авария выпрямителя №3
+//	Бит 6	Авария выпрямителя №4
+//	Бит 7	Авария выпрямителя №5
+//	Бит 8	Авария выпрямителя №6
+//	Бит 9	Авария выпрямителя №7
+//	Бит 10	Авария выпрямителя №8
+
 modbus_registers[118]=(signed char)(tempS>>8);
 modbus_registers[119]=(signed char)(tempS);
 
@@ -1414,6 +1452,9 @@ if(ND_EXT[3])tempS=-1000;
 modbus_registers[406]=(signed char)(tempS>>8);				//Рег204	Внешний датчик температуры №4
 modbus_registers[407]=(signed char)(tempS);   */
 
+modbus_registers[406]=(signed char)(bat_hndl_t_razr_min>>8);
+modbus_registers[407]=(signed char)(bat_hndl_t_razr_min);
+
 tempS=0;
 if(sk_stat[0]==ssON) tempS|=0x0001;
 if(sk_av_stat[0]==sasON) tempS|=0x0002;
@@ -1435,8 +1476,41 @@ if(sk_av_stat[3]==sasON) tempS|=0x0002;
 modbus_registers[426]=(signed char)(tempS>>8);				//Рег214	Состояние  сухого контакта №1, (нулевой бит - физическое состояние, 1 - замкнут, 0 - разомкнут, первый бит - аварийность, 1 - авария, 0 - норма)
 modbus_registers[427]=(signed char)(tempS);
 
-//modbus_registers[
+tempS=bat[0]._av;
+#ifdef UKU_220_IPS_TERMOKOMPENSAT 
+tempS=ips_bat_av_stat;
+#endif
 
+modbus_registers[428]=(signed char)(tempS>>8);				//Рег215	Байт статуса батареи №1(0x01 - авария цепи батареи, 0x02 - авария средней точки батареи)
+modbus_registers[429]=(signed char)(tempS);
+
+tempS=bat[1]._av;
+modbus_registers[430]=(signed char)(tempS>>8);				//Рег216	Байт статуса батареи №2(0x01 - авария цепи батареи, 0x02 - авария средней точки батареи)
+modbus_registers[431]=(signed char)(tempS);
+
+tempS=bat_hndl_t_razr_min;
+modbus_registers[432]=(signed char)(tempS>>8);				//Рег217	Остаточное время работы батареи в минутах
+modbus_registers[433]=(signed char)(tempS);
+
+modbus_registers[434]=(signed char)(snmp_bat_flag[0]>>8);	//Рег218 //  //флаги АКБ №1
+modbus_registers[435]=(signed char)(snmp_bat_flag[0]);	
+modbus_registers[436]=(signed char)(snmp_bat_flag[1]>>8);	//Рег219 //  //флаги АКБ №2
+modbus_registers[437]=(signed char)(snmp_bat_flag[1]);
+/*
+Бит 0- равен 1, если напряжение на АКБ ниже уставки Uсигн., иначе равен нулю.
+Бит 1- равен 1, если показание датчика температуры АКБ выше уставки t бат.сигн., иначе равен нулю. 
+Бит 2- равен 1, если показание датчика температуры АКБ выше уставки t бат.мах., иначе равен нулю.
+Бит 3- равен 1, если ток АКБ меньше нуля (АКБ разряжается), иначе равен нулю.
+Бит 4- равен 1, если включена функция контроля емкости АКБ, иначе равен нулю.
+Бит 5- равен 1, если включен выравнивающий заряд АКБ, иначе равен нулю.
+Бит 6- равен 1, если режим выравнивающего заряда заблокирован.
+Бит 7- равен 1, если включен ускоренный заряд АКБ, иначе равен нулю.
+Бит 8- равен 1, если режим ускоренного заряда заблокирован.
+Бит 9- равен 1, если включен уравнительный заряд АКБ, иначе равен нулю.
+Бит 10- равен 1, если режим уравнительного заряда заблокирован.
+Бит 11- равен 1, если включен формовочный заряд АКБ, иначе равен нулю.
+Бит 12- равен 1, если режим формовочного заряда заблокирован.
+*/
 
 if(prot==MODBUS_RTU_PROT)
 	{

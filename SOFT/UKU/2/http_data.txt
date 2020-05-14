@@ -2485,10 +2485,10 @@
                   http_data PROC
 ;;;594    //-----------------------------------------------
 ;;;595    void http_data(void)
-0010bc  48ac              LDR      r0,|L1.4976|
+0010bc  48b3              LDR      r0,|L1.5004|
 ;;;596    {
 ;;;597    http_power_num_of_phases=NUMPHASE;
-0010be  49ad              LDR      r1,|L1.4980|
+0010be  49b4              LDR      r1,|L1.5008|
 0010c0  8800              LDRH     r0,[r0,#0]  ; NUMPHASE
 0010c2  b2c0              UXTB     r0,r0
 0010c4  7008              STRB     r0,[r1,#0]
@@ -2503,8 +2503,8 @@
 ;;;599    if(http_power_num_of_phases==1)
 ;;;600    	{
 ;;;601    	http_power_voltage_of_phase[0]=net_U;
-0010d4  48a8              LDR      r0,|L1.4984|
-0010d6  4aa7              LDR      r2,|L1.4980|
+0010d4  48af              LDR      r0,|L1.5012|
+0010d6  4aae              LDR      r2,|L1.5008|
 0010d8  780b              LDRB     r3,[r1,#0]            ;599  ; http_power_num_of_phases
 0010da  f9b00000          LDRSH    r0,[r0,#0]
 0010de  1d12              ADDS     r2,r2,#4
@@ -2515,21 +2515,21 @@
 0010e4  8010              STRH     r0,[r2,#0]
                   |L1.4326|
 ;;;604    http_power_voltage_of_phase[1]=net_Ub;
-0010e6  48a5              LDR      r0,|L1.4988|
+0010e6  48ac              LDR      r0,|L1.5016|
 0010e8  8800              LDRH     r0,[r0,#0]  ; net_Ub
 0010ea  8050              STRH     r0,[r2,#2]
 ;;;605    http_power_voltage_of_phase[2]=net_Uc;
-0010ec  48a4              LDR      r0,|L1.4992|
+0010ec  48ab              LDR      r0,|L1.5020|
 0010ee  8800              LDRH     r0,[r0,#0]  ; net_Uc
 0010f0  8090              STRH     r0,[r2,#4]
 ;;;606    http_power_frequncy = net_F;
-0010f2  48a4              LDR      r0,|L1.4996|
+0010f2  48ab              LDR      r0,|L1.5024|
 0010f4  8800              LDRH     r0,[r0,#0]  ; net_F
 0010f6  8048              STRH     r0,[r1,#2]
 ;;;607    http_power_status=0;
 ;;;608    //if(avar_stat&0x0001)http_power_status=1;
 ;;;609    http_power_status=net_av;
-0010f8  48a3              LDR      r0,|L1.5000|
+0010f8  48aa              LDR      r0,|L1.5028|
 0010fa  7800              LDRB     r0,[r0,#0]  ; net_av
 0010fc  7048              STRB     r0,[r1,#1]
 ;;;610    };
@@ -2626,8 +2626,8 @@
 001192  f04f0000          MOV      r0,#0
 ;;;642    	{
 ;;;643    	http_output_buff[i*2]=hex_alfa[buff[i]/16];
-001196  4c7d              LDR      r4,|L1.5004|
-001198  4b7d              LDR      r3,|L1.5008|
+001196  4c84              LDR      r4,|L1.5032|
+001198  4b84              LDR      r3,|L1.5036|
                   |L1.4506|
 00119a  5c2a              LDRB     r2,[r5,r0]
 00119c  eb041112          ADD      r1,r4,r2,LSR #4
@@ -2649,7 +2649,7 @@
 ;;;648    return http_output_buff;
 ;;;649    }
 0011c0  b00a              ADD      sp,sp,#0x28
-0011c2  4873              LDR      r0,|L1.5008|
+0011c2  487a              LDR      r0,|L1.5036|
 0011c4  bd70              POP      {r4-r6,pc}
 ;;;650    
                           ENDP
@@ -2663,11 +2663,11 @@
 ;;;654    char buffer[100];
 ;;;655    
 ;;;656    sprintf(buffer,"%d %d", t_ext[numOfDt], ND_EXT[numOfDt]);
-0011ca  4972              LDR      r1,|L1.5012|
+0011ca  4979              LDR      r1,|L1.5040|
 0011cc  5c0b              LDRB     r3,[r1,r0]
-0011ce  4972              LDR      r1,|L1.5016|
+0011ce  4979              LDR      r1,|L1.5044|
 0011d0  f9312010          LDRSH    r2,[r1,r0,LSL #1]
-0011d4  a171              ADR      r1,|L1.5020|
+0011d4  a178              ADR      r1,|L1.5048|
 0011d6  4668              MOV      r0,sp
 0011d8  f7fffffe          BL       __2sprintf
 ;;;657    
@@ -2693,14 +2693,14 @@
 0011ea  4613              MOV      r3,r2
 ;;;667    
 ;;;668    if(sk_stat[numOfSk]==ssON)temp1=1;
-0011ec  496d              LDR      r1,|L1.5028|
+0011ec  4974              LDR      r1,|L1.5056|
 0011ee  5c09              LDRB     r1,[r1,r0]
 0011f0  2901              CMP      r1,#1
 0011f2  d100              BNE      |L1.4598|
 0011f4  460a              MOV      r2,r1
                   |L1.4598|
 ;;;669    if(sk_av_stat[numOfSk]==sasON)temp2=1;
-0011f6  496c              LDR      r1,|L1.5032|
+0011f6  4973              LDR      r1,|L1.5060|
 0011f8  5c08              LDRB     r0,[r1,r0]
 0011fa  2801              CMP      r0,#1
 0011fc  d100              BNE      |L1.4608|
@@ -2708,7 +2708,7 @@
                   |L1.4608|
 ;;;670    
 ;;;671    sprintf(buffer,"%d %d", temp1, temp2);
-001200  a166              ADR      r1,|L1.5020|
+001200  a16d              ADR      r1,|L1.5048|
 001202  4668              MOV      r0,sp
 001204  f7fffffe          BL       __2sprintf
 ;;;672    
@@ -2727,7 +2727,7 @@
 ;;;679    //return number+spirit_wrk_cnt;
 ;;;680    if((bps[number]._state==bsWRK)&&(!bps[number]._flags_tm)) 		return 1;
 001210  eb011100          ADD      r1,r1,r0,LSL #4
-001214  4865              LDR      r0,|L1.5036|
+001214  486c              LDR      r0,|L1.5064|
 001216  eb000181          ADD      r1,r0,r1,LSL #2
 00121a  7888              LDRB     r0,[r1,#2]
 00121c  2801              CMP      r0,#1
@@ -2816,7 +2816,7 @@
 001288  4601              MOV      r1,r0
 00128a  eb0300c3          ADD      r0,r3,r3,LSL #3
 00128e  eb001203          ADD      r2,r0,r3,LSL #4
-001292  4846              LDR      r0,|L1.5036|
+001292  484d              LDR      r0,|L1.5064|
 001294  eb000082          ADD      r0,r0,r2,LSL #2
 001298  f8902042          LDRB     r2,[r0,#0x42]
 00129c  6a83              LDR      r3,[r0,#0x28]
@@ -2824,7 +2824,7 @@
 0012a2  9202              STR      r2,[sp,#8]
 0012a4  6a43              LDR      r3,[r0,#0x24]
 0012a6  69c2              LDR      r2,[r0,#0x1c]
-0012a8  a141              ADR      r1,|L1.5040|
+0012a8  a148              ADR      r1,|L1.5068|
 0012aa  a804              ADD      r0,sp,#0x10
 0012ac  f7fffffe          BL       __2sprintf
 ;;;698    
@@ -2836,211 +2836,240 @@
 ;;;701    
                           ENDP
 
-                  http_tm_bat_output PROC
+                  http_ip_output PROC
 ;;;702    //-----------------------------------------------
-;;;703    char* http_tm_bat_output(char numOfBat)
-0012b6  e92d41f0          PUSH     {r4-r8,lr}
+;;;703    char* http_ip_output(char ip1, char ip2, char ip3, char ip4)
+0012b6  b500              PUSH     {lr}
 ;;;704    {
-0012ba  b0d4              SUB      sp,sp,#0x150
-0012bc  4605              MOV      r5,r0
-;;;705    char buffer[300];
-;;;706    char* batstat="abcdef";
-;;;707    
-;;;708    short batison=0;
-0012be  f04f0800          MOV      r8,#0
-;;;709    short batcreal=-1;
-0012c2  f04f37ff          MOV      r7,#0xffffffff
-;;;710    short batubm=-1;
-;;;711    if(BAT_IS_ON[numOfBat]==bisON)batison=1;
-0012c6  483f              LDR      r0,|L1.5060|
-0012c8  5d40              LDRB     r0,[r0,r5]
-0012ca  2855              CMP      r0,#0x55
-0012cc  d101              BNE      |L1.4818|
-0012ce  f04f0801          MOV      r8,#1
-                  |L1.4818|
-;;;712    if(BAT_C_REAL[numOfBat]!=0x5555)batcreal=BAT_C_REAL[numOfBat];
-0012d2  483d              LDR      r0,|L1.5064|
-0012d4  f9306015          LDRSH    r6,[r0,r5,LSL #1]
-0012d8  f5a640aa          SUB      r0,r6,#0x5500
-0012dc  3855              SUBS     r0,r0,#0x55
-0012de  d107              BNE      |L1.4848|
-;;;713    else batcreal=-BAT_C_NOM[numOfBat]*10;
-0012e0  483a              LDR      r0,|L1.5068|
-0012e2  f06f0109          MVN      r1,#9
-0012e6  f8300015          LDRH     r0,[r0,r5,LSL #1]
-0012ea  fb00f001          MUL      r0,r0,r1
-0012ee  b206              SXTH     r6,r0
-                  |L1.4848|
-;;;714    if(UBM_AV)batubm=bat[numOfBat]._Ubm;
-0012f0  4837              LDR      r0,|L1.5072|
-0012f2  eb050245          ADD      r2,r5,r5,LSL #1
-0012f6  eb021205          ADD      r2,r2,r5,LSL #4
-0012fa  8801              LDRH     r1,[r0,#0]  ; UBM_AV
-0012fc  4835              LDR      r0,|L1.5076|
-0012fe  eb000482          ADD      r4,r0,r2,LSL #2
-001302  b109              CBZ      r1,|L1.4872|
-001304  f9b47004          LDRSH    r7,[r4,#4]
-                  |L1.4872|
-;;;715    
-;;;716    if(bat[numOfBat]._Ib>0)	batstat=pal_cyr_coder("заряжается");
-001308  f9b40008          LDRSH    r0,[r4,#8]
-00130c  2800              CMP      r0,#0
-00130e  dd03              BLE      |L1.4888|
-001310  a031              ADR      r0,|L1.5080|
-001312  f7fffffe          BL       pal_cyr_coder
-001316  e002              B        |L1.4894|
-                  |L1.4888|
-;;;717    else batstat=pal_cyr_coder("разряжается");
-001318  a032              ADR      r0,|L1.5092|
-00131a  f7fffffe          BL       pal_cyr_coder
-                  |L1.4894|
-;;;718    if(bat[numOfBat]._av&1)batstat=pal_cyr_coder("Авария цепи батареи!!!");
-00131e  f894103d          LDRB     r1,[r4,#0x3d]
-001322  07c9              LSLS     r1,r1,#31
-001324  d002              BEQ      |L1.4908|
-001326  a032              ADR      r0,|L1.5104|
-001328  f7fffffe          BL       pal_cyr_coder
-                  |L1.4908|
-;;;719    if(bat[numOfBat]._av&2)batstat=pal_cyr_coder("Авария средней точки батареи!!!");
-00132c  f894103d          LDRB     r1,[r4,#0x3d]
-001330  0789              LSLS     r1,r1,#30
-001332  d502              BPL      |L1.4922|
-001334  a034              ADR      r0,|L1.5128|
-001336  f7fffffe          BL       pal_cyr_coder
-                  |L1.4922|
-;;;720    //batstat=pal_cyr_coder("Авария средней точки батареи!!!");
-;;;721    
-;;;722    sprintf(buffer,"%d, %d, %d, %d, %d, %d, %d, %d, %d, %s", batison, bat[numOfBat]._Ub, bat[numOfBat]._Ib, bat[numOfBat]._Tb,
-00133a  493b              LDR      r1,|L1.5160|
-00133c  8a22              LDRH     r2,[r4,#0x10]
-00133e  ab01              ADD      r3,sp,#4
-001340  f9311015          LDRSH    r1,[r1,r5,LSL #1]
-001344  e9cd1705          STRD     r1,r7,[sp,#0x14]
-001348  9204              STR      r2,[sp,#0x10]
-00134a  9007              STR      r0,[sp,#0x1c]
-00134c  f9b4000a          LDRSH    r0,[r4,#0xa]
-001350  7b21              LDRB     r1,[r4,#0xc]
-001352  f9b42008          LDRSH    r2,[r4,#8]
-001356  c343              STM      r3!,{r0,r1,r6}
-001358  9200              STR      r2,[sp,#0]
-00135a  f9b43002          LDRSH    r3,[r4,#2]
-00135e  4642              MOV      r2,r8
-001360  a132              ADR      r1,|L1.5164|
-001362  a809              ADD      r0,sp,#0x24
-001364  f7fffffe          BL       __2sprintf
-;;;723     		bat[numOfBat]._nd, batcreal, bat[numOfBat]._zar,BAT_RESURS[numOfBat],batubm, batstat);
-;;;724    
-;;;725    return buffer;
-001368  a809              ADD      r0,sp,#0x24
-;;;726    }
-00136a  b054              ADD      sp,sp,#0x150
-00136c  e8bd81f0          POP      {r4-r8,pc}
-;;;727    
+0012b8  b09b              SUB      sp,sp,#0x6c
+;;;705    char buffer[100];
+;;;706    
+;;;707    sprintf(buffer,"%d.%d.%d.%d", ip1, ip2, ip3, ip4);
+0012ba  e9cd2300          STRD     r2,r3,[sp,#0]
+0012be  460b              MOV      r3,r1
+0012c0  4602              MOV      r2,r0
+0012c2  a147              ADR      r1,|L1.5088|
+0012c4  a802              ADD      r0,sp,#8
+0012c6  f7fffffe          BL       __2sprintf
+;;;708    
+;;;709    return buffer;
+0012ca  a802              ADD      r0,sp,#8
+;;;710    }
+0012cc  b01b              ADD      sp,sp,#0x6c
+0012ce  bd00              POP      {pc}
+;;;711    
                           ENDP
 
-                  |L1.4976|
-                          DCD      NUMPHASE
-                  |L1.4980|
-                          DCD      ||area_number.8||
-                  |L1.4984|
-                          DCD      net_U
-                  |L1.4988|
-                          DCD      net_Ub
-                  |L1.4992|
-                          DCD      net_Uc
-                  |L1.4996|
-                          DCD      net_F
-                  |L1.5000|
-                          DCD      net_av
+                  http_tm_bat_output PROC
+;;;712    //-----------------------------------------------
+;;;713    char* http_tm_bat_output(char numOfBat)
+0012d0  e92d41f0          PUSH     {r4-r8,lr}
+;;;714    {
+0012d4  b0d4              SUB      sp,sp,#0x150
+0012d6  4605              MOV      r5,r0
+;;;715    char buffer[300];
+;;;716    char* batstat="abcdef";
+;;;717    
+;;;718    short batison=0;
+0012d8  f04f0800          MOV      r8,#0
+;;;719    short batcreal=-1;
+0012dc  f04f37ff          MOV      r7,#0xffffffff
+;;;720    short batubm=-1;
+;;;721    if(BAT_IS_ON[numOfBat]==bisON)batison=1;
+0012e0  4842              LDR      r0,|L1.5100|
+0012e2  5d40              LDRB     r0,[r0,r5]
+0012e4  2855              CMP      r0,#0x55
+0012e6  d101              BNE      |L1.4844|
+0012e8  f04f0801          MOV      r8,#1
+                  |L1.4844|
+;;;722    if(BAT_C_REAL[numOfBat]!=0x5555)batcreal=BAT_C_REAL[numOfBat];
+0012ec  4840              LDR      r0,|L1.5104|
+0012ee  f9306015          LDRSH    r6,[r0,r5,LSL #1]
+0012f2  f5a640aa          SUB      r0,r6,#0x5500
+0012f6  3855              SUBS     r0,r0,#0x55
+0012f8  d107              BNE      |L1.4874|
+;;;723    else batcreal=-BAT_C_NOM[numOfBat]*10;
+0012fa  483e              LDR      r0,|L1.5108|
+0012fc  f06f0109          MVN      r1,#9
+001300  f8300015          LDRH     r0,[r0,r5,LSL #1]
+001304  fb00f001          MUL      r0,r0,r1
+001308  b206              SXTH     r6,r0
+                  |L1.4874|
+;;;724    if(UBM_AV)batubm=bat[numOfBat]._Ubm;
+00130a  483b              LDR      r0,|L1.5112|
+00130c  eb050245          ADD      r2,r5,r5,LSL #1
+001310  eb021205          ADD      r2,r2,r5,LSL #4
+001314  8801              LDRH     r1,[r0,#0]  ; UBM_AV
+001316  4839              LDR      r0,|L1.5116|
+001318  eb000482          ADD      r4,r0,r2,LSL #2
+00131c  b109              CBZ      r1,|L1.4898|
+00131e  f9b47004          LDRSH    r7,[r4,#4]
+                  |L1.4898|
+;;;725    
+;;;726    if(bat[numOfBat]._Ib>0)	batstat=pal_cyr_coder("заряжается");
+001322  f9b40008          LDRSH    r0,[r4,#8]
+001326  2800              CMP      r0,#0
+001328  dd03              BLE      |L1.4914|
+00132a  a035              ADR      r0,|L1.5120|
+00132c  f7fffffe          BL       pal_cyr_coder
+001330  e002              B        |L1.4920|
+                  |L1.4914|
+;;;727    else batstat=pal_cyr_coder("разряжается");
+001332  a036              ADR      r0,|L1.5132|
+001334  f7fffffe          BL       pal_cyr_coder
+                  |L1.4920|
+;;;728    if(bat[numOfBat]._av&1)batstat=pal_cyr_coder("Авария цепи батареи!!!");
+001338  f894103d          LDRB     r1,[r4,#0x3d]
+00133c  07c9              LSLS     r1,r1,#31
+00133e  d002              BEQ      |L1.4934|
+001340  a035              ADR      r0,|L1.5144|
+001342  f7fffffe          BL       pal_cyr_coder
+                  |L1.4934|
+;;;729    if(bat[numOfBat]._av&2)batstat=pal_cyr_coder("Авария средней точки батареи!!!");
+001346  f894103d          LDRB     r1,[r4,#0x3d]
+00134a  0789              LSLS     r1,r1,#30
+00134c  d502              BPL      |L1.4948|
+00134e  a038              ADR      r0,|L1.5168|
+001350  f7fffffe          BL       pal_cyr_coder
+                  |L1.4948|
+;;;730    //batstat=pal_cyr_coder("Авария средней точки батареи!!!");
+;;;731    
+;;;732    sprintf(buffer,"%d, %d, %d, %d, %d, %d, %d, %d, %d, %s", batison, bat[numOfBat]._Ub, bat[numOfBat]._Ib, bat[numOfBat]._Tb,
+001354  493e              LDR      r1,|L1.5200|
+001356  8a22              LDRH     r2,[r4,#0x10]
+001358  ab01              ADD      r3,sp,#4
+00135a  f9311015          LDRSH    r1,[r1,r5,LSL #1]
+00135e  e9cd1705          STRD     r1,r7,[sp,#0x14]
+001362  9204              STR      r2,[sp,#0x10]
+001364  9007              STR      r0,[sp,#0x1c]
+001366  f9b4000a          LDRSH    r0,[r4,#0xa]
+00136a  7b21              LDRB     r1,[r4,#0xc]
+00136c  f9b42008          LDRSH    r2,[r4,#8]
+001370  c343              STM      r3!,{r0,r1,r6}
+001372  9200              STR      r2,[sp,#0]
+001374  f9b43002          LDRSH    r3,[r4,#2]
+001378  4642              MOV      r2,r8
+00137a  a136              ADR      r1,|L1.5204|
+00137c  a809              ADD      r0,sp,#0x24
+00137e  f7fffffe          BL       __2sprintf
+;;;733     		bat[numOfBat]._nd, batcreal, bat[numOfBat]._zar,BAT_RESURS[numOfBat],batubm, batstat);
+;;;734    
+;;;735    return buffer;
+001382  a809              ADD      r0,sp,#0x24
+;;;736    }
+001384  b054              ADD      sp,sp,#0x150
+001386  e8bd81f0          POP      {r4-r8,pc}
+;;;737    
+                          ENDP
+
+00138a  0000              DCW      0x0000
                   |L1.5004|
-                          DCD      ||.constdata||
+                          DCD      NUMPHASE
                   |L1.5008|
-                          DCD      ||.bss||
+                          DCD      ||area_number.8||
                   |L1.5012|
-                          DCD      ND_EXT
+                          DCD      net_U
                   |L1.5016|
-                          DCD      t_ext
+                          DCD      net_Ub
                   |L1.5020|
-00139c  25642025          DCB      "%d %d",0
-0013a0  6400    
-0013a2  00                DCB      0
-0013a3  00                DCB      0
+                          DCD      net_Uc
+                  |L1.5024|
+                          DCD      net_F
                   |L1.5028|
-                          DCD      sk_stat
+                          DCD      net_av
                   |L1.5032|
-                          DCD      sk_av_stat
+                          DCD      ||.constdata||
                   |L1.5036|
-                          DCD      bps
+                          DCD      ||.bss||
                   |L1.5040|
-0013b0  25642025          DCB      "%d %d %d %d 0x%02x",0
-0013b4  64202564
-0013b8  20256420
-0013bc  30782530
-0013c0  327800  
-0013c3  00                DCB      0
+                          DCD      ND_EXT
+                  |L1.5044|
+                          DCD      t_ext
+                  |L1.5048|
+0013b8  25642025          DCB      "%d %d",0
+0013bc  6400    
+0013be  00                DCB      0
+0013bf  00                DCB      0
+                  |L1.5056|
+                          DCD      sk_stat
                   |L1.5060|
-                          DCD      BAT_IS_ON
+                          DCD      sk_av_stat
                   |L1.5064|
-                          DCD      BAT_C_REAL
+                          DCD      bps
                   |L1.5068|
-                          DCD      BAT_C_NOM
-                  |L1.5072|
-                          DCD      UBM_AV
-                  |L1.5076|
-                          DCD      bat
-                  |L1.5080|
-0013d8  e7e0f0ff          DCB      231,224,240,255,230,224,229,242,241,255,0
-0013dc  e6e0e5f2
-0013e0  f1ff00  
-0013e3  00                DCB      0
-                  |L1.5092|
-0013e4  f0e0e7f0          DCB      240,224,231,240,255,230,224,229,242,241,255,0
-0013e8  ffe6e0e5
-0013ec  f2f1ff00
+0013cc  25642025          DCB      "%d %d %d %d 0x%02x",0
+0013d0  64202564
+0013d4  20256420
+0013d8  30782530
+0013dc  327800  
+0013df  00                DCB      0
+                  |L1.5088|
+0013e0  25642e25          DCB      "%d.%d.%d.%d",0
+0013e4  642e2564
+0013e8  2e256400
+                  |L1.5100|
+                          DCD      BAT_IS_ON
                   |L1.5104|
-0013f0  c0e2e0f0          DCB      192,226,224,240,232,255," ",246,229,239,232," ",225,224,242
-0013f4  e8ff20f6
-0013f8  e5efe820
-0013fc  e1e0f2  
-0013ff  e0f0e5e8          DCB      224,240,229,232,"!!!",0
-001403  21212100
-001407  00                DCB      0
-                  |L1.5128|
-001408  c0e2e0f0          DCB      192,226,224,240,232,255," ",241,240,229,228,237,229,233," "
-00140c  e8ff20f1
-001410  f0e5e4ed
-001414  e5e920  
-001417  f2eef7ea          DCB      242,238,247,234,232," ",225,224,242,224,240,229,232,"!!!"
-00141b  e820e1e0
-00141f  f2e0f0e5
-001423  e8212121
-001427  00                DCB      0
-                  |L1.5160|
+                          DCD      BAT_C_REAL
+                  |L1.5108|
+                          DCD      BAT_C_NOM
+                  |L1.5112|
+                          DCD      UBM_AV
+                  |L1.5116|
+                          DCD      bat
+                  |L1.5120|
+001400  e7e0f0ff          DCB      231,224,240,255,230,224,229,242,241,255,0
+001404  e6e0e5f2
+001408  f1ff00  
+00140b  00                DCB      0
+                  |L1.5132|
+00140c  f0e0e7f0          DCB      240,224,231,240,255,230,224,229,242,241,255,0
+001410  ffe6e0e5
+001414  f2f1ff00
+                  |L1.5144|
+001418  c0e2e0f0          DCB      192,226,224,240,232,255," ",246,229,239,232," ",225,224,242
+00141c  e8ff20f6
+001420  e5efe820
+001424  e1e0f2  
+001427  e0f0e5e8          DCB      224,240,229,232,"!!!",0
+00142b  21212100
+00142f  00                DCB      0
+                  |L1.5168|
+001430  c0e2e0f0          DCB      192,226,224,240,232,255," ",241,240,229,228,237,229,233," "
+001434  e8ff20f1
+001438  f0e5e4ed
+00143c  e5e920  
+00143f  f2eef7ea          DCB      242,238,247,234,232," ",225,224,242,224,240,229,232,"!!!"
+001443  e820e1e0
+001447  f2e0f0e5
+00144b  e8212121
+00144f  00                DCB      0
+                  |L1.5200|
                           DCD      BAT_RESURS
-                  |L1.5164|
-00142c  25642c20          DCB      "%d, %d, %d, %d, %d, %d, %d, %d, %d, %s",0
-001430  25642c20
-001434  25642c20
-001438  25642c20
-00143c  25642c20
-001440  25642c20
-001444  25642c20
-001448  25642c20
-00144c  25642c20
-001450  257300  
-001453  00                DCB      0
+                  |L1.5204|
+001454  25642c20          DCB      "%d, %d, %d, %d, %d, %d, %d, %d, %d, %s",0
+001458  25642c20
+00145c  25642c20
+001460  25642c20
+001464  25642c20
+001468  25642c20
+00146c  25642c20
+001470  25642c20
+001474  25642c20
+001478  257300  
+00147b  00                DCB      0
 
                           AREA ||area_number.2||, CODE, READONLY, ALIGN=1
 
                           EXPORTAS ||area_number.2||, ||.text||
                   demo_avar_vrite PROC
-;;;741    
-;;;742    void demo_avar_vrite(void)
+;;;751    
+;;;752    void demo_avar_vrite(void)
 000000  4770              BX       lr
-;;;743    {
-;;;744    
-;;;745    }
-;;;746    
+;;;753    {
+;;;754    
+;;;755    }
+;;;756    
                           ENDP
 
 

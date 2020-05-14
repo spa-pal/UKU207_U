@@ -3,7 +3,7 @@
 #define RESET_CNT	0x08
 
 #define SECTOR_KOEF 0x10
-
+						  
 #define EE_KUBAT1		SECTOR_KOEF
 #define EE_KUBAT2		SECTOR_KOEF+2
 #define EE_KI0BAT1		SECTOR_KOEF+4
@@ -248,6 +248,7 @@
 #define EE_SP_CH_VENT_BLOK				SECTOR_SETS2+96
 #define EE_VZ_CH_VENT_BLOK				SECTOR_SETS2+98
 
+
 #define SECTOR_BAT  		SECTOR_KOEF+450
 
 #define EE_BAT1_IS_ON         SECTOR_BAT
@@ -490,6 +491,14 @@
 
 #define EE_NUMENMV		4352
 #define EE_NUMPHASE	4354
+#define EE_WEB_PASSWORD				4360 
+#define EE_HTTP_LOCATION			4370
+#define EE_UMAXN					4470
+#define EE_SNTP_WEB_ENABLE			4472
+#define EE_SNTP_IP1					4474
+#define EE_SNTP_IP2					4476
+#define EE_SNTP_IP3					4478
+#define EE_SNTP_IP4					4480
 
 //#define WRK	4352
 //#define WRK_AH	5376  
@@ -509,7 +518,8 @@
 // затем 4 байта с полным временем завершения процесса
 // и в 2 байта данных записывается колличество отданных амперчасов 
 
-#define EE_HTTP_LOCATION			1664
+
+
 
 extern const unsigned short ADR_EE_BAT_ZAR_CNT[2];
 extern const unsigned short ADR_EE_BAT_ZAR_CNT_KE[2];

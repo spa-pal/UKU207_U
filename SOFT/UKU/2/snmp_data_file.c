@@ -11,9 +11,10 @@
 #include "avar_hndl.h" 
 
 char snmp_community[10];
+char snmp_web_passw[4];
 
 //»нформаци€ об устройстве
-signed short snmp_device_code;
+unsigned int snmp_device_code;
 signed 	   snmp_sernum;
 signed short snmp_sernum_lsb;
 signed short snmp_sernum_msb;
@@ -260,6 +261,7 @@ signed char snmp_warm_stat;				//^^
 unsigned char enmv_on; // если 1, то есть св€зь с модулем	 //o_2
 unsigned char snmp_enmv_number[64]; //o_2
 unsigned char snmp_enmv_data[64]; //данные с модул€     //o_2
+unsigned char enmv_data_pred[8], enmv_data[8]; //данные с модул€ текущие и предыдущие  //o_7
 
 U16 obj[10];
 U8 temp_ip[4];
@@ -288,6 +290,8 @@ else snmp_mains_power_alarm=0;
 if(avar_stat&0x0001)snmp_mains_power_status=1;
 else snmp_mains_power_status=0;
 
+for(i=0;i<3/*snmp_numofevents*/;i++)event2snmp(i);
+
 /*
 snmp_mains_power_status=0; 
 #if(UKU_VERSION==900)
@@ -301,14 +305,14 @@ if(St&0x01)snmp_mains_power_alarm=1;
 
 
 
-for(i=0;i<snmp_numofevents;i++)event2snmp(i);
+
 //snmp_bpsnumber[0]=1;
 //snmp_bpsnumber[1]=2;
 
 
 snmp_sernum_lsb=0x1122;
 snmp_sernum_msb=0x3344;
-snmp_device_code=AUSW_MAIN;
+
 
 //memcpy(snmp_location,"lkhg;la",);
 
@@ -316,6 +320,8 @@ snmp_device_code=AUSW_MAIN;
 snmp_numofbat=1;
 
 */
+snmp_device_code=AUSW_MAIN;
+
 snmp_sernum=AUSW_MAIN_NUMBER;
 
 snmp_load_voltage=load_U;
@@ -1061,6 +1067,114 @@ if(mode==MIB_WRITE)
 }
 
 //-----------------------------------------------
+void snmp_uvz_write (int mode)
+{
+if(mode==MIB_WRITE)
+	{
+	lc640_write_int(EE_UVZ,UVZ);
+	}
+}
+
+//-----------------------------------------------
+void snmp_imax_vz_write (int mode)
+{
+if(mode==MIB_WRITE)
+	{
+	lc640_write_int(EE_IMAX_VZ,IMAX_VZ);
+	}
+}	
+
+//-----------------------------------------------
+void snmp_vz_hr_write (int mode)
+{
+if(mode==MIB_WRITE)
+	{
+	lc640_write_int(EE_VZ_HR,VZ_HR);
+	}
+}
+
+//-----------------------------------------------
+void snmp_vz_ch_vent_block_write (int mode)
+{
+if(mode==MIB_WRITE)
+	{
+	lc640_write_int(EE_VZ_CH_VENT_BLOK,VZ_CH_VENT_BLOK);
+	}
+}
+
+//-----------------------------------------------
+void snmp_spz_i_max_write (int mode)
+{
+if(mode==MIB_WRITE)
+	{
+	lc640_write_int(EE_SPEED_CHRG_CURR,speedChrgCurr);
+	}
+}
+
+//-----------------------------------------------
+void snmp_spz_u_write (int mode)
+{
+if(mode==MIB_WRITE)
+	{
+	lc640_write_int(EE_SPEED_CHRG_VOLT,speedChrgVolt);
+	}
+}
+
+//-----------------------------------------------
+void snmp_spz_time_write (int mode)
+{
+if(mode==MIB_WRITE)
+	{
+	lc640_write_int(EE_SPEED_CHRG_TIME,speedChrgTimeInHour);
+	}
+}
+
+//-----------------------------------------------
+void snmp_spz_avt_en_write (int mode)
+{
+if(mode==MIB_WRITE)
+	{
+	lc640_write_int(EE_SPEED_CHRG_AVT_EN,speedChrgAvtEn);
+	}
+}
+
+//-----------------------------------------------
+void snmp_spz_delta_write (int mode)
+{
+if(mode==MIB_WRITE)
+	{
+	lc640_write_int(EE_SPEED_CHRG_D_U,speedChrgDU);
+	}
+}
+
+//-----------------------------------------------
+void snmp_spz_block_en_src_write (int mode)
+{
+if(mode==MIB_WRITE)
+	{
+	lc640_write_int(EE_SPEED_CHRG_BLOCK_SRC,speedChrgBlckSrc);
+	}
+}
+
+//-----------------------------------------------
+void snmp_spz_block_log_write (int mode)
+{
+if(mode==MIB_WRITE)
+	{
+	lc640_write_int(EE_SPEED_CHRG_BLOCK_LOG,speedChrgBlckLog);
+	}
+}
+
+//-----------------------------------------------
+void snmp_spz_vent_block_write (int mode)
+{
+if(mode==MIB_WRITE)
+	{
+	lc640_write_int(EE_SP_CH_VENT_BLOK,SP_CH_VENT_BLOK);
+	}
+}
+
+//-----------------------------------------------
 void snmp_u_max_write (int mode)
 {
 if(mode==MIB_WRITE)
@@ -1069,6 +1183,32 @@ if(mode==MIB_WRITE)
 	}
 }
 
+//-----------------------------------------------
+void snmp_u_out_kontr_max_write (int mode)
+{
+if(mode==MIB_WRITE)
+	{
+	lc640_write_int(EE_U_OUT_KONTR_MAX,U_OUT_KONTR_MAX);
+	}
+}
+
+//-----------------------------------------------
+void snmp_u_out_kontr_min_write (int mode)
+{
+if(mode==MIB_WRITE)
+	{
+	lc640_write_int(EE_U_OUT_KONTR_MIN,U_OUT_KONTR_MIN);
+	}
+}
+
+//-----------------------------------------------
+void snmp_u_out_kontr_delay_write (int mode)
+{
+if(mode==MIB_WRITE)
+	{
+	lc640_write_int(EE_U_OUT_KONTR_DELAY,U_OUT_KONTR_DELAY);
+	}
+}
 
 //-----------------------------------------------
 void snmp_u_min_write (int mode)
@@ -1235,6 +1375,7 @@ if(mode==MIB_WRITE)
 	}
 }
 
+/*
 //-----------------------------------------------
 void snmp_uvz_write(int mode)
 {
@@ -1242,7 +1383,8 @@ if(mode==MIB_WRITE)
 	{
 	lc640_write_int(EE_UVZ,snmp_uvz);
 	}
-}
+} */
+
 //-----------------------------------------------
 void snmp_bat_part_alarm_write(int mode)
 {
@@ -1332,23 +1474,44 @@ if(mode==MIB_WRITE)
 
 		case SNMP_SPEC_VZ:
 			{
-			if((snmp_command_parametr>=1)&&(snmp_command_parametr<=24))
+			//if((snmp_command_parametr>=1)&&(snmp_command_parametr<=24))
 				{
-			//	if(!(St&0x03)&&(NUMBAT))
+				if(spc_stat==spcOFF)
 					{
-					snmp_command=COMMAND_OK;
-		//			spc_stat=spc_VZ;
-		//			cnt_vz_sec_=3600UL*snmp_command_parametr;
+					vz_start(VZ_HR);
+				 	snmp_command=COMMAND_OK;
 					}
-			//	else
+				else
  					{
 					snmp_command=COMAND_FAIL;	
  					}
 				}
-			else 
+		/*	else 
 				{
 				snmp_command=WRONG_PARAMETER;
-				}
+				}*/
+			break;
+			}
+
+		case SNMP_SPEC_SPZ:
+			{
+			//if((snmp_command_parametr>=1)&&(snmp_command_parametr<=24))
+				{
+				if(sp_ch_stat==scsOFF)
+					{
+					speedChargeStartStop();
+					spch_plazma[0]++;
+				 	snmp_command=COMMAND_OK;
+					}
+				else
+ 					{
+					snmp_command=COMAND_FAIL;	
+ 					}
+				} 
+		/*	else 
+				{
+				snmp_command=WRONG_PARAMETER;
+				}*/
 			break;
 			}
 
@@ -1359,6 +1522,7 @@ if(mode==MIB_WRITE)
 				//spc_stat=spc_KE;
 			//zar_cnt_ee_ke=0;
 			//	zar_cnt=0L;
+				ke_start(snmp_command_parametr);
 				snmp_command=COMMAND_OK;
 				}
 		//	else
@@ -1370,7 +1534,11 @@ if(mode==MIB_WRITE)
 
 		case SNMP_SPEC_DISABLE:
 			{
-		//	spc_stat=spc_OFF;
+			if(spc_stat==spcVZ)vz_stop();
+			spc_stat=spcOFF;
+
+			if(sp_ch_stat!=scsOFF)speedChargeStartStop();
+			
 			snmp_command=COMMAND_OK;
 			break;
 			}
@@ -1471,14 +1639,12 @@ lc640_read_long_ptr(tempii+20,dt____);
 //iii=find(simbol);
      
 if(dt[0]=='U')	 		//¬ключение »ЅЁѕа
-    	{ 
-    	if(dt[2]=='R')
-    		{
-		memcpy(&snmp_log[num][0],"¬ключение »ЅЁѕа@                                      ",50);
-		memcpy(&snmp_log[num][17],datatime2str(dt_[2],dt_[1],dt_[0],dt__[0],dt__[1],dt__[2]),20);
-		memcpy(&snmp_log[num][40],"@                   ",20);
-    		}
-     }   
+    { 
+    if(dt[2]=='R')
+		{
+		sprintf((char *)&snmp_log[num][0],"Power on or restart system %2d:%2d:%2d:",dt_[2],dt_[1],dt_[0]);
+		}
+	}   
 
      
 else if(dt[0]=='P')		//јвари€ питающей сети

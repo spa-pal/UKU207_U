@@ -5,6 +5,7 @@
 #include "common_func.h"
 #include "main.h"
 #include "stdio.h"
+#include "avar_hndl.h"
 
 //Телеметрия сети
 char http_power_num_of_phases;
@@ -563,19 +564,49 @@ output[ii++]=0;
 for(i=0;i<4;i++)
 	{
 	output[ii++]=in[i++];
-	}  */
+	}  
+
+output[0]='0';
+output[1]='1';
+output[2]='2';
+output[3]='3';
+output[4]='4';
+output[5]='5';
+output[6]='6';
+output[7]='7';
+output[8]='8';
+output[9]='9';
+output[10]='a';
+output[11]='b';
+output[12]='c';
+output[13]='d';
+output[14]='e';
+output[15]='f';
+output[16]='g';
+output[17]='h';
+output[18]='i';
+output[19]='j';
+output[20]=0;  */
+
 return output;
 }
 
 //-----------------------------------------------
 void http_data(void)
 {
-http_power_num_of_phases=1;
-http_power_voltage_of_phase[0]=220+spirit_wrk_cnt;
-http_power_voltage_of_phase[1]=225+spirit_wrk_cnt;
-http_power_voltage_of_phase[2]=230+spirit_wrk_cnt;
-http_power_frequncy = 500+spirit_wrk_cnt;
-http_power_status=spirit_wrk_cnt/10;
+http_power_num_of_phases=NUMPHASE;
+if((http_power_num_of_phases!=1)&&(http_power_num_of_phases!=3)) http_power_num_of_phases=0;
+if(http_power_num_of_phases==1)
+	{
+	http_power_voltage_of_phase[0]=net_U;
+	}
+else http_power_voltage_of_phase[0]=net_U;
+http_power_voltage_of_phase[1]=net_Ub;
+http_power_voltage_of_phase[2]=net_Uc;
+http_power_frequncy = net_F;
+http_power_status=0;
+//if(avar_stat&0x0001)http_power_status=1;
+http_power_status=net_av;
 };
 
 //-----------------------------------------------
@@ -645,7 +676,7 @@ return buffer;
 //-----------------------------------------------
 char http_bps_status2number(char number)
 {
-return number+spirit_wrk_cnt;
+//return number+spirit_wrk_cnt;
 if((bps[number]._state==bsWRK)&&(!bps[number]._flags_tm)) 		return 1;
 if((bps[number]._state==bsRDY)) 								return 2;
 if((bps[number]._state==bsWRK)&&(bps[number]._flags_tm&0x08)) 	return 3;
@@ -669,17 +700,37 @@ return buffer;
 }
 
 //-----------------------------------------------
-char* http_tm_bat_output(char numOfBat)
+char* http_ip_output(char ip1, char ip2, char ip3, char ip4)
 {
 char buffer[100];
 
+sprintf(buffer,"%d.%d.%d.%d", ip1, ip2, ip3, ip4);
+
+return buffer;
+}
+
+//-----------------------------------------------
+char* http_tm_bat_output(char numOfBat)
+{
+char buffer[300];
+char* batstat="abcdef";
+
 short batison=0;
 short batcreal=-1;
+short batubm=-1;
 if(BAT_IS_ON[numOfBat]==bisON)batison=1;
 if(BAT_C_REAL[numOfBat]!=0x5555)batcreal=BAT_C_REAL[numOfBat];
+else batcreal=-BAT_C_NOM[numOfBat]*10;
+if(UBM_AV)batubm=bat[numOfBat]._Ubm;
 
-sprintf(buffer,"%d %d %d %d %d %d %d %d %d", batison, bat[numOfBat]._Ub, bat[numOfBat]._Ib, bat[numOfBat]._Tb,
- 		bat[numOfBat]._nd, batcreal, bat[numOfBat]._zar,BAT_RESURS[numOfBat],bat[numOfBat]._Ubm);
+if(bat[numOfBat]._Ib>0)	batstat=pal_cyr_coder("заряжается");
+else batstat=pal_cyr_coder("разряжается");
+if(bat[numOfBat]._av&1)batstat=pal_cyr_coder("Авария цепи батареи!!!");
+if(bat[numOfBat]._av&2)batstat=pal_cyr_coder("Авария средней точки батареи!!!");
+//batstat=pal_cyr_coder("Авария средней точки батареи!!!");
+
+sprintf(buffer,"%d, %d, %d, %d, %d, %d, %d, %d, %d, %s", batison, bat[numOfBat]._Ub, bat[numOfBat]._Ib, bat[numOfBat]._Tb,
+ 		bat[numOfBat]._nd, batcreal, bat[numOfBat]._zar,BAT_RESURS[numOfBat],batubm, batstat);
 
 return buffer;
 }
