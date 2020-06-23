@@ -340,7 +340,7 @@ if(!snmp_bat_status[0])	 			//Батарея №1
 		snmp_bat_flag[0]|=0x0002;
 		if((snmp_bat_flag_puts[0]&0x0002)==0) 
 			{
-			snmp_trap_send("BAT #1 Warning, high battery temperature",5,8,2); 
+			//snmp_trap_send("BAT #1 Warning, high battery temperature",5,8,2); 
 			snmp_bat_flag_puts[0]|=0x0002;
 			}
 		}
@@ -349,7 +349,7 @@ if(!snmp_bat_status[0])	 			//Батарея №1
 		snmp_bat_flag[0]&=~0x0002;
 		if(snmp_bat_flag_puts[0]&0x0002) 
 			{
-			snmp_trap_send("BAT #1 Warning clear, battery temperature is normal",5,8,3);
+			//snmp_trap_send("BAT #1 Warning clear, battery temperature is normal",5,8,3);
 			snmp_bat_flag_puts[0]&=~0x02;
 			}
 		}
@@ -359,7 +359,7 @@ if(!snmp_bat_status[0])	 			//Батарея №1
 		snmp_bat_flag[0]|=0x0004;
 		if((snmp_bat_flag_puts[0]&0x0004)==0) 
 			{
-			snmp_trap_send("BAT #1 Alarm, high battery temperature",5,8,4); 
+			//snmp_trap_send("BAT #1 Alarm, high battery temperature",5,8,4); 
 			snmp_bat_flag_puts[0]|=0x0004;
 			}
 		}
@@ -368,7 +368,7 @@ if(!snmp_bat_status[0])	 			//Батарея №1
 		snmp_bat_flag[0]&=~0x0004;
 		if(snmp_bat_flag_puts[0]&0x0004) 
 			{
-			snmp_trap_send("BAT #1 Alarm clear, battery temperature is normal",5,8,5);
+			//snmp_trap_send("BAT #1 Alarm clear, battery temperature is normal",5,8,5);
 			snmp_bat_flag_puts[0]&=~0x0004;
 			}
 		}
@@ -579,7 +579,7 @@ if(!snmp_bat_status[1])	 			//Батарея №2
 		snmp_bat_flag[1]|=0x0002;
 		if((snmp_bat_flag_puts[0]&0x0002)==0) 
 			{
-			snmp_trap_send("BAT #2 Warning, high battery temperature",5,8,24); 
+			//snmp_trap_send("BAT #2 Warning, high battery temperature",5,8,24); 
 			snmp_bat_flag_puts[1]|=0x0002;
 			}
 		}
@@ -588,7 +588,7 @@ if(!snmp_bat_status[1])	 			//Батарея №2
 		snmp_bat_flag[1]&=~0x0002;
 		if(snmp_bat_flag_puts[1]&0x0002) 
 			{
-			snmp_trap_send("BAT #2 Warning clear, battery temperature is normal",5,8,25);
+			//snmp_trap_send("BAT #2 Warning clear, battery temperature is normal",5,8,25);
 			snmp_bat_flag_puts[1]&=~0x02;
 			}
 		}
@@ -598,7 +598,7 @@ if(!snmp_bat_status[1])	 			//Батарея №2
 		snmp_bat_flag[1]|=0x0004;
 		if((snmp_bat_flag_puts[1]&0x0004)==0) 
 			{
-			snmp_trap_send("BAT #2 Alarm, high battery temperature",5,8,26); 
+			//snmp_trap_send("BAT #2 Alarm, high battery temperature",5,8,26); 
 			snmp_bat_flag_puts[1]|=0x0004;
 			}
 		}
@@ -607,7 +607,7 @@ if(!snmp_bat_status[1])	 			//Батарея №2
 		snmp_bat_flag[1]&=~0x0004;
 		if(snmp_bat_flag_puts[1]&0x0004) 
 			{
-			snmp_trap_send("BAT #2 Alarm clear, battery temperature is normal",5,8,27);
+			//snmp_trap_send("BAT #2 Alarm clear, battery temperature is normal",5,8,27);
 			snmp_bat_flag_puts[1]&=~0x0004;
 			}
 		}

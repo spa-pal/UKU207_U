@@ -1038,13 +1038,15 @@ extern signed short TVENTON;
 extern signed short TVENTOFF;
 extern signed short TWARMON;
 extern signed short TWARMOFF;
-typedef enum {rvsAKB=0,rvsEXT,rvsBPS} enum_releventsign;
+typedef enum {rvsAKB=0,rvsEXT=1,rvsBPS=2} enum_releventsign;	//o_8
 extern enum_releventsign RELEVENTSIGN;
+//typedef enum {rvsAKB=0,rvsEXT,rvsBPS} enum_releventsign;
+//extern enum_releventsign RELEVENTSIGN;
 extern signed short TZNPN;
 extern signed short UONPN;
 extern signed short UVNPN;
 extern signed short dUNPN;
-typedef enum {npnoOFF=0,npnoRELEVENT,npnoRELEAVBAT2} enum_npn_out;
+typedef enum {npnoOFF=0,npnoRELEVENT=1,npnoRELEAVBAT2=2} enum_npn_out;
 extern enum_npn_out NPN_OUT;
 typedef enum {npnsULOAD=0,npnsAVNET} enum_npn_sign;
 extern enum_npn_sign NPN_SIGN;

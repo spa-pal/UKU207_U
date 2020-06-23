@@ -14,6 +14,7 @@
 #include "sc16is7xx.h"
 #include "uart0.h"
 #include "avar_hndl.h"
+#include "curr_version.h"
 
 #define MODBUS_RTU_PROT	0
 
@@ -623,6 +624,594 @@ if(crc16_calculated==crc16_incapsulated)
 				{
 				lc640_write_int(EE_UMAXN,modbus_rx_arg1);
 	     		}
+			if(modbus_rx_arg0==56)		
+				{
+				if(modbus_rx_arg1<=3) lc640_write_int(EE_SNTP_ENABLE,modbus_rx_arg1);
+	     		}						
+			if(modbus_rx_arg0==57)		
+				{
+				signed short www=(signed short)modbus_rx_arg1;
+				if(www>=-12 && www<=13) lc640_write_int(EE_SNTP_GMT,modbus_rx_arg1);
+	     		}						
+			if(modbus_rx_arg0==58)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_SNTP_IP1,modbus_rx_arg1);
+	     		}						
+			if(modbus_rx_arg0==59)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_SNTP_IP2,modbus_rx_arg1);
+	     		}						
+			if(modbus_rx_arg0==60)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_SNTP_IP3,modbus_rx_arg1);
+	     		}						
+			if(modbus_rx_arg0==61)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_SNTP_IP4,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==62)		
+				{
+				#ifdef UKU_220_IPS_TERMOKOMPENSAT
+				if(modbus_rx_arg1<=2) lc640_write_int(EE_NUMBAT,modbus_rx_arg1);
+				#else
+				if(modbus_rx_arg1<=1) lc640_write_int(EE_NUMBAT,modbus_rx_arg1);
+				#endif
+	     		}
+			if(modbus_rx_arg0==63)		
+				{
+				if(modbus_rx_arg1<=3) lc640_write_int(EE_NUMDT,modbus_rx_arg1);
+	     		}	
+			if(modbus_rx_arg0==64)		
+				{
+				if(modbus_rx_arg1==0 || modbus_rx_arg1==2 || modbus_rx_arg1==4) lc640_write_int(EE_NUMMAKB,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==65)		
+				{
+				if(modbus_rx_arg1<=4) lc640_write_int(EE_NUMSK,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==66)		
+				{
+				if(modbus_rx_arg1==0 || modbus_rx_arg1==1) lc640_write_int(EE_NUM_RKI,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==67)		
+				{
+				if(modbus_rx_arg1==0 || modbus_rx_arg1==1) lc640_write_int(EE_NUM_NET_IN,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==68)		
+				{
+				if(modbus_rx_arg1==0 || modbus_rx_arg1==1) lc640_write_int(EE_NUMBDR,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==69)		
+				{
+				if(modbus_rx_arg1==0 || modbus_rx_arg1==1) lc640_write_int(EE_NUMENMV,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==70)		
+				{
+				if(modbus_rx_arg1>=1 && modbus_rx_arg1<=200) lc640_write_int(EE_BAT_C_POINT_NUM_ELEM,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==71)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=25000) lc640_write_int(EE_BAT_C_POINT_20,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==72)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=21000) lc640_write_int(EE_BAT_C_POINT_10,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==73)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=20000) lc640_write_int(EE_BAT_C_POINT_5,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==74)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=18000) lc640_write_int(EE_BAT_C_POINT_3,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==75)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=16000) lc640_write_int(EE_BAT_C_POINT_1,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==76)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=13000) lc640_write_int(EE_BAT_C_POINT_1_2,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==77)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=8000) lc640_write_int(EE_BAT_C_POINT_1_6,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==78)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=10000) lc640_write_int(EE_BAT_U_END_20,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==79)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=10000) lc640_write_int(EE_BAT_U_END_10,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==80)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=10000) lc640_write_int(EE_BAT_U_END_5,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==81)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=10000) lc640_write_int(EE_BAT_U_END_3,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==82)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=10000) lc640_write_int(EE_BAT_U_END_1,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==83)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=10000) lc640_write_int(EE_BAT_U_END_1_2,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==84)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=10000) lc640_write_int(EE_BAT_U_END_1_6,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==85)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=100) lc640_write_int(EE_BAT_K_OLD,modbus_rx_arg1);
+	     		}		
+			if(modbus_rx_arg0==86)		
+				{
+				if(modbus_rx_arg1>=15 && modbus_rx_arg1<=250) lc640_write_int(EE_UVENTOFF,modbus_rx_arg1);
+	     		}			
+			if(modbus_rx_arg0==87)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=2000) lc640_write_int(EE_IMAX_VZ,modbus_rx_arg1);
+	     		}  
+			if(modbus_rx_arg0==88)		
+				{
+				if(modbus_rx_arg1<=72) lc640_write_int(EE_VZ_HR,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==89)		
+				{
+				if(modbus_rx_arg1==0 || modbus_rx_arg1==1) lc640_write_int(EE_VZ_CH_VENT_BLOK,modbus_rx_arg1);
+	     		} 
+			if(modbus_rx_arg0==90)		
+				{
+				if(modbus_rx_arg1==0 || modbus_rx_arg1==1) lc640_write_int(EE_SPEED_CHRG_AVT_EN,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==91)		
+				{
+				if(modbus_rx_arg1>0 && modbus_rx_arg1<=100) lc640_write_int(EE_SPEED_CHRG_D_U,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==92)		
+				{
+				if(modbus_rx_arg1==0 || modbus_rx_arg1==2) lc640_write_int(EE_SPEED_CHRG_BLOCK_SRC,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==93)		
+				{
+				if(modbus_rx_arg1==0 || modbus_rx_arg1==1) lc640_write_int(EE_SPEED_CHRG_BLOCK_LOG,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==94)		
+				{								
+				if(modbus_rx_arg1==0 || modbus_rx_arg1==1) lc640_write_int(EE_SP_CH_VENT_BLOK,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==95)		
+				{								
+				if(modbus_rx_arg1>=UB20 && modbus_rx_arg1<=2600) lc640_write_int(EE_UZ_U,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==96)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=10000) lc640_write_int(EE_UZ_IMAX,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==97)		
+				{
+				if(modbus_rx_arg1>=1 && modbus_rx_arg1<=72) lc640_write_int(EE_UZ_T,modbus_rx_arg1);
+	     		}					  
+			if(modbus_rx_arg0==98)		
+				{
+				if(modbus_rx_arg1>=UB20 && modbus_rx_arg1<=3000) lc640_write_int(EE_FZ_U1,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==99)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=1000) lc640_write_int(EE_FZ_IMAX1,modbus_rx_arg1);
+	     		}
+			// 2 регистра внизу
+			if(modbus_rx_arg0==102)		
+				{
+				if(modbus_rx_arg1>=1 && modbus_rx_arg1<=10) lc640_write_int(EE_FZ_T1,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==103)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=1000) lc640_write_int(EE_FZ_ISW12,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==104)		
+				{
+				if(modbus_rx_arg1>=UB20 && modbus_rx_arg1<=3000) lc640_write_int(EE_FZ_U2,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==105)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=1000) lc640_write_int(EE_FZ_IMAX2,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==106)		
+				{
+				if(modbus_rx_arg1>=1 && modbus_rx_arg1<=10) lc640_write_int(EE_FZ_T2,modbus_rx_arg1);
+	     		}	 
+			if(modbus_rx_arg0==107)		
+				{
+				if(modbus_rx_arg1==0 || modbus_rx_arg1==1) lc640_write_int(EE_AV_OFF_AVT,modbus_rx_arg1);
+	     		}				
+		   	if(modbus_rx_arg0==108)		
+				{
+				if(modbus_rx_arg1==0 || modbus_rx_arg1==1) lc640_write_int(EE_APV_ON1,modbus_rx_arg1);
+	     		}
+		  	if(modbus_rx_arg0==109)		
+				{
+				if(modbus_rx_arg1==0 || modbus_rx_arg1==1) lc640_write_int(EE_APV_ON2,modbus_rx_arg1);
+	     		}		   
+		 	if(modbus_rx_arg0==110)		
+				{
+				if(modbus_rx_arg1>=1 && modbus_rx_arg1<=24) lc640_write_int(EE_APV_ON2_TIME,modbus_rx_arg1);
+	     		}  
+			if(modbus_rx_arg0==111)		
+				{
+				if(modbus_rx_arg1==0)	   lc640_write_int(EE_SK_SIGN0,0xFFFF);
+				else if(modbus_rx_arg1==1) lc640_write_int(EE_SK_SIGN0,0);
+	     		} 	   
+			if(modbus_rx_arg0==112)		
+				{
+				if(modbus_rx_arg1==0)	   lc640_write_int(EE_SK_ZVUK_EN0,0xFFFF);
+				else if(modbus_rx_arg1==1) lc640_write_int(EE_SK_ZVUK_EN0,0);
+	     		}
+			if(modbus_rx_arg0==113)		
+				{
+				if(modbus_rx_arg1==0)	   lc640_write_int(EE_SK_LCD_EN0,0xFFFF);
+				else if(modbus_rx_arg1==1) lc640_write_int(EE_SK_LCD_EN0,0);
+	     		}
+			if(modbus_rx_arg0==114)		
+				{
+				if(modbus_rx_arg1==0)	   lc640_write_int(EE_SK_SIGN1,0xFFFF);
+				else if(modbus_rx_arg1==1) lc640_write_int(EE_SK_SIGN1,0);
+	     		} 	   
+			if(modbus_rx_arg0==115)		
+				{
+				if(modbus_rx_arg1==0)	   lc640_write_int(EE_SK_ZVUK_EN1,0xFFFF);
+				else if(modbus_rx_arg1==1) lc640_write_int(EE_SK_ZVUK_EN1,0);
+	     		}
+			if(modbus_rx_arg0==116)		
+				{
+				if(modbus_rx_arg1==0)	   lc640_write_int(EE_SK_LCD_EN1,0xFFFF);
+				else if(modbus_rx_arg1==1) lc640_write_int(EE_SK_LCD_EN1,0);
+	     		}
+			if(modbus_rx_arg0==117)		
+				{
+				if(modbus_rx_arg1==0)	   lc640_write_int(EE_SK_SIGN2,0xFFFF);
+				else if(modbus_rx_arg1==1) lc640_write_int(EE_SK_SIGN2,0);
+	     		} 	   
+			if(modbus_rx_arg0==118)		
+				{
+				if(modbus_rx_arg1==0)	   lc640_write_int(EE_SK_ZVUK_EN2,0xFFFF);
+				else if(modbus_rx_arg1==1) lc640_write_int(EE_SK_ZVUK_EN2,0);
+	     		}
+			if(modbus_rx_arg0==119)		
+				{
+				if(modbus_rx_arg1==0)	   lc640_write_int(EE_SK_LCD_EN2,0xFFFF);
+				else if(modbus_rx_arg1==1) lc640_write_int(EE_SK_LCD_EN2,0);
+	     		}
+			if(modbus_rx_arg0==120)		
+				{
+				if(modbus_rx_arg1==0)	   lc640_write_int(EE_SK_SIGN3,0xFFFF);
+				else if(modbus_rx_arg1==1) lc640_write_int(EE_SK_SIGN3,0);
+	     		} 	   
+			if(modbus_rx_arg0==121)		
+				{
+				if(modbus_rx_arg1==0)	   lc640_write_int(EE_SK_ZVUK_EN3,0xFFFF);
+				else if(modbus_rx_arg1==1) lc640_write_int(EE_SK_ZVUK_EN3,0);
+	     		}
+			if(modbus_rx_arg0==122)		
+				{
+				if(modbus_rx_arg1==0)	   lc640_write_int(EE_SK_LCD_EN3,0xFFFF);
+				else if(modbus_rx_arg1==1) lc640_write_int(EE_SK_LCD_EN3,0);
+	     		}		  
+		   	if(modbus_rx_arg0==123)		
+				{
+				if(modbus_rx_arg1==0 || modbus_rx_arg1==1) lc640_write_int(EE_TERMOKOMP,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==124)		
+				{
+				if(modbus_rx_arg1<=500) lc640_write_int(EE_FORVARDBPSCHHOUR,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==125)		
+				{
+				if(modbus_rx_arg1==0 || modbus_rx_arg1==1) lc640_write_int(EE_DOP_RELE_FUNC,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==126)		
+				{
+				if(modbus_rx_arg1<=2) lc640_write_int(EE_IPS_BLOCK_SRC,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==127)		
+				{
+				if(modbus_rx_arg1==0 || modbus_rx_arg1==1) lc640_write_int(EE_IPS_BLOCK_LOG,modbus_rx_arg1);
+	     		} 
+		   	if(modbus_rx_arg0==128)		
+				{
+				if(modbus_rx_arg1>0 && modbus_rx_arg1<=100) lc640_write_int(EE_MODBUS_ADRESS,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==129)		
+				{
+				if(modbus_rx_arg1==120 || modbus_rx_arg1==240 || modbus_rx_arg1==480 || modbus_rx_arg1==960 || modbus_rx_arg1==1920 
+				|| modbus_rx_arg1==3840 || modbus_rx_arg1==5760 || modbus_rx_arg1==11520){ 
+					lc640_write_int(EE_MODBUS_BAUDRATE,modbus_rx_arg1);
+					MODBUS_BAUDRATE=modbus_rx_arg1;
+					}
+	     		} 	
+			if(modbus_rx_arg0==130)		
+				{
+				if(modbus_rx_arg1==0 || modbus_rx_arg1==1) lc640_write_int(EE_ETH_IS_ON,modbus_rx_arg1);
+	     		}	 
+			if(modbus_rx_arg0==131)		
+				{
+				if(modbus_rx_arg1==0 || modbus_rx_arg1==1) lc640_write_int(EE_ETH_DHCP_ON,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==132)  //IP адрес
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_IP_1,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==133)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_IP_2,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==134)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_IP_3,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==135)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_IP_4,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==136)	//маска подсети	
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_MASK_1,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==137)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_MASK_2,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==138)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_MASK_3,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==139)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_MASK_4,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==140)	//шлюз
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_GW_1,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==141)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_GW_2,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==142)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_GW_3,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==143)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_GW_4,modbus_rx_arg1);
+	     		}	 
+			if(modbus_rx_arg0==144)		
+				{
+				lc640_write_int(EE_ETH_SNMP_PORT_READ,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==145)		
+				{
+				lc640_write_int(EE_ETH_SNMP_PORT_WRITE,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==146)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_COMMUNITY,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==147)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_COMMUNITY+2,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==148)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_COMMUNITY+4,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==149)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_COMMUNITY+6,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==150)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_COMMUNITY+8,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==151)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_COMMUNITY+10,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==152)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_COMMUNITY+12,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==153)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_COMMUNITY+14,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==154)  //TRAP1 IP адрес
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP1_IP_1,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==155)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP1_IP_2,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==156)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP1_IP_3,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==157)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP1_IP_4,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==158)  //TRAP2 IP адрес
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP2_IP_1,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==159)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP2_IP_2,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==160)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP2_IP_3,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==161)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP2_IP_4,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==162)  //TRAP3 IP адрес
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP3_IP_1,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==163)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP3_IP_2,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==164)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP3_IP_3,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==165)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP3_IP_4,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==166)  //TRAP4 IP адрес
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP4_IP_1,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==167)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP4_IP_2,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==168)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP4_IP_3,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==169)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP4_IP_4,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==170)  //TRAP5 IP адрес
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP5_IP_1,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==171)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP5_IP_2,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==172)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP5_IP_3,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==173)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP5_IP_4,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==174)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_WEB_PASSWORD,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==175)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_WEB_PASSWORD+2,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==176)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_WEB_PASSWORD+4,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==177 && modbus_rx_arg1>0) bRESET_INT_WDT=1;// перегрузка УКУ, инициализировать интернет    
+			if(modbus_rx_arg0==178)		
+				{
+				modbus_rx_arg1/=10;
+				if(modbus_rx_arg1<=6000) lc640_write_int(EE_TVENTMAX,modbus_rx_arg1);
+	     		} 
+		   	if(modbus_rx_arg0==179)		
+				{
+				if(modbus_rx_arg1<=2) lc640_write_int(EE_ICA_EN,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==180)		
+				{
+				if(modbus_rx_arg1<=2) lc640_write_int(EE_ICA_CH,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==181)  //IP адрес второго ИПС
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ICA_MODBUS_TCP_IP1,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==182)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ICA_MODBUS_TCP_IP2,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==183)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ICA_MODBUS_TCP_IP3,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==184)		
+				{
+				if(modbus_rx_arg1<=255) lc640_write_int(EE_ICA_MODBUS_TCP_IP4,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==185)		
+				{
+				if(modbus_rx_arg1>0 && modbus_rx_arg1<=254) lc640_write_int(EE_ICA_MODBUS_TCP_UNIT_ID,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==186)		
+				{
+				if(modbus_rx_arg1>0 && modbus_rx_arg1<=254) lc640_write_int(EE_ICA_MODBUS_ADDRESS,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==187)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=100) lc640_write_int(EE_PWM_START,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==188)		
+				{
+				if(modbus_rx_arg1>=1 && modbus_rx_arg1<=3) lc640_write_int(EE_KB_ALGORITM,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==189)		
+				{
+				if(modbus_rx_arg1>=1 && modbus_rx_arg1<=5) lc640_write_int(EE_REG_SPEED,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==190)		
+				{
+				if(modbus_rx_arg1==0 || modbus_rx_arg1==1) lc640_write_int(EE_SMART_SPC,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==191)		
+				{
+				if(modbus_rx_arg1==1 || modbus_rx_arg1==3) lc640_write_int(EE_NUMPHASE,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==192)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=100) lc640_write_int(EE_TVENTON,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==193)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=100) lc640_write_int(EE_TVENTOFF,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==194)		
+				{
+				if(modbus_rx_arg1<=2) lc640_write_int(EE_RELEVENTSIGN,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==195)		
+				{
+				if(modbus_rx_arg1<=2) lc640_write_int(EE_NPN_OUT,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==196)		
+				{
+				if(modbus_rx_arg1>=100 && modbus_rx_arg1<=2500) lc640_write_int(EE_UONPN,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==197)		
+				{
+				if(modbus_rx_arg1>=100 && modbus_rx_arg1<=2500) lc640_write_int(EE_UVNPN,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==198)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=60) lc640_write_int(EE_TZNPN,modbus_rx_arg1);
+	     		}		
+	/*		if(modbus_rx_arg0==199)		
+				{
+				if(modbus_rx_arg1<=50) lc640_write_int(EE_UBM_AV,modbus_rx_arg1);
+	     		} */
 			if(modbus_rx_arg0==19)		//вкл/выкл источника напр.
 				{
 	/*			if(modbus_rx_arg1==1)
@@ -1122,7 +1711,7 @@ for (i=0;i<8;i++)
 //-----------------------------------------------
 void modbus_hold_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot)
 {
-signed char modbus_registers[250];
+signed char modbus_registers[400];
 //char modbus_tx_buff[150];
 unsigned short crc_temp;
 char i;
@@ -1200,7 +1789,356 @@ modbus_registers[107]=(char)(UB0);
 modbus_registers[108]=(char)(UMAXN>>8);					//Рег55  Максимальное (аварийное) напряжение питающей сети, 1В
 modbus_registers[109]=(char)(UMAXN);
 
+modbus_registers[110]=0;								//Рег56  период синхронизации времени, 0-выкл, 1-1ч, 2-1сут., 3-1-нед.
+modbus_registers[111]=(char)(SNTP_ENABLE);				
+modbus_registers[112]=(char)(SNTP_GMT>>8);				//Рег57  Часовой пояс, от -12 до +13
+modbus_registers[113]=(char)(SNTP_GMT);					
+modbus_registers[114]=0;								//Рег58  1 число IP
+modbus_registers[115]=(char)(lc640_read_int(EE_SNTP_IP1));					
+modbus_registers[116]=0;								//Рег59  2 число IP
+modbus_registers[117]=(char)(lc640_read_int(EE_SNTP_IP2));					
+modbus_registers[118]=0;								//Рег60  3 число IP
+modbus_registers[119]=(char)(lc640_read_int(EE_SNTP_IP3));					
+modbus_registers[120]=0;								//Рег61  4 число IP
+modbus_registers[121]=(char)(lc640_read_int(EE_SNTP_IP4));
+modbus_registers[122]=0;								//Рег62  количество АКБ
+modbus_registers[123]=(char)(NUMBAT);
+modbus_registers[124]=0;								//Рег63  количество датчиков температуры
+modbus_registers[125]=(char)(NUMDT);	
+modbus_registers[126]=0;								//Рег64  количество мониторов АКБ 0,2,4
+modbus_registers[127]=(char)(NUMMAKB);	
+modbus_registers[128]=0;								//Рег65  количество СК
+modbus_registers[129]=(char)(NUMSK);
+modbus_registers[130]=0;								//Рег66  количество РКИ
+modbus_registers[131]=(char)(num_rki);	
+modbus_registers[132]=0;								//Рег67  количество сетевых вводов
+modbus_registers[133]=(char)(num_net_in);
+modbus_registers[134]=0;								//Рег68  количество доп. реле
+modbus_registers[135]=(char)(NUMBDR);
+modbus_registers[136]=0;								//Рег69  количество ЭНМВ
+modbus_registers[137]=(char)(NUMENMV);
+#ifdef UKU_220_IPS_TERMOKOMPENSAT
+modbus_registers[138]=(char)(BAT_C_POINT_NUM_ELEM>>8);	//Рег70  количество 2В элементов АКБ  0-200
+modbus_registers[139]=(char)(BAT_C_POINT_NUM_ELEM);
+modbus_registers[140]=(char)(BAT_C_POINT_20>>8);		//Рег71  уставка С20   0,1А*ч	10-25000
+modbus_registers[141]=(char)(BAT_C_POINT_20);
+modbus_registers[142]=(char)(BAT_C_POINT_10>>8);		//Рег72  уставка С10   0,1А*ч	10-21000
+modbus_registers[143]=(char)(BAT_C_POINT_10);
+modbus_registers[144]=(char)(BAT_C_POINT_5>>8);			//Рег73  уставка С5	   0,1А*ч	10-20000
+modbus_registers[145]=(char)(BAT_C_POINT_5);
+modbus_registers[146]=(char)(BAT_C_POINT_3>>8);			//Рег74  уставка С3	   0,1А*ч	10-18000
+modbus_registers[147]=(char)(BAT_C_POINT_3);
+modbus_registers[148]=(char)(BAT_C_POINT_1>>8);			//Рег75  уставка С1	   0,1А*ч	10-16000
+modbus_registers[149]=(char)(BAT_C_POINT_1);
+modbus_registers[150]=(char)(BAT_C_POINT_1_2>>8);		//Рег76  уставка С1/2    0,1А*ч	   10-13000
+modbus_registers[151]=(char)(BAT_C_POINT_1_2);
+modbus_registers[152]=(char)(BAT_C_POINT_1_6>>8);		//Рег77  уставка С1/6    0,1А*ч	   10-8000
+modbus_registers[153]=(char)(BAT_C_POINT_1_6);
+modbus_registers[154]=(char)(BAT_U_END_20>>8);			//Рег78  уставка U20   0,1В	 1.0-1000.0
+modbus_registers[155]=(char)(BAT_U_END_20);
+modbus_registers[156]=(char)(BAT_U_END_10>>8);			//Рег79  уставка U10   0,1В	  1.0-1000.0
+modbus_registers[157]=(char)(BAT_U_END_10);
+modbus_registers[158]=(char)(BAT_U_END_5>>8);			//Рег80  уставка U5	  0,1В	  1.0-1000.0
+modbus_registers[159]=(char)(BAT_U_END_5);
+modbus_registers[160]=(char)(BAT_U_END_3>>8);			//Рег81  уставка U3	  0,1В	  1.0-1000.0
+modbus_registers[161]=(char)(BAT_U_END_3);
+modbus_registers[162]=(char)(BAT_U_END_1>>8);			//Рег82  уставка U1	  0,1В	  1.0-1000.0
+modbus_registers[163]=(char)(BAT_U_END_1);
+modbus_registers[164]=(char)(BAT_U_END_1_2>>8);			//Рег83  уставка U1/2   0,1В  1.0-1000.0
+modbus_registers[165]=(char)(BAT_U_END_1_2);
+modbus_registers[166]=(char)(BAT_U_END_1_6>>8);			//Рег84  уставка U1/6  0,1В	  1.0-1000.0
+modbus_registers[167]=(char)(BAT_U_END_1_6);
+modbus_registers[168]=(char)(BAT_K_OLD>>8);				//Рег85  коэффициент старения АКБ , 0,01, макс=1,00 min=0.10
+modbus_registers[169]=(char)(BAT_K_OLD);
+#endif
+modbus_registers[170]=(char)(UVENTOFF>>8);			   	//Рег86  Uоткл. вентилятора АКБ, 1В	 15-250
+modbus_registers[171]=(char)(UVENTOFF);
+modbus_registers[172]=(char)(IMAX_VZ>>8);				//Рег87  макс. ток выравн. заряда , 0,1А   10-2000
+modbus_registers[173]=(char)(IMAX_VZ);
+modbus_registers[174]=(char)(VZ_HR>>8);					//Рег88  время выравн. заряда, если =0,  то 0,5 часа. max=72ч, 1ч
+modbus_registers[175]=(char)(VZ_HR);
+modbus_registers[176]=0;								//Рег89  блокирование ВЗ вентиляцией СК1, 1-вкл
+modbus_registers[177]=(char)(VZ_CH_VENT_BLOK);
+modbus_registers[178]=0;								//Рег90  автом. УЗ, 1-вкл
+modbus_registers[179]=(char)(speedChrgAvtEn);
+modbus_registers[180]=(char)(speedChrgDU>>8);			//Рег91  dU УЗ, 1В	  1-100
+modbus_registers[181]=(char)(speedChrgDU);
+modbus_registers[182]=0;								//Рег92  блокирование УЗ  0-выкл, 2-CK2
+modbus_registers[183]=(char)(speedChrgBlckSrc);
+modbus_registers[184]=0;								//Рег93  сигнал блокирование УЗ  1-замкн, 0-разомкн.
+modbus_registers[185]=(char)(speedChrgBlckLog);
+modbus_registers[186]=0;								//Рег94  блокирование УЗ вентиляцией СК1 1-вкл, 0-выкл.
+modbus_registers[187]=(char)(SP_CH_VENT_BLOK);
+modbus_registers[188]=(char)(UZ_U>>8);					//Рег95  Напряжение уравнительного заряда, 0,1В	  Uб20*10-2600
+modbus_registers[189]=(char)(UZ_U);
+modbus_registers[190]=(char)(UZ_IMAX>>8);				//Рег96  Ток уравнительного заряда, 0,1А  10-10000
+modbus_registers[191]=(char)(UZ_IMAX);
+modbus_registers[192]=(char)(UZ_T>>8);					//Рег97  Время работы уравнительного заряда, 1ч	 1-72
+modbus_registers[193]=(char)(UZ_T);
+modbus_registers[194]=(char)(FZ_U1>>8);					//Рег98  Напряжение формовочного заряда 1, 0,1В	  Uб20*10-3000
+modbus_registers[195]=(char)(FZ_U1);
+modbus_registers[196]=(char)(FZ_IMAX1>>8);				//Рег99  Ток формовочного заряда 1, 0,1А   10-1000
+modbus_registers[197]=(char)(FZ_IMAX1);
+// здесь 2 регистра для выравнивания токов
+modbus_registers[202]=(char)(FZ_T1>>8);					//Рег102  Время работы формовочного заряда 1, 1ч 1-10
+modbus_registers[203]=(char)(FZ_T1);
+modbus_registers[204]=(char)(FZ_ISW12>>8);				//Рег103  Ток переключения ФЗ, 0,1А	  10-1000
+modbus_registers[205]=(char)(FZ_ISW12);
+modbus_registers[206]=(char)(FZ_U2>>8);					//Рег104  Напряжение формовочного заряда 2, 0,1В   Uб20*10-3000
+modbus_registers[207]=(char)(FZ_U2);
+modbus_registers[208]=(char)(FZ_IMAX2>>8);				//Рег105  Ток формовочного заряда 2, 0,1А	10-1000
+modbus_registers[209]=(char)(FZ_IMAX2);
+modbus_registers[210]=(char)(FZ_T2>>8);					//Рег106  Время работы формовочного заряда 2, 1ч  1-10
+modbus_registers[211]=(char)(FZ_T2);
+modbus_registers[212]=0;								//Рег107  отключение аварийного сигнала 0-ручн., 1-автом.
+modbus_registers[213]=(char)(AV_OFF_AVT);
+modbus_registers[214]=0;								//Рег108  АПВ 1й уровень 0-выкл., 1-вкл.
+modbus_registers[215]=(char)(APV_ON1);
+modbus_registers[216]=0;								//Рег109  АПВ 2й уровень 0-выкл., 1-вкл.
+modbus_registers[217]=(char)(APV_ON2);
+modbus_registers[218]=0;								//Рег110  АПВ 2й уровень период, 1ч , 1-24ч
+modbus_registers[219]=(char)(APV_ON2_TIME);
+if(SK_SIGN[0]==0){
+	modbus_registers[220]=0;								//Рег111  СК1 авария: 1-замкнун, 0-разомкнут
+	modbus_registers[221]=1;
+}else{
+	modbus_registers[220]=0;								//Рег111  СК1 авария: 1-замкнун, 0-разомкнут
+	modbus_registers[221]=0;
+}
+if(SK_ZVUK_EN[0]==0){
+	modbus_registers[222]=0;								//Рег112  СК1 авария звук: 0-выкл, 1-вкл
+	modbus_registers[223]=1;
+}else{
+	modbus_registers[222]=0;								//Рег112  СК1 авария звук: 0-выкл, 1-вкл
+	modbus_registers[223]=0;
+}
+if(SK_LCD_EN[0]==0){
+	modbus_registers[224]=0;								//Рег113  СК1 авария ЛСД: 0-выкл, 1-вкл
+	modbus_registers[225]=1;
+}else{
+	modbus_registers[224]=0;								//Рег113  СК1 авария ЛСД: 0-выкл, 1-вкл
+	modbus_registers[225]=0;
+}
+if(SK_SIGN[1]==0){
+	modbus_registers[226]=0;								//Рег114  СК2 авария: 1-замкнун, 0-разомкнут
+	modbus_registers[227]=1;
+}else{
+	modbus_registers[226]=0;								//Рег114  СК2 авария: 1-замкнун, 0-разомкнут
+	modbus_registers[227]=0;
+}
+if(SK_ZVUK_EN[1]==0){
+	modbus_registers[228]=0;								//Рег115  СК2 авария звук: 0-выкл, 1-вкл
+	modbus_registers[229]=1;
+}else{
+	modbus_registers[228]=0;								//Рег115  СК2 авария звук: 0-выкл, 1-вкл
+	modbus_registers[229]=0;										   
+}
+if(SK_LCD_EN[1]==0){
+	modbus_registers[230]=0;								//Рег116  СК2 авария ЛСД: 0-выкл, 1-вкл
+	modbus_registers[231]=1;
+}else{
+	modbus_registers[230]=0;								//Рег116  СК2 авария ЛСД: 0-выкл, 1-вкл
+	modbus_registers[231]=0;
+}
 
+if(SK_SIGN[2]==0){
+	modbus_registers[232]=0;								//Рег117  СК3 авария: 1-замкнун, 0-разомкнут
+	modbus_registers[233]=1;
+}else{
+	modbus_registers[232]=0;								//Рег117  СК3 авария: 1-замкнун, 0-разомкнут
+	modbus_registers[233]=0;
+}
+if(SK_ZVUK_EN[2]==0){
+	modbus_registers[234]=0;								//Рег118  СК3 авария звук: 0-выкл, 1-вкл
+	modbus_registers[235]=1;
+}else{
+	modbus_registers[234]=0;								//Рег118  СК3 авария звук: 0-выкл, 1-вкл
+	modbus_registers[235]=0;
+}
+if(SK_LCD_EN[2]==0){
+	modbus_registers[236]=0;								//Рег119  СК3 авария ЛСД: 0-выкл, 1-вкл
+	modbus_registers[237]=1;
+}else{
+	modbus_registers[236]=0;								//Рег119  СК3 авария ЛСД: 0-выкл, 1-вкл
+	modbus_registers[237]=0;
+}
+if(SK_SIGN[3]==0){
+	modbus_registers[238]=0;								//Рег120  СК4 авария: 1-замкнун, 0-разомкнут
+	modbus_registers[239]=1;
+}else{
+	modbus_registers[238]=0;								//Рег120  СК4 авария: 1-замкнун, 0-разомкнут
+	modbus_registers[239]=0;
+}
+if(SK_ZVUK_EN[3]==0){
+	modbus_registers[240]=0;								//Рег121  СК4 авария звук: 0-выкл, 1-вкл
+	modbus_registers[241]=1;
+}else{
+	modbus_registers[240]=0;								//Рег121  СК4 авария звук: 0-выкл, 1-вкл
+	modbus_registers[241]=0;										   
+}
+if(SK_LCD_EN[3]==0){
+	modbus_registers[242]=0;								//Рег122  СК4 авария ЛСД: 0-выкл, 1-вкл
+	modbus_registers[243]=1;
+}else{
+	modbus_registers[242]=0;								//Рег122  СК4 авария ЛСД: 0-выкл, 1-вкл
+	modbus_registers[243]=0;
+}
+modbus_registers[244]=0;									//Рег123  термокомпенсация 0-выкл, 1-вкл
+modbus_registers[245]=(char)(TERMOKOMPENS);
+modbus_registers[246]=(char)(FORVARDBPSCHHOUR>>8);			//Рег124  Время ротации БПС, 1ч, 0-500ч, 0-выкл
+modbus_registers[247]=(char)(FORVARDBPSCHHOUR);
+modbus_registers[248]=0;									//Рег125  назначение доп реле 0-УЗ или ВЗ, 1-разряж.АКБ
+modbus_registers[249]=(char)(DOP_RELE_FUNC);
+modbus_registers[250]=0;									//Рег126  блокировка ИПС, 0-выкл, 1-СК1, 2-СК2
+modbus_registers[251]=(char)(ipsBlckSrc);
+modbus_registers[252]=0;									//Рег127  сигнал блокирования, 0-разомкн. 1-замкн.
+modbus_registers[253]=(char)(ipsBlckLog);
+modbus_registers[254]=0;									//Рег128  адрес модбас	1-100
+modbus_registers[255]=(char)(MODBUS_ADRESS);		
+modbus_registers[256]=(char)(MODBUS_BAUDRATE>>8);			//Рег129  скорость/10 
+modbus_registers[257]=(char)(MODBUS_BAUDRATE);
+modbus_registers[258]=0;									//Рег130  интернет, 0-вкл. 1-выкл
+modbus_registers[259]=(char)(ETH_IS_ON);
+modbus_registers[260]=0;									//Рег131  интернет DHCP, 0-вкл. 1-выкл.
+modbus_registers[261]=(char)(ETH_DHCP_ON);
+modbus_registers[262]=0;									//Рег132  интернет IP число 1
+modbus_registers[263]=(char)(ETH_IP_1);
+modbus_registers[264]=0;									//Рег133  интернет IP число 2
+modbus_registers[265]=(char)(ETH_IP_2);
+modbus_registers[266]=0;									//Рег134  интернет IP число 3
+modbus_registers[267]=(char)(ETH_IP_3);
+modbus_registers[268]=0;									//Рег135  интернет IP число 4
+modbus_registers[269]=(char)(ETH_IP_4);
+modbus_registers[270]=0;									//Рег136  маска сети число 1
+modbus_registers[271]=(char)(ETH_MASK_1);
+modbus_registers[272]=0;									//Рег137  маска сети число 2
+modbus_registers[273]=(char)(ETH_MASK_2);
+modbus_registers[274]=0;									//Рег138  маска сети число 3
+modbus_registers[275]=(char)(ETH_MASK_3);
+modbus_registers[276]=0;									//Рег139  маска сети число 4
+modbus_registers[277]=(char)(ETH_MASK_4);
+modbus_registers[278]=0;									//Рег140  шлюз число 1
+modbus_registers[279]=(char)(ETH_GW_1);
+modbus_registers[280]=0;									//Рег141  шлюз число 2
+modbus_registers[281]=(char)(ETH_GW_2);
+modbus_registers[282]=0;									//Рег142  шлюз число 3
+modbus_registers[283]=(char)(ETH_GW_3);
+modbus_registers[284]=0;									//Рег143  шлюз число 4
+modbus_registers[285]=(char)(ETH_GW_4);
+modbus_registers[286]=(char)(ETH_SNMP_PORT_READ>>8);		//Рег144  порт чтения 
+modbus_registers[287]=(char)(ETH_SNMP_PORT_READ);
+modbus_registers[288]=(char)(ETH_SNMP_PORT_WRITE>>8);		//Рег145  порт записи 
+modbus_registers[289]=(char)(ETH_SNMP_PORT_WRITE);
+modbus_registers[290]=0;									//Рег146  пароль знак 1
+modbus_registers[291]=(char)(snmp_community[0]);
+modbus_registers[292]=0;									//Рег147  пароль знак 2
+modbus_registers[293]=(char)(snmp_community[1]);
+modbus_registers[294]=0;									//Рег148  пароль знак 3
+modbus_registers[295]=(char)(snmp_community[2]);
+modbus_registers[296]=0;									//Рег149  пароль знак 4
+modbus_registers[297]=(char)(snmp_community[3]);
+modbus_registers[298]=0;									//Рег150  пароль знак 5
+modbus_registers[299]=(char)(snmp_community[4]);
+modbus_registers[300]=0;									//Рег151  пароль знак 6
+modbus_registers[301]=(char)(snmp_community[5]);
+modbus_registers[302]=0;									//Рег152  пароль знак 7
+modbus_registers[303]=(char)(snmp_community[6]);
+modbus_registers[304]=0;									//Рег153  пароль знак 7
+modbus_registers[305]=(char)(snmp_community[7]);
+modbus_registers[306]=0;									//Рег154  TRAP1 IP число 1
+modbus_registers[307]=(char)(ETH_TRAP1_IP_1);
+modbus_registers[308]=0;									//Рег155  TRAP1 IP число 2
+modbus_registers[309]=(char)(ETH_TRAP1_IP_2);
+modbus_registers[310]=0;									//Рег156  TRAP1 IP число 3
+modbus_registers[311]=(char)(ETH_TRAP1_IP_3);
+modbus_registers[312]=0;									//Рег157  TRAP1 IP число 4
+modbus_registers[313]=(char)(ETH_TRAP1_IP_4);
+modbus_registers[314]=0;									//Рег158  TRAP2 IP число 1
+modbus_registers[315]=(char)(ETH_TRAP2_IP_1);
+modbus_registers[316]=0;									//Рег159  TRAP2 IP число 2
+modbus_registers[317]=(char)(ETH_TRAP2_IP_2);
+modbus_registers[318]=0;									//Рег160  TRAP2 IP число 3
+modbus_registers[319]=(char)(ETH_TRAP2_IP_3);
+modbus_registers[320]=0;									//Рег161  TRAP2 IP число 4
+modbus_registers[321]=(char)(ETH_TRAP2_IP_4);
+modbus_registers[322]=0;									//Рег162  TRAP3 IP число 1
+modbus_registers[323]=(char)(ETH_TRAP3_IP_1);
+modbus_registers[324]=0;									//Рег163  TRAP3 IP число 2
+modbus_registers[325]=(char)(ETH_TRAP3_IP_2);
+modbus_registers[326]=0;									//Рег164  TRAP3 IP число 3
+modbus_registers[327]=(char)(ETH_TRAP3_IP_3);
+modbus_registers[328]=0;									//Рег165  TRAP3 IP число 4
+modbus_registers[329]=(char)(ETH_TRAP3_IP_4);
+modbus_registers[330]=0;									//Рег166  TRAP4 IP число 1
+modbus_registers[331]=(char)(ETH_TRAP4_IP_1);
+modbus_registers[332]=0;									//Рег167  TRAP4 IP число 2
+modbus_registers[333]=(char)(ETH_TRAP4_IP_2);
+modbus_registers[334]=0;									//Рег168  TRAP4 IP число 3
+modbus_registers[335]=(char)(ETH_TRAP4_IP_3);
+modbus_registers[336]=0;									//Рег169  TRAP4 IP число 4
+modbus_registers[337]=(char)(ETH_TRAP4_IP_4);
+modbus_registers[338]=0;									//Рег170  TRAP5 IP число 1
+modbus_registers[339]=(char)(ETH_TRAP5_IP_1);
+modbus_registers[340]=0;									//Рег171  TRAP5 IP число 2
+modbus_registers[341]=(char)(ETH_TRAP5_IP_2);
+modbus_registers[342]=0;									//Рег172  TRAP5 IP число 3
+modbus_registers[343]=(char)(ETH_TRAP5_IP_3);
+modbus_registers[344]=0;									//Рег173  TRAP5 IP число 4
+modbus_registers[345]=(char)(ETH_TRAP5_IP_4);
+modbus_registers[346]=0;									//Рег174  пароль знак 1
+modbus_registers[347]=(char)(snmp_web_passw[0]);
+modbus_registers[348]=0;									//Рег175  пароль знак 2
+modbus_registers[349]=(char)(snmp_web_passw[1]);
+modbus_registers[350]=0;									//Рег176  пароль знак 3
+modbus_registers[351]=(char)(snmp_web_passw[2]);
+modbus_registers[352]=0;									//Рег177  перезагрузка УКУ
+modbus_registers[353]=0;
+modbus_registers[354]=(char)((TVENTMAX*10)>>8);				//Рег178  порог ресурса вентилятора 
+modbus_registers[355]=(char)(TVENTMAX*10);
+modbus_registers[356]=0;							//Рег179  выравн.токов, 0-ведомый, 1-включено, 2-внешн.упр.
+modbus_registers[357]=(char)(ICA_EN);
+modbus_registers[358]=0;							//Рег180  выравн.токов, 0-MODBUS-RTU, 1-MODBUS-TCP, 2-RS485-2
+modbus_registers[359]=(char)(ICA_CH);
+modbus_registers[360]=0;									//Рег181  IP ведомого число 1
+modbus_registers[361]=(char)(ICA_MODBUS_TCP_IP1);
+modbus_registers[362]=0;									//Рег182  IP ведомого число 2
+modbus_registers[363]=(char)(ICA_MODBUS_TCP_IP2);
+modbus_registers[364]=0;									//Рег183  IP ведомого число 3
+modbus_registers[365]=(char)(ICA_MODBUS_TCP_IP3);
+modbus_registers[366]=0;									//Рег184  IP ведомого число 4
+modbus_registers[367]=(char)(ICA_MODBUS_TCP_IP4);
+modbus_registers[368]=0;									//Рег185  адрес ведомого MODBUS-TCP	 1-254
+modbus_registers[369]=(char)(ICA_MODBUS_TCP_UNIT_ID);
+modbus_registers[370]=0;									//Рег186  адрес ведомого  MODBUS-RTU  1-254
+modbus_registers[371]=(char)(ICA_MODBUS_ADDRESS);
+modbus_registers[372]=0;									//Рег187  стартовый ШИМ, 1%, 10-100%
+modbus_registers[373]=(char)(PWM_START);
+modbus_registers[374]=0;									//Рег188  проверка цепи АКБ, 1-1ступень, 2-2, 3-3
+modbus_registers[375]=(char)(KB_ALGORITM);
+modbus_registers[376]=0;									//Рег189  скорость регулирования, 1-стандарт, 2-с/2, 3-с/3, 4-c/4, 5-c/5
+modbus_registers[377]=(char)(REG_SPEED);
+modbus_registers[378]=0;									//Рег190  спецзаряды, 0-запрещены, 1-разрешены
+modbus_registers[379]=(char)(SMART_SPC);
+//для ИБЭП
+modbus_registers[380]=0;									//Рег191  фазность сети, 1-1ф, 3-3ф
+modbus_registers[381]=(char)(NUMPHASE);
+modbus_registers[382]=0;									//Рег192  Твент.включения
+modbus_registers[383]=(char)(TVENTON);
+modbus_registers[384]=0;									//Рег193  Твент.выключения
+modbus_registers[385]=(char)(TVENTOFF);
+modbus_registers[386]=0;									//Рег194  датчик вент. 0-Tакб, 1-Твнешн., 2-Тбпс
+modbus_registers[387]=(char)(RELEVENTSIGN);
+modbus_registers[388]=0;									//Рег195  откл. НПН 0-выкл, 1-реле вент., 2-реле авар.АКБ2
+modbus_registers[389]=(char)(NPN_OUT);
+modbus_registers[390]=(char)(UONPN>>8);						//Рег196  Uоткл НПН 0,1В, 10,0-250,0В
+modbus_registers[391]=(char)(UONPN);
+modbus_registers[392]=(char)(UVNPN>>8);						//Рег197  Uвкл НПН 0,1В, 10,0-250,0В
+modbus_registers[393]=(char)(UVNPN);
+modbus_registers[394]=0;									//Рег198  задержка откл. НПН, 1с, 10-60
+modbus_registers[395]=(char)(TZNPN);
+/*modbus_registers[396]=0;									//Рег199  контроль средн. точки, 1%, 0-50
+modbus_registers[397]=(char)(UBM_AV);  */
+//o_8_e	   		   	   
 
 
 
@@ -1429,6 +2367,22 @@ modbus_registers[124]=(signed char)(power_int>>8);			//Рег63   	мощность счетчик
 modbus_registers[125]=(signed char)(power_int);
 
 
+modbus_registers[138]=(signed char)(HARDVARE_VERSION>>8);	//Рег 70  	аппаратная версия
+modbus_registers[139]=(signed char)(HARDVARE_VERSION);
+modbus_registers[140]=(signed char)(SOFT_VERSION>>8);		//Рег 71  	версия ПО
+modbus_registers[141]=(signed char)(SOFT_VERSION);
+modbus_registers[142]=(signed char)(BUILD>>8);				//Рег 72  	номер компиляции ПО
+modbus_registers[143]=(signed char)(BUILD);
+modbus_registers[144]=(signed char)(BUILD_YEAR>>8);			//Рег 73  	год	компиляции ПО
+modbus_registers[145]=(signed char)(BUILD_YEAR);
+modbus_registers[146]=(signed char)(BUILD_MONTH>>8);		//Рег 74  	месяц компиляции ПО
+modbus_registers[147]=(signed char)(BUILD_MONTH);
+modbus_registers[148]=(signed char)(BUILD_DAY>>8);			//Рег 75  	день компиляции ПО
+modbus_registers[149]=(signed char)(BUILD_DAY);
+modbus_registers[150]=(signed char)(AUSW_MAIN_NUMBER>>8); 	//?aa 76 caaianeie iiia?
+modbus_registers[151]=(signed char)(AUSW_MAIN_NUMBER);
+modbus_registers[152]=(signed char)(AUSW_MAIN_NUMBER>>24);			//Рег 77  	caaianeie iiia?
+modbus_registers[153]=(signed char)(AUSW_MAIN_NUMBER>>16);
 tempS=cntrl_stat_old;
 if(	(main_kb_cnt==(TBAT*60)-21) || (main_kb_cnt==(TBAT*60)-20) || (main_kb_cnt==(TBAT*60)-19)) tempS=((short)TBAT)|0x4000;
 //tempS=0x800f;
@@ -1511,6 +2465,23 @@ modbus_registers[437]=(signed char)(snmp_bat_flag[1]);
 Бит 11- равен 1, если включен формовочный заряд АКБ, иначе равен нулю.
 Бит 12- равен 1, если режим формовочного заряда заблокирован.
 */
+
+modbus_registers[438]=(signed char)(bps[0]._vent_resurs>>8);	//Рег220 ресурс вентилятора БПС1
+modbus_registers[439]=(signed char)(bps[0]._vent_resurs);
+modbus_registers[440]=(signed char)(bps[1]._vent_resurs>>8);	//Рег221 ресурс вентилятора БПС2
+modbus_registers[441]=(signed char)(bps[1]._vent_resurs);
+modbus_registers[442]=(signed char)(bps[2]._vent_resurs>>8);	//Рег222 ресурс вентилятора БПС3
+modbus_registers[443]=(signed char)(bps[2]._vent_resurs);
+modbus_registers[444]=(signed char)(bps[3]._vent_resurs>>8);	//Рег223 ресурс вентилятора БПС4
+modbus_registers[445]=(signed char)(bps[3]._vent_resurs);
+modbus_registers[446]=(signed char)(bps[4]._vent_resurs>>8);	//Рег224 ресурс вентилятора БПС5
+modbus_registers[447]=(signed char)(bps[4]._vent_resurs);
+modbus_registers[448]=(signed char)(bps[5]._vent_resurs>>8);	//Рег225 ресурс вентилятора БПС6
+modbus_registers[449]=(signed char)(bps[5]._vent_resurs);
+modbus_registers[450]=(signed char)(bps[6]._vent_resurs>>8);	//Рег226 ресурс вентилятора БПС7
+modbus_registers[451]=(signed char)(bps[6]._vent_resurs);
+modbus_registers[452]=(signed char)(bps[7]._vent_resurs>>8);	//Рег227 ресурс вентилятора БПС8
+modbus_registers[453]=(signed char)(bps[7]._vent_resurs); 
 
 if(prot==MODBUS_RTU_PROT)
 	{

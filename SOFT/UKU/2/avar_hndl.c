@@ -1429,7 +1429,7 @@ else if((in==0)||(in==2))
 	data[3]='B';
 	lc640_write_long_ptr(lc640_adr+28,data);
 	
-	if(in==1)
+	if(in==0)
 		{				
 		if(b==0)
 			{
@@ -1440,7 +1440,7 @@ else if((in==0)||(in==2))
 			snmp_trap_send("BAT #2 Alarm, heating eliminated",10,2,0);
 			} 
 		}
-	if(in==3)
+	if(in==2)
 		{				
 		if(b==0)
 			{
