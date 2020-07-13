@@ -4240,10 +4240,13 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
     ptrs[14+NUMBAT]= 											" БПС N10            ";
     ptrs[15+NUMBAT]= 											" БПС N11            ";
     ptrs[16+NUMBAT]= 											" БПС N12            ";
-    ptrs[17+NUMBAT]= 											" БПС N10            ";
-    ptrs[18+NUMBAT]= 											" БПС N11            ";
-    ptrs[19+NUMBAT]= 											" БПС N12            ";
-     
+    ptrs[17+NUMBAT]= 											" БПС N13            ";
+    ptrs[18+NUMBAT]= 											" БПС N14            ";
+    ptrs[19+NUMBAT]= 											" БПС N15            ";
+     ptrs[20+NUMBAT]= 											" БПС N16            ";
+     ptrs[21+NUMBAT]= 											" БПС N17            ";
+     ptrs[22+NUMBAT]= 											" БПС N18            ";
+  
 
     ptrs[5+NUMIST+NUMBAT]= 										" Сеть               ";
     
@@ -9449,7 +9452,7 @@ else if(ind==iStr_220_IPS_TERMOKOMPENSAT)
 	ptrs[5]=" РКИ               &";
 	ptrs[6]=" Сетевых вводов    *";
 	ptrs[7]=" Блоков доп.реле   ^";
-	ptrs[8]=" Модуль ЭНМВ-1-24  ]";
+	ptrs[8]=" Модуль сбора ДС   ]";
 	ptrs[9]=" Выход              ";	
 	
 	if(sub_ind<index_set) index_set=sub_ind;
