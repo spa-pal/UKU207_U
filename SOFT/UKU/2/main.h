@@ -928,6 +928,7 @@ typedef enum {
 	iAvt_set_sel,iAvt_set,iAvt_comm_set,iSet_li_bat,
 	iOut_volt_contr,iDop_rele_set,iBlok_ips_set,iIps_Curr_Avg_Set,
 	iRele_set,iRele_set_,
+	iRele_set_6U,//o_9
 	iFWabout, iSpecInf,
 	iHV_STEP2_1,iHV_STEP2_2,iVZ1_STEP2_1,iVZ1_STEP2_2,iVZ2_STEP2_1,iVZ2_STEP2_2,
 	iSet_load_off,
@@ -1046,7 +1047,7 @@ extern signed short TZNPN;
 extern signed short UONPN;
 extern signed short UVNPN;
 extern signed short dUNPN;
-typedef enum {npnoOFF=0,npnoRELEVENT=1,npnoRELEAVBAT2=2} enum_npn_out;
+typedef enum {npnoOFF=0,npnoRELEVENT=1,npnoRELEAVBAT2=2, npnoBDR=3} enum_npn_out;  //o_9
 extern enum_npn_out NPN_OUT;
 typedef enum {npnsULOAD=0,npnsAVNET} enum_npn_sign;
 extern enum_npn_sign NPN_SIGN;

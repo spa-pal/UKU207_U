@@ -2543,7 +2543,7 @@ else if(net_U>UMN)
 	else if(unet_drv_cnt<0)unet_drv_cnt=0;
 	
 	}
-#ifdef UKU_6U
+#ifdef UKU_6U || UKU_ZVU
 if(net_U>UMAXN)
 	{
 	if((unet_max_drv_cnt<10)&&(main_1Hz_cnt>15))
@@ -5630,7 +5630,10 @@ else if(DOP_RELE_FUNC==1)  //если допреле подключено к индикации разряженной бат
 	if((mess_find_unvol(MESS2RELE_HNDL))&& (mess_data[0]==PARAM_RELE_BAT_IS_DISCHARGED)) SET_REG(LPC_GPIO0->FIOCLR,1,9,1);
 	else SET_REG(LPC_GPIO0->FIOSET,1,9,1);
 	}
-	
+
+#endif //o_9
+
+#if defined UKU_6U || defined UKU_220_IPS_TERMOKOMPENSAT   //o_9	
 //Блок выносной реле
 if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_BDR1))
 	{
@@ -5650,7 +5653,7 @@ if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_BDR2))
 	}
 else 
 	{
-	if(bdr_avar_stat&0x01)  	bdr_transmit_stat|=0x02;
+	if(bdr_avar_stat&0x02)  	bdr_transmit_stat|=0x02;	 //o_9
 	else 						bdr_transmit_stat&=0xfd;
 	}	
 	
@@ -5661,7 +5664,7 @@ if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_BDR3))
 	}
 else 
 	{
-	if(bdr_avar_stat&0x01)  	bdr_transmit_stat|=0x04;
+	if(bdr_avar_stat&0x04)  	bdr_transmit_stat|=0x04;	//o_9
 	else 						bdr_transmit_stat&=0xfb;
 	}	
 	
@@ -5672,7 +5675,7 @@ if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_BDR4))
 	}
 else 
 	{
-	if(bdr_avar_stat&0x01)  	bdr_transmit_stat|=0x08;
+	if(bdr_avar_stat&0x08)  	bdr_transmit_stat|=0x08;	 //o_9
 	else 						bdr_transmit_stat&=0xf7;
 	}	
 					 	
@@ -5965,7 +5968,31 @@ if(NUMBDR==1)
 	char bdr_avar_stat_temp=0;
 	for	(ii_=0;ii_<4;ii_++)
 		{
-		//АБ разряжена
+	//o_9_s
+	#ifdef UKU_6U
+		 //АБ разряжена
+		if((RELE_SET_MASK[ii_]&0x01)&&
+			( (bat[0]._Ub<(USIGN*10)) || (bat[1]._Ub<(USIGN*10)) ) )			bdr_avar_stat_temp|=(1<<ii_);
+		//Выравнивающий заряд
+		if((RELE_SET_MASK[ii_]&0x02)&&
+			(spc_stat==spcVZ))				bdr_avar_stat_temp|=(1<<ii_);
+	   	//Общая авария ИБЭП
+		if((RELE_SET_MASK[ii_]&0x04)&& 		
+			(avar_stat&0x7FF)!=0 )		   	bdr_avar_stat_temp|=(1<<ii_);
+		//Ток АКБ<-0,5А
+		if((RELE_SET_MASK[ii_]&0x08)&&
+			(bat[0]._Ib<-50	|| bat[1]._Ib<-50 ) ) bdr_avar_stat_temp|=(1<<ii_);
+	   	//отключение НПН
+	    if((RELE_SET_MASK[ii_]&0x10)&& 
+			NPN_OUT==npnoBDR && npn_stat==npnsOFF) bdr_avar_stat_temp|=(1<<ii_);
+		//контроль емкости АКБ1
+		if((RELE_SET_MASK[ii_]&0x20)&&
+			(spc_stat==spcKE)&&(spc_bat==0))	bdr_avar_stat_temp|=(1<<ii_); 
+		//контроль емкости АКБ2
+		if((RELE_SET_MASK[ii_]&0x40)&&
+			(spc_stat==spcKE)&&(spc_bat==1))	bdr_avar_stat_temp|=(1<<ii_); 
+	#else
+	//o_9_e		//АБ разряжена
 		if((RELE_SET_MASK[ii_]&0x01)&&
 			(load_U<(USIGN*10)))			bdr_avar_stat_temp|=(1<<ii_);
 		//Ускоренный заряд
@@ -5995,7 +6022,7 @@ if(NUMBDR==1)
 			((bps[1]._av&(0x0f))&&(NUMIST>=2))||
 			((bps[2]._av&(0x0f))&&(NUMIST>=3))
 			))bdr_avar_stat_temp|=(1<<ii_);
-
+	  #endif											 //o_9
 		if(!(RELE_SET_MASK[ii_]&(1<<15))) bdr_avar_stat_temp^=(1<<ii_); 
 		}
 	bdr_avar_stat=bdr_avar_stat_temp;
