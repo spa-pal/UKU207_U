@@ -413,7 +413,7 @@ char can_slot[12][16];
 
 //***********************************************
 //Ñîñòîÿíèå èñòî÷íèêîâ
-BPS_STAT bps[29];
+BPS_STAT bps[35];
 
 //***********************************************
 //Ñîñòîÿíèå èíâåðòîðîâ
@@ -1369,13 +1369,14 @@ void net_drv(void)
 
 
 
-max_net_slot=MINIM_INV_ADRESS+NUMINV+8;
+//max_net_slot=MINIM_INV_ADRESS+NUMINV+8;
+max_net_slot=NUMIST;
 //if(NUMINV) max_net_slot=MINIM_INV_ADRESS+NUMINV;
 //gran_char(&max_net_slot,0,MAX_NET_ADRESS);
 
 if(++cnt_net_drv>max_net_slot) 
 	{
-	cnt_net_drv=-4;
+	cnt_net_drv=-10;
 	//LPC_GPIO2->FIODIR|=(1UL<<7);
 	//LPC_GPIO2->FIOPIN^=(1UL<<7);
 	if(bCAN_INV)bCAN_INV=0;
@@ -1385,7 +1386,7 @@ if(++cnt_net_drv>max_net_slot)
 
 
 #ifndef UKU_KONTUR
-if((cnt_net_drv>=0)&&(cnt_net_drv<=11)) // ñ 1 ïî 12 ïîñûëêè àäðåñíûå
+if((cnt_net_drv>=0)&&(cnt_net_drv<=NUMIST)) // ñ 1 ïî 12 ïîñûëêè àäðåñíûå
 #endif
 #ifdef UKU_KONTUR
 if((cnt_net_drv>=0)&&(cnt_net_drv<=7)) // ñ 1 ïî 12 ïîñûëêè àäðåñíûå
@@ -1409,7 +1410,7 @@ if((cnt_net_drv>=0)&&(cnt_net_drv<=7)) // ñ 1 ïî 12 ïîñûëêè àäðåñíûå
 		if(avar_bps_reset_cnt || bps[cnt_net_drv]._apv_reset_av_timer)  can1_out(cnt_net_drv,cnt_net_drv,CMND,ALRM_RES,0,0,0,0);
 		else can1_out(cnt_net_drv,cnt_net_drv,GETTM,bps[cnt_net_drv]._flags_tu,*((char*)(&bps[cnt_net_drv]._vol_u)),*((char*)((&bps[cnt_net_drv]._vol_u))+1),*((char*)(&bps[cnt_net_drv]._vol_i)),*((char*)((&bps[cnt_net_drv]._vol_i))+1));
      
-	if(cnt_net_drv<=11)
+	if(cnt_net_drv<NUMIST)
 	     {
 	     if(bps[cnt_net_drv]._cnt<CNT_SRC_MAX)
    	 		{    
@@ -1548,17 +1549,17 @@ else if( num_rki && cnt_net_drv==-2) // çàïðîñ äëÿ ÐÊÈ	//rki_1_s
 
 
 
-else if(cnt_net_drv==12)
+else if(cnt_net_drv==-5)
 	{
      if(!bCAN_OFF)can1_out(0xff,0xff,MEM_KF,*((char*)(&UMAX)),*((char*)((&UMAX))+1),*((char*)(&DU)),*((char*)((&DU))+1),0);
      } 
      
-else if(cnt_net_drv==13)
+else if(cnt_net_drv==-6)
 	{
      if(!bCAN_OFF)can1_out(0xff,0xff,MEM_KF1,*((char*)(&TMAX)),*((char*)((&TMAX))+1),*((char*)(&TSIGN)),*((char*)((&TSIGN))+1),(char)TZAS);
      byps._cnt++;
 	} 
-else if(cnt_net_drv==14)
+else if(cnt_net_drv==-7)
 	{                 
 	static char makb_cnt;
 	makb_cnt++;
@@ -1569,7 +1570,7 @@ else if(cnt_net_drv==14)
 	}
 	
 	
-else if(cnt_net_drv==15)
+else if(cnt_net_drv==-8)
 	{
      if(!bCAN_OFF)can1_out(0xff,0xff,MEM_KF1,*((char*)(&TMAX)),*((char*)((&TMAX))+1),*((char*)(&TSIGN)),*((char*)((&TSIGN))+1),(char)TZAS);
      }
@@ -1595,7 +1596,7 @@ else if((cnt_net_drv>=MINIM_INV_ADRESS)&&(cnt_net_drv<(MINIM_INV_ADRESS+NUMINV))
 */	
 	
 
-else if(cnt_net_drv==19)
+else if(cnt_net_drv==-9)
 	{
      if(!bCAN_OFF)
 		{
@@ -1611,37 +1612,37 @@ else if(cnt_net_drv==19)
      }
 	
 	
-else if((cnt_net_drv>=MINIM_INV_ADRESS)&&(cnt_net_drv<MINIM_INV_ADRESS+15))
-	{
-	if(!bCAN_OFF)
-		{
-		if(bCAN_INV)
-			{
+///else if((cnt_net_drv>=MINIM_INV_ADRESS)&&(cnt_net_drv<MINIM_INV_ADRESS+15))
+///	{
+///	if(!bCAN_OFF)
+///		{
+///		if(bCAN_INV)
+///			{
+///			
+///			can1_out(cnt_net_drv,cnt_net_drv,GETTM,bps[cnt_net_drv]._flags_tu,*((char*)(&bps[cnt_net_drv]._vol_u)),*((char*)((&bps[cnt_net_drv]._vol_u))+1),*((char*)(&bps[cnt_net_drv]._vol_i)),*((char*)((&bps[cnt_net_drv]._vol_i))+1));
+///    		}
+///		else
+///			{
 			
-			can1_out(cnt_net_drv,cnt_net_drv,GETTM,bps[cnt_net_drv]._flags_tu,*((char*)(&bps[cnt_net_drv]._vol_u)),*((char*)((&bps[cnt_net_drv]._vol_u))+1),*((char*)(&bps[cnt_net_drv]._vol_i)),*((char*)((&bps[cnt_net_drv]._vol_i))+1));
-     		}
-		else
-			{
-			
-			can1_out(cnt_net_drv,cnt_net_drv,GETTM_INV,bps[cnt_net_drv]._flags_tu,*((char*)(&bps[cnt_net_drv]._vol_u)),*((char*)((&bps[cnt_net_drv]._vol_u))+1),*((char*)(&bps[cnt_net_drv]._vol_i)),*((char*)((&bps[cnt_net_drv]._vol_i))+1));
-     		} 
-		}
-	//if(cnt_net_drv<=11)
-	     {
-	     if(bps[cnt_net_drv]._cnt<CNT_SRC_MAX)
-   	 		{    
-   	 		bps[cnt_net_drv]._cnt++;
-   	 	/*	if( (bps[cnt_net_drv]._cnt>=CNT_SRC_MAX) && (!net_av) && (!(bps[cnt_net_drv]._av&0x08)) && (cnt_net_drv<NUMIST) ) 
-   	 			{
-   	 			avar_bps_hndl(cnt_net_drv,3,1);
-   	 			}*/
-   	 		}
-		else bps[cnt_net_drv]._cnt=CNT_SRC_MAX;
-						
-		if((bps[cnt_net_drv]._cnt>=3)&&(bps[cnt_net_drv]._cnt_old<3))bps[cnt_net_drv]._cnt_more2++;
-		bps[cnt_net_drv]._cnt_old=bps[cnt_net_drv]._cnt;
-	     }
-	}
+///			can1_out(cnt_net_drv,cnt_net_drv,GETTM_INV,bps[cnt_net_drv]._flags_tu,*((char*)(&bps[cnt_net_drv]._vol_u)),*((char*)((&bps[cnt_net_drv]._vol_u))+1),*((char*)(&bps[cnt_net_drv]._vol_i)),*((char*)((&bps[cnt_net_drv]._vol_i))+1));
+ ///    		} 
+///		}
+///	//if(cnt_net_drv<=11)
+///	     {
+///	     if(bps[cnt_net_drv]._cnt<CNT_SRC_MAX)
+///   	 		{    
+///   	 		bps[cnt_net_drv]._cnt++;
+ ///  	 	/*	if( (bps[cnt_net_drv]._cnt>=CNT_SRC_MAX) && (!net_av) && (!(bps[cnt_net_drv]._av&0x08)) && (cnt_net_drv<NUMIST) ) 
+ ///  	 			{
+///   	 			avar_bps_hndl(cnt_net_drv,3,1);
+///   	 			}*/
+///   	 		}
+///		else bps[cnt_net_drv]._cnt=CNT_SRC_MAX;
+///						
+///		if((bps[cnt_net_drv]._cnt>=3)&&(bps[cnt_net_drv]._cnt_old<3))bps[cnt_net_drv]._cnt_more2++;
+///		bps[cnt_net_drv]._cnt_old=bps[cnt_net_drv]._cnt;
+///	     }
+///	}
 
 
 /*
@@ -2110,7 +2111,7 @@ else
 }
 
 //-----------------------------------------------
-void ind_hndl(void)
+void ind_hndl(void)	
 {
 //const char* ptr;
 const char* ptrs[90];		//oleg_start áûëî 60
@@ -2225,6 +2226,126 @@ if(avar_stat&(1<<(3+6)))
 if(avar_stat&(1<<(3+7)))
 	{
 	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹8    ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+8)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹9    ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+9)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹10   ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+10)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹11   ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+11)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹12   ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+12)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹13   ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+13)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹14   ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+14)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹15   ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+15)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹16   ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+16)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹17   ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+17)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹18   ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+18)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹19   ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+19)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹20   ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+20)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹21   ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+21)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹22   ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+22)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹23   ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+23)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹24   ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+24)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹25   ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+25)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹26   ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+26)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹27   ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+27)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹28   ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+28)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹29   ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+29)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹30   ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+30)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹31   ";
+	sub_cnt_max++;	
+	}
+if(avar_stat&(1<<(3+31)))
+	{
+	sub_ptrs[i++]=	"   Àâàðèÿ ÁÏÑ ¹32   ";
 	sub_cnt_max++;	
 	}
 
@@ -4243,12 +4364,26 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
     ptrs[17+NUMBAT]= 											" ÁÏÑ N13            ";
     ptrs[18+NUMBAT]= 											" ÁÏÑ N14            ";
     ptrs[19+NUMBAT]= 											" ÁÏÑ N15            ";
-     ptrs[20+NUMBAT]= 											" ÁÏÑ N16            ";
-     ptrs[21+NUMBAT]= 											" ÁÏÑ N17            ";
-     ptrs[22+NUMBAT]= 											" ÁÏÑ N18            ";
-  
+	ptrs[20+NUMBAT]= 											" ÁÏÑ N16            ";
+	ptrs[21+NUMBAT]= 											" ÁÏÑ N17            ";
+	ptrs[22+NUMBAT]= 											" ÁÏÑ N18            ";
+	ptrs[23+NUMBAT]=  											" ÁÏÑ N19            ";
+    ptrs[24+NUMBAT]=  											" ÁÏÑ N20            ";
+    ptrs[25+NUMBAT]=  											" ÁÏÑ N21            ";
+    ptrs[26+NUMBAT]=  											" ÁÏÑ N22            ";
+    ptrs[27+NUMBAT]= 											" ÁÏÑ N23            ";
+    ptrs[28+NUMBAT]= 											" ÁÏÑ N24            ";
+    ptrs[29+NUMBAT]= 											" ÁÏÑ N25            ";
+    ptrs[30+NUMBAT]= 											" ÁÏÑ N26            ";
+    ptrs[31+NUMBAT]= 											" ÁÏÑ N27            ";
+    ptrs[32+NUMBAT]= 											" ÁÏÑ N28            ";
+    ptrs[33+NUMBAT]= 											" ÁÏÑ N29            ";
+    ptrs[34+NUMBAT]= 											" ÁÏÑ N30            ";
+    ptrs[35+NUMBAT]= 											" ÁÏÑ N31            ";
+    ptrs[36+NUMBAT]= 											" ÁÏÑ N32            ";
 
-    ptrs[5+NUMIST+NUMBAT]= 										" Ñåòü               ";
+
+    ptrs[5+NUMIST+NUMBAT]= 											" Ñåòü               ";
     
 	ptrs[6+NUMIST+NUMBAT]= 											" Ñåòåâûå ââîäû      "; 
 	ptrs[6+NUMIST+(num_net_in!=0)+NUMBAT]=							" Êîíòðîëü èçîëÿöèè  "; 
@@ -11404,17 +11539,37 @@ int2lcdyx(MSG_IND2OUT_EN_SRC2,0,6,0); */
 else if(ind==iK_bps_sel)
 	{
 	ptrs[0]=						" ÁÏÑ N1             ";
-     ptrs[1]=						" ÁÏÑ N2             ";
-     ptrs[2]=						" ÁÏÑ N3             ";
+	ptrs[1]=						" ÁÏÑ N2             ";
+	ptrs[2]=						" ÁÏÑ N3             ";
 	ptrs[3]=						" ÁÏÑ N4             ";
-     ptrs[4]=						" ÁÏÑ N5             ";
-     ptrs[5]=						" ÁÏÑ N6             ";
+	ptrs[4]=						" ÁÏÑ N5             ";
+	ptrs[5]=						" ÁÏÑ N6             ";
 	ptrs[6]=						" ÁÏÑ N7             ";
-     ptrs[7]=						" ÁÏÑ N8             ";
-     ptrs[8]=						" ÁÏÑ N9             ";
+	ptrs[7]=						" ÁÏÑ N8             ";
+	ptrs[8]=						" ÁÏÑ N9             ";
 	ptrs[9]=						" ÁÏÑ N10            ";
-     ptrs[10]=						" ÁÏÑ N11            ";
-     ptrs[11]=						" ÁÏÑ N12            ";               
+	ptrs[10]=						" ÁÏÑ N11            ";
+	ptrs[11]=						" ÁÏÑ N12            ";               
+	ptrs[12]=						" ÁÏÑ N13            ";
+	ptrs[13]=						" ÁÏÑ N14            ";
+	ptrs[14]=						" ÁÏÑ N15            ";
+	ptrs[15]=						" ÁÏÑ N16            ";
+	ptrs[16]=						" ÁÏÑ N17            ";
+	ptrs[17]=						" ÁÏÑ N18            ";
+	ptrs[18]=						" ÁÏÑ N19            ";
+	ptrs[19]=						" ÁÏÑ N20            ";
+	ptrs[20]=						" ÁÏÑ N21            ";
+	ptrs[21]=						" ÁÏÑ N22            "; 
+	ptrs[22]=						" ÁÏÑ N23            ";
+	ptrs[23]=						" ÁÏÑ N24            ";
+	ptrs[24]=						" ÁÏÑ N25            ";
+	ptrs[25]=						" ÁÏÑ N26            ";
+	ptrs[26]=						" ÁÏÑ N27            ";
+	ptrs[27]=						" ÁÏÑ N28            ";
+	ptrs[28]=						" ÁÏÑ N29            ";
+	ptrs[29]=						" ÁÏÑ N30            ";
+	ptrs[30]=						" ÁÏÑ N31            ";
+	ptrs[31]=						" ÁÏÑ N32            ";
 	ptrs[NUMIST]=					" Âûõîä              ";
 	ptrs[1+NUMIST]=				"                    ";
 	ptrs[2+NUMIST]=				"                    ";
@@ -12608,7 +12763,29 @@ if(ind==iDeb)
 		/*int2lcdyx(u_necc,1,15,0);
 		int2lcdyx(bps_U,2,15,0);
 		int2lcdyx(uavt_set_error_cnt,3,19,0);*/ 
-		}																												     				     			
+		}
+    else if(sub_ind==27)
+     	{
+     	bgnd_par(	"27                  ",
+     		    	"                    ",
+     		    	"                    ",
+     		    	"                    ");
+
+
+
+/*     	bps[i]._Ii=bps[i]._buff[0]+(bps[i]._buff[1]*256);
+     	bps[i]._Uin=bps[i]._buff[2]+(bps[i]._buff[3]*256);
+     	bps[i]._Uii=bps[i]._buff[4]+(bps[i]._buff[5]*256);
+     	bps[i]._Ti=(signed)(bps[i]._buff[6]); */
+
+		int2lcdyx(bps[0]._buff[0],0,10,0);
+		int2lcdyx(bps[0]._buff[1],1,10,0);
+		int2lcdyx(bps[0]._buff[6],2,10,0);
+		int2lcdyx(bps[16]._buff[0],0,19,0);
+		int2lcdyx(bps[16]._buff[1],1,19,0);
+		int2lcdyx(bps[16]._buff[6],2,19,0);
+
+		}																															     				     			
 	}
 
 else if((ind==iAv_view)||(ind==iAv_view_avt))
@@ -14078,26 +14255,46 @@ else if(ind==iTst_220_380)
 else if(ind==iTst_220_IPS_TERMOKOMPENSAT)
 	{
 	ptrs[0]=						" Ðåëå àâàðèè        ";
-     ptrs[1]=						" ñåòè              !";
-     ptrs[2]=						" Ðåëå àâàðèè        ";
-     ptrs[3]=						" ÁÏÑîâ             #";
-     ptrs[4]=						" Ðåëå àâàðèè        ";
-     ptrs[5]=						" áàòàðåé           @";
+    ptrs[1]=						" ñåòè              !";
+    ptrs[2]=						" Ðåëå àâàðèè        ";
+    ptrs[3]=						" ÁÏÑîâ             #";
+    ptrs[4]=						" Ðåëå àâàðèè        ";
+    ptrs[5]=						" áàòàðåé           @";
 	ptrs[6]=						" Ðåëå äîïîëíèòåëüíîå";
-     ptrs[7]=						"                   %";
+	ptrs[7]=						"                   %";
 	ptrs[8]=						" ÁÏÑ N1             ";
-     ptrs[9]=						" ÁÏÑ N2             ";
-     ptrs[10]=						" ÁÏÑ N3             ";
+    ptrs[9]=						" ÁÏÑ N2             ";
+	ptrs[10]=						" ÁÏÑ N3             ";
 	ptrs[11]=						" ÁÏÑ N4             ";
-     ptrs[12]=						" ÁÏÑ N5             ";
-     ptrs[13]=						" ÁÏÑ N6             ";
+	ptrs[12]=						" ÁÏÑ N5             ";
+	ptrs[13]=						" ÁÏÑ N6             ";
 	ptrs[14]=						" ÁÏÑ N7             ";
-     ptrs[15]=						" ÁÏÑ N8             ";
-     ptrs[16]=						" ÁÏÑ N9             ";               
+	ptrs[15]=						" ÁÏÑ N8             ";
+	ptrs[16]=						" ÁÏÑ N9             ";               
 	ptrs[17]=						" ÁÏÑ N10            ";
-     ptrs[18]=						" ÁÏÑ N11            ";
-     ptrs[19]=						" ÁÏÑ N12            ";
-	if(NUMBDR)
+	ptrs[18]=						" ÁÏÑ N11            ";
+	ptrs[19]=						" ÁÏÑ N12            ";
+	ptrs[20]=						" ÁÏÑ N13            ";
+    ptrs[21]=						" ÁÏÑ N14            ";
+	ptrs[22]=						" ÁÏÑ N15            ";
+	ptrs[23]=						" ÁÏÑ N16            ";
+	ptrs[24]=						" ÁÏÑ N17            ";
+	ptrs[25]=						" ÁÏÑ N18            ";
+	ptrs[26]=						" ÁÏÑ N19            ";
+	ptrs[27]=						" ÁÏÑ N20            ";
+	ptrs[28]=						" ÁÏÑ N21            ";               
+	ptrs[29]=						" ÁÏÑ N22            ";
+	ptrs[30]=						" ÁÏÑ N23            ";
+	ptrs[31]=						" ÁÏÑ N24            ";
+	ptrs[32]=						" ÁÏÑ N25            ";
+    ptrs[33]=						" ÁÏÑ N26            ";
+	ptrs[34]=						" ÁÏÑ N27            ";
+	ptrs[35]=						" ÁÏÑ N28            ";
+	ptrs[36]=						" ÁÏÑ N29            ";
+	ptrs[37]=						" ÁÏÑ N30            ";
+	ptrs[38]=						" ÁÏÑ N31            ";
+	ptrs[39]=						" ÁÏÑ N32            ";
+
 		{
 		ptrs[8+NUMIST]=				" Ðåëå âûíîñíîãî     ";
     	ptrs[9+NUMIST]=				" áëîêà N1          {";
@@ -14601,7 +14798,8 @@ else if(ind==iTst_bps)
 	int2lcd(u_necc,'@',1);
 
 
-	if(tst_state[5]==tstOFF) mess_send(MESS2BPS_HNDL,PARAM_BPS_MASK_ON_OFF_AFTER_2SEC,~(1<<sub_ind1),10);
+	//if(tst_state[5]==tstOFF) mess_send(MESS2BPS_HNDL,PARAM_BPS_MASK_ON_OFF_AFTER_2SEC,~(1<<sub_ind1),10);
+	if(tst_state[5]==tstOFF) mess_send(MESS2BPS_HNDL,PARAM_BPS_MASK_ON_OFF_AFTER_2SEC_FOR_NUMBER,sub_ind1,10);
 	else mess_send(MESS2BPS_HNDL,PARAM_BPS_MASK_ON_OFF_AFTER_2SEC,(1<<sub_ind1),10);
 	
 	if(tst_state[5]==tst2) mess_send(MESS2NET_DRV,PARAM_BPS_NET_OFF,1,10);
@@ -16686,13 +16884,13 @@ else if(ind==iDeb)
 		{
 		sub_ind++;
 		index_set=0;
-		gran_ring_char(&sub_ind,0,26);
+		gran_ring_char(&sub_ind,0,27);
 		}
 	else if(but==butL)
 		{
 		sub_ind--;
 		index_set=0;
-		gran_ring_char(&sub_ind,0,26);
+		gran_ring_char(&sub_ind,0,27);
 		}
 		
 	else if(sub_ind==1)
@@ -18115,7 +18313,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 		}
 	else if(but==butD_)
 		{
-		sub_ind=0;
+		sub_ind=(9+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)+(NUMEXT!=0) + (6*(SMART_SPC!=0)));
 		}
 
 	else if(but==butLR_)
@@ -25320,7 +25518,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 		if(sub_ind==22)index_set=21;
 		if(sub_ind==23)sub_ind=24;
 		if(sub_ind==25)index_set=24;
-		if(sub_ind==26)sub_ind=25;
+		if(sub_ind==26)sub_ind=27;
 		if(sub_ind==27)index_set=26;
 		if(sub_ind==28)sub_ind=29;
 		if(sub_ind==33)index_set=32;
@@ -25409,7 +25607,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 			} 
         if(sub_ind==23)
         	{
-            sub_ind=24;
+            sub_ind=22;
 		    }
         if(sub_ind==26)
         	{
@@ -28543,7 +28741,7 @@ else if(ind==iStr_220_IPS_TERMOKOMPENSAT)
 	     if((but==butR)||(but==butR_))
 	     	{
 	     	NUMIST++;
-	     	gran(&NUMIST,0,18);
+	     	gran(&NUMIST,0,32);
 	     	lc640_write_int(EE_NUMIST,NUMIST);
 			numOfForvardBps_init();
 	     	}
@@ -28551,7 +28749,7 @@ else if(ind==iStr_220_IPS_TERMOKOMPENSAT)
 	     else if((but==butL)||(but==butL_))
 	     	{
 	     	NUMIST--;
-	     	gran(&NUMIST,0,18);
+	     	gran(&NUMIST,0,32);
 	     	lc640_write_int(EE_NUMIST,NUMIST);
 			numOfForvardBps_init();
 	     	}

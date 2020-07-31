@@ -1364,7 +1364,7 @@ if((((RXBUFF[0]==sub_ind1)&&(ind==iK_bps))||((RXBUFF[0]==uavt_bps_pntr)&&(uavt_s
 	}
 
 
-if((RXBUFF[1]==PUTTM1)&&((RXBUFF[0]&0x1f)>=0)&&((RXBUFF[0]&0x1f)<17))
+if((RXBUFF[1]==PUTTM1)&&((RXBUFF[0]&0x1f)>=0)&&((RXBUFF[0]&0x1f)<32))
      {
 	//can_debug_plazma[1][2]++;
      slave_num=RXBUFF[0]&0x1f;
@@ -1397,7 +1397,7 @@ if((RXBUFF[1]==PUTTM1)&&((RXBUFF[0]&0x1f)>=0)&&((RXBUFF[0]&0x1f)<17))
 	can_reset_cnt=0;
      }
 
-if((RXBUFF[1]==PUTTM2)&&((RXBUFF[0]&0x1f)>=0)&&((RXBUFF[0]&0x1f)<12))
+if((RXBUFF[1]==PUTTM2)&&((RXBUFF[0]&0x1f)>=0)&&((RXBUFF[0]&0x1f)<32))
  	{
      slave_num=RXBUFF[0]&0x1f;  
 

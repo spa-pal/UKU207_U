@@ -45,27 +45,47 @@ extern signed mat_temper;
 //Аварии
 typedef struct  
 	{
-     unsigned int bAN:1; 
-     unsigned int bAB1:1; 
-     unsigned int bAB2:1;
-     unsigned int bAS1:1;
-     unsigned int bAS2:1;
-     unsigned int bAS3:1;
-     unsigned int bAS4:1;
-     unsigned int bAS5:1;
-     unsigned int bAS6:1;
-     unsigned int bAS7:1;
-     unsigned int bAS8:1;
-     unsigned int bAS9:1;
-     unsigned int bAS10:1;
-     unsigned int bAS11:1;
-     unsigned int bAS12:1;
+     unsigned long int bAN:1; 
+     unsigned long int bAB1:1; 
+     unsigned long int bAB2:1;
+     unsigned long int bAS1:1;
+     unsigned long int bAS2:1;
+     unsigned long int bAS3:1;
+     unsigned long int bAS4:1;
+     unsigned long int bAS5:1;
+     unsigned long int bAS6:1;
+     unsigned long int bAS7:1;
+     unsigned long int bAS8:1;
+     unsigned long int bAS9:1;
+     unsigned long int bAS10:1;
+     unsigned long int bAS11:1;
+     unsigned long int bAS12:1;
+     unsigned long int bAS13:1;
+     unsigned long int bAS14:1;
+     unsigned long int bAS15:1;
+     unsigned long int bAS16:1;
+     unsigned long int bAS17:1;
+     unsigned long int bAS18:1;
+     unsigned long int bAS19:1;
+     unsigned long int bAS20:1;
+     unsigned long int bAS21:1;
+     unsigned long int bAS22:1;
+     unsigned long int bAS23:1;
+     unsigned long int bAS24:1;
+     unsigned long int bAS25:1;
+     unsigned long int bAS26:1;
+     unsigned long int bAS27:1;
+     unsigned long int bAS28:1;
+     unsigned long int bAS29:1;
+     unsigned long int bAS30:1;
+     unsigned long int bAS31:1;
+     unsigned long int bAS32:1;
      }avar_struct;
      
 extern union 
 {
 avar_struct av;
-int avar_stat;
+long int avar_stat;
 }a__,a_;
 
 //***********************************************
@@ -170,7 +190,7 @@ signed short ibat_ips,ibat_ips_;
 char num_of_wrks_bps;
 char bps_all_off_cnt,bps_mask_off_cnt,bps_mask_on_off_cnt;
 char bps_hndl_2sec_cnt;
-unsigned short bps_on_mask,bps_off_mask;
+unsigned bps_on_mask,bps_off_mask;
 char num_necc_up,num_necc_down;
 unsigned char sh_cnt0,b1Hz_sh;
 
@@ -6127,10 +6147,15 @@ if(mess_find_unvol(MESS2BPS_HNDL))
 
 	if(mess_data[0]==PARAM_BPS_MASK_ON_OFF_AFTER_2SEC)
 		{
-		bps_on_mask=mess_data[1];
-		bps_off_mask=~(mess_data[1]);
+		bps_on_mask=(unsigned)mess_data[1];
+		bps_off_mask=~((unsigned)mess_data[1]);
 		}
 
+ 	if(mess_data[0]==PARAM_BPS_MASK_ON_OFF_AFTER_2SEC_FOR_NUMBER)
+		{
+		bps_on_mask=(unsigned)(1<<mess_data[1]);
+		bps_off_mask=~((unsigned)(1<<mess_data[1]));
+		}
 
 	for(i=0;i<=NUMIST;i++)
 		{
@@ -6883,25 +6908,32 @@ else if(!(temp&(1<<AVUMIN)))
 	else if(bps[in]._umin_av_cnt>10)bps[in]._umin_av_cnt--;	 
 	}
 
-if((bps[in]._Uii<(UB20-DU))&&(bps[in]._state==bsWRK))
+if((bps[in]._Uii<(UB20-DU)))
 	{
-	if(bps[in]._umin_av_cnt_uku<300) 
+	if(bps[in]._state==bsWRK)
 		{
-		bps[in]._umin_av_cnt_uku++;
-		if(bps[in]._umin_av_cnt_uku>=300)
-			{ 
-			bps[in]._umin_av_cnt_uku=300;
-			if(!(bps[in]._av&(1<<2)))avar_bps_hndl(in,2,1);
-		  	/*	if((K[APV]!=ON)||((apv_cnt[in,0]==0)&&(apv_cnt[in,1]==0)&&(apv_cnt[in,2]==0)&&(apv_flags[in]==afOFF)))avar_s_hndl(in,2,1);
-			if((apv_cnt[in,0]==0)&&(apv_cnt[in,1]==0)&&(apv_cnt[in,2]==0)&&(apv_flags[in]==afON))
-				{
-				apv_cnt[in,0]=APV_INIT;
-				apv_cnt[in,1]=APV_INIT;
-				apv_cnt[in,2]=APV_INIT;
-				apv_flags[in]=afOFF;
-				}*/				
+		if(bps[in]._umin_av_cnt_uku<300) 
+			{
+			bps[in]._umin_av_cnt_uku++;
+			if(bps[in]._umin_av_cnt_uku>=300)
+				{ 
+				bps[in]._umin_av_cnt_uku=300;
+				if(!(bps[in]._av&(1<<2)))avar_bps_hndl(in,2,1);
+			  	/*	if((K[APV]!=ON)||((apv_cnt[in,0]==0)&&(apv_cnt[in,1]==0)&&(apv_cnt[in,2]==0)&&(apv_flags[in]==afOFF)))avar_s_hndl(in,2,1);
+				if((apv_cnt[in,0]==0)&&(apv_cnt[in,1]==0)&&(apv_cnt[in,2]==0)&&(apv_flags[in]==afON))
+					{
+					apv_cnt[in,0]=APV_INIT;
+					apv_cnt[in,1]=APV_INIT;
+					apv_cnt[in,2]=APV_INIT;
+					apv_flags[in]=afOFF;
+					}*/				
+				}
 			}
-		} 
+		else
+			{
+			bps[in]._umin_av_cnt_uku=0;
+			} 
+		}
 	}	
 	
 else if(bps[in]._Uii>=(UB20-DU))

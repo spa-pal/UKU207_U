@@ -540,6 +540,7 @@
 #define		PARAM_BPS_ALL_OFF_AFTER_2SEC			206
 #define		PARAM_BPS_MASK_OFF_AFTER_2SEC			207
 #define		PARAM_BPS_MASK_ON_OFF_AFTER_2SEC		208
+#define 	PARAM_BPS_MASK_ON_OFF_AFTER_2SEC_FOR_NUMBER	308
 #define		PARAM_BPS_MASK_ON					209
 #define		PARAM_BPS_ALL_ON					210
 #define 	MESS2RELE_HNDL						210
@@ -1484,7 +1485,7 @@ typedef struct
 	unsigned char _apv_reset_av_timer;	//таймер для сброса аварий БПСа(пока он ненулевой на БПС шлется сигнал сбросить)
 	unsigned char _apv_succes_timer;	//таймер подсчета времени успешной работы БПС, при достижении порога сбрасывает АПВ 
 	} BPS_STAT; 
-extern BPS_STAT bps[29];
+extern BPS_STAT bps[35];
 
 //***********************************************
 //Состояние инверторов

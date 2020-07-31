@@ -8,7 +8,7 @@
 extern char num_of_wrks_bps;
 extern char bps_all_off_cnt,bps_mask_off_cnt,bps_mask_on_off_cnt;
 extern char bps_hndl_2sec_cnt;
-extern unsigned short bps_on_mask,bps_off_mask;
+extern unsigned bps_on_mask,bps_off_mask;
 extern char num_necc_up,num_necc_down;
 extern unsigned char sh_cnt0,b1Hz_sh;
 

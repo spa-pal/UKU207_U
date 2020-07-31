@@ -90,17 +90,17 @@ for(i=0;i<2;i++)
 	else	   			SET_REG(avar_stat,0,1+i,1);
 	}
 
-for(i=0;i<12;i++)
+for(i=0;i<18;i++)
 	{
 	if(bps[i]._av&0xef)	SET_REG(avar_stat,1,3+i,1);
 	else	   		SET_REG(avar_stat,0,3+i,1);
 	}
 
-for(i=0;i<6;i++)
+/*for(i=0;i<6;i++)
 	{
 	if(av_inv[i])	SET_REG(avar_stat,1,15+i,1);
 	else	   		SET_REG(avar_stat,0,15+i,1);
-	}
+	}*/
 
 /*for(i=0;i<4;i++)
 	{
