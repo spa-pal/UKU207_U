@@ -4316,6 +4316,9 @@ else if(ind==iMn_220_V2)
 	//int2lcdyx(ibat_metr_buff_[0],0,5,0);
 	//int2lcdyx(ibat_metr_buff_[1],0,15,0);
 	//int2lcdyx(bIBAT_SMKLBR,0,19,0);
+	int2lcdyx(main_kb_cnt,0,10,0);
+	int2lcdyx(kb_start[0],0,15,0);
+	int2lcdyx(kb_start[1],0,19,0);
 			 
 	}
 else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
