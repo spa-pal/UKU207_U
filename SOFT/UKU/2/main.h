@@ -157,6 +157,7 @@
 #define SYSPARAMS_SPZ_BLOCK_EN_SRC			36
 #define SYSPARAMS_SPZ_BLOCK_SIGN			37
 #define SYSPARAMS_SPZ_VENTBLOCKING			38
+#define SYSPARAMS_U_MAX_POWER				39	 //o_10
 
 #define DISPLAY_AVT					11
 #define DISPLAY_AVT_ENTRY_NUMBER			1,1
@@ -1554,7 +1555,7 @@ extern signed short bps_I_phantom;
 
 //***********************************************
 //Состояние первичной сети
-extern signed short net_U,net_Ustore,net_Ua,net_Ub,net_Uc;
+extern signed short net_U,net_Ustore,net_Ua,net_Ub,net_Uc, net_Umax, net_Ustore_max; //o_10
 extern char bFF,bFF_;
 extern signed short net_F,hz_out,hz_out_cnt,net_F3;
 extern signed char unet_drv_cnt;	 //Счетчик на снижение первичного наряжеия

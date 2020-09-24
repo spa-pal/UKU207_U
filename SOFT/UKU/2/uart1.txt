@@ -1373,3 +1373,29 @@
                           EXPORTAS ||area_number.12||, ||.data||
                   usart1_router_cnt
 000000  00                DCB      0x00
+
+;*** Start embedded assembler ***
+
+#line 1 "uart1.c"
+	AREA ||.emb_text||, CODE, READONLY
+	THUMB
+	EXPORT |__asm___7_uart1_c_4c3c9f65____REV16|
+#line 112 "C:\\Keil\\ARM\\CMSIS\\Include\\core_cmInstr.h"
+|__asm___7_uart1_c_4c3c9f65____REV16| PROC
+#line 113
+
+ rev16 r0, r0
+ bx lr
+	ENDP
+	AREA ||.emb_text||, CODE, READONLY
+	THUMB
+	EXPORT |__asm___7_uart1_c_4c3c9f65____REVSH|
+#line 130
+|__asm___7_uart1_c_4c3c9f65____REVSH| PROC
+#line 131
+
+ revsh r0, r0
+ bx lr
+	ENDP
+
+;*** End   embedded assembler ***

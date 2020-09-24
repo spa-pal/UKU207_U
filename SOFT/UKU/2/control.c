@@ -334,7 +334,7 @@ if(spc_stat!=spcVZ)
 	vz2_error=0;
 	}
 
-if(!snmp_bat_status[0])	 			//Батарея №1
+if( (snmp_bat_status[0]==0 || snmp_bat_status[0]==2) && NUMBAT>0) 	//o_10 	 			//Батарея №1
 	{
 	if((bat[0]._Ub<(USIGN*10)))		//Снижение напряжения батареи ниже Uбсигн 
 		{
@@ -573,7 +573,7 @@ else
 	snmp_bat_flag_puts[0]=0;
 	}
 
-if(!snmp_bat_status[1])	 			//Батарея №2
+if( (snmp_bat_status[1]==0 || snmp_bat_status[1]==2) && NUMBAT==2 )	//o_10 
 	{
 	if((bat[1]._Ub<(USIGN*10)))		//Снижение напряжения батареи ниже Uбсигн 
 		{
@@ -2563,7 +2563,8 @@ else if(net_U>UMN)
 	else if(unet_drv_cnt<0)unet_drv_cnt=0;
 	
 	}
-#ifdef UKU_6U || UKU_ZVU
+//#ifdef UKU_6U || UKU_ZVU
+#if defined UKU_6U || defined UKU_ZVU  //o_10
 if(net_U>UMAXN)
 	{
 	if((unet_max_drv_cnt<10)&&(main_1Hz_cnt>15))
@@ -2680,6 +2681,11 @@ if((AUSW_MAIN%10)||(AUSW_MAIN==2400)||(AUSW_MAIN==4800)||(AUSW_MAIN==6000))
 	net_U=net_Ua;
 	if(net_Ub<net_U)net_U=net_Ub;
 	if(net_Uc<net_U)net_U=net_Uc;
+	//o_10_s
+	net_Umax=net_Ua;
+	if(net_Ub>net_Umax)net_Umax=net_Ub;
+	if(net_Uc>net_Umax)net_Umax=net_Uc;
+	//o_10_e
 	}
 else 
 	{
@@ -2687,6 +2693,7 @@ else
 	temp_SL*=Kunet;
 	temp_SL/=110000L;
 	net_U=(signed short)temp_SL;
+	net_Umax=(signed short)temp_SL;	  //o_10
 	}
 
 
@@ -2820,6 +2827,11 @@ else
 		net_U=net_Ua;
 		if(net_Ub<net_U)net_U=net_Ub;
 		if(net_Uc<net_U)net_U=net_Uc;
+		//o_10_s
+		net_Umax=net_Ua;
+		if(net_Ub>net_Umax)net_Umax=net_Ub;
+		if(net_Uc>net_Umax)net_Umax=net_Uc;
+		//o_10_e
 		}
 	  else if(AUSW_MAIN==22033)
 	{
@@ -2841,6 +2853,11 @@ else
 	net_U=net_Ua;
 	if(net_Ub<net_U)net_U=net_Ub;
 	if(net_Uc<net_U)net_U=net_Uc;
+	//o_10_s
+	net_Umax=net_Ua;
+	if(net_Ub>net_Umax)net_Umax=net_Ub;
+	if(net_Uc>net_Umax)net_Umax=net_Uc;
+	//o_10_e
 	}
 else if((AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043)||(AUSW_MAIN==22044)||(AUSW_MAIN==22018))
 	{
@@ -2862,6 +2879,11 @@ else if((AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043)||(AUSW_MAIN==
 	net_U=net_Ua;
 	if(net_Ub<net_U)net_U=net_Ub;
 	if(net_Uc<net_U)net_U=net_Uc;
+	//o_10_s
+	net_Umax=net_Ua;
+	if(net_Ub>net_Umax)net_Umax=net_Ub;
+	if(net_Uc>net_Umax)net_Umax=net_Uc;
+	//o_10_e
 	}
 else	if((AUSW_MAIN==22010)||(AUSW_MAIN==22011) )
 	{
@@ -2869,7 +2891,7 @@ else	if((AUSW_MAIN==22010)||(AUSW_MAIN==22011) )
 	temp_SL*=Kunet;
 	temp_SL/=35000L;
 	net_U=(signed short)temp_SL;
-	
+	net_Umax=net_U; //o_10
 	}
 else
 	{
@@ -2881,6 +2903,7 @@ else
 	temp_SL/=5000L;
 	#endif
 	net_U=(signed short)temp_SL;
+	net_Umax=net_U; //o_10
 	
 	}
 if(bps[11]._device!=dNET_METR) net_F3=net_F;

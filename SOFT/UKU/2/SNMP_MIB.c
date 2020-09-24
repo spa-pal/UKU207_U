@@ -493,6 +493,7 @@ const MIB_ENTRY snmp_mib[] = {
 	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_SPZ_BLOCK_EN_SRC, 0},				MIB_INT(speedChrgBlckSrc),		snmp_spz_block_en_src_write},		//номер первого бпса 
 	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_SPZ_BLOCK_SIGN, 0},				MIB_INT(speedChrgBlckLog),		snmp_spz_block_log_write},			//номер первого бпса 
 	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_SPZ_VENTBLOCKING, 0},				MIB_INT(SP_CH_VENT_BLOK),		snmp_spz_vent_block_write},			//номер первого бпса 
+	{ MIB_INTEGER,  			12, {OID_ENTERPRISE, OID_DEVICE, SYSPARAMS, SYSPARAMS_U_MAX_POWER, 0},					MIB_INT(snmp_u_max_power),		snmp_u_max_power_write},			// максимальное напряжение сети //o_10
 
 #ifdef UKU_ZVU
 	{ MIB_INTEGER | MIB_ATR_RO,  	13, {OID_ENTERPRISE, OID_DEVICE, DISPLAY_SK, DISPLAY_SK_ENTRY_NUMBER, 1},  			MIB_INT(snmp_sk_number[0]),  	NULL},	//Номер БПСа

@@ -469,7 +469,7 @@ char show_mess_komma;
 
 //***********************************************
 //Состояние первичной сети
-signed short net_U,net_Ustore,net_Ua,net_Ub,net_Uc;
+signed short net_U,net_Ustore,net_Ua,net_Ub,net_Uc, net_Umax, net_Ustore_max; //o_10
 char bFF,bFF_;
 signed short net_F,hz_out,hz_out_cnt,net_F3;
 signed char unet_drv_cnt;	//Счетчик на снижение первичного наряжеия
@@ -7120,7 +7120,7 @@ else if(ind==iLog_)
 			ptrs[2]="    не устранена    ";
 			ptrs[3]="     Uсети=  +В     ";
 			bgnd_par(ptrs[0],ptrs[1],ptrs[2],ptrs[3]);
-			int2lcd(net_U,'+',0);
+			int2lcd(net_Umax,'+',0);	 //o_10
 			}
 		else 
 			{
@@ -7154,7 +7154,13 @@ else if(ind==iLog_)
 	else if((av_head[0]=='B')&&(av_head[2]=='C'))
 		{  
 		ptrs[0]="       Авария       ";
+		//o_10_s
+		#ifdef UKU_220_IPS_TERMOKOMPENSAT
+		ptrs[1]="      батареи       ";
+		#else
 		ptrs[1]="     батареи N+     ";
+		#endif
+		//o_10_e		ptrs[1]="     батареи N+     ";
 		ptrs[2]="  0%(  0^ 0@:0#:0$  ";
 		if((av_data_off[0]=='A')&&(av_data_off[1]=='A'))
 			{
@@ -16194,7 +16200,7 @@ else if(ind==iRele_set_)
     ptrs[1]=	" Ускоренный заряд  #";
 	ptrs[2]=	" Выравнивающий      "; 
 	ptrs[3]=	" заряд             $";
-    ptrs[4]=	" Общая авария ЗВУ  %";
+    ptrs[4]=	" Общая авария ИПС  %";		//o_10
     ptrs[5]=	" Uвых. завышено    ^";
 	ptrs[6]=	" Uвых. занижено    [";
 	ptrs[7]=	" Ресурс вентилятора ";
@@ -16239,7 +16245,7 @@ else if(ind==iRele_set_6U)
 	ptrs[0]=	" АБ разряжена      @";
 	ptrs[1]=	" Выравнивающий      "; 
 	ptrs[2]=	" заряд             #";
-    ptrs[3]=	" Общая авария ЗВУ  $";
+    ptrs[3]=	" Общая авария ИБЭП $";		//o_10
     ptrs[4]=	" Ток АКБ < -0.5А   %";
 	ptrs[5]=	" Отключение НПН    ^";
 	ptrs[6]=	" К.Е. АКБ №1       [";
@@ -19031,7 +19037,7 @@ else if(ind==iSetRKI) // меню установки РКИ
 		else if(sub_ind==3) command_rki=21;
 		else if(sub_ind==4) command_rki=25;
 		else if(sub_ind==5) command_rki=29;
-		else if(sub_ind==6) command_rki=19;
+		else if(sub_ind==6) command_rki=17;	  //o_10
 		if(type_rki==1){
 			if(sub_ind==7) command_rki=9;
 			else if(sub_ind==8) command_rki=11;
@@ -25783,7 +25789,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	     else if(but==butL)UMAX--;
 	     else if(but==butL_)UMAX-=10;
 
-	     gran(&UMAX,10,3000);
+	     gran(&UMAX,10,6000);
 
 	     lc640_write_int(EE_UMAX,UMAX);
 	     speed=1;
@@ -31916,7 +31922,7 @@ else if(ind==iK_net3)
 			temp_SS-=10;
 			}				
 		speed=1;
-		gran(&temp_SS,150,4000);
+		gran(&temp_SS,100,4000);   //o_10   исправил 150 на 100 по просьбе Виктора
 		lc640_write_int(EE_KUNETA,temp_SS);
 		}
 
@@ -38105,7 +38111,7 @@ else if(ind==iOut_volt_contr)
 		else if(but==butR_)U_OUT_KONTR_MAX=(U_OUT_KONTR_MAX/5+1)*5;
 		else if(but==butL)U_OUT_KONTR_MAX--;
 		else if(but==butL_)U_OUT_KONTR_MAX=(U_OUT_KONTR_MAX/5-1)*5;
-		gran(&U_OUT_KONTR_MAX,10,3000);
+		gran(&U_OUT_KONTR_MAX,10,6000);
 		lc640_write_int(EE_U_OUT_KONTR_MAX,U_OUT_KONTR_MAX);
 		speed=1;
 		}				
@@ -38116,7 +38122,7 @@ else if(ind==iOut_volt_contr)
 		else if(but==butR_)U_OUT_KONTR_MIN=(U_OUT_KONTR_MIN/5+1)*5;
 		else if(but==butL)U_OUT_KONTR_MIN--;
 		else if(but==butL_)U_OUT_KONTR_MIN=(U_OUT_KONTR_MIN/5-1)*5;
-		gran(&U_OUT_KONTR_MIN,10,3000);
+		gran(&U_OUT_KONTR_MIN,10,6000);
 		lc640_write_int(EE_U_OUT_KONTR_MIN,U_OUT_KONTR_MIN);
 		speed=1;
 		}				
@@ -38686,7 +38692,7 @@ else if(ind==iVZ_set)
 	    if ((but==butR)||(but==butR_))UVZ+=1;
 		if ((but==butL)||(but==butL_))UVZ-=1;
 		if(VZ_KIND==0)gran(&UVZ,UB20,2650);
-		else gran(&UVZ,UB20,2900); 	          
+		else gran(&UVZ,UB20,6000); 	          
 		lc640_write_int(EE_UVZ,UVZ);
 	    speed=1;
 	    }
@@ -38756,7 +38762,7 @@ else if(ind==iVZ1_set)
 	    else if(but==butR_)UZ_U+=2;
 	    else if(but==butL)UZ_U--;
 	    else if(but==butL_)UZ_U-=2;
-		gran(&UZ_U,UB20,2600); 	          
+		gran(&UZ_U,UB20,6000); 	          
 		lc640_write_int(EE_UZ_U,UZ_U);
 	    speed=1;
 	    }
@@ -38816,7 +38822,7 @@ else if(ind==iVZ2_set)
 	    else if(but==butR_)FZ_U1+=2;
 	    else if(but==butL)FZ_U1--;
 	    else if(but==butL_)FZ_U1-=2;
-		gran(&FZ_U1,UB20,3000); 	          
+		gran(&FZ_U1,UB20,6000); 	          
 		lc640_write_int(EE_FZ_U1,FZ_U1);
 	    speed=1;
 	    }
@@ -38857,7 +38863,7 @@ else if(ind==iVZ2_set)
 	    else if(but==butR_)FZ_U2+=2;
 	    else if(but==butL)FZ_U2--;
 	    else if(but==butL_)FZ_U2-=2;
-		gran(&FZ_U2,UB20,3000); 	          
+		gran(&FZ_U2,UB20,6000); 	          
 		lc640_write_int(EE_FZ_U2,FZ_U2);
 	    speed=1;
 	    }
@@ -39128,7 +39134,7 @@ else if(ind==iSet_bat_point)
 			BAT_C_POINT_NUM_ELEM--;
 			bI=1;
 			}
-	     gran(&BAT_C_POINT_NUM_ELEM,1,200);
+	     gran(&BAT_C_POINT_NUM_ELEM,1,250);
 	     lc640_write_int(EE_BAT_C_POINT_NUM_ELEM,BAT_C_POINT_NUM_ELEM);
 	     speed=1;
 		 if(bI)
@@ -39519,7 +39525,7 @@ else if(ind==iSet_bat_point)
 	     else if(but==butR_)UB0+=10;
 	     else if(but==butL)UB0--;
 	     else if(but==butL_)UB0-=10;
-		gran(&UB0,10,3000);
+		gran(&UB0,10,6000);
           lc640_write_int(EE_UB0,UB0);
 	     speed=1;
 	     }
@@ -39530,7 +39536,7 @@ else if(ind==iSet_bat_point)
 	     else if(but==butR_)UB20+=10;
 	     else if(but==butL)UB20--;
 	     else if(but==butL_)UB20-=10;
-		gran(&UB20,10,3000);
+		gran(&UB20,10,6000);
 	     lc640_write_int(EE_UB20,UB20);
 	     speed=1;
 	     }	
@@ -39540,7 +39546,7 @@ else if(ind==iSet_bat_point)
 	     else if(but==butR_)USIGN+=10;
 	     else if(but==butL)USIGN--;
 	     else if(but==butL_)USIGN-=10;
-		gran(&USIGN,1,300);
+		gran(&USIGN,1,600);
 	     lc640_write_int(EE_USIGN,USIGN);
 	     speed=1;
 	     }
@@ -39625,7 +39631,7 @@ else if(ind==iSet_bat_point)
 	     else if(but==butR_)UVENTOFF+=2;
 	     else if(but==butL)UVENTOFF--;
 	     else if(but==butL_)UVENTOFF-=2;
-	     gran(&UVENTOFF,15,250);
+	     gran(&UVENTOFF,15,600);
 	     lc640_write_int(EE_UVENTOFF,UVENTOFF);
 	     speed=1;
 	     }

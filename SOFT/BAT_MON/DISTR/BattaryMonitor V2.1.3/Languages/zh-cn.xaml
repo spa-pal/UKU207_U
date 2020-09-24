@@ -1,0 +1,350 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="LanguageCode">zh</sys:String>
+    <sys:String x:Key="LanguageName">简休中文</sys:String>
+    <sys:String x:Key="LanguageDisplayName">简休中文</sys:String>
+    <sys:String x:Key="LanguageEnabled">true</sys:String>    
+    
+    <!--=========================主界面======================-->
+    <!--工具栏-->
+    <sys:String x:Key="MainForm_ImportProtocolFile">导入协议</sys:String>
+    <sys:String x:Key="MainForm_LoadParamFile">加载参数</sys:String>
+    <sys:String x:Key="MainForm_UploadParams">上传参数</sys:String>
+    <sys:String x:Key="MainForm_RealTime">实时</sys:String>
+    <sys:String x:Key="MainForm_CommRecord">通讯记录</sys:String>
+    <sys:String x:Key="MainForm_CommRecord_Tips">打开通讯记录窗口</sys:String>
+    <sys:String x:Key="MainForm_RealTimeRecord">实时记录</sys:String>
+    <sys:String x:Key="MainForm_RealTimeRecord_Tips">打开实时记录窗口</sys:String>
+    <sys:String x:Key="MainForm_HistoryRecord">历史记录</sys:String>
+    <sys:String x:Key="MainForm_HistoryRecord_Tips">打开历史纪录窗口</sys:String>
+    <sys:String x:Key="MainForm_Schedule">定时</sys:String>
+    <sys:String x:Key="MainForm_Schedule_Tips">打开定时设定窗口</sys:String>
+    <sys:String x:Key="MainForm_Calibrate">校准</sys:String>
+    <sys:String x:Key="MainForm_Calibrate_Tips">打开校准窗口</sys:String>
+    <sys:String x:Key="MainForm_Login">登陆</sys:String>
+    <sys:String x:Key="MainForm_SaveLayout">保存布局</sys:String>
+    <sys:String x:Key="MainForm_Language">语言</sys:String>
+    <sys:String x:Key="MainForm_Language:Chinese">中文</sys:String>
+    <sys:String x:Key="MainForm_Language:English">英文</sys:String>
+    
+    <!--状态栏-->
+    <sys:String x:Key="MainForm_Txd_Tips">请求帧 发送指示</sys:String>
+    <sys:String x:Key="MainForm_Rxd_Tips">应答帧 接收成功指示</sys:String>
+    <sys:String x:Key="MainForm_Err_Tips">应答帧 接收失败指示</sys:String>
+    <sys:String x:Key="MainForm_Protect">保护</sys:String>
+    <sys:String x:Key="MainForm_Protect_Tips">颜色标识-保护</sys:String>
+    <sys:String x:Key="MainForm_Warn">告警</sys:String>
+    <sys:String x:Key="MainForm_Warn_Tips">颜色标识-告警</sys:String>
+    <sys:String x:Key="MainForm_Normal">正常</sys:String>
+    <sys:String x:Key="MainForm_Normal_Tips">颜色标识-正常</sys:String>
+    <sys:String x:Key="MainForm_UpLimit">上限</sys:String>
+    <sys:String x:Key="MainForm_UpLimit_Tips">颜色标识-上限</sys:String>
+    <sys:String x:Key="MainForm_LowLimit">下限</sys:String>
+    <sys:String x:Key="MainForm_LowLimit_Tips">颜色标识-下限</sys:String>
+    <sys:String x:Key="MainForm_Unknown">未知</sys:String>
+    <sys:String x:Key="MainForm_Unknown_Tips">颜色标识-未知</sys:String>
+    <sys:String x:Key="MainForm_UnConnect">未联机</sys:String>
+    <sys:String x:Key="MainForm_Online">已联机</sys:String>
+    <sys:String x:Key="MainForm_Linking">正在联机</sys:String>
+    <sys:String x:Key="MainForm_Breaking">正在断开</sys:String>
+    
+    <!--中间右侧-->
+    <sys:String x:Key="MainForm_ProtocolName">协议名称：</sys:String>
+    <sys:String x:Key="MainForm_ProtocolVer">协议版本：</sys:String>
+    <sys:String x:Key="MainForm_PortConfig">端口设置</sys:String>
+    <sys:String x:Key="MainForm_PortNum">端口号</sys:String>
+    <sys:String x:Key="MainForm_BaudRate">波特率</sys:String>
+    <sys:String x:Key="MainForm_Connect">连接</sys:String>
+    <sys:String x:Key="MainForm_Break">断开</sys:String>
+    <sys:String x:Key="MainForm_TargetConfig">目标选择</sys:String>
+    <sys:String x:Key="MainForm_PackCnt">Pack数量</sys:String>
+    <sys:String x:Key="MainForm_CycleRefresh">循环刷新</sys:String>
+    <sys:String x:Key="MainForm_Multiple">并机监控</sys:String>
+    
+    <!--中间左侧-->
+    <sys:String x:Key="MainForm_CellVolt">单体电压(V)</sys:String>
+    <sys:String x:Key="MainForm_MaxCellVolt">最高电压</sys:String>
+    <sys:String x:Key="MainForm_AvgCellVolt">平均电压</sys:String>
+    <sys:String x:Key="MainForm_MinCellVolt">最低电压</sys:String>
+    <sys:String x:Key="MainForm_DiffCellVolt">压差</sys:String>
+    <sys:String x:Key="MainForm_Mode">模式：</sys:String>
+    <sys:String x:Key="MainForm_BatteryVolt">总电压</sys:String>
+    <sys:String x:Key="MainForm_BatteryCurrent">总电流</sys:String>
+    <sys:String x:Key="MainForm_SystemStatus">系统状态</sys:String>
+    <sys:String x:Key="MainForm_WarnProtect">告警和保护</sys:String>
+    <sys:String x:Key="MainForm_BMSInfo">保护板信息</sys:String>
+    <sys:String x:Key="MainForm_Manufacturer">生产厂家：</sys:String>
+    <sys:String x:Key="MainForm_PartModel">部件型号：</sys:String>
+    <sys:String x:Key="MainForm_SoftWareVer">软件版本：</sys:String>
+    <!--<sys:String x:Key="MainForm_ProtocolVer">协议版本：</sys:String>-->
+    <sys:String x:Key="MainForm_BatteryInfo">电池信息</sys:String>
+    <sys:String x:Key="MainForm_TemperatureInfo">温度信息</sys:String>
+    <sys:String x:Key="MainForm_SOC">剩余容量百分比</sys:String>
+    
+    <!--运行时提示-->
+    <sys:String x:Key="MainForm_MessageBoxContent">未发现协议配置文件,请加载协议文件。</sys:String>
+    <sys:String x:Key="MainForm_MessageBoxTitle">提示</sys:String>
+    <sys:String x:Key="MainForm_PortNoExit">端口不存在</sys:String>
+
+    <!--=========================校准界面======================-->
+    <!--窗体标题-->
+    <sys:String x:Key="AdjustForm_Title">校准</sys:String>
+    <!--左侧校准参数-->
+    <sys:String x:Key="AdjustForm_AdjustParams">校准参数</sys:String>
+    <sys:String x:Key="AdjustForm_Num">序号</sys:String>
+    <sys:String x:Key="AdjustForm_Type">校准类型</sys:String>
+    <sys:String x:Key="AdjustForm_Value">数值</sys:String>
+    <sys:String x:Key="AdjustForm_Unit">单位</sys:String>
+    <sys:String x:Key="AdjustForm_Operate">操作</sys:String>
+    <sys:String x:Key="AdjustForm_Execute">执行校准</sys:String>
+    
+    <!--右侧时钟-->
+    <sys:String x:Key="AdjustForm_BMSClock">保护板时钟</sys:String>
+    <sys:String x:Key="AdjustForm_GetTime">读远程时间</sys:String>
+    <sys:String x:Key="AdjustForm_SetTime">同步到本机时间</sys:String>
+    
+    <!--右侧控制开关-->
+    <sys:String x:Key="AdjustForm_Switch">控制开关</sys:String>
+    <sys:String x:Key="AdjustForm_SysShutDowm">系统关机</sys:String>
+    <sys:String x:Key="AdjustForm_FactoryReset">恢复出厂</sys:String>
+
+    <!--=========================通讯记录界面======================-->
+    <!--窗体标题-->
+    <sys:String x:Key="FrameRecordForm_Title">通讯记录</sys:String>
+    <!--工具栏-->
+    <sys:String x:Key="FrameRecordForm_Start">开启</sys:String>
+    <sys:String x:Key="FrameRecordForm_Save">保存</sys:String>
+    <sys:String x:Key="FrameRecordForm_Clear">清除</sys:String>
+    <!--表格-->
+    <sys:String x:Key="FrameRecordForm_Direction">方向</sys:String>
+    <sys:String x:Key="FrameRecordForm_Time">时间</sys:String>
+    <sys:String x:Key="FrameRecordForm_Type">类型</sys:String>
+    <sys:String x:Key="FrameRecordForm_Format">格式</sys:String>
+    <sys:String x:Key="FrameRecordForm_Data">数据</sys:String>
+    <sys:String x:Key="FrameRecordForm_Remarks">备注</sys:String>
+    
+    <!--====================参数管理界面===========================-->
+    <sys:String x:Key="ParaManageForm_Title">参数管理</sys:String>
+    <sys:String x:Key="ParaManageForm_DownLoad">下载</sys:String>
+    <sys:String x:Key="ParaManageForm_SaveToFile">保存到文件</sys:String>
+    <sys:String x:Key="ParaManageForm_SetAll">设置全部</sys:String>
+    <sys:String x:Key="ParaManageForm_Close">关闭</sys:String>
+    <sys:String x:Key="ParaManageForm_IntParam">数值参数</sys:String>
+    <sys:String x:Key="ParaManageForm_Num">序号</sys:String>
+    <sys:String x:Key="ParaManageForm_Name">名称</sys:String>
+    <sys:String x:Key="ParaManageForm_Value">数值</sys:String>
+    <sys:String x:Key="ParaManageForm_Unit">单位</sys:String>
+    <sys:String x:Key="ParaManageForm_Operate">操作</sys:String>
+    <sys:String x:Key="ParaManageForm_FucSwitch">功能开关</sys:String>
+    <sys:String x:Key="ParaManageForm_CharParam">字符参数</sys:String>
+    <sys:String x:Key="ParaManageForm_Model">型号:</sys:String>
+    <sys:String x:Key="ParaManageForm_ParamSaveAs">参数另存为</sys:String>
+    <sys:String x:Key="ParaManageForm_FileFilter">参数文件(*.xml)|*.xml|所有文件(*.*)|*.*</sys:String>
+    <sys:String x:Key="ParaManageForm_Param">参数</sys:String>
+    <sys:String x:Key="ParaManageForm_SaveSucess">参数保存成功!</sys:String>
+    <sys:String x:Key="ParaManageForm_MsgBoxTip">提示</sys:String>
+    <sys:String x:Key="ProgressForm_TimeOut">超时</sys:String>
+
+    <!--=========================历史纪录界面======================-->
+    <!--窗体标题-->
+    <sys:String x:Key="HistoryForm_Title">历史记录</sys:String>
+    <!--工具栏-->
+    <sys:String x:Key="HistoryForm_First">读第一条</sys:String>
+    <sys:String x:Key="HistoryForm_Next">读下一条</sys:String>
+    <sys:String x:Key="HistoryForm_All">读所有</sys:String>
+    <sys:String x:Key="HistoryForm_Save">保存</sys:String>
+    <sys:String x:Key="HistoryForm_Close">关闭</sys:String>
+    <!--运行时提示信息-->
+    <sys:String x:Key="HistoryForm_Num">序号</sys:String>
+    <sys:String x:Key="HistoryForm_Date">日期</sys:String>
+    <sys:String x:Key="HistoryForm_Time">时间</sys:String>
+    <sys:String x:Key="HistoryForm_Mode">模式</sys:String>
+    <sys:String x:Key="HistoryForm_Warn">报警</sys:String>
+    <sys:String x:Key="HistoryForm_HistoryData">历史数据</sys:String>
+
+    <!--=========================登陆界面======================-->
+    <!--窗体标题-->
+    <sys:String x:Key="LoginForm_Title">登陆</sys:String>
+    <sys:String x:Key="LoginForm_EnterUserName">请输入用户名</sys:String>
+    <sys:String x:Key="LoginForm_EnterPassword">请输入密码</sys:String>
+    <sys:String x:Key="LoginForm_ErrorTips">用户名或密码输入错误！重新输入</sys:String>
+    <sys:String x:Key="LoginForm_MessgeBoxTitle">错误</sys:String>
+
+    <!--=========================并机界面======================-->
+    <!--窗体标题-->
+    <sys:String x:Key="MultiplePackForm_Title">并机监控</sys:String>
+    <sys:String x:Key="MultiplePackForm_Online">在线</sys:String>
+    <sys:String x:Key="MultiplePackForm_Offline">离线</sys:String>
+    <sys:String x:Key="MultiplePackForm_Warn">报警</sys:String>
+    <sys:String x:Key="MultiplePackForm_BatteryVolt">电压</sys:String>
+    <sys:String x:Key="MultiplePackForm_BatteryCurrent">电流</sys:String>
+    <sys:String x:Key="MultiplePackForm_ResidualCapacity">剩余容量</sys:String>
+    <sys:String x:Key="MultiplePackForm_TotalCapacity">总容量</sys:String>
+    <sys:String x:Key="MultiplePackForm_CellMaxVolt">最高：</sys:String>
+    <sys:String x:Key="MultiplePackForm_CellAvgVolt">平均：</sys:String>
+    <sys:String x:Key="MultiplePackForm_CellMinVolt">最低：</sys:String>
+
+    <!--=========================操作等待界面======================-->
+    <sys:String x:Key="OperateForm_Cancel">取消</sys:String>
+    <sys:String x:Key="OperateForm_Close">关闭</sys:String>
+    <sys:String x:Key="OperateForm_TimeOut">操作超时</sys:String>
+
+    <!--=========================实时记录界面======================-->
+    <!--窗体标题-->
+    <sys:String x:Key="RealTimeForm_Title">实时记录</sys:String>
+    <!--工具栏-->
+    <sys:String x:Key="RealTimeForm_Start">开启</sys:String>
+    <sys:String x:Key="RealTimeForm_Stop">停止</sys:String>
+    <sys:String x:Key="RealTimeForm_Save">保存</sys:String>
+    <sys:String x:Key="RealTimeForm_Clear">清空</sys:String>
+    <sys:String x:Key="RealTimeForm_Close">关闭</sys:String>
+    <sys:String x:Key="RealTimeForm_Run">启动</sys:String>
+    <sys:String x:Key="RealTimeForm_CreateFileFail">创建记录文件失败：</sys:String>
+    <sys:String x:Key="RealTimeForm_GroupData">分组数据</sys:String>
+    <!--运行时提示信息-->
+    <sys:String x:Key="RealTimeForm_Num">序号</sys:String>
+    <sys:String x:Key="RealTimeForm_Date">日期</sys:String>
+    <sys:String x:Key="RealTimeForm_Time">时间</sys:String>
+    <sys:String x:Key="RealTimeForm_Mode">模式</sys:String>
+    <sys:String x:Key="RealTimeForm_Warn">报警</sys:String>
+    
+
+    <!--=========================定时记录界面======================-->
+    <!--窗体标题-->
+    <sys:String x:Key="ScheduleForm_Title">定时记录</sys:String>
+    <sys:String x:Key="ScheduleForm_Start">开启</sys:String>
+    <sys:String x:Key="ScheduleForm_Stop">关闭</sys:String>
+    <sys:String x:Key="ScheduleForm_StartTime">开始时刻：</sys:String>
+    <sys:String x:Key="ScheduleForm_EndTime">结束时刻：</sys:String>
+    <sys:String x:Key="ScheduleForm_Interval">采样间隔</sys:String>
+    <sys:String x:Key="ScheduleForm_Unit">秒</sys:String>
+    <sys:String x:Key="ScheduleForm_DataError">数据错误</sys:String>
+    <sys:String x:Key="ScheduleForm_MomentError">开始时刻 必须在 结束时刻 之前!</sys:String>
+    <sys:String x:Key="ScheduleForm_IntervalError">\n 间隔时间设置错误!</sys:String>
+
+    <!--========================transition window====================-->
+    <sys:String x:Key="TransitonForm_PleaseWait">请稍等</sys:String>
+    <sys:String x:Key="TransitonForm_Cancel">取消</sys:String>
+    <sys:String x:Key="TransitonForm_Close">关闭</sys:String>
+
+    <!--===============backgrounderWorker==============-->
+    <sys:String x:Key="BackGround_Undefine">未知</sys:String>
+    <sys:String x:Key="BackGround_SetPackTips">设置 Pack#</sys:String>
+    <sys:String x:Key="BackGround_SystemOneParam">系统参数</sys:String>
+    <sys:String x:Key="BackGround_SystemAllParam">全部系统参数</sys:String>
+    <sys:String x:Key="BackGround_Sucess">成功</sys:String>
+    <sys:String x:Key="BackGround_None">无</sys:String>
+    <sys:String x:Key="BackGround_GetVersionFail">获取通讯协议版本号失败：</sys:String>
+    <sys:String x:Key="BackGround_GetManufacturerInfoFail">获取设备厂商信息失败：</sys:String>
+    <sys:String x:Key="BackGround_GetTeleMeterDataFail">获取模拟量数据失败：</sys:String>
+    <sys:String x:Key="BackGround_GetTeleStateDataFail">获取告警状态失败：</sys:String>
+    <sys:String x:Key="BackGround_GetHistoryWarnFail">获取历史告警失败：</sys:String>
+    <sys:String x:Key="BackGround_MaxVolt">最高：</sys:String>
+    <sys:String x:Key="BackGround_MinVolt">最低：</sys:String>
+    
+    <!--==============Converter=========================-->
+    <sys:String x:Key="Converter_Num">序号 :</sys:String>
+    <sys:String x:Key="Converter_Time">时间 :</sys:String>
+    <sys:String x:Key="Converter_Mode">模式 :</sys:String>
+    <sys:String x:Key="Converter_Warn">报警 :</sys:String>
+    <sys:String x:Key="Converter_Record">第{0}条记录：</sys:String>
+    
+    <!--==============DataDefine=========================-->
+    <sys:String x:Key="DataDefine_NoneWarn">无告警</sys:String>
+    
+    <!--==============DataFrame==========================-->
+    <sys:String x:Key="DataFrame_CommResNormal">通信正常响应</sys:String>
+    <sys:String x:Key="DataFrame_ProtocolVerError">协议版本错误</sys:String>
+    <sys:String x:Key="DataFrame_DataCheckError">数据校验错误</sys:String>
+    <sys:String x:Key="DataFrame_LenCheckError">长度校验错误</sys:String>
+    <sys:String x:Key="DataFrame_CommandNoSupport">命令不支持</sys:String>
+    <sys:String x:Key="DataFrame_DataFormatError">数据格式错误</sys:String>
+    <sys:String x:Key="DataFrame_DataInvalid">设置数据无效</sys:String>
+    <sys:String x:Key="DataFrame_AddressError">寻址组号错误</sys:String>
+    <sys:String x:Key="DataFrame_FlashError">存储外设错误</sys:String>
+    <sys:String x:Key="DataFrame_GetVersion">获取通讯协议版本号</sys:String>
+    <sys:String x:Key="DataFrame_GetManufacturerInfo">获取设备厂商信息</sys:String>
+    <sys:String x:Key="DataFrame_GetPackCnt">获取联机Pack数量</sys:String>
+    <sys:String x:Key="DataFrame_GetTeleMeterData">获取Pack#{0}遥测数据</sys:String>
+    <sys:String x:Key="DataFrame_GetTeleStateData">获取Pack#{0}遥信数据</sys:String>
+    <sys:String x:Key="DataFrame_GetFirstHisRecord">获取Pack#{0}第一条历史报警信息</sys:String>
+    <sys:String x:Key="DataFrame_GetNextHisRecord">获取Pack#{0}下一条历史报警信息</sys:String>
+    <sys:String x:Key="DataFrame_RetryCurHisRecord">重发Pack#{0}当前历史报警信息</sys:String>
+    <sys:String x:Key="DataFrame_GetAllParams">获取Pack#{0}全部参数</sys:String>
+    <sys:String x:Key="DataFrame_SetIntParam">设定Pack#{0}参数【{1}】值为{2}</sys:String>
+    <sys:String x:Key="DataFrame_SetBitParam">设定Pack#{0}功能开关【{1}】{2}</sys:String>
+    <sys:String x:Key="DataFrame_SetAllParams">设定Pack#{0}全部参数</sys:String>
+    <sys:String x:Key="DataFrame_SetPartModelParams">设定Pack#{0}部件型号为【{1}】</sys:String>
+    <sys:String x:Key="DataFrame_GetRemoteTime">获取远程时间信息</sys:String>
+    <sys:String x:Key="DataFrame_SetRemoteTime">设置远程时间信息</sys:String>
+    <sys:String x:Key="DataFrame_ExecuteAdjust">执行【{0}】校准值{1:F3}{2}</sys:String>
+    <sys:String x:Key="DataFrame_Open">开启</sys:String>
+    <sys:String x:Key="DataFrame_Close">关闭</sys:String>
+    <sys:String x:Key="DataFrame_ExecuteFuctionSwitch">执行Pack#{0}【{1}】{2}命令( 序号{3:X2}H:{4} )</sys:String>
+    <sys:String x:Key="DataFrame_OpenScheduleRecord">启动定时记录</sys:String>
+    <sys:String x:Key="DataFrame_CloseScheduleRecord">终止定时记录</sys:String>
+    
+    <!--参数定义-->
+    <sys:String x:Key="ParamDefine_SwitchOpen">开启</sys:String>
+    <sys:String x:Key="ParamDefine_SwitchClose">关闭</sys:String>
+    <sys:String x:Key="ParamDefine_ParamRange">数值{0}必须介于{1:F3}和{2:F3}之间！</sys:String>
+    <sys:String x:Key="StateDefine_Warn">报警</sys:String>
+    <sys:String x:Key="StateDefine_Protect">保护</sys:String>
+    <sys:String x:Key="StateDefine_Open">开启</sys:String>
+    <sys:String x:Key="StateDefine_Close">关闭</sys:String>
+    <sys:String x:Key="StateDefine_None">无</sys:String>
+    
+    <!--命令体内容-->
+    <sys:String x:Key="CommandEntity_ProtocolFilter">协议定义文件(*.xml)|*.xml|所有文件(*.*)|*.*;</sys:String>
+    <sys:String x:Key="CommandEntity_ProtocolLoadSucessTip">"\n"协议文件:{0}"\n\n"加载成功，请您关闭并重新启动{1}</sys:String>
+    <sys:String x:Key="CommandEntity_MsgBoxTips">提示</sys:String>
+    <sys:String x:Key="CommandEntity_MsgBoxWarn">告警</sys:String>
+    <sys:String x:Key="CommandEntity_ProtocolLoadFailTip">\n文件： {0}  \n\n错误： {1}  "\n\n提示： 加载协议失败, 请更正后重新加载。</sys:String>
+    <sys:String x:Key="CommandEntity_ProtocolLoadFail">加载协议文件失败.</sys:String>
+    <sys:String x:Key="CommandEntity_UploadingAllParams">正在上传全部参数</sys:String>
+    <sys:String x:Key="CommandEntity_ParamsFilter">参数文件(*.xml)|*.xml|所有文件(*.*)|*.*</sys:String>
+    <sys:String x:Key="CommandEntity_OpenParamsFileSucess">打开参数文件成功.</sys:String>
+    <sys:String x:Key="CommandEntity_OpenParamsFileFail">打开参数文件失败.</sys:String>
+    <sys:String x:Key="CommandEntity_MsgBoxFail">打开参数文件失败</sys:String>
+    <sys:String x:Key="CommandEntity_MsgBoxMsg">{0} \n\n {1}  \n\n请更正后重新打开。</sys:String>
+    <sys:String x:Key="CommandEntity_PortBusing">{0}已经被其他程序占用!   \n\n 请选择其他端口.</sys:String>
+    <sys:String x:Key="CommandEntity_PortInvalid">{0}不可用，请选择其它端口后重新连接.</sys:String>
+    <sys:String x:Key="CommandEntity_Connecting">正在联机...</sys:String>
+    <sys:String x:Key="CommandEntity_ReadFirstHistoryRecord">读取第一条历史报警记录</sys:String>
+    <sys:String x:Key="CommandEntity_ReadNextHistoryRecord">读取下一条历史报警记录</sys:String>
+    <sys:String x:Key="CommandEntity_ReadAllHistoryRecord">正在上传全部历史报警记录</sys:String>
+    
+    <!--全局变量-->
+    <sys:String x:Key="StudioCtrl_PleaseLoad">请加载</sys:String>
+    <sys:String x:Key="StudioCtrl_MaxVolt">最高：</sys:String>
+    <sys:String x:Key="StudioCtrl_MinVolt">最低：</sys:String>
+    
+    <!--温度计量-->
+    <sys:String x:Key="Temperature_DegreesCelsius">摄氏度</sys:String>
+    <sys:String x:Key="Temperature_Fahrenheit">华氏度</sys:String>
+    <sys:String x:Key="Temperature_Kelvin">开尔文</sys:String>
+    
+    <!--xml运行时提示信息-->
+    <sys:String x:Key="xml_NoProtocolFile">非协议文件</sys:String>
+    <sys:String x:Key="xml_BaseContinuous">连续</sys:String>
+    <sys:String x:Key="xml_NoParamsFile">非参数文件</sys:String>
+
+    <sys:String x:Key="xml_RealTime_Num">序号</sys:String>
+    <sys:String x:Key="xml_RealTime_Date">日期</sys:String>
+    <sys:String x:Key="xml_RealTime_Time">时间</sys:String>
+    <sys:String x:Key="xml_RealTime_Mode">模式</sys:String>
+    <sys:String x:Key="xml_RealTime_Warn">报警</sys:String>
+
+    <sys:String x:Key="xml_History_Num">序号</sys:String>
+    <sys:String x:Key="xml_History_Date">日期</sys:String>
+    <sys:String x:Key="xml_History_Time">时间</sys:String>
+    <sys:String x:Key="xml_History_Mode">模式</sys:String>
+    <sys:String x:Key="xml_History_Warn">报警</sys:String>
+
+    <sys:String x:Key="TransWindowForm_ExecuteSucess">执行{0}命令成功</sys:String>
+    <sys:String x:Key="TransWindowForm_ExecuteFail">执行{0}命令失败\n{1}</sys:String>
+    <sys:String x:Key="TransWindowForm_Executing">正在执行{0}命令"</sys:String>
+    <sys:String x:Key="TransWindowForm_TimeOut">超时</sys:String>
+</ResourceDictionary>

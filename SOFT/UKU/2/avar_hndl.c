@@ -66,6 +66,7 @@ extern char bOUT_FREE2;
 //***********************************************
 //Состояние первичной сети
 //char u_net_av_stat,u_net_av_stat_;
+extern signed short net_U,net_Ustore, net_Umax, net_Ustore_max; //o_10
 extern signed short net_U,net_Ustore;
 extern char bFF,bFF_;
 extern signed short net_F,hz_out,hz_out_cnt;
@@ -83,13 +84,13 @@ char i;
 
 if(net_av)		SET_REG(avar_stat,1,0,1);
 else	   			SET_REG(avar_stat,0,0,1);
-
+#ifndef UKU_220_IPS_TERMOKOMPENSAT //o_10
 for(i=0;i<2;i++)
 	{
 	if(bat[i]._av&3)	SET_REG(avar_stat,1,1+i,1);
 	else	   			SET_REG(avar_stat,0,1+i,1);
 	}
-
+#endif //o_10
 for(i=0;i<18;i++)
 	{
 	if(bps[i]._av&0xef)	SET_REG(avar_stat,1,3+i,1);
@@ -243,7 +244,7 @@ unsigned int event_ptr,lc640_adr,event_ptr_find,event_cnt;
 
 if(in==1)
 	{
-	net_av=1;
+	net_av|=1; //o_10
 	net_av_2min_timer=1200;
 
 	//beep_init(0x01L,'O');
@@ -327,7 +328,7 @@ if(in==1)
 
 else if(in==2)
 	{
-	net_av=2;
+	net_av|=2;	  //o_10
 
 	//beep_init(0x01L,'O');
 	//a.av.bAN=1;
@@ -396,28 +397,19 @@ else if(in==2)
 	
 	snmp_trap_send("Main power alarm, voltage increased",2,2,0);
 	}
-
-else if(in==0)
+//o_10_s
+else if(in==0 || in==4)	
 	{
-	net_av=0;
+//	if( (in==0 && (net_av&2)==0) || (in==4 && (net_av&1)==0) )  {
+		if(in==0) net_av&=~1;
+		if(in==4) net_av&=~2;	 
+		if(net_av==0) if(AV_OFF_AVT) SET_REG(avar_ind_stat,0,0,1);
 
-  /*
-	SET_REG(C2GSR,3,24,8);
-	C2MOD=0;
-	bOUT_FREE2=1;*/
-
-
-	//C2MOD=0;
-
-	//can2_init(7,8,CANBitrate250k_60MHz);
-
-     //beep_init(0x02L,'O');
-	//a_.av.bAN=0;
 	SET_REG(avar_stat,0,0,1);
-
-	//if(AV_OFF_AVT)a.av.bAN=0;
 	
-	if(AV_OFF_AVT) SET_REG(avar_ind_stat,0,0,1);
+	
+//}
+//o_10_e
 
      event_ptr=lc640_read_int(PTR_EVENT_LOG);
 	event_ptr_find=event_ptr;
@@ -426,7 +418,7 @@ avar_unet_hndl_lbl1:
 
      lc640_read_long_ptr(lc640_adr,data);
      
-     if(!((data[0]=='P')&&(data[1]==0)&&((data[2]=='A')||(data[2]=='B'))))
+     if( !( (data[0]=='P')&&(data[1]==0)&&( (in==0 && data[2]=='A' )||(in==4 && data[2]=='B') ) ) )	//o_10
      	{        
      	if(event_ptr_find)event_ptr_find--;
      	else event_ptr_find=63;
@@ -458,8 +450,15 @@ avar_unet_hndl_lbl1:
 	data[3]=0;
 	lc640_write_long_ptr(lc640_adr+20,data); 
 	
-	data[0]=*((char*)(&net_Ustore));
-	data[1]=*(((char*)(&net_Ustore))+1);
+	//o_10_s
+	if(in==4) {
+	   	data[0]=*((char*)(&net_Ustore_max));
+		data[1]=*(((char*)(&net_Ustore_max))+1);
+	}else{
+		data[0]=*((char*)(&net_Ustore));
+		data[1]=*(((char*)(&net_Ustore))+1);
+	}
+	//o_10_e
 	data[2]='B';
 	data[3]='B';
 	lc640_write_long_ptr(lc640_adr+24,data);
@@ -1088,7 +1087,7 @@ void avar_bat_hndl(char b, char in)
 {
 char data[4];
 unsigned short event_ptr,lc640_adr,event_ptr_find,event_cnt;
-
+#ifndef UKU_220_IPS_TERMOKOMPENSAT	 //o_10
 if(in==1)
 	{
 	bat[b]._av|=1;
@@ -1232,7 +1231,8 @@ avar_bat_hndl_lbl1:
 	}
 	
 avar_bat_hndl_end:
-__nop();		
+__nop();
+#endif    //o_10		
 }
 
 //-----------------------------------------------

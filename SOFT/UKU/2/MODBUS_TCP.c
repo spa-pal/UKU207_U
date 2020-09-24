@@ -291,6 +291,651 @@ switch (evt)
 					{
 					lc640_write_int(EE_U_OUT_KONTR_DELAY,modbus_tcp_rx_arg1);
 		     		}
+		//o_10_s	 забыл в прошлый раз про modbus tcp
+			if(modbus_tcp_rx_arg0==54)		//
+				{
+				lc640_write_int(EE_UB0,modbus_tcp_rx_arg1);
+				lc640_write_int(EE_UB20,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==55)		//
+				{
+				lc640_write_int(EE_UMAXN,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==56)		
+				{
+				if(modbus_tcp_rx_arg1<=3) lc640_write_int(EE_SNTP_ENABLE,modbus_tcp_rx_arg1);
+	     		}						
+			if(modbus_tcp_rx_arg0==57)		
+				{
+				signed short www=(signed short)modbus_tcp_rx_arg1;
+				if(www>=-12 && www<=13) lc640_write_int(EE_SNTP_GMT,modbus_tcp_rx_arg1);
+	     		}						
+			if(modbus_tcp_rx_arg0==58)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_SNTP_IP1,modbus_tcp_rx_arg1);
+	     		}						
+			if(modbus_tcp_rx_arg0==59)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_SNTP_IP2,modbus_tcp_rx_arg1);
+	     		}						
+			if(modbus_tcp_rx_arg0==60)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_SNTP_IP3,modbus_tcp_rx_arg1);
+	     		}						
+			if(modbus_tcp_rx_arg0==61)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_SNTP_IP4,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==62)		
+				{
+				#ifdef UKU_220_IPS_TERMOKOMPENSAT
+				if(modbus_tcp_rx_arg1<=2) lc640_write_int(EE_NUMBAT,modbus_tcp_rx_arg1);
+				#else
+				if(modbus_tcp_rx_arg1<=1) lc640_write_int(EE_NUMBAT,modbus_tcp_rx_arg1);
+				#endif
+	     		}
+			if(modbus_tcp_rx_arg0==63)		
+				{
+				if(modbus_tcp_rx_arg1<=3) lc640_write_int(EE_NUMDT,modbus_tcp_rx_arg1);
+	     		}	
+			if(modbus_tcp_rx_arg0==64)		
+				{
+				if(modbus_tcp_rx_arg1==0 || modbus_tcp_rx_arg1==2 || modbus_tcp_rx_arg1==4) lc640_write_int(EE_NUMMAKB,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==65)		
+				{
+				if(modbus_tcp_rx_arg1<=4) lc640_write_int(EE_NUMSK,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==66)		
+				{
+				if(modbus_tcp_rx_arg1==0 || modbus_tcp_rx_arg1==1) lc640_write_int(EE_NUM_RKI,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==67)		
+				{
+				if(modbus_tcp_rx_arg1==0 || modbus_tcp_rx_arg1==1) lc640_write_int(EE_NUM_NET_IN,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==68)		
+				{
+				if(modbus_tcp_rx_arg1==0 || modbus_tcp_rx_arg1==1) lc640_write_int(EE_NUMBDR,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==69)		
+				{
+				if(modbus_tcp_rx_arg1==0 || modbus_tcp_rx_arg1==1) lc640_write_int(EE_NUMENMV,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==70)		
+				{
+				if(modbus_tcp_rx_arg1>=1 && modbus_tcp_rx_arg1<=200) lc640_write_int(EE_BAT_C_POINT_NUM_ELEM,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==71)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=25000) lc640_write_int(EE_BAT_C_POINT_20,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==72)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=21000) lc640_write_int(EE_BAT_C_POINT_10,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==73)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=20000) lc640_write_int(EE_BAT_C_POINT_5,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==74)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=18000) lc640_write_int(EE_BAT_C_POINT_3,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==75)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=16000) lc640_write_int(EE_BAT_C_POINT_1,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==76)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=13000) lc640_write_int(EE_BAT_C_POINT_1_2,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==77)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=8000) lc640_write_int(EE_BAT_C_POINT_1_6,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==78)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=10000) lc640_write_int(EE_BAT_U_END_20,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==79)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=10000) lc640_write_int(EE_BAT_U_END_10,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==80)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=10000) lc640_write_int(EE_BAT_U_END_5,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==81)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=10000) lc640_write_int(EE_BAT_U_END_3,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==82)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=10000) lc640_write_int(EE_BAT_U_END_1,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==83)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=10000) lc640_write_int(EE_BAT_U_END_1_2,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==84)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=10000) lc640_write_int(EE_BAT_U_END_1_6,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==85)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=100) lc640_write_int(EE_BAT_K_OLD,modbus_tcp_rx_arg1);
+	     		}		
+			if(modbus_tcp_rx_arg0==86)		
+				{
+				if(modbus_tcp_rx_arg1>=15 && modbus_tcp_rx_arg1<=250) lc640_write_int(EE_UVENTOFF,modbus_tcp_rx_arg1);
+	     		}			
+			if(modbus_tcp_rx_arg0==87)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=2000) lc640_write_int(EE_IMAX_VZ,modbus_tcp_rx_arg1);
+	     		}  
+			if(modbus_tcp_rx_arg0==88)		
+				{
+				if(modbus_tcp_rx_arg1<=72) lc640_write_int(EE_VZ_HR,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==89)		
+				{
+				if(modbus_tcp_rx_arg1==0 || modbus_tcp_rx_arg1==1) lc640_write_int(EE_VZ_CH_VENT_BLOK,modbus_tcp_rx_arg1);
+	     		} 
+			if(modbus_tcp_rx_arg0==90)		
+				{
+				if(modbus_tcp_rx_arg1==0 || modbus_tcp_rx_arg1==1) lc640_write_int(EE_SPEED_CHRG_AVT_EN,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==91)		
+				{
+				if(modbus_tcp_rx_arg1>0 && modbus_tcp_rx_arg1<=100) lc640_write_int(EE_SPEED_CHRG_D_U,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==92)		
+				{
+				if(modbus_tcp_rx_arg1==0 || modbus_tcp_rx_arg1==2) lc640_write_int(EE_SPEED_CHRG_BLOCK_SRC,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==93)		
+				{
+				if(modbus_tcp_rx_arg1==0 || modbus_tcp_rx_arg1==1) lc640_write_int(EE_SPEED_CHRG_BLOCK_LOG,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==94)		
+				{								
+				if(modbus_tcp_rx_arg1==0 || modbus_tcp_rx_arg1==1) lc640_write_int(EE_SP_CH_VENT_BLOK,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==95)		
+				{								
+				if(modbus_tcp_rx_arg1>=UB20 && modbus_tcp_rx_arg1<=2600) lc640_write_int(EE_UZ_U,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==96)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=10000) lc640_write_int(EE_UZ_IMAX,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==97)		
+				{
+				if(modbus_tcp_rx_arg1>=1 && modbus_tcp_rx_arg1<=72) lc640_write_int(EE_UZ_T,modbus_tcp_rx_arg1);
+	     		}					  
+			if(modbus_tcp_rx_arg0==98)		
+				{
+				if(modbus_tcp_rx_arg1>=UB20 && modbus_tcp_rx_arg1<=3000) lc640_write_int(EE_FZ_U1,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==99)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=1000) lc640_write_int(EE_FZ_IMAX1,modbus_tcp_rx_arg1);
+	     		}
+			// 2 регистра внизу
+			if(modbus_tcp_rx_arg0==102)		
+				{
+				if(modbus_tcp_rx_arg1>=1 && modbus_tcp_rx_arg1<=10) lc640_write_int(EE_FZ_T1,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==103)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=1000) lc640_write_int(EE_FZ_ISW12,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==104)		
+				{
+				if(modbus_tcp_rx_arg1>=UB20 && modbus_tcp_rx_arg1<=3000) lc640_write_int(EE_FZ_U2,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==105)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=1000) lc640_write_int(EE_FZ_IMAX2,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==106)		
+				{
+				if(modbus_tcp_rx_arg1>=1 && modbus_tcp_rx_arg1<=10) lc640_write_int(EE_FZ_T2,modbus_tcp_rx_arg1);
+	     		}	 
+			if(modbus_tcp_rx_arg0==107)		
+				{
+				if(modbus_tcp_rx_arg1==0 || modbus_tcp_rx_arg1==1) lc640_write_int(EE_AV_OFF_AVT,modbus_tcp_rx_arg1);
+	     		}				
+		   	if(modbus_tcp_rx_arg0==108)		
+				{
+				if(modbus_tcp_rx_arg1==0 || modbus_tcp_rx_arg1==1) lc640_write_int(EE_APV_ON1,modbus_tcp_rx_arg1);
+	     		}
+		  	if(modbus_tcp_rx_arg0==109)		
+				{
+				if(modbus_tcp_rx_arg1==0 || modbus_tcp_rx_arg1==1) lc640_write_int(EE_APV_ON2,modbus_tcp_rx_arg1);
+	     		}		   
+		 	if(modbus_tcp_rx_arg0==110)		
+				{
+				if(modbus_tcp_rx_arg1>=1 && modbus_tcp_rx_arg1<=24) lc640_write_int(EE_APV_ON2_TIME,modbus_tcp_rx_arg1);
+	     		}  
+			if(modbus_tcp_rx_arg0==111)		
+				{
+				if(modbus_tcp_rx_arg1==0)	   lc640_write_int(EE_SK_SIGN0,0xFFFF);
+				else if(modbus_tcp_rx_arg1==1) lc640_write_int(EE_SK_SIGN0,0);
+	     		} 	   
+			if(modbus_tcp_rx_arg0==112)		
+				{
+				if(modbus_tcp_rx_arg1==0)	   lc640_write_int(EE_SK_ZVUK_EN0,0xFFFF);
+				else if(modbus_tcp_rx_arg1==1) lc640_write_int(EE_SK_ZVUK_EN0,0);
+	     		}
+			if(modbus_tcp_rx_arg0==113)		
+				{
+				if(modbus_tcp_rx_arg1==0)	   lc640_write_int(EE_SK_LCD_EN0,0xFFFF);
+				else if(modbus_tcp_rx_arg1==1) lc640_write_int(EE_SK_LCD_EN0,0);
+	     		}
+			if(modbus_tcp_rx_arg0==114)		
+				{
+				if(modbus_tcp_rx_arg1==0)	   lc640_write_int(EE_SK_SIGN1,0xFFFF);
+				else if(modbus_tcp_rx_arg1==1) lc640_write_int(EE_SK_SIGN1,0);
+	     		} 	   
+			if(modbus_tcp_rx_arg0==115)		
+				{
+				if(modbus_tcp_rx_arg1==0)	   lc640_write_int(EE_SK_ZVUK_EN1,0xFFFF);
+				else if(modbus_tcp_rx_arg1==1) lc640_write_int(EE_SK_ZVUK_EN1,0);
+	     		}
+			if(modbus_tcp_rx_arg0==116)		
+				{
+				if(modbus_tcp_rx_arg1==0)	   lc640_write_int(EE_SK_LCD_EN1,0xFFFF);
+				else if(modbus_tcp_rx_arg1==1) lc640_write_int(EE_SK_LCD_EN1,0);
+	     		}
+			if(modbus_tcp_rx_arg0==117)		
+				{
+				if(modbus_tcp_rx_arg1==0)	   lc640_write_int(EE_SK_SIGN2,0xFFFF);
+				else if(modbus_tcp_rx_arg1==1) lc640_write_int(EE_SK_SIGN2,0);
+	     		} 	   
+			if(modbus_tcp_rx_arg0==118)		
+				{
+				if(modbus_tcp_rx_arg1==0)	   lc640_write_int(EE_SK_ZVUK_EN2,0xFFFF);
+				else if(modbus_tcp_rx_arg1==1) lc640_write_int(EE_SK_ZVUK_EN2,0);
+	     		}
+			if(modbus_tcp_rx_arg0==119)		
+				{
+				if(modbus_tcp_rx_arg1==0)	   lc640_write_int(EE_SK_LCD_EN2,0xFFFF);
+				else if(modbus_tcp_rx_arg1==1) lc640_write_int(EE_SK_LCD_EN2,0);
+	     		}
+			if(modbus_tcp_rx_arg0==120)		
+				{
+				if(modbus_tcp_rx_arg1==0)	   lc640_write_int(EE_SK_SIGN3,0xFFFF);
+				else if(modbus_tcp_rx_arg1==1) lc640_write_int(EE_SK_SIGN3,0);
+	     		} 	   
+			if(modbus_tcp_rx_arg0==121)		
+				{
+				if(modbus_tcp_rx_arg1==0)	   lc640_write_int(EE_SK_ZVUK_EN3,0xFFFF);
+				else if(modbus_tcp_rx_arg1==1) lc640_write_int(EE_SK_ZVUK_EN3,0);
+	     		}
+			if(modbus_tcp_rx_arg0==122)		
+				{
+				if(modbus_tcp_rx_arg1==0)	   lc640_write_int(EE_SK_LCD_EN3,0xFFFF);
+				else if(modbus_tcp_rx_arg1==1) lc640_write_int(EE_SK_LCD_EN3,0);
+	     		}		  
+		   	if(modbus_tcp_rx_arg0==123)		
+				{
+				if(modbus_tcp_rx_arg1==0 || modbus_tcp_rx_arg1==1) lc640_write_int(EE_TERMOKOMP,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==124)		
+				{
+				if(modbus_tcp_rx_arg1<=500) lc640_write_int(EE_FORVARDBPSCHHOUR,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==125)		
+				{
+				if(modbus_tcp_rx_arg1==0 || modbus_tcp_rx_arg1==1) lc640_write_int(EE_DOP_RELE_FUNC,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==126)		
+				{
+				if(modbus_tcp_rx_arg1<=2) lc640_write_int(EE_IPS_BLOCK_SRC,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==127)		
+				{
+				if(modbus_tcp_rx_arg1==0 || modbus_tcp_rx_arg1==1) lc640_write_int(EE_IPS_BLOCK_LOG,modbus_tcp_rx_arg1);
+	     		} 
+		   	if(modbus_tcp_rx_arg0==128)		
+				{
+				if(modbus_tcp_rx_arg1>0 && modbus_tcp_rx_arg1<=100) lc640_write_int(EE_MODBUS_ADRESS,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==129)		
+				{
+				if(modbus_tcp_rx_arg1==120 || modbus_tcp_rx_arg1==240 || modbus_tcp_rx_arg1==480 || modbus_tcp_rx_arg1==960 || modbus_tcp_rx_arg1==1920 
+				|| modbus_tcp_rx_arg1==3840 || modbus_tcp_rx_arg1==5760 || modbus_tcp_rx_arg1==11520){ 
+					lc640_write_int(EE_MODBUS_BAUDRATE,modbus_tcp_rx_arg1);
+					MODBUS_BAUDRATE=modbus_tcp_rx_arg1;
+					}
+	     		} 	
+			if(modbus_tcp_rx_arg0==130)		
+				{
+				if(modbus_tcp_rx_arg1==0 || modbus_tcp_rx_arg1==1) lc640_write_int(EE_ETH_IS_ON,modbus_tcp_rx_arg1);
+	     		}	 
+			if(modbus_tcp_rx_arg0==131)		
+				{
+				if(modbus_tcp_rx_arg1==0 || modbus_tcp_rx_arg1==1) lc640_write_int(EE_ETH_DHCP_ON,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==132)  //IP адрес
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_IP_1,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==133)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_IP_2,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==134)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_IP_3,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==135)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_IP_4,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==136)	//маска подсети	
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_MASK_1,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==137)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_MASK_2,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==138)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_MASK_3,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==139)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_MASK_4,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==140)	//шлюз
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_GW_1,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==141)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_GW_2,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==142)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_GW_3,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==143)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_GW_4,modbus_tcp_rx_arg1);
+	     		}	 
+			if(modbus_tcp_rx_arg0==144)		
+				{
+				lc640_write_int(EE_ETH_SNMP_PORT_READ,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==145)		
+				{
+				lc640_write_int(EE_ETH_SNMP_PORT_WRITE,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==146)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_COMMUNITY,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==147)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_COMMUNITY+2,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==148)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_COMMUNITY+4,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==149)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_COMMUNITY+6,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==150)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_COMMUNITY+8,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==151)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_COMMUNITY+10,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==152)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_COMMUNITY+12,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==153)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_COMMUNITY+14,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==154)  //TRAP1 IP адрес
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP1_IP_1,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==155)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP1_IP_2,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==156)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP1_IP_3,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==157)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP1_IP_4,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==158)  //TRAP2 IP адрес
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP2_IP_1,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==159)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP2_IP_2,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==160)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP2_IP_3,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==161)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP2_IP_4,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==162)  //TRAP3 IP адрес
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP3_IP_1,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==163)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP3_IP_2,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==164)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP3_IP_3,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==165)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP3_IP_4,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==166)  //TRAP4 IP адрес
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP4_IP_1,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==167)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP4_IP_2,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==168)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP4_IP_3,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==169)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP4_IP_4,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==170)  //TRAP5 IP адрес
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP5_IP_1,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==171)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP5_IP_2,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==172)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP5_IP_3,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==173)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ETH_TRAP5_IP_4,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==174)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_WEB_PASSWORD,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==175)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_WEB_PASSWORD+2,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==176)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_WEB_PASSWORD+4,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==177 && modbus_tcp_rx_arg1>0) bRESET_INT_WDT=1;// перегрузка УКУ, инициализировать интернет    
+			if(modbus_tcp_rx_arg0==178)		
+				{
+				modbus_tcp_rx_arg1/=10;
+				if(modbus_tcp_rx_arg1<=6000) lc640_write_int(EE_TVENTMAX,modbus_tcp_rx_arg1);
+	     		} 
+		   	if(modbus_tcp_rx_arg0==179)		
+				{
+				if(modbus_tcp_rx_arg1<=2) lc640_write_int(EE_ICA_EN,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==180)		
+				{
+				if(modbus_tcp_rx_arg1<=2) lc640_write_int(EE_ICA_CH,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==181)  //IP адрес второго ИПС
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ICA_MODBUS_TCP_IP1,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==182)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ICA_MODBUS_TCP_IP2,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==183)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ICA_MODBUS_TCP_IP3,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==184)		
+				{
+				if(modbus_tcp_rx_arg1<=255) lc640_write_int(EE_ICA_MODBUS_TCP_IP4,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==185)		
+				{
+				if(modbus_tcp_rx_arg1>0 && modbus_tcp_rx_arg1<=254) lc640_write_int(EE_ICA_MODBUS_TCP_UNIT_ID,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==186)		
+				{
+				if(modbus_tcp_rx_arg1>0 && modbus_tcp_rx_arg1<=254) lc640_write_int(EE_ICA_MODBUS_ADDRESS,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==187)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=100) lc640_write_int(EE_PWM_START,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==188)		
+				{
+				if(modbus_tcp_rx_arg1>=1 && modbus_tcp_rx_arg1<=3) lc640_write_int(EE_KB_ALGORITM,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==189)		
+				{
+				if(modbus_tcp_rx_arg1>=1 && modbus_tcp_rx_arg1<=5) lc640_write_int(EE_REG_SPEED,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==190)		
+				{
+				if(modbus_tcp_rx_arg1==0 || modbus_tcp_rx_arg1==1) lc640_write_int(EE_SMART_SPC,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==191)		
+				{
+				if(modbus_tcp_rx_arg1==1 || modbus_tcp_rx_arg1==3) lc640_write_int(EE_NUMPHASE,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==192)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=100) lc640_write_int(EE_TVENTON,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==193)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=100) lc640_write_int(EE_TVENTOFF,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==194)		
+				{
+				if(modbus_tcp_rx_arg1<=2) lc640_write_int(EE_RELEVENTSIGN,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==195)		
+				{
+				if(modbus_tcp_rx_arg1<=2) lc640_write_int(EE_NPN_OUT,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==196)		
+				{
+				if(modbus_tcp_rx_arg1>=100 && modbus_tcp_rx_arg1<=2500) lc640_write_int(EE_UONPN,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==197)		
+				{
+				if(modbus_tcp_rx_arg1>=100 && modbus_tcp_rx_arg1<=2500) lc640_write_int(EE_UVNPN,modbus_tcp_rx_arg1);
+	     		}
+			if(modbus_tcp_rx_arg0==198)		
+				{
+				if(modbus_tcp_rx_arg1>=10 && modbus_tcp_rx_arg1<=60) lc640_write_int(EE_TZNPN,modbus_tcp_rx_arg1);
+	     		}		
+
+			if(modbus_tcp_rx_arg0==200)		
+				{
+				if(modbus_tcp_rx_arg1==1 ) command_rki=36;
+				else if(modbus_tcp_rx_arg1==10 ) command_rki=37;
+				else if(modbus_tcp_rx_arg1==-1 ) command_rki=38; //-1
+				else if(modbus_tcp_rx_arg1==-10 ) command_rki=39;
+	     		}
+			if(modbus_tcp_rx_arg0==201)		
+				{
+				if(modbus_tcp_rx_arg1==1 ) command_rki=40;
+				else if(modbus_tcp_rx_arg1==10 ) command_rki=41;
+				else if(modbus_tcp_rx_arg1==-1 ) command_rki=42;
+				else if(modbus_tcp_rx_arg1==-10 ) command_rki=43;
+	     		}
+			if(modbus_tcp_rx_arg0==202)		
+				{
+				if(modbus_tcp_rx_arg1==1 ) command_rki=14;
+				else if(modbus_tcp_rx_arg1==-1 ) command_rki=13;
+	     		}
+			if(modbus_tcp_rx_arg0==203)		
+				{
+				if(modbus_tcp_rx_arg1==1 ) command_rki=20;
+				else if(modbus_tcp_rx_arg1==5 ) command_rki=22;
+				else if(modbus_tcp_rx_arg1==0xFFFF ) command_rki=19;
+				else if(modbus_tcp_rx_arg1==0xFFFB ) command_rki=21;
+	     		}
+			if(modbus_tcp_rx_arg0==204)		
+				{
+				if(modbus_tcp_rx_arg1==1 ) command_rki=24;
+				else if(modbus_tcp_rx_arg1==5 ) command_rki=26;
+				else if(modbus_tcp_rx_arg1==-1 ) command_rki=23;
+				else if(modbus_tcp_rx_arg1==-5 ) command_rki=25;
+	     		}
+			if(modbus_tcp_rx_arg0==205)		
+				{
+				if(modbus_tcp_rx_arg1==1 ) command_rki=28;
+				else if(modbus_tcp_rx_arg1==5 ) command_rki=30;
+				else if(modbus_tcp_rx_arg1==-1 ) command_rki=27;
+				else if(modbus_tcp_rx_arg1==-5 ) command_rki=29;
+	     		}
+			if(modbus_tcp_rx_arg0==206)		
+				{
+				if(modbus_tcp_rx_arg1==1 ) command_rki=16;
+				else if(modbus_tcp_rx_arg1==10 ) command_rki=18;
+				else if(modbus_tcp_rx_arg1==-1 ) command_rki=15;
+				else if(modbus_tcp_rx_arg1==-10 ) command_rki=17;
+	     		}
+
+
+		//o_10_e
 	
 				if(modbus_tcp_rx_arg0==19)		//вкл/выкл источника напр.
 					{

@@ -134,6 +134,7 @@ extern signed short snmp_u_0_grad;
 extern signed short snmp_u_20_grad;
 extern signed short snmp_u_sign;
 extern signed short snmp_u_min_power;
+extern signed short snmp_u_max_power;	 //o_10
 extern signed short snmp_u_withouth_bat;
 extern signed short snmp_control_current;
 extern signed short snmp_max_charge_current;
@@ -235,6 +236,7 @@ void snmp_u_20_grad_write (int mode);
 void snmp_u_sign_write (int mode);
 void snmp_u_min_power_write (int mode);
 void snmp_u_withouth_bat_write (int mode);
+void snmp_u_max_power_write (int mode);	 //o_10
 void snmp_control_current_write (int mode);
 void snmp_max_charge_current_write (int mode);
 void snmp_max_current_write (int mode);

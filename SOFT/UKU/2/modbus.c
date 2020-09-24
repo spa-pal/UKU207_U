@@ -1212,6 +1212,56 @@ if(crc16_calculated==crc16_incapsulated)
 				{
 				if(modbus_rx_arg1<=50) lc640_write_int(EE_UBM_AV,modbus_rx_arg1);
 	     		} */
+				//o_10_s
+			if(modbus_rx_arg0==200)		
+				{
+				if(modbus_rx_arg1==1 ) command_rki=36;
+				else if(modbus_rx_arg1==10 ) command_rki=37;
+				else if(modbus_rx_arg1==0xFFFF ) command_rki=38; //-1
+				else if(modbus_rx_arg1==0xFFF6 ) command_rki=39;
+	     		}
+			if(modbus_rx_arg0==201)		
+				{
+				if(modbus_rx_arg1==1 ) command_rki=40;
+				else if(modbus_rx_arg1==10 ) command_rki=41;
+				else if(modbus_rx_arg1==0xFFFF ) command_rki=42;
+				else if(modbus_rx_arg1==0xFFF6 ) command_rki=43;
+	     		}
+			if(modbus_rx_arg0==202)		
+				{
+				if(modbus_rx_arg1==1 ) command_rki=14;
+				else if(modbus_rx_arg1==0xFFFF ) command_rki=13;
+	     		}
+			if(modbus_rx_arg0==203)		
+				{
+				if(modbus_rx_arg1==1 ) command_rki=20;
+				else if(modbus_rx_arg1==5 ) command_rki=22;
+				else if(modbus_rx_arg1==0xFFFF ) command_rki=19;
+				else if(modbus_rx_arg1==0xFFFB ) command_rki=21;
+	     		}
+			if(modbus_rx_arg0==204)		
+				{
+				if(modbus_rx_arg1==1 ) command_rki=24;
+				else if(modbus_rx_arg1==5 ) command_rki=26;
+				else if(modbus_rx_arg1==0xFFFF ) command_rki=23;
+				else if(modbus_rx_arg1==0xFFFB ) command_rki=25;
+	     		}
+			if(modbus_rx_arg0==205)		
+				{
+				if(modbus_rx_arg1==1 ) command_rki=28;
+				else if(modbus_rx_arg1==5 ) command_rki=30;
+				else if(modbus_rx_arg1==0xFFFF ) command_rki=27;
+				else if(modbus_rx_arg1==0xFFFB ) command_rki=29;
+	     		}
+			if(modbus_rx_arg0==206)		
+				{
+				if(modbus_rx_arg1==1 ) command_rki=16;
+				else if(modbus_rx_arg1==10 ) command_rki=18;
+				else if(modbus_rx_arg1==0xFFFF ) command_rki=15;
+				else if(modbus_rx_arg1==0xFFF6 ) command_rki=17;
+	     		}
+
+//o_10_e
 			if(modbus_rx_arg0==19)		//вкл/выкл источника напр.
 				{
 	/*			if(modbus_rx_arg1==1)
@@ -1711,7 +1761,7 @@ for (i=0;i<8;i++)
 //-----------------------------------------------
 void modbus_hold_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot)
 {
-signed char modbus_registers[400];
+signed char modbus_registers[450];	//o_10
 //char modbus_tx_buff[150];
 unsigned short crc_temp;
 char i;
@@ -2140,7 +2190,22 @@ modbus_registers[395]=(char)(TZNPN);
 modbus_registers[397]=(char)(UBM_AV);  */
 //o_8_e	   		   	   
 
-
+ //o_10_s	          
+modbus_registers[398]=(char)(r_iz_porog_pred>>8);			//Рег200  порог предупреждения
+modbus_registers[399]=(char)(r_iz_porog_pred); 
+modbus_registers[400]=(char)(r_iz_porog_error>>8);			//Рег201  порог аварии
+modbus_registers[401]=(char)(r_iz_porog_error);
+modbus_registers[402]=0;									//Рег202  порог асимметрии в %
+modbus_registers[403]=(char)(asymmetry_porog);   		          	   
+modbus_registers[404]=0;									//Рег203  порог асимметрии в вольтах >1MOm
+modbus_registers[405]=(char)(u_asymmetry_porog_up);
+modbus_registers[406]=0;									//Рег204  порог асимметрии в вольтах
+modbus_registers[407]=(char)(u_asymmetry_porog);
+modbus_registers[408]=0;									//Рег205  порог асимметрии в вольтах <20kOm
+modbus_registers[409]=(char)(u_asymmetry_porog_down);
+modbus_registers[410]=(char)(porog_u_in>>8);				//Рег206  порог Uшины
+modbus_registers[411]=(char)(porog_u_in); 
+//o_10_e
 
 
 if(prot==MODBUS_RTU_PROT)
@@ -2174,7 +2239,7 @@ else if(prot==MODBUS_TCP_PROT)
 //-----------------------------------------------
 void modbus_input_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot)
 {
-signed char modbus_registers[500];
+signed char modbus_registers[700];	 //o_10
 //char modbus_tx_buff[200];
 unsigned short crc_temp;
 char i;
@@ -2183,7 +2248,7 @@ short tempS;
 //tempS=(MODBUS_INPUT_REGS[0]);
 //bps_I=bps_I_phantom;
 
-#if defined(UKU_6U) || defined(UKU_220_V2)
+#if defined UKU_6U || defined UKU_220_V2 //o_10  в UKU_220_V2 не отображались U и I у UKU_6U-отображались 
 modbus_registers[0]=(signed char)(load_U>>8);					//Рег1   	напряжение выходной шины, 0.1В
 modbus_registers[1]=(signed char)(load_U);
 modbus_registers[2]=(signed char)(load_I>>8);					//Рег2   	ток выпрямителей, 0.1А
@@ -2639,12 +2704,18 @@ modbus_registers[427]=(signed char)(tempS);
 tempS=bat[0]._av;
 #ifdef UKU_220_IPS_TERMOKOMPENSAT 
 tempS=ips_bat_av_stat;
+if(NUMBAT==0)tempS=0xff; //o_10   сделать как в SNMP  255-не введена
 #endif
 
 modbus_registers[428]=(signed char)(tempS>>8);				//Рег215	Байт статуса батареи №1(0x01 - авария цепи батареи, 0x02 - авария средней точки батареи)
 modbus_registers[429]=(signed char)(tempS);
 
 tempS=bat[1]._av;
+//o_10_s
+#ifdef UKU_220_IPS_TERMOKOMPENSAT
+tempS=0xff;  //сделать как в SNMP   255-не введена
+#endif
+//o_10_e
 modbus_registers[430]=(signed char)(tempS>>8);				//Рег216	Байт статуса батареи №2(0x01 - авария цепи батареи, 0x02 - авария средней точки батареи)
 modbus_registers[431]=(signed char)(tempS);
 
@@ -2688,7 +2759,40 @@ modbus_registers[450]=(signed char)(bps[6]._vent_resurs>>8);	//Рег226 ресурс вен
 modbus_registers[451]=(signed char)(bps[6]._vent_resurs);
 modbus_registers[452]=(signed char)(bps[7]._vent_resurs>>8);	//Рег227 ресурс вентилятора БПС8
 modbus_registers[453]=(signed char)(bps[7]._vent_resurs); 
+//o_10_s
+modbus_registers[598]=0;  	
+if(no_rki==NO_RKI) modbus_registers[599]=0;				//Рег300 если 0, то нет связи с РКИ
+else modbus_registers[599]=1;							//Рег300 если 1, то есть связь с РКИ			
 
+modbus_registers[600]=0;								//Рег301 версия софта РКИ		
+modbus_registers[601]=ver_soft;
+modbus_registers[602]=0;								//Рег302 тип РКИ		
+modbus_registers[603]=type_rki;
+
+modbus_registers[604]=0;								//Рег303 рабочее напряжение РКИ		
+if(u_rki==1) modbus_registers[605]=48;
+else if(u_rki==2) modbus_registers[605]=110;
+else modbus_registers[605]=220;
+
+modbus_registers[606]=(signed char)(status_izm_r>>8);	//Рег304 Статус измерения 
+modbus_registers[607]=(signed char)(status_izm_r);
+	
+modbus_registers[608]=(signed char)(r_iz_plus>>8);		//Рег305 Сопротивление изоляции положительного полюса
+modbus_registers[609]=(signed char)(r_iz_plus);		
+modbus_registers[610]=(signed char)(r_iz_minus>>8);		//Рег306 Сопротивление изоляции отрицательного полюса
+modbus_registers[611]=(signed char)(r_iz_minus);
+modbus_registers[612]=0;								//Рег307 асимметрия в %
+modbus_registers[613]=(signed char)(asymmetry);
+modbus_registers[614]=(signed char)(u_asymmetry>>8);	//Рег308 асимметрия в вольтах
+modbus_registers[615]=(signed char)(u_asymmetry);
+modbus_registers[616]=(signed char)(v_plus>>8);			//Рег309 U+
+modbus_registers[617]=(signed char)(v_plus); 
+modbus_registers[618]=(signed char)(v_minus>>8);		//Рег310 U-
+modbus_registers[619]=(signed char)(v_minus);
+modbus_registers[620]=(signed char)(Ubus>>8);			//Рег311 Uшины
+modbus_registers[621]=(signed char)(Ubus);
+
+//o_10_e
 if(prot==MODBUS_RTU_PROT)
 	{
 	modbus_tx_buff[0]=adr;

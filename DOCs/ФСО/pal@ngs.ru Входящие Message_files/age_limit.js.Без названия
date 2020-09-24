@@ -1,0 +1,107 @@
+/**
+ * JavaScript NGS AgeLimit
+ * Date: 31 August, 2012
+ * Project: NGS
+ * File: age_limit.js
+ */
+
+
+/**
+ * Класc для всплывающего предупреждения об ограничениях по возрасту
+ */
+var AgeLimitPop = {
+
+	init: function(age) {
+		
+		var ie = window.ActiveXObject;
+		
+		var buttonAge = jQuery('.ngs-age-limit-js');
+		
+		var textPop;
+		
+		if (age == 18) {
+			
+			textPop = '<p>Информация о возрастных ограничениях в отношении информационной продукции, подлежащая распространению на основании норм Федерального закона «О защите детей от информации, причиняющей вред их здоровью и развитию».</p> <p class="ngs-age-limit-popup-important">Некоторые материалы настоящего раздела могут содержать информацию, запрещенную для детей.</p>';
+			buttonAge.addClass('ngs-age-limit_18');
+			
+		} else {
+			
+			textPop = '<p>Информация о возрастных ограничениях в отношении информационной продукции, подлежащая распространению на основании норм Федерального закона «О защите детей от информации, причиняющей вред их здоровью и развитию».</p> <p class="ngs-age-limit-popup-important">Некоторые материалы данной страницы могут содержать информацию, не предназначенную для детей младше 16 лет.</p>'
+			buttonAge.addClass('ngs-age-limit_16');
+		}
+		
+		var popElem = jQuery('<div style="display: none;" class="ngs-age-limit-popup ngs-age-limit-pop-js">' + 
+						  	'<div class="ngs-age-limit-popup-info">' +  textPop + '</div>' +
+						  	'<span class="ngs-age-limit-popup-corner"><span class="ngs-age-limit-popup-corner-elem"></span></span>' +
+						'</div>');
+				
+		jQuery('body').append(popElem);
+		
+		var popUp = jQuery('.ngs-age-limit-pop-js');
+		
+		var timerAgeLim;
+		
+		buttonAge.mouseover(function() {
+			clearTimeout(timerAgeLim); 
+			AgeLimitPop.showElem(popUp, jQuery(this));
+							
+		});
+		
+		popUp.mouseover(function() {			
+			clearTimeout(timerAgeLim); 						
+			jQuery(this).show();
+							
+		});
+		
+		buttonAge.mouseout(function() {		
+			
+			/*timerAgeLim = setTimeout(function() {popUp.hide();}, 100);*/
+			
+			timerAgeLim = setTimeout(function() {
+				if (ie) {
+					popUp.hide();
+				} else {
+					popUp.fadeOut(200);
+				}
+			}, 100);
+		});
+						
+		popUp.mouseout(function() {
+			
+			timerAgeLim = setTimeout(function() {
+				if (ie) {
+					popUp.hide();
+				} else {
+					popUp.fadeOut(200);
+				}
+			}, 100);
+			
+		});
+		
+	},
+
+	/* 
+	 * Показать/Скрыть, расчитать позицию "всплывающего предупреждения". 
+	 *
+	 * obj - объект, который позиционируем
+	 * parentObj - объект, относительно которого позиционируем
+	 */
+	showElem: function(obj, parentObj) {
+		
+		var ie = window.ActiveXObject;
+		
+		var offset = parentObj.offset();
+		
+		var objHeight = obj.outerHeight();
+	
+		obj.css('top', offset.top - objHeight - 3 + 'px');
+		obj.css('left', offset.left + parentObj.outerWidth()/2 - obj.outerWidth()/2 + 'px');
+
+		if (ie) {	
+			obj.show();
+		} else {
+			obj.fadeIn(250);
+		}
+
+	}
+}

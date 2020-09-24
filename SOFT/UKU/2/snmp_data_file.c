@@ -178,6 +178,7 @@ signed short snmp_u_0_grad;
 signed short snmp_u_20_grad;
 signed short snmp_u_sign;
 signed short snmp_u_min_power;
+signed short snmp_u_max_power;	 //o_10
 signed short snmp_u_withouth_bat;
 signed short snmp_control_current;
 signed short snmp_max_charge_current;
@@ -663,6 +664,7 @@ snmp_u_0_grad=UB0;
 snmp_u_20_grad=UB20;
 snmp_u_sign=USIGN;
 snmp_u_min_power=UMN;
+snmp_u_max_power=UMAXN;	 //o_10
 snmp_u_withouth_bat=U0B;
 snmp_control_current=IKB;
 snmp_max_charge_current=IZMAX;
@@ -1261,6 +1263,16 @@ if(mode==MIB_WRITE)
 	lc640_write_int(EE_UMN,snmp_u_min_power);
 	}
 }
+//o_10_s
+//-----------------------------------------------
+void snmp_u_max_power_write (int mode)
+{
+if(mode==MIB_WRITE)
+	{
+	lc640_write_int(EE_UMAXN,snmp_u_max_power);
+	}
+}
+//o_10_e
 //-----------------------------------------------
 void snmp_u_withouth_bat_write (int mode)
 {
