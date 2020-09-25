@@ -2565,31 +2565,31 @@ else if(net_U>UMN)
 	}
 //#ifdef UKU_6U || UKU_ZVU
 #if defined UKU_6U || defined UKU_ZVU  //o_10
-if(net_U>UMAXN)
+if(net_Umax>UMAXN) //o_11
 	{
 	if((unet_max_drv_cnt<10)&&(main_1Hz_cnt>15))
 		{
 		unet_max_drv_cnt++;
 		if(unet_max_drv_cnt>=10)
 			{
-			net_Ustore=net_U;
+			net_Ustore_max=net_Umax; //o_11
 		 	avar_unet_hndl(2);
 			
 			}
 		}
 	else if(unet_max_drv_cnt>=10)unet_max_drv_cnt=10;
 
-	if(net_U>net_Ustore) net_Ustore=net_U;	
+	if(net_Umax>net_Ustore_max) net_Ustore_max=net_Umax; //o_11	
 	}
 
-else if(net_U<UMAXN)
+else if(net_Umax<UMAXN) //o_11
 	{                 
 	if(unet_max_drv_cnt)
 		{
 		unet_max_drv_cnt--;
 		if(unet_max_drv_cnt<=0)
 			{
-			avar_unet_hndl(0);
+			avar_unet_hndl(4); //o_11
 			avar_bps_reset_cnt=10;
 			}
 		}
