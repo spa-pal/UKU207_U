@@ -35,9 +35,24 @@ void ip2lcd(	short in1,
 			short in4,
 			char xy,
 			char flash_pos);
+
+void data2lcd(	
+			short day,
+			short month,
+			short year,
+			char xy,
+			char flash_pos);
+
 void community2lcd(char* in,
 			char xy,
 			char flash_pos,
 			char flash_on);
+
+void place2lcd(char* in,
+			char xy,
+			char flash_pos,
+			char flash_on);
+unsigned int power_inc(unsigned int argument, char powerum);
+unsigned int power_dec(unsigned int argument, char powerum);
 
 #endif

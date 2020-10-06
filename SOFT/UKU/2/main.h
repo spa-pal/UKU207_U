@@ -623,6 +623,8 @@
 #define PAROL_AUSW 949
 #define PAROL_DEF 295
 #define PAROL_LOG_RESET	691
+#define PAROL_SET_FSO_INF 0
+//#define PAROL_SET_FSO_INF 743
 #endif                
 
 #ifdef PAROL_ALL_ZERO
@@ -638,6 +640,7 @@
 #define PAROL_DEFAULT 0
 #define PAROL_AUSW 0
 #define PAROL_LOG_RESET	0
+#define PAROL_SET_FSO_INF 0
 #endif
 
 
@@ -860,6 +863,10 @@ typedef enum {
 	iMn_IPS_SGEP_GAZPROM,
 	#endif
 
+	#ifdef UKU_FSO
+	iMn_FSO,
+	#endif
+
 	iMn,iMn_3U,iMn_RSTKM,
 	#ifndef UKU_220_IPS_TERMOKOMPENSAT
 	iMn_220_IPS_TERMOKOMPENSAT,
@@ -888,19 +895,23 @@ typedef enum {
 	#ifndef IPS_SGEP_GAZPROM
 	iMn_IPS_SGEP_GAZPROM,
 	#endif
+	#ifndef UKU_FSO
+	iMn_FSO,
+	#endif
 	iRKI, iSetRKI, iK_RKI,iK_MOST,//oleg_start
 	iNET_IN, iSetNetIn, iK_Net_In,//oleg_start 
 	iSrv_sl,iNet,iNet3,iNetEM,iNet3LIN,iNet_IPS_SGEP_GAZPROM,
-	iSet,iSet_3U,iSet_RSTKM,iSet_GLONASS,iSet_KONTUR,iSet_6U,iSet_220,iSet_220_IPS_TERMOKOMPENSAT,iSet_220_V2,iInv_set_sel,
+	iSet,iSet_3U,iSet_RSTKM,iSet_GLONASS,iSet_KONTUR,iSet_6U,iSet_220,iSet_220_IPS_TERMOKOMPENSAT,iSet_220_V2,iInv_set_sel, iSet_FSO,
 	iBat, iBat_simple, iBat_li, iBat_SacredSun, iBat_universe, iInv_set, iSet_TELECORE2015, iSet_TELECORE2017, iSet_IPS_SGEP_GAZPROM, iBat_ZVU,
 	iMakb,
+	iSet_prl_FSO_inf, iSet_FSO_inf, iFSO_inf,
 	iBps,iBps_elteh,iS2,iSet_prl,iK_prl,iDnd,iPrlVZ1,iPrlVZ2,
 	iK,iK_3U,iK_RSTKM,iK_GLONASS,iK_KONTUR,iK_6U,iK_220,iK_220_380,iK_220_IPS_TERMOKOMPENSAT,iK_220_IPS_TERMOKOMPENSAT_IB,iK_TELECORE,iK_IPS_SGEP_GAZPROM,
 	iSpcprl,iSpc,k,Crash_0,Crash_1,iKednd,iAv_view_avt,iAKE,iSpc_termocompensat,
 	iLoad,iSpc_prl_vz,iSpc_prl_ke,iKe,iVz,iAvz,iAVAR,
-	iStr,iStr_3U,iStr_RSTKM,iStr_GLONASS,iStr_KONTUR,iStr_6U,iStr_220_IPS_TERMOKOMPENSAT,iStr_TELECORE2015,iStr_IPS_SGEP_GAZPROM,
+	iStr,iStr_3U,iStr_RSTKM,iStr_GLONASS,iStr_KONTUR,iStr_6U,iStr_220_IPS_TERMOKOMPENSAT,iStr_TELECORE2015,iStr_IPS_SGEP_GAZPROM,iStr_FSO,
 	iVrs,iPrltst,iApv,iVZ_set,iVZ1_set,iVZ2_set,
-	iK_bps,iK_bps_sel,iK_bat,iK_bat_simple,iK_bat_ips_termokompensat_ib,iK_bat_TELECORE,iK_bat_sel,iK_bat_sel_TELECORE,iK_load,iK_net,iK_net3,
+	iK_bps,iK_bps_sel,iK_bat,iK_bat_simple,iK_bat_ips_termokompensat_ib,iK_bat_TELECORE,iK_bat_sel,iK_bat_sel_TELECORE,iK_load,iK_net, iK_net3, iK_FSO,
 	iK_makb_sel,iK_makb,iK_out,
 	iTst,iTst_3U,iTst_RSTKM,iTst_GLONASS,iTst_KONTUR,iTst_6U,iTst_220,iTst_220_380,iTst_220_IPS_TERMOKOMPENSAT,
 	iTst_TELECORE, iTst_IPS_SGEP_GAZPROM,
@@ -1105,6 +1116,8 @@ extern signed short VZ_KIND;			//Тип выравнивающего заряда, 0 - обычный(историче
 extern signed short SNTP_ENABLE;
 extern signed short SNTP_GMT;
 
+extern signed short NUMBAT_FSO;
+
 extern signed short UZ_U;
 extern signed short UZ_IMAX;
 extern signed short UZ_T;
@@ -1236,6 +1249,39 @@ extern signed short BAT_U_END_20;  		//Конечное напряжение батареи при разряде 2
 extern signed short BAT_C_POINT_NUM_ELEM;	//Количество элементов в батарее
 extern signed short BAT_K_OLD;			//Коэффициент старения батареи
 #endif
+
+#ifdef UKU_FSO
+extern signed int UKUFSO_IBEP_SN; 						//Серийный номер ИБЭП
+extern signed short UKUFSO_IBEP_START_DATE_YEAR; 		//Год начала эксплуатации ИБЭП
+extern signed short UKUFSO_IBEP_START_DATE_MONTH; 		//Месяц начала эксплуатации ИБЭП
+extern signed short UKUFSO_IBEP_START_DATE_DAY; 		//День начала эксплуатации ИБЭП
+extern char UKUFSO_IBEP_PLACE[55];						//Строка с месторасположением ИБЭП
+extern signed int UKUFSO_BPS1_SN; 						//Серийный номер БПС1
+extern signed short UKUFSO_BPS1_START_DATE_YEAR;		//Год начала эксплуатации БПС1
+extern signed short UKUFSO_BPS1_START_DATE_MONTH;		//Месяц начала эксплуатации БПС1
+extern signed short UKUFSO_BPS1_START_DATE_DAY;			//День начала эксплуатации БПС1
+extern signed int UKUFSO_BPS2_SN; 						//Серийный номер БПС2
+extern signed short UKUFSO_BPS2_START_DATE_YEAR;		//Год начала эксплуатации БПС2
+extern signed short UKUFSO_BPS2_START_DATE_MONTH;		//Месяц начала эксплуатации БПС2
+extern signed short UKUFSO_BPS2_START_DATE_DAY;			//День начала эксплуатации БПС2
+extern signed int UKUFSO_BPS3_SN; 						//Серийный номер БПС3
+extern signed short UKUFSO_BPS3_START_DATE_YEAR;		//Год начала эксплуатации БПС3
+extern signed short UKUFSO_BPS3_START_DATE_MONTH;		//Месяц начала эксплуатации БПС3
+extern signed short UKUFSO_BPS3_START_DATE_DAY;			//День начала эксплуатации БПС3
+extern signed int UKUFSO_BPS4_SN; 						//Серийный номер БПС4
+extern signed short UKUFSO_BPS4_START_DATE_YEAR;		//Год начала эксплуатации БПС4
+extern signed short UKUFSO_BPS4_START_DATE_MONTH;		//Месяц начала эксплуатации БПС4
+extern signed short UKUFSO_BPS4_START_DATE_DAY;			//День начала эксплуатации БПС4
+extern signed int UKUFSO_BAT1_SN; 						//Серийный номер БАТ1
+extern signed short UKUFSO_BAT1_START_DATE_YEAR;		//Год начала эксплуатации БАТ1
+extern signed short UKUFSO_BAT1_START_DATE_MONTH;		//Месяц начала эксплуатации БАТ1
+extern signed short UKUFSO_BAT1_START_DATE_DAY;			//День начала эксплуатации БАТ1
+extern signed int UKUFSO_BAT2_SN; 						//Серийный номер БАТ2
+extern signed short UKUFSO_BAT2_START_DATE_YEAR;		//Год начала эксплуатации БАТ2
+extern signed short UKUFSO_BAT2_START_DATE_MONTH;		//Месяц начала эксплуатации БАТ2
+extern signed short UKUFSO_BAT2_START_DATE_DAY;			//День начала эксплуатации БАТ2
+#endif
+
 extern signed short SP_CH_VENT_BLOK;
 extern signed short VZ_CH_VENT_BLOK;
 
@@ -1909,6 +1955,14 @@ extern unsigned char count_reg_enmv, count_bit_enmv, enmv_puts_en, delay_enmv_pu
 //-----------------------------------------------
 //Ресурс вентиляторов
 //extern char vent_resurs_temp[4];
+
+//-----------------------------------------------
+//Отладочная информация
+#ifdef UKU_FSO
+extern char plazma_fso;
+extern signed short plazmaSS_fso[10];
+#endif //UKU_FSO
+
 
 /*----------------------------------------------------------------------------
  * end of file

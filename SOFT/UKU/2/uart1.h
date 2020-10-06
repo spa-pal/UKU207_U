@@ -34,6 +34,7 @@ void putchar1(char c);
 void uart_out1 (char num,char data0,char data1,char data2,char data3,char data4,char data5);
 void uart_out_adr1 (char *ptr, unsigned char len);
 void uart_out__adr1 (char *ptr, unsigned char len);
+void uart_out_buff1 (char *ptr, char len);
 uint32_t uart1_init(uint32_t baudrate);
 char getchar1(void);
 void UART1_IRQHandler (void);

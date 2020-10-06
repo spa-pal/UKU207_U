@@ -518,8 +518,46 @@
 // затем 4 байта с полным временем завершения процесса
 // и в 2 байта данных записывается колличество отданных амперчасов 
 
+#define EE_UKU_FSO	0x1800
+#define EE_UKUFSO_IBEP_SN 						EE_UKU_FSO+4
+//Серийник, 4 байта
+#define EE_UKUFSO_IBEP_START_DATE_YEAR 			EE_UKU_FSO+8		
+#define EE_UKUFSO_IBEP_START_DATE_MONTH			EE_UKU_FSO+10
+#define EE_UKUFSO_IBEP_START_DATE_DAY 			EE_UKU_FSO+12
+#define EE_UKUFSO_IBEP_PLACE 					EE_UKU_FSO+14
+//Массив из 50 символов
+#define EE_UKUFSO_BPS1_SN 						EE_UKU_FSO+108
+//Серийник, 4 байта
+#define EE_UKUFSO_BPS1_START_DATE_YEAR			EE_UKU_FSO+112
+#define EE_UKUFSO_BPS1_START_DATE_MONTH			EE_UKU_FSO+114
+#define EE_UKUFSO_BPS1_START_DATE_DAY			EE_UKU_FSO+116
+#define EE_UKUFSO_BPS2_SN 						EE_UKU_FSO+120
+//Серийник, 4 байта
+#define EE_UKUFSO_BPS2_START_DATE_YEAR			EE_UKU_FSO+124
+#define EE_UKUFSO_BPS2_START_DATE_MONTH			EE_UKU_FSO+126
+#define EE_UKUFSO_BPS2_START_DATE_DAY			EE_UKU_FSO+128
+#define EE_UKUFSO_BPS3_SN 						EE_UKU_FSO+132
+//Серийник, 4 байта
+#define EE_UKUFSO_BPS3_START_DATE_YEAR			EE_UKU_FSO+136
+#define EE_UKUFSO_BPS3_START_DATE_MONTH			EE_UKU_FSO+138
+#define EE_UKUFSO_BPS3_START_DATE_DAY			EE_UKU_FSO+140
+#define EE_UKUFSO_BPS4_SN 						EE_UKU_FSO+144
+//Серийник, 4 байта
+#define EE_UKUFSO_BPS4_START_DATE_YEAR			EE_UKU_FSO+148
+#define EE_UKUFSO_BPS4_START_DATE_MONTH			EE_UKU_FSO+150
+#define EE_UKUFSO_BPS4_START_DATE_DAY			EE_UKU_FSO+152
+#define EE_UKUFSO_BAT1_SN 						EE_UKU_FSO+156
+//Серийник, 4 байта
+#define EE_UKUFSO_BAT1_START_DATE_YEAR			EE_UKU_FSO+160
+#define EE_UKUFSO_BAT1_START_DATE_MONTH			EE_UKU_FSO+162
+#define EE_UKUFSO_BAT1_START_DATE_DAY			EE_UKU_FSO+164
+#define EE_UKUFSO_BAT2_SN 						EE_UKU_FSO+168
+//Серийник, 4 байта
+#define EE_UKUFSO_BAT2_START_DATE_YEAR			EE_UKU_FSO+170
+#define EE_UKUFSO_BAT2_START_DATE_MONTH			EE_UKU_FSO+172
+#define EE_UKUFSO_BAT2_START_DATE_DAY			EE_UKU_FSO+174
 
-
+#define EE_NUMBAT_FSO							EE_UKU_FSO+200
 
 extern const unsigned short ADR_EE_BAT_ZAR_CNT[2];
 extern const unsigned short ADR_EE_BAT_ZAR_CNT_KE[2];

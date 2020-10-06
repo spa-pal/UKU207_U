@@ -208,6 +208,74 @@ for (i=0;i<simb_num;i++)
 	}
 }
 
+
+//-----------------------------------------------
+void serial2lcd(unsigned int in,char xy,char len, char flash_pos, char flash_on)
+{
+signed char i;
+char n;
+char s[10];
+//char minus='+';
+//char zero_on;
+//char simb_num;
+
+//if(in<0)
+	//{
+	//in=-in;
+	//minus='-';
+	//}
+
+for(i=0;i<10;i++)
+	{
+	s[i]=in%10;
+	in/=10;
+	}   
+
+//zero_on=1;
+//simb_num=0;
+/*
+for (i=9;i>=0;i--)
+	{
+	if(zero_on&&(!s[i])&&(i>(des)))
+	     {
+	     s[i]=0x20;
+	     }
+	else 
+	     {
+	     s[i]=s[i]+0x30;
+	     zero_on=0;
+	     simb_num++;
+	     }
+	 }*/
+/*	          
+if(minus=='-')	
+     {
+     s[simb_num++]=minus; 
+     }    
+if(des)
+     {
+     for(i=simb_num;i>des;i--)
+          {
+          s[i]=s[i-1];
+          }
+     s[des]='.';
+     simb_num++;     
+     }
+*/	
+n=find(xy);
+for (i=0;i<len;i++)
+	{
+	lcd_buffer[n-i]=s[i]+0x30;
+	}
+
+if((bFL2)&&(flash_on))
+	{
+	lcd_buffer[n-flash_pos]=95;
+	}
+}
+
+
+
 //-----------------------------------------------
 void long2lcd_mmm(signed long in,char xy,char des)
 {
@@ -266,6 +334,83 @@ for (i=0;i<simb_num;i++)
 	{
      lcd_buffer[n-i]=s[i];
 	}
+}
+
+//-----------------------------------------------
+unsigned int power_inc(unsigned int argument, char powerum)
+{
+unsigned int base,base_up,base_dn, digit;
+unsigned int med_dn,med,med_up;
+
+base = 0;
+if(powerum==0) base=1U;
+else if(powerum==1) base=10U;
+else if(powerum==2) base=100U;
+else if(powerum==3) base=1000U;
+else if(powerum==4) base=10000U;
+else if(powerum==5) base=100000U;
+else if(powerum==6) base=1000000U;
+else if(powerum==7) base=10000000U;
+else if(powerum==8) base=100000000U;
+else if(powerum==9) base=1000000000U;
+
+base_up=base*10U;
+base_dn=base/10U;
+
+med_dn=argument%base;
+med=argument/base;
+med_up=argument/base_up;
+digit=med%10U;
+digit++;
+digit%=10U;
+med_up*=10U;
+med_up+=digit;
+med_up*=base;
+med_up+=med_dn;
+return med_up;
+
+
+
+
+}
+
+//-----------------------------------------------
+unsigned int power_dec(unsigned int argument, char powerum)
+{
+unsigned int base,base_up,base_dn, digit;
+unsigned int med_dn,med,med_up;
+
+base = 0;
+if(powerum==0) base=1U;
+else if(powerum==1) base=10U;
+else if(powerum==2) base=100U;
+else if(powerum==3) base=1000U;
+else if(powerum==4) base=10000U;
+else if(powerum==5) base=100000U;
+else if(powerum==6) base=1000000U;
+else if(powerum==7) base=10000000U;
+else if(powerum==8) base=100000000U;
+else if(powerum==9) base=1000000000U;
+
+base_up=base*10U;
+base_dn=base/10U;
+
+med_dn=argument%base;
+med=argument/base;
+med_up=argument/base_up;
+digit=med%10U;
+if(digit==0)digit=9;
+else digit--;
+//digit%=10U;
+med_up*=10U;
+med_up+=digit;
+med_up*=base;
+med_up+=med_dn;
+return med_up;
+
+
+
+
 }
 
 //-----------------------------------------------
@@ -1186,6 +1331,38 @@ else if(dt[0]=='f')
 }	
 
 //-----------------------------------------------
+void place2lcd(char* in,
+			char xy,
+			char flash_pos,
+			char flash_on)
+{
+char temp;
+char i,ii;
+
+i=find(xy);
+
+temp=i;
+
+ii=0;
+
+if(temp!=255)
+while ((*in) && (ii<19))
+	{
+	lcd_buffer[temp]=*in++;
+	temp++;
+	ii++;
+	}
+
+
+
+if((bFL2)&&(flash_on))
+	{
+	lcd_buffer[i+flash_pos]=95;
+	}
+
+}
+
+//-----------------------------------------------
 void community2lcd(char* in,
 			char xy,
 			char flash_pos,
@@ -1220,6 +1397,67 @@ if((bFL2)&&(flash_on))
 	{
 	lcd_buffer[i+flash_pos]=95;
 	}
+
+}
+
+//-----------------------------------------------
+void data2lcd(	
+			short day,
+			short month,
+			short year,
+			char xy,
+			char flash_pos)
+{
+char i;
+//char n;
+
+//bin2bcd_int(in);
+//bcd2lcd_zero(des+1);
+i=find(xy);
+
+//in1=192;
+
+//in2=34;
+
+if((flash_pos==1)&&(bFL2))
+	{
+	lcd_buffer[i-9]=' ';
+	lcd_buffer[i-8]=' ';
+	}
+else 
+	{
+	lcd_buffer[i-9]=0x30+(day/10);
+	lcd_buffer[i-8]=0x30+(day%10);
+	}
+lcd_buffer[i-7]='/';
+
+if((flash_pos==2)&&(bFL2))
+	{
+	lcd_buffer[i-6]=' ';
+	lcd_buffer[i-5]=' ';
+	}
+else 
+	{
+	lcd_buffer[i-6]=0x30+(month/10);
+	lcd_buffer[i-5]=0x30+(month%10);
+	}
+lcd_buffer[i-4]='/';
+
+if((flash_pos==3)&&(bFL2))
+	{
+	lcd_buffer[i-3]=' ';
+	lcd_buffer[i-2]=' ';
+	lcd_buffer[i-1]=' ';
+	lcd_buffer[i]=' ';
+	}
+else 
+	{
+	lcd_buffer[i-3]='2';
+	lcd_buffer[i-2]='0';
+	lcd_buffer[i-1]=0x30+((year%100)/10);
+	lcd_buffer[i]=0x30+(year%10);
+	}
+
 
 }
 

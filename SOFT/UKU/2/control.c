@@ -3877,6 +3877,72 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 	}
 */
 
+#ifdef UKU_FSO
+
+	//if(BAT_TYPE==2)
+		//{
+		lakb[0]._ch_curr=((ascii2halFhex(liBatteryInBuff[105]))<<12)+
+					 		((ascii2halFhex(liBatteryInBuff[106]))<<8)+
+							((ascii2halFhex(liBatteryInBuff[107]))<<4)+
+							((ascii2halFhex(liBatteryInBuff[108])));
+		
+		/*if(temp_SS&0x8000)		lakb[0]._ch_curr=~temp_SS;
+		else 				lakb[0]._ch_curr=temp_SS;*/
+	
+		lakb[0]._tot_bat_volt=	(unsigned short)(((ascii2halFhex(liBatteryInBuff[109]))<<12)+
+							((ascii2halFhex(liBatteryInBuff[110]))<<8)+
+							((ascii2halFhex(liBatteryInBuff[111]))<<4)+
+							((ascii2halFhex(liBatteryInBuff[112]))))/10;
+
+
+		lakb[0]._cell_temp_1= (unsigned short)(((ascii2halFhex(liBatteryInBuff[81]))<<12)+
+							((ascii2halFhex(liBatteryInBuff[82]))<<8)+
+							((ascii2halFhex(liBatteryInBuff[83]))<<4)+
+							((ascii2halFhex(liBatteryInBuff[84]))));
+		lakb[0]._cell_temp_2= (unsigned short)(((ascii2halFhex(liBatteryInBuff[85]))<<12)+
+							((ascii2halFhex(liBatteryInBuff[86]))<<8)+
+							((ascii2halFhex(liBatteryInBuff[87]))<<4)+
+							((ascii2halFhex(liBatteryInBuff[88]))));
+		lakb[0]._cell_temp_3= (unsigned short)(((ascii2halFhex(liBatteryInBuff[89]))<<12)+
+							((ascii2halFhex(liBatteryInBuff[90]))<<8)+
+							((ascii2halFhex(liBatteryInBuff[91]))<<4)+
+							((ascii2halFhex(liBatteryInBuff[92]))));
+		lakb[0]._cell_temp_4= (unsigned short)(((ascii2halFhex(liBatteryInBuff[93]))<<12)+
+							((ascii2halFhex(liBatteryInBuff[94]))<<8)+
+							((ascii2halFhex(liBatteryInBuff[95]))<<4)+
+							((ascii2halFhex(liBatteryInBuff[96]))));
+		lakb[0]._cell_temp_ambient= (unsigned short)(((ascii2halFhex(liBatteryInBuff[97]))<<12)+
+							((ascii2halFhex(liBatteryInBuff[98]))<<8)+
+							((ascii2halFhex(liBatteryInBuff[99]))<<4)+
+							((ascii2halFhex(liBatteryInBuff[100]))));
+		lakb[0]._cell_temp_power= (unsigned short)(((ascii2halFhex(liBatteryInBuff[101]))<<12)+
+							((ascii2halFhex(liBatteryInBuff[102]))<<8)+
+							((ascii2halFhex(liBatteryInBuff[103]))<<4)+
+							((ascii2halFhex(liBatteryInBuff[104]))));
+			//int2lcd_mmm(lakb[sub_ind1]._cell_temp_ambient,'[',0);
+			//int2lcd_mmm(lakb[sub_ind1]._cell_temp_power,']',0);
+	
+/*		lakb[0]._max_cell_temp= 	(((ascii2halFhex(liBatteryInBuff[93]))<<12)+
+							((ascii2halFhex(liBatteryInBuff[94]))<<8)+
+							((ascii2halFhex(liBatteryInBuff[95]))<<4)+
+							((ascii2halFhex(liBatteryInBuff[96]))))/10-273;	*/
+	
+		lakb[0]._s_o_c=		(unsigned short)((ascii2halFhex(liBatteryInBuff[113]))<<12)+
+							((ascii2halFhex(liBatteryInBuff[114]))<<8)+
+							((ascii2halFhex(liBatteryInBuff[115]))<<4)+
+							((ascii2halFhex(liBatteryInBuff[116])));
+	
+		lakb[0]._rat_cap=		(unsigned short)((ascii2halFhex(liBatteryInBuff[127]))<<12)+
+							((ascii2halFhex(liBatteryInBuff[128]))<<8)+
+							((ascii2halFhex(liBatteryInBuff[129]))<<4)+
+							((ascii2halFhex(liBatteryInBuff[130])));
+	
+		//lakb[0]._s_o_c=		lakb[0]._s_o_c_abs/(lakb[0]._rat_cap/100);
+	
+#endif //UKU_FSO	
+
+
+
 #ifdef UKU_TELECORE2015
 
 	if(BAT_TYPE==2)

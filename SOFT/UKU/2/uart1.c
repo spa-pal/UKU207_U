@@ -10,6 +10,9 @@
 #include "gran.h"
 #include "common_func.h"
 #include "avar_hndl.h"
+#include "sacred_sun.h"
+#include "ztt.h"
+#include "stark.h"
 
 
 char bRXIN1;
@@ -102,6 +105,26 @@ UOB[len+1]=t;
 UOB[len+2]=END;
  
 for (i=0;i<len+3;i++)
+	{
+	putchar1(UOB[i]);
+	}   
+}
+
+//-----------------------------------------------
+void uart_out_buff1 (char *ptr, char len)
+{
+char UOB[60]/*={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}*/;
+char i,t=0;
+
+//rs232_data_out_buff[4]=210;
+
+for(i=0;i<len;i++)
+	{
+	UOB[i]=ptr[i];
+	t^=UOB[i];
+	}
+
+for (i=0;i<len;i++)
 	{
 	putchar1(UOB[i]);
 	}   
@@ -237,7 +260,7 @@ if ( IIRValue == IIR_RLS )		/* Receive Line Status */
   	}
 else if ( IIRValue == IIR_RDA )	/* Receive Data Available */
   	{
-	
+	plazmaSS_fso[0]++;
 	//plazma_uart1++;
 	data=LPC_UART1->RBR;
 	rx_buffer1[rx_wr_index1]=data;
@@ -252,6 +275,57 @@ else if ( IIRValue == IIR_RDA )	/* Receive Data Available */
 	//modbus_rx_buffer[modbus_rx_buffer_ptr]=data;
 	//modbus_rx_buffer_ptr++;
 //	modbus_timeout_cnt=0;
+
+
+	if(data==0x7e)
+		{
+		bat_drv_rx_cnt=0;
+		bat_drv_rx_cnt=0;
+		plazmaSS_fso[1]++;
+		}
+	//if(bat_drv_rx_cnt<50)
+	bat_drv_rx_buff[bat_drv_rx_cnt++]=data;
+	//if(bat_drv_rx_cnt==50) bat_drv_rx_in=1; 
+
+	if(data==0x0d)
+		{
+		plazmaSS_fso[2]++;
+		if(BAT_TYPE==2)
+			{
+			if(sacredSunRequestPhase==0)	mem_copy (liBatteryInBuff, bat_drv_rx_buff,  bat_drv_rx_cnt);
+			else if(sacredSunRequestPhase==1)	mem_copy (&liBatteryInBuff[150], bat_drv_rx_buff,  bat_drv_rx_cnt);
+			sacredSunSilentCnt=0;
+			}
+		else if (BAT_TYPE==3)
+			{
+			numOfPacks_=((ascii2halFhex(bat_drv_rx_buff[15]))<<4)+((ascii2halFhex(bat_drv_rx_buff[16])));
+			if(numOfPacks_)numOfPacks_--;
+		   	if(numOfPacks_<0)numOfPacks_=0;
+			if(numOfPacks_>NUMBAT)numOfPacks_=0;
+			zTTSilentCnt[numOfPacks_]=50;
+
+			if(zTTRequestPhase==0)	mem_copy (liBatteryInBuff, bat_drv_rx_buff,  bat_drv_rx_cnt);
+			else if(zTTRequestPhase==1)	mem_copy (&liBatteryInBuff[150], bat_drv_rx_buff,  bat_drv_rx_cnt);
+			//zTTSilentCnt=0;
+			}
+		else if (BAT_TYPE==4)
+			{
+			plazmaSS_fso[3]++;
+			numOfPacks_=((ascii2halFhex(bat_drv_rx_buff[3]))<<4)+((ascii2halFhex(bat_drv_rx_buff[4])));
+			//if(numOfPacks_)numOfPacks_--;
+		   	if(numOfPacks_<0)numOfPacks_=0;
+			if(numOfPacks_>NUMBAT_FSO)numOfPacks_=0;
+			sTARKSilentCnt[numOfPacks_]=50;
+
+			if(sTARKRequestPhase==0)	mem_copy (liBatteryInBuff, bat_drv_rx_buff,  bat_drv_rx_cnt);
+			else if(sTARKRequestPhase==1)	mem_copy (&liBatteryInBuff[150], bat_drv_rx_buff,  bat_drv_rx_cnt);
+			//zTTSilentCnt=0;
+			plazmaSS_fso[4]=sTARKRequestPhase;
+			plazmaSS_fso[5]=bat_drv_rx_cnt;
+			}
+		}
+
+
 
   	}
 else if ( IIRValue == IIR_CTI )	/* Character timeout indicator */
