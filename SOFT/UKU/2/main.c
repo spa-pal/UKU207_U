@@ -5147,7 +5147,7 @@ else if(ind==iMn_FSO)
 	 
 	//int2lcdyx(plazma_stark[0],0,3,0);
 //	int2lcdyx(plazma_stark[1],0,6,0);
-	int2lcdyx(plazma_fso,0,6,0);
+//	int2lcdyx(plazma_fso,0,6,0);
 //	int2lcdyx(lakb[0]._tot_bat_volt,0,19,0);
 /*	int2lcdyx(plazma_numOfTemperCells,0,12,0);
 	int2lcdyx(plazma_numOfCells,0,19,0); */
@@ -9651,12 +9651,12 @@ else if((ind==iSet_FSO_inf)||(ind==iFSO_inf))
 		data2lcd(UKUFSO_BAT2_START_DATE_DAY,UKUFSO_BAT2_START_DATE_MONTH,UKUFSO_BAT2_START_DATE_YEAR,']',0);
 
 
-		int2lcdyx(sub_ind,0,1,0);
-		int2lcdyx(index_set,0,3,0);
-		int2lcdyx(sub_ind1,0,5,0);
-		int2lcdyx(sub_ind2,0,7,0);
-		int2lcdyx(flash_en,0,9,0);
-		int2lcdyx(flash_ptr,0,11,0);
+		//int2lcdyx(sub_ind,0,1,0);
+		//int2lcdyx(index_set,0,3,0);
+		//int2lcdyx(sub_ind1,0,5,0);
+		//int2lcdyx(sub_ind2,0,7,0);
+		//int2lcdyx(flash_en,0,9,0);
+		//int2lcdyx(flash_ptr,0,11,0);
 		}
 
 	if(ind==iSet_FSO_inf)
@@ -11485,6 +11485,21 @@ else if(ind==iK_bat_sel_TELECORE)
 	pointer_set(1);
 	
      }  
+
+else if(ind==iK_bat_sel_FSO)
+	{
+	ptrs[0]=						" Áàòàðåÿ N1         ";
+    ptrs[1]=						" Áàòàðåÿ N2         ";
+    ptrs[0+NUMBAT_FSO]=		" Âûõîä              ";
+	ptrs[1+NUMBAT_FSO]=		"                    ";
+	ptrs[2+NUMBAT_FSO]=		"                    ";
+
+	if((sub_ind-index_set)>2)index_set=sub_ind-2;
+	else if(sub_ind<index_set)index_set=sub_ind;
+	bgnd_par(" ÊÀËÈÁÐÎÂÊÀ ÁÀÒÀÐÅÉ ",ptrs[index_set],ptrs[index_set+1],ptrs[index_set+2]);
+	pointer_set(1);
+	
+     } 
 
 else if(ind==iK_bat)
 	{
@@ -13389,7 +13404,7 @@ if(ind==iDeb)
 		//int2lcdyx(plazma_stark[0],1,3,0);
 		//int2lcdyx(plazma_stark[1],2,3,0);
 		
-		
+#ifdef UKU_FSO		
 		int2lcdyx(plazmaSS_fso[0],0,3,0);
 		int2lcdyx(plazmaSS_fso[1],0,7,0);
 		int2lcdyx(plazmaSS_fso[2],0,10,0);
@@ -13402,6 +13417,7 @@ if(ind==iDeb)
 		int2lcdyx(lakb[0]._tot_bat_volt,2,19,0);
 		int2lcdyx(lakb[0]._s_o_c_abs,3,7,0);
 		int2lcdyx(lakb[0]._rat_cap,3,19,0);
+#endif
 /*
 		int2lcdyx(plazma_stark[10],0,11,0);				
 		int2lcdyx(plazma_stark[11],1,11,0);
@@ -33297,7 +33313,7 @@ else if(ind==iK_FSO)
 			}
 		else if((NUMBAT_FSO)&&(sub_ind==1))
 			{
-			tree_up(iK_bat_sel,0,0,0);	
+			tree_up(iK_bat_sel_FSO,0,0,0);	
 			ret(1000);
 			}
 		else if((NUMIST)&&(sub_ind==(1+(NUMBAT!=0))))
@@ -34451,7 +34467,50 @@ else if(ind==iK_bat_sel_TELECORE)
 			}
 		}				
 	}
-
+else if(ind==iK_bat_sel_FSO)
+	{
+	ret(1000);
+	if(but==butD)
+		{
+		sub_ind++;
+		gran_char(&sub_ind,0,NUMBAT_FSO);
+		phase=0;
+		}
+	else if(but==butU)
+		{
+		sub_ind--;
+		gran_char(&sub_ind,0,NUMBAT_FSO);
+		phase=0;
+		}
+	else if(but==butD_)
+		{
+		sub_ind=1+NUMBAT_FSO;
+		}
+	else if(sub_ind==0)
+		{
+		if((but==butE)&&(NUMBAT_FSO>0))
+			{
+			tree_up(iK_bat_TELECORE,0,0,0);	
+			ret(1000);
+			}
+		}	
+	else if((sub_ind==1)&&(NUMBAT_FSO>1))
+		{
+		if((but==butE)&&(NUMBAT_FSO>1))
+			{
+			tree_up(iK_bat_TELECORE,0,0,1);	
+			ret(1000);
+			}
+		}
+	else if(sub_ind==(NUMBAT_FSO))
+		{
+		if(but==butE)
+			{
+			tree_down(0,0);
+			ret(0);
+			}
+		}				
+	}
 else if(ind==iK_bat)
 	{
 	ret(1000);

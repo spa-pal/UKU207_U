@@ -260,7 +260,7 @@ if ( IIRValue == IIR_RLS )		/* Receive Line Status */
   	}
 else if ( IIRValue == IIR_RDA )	/* Receive Data Available */
   	{
-	plazmaSS_fso[0]++;
+//	plazmaSS_fso[0]++;
 	//plazma_uart1++;
 	data=LPC_UART1->RBR;
 	rx_buffer1[rx_wr_index1]=data;
@@ -276,7 +276,7 @@ else if ( IIRValue == IIR_RDA )	/* Receive Data Available */
 	//modbus_rx_buffer_ptr++;
 //	modbus_timeout_cnt=0;
 
-
+#ifdef UKU_FSO
 	if(data==0x7e)
 		{
 		bat_drv_rx_cnt=0;
@@ -324,7 +324,7 @@ else if ( IIRValue == IIR_RDA )	/* Receive Data Available */
 			plazmaSS_fso[5]=bat_drv_rx_cnt;
 			}
 		}
-
+#endif //UKU_FSO
 
 
   	}
