@@ -15137,7 +15137,7 @@
             <uThumb>0</uThumb>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>UKU_TELECORE2017, TELECORE, UKU2071x, UKU_FSO</Define>
+              <Define>UKU2071x, UKU_FSO</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>

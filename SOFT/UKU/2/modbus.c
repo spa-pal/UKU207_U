@@ -1761,7 +1761,7 @@ for (i=0;i<8;i++)
 //-----------------------------------------------
 void modbus_hold_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot)
 {
-signed char modbus_registers[450];	//o_10
+signed char modbus_registers[800];	//o_10
 //char modbus_tx_buff[150];
 unsigned short crc_temp;
 char i;
@@ -2207,6 +2207,7 @@ modbus_registers[410]=(char)(porog_u_in>>8);				//–ег206  порог Uшины
 modbus_registers[411]=(char)(porog_u_in); 
 //o_10_e
 
+#ifdef UKU_FSO
 
 if(prot==MODBUS_RTU_PROT)
 	{

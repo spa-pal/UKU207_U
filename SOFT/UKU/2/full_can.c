@@ -1,4 +1,5 @@
 #include "main.h"
+#include "stdint.h"
 #include <LPC17xx.H>
 #include "full_can.h"
 #include "cmd.h"
@@ -1948,7 +1949,7 @@ if((RXBUFF[1]&0xf8)==PUT_LB_TM6)
 		}
 	}
 
-
+#ifdef TELECORE
 if(RXBUFF[1]==PUT_ZTT_TM1)
     {
 	lakb[0]._communication2lvlErrorCnt=(signed short)(*((signed char*)&RXBUFF[0]));
@@ -2241,7 +2242,8 @@ if(RXBUFF[1]==PUT_STARK_TM7)
 	//lakb[0]._cell_temp_power=42;
 
 	libat_comm_cnt=50;
-	}		
+	}
+#endif //TELECORE			
 CAN_IN_AN1_end:
 bIN2=0;
 }

@@ -774,6 +774,17 @@
 #define SHIFT_REL_VVENT	     6
 #endif
 
+#ifdef UKU_FSO
+#define SHIFT_REL_AV_NET		5
+#define SHIFT_REL_LOAD_OFF	4
+#define SHIFT_REL_AV_BPS	     7
+#define SHIFT_REL_BAT1	     8
+#define SHIFT_REL_BAT2	     6
+#define SHIFT_REL_LIGHT		9
+#define SHIFT_REL_WARM		4
+#define SHIFT_REL_VENT	     7
+#define SHIFT_REL_VVENT	     6
+#endif
 //***********************************************
 // oleg_stard*
 extern unsigned char ver_soft;
