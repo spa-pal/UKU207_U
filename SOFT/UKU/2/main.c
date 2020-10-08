@@ -9069,8 +9069,8 @@ else if(ind==iSet_FSO)
 	    else sub_bgnd("выкл.",'y',-4);
 	    int2lcd(UMAX,'!',1);
 	    int2lcd((UMAX-DU),'Z',1);
-	    int2lcd(ULAUNCH,'@',1);
-	    int2lcd(ULINECC,'#',1);
+//	    int2lcd(ULAUNCH,'@',1);
+//	    int2lcd(ULINECC,'#',1);
 	    int2lcd(USIGN,'^',0);
 	    int2lcd(UMN,'&',0);
 	    //int2lcd(U0B,'>',1);
@@ -13457,7 +13457,17 @@ if(ind==iDeb)
 		int2lcdyx(lakb[0]._s_o_c_abs,2,19,0);
 		int2lcdyx(lakb[0]._rat_cap,3,19,0);
 		int2lcdyx(u_necc,1,3,0); int2lcdyx(load_U,1,8,0);
-		int2lcdyx(cntrl_stat,2,3,0);
+		int2lcdyx(cntrl_stat,2,3,0); 
+
+		int2lcdyx(lakb[0]._cell_temp_1,2,10,0);
+		int2lcdyx((ascii2halFhex(liBatteryInBuff[83])<<4)+((ascii2halFhex(liBatteryInBuff[84]))),3,10,0);
+		
+		char2lcdhyx(liBatteryInBuff[81],0,14);
+		char2lcdhyx(liBatteryInBuff[82],1,14);
+		char2lcdhyx(liBatteryInBuff[83],2,14);
+		char2lcdhyx(liBatteryInBuff[84],3,14);
+
+
 #endif
 /*
 		int2lcdyx(plazma_stark[10],0,11,0);				
@@ -17370,7 +17380,7 @@ int2lcdyx(retindsec,0,15,0);
 int2lcdyx(retcnt,0,11,0);
 int2lcdyx(retcntsec,0,7,0);	*/
 //int2lcdyx(hv_vz_stat_cnt,3,7,0);
-//int2lcdyx(UB0,0,14,0);
+int2lcdyx(ind,0,19,0);
 
 }							    
 
@@ -33501,7 +33511,7 @@ else if(ind==iK_FSO)
 			tree_up(iK_t_ext_6U,0,0,0);	
 			ret(1000);			
 			}
-         else if((sub_ind==(2+(NUMBAT_FSO!=0)+(NUMIST!=0))))
+         else if((sub_ind==(2+(NUMBAT_FSO!=0)+(NUMIST!=0)+(NUMDT!=0))))
 			{
 	        tree_down(0,0);
 	        ret(0);

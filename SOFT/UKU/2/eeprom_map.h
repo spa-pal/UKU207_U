@@ -167,7 +167,7 @@
 #define EE_dUNPN	 						SECTOR_SETS+248
 //сюда больще не писать
 
-#ifdef UKU_TELECORE2017
+//#ifdef UKU_TELECORE2017
 #define EE_TELECORE2017_ULINECC			EE_UB0
 #define EE_TELECORE2017_Q				EE_MAIN_IST	
 #define EE_TELECORE2017_IZMAX1			EE_DU_LI_BAT
@@ -177,7 +177,7 @@
 #define EE_TELECORE2017_K3				EE_IZMAX
 #define EE_TELECORE2017_T4				EE_NUMINV
 
-#endif
+//#endif
 
 #define SECTOR_AUSW  		SECTOR_KOEF+300
 

@@ -2208,6 +2208,7 @@ modbus_registers[411]=(char)(porog_u_in);
 //o_10_e
 
 #ifdef UKU_FSO
+#endif //UKU_FSO
 
 if(prot==MODBUS_RTU_PROT)
 	{

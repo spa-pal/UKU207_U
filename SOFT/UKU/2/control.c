@@ -3899,30 +3899,30 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 							((ascii2halFhex(liBatteryInBuff[112]))))/10;
 
 
-		lakb[0]._cell_temp_1= (unsigned short)(((ascii2halFhex(liBatteryInBuff[81]))<<12)+
+		lakb[0]._cell_temp_1= (signed char)((((ascii2halFhex(liBatteryInBuff[81]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[82]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[83]))<<4)+
-							((ascii2halFhex(liBatteryInBuff[84]))));
+							((ascii2halFhex(liBatteryInBuff[84]))))/100);
 		lakb[0]._cell_temp_2= (unsigned short)(((ascii2halFhex(liBatteryInBuff[85]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[86]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[87]))<<4)+
-							((ascii2halFhex(liBatteryInBuff[88]))));
+							((ascii2halFhex(liBatteryInBuff[88]))/10));
 		lakb[0]._cell_temp_3= (unsigned short)(((ascii2halFhex(liBatteryInBuff[89]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[90]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[91]))<<4)+
-							((ascii2halFhex(liBatteryInBuff[92]))));
+							((ascii2halFhex(liBatteryInBuff[92])))/10);
 		lakb[0]._cell_temp_4= (unsigned short)(((ascii2halFhex(liBatteryInBuff[93]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[94]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[95]))<<4)+
-							((ascii2halFhex(liBatteryInBuff[96]))));
+							((ascii2halFhex(liBatteryInBuff[96])))/10);
 		lakb[0]._cell_temp_ambient= (unsigned short)(((ascii2halFhex(liBatteryInBuff[97]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[98]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[99]))<<4)+
-							((ascii2halFhex(liBatteryInBuff[100]))));
+							((ascii2halFhex(liBatteryInBuff[100])))/10);
 		lakb[0]._cell_temp_power= (unsigned short)(((ascii2halFhex(liBatteryInBuff[101]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[102]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[103]))<<4)+
-							((ascii2halFhex(liBatteryInBuff[104]))));
+							((ascii2halFhex(liBatteryInBuff[104]))/10));
 			//int2lcd_mmm(lakb[sub_ind1]._cell_temp_ambient,'[',0);
 			//int2lcd_mmm(lakb[sub_ind1]._cell_temp_power,']',0);
 	
@@ -10505,6 +10505,9 @@ for(i=0;i<NUMSK;i++)
 	#ifdef IPS_SGEP_GAZPROM
 	if(adc_buff_[sk_buff_6U[i]]<2000)
 	#endif		
+ 	#ifdef UKU_FSO
+	if(adc_buff_[sk_buff_6U[i]]<2000)
+	#endif	
 		{
 		if(sk_cnt[i]<10)
 			{
