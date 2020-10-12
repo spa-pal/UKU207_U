@@ -5418,7 +5418,7 @@
             <uThumb>0</uThumb>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>UKU_6U, CE102M_ENABLED, UKU2071x</Define>
+              <Define>UKU_6U, UKU2071x</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>

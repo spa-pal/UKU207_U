@@ -17380,7 +17380,7 @@ int2lcdyx(retindsec,0,15,0);
 int2lcdyx(retcnt,0,11,0);
 int2lcdyx(retcntsec,0,7,0);	*/
 //int2lcdyx(hv_vz_stat_cnt,3,7,0);
-int2lcdyx(ind,0,19,0);
+//int2lcdyx(ind,0,19,0);
 
 }							    
 
@@ -42830,7 +42830,7 @@ while (1)
 			sc16is700_spi_init_cnt=0;
 			sc16is700_init((uint32_t)(MODBUS_BAUDRATE*10UL));
 			}
-		energometr_hndl();
+		energometr_hndl();	   
 		}
 
 	if(b5Hz)
