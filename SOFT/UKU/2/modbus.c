@@ -1261,7 +1261,35 @@ if(crc16_calculated==crc16_incapsulated)
 				else if(modbus_rx_arg1==0xFFF6 ) command_rki=17;
 	     		}
 
-//o_10_e
+#ifdef UKU_FSO
+			if(modbus_rx_arg0==251)		
+				{
+				lc640_write_int(EE_UKUFSO_IBEP_SN,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==252)		
+				{
+				lc640_write_int(EE_UKUFSO_IBEP_SN+2,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==253)		
+				{
+				if(modbus_rx_arg1>=100 && modbus_rx_arg1<=2500) lc640_write_int(EE_UVNPN,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==254)		
+				{
+				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=60) lc640_write_int(EE_TZNPN,modbus_rx_arg1);
+	     		}
+
+ /*
+modbus_registers[500]=(char)(UKUFSO_IBEP_SN>>8);				//Рег251  Серийный номер ИБЭП(младшее слово)
+modbus_registers[501]=(char)(UKUFSO_IBEP_SN); 
+modbus_registers[502]=(char)(UKUFSO_IBEP_SN>>24);				//Рег252  Серийный номер ИБЭП(старшее слово)
+modbus_registers[503]=(char)(UKUFSO_IBEP_SN>>16); 
+modbus_registers[504]=(char)(UKUFSO_IBEP_START_DATE_YEAR>>8);	//Рег253  Год введения в эксплуатацию ИБЭП
+modbus_registers[505]=(char)(UKUFSO_IBEP_START_DATE_YEAR); 
+modbus_registers[506]=(char)(UKUFSO_IBEP_START_DATE_MONTH);		//Рег254  День и месяц введения в эксплуатацию ИБЭП
+modbus_registers[507]=(char)(UKUFSO_IBEP_START_DATE_DAY); 	*/
+#endif
+
 			if(modbus_rx_arg0==19)		//вкл/выкл источника напр.
 				{
 	/*			if(modbus_rx_arg1==1)
@@ -2208,6 +2236,14 @@ modbus_registers[411]=(char)(porog_u_in);
 //o_10_e
 
 #ifdef UKU_FSO
+modbus_registers[500]=(char)(UKUFSO_IBEP_SN>>8);				//Рег251  Серийный номер ИБЭП(младшее слово)
+modbus_registers[501]=(char)(UKUFSO_IBEP_SN); 
+modbus_registers[502]=(char)(UKUFSO_IBEP_SN>>24);				//Рег252  Серийный номер ИБЭП(старшее слово)
+modbus_registers[503]=(char)(UKUFSO_IBEP_SN>>16); 
+modbus_registers[504]=(char)(UKUFSO_IBEP_START_DATE_YEAR>>8);	//Рег253  Год введения в эксплуатацию ИБЭП
+modbus_registers[505]=(char)(UKUFSO_IBEP_START_DATE_YEAR); 
+modbus_registers[506]=(char)(UKUFSO_IBEP_START_DATE_MONTH);		//Рег254  День и месяц введения в эксплуатацию ИБЭП
+modbus_registers[507]=(char)(UKUFSO_IBEP_START_DATE_DAY); 
 #endif //UKU_FSO
 
 if(prot==MODBUS_RTU_PROT)
