@@ -1262,32 +1262,172 @@ if(crc16_calculated==crc16_incapsulated)
 	     		}
 
 #ifdef UKU_FSO
-			if(modbus_rx_arg0==251)		
+			if(modbus_rx_arg0==251)			//Рег251  Серийный номер ИБЭП(младшее слово)		  	
 				{
-				lc640_write_int(EE_UKUFSO_IBEP_SN,modbus_rx_arg1);
+				lc640_write_int(EE_UKUFSO_IBEP_SN,modbus_rx_arg1);			
 	     		}
-			if(modbus_rx_arg0==252)		
+			if(modbus_rx_arg0==252)			//Рег252  Серийный номер ИБЭП(старшее слово)	
 				{
 				lc640_write_int(EE_UKUFSO_IBEP_SN+2,modbus_rx_arg1);
 	     		}
-			if(modbus_rx_arg0==253)		
+			if(modbus_rx_arg0==253)			//Рег253  Год введения в эксплуатацию ИБЭП	
 				{
-				if(modbus_rx_arg1>=100 && modbus_rx_arg1<=2500) lc640_write_int(EE_UVNPN,modbus_rx_arg1);
+				lc640_write_int(EE_UKUFSO_IBEP_START_DATE_YEAR,modbus_rx_arg1);
 	     		}
-			if(modbus_rx_arg0==254)		
+			if(modbus_rx_arg0==254)			//Рег254  День и месяц введения в эксплуатацию ИБЭП
 				{
-				if(modbus_rx_arg1>=10 && modbus_rx_arg1<=60) lc640_write_int(EE_TZNPN,modbus_rx_arg1);
+				lc640_write_int(EE_UKUFSO_IBEP_START_DATE_MONTH,(modbus_rx_arg1>>8)&0x00ff);
+				lc640_write_int(EE_UKUFSO_IBEP_START_DATE_DAY,modbus_rx_arg1&0x00ff);
+	     		}
+			if(modbus_rx_arg0==281)			//Рег281  Серийный номер БПС№1(младшее слово)	  	
+				{
+				lc640_write_int(EE_UKUFSO_BPS1_SN,modbus_rx_arg1);			
+	     		}
+			if(modbus_rx_arg0==282)			//Рег282  Серийный номер БПС№1(старшее слово)	
+				{
+				lc640_write_int(EE_UKUFSO_BPS1_SN+2,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==283)			//Рег283  Год введения в эксплуатацию БПС№1
+				{
+				lc640_write_int(EE_UKUFSO_BPS1_START_DATE_YEAR,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==284)			//Рег284  День и месяц введения в эксплуатацию БПС№1
+				{
+				lc640_write_int(EE_UKUFSO_BPS1_START_DATE_MONTH,(modbus_rx_arg1>>8)&0x00ff);
+				lc640_write_int(EE_UKUFSO_BPS1_START_DATE_DAY,modbus_rx_arg1&0x00ff);
+	     		}
+			if(modbus_rx_arg0==285)			//Рег285  Серийный номер БПС№2(младшее слово) 	
+				{
+				lc640_write_int(EE_UKUFSO_BPS2_SN,modbus_rx_arg1);			
+	     		}
+			if(modbus_rx_arg0==286)			//Рег286  Серийный номер БПС№2(старшее слово)	
+				{
+				lc640_write_int(EE_UKUFSO_BPS2_SN+2,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==287)			//Рег287  Год введения в эксплуатацию БПС№2	
+				{
+				lc640_write_int(EE_UKUFSO_BPS2_START_DATE_YEAR,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==288)			//Рег288  День и месяц введения в эксплуатацию БПС№2		
+				{
+				lc640_write_int(EE_UKUFSO_BPS2_START_DATE_MONTH,(modbus_rx_arg1>>8)&0x00ff);
+				lc640_write_int(EE_UKUFSO_BPS2_START_DATE_DAY,modbus_rx_arg1&0x00ff);
+	     		}
+			if(modbus_rx_arg0==289)			//Рег289  Серийный номер БПС№3(младшее слово)			  	
+				{
+				lc640_write_int(EE_UKUFSO_BPS3_SN,modbus_rx_arg1);			
+	     		}
+			if(modbus_rx_arg0==290)			//Рег290  Серийный номер БПС№3(старшее слово)				
+				{
+				lc640_write_int(EE_UKUFSO_BPS3_SN+2,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==291)			//Рег291  Год введения в эксплуатацию БПС№3	
+				{
+				lc640_write_int(EE_UKUFSO_BPS3_START_DATE_YEAR,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==292)			//Рег292  День и месяц введения в эксплуатацию БПС№3		
+				{
+				lc640_write_int(EE_UKUFSO_BPS3_START_DATE_MONTH,(modbus_rx_arg1>>8)&0x00ff);
+				lc640_write_int(EE_UKUFSO_BPS3_START_DATE_DAY,modbus_rx_arg1&0x00ff);
+	     		}
+			if(modbus_rx_arg0==293)			//Рег293  Серийный номер БПС№4(младшее слово)  	
+				{
+				lc640_write_int(EE_UKUFSO_BPS4_SN,modbus_rx_arg1);			
+	     		}
+			if(modbus_rx_arg0==294)			//Рег294  Серийный номер БПС№4(старшее слово)		
+				{
+				lc640_write_int(EE_UKUFSO_BPS4_SN+2,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==295)			//Рег295  Год введения в эксплуатацию БПС№4
+				{
+				lc640_write_int(EE_UKUFSO_BPS4_START_DATE_YEAR,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==296)			//Рег296  День и месяц введения в эксплуатацию БПС№4	
+				{
+				lc640_write_int(EE_UKUFSO_BPS4_START_DATE_MONTH,(modbus_rx_arg1>>8)&0x00ff);
+				lc640_write_int(EE_UKUFSO_BPS4_START_DATE_DAY,modbus_rx_arg1&0x00ff);
+	     		}
+			if(modbus_rx_arg0==297)			//Рег297  Серийный номер БАТ№1(младшее слово)	
+				{
+				lc640_write_int(EE_UKUFSO_BAT1_SN,modbus_rx_arg1);			
+	     		}
+			if(modbus_rx_arg0==298)			//Рег298  Серийный номер БАТ№1(старшее слово)				
+				{
+				lc640_write_int(EE_UKUFSO_BAT1_SN+2,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==299)			//Рег299  Год введения в эксплуатацию БАТ№1		
+				{
+				lc640_write_int(EE_UKUFSO_BAT1_START_DATE_YEAR,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==300)			//Рег300  День и месяц введения в эксплуатацию БАТ№1	
+				{
+				lc640_write_int(EE_UKUFSO_BAT1_START_DATE_MONTH,(modbus_rx_arg1>>8)&0x00ff);
+				lc640_write_int(EE_UKUFSO_BAT1_START_DATE_DAY,modbus_rx_arg1&0x00ff);
+	     		}
+			if(modbus_rx_arg0==301)			//Рег301  Серийный номер БАТ№2(младшее слово)			  	
+				{
+				lc640_write_int(EE_UKUFSO_BAT2_SN,modbus_rx_arg1);			
+	     		}
+			if(modbus_rx_arg0==302)			//Рег302  Серийный номер БАТ№2(старшее слово)			
+				{
+				lc640_write_int(EE_UKUFSO_BAT2_SN+2,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==303)			//Рег303  Год введения в эксплуатацию БАТ№2	
+				{
+				lc640_write_int(EE_UKUFSO_BAT2_START_DATE_YEAR,modbus_rx_arg1);
+	     		}
+			if(modbus_rx_arg0==304)			//Рег304  День и месяц введения в эксплуатацию БАТ№2	
+				{
+				lc640_write_int(EE_UKUFSO_BAT2_START_DATE_MONTH,(modbus_rx_arg1>>8)&0x00ff);
+				lc640_write_int(EE_UKUFSO_BAT2_START_DATE_DAY,modbus_rx_arg1&0x00ff);
 	     		}
 
  /*
-modbus_registers[500]=(char)(UKUFSO_IBEP_SN>>8);				//Рег251  Серийный номер ИБЭП(младшее слово)
+modbus_registers[500]=(char)(UKUFSO_IBEP_SN>>8);				
 modbus_registers[501]=(char)(UKUFSO_IBEP_SN); 
-modbus_registers[502]=(char)(UKUFSO_IBEP_SN>>24);				//Рег252  Серийный номер ИБЭП(старшее слово)
+modbus_registers[502]=(char)(UKUFSO_IBEP_SN>>24);				
 modbus_registers[503]=(char)(UKUFSO_IBEP_SN>>16); 
-modbus_registers[504]=(char)(UKUFSO_IBEP_START_DATE_YEAR>>8);	//Рег253  Год введения в эксплуатацию ИБЭП
+modbus_registers[504]=(char)(UKUFSO_IBEP_START_DATE_YEAR>>8);	
 modbus_registers[505]=(char)(UKUFSO_IBEP_START_DATE_YEAR); 
-modbus_registers[506]=(char)(UKUFSO_IBEP_START_DATE_MONTH);		//Рег254  День и месяц введения в эксплуатацию ИБЭП
-modbus_registers[507]=(char)(UKUFSO_IBEP_START_DATE_DAY); 	*/
+modbus_registers[506]=(char)(UKUFSO_IBEP_START_DATE_MONTH);		
+modbus_registers[507]=(char)(UKUFSO_IBEP_START_DATE_DAY); 
+
+modbus_registers[560]=(char)(UKUFSO_BPS1_SN>>8);				
+modbus_registers[561]=(char)(UKUFSO_BPS1_SN); 
+modbus_registers[562]=(char)(UKUFSO_BPS1_SN>>24);				
+modbus_registers[563]=(char)(UKUFSO_BPS1_SN>>16); 
+modbus_registers[564]=(char)(UKUFSO_BPS1_START_DATE_YEAR>>8);	
+modbus_registers[565]=(char)(UKUFSO_BPS1_START_DATE_YEAR); 
+modbus_registers[566]=(char)(UKUFSO_BPS1_START_DATE_MONTH);		
+modbus_registers[567]=(char)(UKUFSO_BPS1_START_DATE_DAY);
+modbus_registers[568]=(char)(UKUFSO_BPS2_SN>>8);				
+modbus_registers[569]=(char)(UKUFSO_BPS2_SN); 
+modbus_registers[570]=(char)(UKUFSO_BPS2_SN>>24);				
+modbus_registers[571]=(char)(UKUFSO_BPS2_SN>>16); 
+modbus_registers[572]=(char)(UKUFSO_BPS2_START_DATE_YEAR>>8);	
+modbus_registers[573]=(char)(UKUFSO_BPS2_START_DATE_YEAR); 
+modbus_registers[574]=(char)(UKUFSO_BPS2_START_DATE_MONTH);		
+modbus_registers[575]=(char)(UKUFSO_BPS2_START_DATE_DAY);
+modbus_registers[576]=(char)(UKUFSO_BPS3_SN>>8);				
+modbus_registers[577]=(char)(UKUFSO_BPS3_SN); 
+modbus_registers[578]=(char)(UKUFSO_BPS3_SN>>24);				
+modbus_registers[579]=(char)(UKUFSO_BPS3_SN>>16); 
+modbus_registers[580]=(char)(UKUFSO_BPS3_START_DATE_YEAR>>8);	
+modbus_registers[581]=(char)(UKUFSO_BPS3_START_DATE_YEAR); 
+modbus_registers[582]=(char)(UKUFSO_BPS3_START_DATE_MONTH);		
+modbus_registers[583]=(char)(UKUFSO_BPS3_START_DATE_DAY);
+modbus_registers[584]=(char)(UKUFSO_BPS4_SN>>8);				
+modbus_registers[585]=(char)(UKUFSO_BPS4_SN); 
+modbus_registers[586]=(char)(UKUFSO_BPS4_SN>>24);				
+modbus_registers[587]=(char)(UKUFSO_BPS4_SN>>16); 
+modbus_registers[588]=(char)(UKUFSO_BPS4_START_DATE_YEAR>>8);	
+modbus_registers[589]=(char)(UKUFSO_BPS4_START_DATE_YEAR); 
+modbus_registers[590]=(char)(UKUFSO_BPS4_START_DATE_MONTH);		
+modbus_registers[591]=(char)(UKUFSO_BPS4_START_DATE_DAY);
+ 
+
+
+	*/
 #endif
 
 			if(modbus_rx_arg0==19)		//вкл/выкл источника напр.
@@ -2243,7 +2383,57 @@ modbus_registers[503]=(char)(UKUFSO_IBEP_SN>>16);
 modbus_registers[504]=(char)(UKUFSO_IBEP_START_DATE_YEAR>>8);	//Рег253  Год введения в эксплуатацию ИБЭП
 modbus_registers[505]=(char)(UKUFSO_IBEP_START_DATE_YEAR); 
 modbus_registers[506]=(char)(UKUFSO_IBEP_START_DATE_MONTH);		//Рег254  День и месяц введения в эксплуатацию ИБЭП
-modbus_registers[507]=(char)(UKUFSO_IBEP_START_DATE_DAY); 
+modbus_registers[507]=(char)(UKUFSO_IBEP_START_DATE_DAY);
+
+modbus_registers[560]=(char)(UKUFSO_BPS1_SN>>8);				//Рег281  Серийный номер БПС№1(младшее слово)
+modbus_registers[561]=(char)(UKUFSO_BPS1_SN); 
+modbus_registers[562]=(char)(UKUFSO_BPS1_SN>>24);				//Рег282  Серийный номер БПС№1(старшее слово)
+modbus_registers[563]=(char)(UKUFSO_BPS1_SN>>16); 
+modbus_registers[564]=(char)(UKUFSO_BPS1_START_DATE_YEAR>>8);	//Рег283  Год введения в эксплуатацию БПС№1
+modbus_registers[565]=(char)(UKUFSO_BPS1_START_DATE_YEAR); 
+modbus_registers[566]=(char)(UKUFSO_BPS1_START_DATE_MONTH);		//Рег284  День и месяц введения в эксплуатацию БПС№1
+modbus_registers[567]=(char)(UKUFSO_BPS1_START_DATE_DAY);
+modbus_registers[568]=(char)(UKUFSO_BPS2_SN>>8);				//Рег285  Серийный номер БПС№2(младшее слово)
+modbus_registers[569]=(char)(UKUFSO_BPS2_SN); 
+modbus_registers[570]=(char)(UKUFSO_BPS2_SN>>24);				//Рег286  Серийный номер БПС№2(старшее слово)
+modbus_registers[571]=(char)(UKUFSO_BPS2_SN>>16); 
+modbus_registers[572]=(char)(UKUFSO_BPS2_START_DATE_YEAR>>8);	//Рег287  Год введения в эксплуатацию БПС№2
+modbus_registers[573]=(char)(UKUFSO_BPS2_START_DATE_YEAR); 
+modbus_registers[574]=(char)(UKUFSO_BPS2_START_DATE_MONTH);		//Рег288  День и месяц введения в эксплуатацию БПС№2
+modbus_registers[575]=(char)(UKUFSO_BPS2_START_DATE_DAY);
+modbus_registers[576]=(char)(UKUFSO_BPS3_SN>>8);				//Рег289  Серийный номер БПС№3(младшее слово)
+modbus_registers[577]=(char)(UKUFSO_BPS3_SN); 
+modbus_registers[578]=(char)(UKUFSO_BPS3_SN>>24);				//Рег290  Серийный номер БПС№3(старшее слово)
+modbus_registers[579]=(char)(UKUFSO_BPS3_SN>>16); 
+modbus_registers[580]=(char)(UKUFSO_BPS3_START_DATE_YEAR>>8);	//Рег291  Год введения в эксплуатацию БПС№3
+modbus_registers[581]=(char)(UKUFSO_BPS3_START_DATE_YEAR); 
+modbus_registers[582]=(char)(UKUFSO_BPS3_START_DATE_MONTH);		//Рег292  День и месяц введения в эксплуатацию БПС№3
+modbus_registers[583]=(char)(UKUFSO_BPS3_START_DATE_DAY);
+modbus_registers[584]=(char)(UKUFSO_BPS4_SN>>8);				//Рег293  Серийный номер БПС№4(младшее слово)
+modbus_registers[585]=(char)(UKUFSO_BPS4_SN); 
+modbus_registers[586]=(char)(UKUFSO_BPS4_SN>>24);				//Рег294  Серийный номер БПС№4(старшее слово)
+modbus_registers[587]=(char)(UKUFSO_BPS4_SN>>16); 
+modbus_registers[588]=(char)(UKUFSO_BPS4_START_DATE_YEAR>>8);	//Рег295  Год введения в эксплуатацию БПС№4
+modbus_registers[589]=(char)(UKUFSO_BPS4_START_DATE_YEAR); 
+modbus_registers[590]=(char)(UKUFSO_BPS4_START_DATE_MONTH);		//Рег296  День и месяц введения в эксплуатацию БПС№4
+modbus_registers[591]=(char)(UKUFSO_BPS4_START_DATE_DAY);
+modbus_registers[592]=(char)(UKUFSO_BPS3_SN>>8);				//Рег297  Серийный номер БПС№3(младшее слово)
+modbus_registers[593]=(char)(UKUFSO_BPS3_SN); 
+modbus_registers[594]=(char)(UKUFSO_BPS3_SN>>24);				//Рег298  Серийный номер БПС№3(старшее слово)
+modbus_registers[595]=(char)(UKUFSO_BPS3_SN>>16); 
+modbus_registers[596]=(char)(UKUFSO_BPS3_START_DATE_YEAR>>8);	//Рег291  Год введения в эксплуатацию БПС№3
+modbus_registers[597]=(char)(UKUFSO_BPS3_START_DATE_YEAR); 
+modbus_registers[598]=(char)(UKUFSO_BPS3_START_DATE_MONTH);		//Рег292  День и месяц введения в эксплуатацию БПС№3
+modbus_registers[599]=(char)(UKUFSO_BPS3_START_DATE_DAY);
+modbus_registers[600]=(char)(UKUFSO_BPS4_SN>>8);				//Рег293  Серийный номер БПС№4(младшее слово)
+modbus_registers[601]=(char)(UKUFSO_BPS4_SN); 
+modbus_registers[602]=(char)(UKUFSO_BPS4_SN>>24);				//Рег294  Серийный номер БПС№4(старшее слово)
+modbus_registers[603]=(char)(UKUFSO_BPS4_SN>>16); 
+modbus_registers[604]=(char)(UKUFSO_BPS4_START_DATE_YEAR>>8);	//Рег295  Год введения в эксплуатацию БПС№4
+modbus_registers[605]=(char)(UKUFSO_BPS4_START_DATE_YEAR); 
+modbus_registers[606]=(char)(UKUFSO_BPS4_START_DATE_MONTH);		//Рег296  День и месяц введения в эксплуатацию БПС№4
+modbus_registers[607]=(char)(UKUFSO_BPS4_START_DATE_DAY);
+ 
 #endif //UKU_FSO
 
 if(prot==MODBUS_RTU_PROT)

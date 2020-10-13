@@ -5151,6 +5151,7 @@ else if(ind==iMn_FSO)
 //	int2lcdyx(lakb[0]._tot_bat_volt,0,19,0);
 /*	int2lcdyx(plazma_numOfTemperCells,0,12,0);
 	int2lcdyx(plazma_numOfCells,0,19,0); */
+	//long2lcdhyx(avar_stat,0,19);
 	}
 //#ifndef _DEBUG_
 else if (ind==iBat)
@@ -10295,8 +10296,8 @@ else if(ind==iStr_FSO)
 	{
 	ptrs[0]=" Батарей           @";
 	ptrs[1]=" Источников        !";
-	ptrs[2]=" Датчиков темпер.  #";
-	ptrs[3]=" Сухих контактов   $";
+	ptrs[2]=" Фазность питающей  ";
+	ptrs[3]=" сети              [";
 	ptrs[4]=" Выход              ";
 	
 	if(sub_ind<index_set) index_set=sub_ind;
@@ -10307,8 +10308,9 @@ else if(ind==iStr_FSO)
 
 	int2lcd(NUMBAT_FSO,'@',0);		
 	int2lcd(NUMIST,'!',0); 
-	int2lcd(NUMDT,'#',0);
-	int2lcd(NUMSK,'$',0);
+//	int2lcd(NUMDT,'#',0);
+//	int2lcd(NUMSK,'$',0);
+	int2lcd(NUMPHASE,'[',0);
 	} 
 #endif  //UKU_FSO
 	   
@@ -12340,9 +12342,9 @@ int2lcdyx(MSG_IND2OUT_EN_SRC2,0,6,0); */
 
 //int2lcdyx(cntrl_stat1,0,19,0); 
 //int2lcdyx(load_U,0,5,0); 
-//int2lcdyx(cntrl_stat,0,10,0); 
+int2lcdyx(cntrl_stat,0,10,0); 
 //int2lcdyx(bps[sub_ind1]._rotor,0,19,0); 
-//int2lcdyx(u_necc,0,19,0);  
+int2lcdyx(u_necc,0,19,0);  
 	 }
 
 else if(ind==iK_power_net)
@@ -19576,7 +19578,9 @@ else if(ind==iMn_IPS_SGEP_GAZPROM)
 			}
 		}
     }
-#endif //UKU_FSO
+#endif	//UKU_FSO
+
+#ifdef UKU_FSO
 else if(ind==iMn_FSO)
 	{
 	gran(&NUMBAT_FSO,0,2);
@@ -19604,8 +19608,8 @@ else if(ind==iMn_FSO)
 
 	else if(but==butE_)
 		{
-		can1_init(BITRATE62_5K25MHZ);
-		FullCAN_SetFilter(0,0x18e);
+		//can1_init(BITRATE62_5K25MHZ);
+		//FullCAN_SetFilter(0,0x18e);
 		}
 	else if(but==butDR_)
 		{
@@ -19658,8 +19662,9 @@ else if(ind==iMn_FSO)
 		    	}
 		else if(sub_ind==(1+NUMBAT_FSO+NUMIST))
 			{
-			tree_up(iNetEM,0,0,0);
-		      ret(0);//1204//ret(1000);
+			if(NUMPHASE==1)	tree_up(iNet,0,0,0);
+			else 			tree_up(iNet3,0,0,0);
+			ret(0);//1204//ret(1000);
 			}
 		
 		else if(sub_ind==(2+NUMBAT_FSO+NUMIST))
@@ -19711,7 +19716,7 @@ else if(ind==iMn_FSO)
 			}
 		}
     }
-
+#endif //UKU_FSO
 // oleg_start
 else if(ind==iSetNetIn){
 	ret(1000);
@@ -30813,11 +30818,19 @@ else if(ind==iStr_FSO)
 		{
 		sub_ind++;
 		gran_char(&sub_ind,0,4);
+		if(sub_ind==3)
+			{
+			sub_ind==4;
+			}
 		}
 	else if(but==butU)
 		{
 		sub_ind--;
 		gran_char(&sub_ind,0,4);
+		if(sub_ind==3)
+			{
+			sub_ind==2;
+			}
 		}
 	else if(but==butD_)
 		{
@@ -30857,7 +30870,7 @@ else if(ind==iStr_FSO)
 			numOfForvardBps_init();
 	     	}
          }	     			          
-     else if(sub_ind==2)
+ /*    else if(sub_ind==2)
 	     {
 	     if((but==butR)||(but==butR_))
 	     	{
@@ -30888,7 +30901,21 @@ else if(ind==iStr_FSO)
 	     	gran(&NUMSK,0,4);
 	     	lc640_write_int(EE_NUMSK,NUMSK);
 	     	}
-          }              
+          }  */
+	else if(sub_ind==2) 
+		{
+		if((but==butR)||(but==butR_))
+			{
+	     	NUMPHASE=3;
+	     	lc640_write_int(EE_NUMPHASE,NUMPHASE);
+	     	}
+	     
+		else if((but==butL)||(but==butL_))
+	     	{
+			NUMPHASE=1;
+	     	lc640_write_int(EE_NUMPHASE,NUMPHASE);
+	     	}
+		}		              
     else if(sub_ind==4)
 	     {
 	     if(but==butE)
@@ -33467,7 +33494,7 @@ else if(ind==iK_FSO)
 		{
 		if(sub_ind==0)
 			{
-			if(AUSW_MAIN%10)
+			if(NUMPHASE!=1)
 				{
 				tree_up(iK_net3,0,0,0);
 		     	ret(1000);
@@ -33483,30 +33510,18 @@ else if(ind==iK_FSO)
 			tree_up(iK_bat_sel_FSO,0,0,0);	
 			ret(1000);
 			}
-		else if((NUMIST)&&(sub_ind==(1+(NUMBAT!=0))))
+		else if((NUMIST)&&(sub_ind==(1+(NUMBAT_FSO!=0))))
 			{
 			tree_up(iK_bps_sel,0,0,0);	
 			ret(1000);
 			}
-/*		else if((NUMINV)&&(sub_ind==(1+(NUMBAT!=0)+(NUMIST!=0))))
-			{
-			tree_up(iK_inv_sel,0,0,1);	
-			ret(1000);
-			}		
-
-		else if((NUMBYPASS)&&(sub_ind==(1+(NUMBAT!=0)+(NUMIST!=0)+(NUMINV!=0))))
-			{
-			tree_up(iK_byps,0,0,1);	
-			ret(1000);
-			}*/
-
-		else if((sub_ind==(1+(NUMBAT_FSO!=0)+(NUMIST!=0)/*+(NUMINV!=0)+((NUMBYPASS>0)&&(NUMBYPASS<2))*/)))
+		else if((sub_ind==(1+(NUMBAT_FSO!=0)+(NUMIST!=0))))
 			{
 			tree_up(iK_load,0,0,0);	
 			ret(1000);
 			}
           
-         else if((NUMDT)&&(sub_ind==(2+(NUMBAT_FSO!=0)+(NUMIST!=0)/*+(NUMINV!=0)+((NUMBYPASS>0)&&(NUMBYPASS<2))*/)))
+         else if((NUMDT)&&(sub_ind==(2+(NUMBAT_FSO!=0)+(NUMIST!=0))))
 			{
 			tree_up(iK_t_ext_6U,0,0,0);	
 			ret(1000);			
@@ -42625,6 +42640,7 @@ lc640_write(EE_UKUFSO_PLACE+49,'х');
 //lc640_write(EE_UKUFSO_PLACE+50,0);
 */
 //lc640_write_long(EE_UKUFSO_BPS1_SN,456789U);
+time_sinc_hndl_main_cnt=20L;
 		
 while (1)  
 	{

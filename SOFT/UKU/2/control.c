@@ -2929,6 +2929,44 @@ temp_SL/=110000L;
 net_U=(signed short)temp_SL;
 #endif
 
+
+#ifdef UKU_FSO
+//напряжение сети
+if(NUMPHASE==1)
+	{
+	temp_SL=(signed long)net_buff_;
+	temp_SL*=Kunet;
+	temp_SL/=110000L;
+	net_U=(signed short)temp_SL;
+	net_Umax=net_U;
+	}
+else
+	{
+	temp_SL=(signed long)net_buff_;
+	temp_SL*=KunetA;
+	temp_SL/=40000L;
+	net_Ua=(signed short)temp_SL;
+
+	temp_SL=(signed long)adc_buff_[3];
+	temp_SL*=KunetB;
+	temp_SL/=6000L;
+	net_Ub=(signed short)temp_SL;
+
+	temp_SL=(signed long)adc_buff_[10];
+	temp_SL*=KunetC;
+	temp_SL/=6000L;
+	net_Uc=(signed short)temp_SL;
+
+	net_U=net_Ua;
+	if(net_Ub<net_U)net_U=net_Ub;
+	if(net_Uc<net_U)net_U=net_Uc;
+	//o_10_s
+	net_Umax=net_Ua;
+	if(net_Ub>net_Umax)net_Umax=net_Ub;
+	if(net_Uc>net_Umax)net_Umax=net_Uc;
+	}
+#endif	//UKU_FSO
+
 //Напряжения батарей
 temp_SL=(signed long)adc_buff_[0];
 temp_SL*=Kubat[0];
@@ -10257,7 +10295,7 @@ if(ch_cnt0<10)
 		}
 	}
 else ch_cnt0=0;
-/*
+
 if(mess_find_unvol(MESS2CNTRL_HNDL))
 	{
 	if(mess_data[0]==PARAM_CNTRL_STAT_PLUS)
@@ -10294,8 +10332,9 @@ if(mess_find_unvol(MESS2CNTRL_HNDL))
 			}
 		}
 
-	}*/
-
+	}
+else
+	{
 IZMAX_=TELECORE2017_IZMAX1;
 
 for(i=0;i<NUMBAT_TELECORE;i++)
@@ -10438,7 +10477,7 @@ if(b1Hz_ch)
 	cntrl_stat_old=cntrl_stat_new;
 	cntrl_stat=cntrl_stat_new;
 	}
-
+	}
 
 iiii=0;
 for(i=0;i<NUMIST;i++)
