@@ -5796,12 +5796,12 @@ else if (ind==iBat_universe)
 
 		    int2lcd(lakb[sub_ind1]._tot_bat_volt,'$',1);
 			int2lcd_mmm(abs(lakb[sub_ind1]._ch_curr),'#',2);
-		    int2lcd_mmm(lakb[sub_ind1]._cell_temp_1,'?',1);
-			int2lcd_mmm(lakb[sub_ind1]._cell_temp_2,'(',1);
-			int2lcd_mmm(lakb[sub_ind1]._cell_temp_3,')',1);
-			int2lcd_mmm(lakb[sub_ind1]._cell_temp_4,'+',1);
-			int2lcd_mmm(lakb[sub_ind1]._cell_temp_ambient,'[',1);
-			int2lcd_mmm(lakb[sub_ind1]._cell_temp_power,']',1);
+		    int2lcd_mmm(lakb[sub_ind1]._cell_temp_1,'?',0);
+			int2lcd_mmm(lakb[sub_ind1]._cell_temp_2,'(',0);
+			int2lcd_mmm(lakb[sub_ind1]._cell_temp_3,')',0);
+			int2lcd_mmm(lakb[sub_ind1]._cell_temp_4,'+',0);
+			int2lcd_mmm(lakb[sub_ind1]._cell_temp_ambient,'[',0);
+			int2lcd_mmm(lakb[sub_ind1]._cell_temp_power,']',0);
 		    int2lcd(lakb[sub_ind1]._s_o_c,'w',1);
 			if(sub_ind==10)lcd_buffer[60]=1;
 			int2lcd(lakb[sub_ind1]._s_o_h,'>',1);
@@ -13454,20 +13454,30 @@ if(ind==iDeb)
 		//int2lcdyx(plazmaSS_fso[4],1,3,0);
 		//int2lcdyx(plazmaSS_fso[5],1,8,0);
 
-		long2lcdyx_mmm(lakb[0]._ch_curr,0,19,0);				
-		int2lcdyx(lakb[0]._tot_bat_volt,1,19,0);
-		int2lcdyx(lakb[0]._s_o_c_abs,2,19,0);
-		int2lcdyx(lakb[0]._rat_cap,3,19,0);
-		int2lcdyx(u_necc,1,3,0); int2lcdyx(load_U,1,8,0);
-		int2lcdyx(cntrl_stat,2,3,0); 
-
-		int2lcdyx(lakb[0]._cell_temp_1,2,10,0);
-		int2lcdyx((ascii2halFhex(liBatteryInBuff[83])<<4)+((ascii2halFhex(liBatteryInBuff[84]))),3,10,0);
+		int2lcdyx(lakb[0]._tot_bat_volt,0,19,0);
+		long2lcdyx_mmm(lakb[0]._ch_curr,1,19,0);				
+		long2lcdyx_mmm(bat[0]._Ib/10,2,19,0);
 		
-		char2lcdhyx(liBatteryInBuff[81],0,14);
-		char2lcdhyx(liBatteryInBuff[82],1,14);
-		char2lcdhyx(liBatteryInBuff[83],2,14);
-		char2lcdhyx(liBatteryInBuff[84],3,14);
+		int2lcdyx(load_U,0,14,0);
+		int2lcdyx(bps[0]._Uin,1,14,0);
+		int2lcdyx(bps[1]._Uin,2,14,0);
+		
+		int2lcdyx(lakb[0]._s_o_c_percent,3,19,0);
+		//int2lcdyx(lakb[0]._rat_cap,3,19,0);
+		int2lcdyx(u_necc,1,3,0); //int2lcdyx(load_U,1,8,0);
+		int2lcdyx(cntrl_stat,2,3,0); 
+		int2lcdyx(plazma_cntrl_stat,3,3,0); 
+
+		int2lcdyx(IZMAX_,1,8,0); //int2lcdyx(load_U,1,8,0);
+		int2lcdyx(IZMAX_130,2,8,0); 
+		int2lcdyx(IZMAX_70,3,8,0); 
+		//int2lcdyx(lakb[0]._cell_temp_1,2,10,0);
+		//int2lcdyx((ascii2halFhex(liBatteryInBuff[83])<<4)+((ascii2halFhex(liBatteryInBuff[84]))),3,10,0);
+		
+		//char2lcdhyx(liBatteryInBuff[81],0,14);
+		//char2lcdhyx(liBatteryInBuff[82],1,14);
+		//char2lcdhyx(liBatteryInBuff[83],2,14);
+		//char2lcdhyx(liBatteryInBuff[84],3,14);
 
 
 #endif
@@ -42826,14 +42836,14 @@ while (1)
 
 #ifdef 	UKU_FSO
 		cntrl_hndl_FSO();
-#elif 	UKU_TELECORE2017
-		cntrl_hndl_telecore2017();
-		lakb_hndl();
-#elif	TELECORE
-		cntrl_hndl_telecore();
-		lakb_hndl();
+#elif defined	UKU_TELECORE2017
+		//cntrl_hndl_telecore2017();
+		//lakb_hndl();
+#elif defined	TELECORE
+		//cntrl_hndl_telecore();
+		//lakb_hndl();
 #else 
-		cntrl_hndl();
+		//cntrl_hndl();
 #endif				  
 
 		//ret_hndl();
@@ -42948,7 +42958,7 @@ while (1)
 		#elif	TELECORE
 		klimat_hndl_telecore2015();
 		#else 
-		cntrl_hndl();
+		//cntrl_hndl();
 		#endif	
 		  
 		if(t_ext_can_nd<10) t_ext_can_nd++;

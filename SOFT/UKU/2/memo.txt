@@ -1772,68 +1772,69 @@
 ;;;405    UKUFSO_BAT2_START_DATE_MONTH=lc640_read_int(EE_UKUFSO_BAT2_START_DATE_MONTH);
 ;;;406    UKUFSO_BAT2_START_DATE_DAY=lc640_read_int(EE_UKUFSO_BAT2_START_DATE_DAY);
 ;;;407    
-;;;408    BAT_TYPE=lc640_read_int(EE_BAT_TYPE);			
-;;;409    #endif
-;;;410    
-;;;411    SP_CH_VENT_BLOK=lc640_read_int(EE_SP_CH_VENT_BLOK);
+;;;408    BAT_TYPE=4;
+;;;409    NUMBAT_FSO=lc640_read_int(EE_NUMBAT_FSO);			
+;;;410    #endif
+;;;411    
+;;;412    SP_CH_VENT_BLOK=lc640_read_int(EE_SP_CH_VENT_BLOK);
 000e28  f44f70e7          MOV      r0,#0x1ce
 000e2c  f7fffffe          BL       lc640_read_int
 000e30  4965              LDR      r1,|L1.4040|
 000e32  8008              STRH     r0,[r1,#0]
-;;;412    VZ_CH_VENT_BLOK=lc640_read_int(EE_VZ_CH_VENT_BLOK);
+;;;413    VZ_CH_VENT_BLOK=lc640_read_int(EE_VZ_CH_VENT_BLOK);
 000e34  f44f70e8          MOV      r0,#0x1d0
 000e38  f7fffffe          BL       lc640_read_int
 000e3c  4963              LDR      r1,|L1.4044|
 000e3e  8008              STRH     r0,[r1,#0]
-;;;413    
-;;;414    for(i=0;i<64;i++)
+;;;414    
+;;;415    for(i=0;i<64;i++)
 000e40  f04f0400          MOV      r4,#0
-;;;415    	{
-;;;416    	snmp_location[i]=lc640_read(EE_LOCATION+i);
+;;;416    	{
+;;;417    	snmp_location[i]=lc640_read(EE_LOCATION+i);
 000e44  4e62              LDR      r6,|L1.4048|
                   |L1.3654|
 000e46  f5047065          ADD      r0,r4,#0x394
 000e4a  f7fffffe          BL       lc640_read
 000e4e  5530              STRB     r0,[r6,r4]
-000e50  f1040401          ADD      r4,r4,#1              ;414
-000e54  b2e4              UXTB     r4,r4                 ;414
-000e56  2c40              CMP      r4,#0x40              ;414
+000e50  f1040401          ADD      r4,r4,#1              ;415
+000e54  b2e4              UXTB     r4,r4                 ;415
+000e56  2c40              CMP      r4,#0x40              ;415
 000e58  d3f5              BCC      |L1.3654|
-;;;417    	}
-;;;418    for(i=0;i<10;i++)
+;;;418    	}
+;;;419    for(i=0;i<10;i++)
 000e5a  f04f0400          MOV      r4,#0
-;;;419    	{
-;;;420    	snmp_community[i]=lc640_read(EE_COMMUNITY+(i*2));
+;;;420    	{
+;;;421    	snmp_community[i]=lc640_read(EE_COMMUNITY+(i*2));
 000e5e  4f5d              LDR      r7,|L1.4052|
 000e60  f24036da          MOV      r6,#0x3da
                   |L1.3684|
 000e64  eb060044          ADD      r0,r6,r4,LSL #1
 000e68  f7fffffe          BL       lc640_read
 000e6c  5538              STRB     r0,[r7,r4]
-000e6e  f1040401          ADD      r4,r4,#1              ;418
-000e72  b2e4              UXTB     r4,r4                 ;418
-000e74  2c0a              CMP      r4,#0xa               ;418
+000e6e  f1040401          ADD      r4,r4,#1              ;419
+000e72  b2e4              UXTB     r4,r4                 ;419
+000e74  2c0a              CMP      r4,#0xa               ;419
 000e76  d3f5              BCC      |L1.3684|
-;;;421    	}
-;;;422    for(i=0;i<64;i++)
+;;;422    	}
+;;;423    for(i=0;i<64;i++)
 000e78  f04f0400          MOV      r4,#0
-;;;423    	{
-;;;424    	place_holder[i]=lc640_read(EE_HTTP_LOCATION+i);
+;;;424    	{
+;;;425    	place_holder[i]=lc640_read(EE_HTTP_LOCATION+i);
 000e7c  4e56              LDR      r6,|L1.4056|
 000e7e  f2411712          MOV      r7,#0x1112
                   |L1.3714|
 000e82  19e0              ADDS     r0,r4,r7
 000e84  f7fffffe          BL       lc640_read
 000e88  5530              STRB     r0,[r6,r4]
-000e8a  f1040401          ADD      r4,r4,#1              ;422
-000e8e  b2e4              UXTB     r4,r4                 ;422
-000e90  2c40              CMP      r4,#0x40              ;422
+000e8a  f1040401          ADD      r4,r4,#1              ;423
+000e8e  b2e4              UXTB     r4,r4                 ;423
+000e90  2c40              CMP      r4,#0x40              ;423
 000e92  d3f6              BCC      |L1.3714|
-;;;425    	}
-;;;426    for(i=0;i<3;i++)
+;;;426    	}
+;;;427    for(i=0;i<3;i++)
 000e94  f04f0400          MOV      r4,#0
-;;;427    	{
-;;;428    	snmp_web_passw[i]=lc640_read(EE_WEB_PASSWORD+(i*2));
+;;;428    	{
+;;;429    	snmp_web_passw[i]=lc640_read(EE_WEB_PASSWORD+(i*2));
 000e98  4e50              LDR      r6,|L1.4060|
 000e9a  f2411708          MOV      r7,#0x1108
                   |L1.3742|
@@ -1998,37 +1999,37 @@
                           DCD      snmp_web_passw
                   |L1.4064|
 000fe0  5530              STRB     r0,[r6,r4]
-;;;429    	snmp_web_passw[3]=0;
+;;;430    	snmp_web_passw[3]=0;
 000fe2  70f5              STRB     r5,[r6,#3]
-000fe4  f1040401          ADD      r4,r4,#1              ;426
-000fe8  b2e4              UXTB     r4,r4                 ;426
-000fea  2c03              CMP      r4,#3                 ;426
+000fe4  f1040401          ADD      r4,r4,#1              ;427
+000fe8  b2e4              UXTB     r4,r4                 ;427
+000fea  2c03              CMP      r4,#3                 ;427
 000fec  f4ffaf57          BCC      |L1.3742|
-;;;430    	}
-;;;431    
-;;;432    __ee_vz_cnt=lc640_read_int(EE_VZ_CNT);
+;;;431    	}
+;;;432    
+;;;433    __ee_vz_cnt=lc640_read_int(EE_VZ_CNT);
 000ff0  f44f7027          MOV      r0,#0x29c
 000ff4  f7fffffe          BL       lc640_read_int
 000ff8  490a              LDR      r1,|L1.4132|
 000ffa  8008              STRH     r0,[r1,#0]
-;;;433    __ee_spc_stat=lc640_read_int(EE_SPC_STAT);
+;;;434    __ee_spc_stat=lc640_read_int(EE_SPC_STAT);
 000ffc  f240209a          MOV      r0,#0x29a
 001000  f7fffffe          BL       lc640_read_int
 001004  4908              LDR      r1,|L1.4136|
 001006  8008              STRH     r0,[r1,#0]
-;;;434    __ee_spc_bat=lc640_read_int(EE_SPC_BAT);
+;;;435    __ee_spc_bat=lc640_read_int(EE_SPC_BAT);
 001008  f240209e          MOV      r0,#0x29e
 00100c  f7fffffe          BL       lc640_read_int
 001010  4906              LDR      r1,|L1.4140|
 001012  8008              STRH     r0,[r1,#0]
-;;;435    __ee_spc_phase=lc640_read_int(EE_SPC_PHASE);
+;;;436    __ee_spc_phase=lc640_read_int(EE_SPC_PHASE);
 001014  f44f7028          MOV      r0,#0x2a0
 001018  f7fffffe          BL       lc640_read_int
 00101c  4904              LDR      r1,|L1.4144|
 00101e  8008              STRH     r0,[r1,#0]
-;;;436    }
+;;;437    }
 001020  e8bd87f0          POP      {r4-r10,pc}
-;;;437    
+;;;438    
                           ENDP
 
                   |L1.4132|

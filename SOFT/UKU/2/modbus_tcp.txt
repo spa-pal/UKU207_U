@@ -3315,29 +3315,3 @@
 000004  00000000          DCB      0x00,0x00,0x00,0x00
                   modbus_tcp_out_ptr
                           DCD      0x00000000
-
-;*** Start embedded assembler ***
-
-#line 1 "MODBUS_TCP.c"
-	AREA ||.emb_text||, CODE, READONLY
-	THUMB
-	EXPORT |__asm___12_MODBUS_TCP_c_d2d62cad____REV16|
-#line 112 "C:\\Keil\\ARM\\CMSIS\\Include\\core_cmInstr.h"
-|__asm___12_MODBUS_TCP_c_d2d62cad____REV16| PROC
-#line 113
-
- rev16 r0, r0
- bx lr
-	ENDP
-	AREA ||.emb_text||, CODE, READONLY
-	THUMB
-	EXPORT |__asm___12_MODBUS_TCP_c_d2d62cad____REVSH|
-#line 130
-|__asm___12_MODBUS_TCP_c_d2d62cad____REVSH| PROC
-#line 131
-
- revsh r0, r0
- bx lr
-	ENDP
-
-;*** End   embedded assembler ***

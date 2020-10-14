@@ -3731,8 +3731,12 @@ if((NUMBAT_TELECORE>1)&&(bat[1]._Ib/10>Ibmax))Ibmax=bat[1]._Ib/10;
 //if((BAT_IS_ON[0]==bisON)&&(bat[0]._Ub>200)) Ibmax=bat[0]._Ib/1;
 //if((BAT_IS_ON[1]==bisON)&&(bat[1]._Ub>200)&&(bat[1]._Ib>bat[0]._Ib)) Ibmax=bat[1]._Ib;
 #endif
-//Ibmax=bat[0]._Ib;
-//if((AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043))Ibmax=Ib_ips_termokompensat;
+
+#ifdef UKU_FSO
+Ibmax=0;
+if((NUMBAT_FSO>0)&&(bat[0]._Ib/10>Ibmax))Ibmax=bat[0]._Ib/10;
+if((NUMBAT_FSO>1)&&(bat[1]._Ib/10>Ibmax))Ibmax=bat[1]._Ib/10;
+#endif
 
 #ifdef UKU_TELECORE2017
 Ibmax=0;
@@ -3941,26 +3945,26 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 							((ascii2halFhex(liBatteryInBuff[82]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[83]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[84]))))/100);
-		lakb[0]._cell_temp_2= (unsigned short)(((ascii2halFhex(liBatteryInBuff[85]))<<12)+
+		lakb[0]._cell_temp_2= (signed char)((((ascii2halFhex(liBatteryInBuff[85]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[86]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[87]))<<4)+
-							((ascii2halFhex(liBatteryInBuff[88]))/10));
-		lakb[0]._cell_temp_3= (unsigned short)(((ascii2halFhex(liBatteryInBuff[89]))<<12)+
+							((ascii2halFhex(liBatteryInBuff[88]))))/100);
+		lakb[0]._cell_temp_3= (signed char)((((ascii2halFhex(liBatteryInBuff[89]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[90]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[91]))<<4)+
-							((ascii2halFhex(liBatteryInBuff[92])))/10);
-		lakb[0]._cell_temp_4= (unsigned short)(((ascii2halFhex(liBatteryInBuff[93]))<<12)+
+							((ascii2halFhex(liBatteryInBuff[92]))))/100);
+		lakb[0]._cell_temp_4= (signed char)((((ascii2halFhex(liBatteryInBuff[93]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[94]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[95]))<<4)+
-							((ascii2halFhex(liBatteryInBuff[96])))/10);
-		lakb[0]._cell_temp_ambient= (unsigned short)(((ascii2halFhex(liBatteryInBuff[97]))<<12)+
+							((ascii2halFhex(liBatteryInBuff[96]))))/100);
+		lakb[0]._cell_temp_ambient= (signed char)((((ascii2halFhex(liBatteryInBuff[97]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[98]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[99]))<<4)+
-							((ascii2halFhex(liBatteryInBuff[100])))/10);
-		lakb[0]._cell_temp_power= (unsigned short)(((ascii2halFhex(liBatteryInBuff[101]))<<12)+
+							((ascii2halFhex(liBatteryInBuff[100]))))/100);
+		lakb[0]._cell_temp_power= (signed char)((((ascii2halFhex(liBatteryInBuff[101]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[102]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[103]))<<4)+
-							((ascii2halFhex(liBatteryInBuff[104]))/10));
+							((ascii2halFhex(liBatteryInBuff[104]))))/100);
 			//int2lcd_mmm(lakb[sub_ind1]._cell_temp_ambient,'[',0);
 			//int2lcd_mmm(lakb[sub_ind1]._cell_temp_power,']',0);
 	
@@ -3969,7 +3973,7 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 							((ascii2halFhex(liBatteryInBuff[95]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[96]))))/10-273;	*/
 	
-		lakb[0]._s_o_c=		(unsigned short)((ascii2halFhex(liBatteryInBuff[113]))<<12)+
+		lakb[0]._s_o_c_percent=		(unsigned short)((ascii2halFhex(liBatteryInBuff[113]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[114]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[115]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[116])));
@@ -10497,6 +10501,9 @@ gran(&cntrl_stat,10,1010);
 b1Hz_ch=0;
 b1_30Hz_ch=0;
 b1_10Hz_ch=0;
+
+//IZMAX_=100;
+
 }
 #endif
 
