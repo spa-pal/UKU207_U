@@ -10,15 +10,15 @@
 000000  b530              PUSH     {r4,r5,lr}
 ;;;42     {
 ;;;43     while (tx_counter1 == TX_BUFFER_SIZE1);
-000002  f44f7496          MOV      r4,#0x12c
-000006  4bff              LDR      r3,|L1.1028|
+000002  4bfa              LDR      r3,|L1.1004|
+000004  f44f7496          MOV      r4,#0x12c
 000008  8a59              LDRH     r1,[r3,#0x12]
                   |L1.10|
 00000a  42a1              CMP      r1,r4
 00000c  d0fd              BEQ      |L1.10|
 ;;;44     if (tx_counter1 || ((LPC_UART1->LSR & 0x60)==0))
 00000e  b9b1              CBNZ     r1,|L1.62|
-000010  4afd              LDR      r2,|L1.1032|
+000010  4af7              LDR      r2,|L1.1008|
 000012  7d15              LDRB     r5,[r2,#0x14]
 000014  f0150f60          TST      r5,#0x60
 000018  d011              BEQ      |L1.62|
@@ -30,7 +30,7 @@
 ;;;50     else
 ;;;51     	{
 ;;;52     	LPC_PINCON->PINSEL4 &= ~0x0000c000;//!!!!!!!!!!!
-00001a  49fc              LDR      r1,|L1.1036|
+00001a  49f6              LDR      r1,|L1.1012|
 00001c  690b              LDR      r3,[r1,#0x10]
 00001e  f4234340          BIC      r3,r3,#0xc000
 000022  610b              STR      r3,[r1,#0x10]
@@ -38,7 +38,7 @@
 000024  690b              LDR      r3,[r1,#0x10]
 000026  610b              STR      r3,[r1,#0x10]
 ;;;54     	LPC_GPIO2->FIODIR|=(1UL<<2);
-000028  49f9              LDR      r1,|L1.1040|
+000028  49f3              LDR      r1,|L1.1016|
 00002a  6c0b              LDR      r3,[r1,#0x40]
 00002c  f0430304          ORR      r3,r3,#4
 000030  640b              STR      r3,[r1,#0x40]
@@ -52,7 +52,7 @@
 ;;;58     }
 00003c  bd30              POP      {r4,r5,pc}
                   |L1.62|
-00003e  4df5              LDR      r5,|L1.1044|
+00003e  4def              LDR      r5,|L1.1020|
 000040  89da              LDRH     r2,[r3,#0xe]          ;46  ; tx_wr_index1
 000042  54a8              STRB     r0,[r5,r2]            ;46
 000044  1c52              ADDS     r2,r2,#1              ;47
@@ -139,165 +139,10 @@
 ;;;87     
                           ENDP
 
-                  uart_out_buff1 PROC
-;;;113    //-----------------------------------------------
-;;;114    void uart_out_buff1 (char *ptr, char len)
-0000c2  b570              PUSH     {r4-r6,lr}
-;;;115    {
-0000c4  b08f              SUB      sp,sp,#0x3c
-0000c6  460d              MOV      r5,r1
-;;;116    char UOB[60]/*={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}*/;
-;;;117    char i,t=0;
-;;;118    
-;;;119    //rs232_data_out_buff[4]=210;
-;;;120    
-;;;121    for(i=0;i<len;i++)
-0000c8  f04f0200          MOV      r2,#0
-0000cc  466e              MOV      r6,sp                 ;116
-0000ce  e004              B        |L1.218|
-                  |L1.208|
-;;;122    	{
-;;;123    	UOB[i]=ptr[i];
-0000d0  5c81              LDRB     r1,[r0,r2]
-0000d2  54b1              STRB     r1,[r6,r2]
-0000d4  f1020201          ADD      r2,r2,#1              ;121
-0000d8  b2d2              UXTB     r2,r2                 ;121
-                  |L1.218|
-0000da  42aa              CMP      r2,r5                 ;121
-0000dc  d3f8              BCC      |L1.208|
-;;;124    	t^=UOB[i];
-;;;125    	}
-;;;126    
-;;;127    for (i=0;i<len;i++)
-0000de  f04f0400          MOV      r4,#0
-0000e2  e005              B        |L1.240|
-                  |L1.228|
-;;;128    	{
-;;;129    	putchar1(UOB[i]);
-0000e4  5d30              LDRB     r0,[r6,r4]
-0000e6  f7fffffe          BL       putchar1
-0000ea  f1040401          ADD      r4,r4,#1              ;127
-0000ee  b2e4              UXTB     r4,r4                 ;127
-                  |L1.240|
-0000f0  42ac              CMP      r4,r5                 ;127
-0000f2  d3f7              BCC      |L1.228|
-;;;130    	}   
-;;;131    }
-0000f4  b00f              ADD      sp,sp,#0x3c
-0000f6  bd70              POP      {r4-r6,pc}
-;;;132    
-                          ENDP
-
-                  uart1_init PROC
-;;;157    //-----------------------------------------------
-;;;158    uint32_t uart1_init(uint32_t baudrate)
-0000f8  49c4              LDR      r1,|L1.1036|
-;;;159    {
-;;;160    uint32_t Fdiv;
-;;;161    uint32_t pclkdiv, pclk;
-;;;162    
-;;;163    LPC_PINCON->PINSEL4 &= ~0x0000000F;
-0000fa  690a              LDR      r2,[r1,#0x10]
-0000fc  f022020f          BIC      r2,r2,#0xf
-000100  610a              STR      r2,[r1,#0x10]
-;;;164    LPC_PINCON->PINSEL4 |= 0x0000000A;	/* Enable RxD1 P2.1, TxD1 P2.0 */
-000102  690a              LDR      r2,[r1,#0x10]
-000104  f042020a          ORR      r2,r2,#0xa
-000108  610a              STR      r2,[r1,#0x10]
-;;;165    
-;;;166    LPC_PINCON->PINSEL4 &= ~0x00000030;//!!!!!!!!!!!
-00010a  690a              LDR      r2,[r1,#0x10]
-00010c  f0220230          BIC      r2,r2,#0x30
-000110  610a              STR      r2,[r1,#0x10]
-;;;167    LPC_PINCON->PINSEL4 |= 0x00000000; //!!!!!!!!!!! 
-000112  690a              LDR      r2,[r1,#0x10]
-000114  610a              STR      r2,[r1,#0x10]
-;;;168    LPC_GPIO2->FIODIR|=(1UL<<2);
-000116  49be              LDR      r1,|L1.1040|
-000118  6c0a              LDR      r2,[r1,#0x40]
-00011a  f0420204          ORR      r2,r2,#4
-00011e  640a              STR      r2,[r1,#0x40]
-;;;169    LPC_GPIO2->FIOPIN&=~(1UL<<2);
-000120  6d4a              LDR      r2,[r1,#0x54]
-000122  f0220204          BIC      r2,r2,#4
-000126  654a              STR      r2,[r1,#0x54]
-;;;170    
-;;;171    pclkdiv = (LPC_SC->PCLKSEL0 >> 8) & 0x03;
-000128  49bb              LDR      r1,|L1.1048|
-00012a  6809              LDR      r1,[r1,#0]
-00012c  f3c12201          UBFX     r2,r1,#8,#2
-;;;172    switch ( pclkdiv )
-;;;173    	{
-;;;174    	case 0x00:
-;;;175    	default:
-;;;176         pclk = SystemFrequency/4;
-000130  49ba              LDR      r1,|L1.1052|
-000132  2a01              CMP      r2,#1                 ;172
-000134  6809              LDR      r1,[r1,#0]
-000136  d00b              BEQ      |L1.336|
-000138  2a02              CMP      r2,#2                 ;172
-00013a  d004              BEQ      |L1.326|
-00013c  2a03              CMP      r2,#3                 ;172
-00013e  d005              BEQ      |L1.332|
-000140  ea4f0191          LSR      r1,r1,#2
-;;;177    	break;
-000144  e004              B        |L1.336|
-                  |L1.326|
-;;;178    	case 0x01:
-;;;179    	pclk = SystemFrequency;
-;;;180    	break; 
-;;;181    	case 0x02:
-;;;182    	pclk = SystemFrequency/2;
-000146  ea4f0151          LSR      r1,r1,#1
-;;;183    	break; 
-00014a  e001              B        |L1.336|
-                  |L1.332|
-;;;184    	case 0x03:
-;;;185    	pclk = SystemFrequency/8;
-00014c  ea4f01d1          LSR      r1,r1,#3
-                  |L1.336|
-;;;186    	break;
-;;;187    	}
-;;;188    
-;;;189    LPC_UART1->LCR = 0x83;		/* 8 bits, no Parity, 1 Stop bit */
-000150  4aad              LDR      r2,|L1.1032|
-000152  f04f0383          MOV      r3,#0x83
-000156  7313              STRB     r3,[r2,#0xc]
-;;;190    Fdiv = ( pclk / 16 ) / baudrate ;	/*baud rate */
-000158  ea4f1111          LSR      r1,r1,#4
-00015c  fbb1f0f0          UDIV     r0,r1,r0
-;;;191    LPC_UART1->DLM = Fdiv / 256;							
-000160  ea4f2110          LSR      r1,r0,#8
-000164  7111              STRB     r1,[r2,#4]
-;;;192    LPC_UART1->DLL = Fdiv % 256;
-000166  7010              STRB     r0,[r2,#0]
-;;;193    LPC_UART1->LCR = 0x03;		/* DLAB = 0 */
-000168  f04f0003          MOV      r0,#3
-00016c  7310              STRB     r0,[r2,#0xc]
-;;;194    LPC_UART1->FCR = 0x07;		/* Enable and reset TX and RX FIFO. */
-00016e  f04f0007          MOV      r0,#7
-000172  7210              STRB     r0,[r2,#8]
-000174  49aa              LDR      r1,|L1.1056|
-000176  f04f0340          MOV      r3,#0x40
-00017a  600b              STR      r3,[r1,#0]
-;;;195    
-;;;196    NVIC_EnableIRQ(UART1_IRQn);
-;;;197    
-;;;198    LPC_UART1->IER = IER_RBR | IER_THRE | IER_RLS;	/* Enable UART1 interrupt */
-00017c  6050              STR      r0,[r2,#4]
-;;;199    return (TRUE);
-00017e  f04f0001          MOV      r0,#1
-;;;200    
-;;;201    
-;;;202    }
-000182  4770              BX       lr
-;;;203    
-                          ENDP
-
                   UART1_IRQHandler PROC
 ;;;216    //***********************************************
 ;;;217    void UART1_IRQHandler (void) 
-000184  e92d41f0          PUSH     {r4-r8,lr}
+0000c2  e92d41f0          PUSH     {r4-r8,lr}
 ;;;218    {
 ;;;219    uint8_t IIRValue, LSRValue;
 ;;;220    uint8_t Dummy = Dummy;
@@ -305,13 +150,13 @@
 ;;;222    
 ;;;223    			
 ;;;224    IIRValue = LPC_UART1->IIR;
-000188  4e9f              LDR      r6,|L1.1032|
-00018a  68b0              LDR      r0,[r6,#8]
+0000c6  4eca              LDR      r6,|L1.1008|
+0000c8  68b0              LDR      r0,[r6,#8]
 ;;;225        
 ;;;226    IIRValue >>= 1;			/* skip pending bit in IIR */
-00018c  ea4f0050          LSR      r0,r0,#1
+0000ca  ea4f0050          LSR      r0,r0,#1
 ;;;227    IIRValue &= 0x07;			/* check bit 1~3, interrupt identification */
-000190  f0000007          AND      r0,r0,#7
+0000ce  f0000007          AND      r0,r0,#7
 ;;;228    if ( IIRValue == IIR_RLS )		/* Receive Line Status */
 ;;;229      	{
 ;;;230    	LSRValue = LPC_UART1->LSR;
@@ -324,7 +169,7 @@
 ;;;237    	  	/* There are errors or break interrupt */
 ;;;238    	  	/* Read LSR will clear the interrupt */
 ;;;239    	  	UART1Status = LSRValue;
-000194  499b              LDR      r1,|L1.1028|
+0000d2  49c6              LDR      r1,|L1.1004|
 ;;;240    	  	Dummy = LPC_UART1->RBR;		/* Dummy read on RX to clear 
 ;;;241    							interrupt, then bail out */
 ;;;242    	  	return;
@@ -334,21 +179,21 @@
 ;;;246    		
 ;;;247    		data=LPC_UART1->RBR;
 ;;;248    		rx_buffer1[rx_wr_index1]=data;
-000196  f8dfc27c          LDR      r12,|L1.1044|
+0000d4  f8dfc324          LDR      r12,|L1.1020|
 ;;;249       		bRXIN1=1;
-00019a  f04f0701          MOV      r7,#1
-00019e  890d              LDRH     r5,[r1,#8]            ;248
-0001a0  f1ac0c64          SUB      r12,r12,#0x64         ;248
+0000d8  f04f0701          MOV      r7,#1
+0000dc  890d              LDRH     r5,[r1,#8]            ;248
+0000de  f1ac0c64          SUB      r12,r12,#0x64         ;248
 ;;;250       		if (++rx_wr_index1 == RX_BUFFER_SIZE1) rx_wr_index1=0;
-0001a4  f1050201          ADD      r2,r5,#1
-0001a8  b293              UXTH     r3,r2
+0000e2  f1050201          ADD      r2,r5,#1
+0000e6  b293              UXTH     r3,r2
 ;;;251       		if (++rx_counter1 == RX_BUFFER_SIZE1)
-0001aa  898a              LDRH     r2,[r1,#0xc]
-0001ac  2803              CMP      r0,#3                 ;228
-0001ae  f1020201          ADD      r2,r2,#1
-0001b2  b294              UXTH     r4,r2
-0001b4  f04f0200          MOV      r2,#0                 ;250
-0001b8  d01c              BEQ      |L1.500|
+0000e8  898a              LDRH     r2,[r1,#0xc]
+0000ea  2803              CMP      r0,#3                 ;228
+0000ec  f1020201          ADD      r2,r2,#1
+0000f0  b294              UXTH     r4,r2
+0000f2  f04f0200          MOV      r2,#0                 ;250
+0000f6  d01c              BEQ      |L1.306|
 ;;;252          		{
 ;;;253          		rx_counter1=0;
 ;;;254          		rx_buffer_overflow1=1;
@@ -359,8 +204,8 @@
 ;;;259    
 ;;;260      	}
 ;;;261    else if ( IIRValue == IIR_RDA )	/* Receive Data Available */
-0001ba  2802              CMP      r0,#2
-0001bc  d031              BEQ      |L1.546|
+0000f8  2802              CMP      r0,#2
+0000fa  d031              BEQ      |L1.352|
 ;;;262      	{
 ;;;263    //	plazmaSS_fso[0]++;
 ;;;264    	//plazma_uart1++;
@@ -431,47 +276,47 @@
 ;;;329    
 ;;;330      	}
 ;;;331    else if ( IIRValue == IIR_CTI )	/* Character timeout indicator */
-0001be  2806              CMP      r0,#6
-0001c0  d03e              BEQ      |L1.576|
+0000fc  2806              CMP      r0,#6
+0000fe  d03e              BEQ      |L1.382|
 ;;;332      	{
 ;;;333    	/* Character Time-out indicator */
 ;;;334    	UART1Status |= 0x100;		/* Bit 9 as the CTI error */
 ;;;335      	}
 ;;;336    else if ( IIRValue == IIR_THRE )	/* THRE, transmit holding register empty */
-0001c2  2801              CMP      r0,#1
-0001c4  d114              BNE      |L1.496|
+000100  2801              CMP      r0,#1
+000102  d114              BNE      |L1.302|
 ;;;337      	{
 ;;;338    	/* THRE interrupt */
 ;;;339    	
 ;;;340    	LSRValue = LPC_UART1->LSR;		/* Check status in the LSR to see if
-0001c6  7d30              LDRB     r0,[r6,#0x14]
+000104  7d30              LDRB     r0,[r6,#0x14]
 ;;;341    									valid data in U0THR or not */
 ;;;342    	if ( LSRValue & LSR_THRE )
-0001c8  0680              LSLS     r0,r0,#26
-0001ca  d544              BPL      |L1.598|
+000106  0680              LSLS     r0,r0,#26
+000108  d544              BPL      |L1.404|
 ;;;343    		{
 ;;;344    	  	UART1TxEmpty = 1;
-0001cc  700f              STRB     r7,[r1,#0]
+00010a  700f              STRB     r7,[r1,#0]
 ;;;345    		if (tx_counter1)
-0001ce  8a48              LDRH     r0,[r1,#0x12]  ; tx_counter1
-0001d0  b3a8              CBZ      r0,|L1.574|
+00010c  8a48              LDRH     r0,[r1,#0x12]  ; tx_counter1
+00010e  b3a8              CBZ      r0,|L1.380|
 ;;;346       			{
 ;;;347       			--tx_counter1;
-0001d2  f1a00001          SUB      r0,r0,#1
-0001d6  8248              STRH     r0,[r1,#0x12]
+000110  f1a00001          SUB      r0,r0,#1
+000114  8248              STRH     r0,[r1,#0x12]
 ;;;348       			LPC_UART1->THR=tx_buffer1[tx_rd_index1];
-0001d8  4b8e              LDR      r3,|L1.1044|
-0001da  8a08              LDRH     r0,[r1,#0x10]  ; tx_rd_index1
-0001dc  5c1b              LDRB     r3,[r3,r0]
-0001de  7033              STRB     r3,[r6,#0]
+000116  4bb9              LDR      r3,|L1.1020|
+000118  8a08              LDRH     r0,[r1,#0x10]  ; tx_rd_index1
+00011a  5c1b              LDRB     r3,[r3,r0]
+00011c  7033              STRB     r3,[r6,#0]
 ;;;349       			if (++tx_rd_index1 == TX_BUFFER_SIZE1) tx_rd_index1=0;
-0001e0  f1000001          ADD      r0,r0,#1
-0001e4  b280              UXTH     r0,r0
-0001e6  8208              STRH     r0,[r1,#0x10]
-0001e8  f5b07f96          CMP      r0,#0x12c
-0001ec  d100              BNE      |L1.496|
-0001ee  820a              STRH     r2,[r1,#0x10]
-                  |L1.496|
+00011e  f1000001          ADD      r0,r0,#1
+000122  b280              UXTH     r0,r0
+000124  8208              STRH     r0,[r1,#0x10]
+000126  f5b07f96          CMP      r0,#0x12c
+00012a  d100              BNE      |L1.302|
+00012c  820a              STRH     r2,[r1,#0x10]
+                  |L1.302|
 ;;;350       			}
 ;;;351    		else LPC_GPIO2->FIOPIN&=~(1UL<<2);
 ;;;352    		}
@@ -481,163 +326,163 @@
 ;;;356    		}
 ;;;357      	}
 ;;;358    }
-0001f0  e8bd81f0          POP      {r4-r8,pc}
-                  |L1.500|
-0001f4  7d30              LDRB     r0,[r6,#0x14]         ;230
-0001f6  f0100f9e          TST      r0,#0x9e              ;235
-0001fa  d002              BEQ      |L1.514|
-0001fc  6148              STR      r0,[r1,#0x14]         ;239  ; UART1Status
-0001fe  7830              LDRB     r0,[r6,#0]            ;240
-000200  e7f6              B        |L1.496|
-                  |L1.514|
-000202  07c0              LSLS     r0,r0,#31             ;244
-000204  d0f4              BEQ      |L1.496|
-000206  7830              LDRB     r0,[r6,#0]            ;247
-000208  f80c0005          STRB     r0,[r12,r5]           ;248
-00020c  708f              STRB     r7,[r1,#2]            ;249
-00020e  810b              STRH     r3,[r1,#8]            ;250
-000210  2b64              CMP      r3,#0x64              ;250
-000212  d100              BNE      |L1.534|
-000214  810a              STRH     r2,[r1,#8]            ;250
-                  |L1.534|
-000216  818c              STRH     r4,[r1,#0xc]          ;251
-000218  2c64              CMP      r4,#0x64              ;251
-00021a  d1e9              BNE      |L1.496|
-00021c  818a              STRH     r2,[r1,#0xc]          ;253
-00021e  70cf              STRB     r7,[r1,#3]            ;254
-000220  e7e6              B        |L1.496|
-                  |L1.546|
-000222  7830              LDRB     r0,[r6,#0]            ;265
-000224  f80c0005          STRB     r0,[r12,r5]           ;266
-000228  708f              STRB     r7,[r1,#2]            ;267
-00022a  810b              STRH     r3,[r1,#8]            ;269
-00022c  2b64              CMP      r3,#0x64              ;269
-00022e  d100              BNE      |L1.562|
-000230  810a              STRH     r2,[r1,#8]            ;269
-                  |L1.562|
-000232  818c              STRH     r4,[r1,#0xc]          ;270
-000234  2c64              CMP      r4,#0x64              ;270
-000236  d1db              BNE      |L1.496|
-000238  818a              STRH     r2,[r1,#0xc]          ;272
-00023a  70cf              STRB     r7,[r1,#3]            ;273
-00023c  e7d8              B        |L1.496|
-                  |L1.574|
-00023e  e004              B        |L1.586|
-                  |L1.576|
-000240  6948              LDR      r0,[r1,#0x14]         ;334  ; UART1Status
-000242  f4407080          ORR      r0,r0,#0x100          ;334
-000246  6148              STR      r0,[r1,#0x14]         ;334  ; UART1Status
-000248  e7d2              B        |L1.496|
-                  |L1.586|
-00024a  4871              LDR      r0,|L1.1040|
-00024c  6d41              LDR      r1,[r0,#0x54]         ;351
-00024e  f0210104          BIC      r1,r1,#4              ;351
-000252  6541              STR      r1,[r0,#0x54]         ;351
-000254  e7cc              B        |L1.496|
-                  |L1.598|
-000256  700a              STRB     r2,[r1,#0]            ;355
-000258  e7ca              B        |L1.496|
+00012e  e8bd81f0          POP      {r4-r8,pc}
+                  |L1.306|
+000132  7d30              LDRB     r0,[r6,#0x14]         ;230
+000134  f0100f9e          TST      r0,#0x9e              ;235
+000138  d002              BEQ      |L1.320|
+00013a  6148              STR      r0,[r1,#0x14]         ;239  ; UART1Status
+00013c  7830              LDRB     r0,[r6,#0]            ;240
+00013e  e7f6              B        |L1.302|
+                  |L1.320|
+000140  07c0              LSLS     r0,r0,#31             ;244
+000142  d0f4              BEQ      |L1.302|
+000144  7830              LDRB     r0,[r6,#0]            ;247
+000146  f80c0005          STRB     r0,[r12,r5]           ;248
+00014a  708f              STRB     r7,[r1,#2]            ;249
+00014c  810b              STRH     r3,[r1,#8]            ;250
+00014e  2b64              CMP      r3,#0x64              ;250
+000150  d100              BNE      |L1.340|
+000152  810a              STRH     r2,[r1,#8]            ;250
+                  |L1.340|
+000154  818c              STRH     r4,[r1,#0xc]          ;251
+000156  2c64              CMP      r4,#0x64              ;251
+000158  d1e9              BNE      |L1.302|
+00015a  818a              STRH     r2,[r1,#0xc]          ;253
+00015c  70cf              STRB     r7,[r1,#3]            ;254
+00015e  e7e6              B        |L1.302|
+                  |L1.352|
+000160  7830              LDRB     r0,[r6,#0]            ;265
+000162  f80c0005          STRB     r0,[r12,r5]           ;266
+000166  708f              STRB     r7,[r1,#2]            ;267
+000168  810b              STRH     r3,[r1,#8]            ;269
+00016a  2b64              CMP      r3,#0x64              ;269
+00016c  d100              BNE      |L1.368|
+00016e  810a              STRH     r2,[r1,#8]            ;269
+                  |L1.368|
+000170  818c              STRH     r4,[r1,#0xc]          ;270
+000172  2c64              CMP      r4,#0x64              ;270
+000174  d1db              BNE      |L1.302|
+000176  818a              STRH     r2,[r1,#0xc]          ;272
+000178  70cf              STRB     r7,[r1,#3]            ;273
+00017a  e7d8              B        |L1.302|
+                  |L1.380|
+00017c  e004              B        |L1.392|
+                  |L1.382|
+00017e  6948              LDR      r0,[r1,#0x14]         ;334  ; UART1Status
+000180  f4407080          ORR      r0,r0,#0x100          ;334
+000184  6148              STR      r0,[r1,#0x14]         ;334  ; UART1Status
+000186  e7d2              B        |L1.302|
+                  |L1.392|
+000188  489b              LDR      r0,|L1.1016|
+00018a  6d41              LDR      r1,[r0,#0x54]         ;351
+00018c  f0210104          BIC      r1,r1,#4              ;351
+000190  6541              STR      r1,[r0,#0x54]         ;351
+000192  e7cc              B        |L1.302|
+                  |L1.404|
+000194  700a              STRB     r2,[r1,#0]            ;355
+000196  e7ca              B        |L1.302|
 ;;;359     
                           ENDP
 
                   uart_in_an1 PROC
 ;;;361    //-----------------------------------------------
 ;;;362    void uart_in_an1(void)
-00025a  b5fe              PUSH     {r1-r7,lr}
+000198  b5fe              PUSH     {r1-r7,lr}
 ;;;363    {
 ;;;364    char i;
 ;;;365    //motor_ind[0]^=0b0001000;
 ;;;366    plazma_suz[0]++;
-00025c  4969              LDR      r1,|L1.1028|
-00025e  3118              ADDS     r1,r1,#0x18
-000260  7808              LDRB     r0,[r1,#0]  ; plazma_suz
-000262  f1000001          ADD      r0,r0,#1
-000266  7008              STRB     r0,[r1,#0]
+00019a  4994              LDR      r1,|L1.1004|
+00019c  3118              ADDS     r1,r1,#0x18
+00019e  7808              LDRB     r0,[r1,#0]  ; plazma_suz
+0001a0  f1000001          ADD      r0,r0,#1
+0001a4  7008              STRB     r0,[r1,#0]
 ;;;367    
 ;;;368    if(UIB1[1]!=0x51)
-000268  4c6a              LDR      r4,|L1.1044|
-00026a  f1a40478          SUB      r4,r4,#0x78
-00026e  7863              LDRB     r3,[r4,#1]  ; UIB1
-000270  2b51              CMP      r3,#0x51
-000272  d00a              BEQ      |L1.650|
+0001a6  4c95              LDR      r4,|L1.1020|
+0001a8  f1a40478          SUB      r4,r4,#0x78
+0001ac  7863              LDRB     r3,[r4,#1]  ; UIB1
+0001ae  2b51              CMP      r3,#0x51
+0001b0  d00a              BEQ      |L1.456|
 ;;;369    {
 ;;;370    for(i=0;i<24;i++)
-000274  f04f0000          MOV      r0,#0
+0001b2  f04f0000          MOV      r0,#0
 ;;;371    	{
 ;;;372    	UIB10[i]=UIB1[i];
-000278  f50471d7          ADD      r1,r4,#0x1ae
-                  |L1.636|
-00027c  5c22              LDRB     r2,[r4,r0]
-00027e  540a              STRB     r2,[r1,r0]
-000280  f1000001          ADD      r0,r0,#1              ;370
-000284  b2c0              UXTB     r0,r0                 ;370
-000286  2818              CMP      r0,#0x18              ;370
-000288  d3f8              BCC      |L1.636|
-                  |L1.650|
+0001b6  f50471d7          ADD      r1,r4,#0x1ae
+                  |L1.442|
+0001ba  5c22              LDRB     r2,[r4,r0]
+0001bc  540a              STRB     r2,[r1,r0]
+0001be  f1000001          ADD      r0,r0,#1              ;370
+0001c2  b2c0              UXTB     r0,r0                 ;370
+0001c4  2818              CMP      r0,#0x18              ;370
+0001c6  d3f8              BCC      |L1.442|
+                  |L1.456|
 ;;;373    	}
 ;;;374    }
 ;;;375    uart1_mess[0]++;
-00028a  4866              LDR      r0,|L1.1060|
-00028c  7801              LDRB     r1,[r0,#0]  ; uart1_mess
-00028e  f1010101          ADD      r1,r1,#1
-000292  7001              STRB     r1,[r0,#0]
+0001c8  488d              LDR      r0,|L1.1024|
+0001ca  7801              LDRB     r1,[r0,#0]  ; uart1_mess
+0001cc  f1010101          ADD      r1,r1,#1
+0001d0  7001              STRB     r1,[r0,#0]
 ;;;376    
 ;;;377    if((UIB1[0]==4)&&(UIB1[1]==0)&&(UIB1[2]==2)&&(UIB1[3]==0)&&(UIB1[4]==1) && (ICA_EN==0))
-000294  7820              LDRB     r0,[r4,#0]  ; UIB1
+0001d2  7820              LDRB     r0,[r4,#0]  ; UIB1
 ;;;378    	{
 ;;;379    	
 ;;;380    	uart_out1(5,4,1,2,(char)bps_I,(char)(bps_I/256),0);
 ;;;381    	plazma_uart1++;
-000296  4d5b              LDR      r5,|L1.1028|
-000298  4f63              LDR      r7,|L1.1064|
-00029a  f04f0600          MOV      r6,#0                 ;370
-00029e  2804              CMP      r0,#4                 ;377
-0002a0  d120              BNE      |L1.740|
-0002a2  b9fb              CBNZ     r3,|L1.740|
-0002a4  78a0              LDRB     r0,[r4,#2]            ;377  ; UIB1
-0002a6  2802              CMP      r0,#2                 ;377
-0002a8  d11c              BNE      |L1.740|
-0002aa  78e0              LDRB     r0,[r4,#3]            ;377  ; UIB1
-0002ac  b9d0              CBNZ     r0,|L1.740|
-0002ae  7920              LDRB     r0,[r4,#4]            ;377  ; UIB1
-0002b0  2801              CMP      r0,#1                 ;377
-0002b2  d117              BNE      |L1.740|
-0002b4  8838              LDRH     r0,[r7,#0]            ;377  ; ICA_EN
-0002b6  b9a8              CBNZ     r0,|L1.740|
-0002b8  485c              LDR      r0,|L1.1068|
-0002ba  2302              MOVS     r3,#2                 ;380
-0002bc  2201              MOVS     r2,#1                 ;380
-0002be  f9b00000          LDRSH    r0,[r0,#0]            ;380  ; bps_I
-0002c2  17c1              ASRS     r1,r0,#31             ;380
-0002c4  eb006111          ADD      r1,r0,r1,LSR #24      ;380
-0002c8  f3c12107          UBFX     r1,r1,#8,#8           ;380
-0002cc  b2c0              UXTB     r0,r0                 ;380
-0002ce  e88d0043          STM      sp,{r0,r1,r6}         ;380
-0002d2  2104              MOVS     r1,#4                 ;380
-0002d4  2005              MOVS     r0,#5                 ;380
-0002d6  f7fffffe          BL       uart_out1
-0002da  7928              LDRB     r0,[r5,#4]  ; plazma_uart1
-0002dc  f1000001          ADD      r0,r0,#1
-0002e0  7128              STRB     r0,[r5,#4]
+0001d4  4d85              LDR      r5,|L1.1004|
+0001d6  4f8b              LDR      r7,|L1.1028|
+0001d8  f04f0600          MOV      r6,#0                 ;370
+0001dc  2804              CMP      r0,#4                 ;377
+0001de  d120              BNE      |L1.546|
+0001e0  b9fb              CBNZ     r3,|L1.546|
+0001e2  78a0              LDRB     r0,[r4,#2]            ;377  ; UIB1
+0001e4  2802              CMP      r0,#2                 ;377
+0001e6  d11c              BNE      |L1.546|
+0001e8  78e0              LDRB     r0,[r4,#3]            ;377  ; UIB1
+0001ea  b9d0              CBNZ     r0,|L1.546|
+0001ec  7920              LDRB     r0,[r4,#4]            ;377  ; UIB1
+0001ee  2801              CMP      r0,#1                 ;377
+0001f0  d117              BNE      |L1.546|
+0001f2  8838              LDRH     r0,[r7,#0]            ;377  ; ICA_EN
+0001f4  b9a8              CBNZ     r0,|L1.546|
+0001f6  4884              LDR      r0,|L1.1032|
+0001f8  2302              MOVS     r3,#2                 ;380
+0001fa  2201              MOVS     r2,#1                 ;380
+0001fc  f9b00000          LDRSH    r0,[r0,#0]            ;380  ; bps_I
+000200  17c1              ASRS     r1,r0,#31             ;380
+000202  eb006111          ADD      r1,r0,r1,LSR #24      ;380
+000206  f3c12107          UBFX     r1,r1,#8,#8           ;380
+00020a  b2c0              UXTB     r0,r0                 ;380
+00020c  e88d0043          STM      sp,{r0,r1,r6}         ;380
+000210  2104              MOVS     r1,#4                 ;380
+000212  2005              MOVS     r0,#5                 ;380
+000214  f7fffffe          BL       uart_out1
+000218  7928              LDRB     r0,[r5,#4]  ; plazma_uart1
+00021a  f1000001          ADD      r0,r0,#1
+00021e  7128              STRB     r0,[r5,#4]
 ;;;382    
 ;;;383    	uart1_net_cnt=0;
-0002e2  706e              STRB     r6,[r5,#1]
-                  |L1.740|
+000220  706e              STRB     r6,[r5,#1]
+                  |L1.546|
 ;;;384    	}
 ;;;385    
 ;;;386    
 ;;;387    if((UIB1[0]==6)&&(UIB1[1]==0)&&(UIB1[2]==100) && (ICA_EN==0))
-0002e4  7820              LDRB     r0,[r4,#0]  ; UIB1
-0002e6  2806              CMP      r0,#6
-0002e8  d106              BNE      |L1.760|
-0002ea  7861              LDRB     r1,[r4,#1]  ; UIB1
-0002ec  b921              CBNZ     r1,|L1.760|
-0002ee  78a1              LDRB     r1,[r4,#2]  ; UIB1
-0002f0  2964              CMP      r1,#0x64
-0002f2  d101              BNE      |L1.760|
-0002f4  8839              LDRH     r1,[r7,#0]  ; ICA_EN
-0002f6  b111              CBZ      r1,|L1.766|
-                  |L1.760|
+000222  7820              LDRB     r0,[r4,#0]  ; UIB1
+000224  2806              CMP      r0,#6
+000226  d106              BNE      |L1.566|
+000228  7861              LDRB     r1,[r4,#1]  ; UIB1
+00022a  b921              CBNZ     r1,|L1.566|
+00022c  78a1              LDRB     r1,[r4,#2]  ; UIB1
+00022e  2964              CMP      r1,#0x64
+000230  d101              BNE      |L1.566|
+000232  8839              LDRH     r1,[r7,#0]  ; ICA_EN
+000234  b111              CBZ      r1,|L1.572|
+                  |L1.566|
 ;;;388    	{
 ;;;389    	short tempSSSS;
 ;;;390    	tempSSSS=(short)UIB1[4] + ((short)UIB1[3])*256;
@@ -662,52 +507,52 @@
 ;;;409    
 ;;;410    
 ;;;411    else if((UIB1[0]==4)&&(UIB1[1]==1)&&(UIB1[2]==2) && (ICA_EN==1) && (ICA_CH==2) )
-0002f8  2804              CMP      r0,#4
-0002fa  d030              BEQ      |L1.862|
-0002fc  e03c              B        |L1.888|
-                  |L1.766|
-0002fe  7920              LDRB     r0,[r4,#4]            ;390  ; UIB1
-000300  78e1              LDRB     r1,[r4,#3]            ;390  ; UIB1
-000302  eb002001          ADD      r0,r0,r1,LSL #8       ;390
-000306  b200              SXTH     r0,r0                 ;390
-000308  4949              LDR      r1,|L1.1072|
-00030a  8008              STRH     r0,[r1,#0]            ;392
-00030c  0441              LSLS     r1,r0,#17             ;394
-00030e  d51e              BPL      |L1.846|
-000310  f3c0040d          UBFX     r4,r0,#0,#14          ;396
-000314  f1a40001          SUB      r0,r4,#1              ;397
-000318  2804              CMP      r0,#4                 ;397
-00031a  d202              BCS      |L1.802|
-00031c  f04f0400          MOV      r4,#0                 ;397
-000320  e003              B        |L1.810|
-                  |L1.802|
-000322  2c3c              CMP      r4,#0x3c              ;398
-000324  db01              BLT      |L1.810|
-000326  f04f043c          MOV      r4,#0x3c              ;398
-                  |L1.810|
-00032a  4842              LDR      r0,|L1.1076|
-00032c  f9b00000          LDRSH    r0,[r0,#0]            ;399  ; TBAT
-000330  42a0              CMP      r0,r4                 ;399
-000332  d003              BEQ      |L1.828|
-000334  4621              MOV      r1,r4                 ;399
-000336  20c2              MOVS     r0,#0xc2              ;399
-000338  f7fffffe          BL       lc640_write_int
-                  |L1.828|
-00033c  ebc41004          RSB      r0,r4,r4,LSL #4       ;401
-000340  f06f0113          MVN      r1,#0x13              ;401
-000344  eb010080          ADD      r0,r1,r0,LSL #2       ;401
-000348  493b              LDR      r1,|L1.1080|
-00034a  8008              STRH     r0,[r1,#0]            ;401
-00034c  e001              B        |L1.850|
-                  |L1.846|
-00034e  493b              LDR      r1,|L1.1084|
-000350  8008              STRH     r0,[r1,#0]            ;403
-                  |L1.850|
-000352  493b              LDR      r1,|L1.1088|
-000354  f04f00c8          MOV      r0,#0xc8              ;405
-000358  8008              STRH     r0,[r1,#0]            ;405
-00035a  706e              STRB     r6,[r5,#1]            ;407
-                  |L1.860|
+000236  2804              CMP      r0,#4
+000238  d030              BEQ      |L1.668|
+00023a  e03c              B        |L1.694|
+                  |L1.572|
+00023c  7920              LDRB     r0,[r4,#4]            ;390  ; UIB1
+00023e  78e1              LDRB     r1,[r4,#3]            ;390  ; UIB1
+000240  eb002001          ADD      r0,r0,r1,LSL #8       ;390
+000244  b200              SXTH     r0,r0                 ;390
+000246  4971              LDR      r1,|L1.1036|
+000248  8008              STRH     r0,[r1,#0]            ;392
+00024a  0441              LSLS     r1,r0,#17             ;394
+00024c  d51e              BPL      |L1.652|
+00024e  f3c0040d          UBFX     r4,r0,#0,#14          ;396
+000252  f1a40001          SUB      r0,r4,#1              ;397
+000256  2804              CMP      r0,#4                 ;397
+000258  d202              BCS      |L1.608|
+00025a  f04f0400          MOV      r4,#0                 ;397
+00025e  e003              B        |L1.616|
+                  |L1.608|
+000260  2c3c              CMP      r4,#0x3c              ;398
+000262  db01              BLT      |L1.616|
+000264  f04f043c          MOV      r4,#0x3c              ;398
+                  |L1.616|
+000268  4869              LDR      r0,|L1.1040|
+00026a  f9b00000          LDRSH    r0,[r0,#0]            ;399  ; TBAT
+00026e  42a0              CMP      r0,r4                 ;399
+000270  d003              BEQ      |L1.634|
+000272  4621              MOV      r1,r4                 ;399
+000274  20c2              MOVS     r0,#0xc2              ;399
+000276  f7fffffe          BL       lc640_write_int
+                  |L1.634|
+00027a  ebc41004          RSB      r0,r4,r4,LSL #4       ;401
+00027e  f06f0113          MVN      r1,#0x13              ;401
+000282  eb010080          ADD      r0,r1,r0,LSL #2       ;401
+000286  4963              LDR      r1,|L1.1044|
+000288  8008              STRH     r0,[r1,#0]            ;401
+00028a  e001              B        |L1.656|
+                  |L1.652|
+00028c  4962              LDR      r1,|L1.1048|
+00028e  8008              STRH     r0,[r1,#0]            ;403
+                  |L1.656|
+000290  4962              LDR      r1,|L1.1052|
+000292  f04f00c8          MOV      r0,#0xc8              ;405
+000296  8008              STRH     r0,[r1,#0]            ;405
+000298  706e              STRB     r6,[r5,#1]            ;407
+                  |L1.666|
 ;;;412    	{
 ;;;413    	
 ;;;414    	ica_your_current=(short)UIB1[3]+((short)UIB1[4]*256);
@@ -729,118 +574,117 @@
 ;;;430    	
 ;;;431    			
 ;;;432    }
-00035c  bdfe              POP      {r1-r7,pc}
-                  |L1.862|
-00035e  7861              LDRB     r1,[r4,#1]            ;411  ; UIB1
-000360  2901              CMP      r1,#1                 ;411
-000362  d109              BNE      |L1.888|
-000364  78a1              LDRB     r1,[r4,#2]            ;411  ; UIB1
-000366  2902              CMP      r1,#2                 ;411
-000368  d106              BNE      |L1.888|
-00036a  8839              LDRH     r1,[r7,#0]            ;411  ; ICA_EN
-00036c  2901              CMP      r1,#1                 ;411
-00036e  d103              BNE      |L1.888|
-000370  4934              LDR      r1,|L1.1092|
-000372  8809              LDRH     r1,[r1,#0]            ;411  ; ICA_CH
-000374  2902              CMP      r1,#2                 ;411
-000376  d004              BEQ      |L1.898|
-                  |L1.888|
-000378  2816              CMP      r0,#0x16              ;418
-00037a  d1ef              BNE      |L1.860|
-00037c  7860              LDRB     r0,[r4,#1]            ;418  ; UIB1
-00037e  2801              CMP      r0,#1                 ;418
-000380  bdfe              POP      {r1-r7,pc}
-                  |L1.898|
-000382  78e0              LDRB     r0,[r4,#3]            ;414  ; UIB1
-000384  7921              LDRB     r1,[r4,#4]            ;414  ; UIB1
-000386  eb002001          ADD      r0,r0,r1,LSL #8       ;414
-00038a  492f              LDR      r1,|L1.1096|
-00038c  8008              STRH     r0,[r1,#0]            ;414
-00038e  706e              STRB     r6,[r5,#1]            ;416
-000390  bdfe              POP      {r1-r7,pc}
+00029a  bdfe              POP      {r1-r7,pc}
+                  |L1.668|
+00029c  7861              LDRB     r1,[r4,#1]            ;411  ; UIB1
+00029e  2901              CMP      r1,#1                 ;411
+0002a0  d109              BNE      |L1.694|
+0002a2  78a1              LDRB     r1,[r4,#2]            ;411  ; UIB1
+0002a4  2902              CMP      r1,#2                 ;411
+0002a6  d106              BNE      |L1.694|
+0002a8  8839              LDRH     r1,[r7,#0]            ;411  ; ICA_EN
+0002aa  2901              CMP      r1,#1                 ;411
+0002ac  d103              BNE      |L1.694|
+0002ae  495c              LDR      r1,|L1.1056|
+0002b0  8809              LDRH     r1,[r1,#0]            ;411  ; ICA_CH
+0002b2  2902              CMP      r1,#2                 ;411
+0002b4  d004              BEQ      |L1.704|
+                  |L1.694|
+0002b6  2816              CMP      r0,#0x16              ;418
+0002b8  d1ef              BNE      |L1.666|
+0002ba  7860              LDRB     r0,[r4,#1]            ;418  ; UIB1
+0002bc  2801              CMP      r0,#1                 ;418
+0002be  bdfe              POP      {r1-r7,pc}
+                  |L1.704|
+0002c0  78e0              LDRB     r0,[r4,#3]            ;414  ; UIB1
+0002c2  7921              LDRB     r1,[r4,#4]            ;414  ; UIB1
+0002c4  eb002001          ADD      r0,r0,r1,LSL #8       ;414
+0002c8  4956              LDR      r1,|L1.1060|
+0002ca  8008              STRH     r0,[r1,#0]            ;414
+0002cc  706e              STRB     r6,[r5,#1]            ;416
+0002ce  bdfe              POP      {r1-r7,pc}
 ;;;433     
                           ENDP
 
                   index_offset1 PROC
 ;;;434    //-----------------------------------------------
 ;;;435    char index_offset1 (signed char index,signed char offset)
-000392  4408              ADD      r0,r0,r1
+0002d0  4408              ADD      r0,r0,r1
 ;;;436    {
 ;;;437    index=index+offset;
-000394  b240              SXTB     r0,r0
+0002d2  b240              SXTB     r0,r0
 ;;;438    if(index>=RX_BUFFER_SIZE1) index-=RX_BUFFER_SIZE1; 
-000396  2864              CMP      r0,#0x64
-000398  db02              BLT      |L1.928|
-00039a  f1a00064          SUB      r0,r0,#0x64
-00039e  b240              SXTB     r0,r0
-                  |L1.928|
+0002d4  2864              CMP      r0,#0x64
+0002d6  db02              BLT      |L1.734|
+0002d8  f1a00064          SUB      r0,r0,#0x64
+0002dc  b240              SXTB     r0,r0
+                  |L1.734|
 ;;;439    if(index<0) index+=RX_BUFFER_SIZE1;
-0003a0  2800              CMP      r0,#0
-0003a2  da02              BGE      |L1.938|
-0003a4  f1000064          ADD      r0,r0,#0x64
-0003a8  b240              SXTB     r0,r0
-                  |L1.938|
+0002de  2800              CMP      r0,#0
+0002e0  da02              BGE      |L1.744|
+0002e2  f1000064          ADD      r0,r0,#0x64
+0002e6  b240              SXTB     r0,r0
+                  |L1.744|
 ;;;440    return index;
-0003aa  b2c0              UXTB     r0,r0
+0002e8  b2c0              UXTB     r0,r0
 ;;;441    }
-0003ac  4770              BX       lr
+0002ea  4770              BX       lr
 ;;;442    
                           ENDP
 
                   control_check1 PROC
 ;;;443    //-----------------------------------------------
 ;;;444    char control_check1(char index)
-0003ae  b570              PUSH     {r4-r6,lr}
+0002ec  b570              PUSH     {r4-r6,lr}
 ;;;445    {
 ;;;446    char i=0,ii=0,iii;
-0003b0  f04f0200          MOV      r2,#0
+0002ee  f04f0200          MOV      r2,#0
 ;;;447    
 ;;;448    if(rx_buffer1[index]!=END) goto error_cc;
-0003b4  4e17              LDR      r6,|L1.1044|
-0003b6  f1a60664          SUB      r6,r6,#0x64
-0003ba  5c31              LDRB     r1,[r6,r0]
-0003bc  290a              CMP      r1,#0xa
-0003be  d145              BNE      |L1.1100|
+0002f2  4e42              LDR      r6,|L1.1020|
+0002f4  f1a60664          SUB      r6,r6,#0x64
+0002f8  5c31              LDRB     r1,[r6,r0]
+0002fa  290a              CMP      r1,#0xa
+0002fc  d120              BNE      |L1.832|
 ;;;449    
 ;;;450    ii=rx_buffer1[index_offset1(index,-2)];
-0003c0  b240              SXTB     r0,r0
-0003c2  1e91              SUBS     r1,r2,#2
-0003c4  4605              MOV      r5,r0
-0003c6  f7fffffe          BL       index_offset1
-0003ca  5c34              LDRB     r4,[r6,r0]
+0002fe  b240              SXTB     r0,r0
+000300  1e91              SUBS     r1,r2,#2
+000302  4605              MOV      r5,r0
+000304  f7fffffe          BL       index_offset1
+000308  5c34              LDRB     r4,[r6,r0]
 ;;;451    iii=0;
-0003cc  f04f0300          MOV      r3,#0
+00030a  f04f0300          MOV      r3,#0
 ;;;452    for(i=0;i<=ii;i++)
-0003d0  e00b              B        |L1.1002|
-                  |L1.978|
+00030e  e00b              B        |L1.808|
+                  |L1.784|
 ;;;453    	{
 ;;;454    	iii^=rx_buffer1[index_offset1(index,-2-ii+i)];
-0003d2  1b10              SUBS     r0,r2,r4
-0003d4  1e80              SUBS     r0,r0,#2
-0003d6  b241              SXTB     r1,r0
-0003d8  4628              MOV      r0,r5
-0003da  f7fffffe          BL       index_offset1
-0003de  5c30              LDRB     r0,[r6,r0]
-0003e0  ea800303          EOR      r3,r0,r3
-0003e4  f1020201          ADD      r2,r2,#1              ;452
-0003e8  b2d2              UXTB     r2,r2                 ;452
-                  |L1.1002|
-0003ea  42a2              CMP      r2,r4                 ;452
-0003ec  d9f1              BLS      |L1.978|
+000310  1b10              SUBS     r0,r2,r4
+000312  1e80              SUBS     r0,r0,#2
+000314  b241              SXTB     r1,r0
+000316  4628              MOV      r0,r5
+000318  f7fffffe          BL       index_offset1
+00031c  5c30              LDRB     r0,[r6,r0]
+00031e  ea800303          EOR      r3,r0,r3
+000322  f1020201          ADD      r2,r2,#1              ;452
+000326  b2d2              UXTB     r2,r2                 ;452
+                  |L1.808|
+000328  42a2              CMP      r2,r4                 ;452
+00032a  d9f1              BLS      |L1.784|
 ;;;455    	}
 ;;;456    if (iii!=rx_buffer1[index_offset1(index,-1)]) goto error_cc;	
-0003ee  f04f31ff          MOV      r1,#0xffffffff
-0003f2  4628              MOV      r0,r5
-0003f4  f7fffffe          BL       index_offset1
-0003f8  5c30              LDRB     r0,[r6,r0]
-0003fa  4298              CMP      r0,r3
-0003fc  d126              BNE      |L1.1100|
+00032c  f04f31ff          MOV      r1,#0xffffffff
+000330  4628              MOV      r0,r5
+000332  f7fffffe          BL       index_offset1
+000336  5c30              LDRB     r0,[r6,r0]
+000338  4298              CMP      r0,r3
+00033a  d101              BNE      |L1.832|
 ;;;457    
 ;;;458    
 ;;;459    //success_cc:
 ;;;460    return 1;
-0003fe  2001              MOVS     r0,#1
-                  |L1.1024|
+00033c  2001              MOVS     r0,#1
 ;;;461    //goto end_cc;
 ;;;462    error_cc:
 ;;;463    return 0;
@@ -849,153 +693,121 @@
 ;;;466    //end_cc:
 ;;;467    //__nop();
 ;;;468    }
-000400  bd70              POP      {r4-r6,pc}
-000402  0000              DCW      0x0000
-                  |L1.1028|
-                          DCD      ||.data||
-                  |L1.1032|
-                          DCD      0x40010000
-                  |L1.1036|
-                          DCD      0x4002c000
-                  |L1.1040|
-                          DCD      0x2009c000
-                  |L1.1044|
-                          DCD      ||.bss||+0x78
-                  |L1.1048|
-                          DCD      0x400fc1a8
-                  |L1.1052|
-                          DCD      SystemFrequency
-                  |L1.1056|
-                          DCD      0xe000e100
-                  |L1.1060|
-                          DCD      ||.bss||+0x1a4
-                  |L1.1064|
-                          DCD      ICA_EN
-                  |L1.1068|
-                          DCD      bps_I
-                  |L1.1072|
-                          DCD      plazma_ica2
-                  |L1.1076|
-                          DCD      TBAT
-                  |L1.1080|
-                          DCD      main_kb_cnt
-                  |L1.1084|
-                          DCD      ica_cntrl_hndl
-                  |L1.1088|
-                          DCD      ica_cntrl_hndl_cnt
-                  |L1.1092|
-                          DCD      ICA_CH
-                  |L1.1096|
-                          DCD      ica_your_current
-                  |L1.1100|
-00044c  2000              MOVS     r0,#0                 ;463
-00044e  e7d7              B        |L1.1024|
+00033e  bd70              POP      {r4-r6,pc}
+                  |L1.832|
+000340  2000              MOVS     r0,#0                 ;463
+000342  bd70              POP      {r4-r6,pc}
 ;;;469    
                           ENDP
 
                   uart_in1 PROC
 ;;;470    //-----------------------------------------------
 ;;;471    void uart_in1(void)
-000450  e92d41f0          PUSH     {r4-r8,lr}
+000344  e92d41f0          PUSH     {r4-r8,lr}
 ;;;472    {
 ;;;473    char temp,i/*,count*/;
 ;;;474    
 ;;;475    __disable_irq();
-000454  b672              CPSID    i
+000348  b672              CPSID    i
 ;;;476    
 ;;;477    if(rx_buffer_overflow1)
-000456  4d26              LDR      r5,|L1.1264|
-000458  2600              MOVS     r6,#0
-00045a  78e8              LDRB     r0,[r5,#3]  ; rx_buffer_overflow1
-00045c  b118              CBZ      r0,|L1.1126|
+00034a  4d28              LDR      r5,|L1.1004|
+00034c  2600              MOVS     r6,#0
+00034e  78e8              LDRB     r0,[r5,#3]  ; rx_buffer_overflow1
+000350  b118              CBZ      r0,|L1.858|
 ;;;478    	{
 ;;;479    	rx_wr_index1=0;
-00045e  812e              STRH     r6,[r5,#8]
+000352  812e              STRH     r6,[r5,#8]
 ;;;480    	rx_rd_index1=0;
-000460  816e              STRH     r6,[r5,#0xa]
+000354  816e              STRH     r6,[r5,#0xa]
 ;;;481    	rx_counter1=0;
-000462  81ae              STRH     r6,[r5,#0xc]
+000356  81ae              STRH     r6,[r5,#0xc]
 ;;;482    	rx_buffer_overflow1=0;
-000464  70ee              STRB     r6,[r5,#3]
-                  |L1.1126|
+000358  70ee              STRB     r6,[r5,#3]
+                  |L1.858|
 ;;;483    	}    
 ;;;484    usart1_router_wrk=1;	
-000466  f04f0001          MOV      r0,#1
-00046a  71a8              STRB     r0,[r5,#6]
+00035a  f04f0001          MOV      r0,#1
+00035e  71a8              STRB     r0,[r5,#6]
 ;;;485    if(rx_counter1&&(rx_buffer1[index_offset1(rx_wr_index1,-1)])==END)
-00046c  89a8              LDRH     r0,[r5,#0xc]  ; rx_counter1
-00046e  b3e8              CBZ      r0,|L1.1260|
-000470  8928              LDRH     r0,[r5,#8]  ; rx_wr_index1
-000472  f04f32ff          MOV      r2,#0xffffffff
-000476  4611              MOV      r1,r2
-000478  b240              SXTB     r0,r0
-00047a  f7fffffe          BL       index_offset1
-00047e  4f1d              LDR      r7,|L1.1268|
-000480  5c38              LDRB     r0,[r7,r0]
-000482  280a              CMP      r0,#0xa
-000484  d132              BNE      |L1.1260|
+000360  89a8              LDRH     r0,[r5,#0xc]  ; rx_counter1
+000362  b3f0              CBZ      r0,|L1.994|
+000364  8928              LDRH     r0,[r5,#8]  ; rx_wr_index1
+000366  f04f32ff          MOV      r2,#0xffffffff
+00036a  4611              MOV      r1,r2
+00036c  b240              SXTB     r0,r0
+00036e  f7fffffe          BL       index_offset1
+000372  4f22              LDR      r7,|L1.1020|
+000374  3f64              SUBS     r7,r7,#0x64
+000376  5c38              LDRB     r0,[r7,r0]
+000378  280a              CMP      r0,#0xa
+00037a  d134              BNE      |L1.998|
 ;;;486    	{
 ;;;487    	
 ;;;488         temp=rx_buffer1[index_offset1(rx_wr_index1,-3)];
-000486  8928              LDRH     r0,[r5,#8]  ; rx_wr_index1
-000488  f06f0102          MVN      r1,#2
-00048c  b240              SXTB     r0,r0
-00048e  f7fffffe          BL       index_offset1
-000492  5c3c              LDRB     r4,[r7,r0]
+00037c  8928              LDRH     r0,[r5,#8]  ; rx_wr_index1
+00037e  f06f0102          MVN      r1,#2
+000382  b240              SXTB     r0,r0
+000384  f7fffffe          BL       index_offset1
+000388  5c3c              LDRB     r4,[r7,r0]
 ;;;489        	if(temp<20) 
-000494  2c14              CMP      r4,#0x14
-000496  d229              BCS      |L1.1260|
+00038a  2c14              CMP      r4,#0x14
+00038c  d22b              BCS      |L1.998|
 ;;;490        		{
 ;;;491        		if(control_check1(index_offset1(rx_wr_index1,-1)))
-000498  8928              LDRH     r0,[r5,#8]  ; rx_wr_index1
-00049a  4611              MOV      r1,r2
-00049c  b240              SXTB     r0,r0
-00049e  f7fffffe          BL       index_offset1
-0004a2  f7fffffe          BL       control_check1
-0004a6  b308              CBZ      r0,|L1.1260|
+00038e  8928              LDRH     r0,[r5,#8]  ; rx_wr_index1
+000390  4611              MOV      r1,r2
+000392  b240              SXTB     r0,r0
+000394  f7fffffe          BL       index_offset1
+000398  f7fffffe          BL       control_check1
+00039c  b308              CBZ      r0,|L1.994|
 ;;;492        			{
 ;;;493        		
 ;;;494        			rx_rd_index1=index_offset1(rx_wr_index1,-3-temp);
-0004a8  1ce0              ADDS     r0,r4,#3
-0004aa  4240              RSBS     r0,r0,#0
-0004ac  b241              SXTB     r1,r0
-0004ae  8928              LDRH     r0,[r5,#8]  ; rx_wr_index1
-0004b0  b240              SXTB     r0,r0
-0004b2  f7fffffe          BL       index_offset1
-0004b6  8168              STRH     r0,[r5,#0xa]
+00039e  1ce0              ADDS     r0,r4,#3
+0003a0  4240              RSBS     r0,r0,#0
+0003a2  b241              SXTB     r1,r0
+0003a4  8928              LDRH     r0,[r5,#8]  ; rx_wr_index1
+0003a6  b240              SXTB     r0,r0
+0003a8  f7fffffe          BL       index_offset1
+0003ac  8168              STRH     r0,[r5,#0xa]
 ;;;495        			for(i=0;i<temp;i++)
-0004b8  f04f0200          MOV      r2,#0
+0003ae  f04f0200          MOV      r2,#0
 ;;;496    				{
 ;;;497    				UIB1[i]=rx_buffer1[index_offset1(rx_rd_index1,i)];
-0004bc  f1a70314          SUB      r3,r7,#0x14
-0004c0  e009              B        |L1.1238|
-                  |L1.1218|
-0004c2  8968              LDRH     r0,[r5,#0xa]  ; rx_rd_index1
-0004c4  b251              SXTB     r1,r2
-0004c6  b240              SXTB     r0,r0
-0004c8  f7fffffe          BL       index_offset1
-0004cc  5c38              LDRB     r0,[r7,r0]
-0004ce  5498              STRB     r0,[r3,r2]
-0004d0  f1020201          ADD      r2,r2,#1              ;495
-0004d4  b2d2              UXTB     r2,r2                 ;495
-                  |L1.1238|
-0004d6  42a2              CMP      r2,r4                 ;495
-0004d8  d3f3              BCC      |L1.1218|
+0003b2  f1a70314          SUB      r3,r7,#0x14
+0003b6  e009              B        |L1.972|
+                  |L1.952|
+0003b8  8968              LDRH     r0,[r5,#0xa]  ; rx_rd_index1
+0003ba  b251              SXTB     r1,r2
+0003bc  b240              SXTB     r0,r0
+0003be  f7fffffe          BL       index_offset1
+0003c2  5c38              LDRB     r0,[r7,r0]
+0003c4  5498              STRB     r0,[r3,r2]
+0003c6  f1020201          ADD      r2,r2,#1              ;495
+0003ca  b2d2              UXTB     r2,r2                 ;495
+                  |L1.972|
+0003cc  42a2              CMP      r2,r4                 ;495
+0003ce  d3f3              BCC      |L1.952|
 ;;;498    				} 
 ;;;499    			rx_rd_index1=rx_wr_index1;
-0004da  8928              LDRH     r0,[r5,#8]  ; rx_wr_index1
-0004dc  8168              STRH     r0,[r5,#0xa]
+0003d0  8928              LDRH     r0,[r5,#8]  ; rx_wr_index1
+0003d2  8168              STRH     r0,[r5,#0xa]
 ;;;500    			rx_counter1=0;
-0004de  81ae              STRH     r6,[r5,#0xc]
+0003d4  81ae              STRH     r6,[r5,#0xc]
 ;;;501    			uart_in_an1();
-0004e0  f7fffffe          BL       uart_in_an1
+0003d6  f7fffffe          BL       uart_in_an1
 ;;;502    			
 ;;;503    			if(usart1_router_stat==ursMEGA)usart1_router_wrk=0;
-0004e4  7968              LDRB     r0,[r5,#5]  ; usart1_router_stat
-0004e6  2855              CMP      r0,#0x55
-0004e8  d100              BNE      |L1.1260|
-0004ea  71ae              STRB     r6,[r5,#6]
-                  |L1.1260|
+0003da  7968              LDRB     r0,[r5,#5]  ; usart1_router_stat
+0003dc  2855              CMP      r0,#0x55
+0003de  d102              BNE      |L1.998|
+0003e0  e000              B        |L1.996|
+                  |L1.994|
+0003e2  e000              B        |L1.998|
+                  |L1.996|
+0003e4  71ae              STRB     r6,[r5,#6]
+                  |L1.998|
 ;;;504        			}
 ;;;505     	
 ;;;506        		} 
@@ -1228,16 +1040,42 @@
 ;;;733    
 ;;;734    
 ;;;735    __enable_irq();     
-0004ec  b662              CPSIE    i
+0003e6  b662              CPSIE    i
 ;;;736    }   	
-0004ee  e67f              B        |L1.496|
-;;;737    
+0003e8  e6a1              B        |L1.302|
+0003ea  0000              DCW      0x0000
+                  |L1.1004|
+                          DCD      ||.data||
+                  |L1.1008|
+                          DCD      0x40010000
+                  |L1.1012|
+                          DCD      0x4002c000
+                  |L1.1016|
+                          DCD      0x2009c000
+                  |L1.1020|
+                          DCD      ||.bss||+0x78
+                  |L1.1024|
+                          DCD      ||.bss||+0x1a4
+                  |L1.1028|
+                          DCD      ICA_EN
+                  |L1.1032|
+                          DCD      bps_I
+                  |L1.1036|
+                          DCD      plazma_ica2
+                  |L1.1040|
+                          DCD      TBAT
+                  |L1.1044|
+                          DCD      main_kb_cnt
+                  |L1.1048|
+                          DCD      ica_cntrl_hndl
+                  |L1.1052|
+                          DCD      ica_cntrl_hndl_cnt
+                  |L1.1056|
+                          DCD      ICA_CH
+                  |L1.1060|
+                          DCD      ica_your_current
                           ENDP
 
-                  |L1.1264|
-                          DCD      ||.data||
-                  |L1.1268|
-                          DCD      ||.bss||+0x14
 
                           AREA ||area_number.2||, CODE, READONLY, ALIGN=1
 
@@ -1303,13 +1141,13 @@
                           AREA ||area_number.3||, CODE, READONLY, ALIGN=1
 
                           EXPORTAS ||area_number.3||, ||.text||
-                  uart_out__adr1 PROC
+                  uart_out_buff1 PROC
 ;;;40     //-----------------------------------------------
 ;;;41     void putchar1(char c)
 000000  b570              PUSH     {r4-r6,lr}
 ;;;42     {
 ;;;43     while (tx_counter1 == TX_BUFFER_SIZE1);
-000002  b0cb              SUB      sp,sp,#0x12c
+000002  b08f              SUB      sp,sp,#0x3c
 000004  460d              MOV      r5,r1
 000006  f04f0200          MOV      r2,#0
 00000a  466e              MOV      r6,sp
@@ -1344,6 +1182,59 @@
 00002e  42ac              CMP      r4,r5
 000030  d3f7              BCC      |L3.34|
 ;;;55     	LPC_GPIO2->FIOPIN|=(1UL<<2);
+000032  b00f              ADD      sp,sp,#0x3c
+000034  bd70              POP      {r4-r6,pc}
+;;;56     	LPC_UART1->THR=c;
+;;;57     	} 
+;;;58     }
+;;;59     
+                          ENDP
+
+
+                          AREA ||area_number.4||, CODE, READONLY, ALIGN=1
+
+                          EXPORTAS ||area_number.4||, ||.text||
+                  uart_out__adr1 PROC
+;;;40     //-----------------------------------------------
+;;;41     void putchar1(char c)
+000000  b570              PUSH     {r4-r6,lr}
+;;;42     {
+;;;43     while (tx_counter1 == TX_BUFFER_SIZE1);
+000002  b0cb              SUB      sp,sp,#0x12c
+000004  460d              MOV      r5,r1
+000006  f04f0200          MOV      r2,#0
+00000a  466e              MOV      r6,sp
+00000c  e004              B        |L4.24|
+                  |L4.14|
+;;;44     if (tx_counter1 || ((LPC_UART1->LSR & 0x60)==0))
+00000e  5c81              LDRB     r1,[r0,r2]
+000010  54b1              STRB     r1,[r6,r2]
+000012  f1020201          ADD      r2,r2,#1
+000016  b2d2              UXTB     r2,r2
+                  |L4.24|
+000018  42aa              CMP      r2,r5
+;;;45        {
+;;;46        tx_buffer1[tx_wr_index1]=c;
+;;;47        if (++tx_wr_index1 == TX_BUFFER_SIZE1) tx_wr_index1=0;
+;;;48        ++tx_counter1;
+;;;49        }
+;;;50     else
+;;;51     	{
+;;;52     	LPC_PINCON->PINSEL4 &= ~0x0000c000;//!!!!!!!!!!!
+00001a  d3f8              BCC      |L4.14|
+00001c  f04f0400          MOV      r4,#0
+000020  e005              B        |L4.46|
+                  |L4.34|
+000022  5d30              LDRB     r0,[r6,r4]
+;;;53     	LPC_PINCON->PINSEL4 |= 0x00000000; //!!!!!!!!!!! 
+000024  f7fffffe          BL       putchar1
+;;;54     	LPC_GPIO2->FIODIR|=(1UL<<2);
+000028  f1040401          ADD      r4,r4,#1
+00002c  b2e4              UXTB     r4,r4
+                  |L4.46|
+00002e  42ac              CMP      r4,r5
+000030  d3f7              BCC      |L4.34|
+;;;55     	LPC_GPIO2->FIOPIN|=(1UL<<2);
 000032  b04b              ADD      sp,sp,#0x12c
 000034  bd70              POP      {r4-r6,pc}
 ;;;56     	LPC_UART1->THR=c;
@@ -1353,20 +1244,115 @@
                           ENDP
 
 
-                          AREA ||area_number.4||, CODE, READONLY, ALIGN=2
+                          AREA ||area_number.5||, CODE, READONLY, ALIGN=2
 
-                          EXPORTAS ||area_number.4||, ||.text||
+                          EXPORTAS ||area_number.5||, ||.text||
+                  uart1_init PROC
+;;;40     //-----------------------------------------------
+;;;41     void putchar1(char c)
+000000  4922              LDR      r1,|L5.140|
+;;;42     {
+;;;43     while (tx_counter1 == TX_BUFFER_SIZE1);
+000002  690a              LDR      r2,[r1,#0x10]
+000004  f022020f          BIC      r2,r2,#0xf
+000008  610a              STR      r2,[r1,#0x10]
+00000a  690a              LDR      r2,[r1,#0x10]
+00000c  f042020a          ORR      r2,r2,#0xa
+;;;44     if (tx_counter1 || ((LPC_UART1->LSR & 0x60)==0))
+000010  610a              STR      r2,[r1,#0x10]
+000012  690a              LDR      r2,[r1,#0x10]
+000014  f0220230          BIC      r2,r2,#0x30
+000018  610a              STR      r2,[r1,#0x10]
+;;;45        {
+;;;46        tx_buffer1[tx_wr_index1]=c;
+;;;47        if (++tx_wr_index1 == TX_BUFFER_SIZE1) tx_wr_index1=0;
+;;;48        ++tx_counter1;
+;;;49        }
+;;;50     else
+;;;51     	{
+;;;52     	LPC_PINCON->PINSEL4 &= ~0x0000c000;//!!!!!!!!!!!
+00001a  690a              LDR      r2,[r1,#0x10]
+00001c  610a              STR      r2,[r1,#0x10]
+00001e  491c              LDR      r1,|L5.144|
+000020  6c0a              LDR      r2,[r1,#0x40]
+000022  f0420204          ORR      r2,r2,#4
+;;;53     	LPC_PINCON->PINSEL4 |= 0x00000000; //!!!!!!!!!!! 
+000026  640a              STR      r2,[r1,#0x40]
+;;;54     	LPC_GPIO2->FIODIR|=(1UL<<2);
+000028  6d4a              LDR      r2,[r1,#0x54]
+00002a  f0220204          BIC      r2,r2,#4
+00002e  654a              STR      r2,[r1,#0x54]
+000030  4918              LDR      r1,|L5.148|
+;;;55     	LPC_GPIO2->FIOPIN|=(1UL<<2);
+000032  6809              LDR      r1,[r1,#0]
+000034  f3c12201          UBFX     r2,r1,#8,#2
+000038  4917              LDR      r1,|L5.152|
+;;;56     	LPC_UART1->THR=c;
+00003a  2a01              CMP      r2,#1
+;;;57     	} 
+;;;58     }
+00003c  6809              LDR      r1,[r1,#0]
+00003e  d00b              BEQ      |L5.88|
+000040  2a02              CMP      r2,#2                 ;46
+000042  d004              BEQ      |L5.78|
+000044  2a03              CMP      r2,#3                 ;47
+000046  d005              BEQ      |L5.84|
+000048  ea4f0191          LSR      r1,r1,#2              ;47
+00004c  e004              B        |L5.88|
+                  |L5.78|
+00004e  ea4f0151          LSR      r1,r1,#1              ;47
+000052  e001              B        |L5.88|
+                  |L5.84|
+000054  ea4f01d1          LSR      r1,r1,#3              ;48
+                  |L5.88|
+000058  4a10              LDR      r2,|L5.156|
+00005a  f04f0383          MOV      r3,#0x83
+00005e  7313              STRB     r3,[r2,#0xc]
+000060  ea4f1111          LSR      r1,r1,#4
+000064  fbb1f0f0          UDIV     r0,r1,r0
+000068  ea4f2110          LSR      r1,r0,#8
+00006c  7111              STRB     r1,[r2,#4]
+00006e  7010              STRB     r0,[r2,#0]
+000070  f04f0003          MOV      r0,#3
+000074  7310              STRB     r0,[r2,#0xc]
+000076  f04f0007          MOV      r0,#7
+00007a  7210              STRB     r0,[r2,#8]
+00007c  4908              LDR      r1,|L5.160|
+00007e  f04f0340          MOV      r3,#0x40
+000082  600b              STR      r3,[r1,#0]
+000084  6050              STR      r0,[r2,#4]
+000086  f04f0001          MOV      r0,#1
+00008a  4770              BX       lr
+;;;59     
+                          ENDP
+
+                  |L5.140|
+                          DCD      0x4002c000
+                  |L5.144|
+                          DCD      0x2009c000
+                  |L5.148|
+                          DCD      0x400fc1a8
+                  |L5.152|
+                          DCD      SystemFrequency
+                  |L5.156|
+                          DCD      0x40010000
+                  |L5.160|
+                          DCD      0xe000e100
+
+                          AREA ||area_number.6||, CODE, READONLY, ALIGN=2
+
+                          EXPORTAS ||area_number.6||, ||.text||
                   getchar1 PROC
 ;;;40     //-----------------------------------------------
 ;;;41     void putchar1(char c)
-000000  4b09              LDR      r3,|L4.40|
+000000  4b09              LDR      r3,|L6.40|
 ;;;42     {
 ;;;43     while (tx_counter1 == TX_BUFFER_SIZE1);
 000002  8999              LDRH     r1,[r3,#0xc]
-                  |L4.4|
+                  |L6.4|
 000004  2900              CMP      r1,#0
-000006  d0fd              BEQ      |L4.4|
-000008  4808              LDR      r0,|L4.44|
+000006  d0fd              BEQ      |L6.4|
+000008  4808              LDR      r0,|L6.44|
 00000a  895a              LDRH     r2,[r3,#0xa]  ; rx_rd_index1
 00000c  5c80              LDRB     r0,[r0,r2]
 ;;;44     if (tx_counter1 || ((LPC_UART1->LSR & 0x60)==0))
@@ -1374,7 +1360,7 @@
 000010  b292              UXTH     r2,r2
 000012  815a              STRH     r2,[r3,#0xa]
 000014  2a64              CMP      r2,#0x64
-000016  d102              BNE      |L4.30|
+000016  d102              BNE      |L6.30|
 000018  f04f0200          MOV      r2,#0
 ;;;45        {
 ;;;46        tx_buffer1[tx_wr_index1]=c;
@@ -1385,7 +1371,7 @@
 ;;;51     	{
 ;;;52     	LPC_PINCON->PINSEL4 &= ~0x0000c000;//!!!!!!!!!!!
 00001c  815a              STRH     r2,[r3,#0xa]
-                  |L4.30|
+                  |L6.30|
 00001e  f1a10101          SUB      r1,r1,#1
 000022  8199              STRH     r1,[r3,#0xc]
 ;;;53     	LPC_PINCON->PINSEL4 |= 0x00000000; //!!!!!!!!!!! 
@@ -1399,9 +1385,9 @@
                           ENDP
 
 000026  0000              DCW      0x0000
-                  |L4.40|
+                  |L6.40|
                           DCD      ||.data||
-                  |L4.44|
+                  |L6.44|
                           DCD      ||.bss||+0x14
 
                           AREA ||.bss||, DATA, NOINIT, ALIGN=0
@@ -1417,15 +1403,15 @@
                   UIB10
                           %        30
 
-                          AREA ||area_number.7||, DATA, NOINIT, ALIGN=0
+                          AREA ||area_number.9||, DATA, NOINIT, ALIGN=0
 
-                          EXPORTAS ||area_number.7||, ||.bss||
+                          EXPORTAS ||area_number.9||, ||.bss||
                   data_rs1
                           %        40
 
-                          AREA ||area_number.8||, DATA, NOINIT, ALIGN=0
+                          AREA ||area_number.10||, DATA, NOINIT, ALIGN=0
 
-                          EXPORTAS ||area_number.8||, ||.bss||
+                          EXPORTAS ||area_number.10||, ||.bss||
                   memo_out1
                           %        100
 
@@ -1463,14 +1449,14 @@
                           DCD      0x00000000
 00001c  00                DCB      0x00
 
-                          AREA ||area_number.11||, DATA, ALIGN=0
+                          AREA ||area_number.13||, DATA, ALIGN=0
 
-                          EXPORTAS ||area_number.11||, ||.data||
+                          EXPORTAS ||area_number.13||, ||.data||
                   flag1
 000000  00                DCB      0x00
 
-                          AREA ||area_number.12||, DATA, ALIGN=0
+                          AREA ||area_number.14||, DATA, ALIGN=0
 
-                          EXPORTAS ||area_number.12||, ||.data||
+                          EXPORTAS ||area_number.14||, ||.data||
                   usart1_router_cnt
 000000  00                DCB      0x00

@@ -3973,17 +3973,43 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 							((ascii2halFhex(liBatteryInBuff[95]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[96]))))/10-273;	*/
 	
-		lakb[0]._s_o_c_percent=		(unsigned short)((ascii2halFhex(liBatteryInBuff[113]))<<12)+
+		lakb[0]._s_o_c=		(unsigned short)((ascii2halFhex(liBatteryInBuff[113]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[114]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[115]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[116])));
 	
+		lakb[0]._s_o_h=		(unsigned short)((ascii2halFhex(liBatteryInBuff[119]))<<12)+
+							((ascii2halFhex(liBatteryInBuff[120]))<<8)+
+							((ascii2halFhex(liBatteryInBuff[121]))<<4)+
+							((ascii2halFhex(liBatteryInBuff[122])));
+
+		if(lakb[0]._s_o_h==0)lakb[0]._s_o_h=1;
+
+		temp_SL=((signed long)lakb[0]._s_o_c)*100L;
+		temp_SL/=(signed long)lakb[0]._s_o_h;
+		lakb[0]._s_o_c_percent=(signed short)temp_SL;
+			
+
 		lakb[0]._rat_cap=		(unsigned short)((ascii2halFhex(liBatteryInBuff[127]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[128]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[129]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[130])));
 	
 		//lakb[0]._s_o_c=		lakb[0]._s_o_c_abs/(lakb[0]._rat_cap/100);
+
+
+
+
+//Внешний датчик температуры 
+if((adc_buff_[6]>800)&&(adc_buff_[6]<3800))ND_EXT[0]=0;
+else ND_EXT[0]=1;
+temp_SL=(signed long)adc_buff_[6];
+temp_SL*=Ktext[0];
+temp_SL/=20000L;
+temp_SL-=273L;
+t_ext[0]=(signed short)temp_SL;
+
+
 	
 #endif //UKU_FSO	
 
@@ -10341,7 +10367,7 @@ else
 	{
 IZMAX_=TELECORE2017_IZMAX1;
 
-for(i=0;i<NUMBAT_TELECORE;i++)
+for(i=0;i<NUMBAT_FSO;i++)
 	{
 	if(lakb[i]._s_o_c_percent>=TELECORE2017_Q)
 		{
@@ -10512,6 +10538,9 @@ void ext_drv(void)
 {
 char i;
 
+#ifdef UKU_FSO
+NUMSK=3;
+#endif
 
 for(i=0;i<NUMSK;i++)
 	{

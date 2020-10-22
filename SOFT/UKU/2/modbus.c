@@ -2376,6 +2376,7 @@ modbus_registers[411]=(char)(porog_u_in);
 //o_10_e
 
 #ifdef UKU_FSO
+//UKUFSO_IBEP_SN=100000;
 modbus_registers[500]=(char)(UKUFSO_IBEP_SN>>8);				//Рег251  Серийный номер ИБЭП(младшее слово)
 modbus_registers[501]=(char)(UKUFSO_IBEP_SN); 
 modbus_registers[502]=(char)(UKUFSO_IBEP_SN>>24);				//Рег252  Серийный номер ИБЭП(старшее слово)
@@ -2417,23 +2418,22 @@ modbus_registers[588]=(char)(UKUFSO_BPS4_START_DATE_YEAR>>8);	//Рег295  Год введ
 modbus_registers[589]=(char)(UKUFSO_BPS4_START_DATE_YEAR); 
 modbus_registers[590]=(char)(UKUFSO_BPS4_START_DATE_MONTH);		//Рег296  День и месяц введения в эксплуатацию БПС№4
 modbus_registers[591]=(char)(UKUFSO_BPS4_START_DATE_DAY);
-modbus_registers[592]=(char)(UKUFSO_BPS3_SN>>8);				//Рег297  Серийный номер БПС№3(младшее слово)
-modbus_registers[593]=(char)(UKUFSO_BPS3_SN); 
-modbus_registers[594]=(char)(UKUFSO_BPS3_SN>>24);				//Рег298  Серийный номер БПС№3(старшее слово)
-modbus_registers[595]=(char)(UKUFSO_BPS3_SN>>16); 
-modbus_registers[596]=(char)(UKUFSO_BPS3_START_DATE_YEAR>>8);	//Рег291  Год введения в эксплуатацию БПС№3
-modbus_registers[597]=(char)(UKUFSO_BPS3_START_DATE_YEAR); 
-modbus_registers[598]=(char)(UKUFSO_BPS3_START_DATE_MONTH);		//Рег292  День и месяц введения в эксплуатацию БПС№3
-modbus_registers[599]=(char)(UKUFSO_BPS3_START_DATE_DAY);
-modbus_registers[600]=(char)(UKUFSO_BPS4_SN>>8);				//Рег293  Серийный номер БПС№4(младшее слово)
-modbus_registers[601]=(char)(UKUFSO_BPS4_SN); 
-modbus_registers[602]=(char)(UKUFSO_BPS4_SN>>24);				//Рег294  Серийный номер БПС№4(старшее слово)
-modbus_registers[603]=(char)(UKUFSO_BPS4_SN>>16); 
-modbus_registers[604]=(char)(UKUFSO_BPS4_START_DATE_YEAR>>8);	//Рег295  Год введения в эксплуатацию БПС№4
-modbus_registers[605]=(char)(UKUFSO_BPS4_START_DATE_YEAR); 
-modbus_registers[606]=(char)(UKUFSO_BPS4_START_DATE_MONTH);		//Рег296  День и месяц введения в эксплуатацию БПС№4
-modbus_registers[607]=(char)(UKUFSO_BPS4_START_DATE_DAY);
- 
+modbus_registers[592]=(char)(UKUFSO_BAT1_SN>>8);				//Рег297  Серийный номер АКБ№1(младшее слово)
+modbus_registers[593]=(char)(UKUFSO_BAT1_SN); 
+modbus_registers[594]=(char)(UKUFSO_BAT1_SN>>24);				//Рег298  Серийный номер АКБ№1(старшее слово)
+modbus_registers[595]=(char)(UKUFSO_BAT1_SN>>16); 
+modbus_registers[596]=(char)(UKUFSO_BAT1_START_DATE_YEAR>>8);	//Рег299  Год введения в эксплуатацию АКБ№1
+modbus_registers[597]=(char)(UKUFSO_BAT1_START_DATE_YEAR); 
+modbus_registers[598]=(char)(UKUFSO_BAT1_START_DATE_MONTH);		//Рег300  День и месяц введения в эксплуатацию АКБ№1
+modbus_registers[599]=(char)(UKUFSO_BAT1_START_DATE_DAY);
+modbus_registers[600]=(char)(UKUFSO_BAT2_SN>>8);				//Рег301  Серийный номер АКБ№2(младшее слово)
+modbus_registers[601]=(char)(UKUFSO_BAT2_SN); 
+modbus_registers[602]=(char)(UKUFSO_BAT2_SN>>24);				//Рег302  Серийный номер АКБ№2(старшее слово)
+modbus_registers[603]=(char)(UKUFSO_BAT2_SN>>16); 
+modbus_registers[604]=(char)(UKUFSO_BAT2_START_DATE_YEAR>>8);	//Рег303  Год введения в эксплуатацию АКБ№2
+modbus_registers[605]=(char)(UKUFSO_BAT2_START_DATE_YEAR); 
+modbus_registers[606]=(char)(UKUFSO_BAT2_START_DATE_MONTH);		//Рег304  День и месяц введения в эксплуатацию АКБ№2
+modbus_registers[607]=(char)(UKUFSO_BAT2_START_DATE_DAY); 
 #endif //UKU_FSO
 
 if(prot==MODBUS_RTU_PROT)
@@ -3019,6 +3019,30 @@ modbus_registers[618]=(signed char)(v_minus>>8);		//Рег310 U-
 modbus_registers[619]=(signed char)(v_minus);
 modbus_registers[620]=(signed char)(Ubus>>8);			//Рег311 Uшины
 modbus_registers[621]=(signed char)(Ubus);
+
+#ifdef UKU_FSO
+modbus_registers[600]=(signed char)(lakb[0]._tot_bat_volt>>8);			//Рег301	напряжение батареи №1, В
+modbus_registers[601]=(signed char)(lakb[0]._tot_bat_volt);
+modbus_registers[602]=(signed char)(lakb[0]._ch_curr>>8);				//Рег302	ток батареи №1, В
+modbus_registers[603]=(signed char)(lakb[0]._ch_curr);
+modbus_registers[600]=(signed char)(lakb[0]._cell_temp_1>>8);			//Рег303	темперратура первого датчика батареи №1, В
+modbus_registers[601]=(signed char)(lakb[0]._cell_temp_1);
+modbus_registers[600]=(signed char)(lakb[0]._cell_temp_2>>8);			//Рег304	темперратура второго датчика батареи №1, В
+modbus_registers[601]=(signed char)(lakb[0]._cell_temp_2);
+modbus_registers[600]=(signed char)(lakb[0]._cell_temp_3>>8);			//Рег305	темперратура третьего датчика батареи №1, В
+modbus_registers[601]=(signed char)(lakb[0]._cell_temp_3);
+modbus_registers[600]=(signed char)(lakb[0]._cell_temp_4>>8);			//Рег306	темперратура четвертого датчика батареи №1, В
+modbus_registers[601]=(signed char)(lakb[0]._cell_temp_4);
+modbus_registers[600]=(signed char)(lakb[0]._tot_bat_volt>>8);			//Рег307	напряжение батареи №1, В
+modbus_registers[601]=(signed char)(lakb[0]._tot_bat_volt);
+modbus_registers[600]=(signed char)(lakb[0]._tot_bat_volt>>8);			//Рег308	напряжение батареи №1, В
+modbus_registers[601]=(signed char)(lakb[0]._tot_bat_volt);
+modbus_registers[600]=(signed char)(lakb[0]._tot_bat_volt>>8);			//Рег301	напряжение батареи №1, В
+modbus_registers[601]=(signed char)(lakb[0]._tot_bat_volt);
+modbus_registers[600]=(signed char)(lakb[0]._tot_bat_volt>>8);			//Рег301	напряжение батареи №1, В
+modbus_registers[601]=(signed char)(lakb[0]._tot_bat_volt);
+
+#endif //UKU_FSO
 
 //o_10_e
 if(prot==MODBUS_RTU_PROT)

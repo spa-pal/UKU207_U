@@ -623,8 +623,8 @@
 #define PAROL_AUSW 949
 #define PAROL_DEF 295
 #define PAROL_LOG_RESET	691
-#define PAROL_SET_FSO_INF 0
-//#define PAROL_SET_FSO_INF 743
+//#define PAROL_SET_FSO_INF 0
+#define PAROL_SET_FSO_INF 743
 #endif                
 
 #ifdef PAROL_ALL_ZERO
@@ -913,7 +913,7 @@ typedef enum {
 	iNET_IN, iSetNetIn, iK_Net_In,//oleg_start 
 	iSrv_sl,iNet,iNet3,iNetEM,iNet3LIN,iNet_IPS_SGEP_GAZPROM,
 	iSet,iSet_3U,iSet_RSTKM,iSet_GLONASS,iSet_KONTUR,iSet_6U,iSet_220,iSet_220_IPS_TERMOKOMPENSAT,iSet_220_V2,iInv_set_sel, iSet_FSO,
-	iBat, iBat_simple, iBat_li, iBat_SacredSun, iBat_universe, iInv_set, iSet_TELECORE2015, iSet_TELECORE2017, iSet_IPS_SGEP_GAZPROM, iBat_ZVU,
+	iBat, iBat_simple, iBat_li, iBat_SacredSun, iBat_universe, iBat_FSO, iInv_set, iSet_TELECORE2015, iSet_TELECORE2017, iSet_IPS_SGEP_GAZPROM, iBat_ZVU,
 	iMakb,
 	iSet_prl_FSO_inf, iSet_FSO_inf, iFSO_inf,
 	iBps,iBps_elteh,iS2,iSet_prl,iK_prl,iDnd,iPrlVZ1,iPrlVZ2,
@@ -924,7 +924,7 @@ typedef enum {
 	iVrs,iPrltst,iApv,iVZ_set,iVZ1_set,iVZ2_set,
 	iK_bps,iK_bps_sel,iK_bat,iK_bat_simple,iK_bat_ips_termokompensat_ib,iK_bat_TELECORE,iK_bat_FSO,iK_bat_sel,iK_bat_sel_TELECORE,iK_bat_sel_FSO,iK_load,iK_net, iK_net3, iK_FSO,
 	iK_makb_sel,iK_makb,iK_out,
-	iTst,iTst_3U,iTst_RSTKM,iTst_GLONASS,iTst_KONTUR,iTst_6U,iTst_220,iTst_220_380,iTst_220_IPS_TERMOKOMPENSAT,
+	iTst,iTst_3U,iTst_RSTKM,iTst_GLONASS,iTst_KONTUR,iTst_6U,iTst_220,iTst_220_380,iTst_220_IPS_TERMOKOMPENSAT,iTst_FSO,
 	iTst_TELECORE, iTst_IPS_SGEP_GAZPROM,
 	iTst_klbr,iTst_BPS1,iTst_BPS2,iTst_BPS12,iDebug,
 	iDef,iDef_3U,iDef_RSTKM,iDef_GLONASS,iDef_KONTUR,iDef_6U,iDef_220,iDef_220_IPS_TERMOKOMPENSAT,iDef_220_V2,
@@ -942,7 +942,7 @@ typedef enum {
 	iExt_sk,iExt_sk_3U,iExt_sk_GLONASS,
 	iExt_ddv,iExt_ddi,iExt_dud,iExt_dp,iSM,iLog,iLog_, iLog_reset_prl, iBatLog,iKlimat,iKlimat_kontur,iKlimat_TELECORE,
 	iEnerg3,iEnerg,
-	iExtern_TELECORE2015,
+	iExtern_TELECORE2015, iExtern_FSO, iAvt_FSO,
 	iVent,
 	iK_power_net3,
 	iAvt,iLan_set,
