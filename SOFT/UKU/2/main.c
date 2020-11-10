@@ -13690,7 +13690,78 @@ if(ind==iDeb)
 		int2lcdyx(plazma_stark[19],1,19,0);
 		int2lcdyx(plazma_stark[20],2,19,0);
 		int2lcdyx(plazma_stark[21],3,19,0);	*/
-     	}																																		     				     			
+     	}
+   else if(sub_ind==29)
+     	{
+     	bgnd_par(	"STARK               ",
+     		    	"                    ",
+     		    	"                    ",
+     		    	"                    ");
+     	
+		//int2lcdyx(plazma_stark[0],1,3,0);
+		//int2lcdyx(plazma_stark[1],2,3,0);
+		
+#ifdef UKU_FSO		
+		//int2lcdyx(plazmaSS_fso[0],0,3,0);
+		//int2lcdyx(plazmaSS_fso[1],0,7,0);
+		//int2lcdyx(plazmaSS_fso[2],0,10,0);
+		int2lcdyx(plazmaSS_fso[3],0,7,0);
+		int2lcdyx(plazmaSS_fso[5],1,7,0);
+		int2lcdyx(plazmaSS_fso[1],2,7,0);
+		int2lcdyx(plazmaSS_fso[9],3,8,0);
+
+
+		int2lcdyx(sTARKBatteryHndlPhase,0,10,0);
+		int2lcdyx(sTARKRequestPhase/*sTARKButteryCnter*/,0,13,0);
+
+		int2lcdyx(sTARKSilentCnt[0],1,2,0);
+		int2lcdyx(sTARKSilentCnt[1],2,2,0);
+		int2lcdyx(sTARKSilentCnt[2],3,2,0);
+
+		int2lcdyx(lakb[0]._tot_bat_volt,0,19,0);				
+		//long2lcdyx_mmm(bat[0]._Ib/10,2,19,0);
+		
+		//int2lcdyx(load_U,0,14,0);
+		//int2lcdyx(bps[0]._Uin,1,14,0);
+		//int2lcdyx(bps[1]._Uin,2,14,0);
+		
+		//int2lcdyx(lakb[0]._s_o_c,3,19,0);
+		//int2lcdyx(lakb[0]._s_o_h,2,14,0);
+		//int2lcdyx(lakb[0]._rat_cap,3,14,0);
+		//int2lcdyx(lakb[0]._rat_cap,3,19,0);
+		//int2lcdyx(u_necc,1,3,0); //int2lcdyx(load_U,1,8,0);
+		//int2lcdyx(cntrl_stat,2,3,0); 
+		//int2lcdyx(plazma_cntrl_stat,3,3,0); 
+
+		//int2lcdyx(IZMAX_,1,8,0); //int2lcdyx(load_U,1,8,0);
+		//int2lcdyx(IZMAX_130,2,8,0); 
+		//int2lcdyx(IZMAX_70,3,8,0); 
+		//int2lcdyx(lakb[0]._cell_temp_1,2,10,0);
+		//int2lcdyx((ascii2halFhex(liBatteryInBuff[83])<<4)+((ascii2halFhex(liBatteryInBuff[84]))),3,10,0);
+		
+		//char2lcdhyx(liBatteryInBuff[81],0,14);
+		//char2lcdhyx(liBatteryInBuff[82],1,14);
+		//char2lcdhyx(liBatteryInBuff[83],2,14);
+		//char2lcdhyx(liBatteryInBuff[84],3,14);
+
+
+#endif
+/*
+		int2lcdyx(plazma_stark[10],0,11,0);				
+		int2lcdyx(plazma_stark[11],1,11,0);
+		int2lcdyx(plazma_stark[12],2,11,0);
+		int2lcdyx(plazma_stark[13],3,11,0);
+				
+		int2lcdyx(plazma_stark[14],0,15,0);				
+		int2lcdyx(plazma_stark[15],1,15,0);
+		int2lcdyx(plazma_stark[16],2,15,0);
+		int2lcdyx(plazma_stark[17],3,15,0);
+
+		int2lcdyx(plazma_stark[18],0,19,0);				
+		int2lcdyx(plazma_stark[19],1,19,0);
+		int2lcdyx(plazma_stark[20],2,19,0);
+		int2lcdyx(plazma_stark[21],3,19,0);	*/
+     	}																																					     				     			
 	}
 
 else if((ind==iAv_view)||(ind==iAv_view_avt))
@@ -17811,13 +17882,13 @@ else if(ind==iDeb)
 		{
 		sub_ind++;
 		index_set=0;
-		gran_ring_char(&sub_ind,0,28);
+		gran_ring_char(&sub_ind,0,29);
 		}
 	else if(but==butL)
 		{
 		sub_ind--;
 		index_set=0;
-		gran_ring_char(&sub_ind,0,28);
+		gran_ring_char(&sub_ind,0,29);
 		}
 		
 	else if(sub_ind==1)
@@ -43052,7 +43123,11 @@ time_sinc_hndl_main_cnt=20L;
 if(EE_ETH_IS_ON)lc640_write_int(EE_ETH_IS_ON,0);
 if(SNTP_ENABLE)lc640_write_int(EE_SNTP_ENABLE,0);
 #endif
-lc640_write_long(EE_UKUFSO_IBEP_SN,199999999L);		
+lc640_write_long(EE_UKUFSO_IBEP_SN,199999999L);	
+
+//ind=iDeb;
+//sub_ind=29;
+	
 while (1)  
 	{
 	bTPS=0; 

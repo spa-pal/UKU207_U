@@ -108,6 +108,13 @@ for(i=0;i<18;i++)
 	if(av_dt[i])	SET_REG(avar_stat,1,21+i,1);
 	else	   		SET_REG(avar_stat,0,21+i,1);
 	}  */
+#ifndef UKU_ZVU
+for(i=0;i<4;i++)
+	{
+	if(sk_av_stat[i]==sasON)	SET_REG(avar_stat,1,24+i,1);
+	else	   		SET_REG(avar_stat,0,24+i,1);
+	}
+#endif //UKU_ZVU
 #ifndef UKU_FSO
 for(i=0;i<4;i++)
 	{

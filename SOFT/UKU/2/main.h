@@ -1461,7 +1461,8 @@ typedef struct
 	signed char		_fet_status_code;								//(ZTT)
 	signed short	_balanced_status_code;							//(ZTT)
 	signed char 	_system_status_code;							//(ZTT)
-
+	signed short 	_succes_transmission_cnt;
+	signed short 	_no_transmission_second_cnt;
 	} LAKB_STAT; 
 extern LAKB_STAT lakb[3];
 extern char lakb_damp[1][42];

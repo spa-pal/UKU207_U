@@ -187,9 +187,18 @@ switch ( pclkdiv )
 	}
 
 LPC_UART1->LCR = 0x83;		/* 8 bits, no Parity, 1 Stop bit */
+#ifdef UKU_FSO
+LPC_UART1->LCR = 0x86;		/* 8 bits, no Parity, 2 Stop bit */
+#endif //UKU_FSO
+
 Fdiv = ( pclk / 16 ) / baudrate ;	/*baud rate */
+//plazmaSS_fso[9] = Fdiv;
 LPC_UART1->DLM = Fdiv / 256;							
 LPC_UART1->DLL = Fdiv % 256;
+//LPC_UART1->DLM = 0;							
+//LPC_UART1->DLL = 108;
+//LPC_UART1->FDR = 0xf8;
+
 LPC_UART1->LCR = 0x03;		/* DLAB = 0 */
 LPC_UART1->FCR = 0x07;		/* Enable and reset TX and RX FIFO. */
 
@@ -262,7 +271,11 @@ else if ( IIRValue == IIR_RDA )	/* Receive Data Available */
   	{
 //	plazmaSS_fso[0]++;
 	//plazma_uart1++;
+	
 	data=LPC_UART1->RBR;
+	//plazmaSS_fso[5]=0;
+	if (!tx_counter1)
+	{
 	rx_buffer1[rx_wr_index1]=data;
    	bRXIN1=1;
 
@@ -289,7 +302,7 @@ else if ( IIRValue == IIR_RDA )	/* Receive Data Available */
 
 	if(data==0x0d)
 		{
-		plazmaSS_fso[2]++;
+/*		plazmaSS_fso[2]++;
 		if(BAT_TYPE==2)
 			{
 			if(sacredSunRequestPhase==0)	mem_copy (liBatteryInBuff, bat_drv_rx_buff,  bat_drv_rx_cnt);
@@ -309,23 +322,23 @@ else if ( IIRValue == IIR_RDA )	/* Receive Data Available */
 			//zTTSilentCnt=0;
 			}
 		else if (BAT_TYPE==4)
-			{
+			{ */
 			plazmaSS_fso[3]++;
 			numOfPacks_=((ascii2halFhex(bat_drv_rx_buff[3]))<<4)+((ascii2halFhex(bat_drv_rx_buff[4])));
 			//if(numOfPacks_)numOfPacks_--;
 		   	if(numOfPacks_<0)numOfPacks_=0;
 			if(numOfPacks_>NUMBAT_FSO)numOfPacks_=0;
-			sTARKSilentCnt[numOfPacks_]=50;
+			//sTARKSilentCnt[numOfPacks_]=50;
 
 			if(sTARKRequestPhase==0)	mem_copy (liBatteryInBuff, bat_drv_rx_buff,  bat_drv_rx_cnt);
 			else if(sTARKRequestPhase==1)	mem_copy (&liBatteryInBuff[150], bat_drv_rx_buff,  bat_drv_rx_cnt);
 			//zTTSilentCnt=0;
 			plazmaSS_fso[4]=sTARKRequestPhase;
 			plazmaSS_fso[5]=bat_drv_rx_cnt;
-			}
+		/*	}	*/
 		}
 #endif //UKU_FSO
-
+		}
 
   	}
 else if ( IIRValue == IIR_CTI )	/* Character timeout indicator */
