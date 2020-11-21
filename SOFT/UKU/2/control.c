@@ -6153,7 +6153,8 @@ if(NUMBDR==1)
 	#ifdef UKU_6U
 		 //АБ разряжена
 		if((RELE_SET_MASK[ii_]&0x01)&&
-			( (bat[0]._Ub<(USIGN*10)) || (bat[1]._Ub<(USIGN*10)) ) )			bdr_avar_stat_temp|=(1<<ii_);
+			( (bat[0]._Ub<(USIGN*10) && (BAT_IS_ON[0]==bisON) ) || 
+			(bat[1]._Ub<(USIGN*10) && (BAT_IS_ON[1]==bisON) ) ) )			bdr_avar_stat_temp|=(1<<ii_);
 		//Выравнивающий заряд
 		if((RELE_SET_MASK[ii_]&0x02)&&
 			(spc_stat==spcVZ))				bdr_avar_stat_temp|=(1<<ii_);

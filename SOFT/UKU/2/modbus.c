@@ -3039,8 +3039,29 @@ modbus_registers[614]=(signed char)(lakb[0]._s_o_c>>8);					//Рег308	заряд батар
 modbus_registers[615]=(signed char)(lakb[0]._s_o_c);
 modbus_registers[616]=(signed char)(lakb[0]._s_o_c_percent>>8);			//Рег309	заряд батареи №1, %
 modbus_registers[617]=(signed char)(lakb[0]._s_o_c_percent);
-modbus_registers[618]=(signed char)(lakb[0]._tot_bat_volt>>8);			//Рег301	напряжение батареи №1, В
+modbus_registers[618]=(signed char)(lakb[0]._tot_bat_volt>>8);			//Рег310	предполагаемое время разряда батареи №1, мин
 modbus_registers[619]=(signed char)(lakb[0]._tot_bat_volt);
+
+modbus_registers[620]=(signed char)(lakb[1]._tot_bat_volt>>8);			//Рег301	напряжение батареи №1, В
+modbus_registers[621]=(signed char)(lakb[1]._tot_bat_volt);
+modbus_registers[622]=(signed char)(lakb[1]._ch_curr>>8);				//Рег302	ток батареи №1, В
+modbus_registers[623]=(signed char)(lakb[1]._ch_curr);
+modbus_registers[624]=(signed char)(lakb[1]._cell_temp_1>>8);			//Рег303	темперратура первого датчика батареи №1, В
+modbus_registers[625]=(signed char)(lakb[1]._cell_temp_1);
+modbus_registers[626]=(signed char)(lakb[1]._cell_temp_2>>8);			//Рег304	темперратура второго датчика батареи №1, В
+modbus_registers[627]=(signed char)(lakb[1]._cell_temp_2);
+modbus_registers[628]=(signed char)(lakb[1]._cell_temp_3>>8);			//Рег305	темперратура третьего датчика батареи №1, В
+modbus_registers[629]=(signed char)(lakb[1]._cell_temp_3);
+modbus_registers[630]=(signed char)(lakb[1]._cell_temp_4>>8);			//Рег306	темперратура четвертого датчика батареи №1, В
+modbus_registers[631]=(signed char)(lakb[1]._cell_temp_4);
+modbus_registers[632]=(signed char)(lakb[1]._s_o_h>>8);					//Рег307	Емкость батареи №1, 0.01А*ч
+modbus_registers[633]=(signed char)(lakb[1]._s_o_h);
+modbus_registers[634]=(signed char)(lakb[1]._s_o_c>>8);					//Рег308	заряд батареи №1, 0.01А*ч
+modbus_registers[635]=(signed char)(lakb[1]._s_o_c);
+modbus_registers[636]=(signed char)(lakb[1]._s_o_c_percent>>8);			//Рег309	заряд батареи №1, %
+modbus_registers[637]=(signed char)(lakb[1]._s_o_c_percent);
+modbus_registers[638]=(signed char)(lakb[1]._tot_bat_volt>>8);			//Рег310	предполагаемое время разряда батареи №1, мин
+modbus_registers[639]=(signed char)(lakb[1]._tot_bat_volt);
 
 #endif //UKU_FSO
 
