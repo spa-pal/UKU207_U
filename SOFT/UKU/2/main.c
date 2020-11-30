@@ -4006,7 +4006,9 @@ else if(ind==iMn_6U)
 	int2lcdyx(net_av,0,19,0); */ 
 	//int2lcdyx(http_power_num_of_phases,0,19,0);
 	//long2lcdyx_mmm(1234567,0,8,0);
-	//long2lcdyx_mmm(AUSW_MAIN,0,19,0);	
+	//long2lcdyx_mmm(AUSW_MAIN,0,19,0);
+	//int2lcdyx(cntrl_stat,0,7,0);
+	//int2lcdyx(u_necc,0,19,0);	
 	}
 //#ifndef UKU_6U_WEB
 else if(ind==iMn_220)
@@ -43313,13 +43315,13 @@ while (1)
 #ifdef 	UKU_FSO
 		cntrl_hndl_FSO();
 #elif defined	UKU_TELECORE2017
-		//cntrl_hndl_telecore2017();
-		//lakb_hndl();
+		cntrl_hndl_telecore2017();
+		lakb_hndl();
 #elif defined	TELECORE
-		//cntrl_hndl_telecore();
-		//lakb_hndl();
+		cntrl_hndl_telecore();
+		lakb_hndl();
 #else 
-		//cntrl_hndl();
+		cntrl_hndl();
 #endif				  
 
 		//ret_hndl();

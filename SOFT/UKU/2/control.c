@@ -145,8 +145,8 @@ signed char vent_stat=0;
 
 //***********************************************
 //Управление ШИМом
-signed short cntrl_stat=600;
-signed short cntrl_stat_old=600;
+signed short cntrl_stat=610;
+signed short cntrl_stat_old=610;
 signed short cntrl_stat_new;
 signed short Ibmax;
 unsigned char unh_cnt0,unh_cnt1,b1Hz_unh;
@@ -9777,9 +9777,9 @@ for(i=0;i<NUMIST;i++)
 
 if(iiii==0)
 	{
-	cntrl_stat=600;	
-	cntrl_stat_old=600;
-	cntrl_stat_new=600;
+	cntrl_stat=620;	
+	cntrl_stat_old=620;
+	cntrl_stat_new=620;
 	cntrl_stat=10*PWM_START;
 	cntrl_stat_old=10*PWM_START;
 	cntrl_stat_new=10*PWM_START;
