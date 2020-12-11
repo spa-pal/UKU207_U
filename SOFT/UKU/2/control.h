@@ -97,6 +97,10 @@ extern short __ee_spc_phase;
 extern char vz_error;   // устанавливается, если выр. заряд заблокирован
 
 //***********************************************
+//Управление вентилятором
+extern signed char vent_stat;
+
+//***********************************************
 //Управление ШИМом
 extern signed short cntrl_stat;
 extern signed short cntrl_stat_old;

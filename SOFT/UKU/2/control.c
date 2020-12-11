@@ -14,6 +14,7 @@
 #include "modbus_tcp.h"
 #include "uart1.h"
 #include "cmd.h"
+#include "stark.h"
 #include <LPC17xx.h>
 
 #define KOEFPOT  105L
@@ -3927,7 +3928,7 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 
 	//if(BAT_TYPE==2)
 		//{
-		lakb[0]._ch_curr=((ascii2halFhex(liBatteryInBuff[105]))<<12)+
+		lakb[numOfPacks_]._ch_curr=((ascii2halFhex(liBatteryInBuff[105]))<<12)+
 					 		((ascii2halFhex(liBatteryInBuff[106]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[107]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[108])));
@@ -3935,33 +3936,33 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 		/*if(temp_SS&0x8000)		lakb[0]._ch_curr=~temp_SS;
 		else 				lakb[0]._ch_curr=temp_SS;*/
 	
-		lakb[0]._tot_bat_volt=	(unsigned short)(((ascii2halFhex(liBatteryInBuff[109]))<<12)+
+		lakb[numOfPacks_]._tot_bat_volt=	(unsigned short)(((ascii2halFhex(liBatteryInBuff[109]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[110]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[111]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[112]))))/10;
 
 
-		lakb[0]._cell_temp_1= (signed char)((((ascii2halFhex(liBatteryInBuff[81]))<<12)+
+		lakb[numOfPacks_]._cell_temp_1= (signed char)((((ascii2halFhex(liBatteryInBuff[81]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[82]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[83]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[84]))))/100);
-		lakb[0]._cell_temp_2= (signed char)((((ascii2halFhex(liBatteryInBuff[85]))<<12)+
+		lakb[numOfPacks_]._cell_temp_2= (signed char)((((ascii2halFhex(liBatteryInBuff[85]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[86]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[87]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[88]))))/100);
-		lakb[0]._cell_temp_3= (signed char)((((ascii2halFhex(liBatteryInBuff[89]))<<12)+
+		lakb[numOfPacks_]._cell_temp_3= (signed char)((((ascii2halFhex(liBatteryInBuff[89]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[90]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[91]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[92]))))/100);
-		lakb[0]._cell_temp_4= (signed char)((((ascii2halFhex(liBatteryInBuff[93]))<<12)+
+		lakb[numOfPacks_]._cell_temp_4= (signed char)((((ascii2halFhex(liBatteryInBuff[93]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[94]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[95]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[96]))))/100);
-		lakb[0]._cell_temp_ambient= (signed char)((((ascii2halFhex(liBatteryInBuff[97]))<<12)+
+		lakb[numOfPacks_]._cell_temp_ambient= (signed char)((((ascii2halFhex(liBatteryInBuff[97]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[98]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[99]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[100]))))/100);
-		lakb[0]._cell_temp_power= (signed char)((((ascii2halFhex(liBatteryInBuff[101]))<<12)+
+		lakb[numOfPacks_]._cell_temp_power= (signed char)((((ascii2halFhex(liBatteryInBuff[101]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[102]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[103]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[104]))))/100);
@@ -3973,31 +3974,46 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 							((ascii2halFhex(liBatteryInBuff[95]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[96]))))/10-273;	*/
 	
-		lakb[0]._s_o_c=		(unsigned short)((ascii2halFhex(liBatteryInBuff[113]))<<12)+
+		lakb[numOfPacks_]._s_o_c=		(unsigned short)((ascii2halFhex(liBatteryInBuff[113]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[114]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[115]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[116])));
 	
-		lakb[0]._s_o_h=		(unsigned short)((ascii2halFhex(liBatteryInBuff[119]))<<12)+
+		lakb[numOfPacks_]._s_o_h=		(unsigned short)((ascii2halFhex(liBatteryInBuff[119]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[120]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[121]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[122])));
 
-		if(lakb[0]._s_o_h==0)lakb[0]._s_o_h=1;
+		if(lakb[numOfPacks_]._s_o_h==0)lakb[numOfPacks_]._s_o_h=1;
 
-		temp_SL=((signed long)lakb[0]._s_o_c)*100L;
-		temp_SL/=(signed long)lakb[0]._s_o_h;
-		lakb[0]._s_o_c_percent=(signed short)temp_SL;
+		temp_SL=((signed long)lakb[numOfPacks_]._s_o_c)*100L;
+		temp_SL/=(signed long)lakb[numOfPacks_]._s_o_h;
+		lakb[numOfPacks_]._s_o_c_percent=(signed short)temp_SL;
 			
 
-		lakb[0]._rat_cap=		(unsigned short)((ascii2halFhex(liBatteryInBuff[127]))<<12)+
+		lakb[numOfPacks_]._rat_cap=		(unsigned short)((ascii2halFhex(liBatteryInBuff[127]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[128]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[129]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[130])));
 	
 		//lakb[0]._s_o_c=		lakb[0]._s_o_c_abs/(lakb[0]._rat_cap/100);
 
-
+		if(sTARKSilentCnt[numOfPacks_]==10)
+			{
+		lakb[numOfPacks_]._ch_curr=0;
+		lakb[numOfPacks_]._tot_bat_volt=0;
+		lakb[numOfPacks_]._cell_temp_1=0;
+		lakb[numOfPacks_]._cell_temp_2=0;
+		lakb[numOfPacks_]._cell_temp_3=0;
+		lakb[numOfPacks_]._cell_temp_4=0;
+		lakb[numOfPacks_]._cell_temp_ambient=0;
+		lakb[numOfPacks_]._cell_temp_power=0;
+		lakb[numOfPacks_]._s_o_c=0;
+		lakb[numOfPacks_]._s_o_h=0;
+		if(lakb[numOfPacks_]._s_o_h==0)lakb[numOfPacks_]._s_o_h=1;
+		lakb[numOfPacks_]._s_o_c_percent=0;
+		lakb[numOfPacks_]._rat_cap=0;
+			}
 
 
 //Внешний датчик температуры 
@@ -5813,6 +5829,23 @@ else if(DOP_RELE_FUNC==1)  //если допреле подключено к индикации разряженной бат
 	}
 
 #endif //o_9
+
+#ifdef UKU_FSO
+//Реле аварий батарей
+if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_VENT))
+	{
+	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VENT,1);
+	else if(mess_data[1]==1) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VENT,1);
+     }
+else 
+	{
+	if(!(vent_stat)) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VENT,1);
+    else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VENT,1);
+	} 
+
+
+
+#endif
 
 #if defined UKU_6U || defined UKU_220_IPS_TERMOKOMPENSAT   //o_9	
 //Блок выносной реле
@@ -9299,16 +9332,16 @@ else if(b1Hz_unh)
 
 	if(BAT_TYPE==4)
 		{
-		u_necc=U0B;
+		u_necc=TELECORE2017_ULINECC;
 		
-		if((spc_stat==spcVZ)&&(sk_stat[0]==1))
+	/**	if((spc_stat==spcVZ)&&(sk_stat[0]==1))
 			{
 			u_necc=UVZ;
-			}
+			}*/
 
 		gran(&DU_LI_BAT,1,30);
 
-
+		/*
 		if(lakbNotErrorNum==0)
 			{
 			u_necc=U0B;
@@ -9328,8 +9361,8 @@ else if(b1Hz_unh)
 
 			if(soc_flag==0)u_necc=USODERG_LI_BAT;
 			}
-
-		u_necc=512;
+		*/
+		//u_necc=512;
 		gran(&u_necc,0,UB0);
 		//gran(&u_necc,0,UB20);
 		gran(&u_necc,0,540);
@@ -11557,6 +11590,7 @@ for(i=0;i<NUMIST;i++)
 	}
 }
 
+#ifndef UKU_FSO
 //-----------------------------------------------
 void vent_hndl(void)
 {
@@ -11673,6 +11707,57 @@ else if(RELEVENTSIGN==rvsEXT)
 		}
 	}
 else vent_stat=1;
+//vent_stat=44;
 }
+#endif //UKU_FSO
 
-
+#ifdef UKU_FSO
+//-----------------------------------------------
+void vent_hndl_fso(void)
+{
+	if	(
+		((NUMIST)&&((bps[0]._Ti>TVENTON)||(bps[0]._cnt>=30)))
+		||
+		((NUMIST>1)&&((bps[1]._Ti>TVENTON)||(bps[1]._cnt>=30)))
+		||
+		((NUMIST>2)&&((bps[2]._Ti>TVENTON)||(bps[2]._cnt>=30)))
+		||
+		((NUMIST>3)&&((bps[3]._Ti>TVENTON)||(bps[3]._cnt>=30)))
+		||
+		((NUMIST>4)&&((bps[4]._Ti>TVENTON)||(bps[4]._cnt>=30)))
+		||
+		((NUMIST>5)&&((bps[5]._Ti>TVENTON)||(bps[5]._cnt>=30)))
+		||
+		((NUMIST>6)&&((bps[6]._Ti>TVENTON)||(bps[6]._cnt>=30)))
+		||
+		((NUMIST>7)&&((bps[7]._Ti>TVENTON)||(bps[7]._cnt>=30)))
+		)
+		{
+		vent_stat=1;
+		}
+	else if(vent_stat==1)
+		{
+		if	(
+			((!NUMIST)||((NUMIST)&&(bps[0]._Ti<TVENTOFF)&&(bps[0]._cnt<10)))
+			&&
+			((NUMIST<2)||((NUMIST>=2)&&(bps[1]._Ti<TVENTOFF)&&(bps[1]._cnt<10)))
+			&&
+			((NUMIST<3)||((NUMIST>=3)&&(bps[2]._Ti<TVENTOFF)&&(bps[2]._cnt<10)))
+			&&
+			((NUMIST<4)||((NUMIST>=4)&&(bps[3]._Ti<TVENTOFF)&&(bps[3]._cnt<10)))
+			&&
+			((NUMIST<5)||((NUMIST>=5)&&(bps[4]._Ti<TVENTOFF)&&(bps[4]._cnt<10)))
+			&&
+			((NUMIST<6)||((NUMIST>=6)&&(bps[5]._Ti<TVENTOFF)&&(bps[5]._cnt<10)))
+			&&
+			((NUMIST<7)||((NUMIST>=7)&&(bps[6]._Ti<TVENTOFF)&&(bps[6]._cnt<10)))
+			&&
+			((NUMIST<8)||((NUMIST>=8)&&(bps[7]._Ti<TVENTOFF)&&(bps[7]._cnt<10)))
+			)
+			{
+			vent_stat=0;
+			}
+		}
+//vent_stat=33;
+}
+#endif //UKU_FSO

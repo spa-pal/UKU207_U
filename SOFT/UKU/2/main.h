@@ -780,10 +780,10 @@
 #define SHIFT_REL_AV_BPS	     7
 #define SHIFT_REL_BAT1	     8
 #define SHIFT_REL_BAT2	     6
-#define SHIFT_REL_LIGHT		9
-#define SHIFT_REL_WARM		4
-#define SHIFT_REL_VENT	     7
-#define SHIFT_REL_VVENT	     6
+//#define SHIFT_REL_AV_BAT1	4
+#define SHIFT_REL_VENT	     6
+//7
+//#define SHIFT_REL_VVENT	     6
 #endif
 //***********************************************
 // oleg_stard*
@@ -955,7 +955,7 @@ typedef enum {
 	iOut_volt_contr,iDop_rele_set,iBlok_ips_set,iIps_Curr_Avg_Set,
 	iRele_set,iRele_set_,
 	iRele_set_6U,//o_9
-	iFWabout, iSpecInf,
+	iFWabout, iSpecInf,	iSpecInfFSO,
 	iHV_STEP2_1,iHV_STEP2_2,iVZ1_STEP2_1,iVZ1_STEP2_2,iVZ2_STEP2_1,iVZ2_STEP2_2,
 	iSet_load_off,
 	iSet_bat_point
@@ -1474,7 +1474,7 @@ extern char bLAKB_KONF_CH_EN;
 extern char bRS485ERR;
 extern short LBAT_STRUKT;
 extern char lakb_error_cnt;	//счетчик неправильного показания ннапряжения батареи
-extern short numOfPacks,numOfPacks_;
+extern short numOfPacks, numOfPacks_, post_length_;
 extern short numOfCells, numOfTemperCells, baseOfData;
 extern short lakb_stat_comm_error;	//аварийность канала связи с литиевыми батареями. 0 означает исправность платы расширения и наличие связи со всеми литиевыми батареями
 extern short lakbNotErrorNum;		//колличество литиевых батарей с исправной связью

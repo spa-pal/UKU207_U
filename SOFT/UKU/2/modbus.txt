@@ -1753,54 +1753,75 @@
 ;;;3039   modbus_registers[615]=(signed char)(lakb[0]._s_o_c);
 ;;;3040   modbus_registers[616]=(signed char)(lakb[0]._s_o_c_percent>>8);			//Рег309	заряд батареи №1, %
 ;;;3041   modbus_registers[617]=(signed char)(lakb[0]._s_o_c_percent);
-;;;3042   modbus_registers[618]=(signed char)(lakb[0]._tot_bat_volt>>8);			//Рег301	напряжение батареи №1, В
+;;;3042   modbus_registers[618]=(signed char)(lakb[0]._tot_bat_volt>>8);			//Рег310	предполагаемое время разряда батареи №1, мин
 ;;;3043   modbus_registers[619]=(signed char)(lakb[0]._tot_bat_volt);
 ;;;3044   
-;;;3045   #endif //UKU_FSO
-;;;3046   
-;;;3047   //o_10_e
-;;;3048   if(prot==MODBUS_RTU_PROT)
-;;;3049   	{
-;;;3050   	modbus_tx_buff[0]=adr;
-;;;3051   	modbus_tx_buff[1]=func;
-;;;3052   
-;;;3053   	modbus_tx_buff[2]=(char)(reg_quantity*2);
-;;;3054   
-;;;3055   	mem_copy((signed char*)&modbus_tx_buff[3],(signed char*)&modbus_registers[(reg_adr-1)*2],reg_quantity*2);
+;;;3045   modbus_registers[620]=(signed char)(lakb[1]._tot_bat_volt>>8);			//Рег301	напряжение батареи №1, В
+;;;3046   modbus_registers[621]=(signed char)(lakb[1]._tot_bat_volt);
+;;;3047   modbus_registers[622]=(signed char)(lakb[1]._ch_curr>>8);				//Рег302	ток батареи №1, В
+;;;3048   modbus_registers[623]=(signed char)(lakb[1]._ch_curr);
+;;;3049   modbus_registers[624]=(signed char)(lakb[1]._cell_temp_1>>8);			//Рег303	темперратура первого датчика батареи №1, В
+;;;3050   modbus_registers[625]=(signed char)(lakb[1]._cell_temp_1);
+;;;3051   modbus_registers[626]=(signed char)(lakb[1]._cell_temp_2>>8);			//Рег304	темперратура второго датчика батареи №1, В
+;;;3052   modbus_registers[627]=(signed char)(lakb[1]._cell_temp_2);
+;;;3053   modbus_registers[628]=(signed char)(lakb[1]._cell_temp_3>>8);			//Рег305	темперратура третьего датчика батареи №1, В
+;;;3054   modbus_registers[629]=(signed char)(lakb[1]._cell_temp_3);
+;;;3055   modbus_registers[630]=(signed char)(lakb[1]._cell_temp_4>>8);			//Рег306	темперратура четвертого датчика батареи №1, В
+;;;3056   modbus_registers[631]=(signed char)(lakb[1]._cell_temp_4);
+;;;3057   modbus_registers[632]=(signed char)(lakb[1]._s_o_h>>8);					//Рег307	Емкость батареи №1, 0.01А*ч
+;;;3058   modbus_registers[633]=(signed char)(lakb[1]._s_o_h);
+;;;3059   modbus_registers[634]=(signed char)(lakb[1]._s_o_c>>8);					//Рег308	заряд батареи №1, 0.01А*ч
+;;;3060   modbus_registers[635]=(signed char)(lakb[1]._s_o_c);
+;;;3061   modbus_registers[636]=(signed char)(lakb[1]._s_o_c_percent>>8);			//Рег309	заряд батареи №1, %
+;;;3062   modbus_registers[637]=(signed char)(lakb[1]._s_o_c_percent);
+;;;3063   modbus_registers[638]=(signed char)(lakb[1]._tot_bat_volt>>8);			//Рег310	предполагаемое время разряда батареи №1, мин
+;;;3064   modbus_registers[639]=(signed char)(lakb[1]._tot_bat_volt);
+;;;3065   
+;;;3066   #endif //UKU_FSO
+;;;3067   
+;;;3068   //o_10_e
+;;;3069   if(prot==MODBUS_RTU_PROT)
+;;;3070   	{
+;;;3071   	modbus_tx_buff[0]=adr;
+;;;3072   	modbus_tx_buff[1]=func;
+;;;3073   
+;;;3074   	modbus_tx_buff[2]=(char)(reg_quantity*2);
+;;;3075   
+;;;3076   	mem_copy((signed char*)&modbus_tx_buff[3],(signed char*)&modbus_registers[(reg_adr-1)*2],reg_quantity*2);
 000ed4  f1a20201          SUB      r2,r2,#1
 000ed8  4f77              LDR      r7,|L1.4280|
 000eda  eb040442          ADD      r4,r4,r2,LSL #1
-000ede  ea4f0246          LSL      r2,r6,#1              ;3053
+000ede  ea4f0246          LSL      r2,r6,#1              ;3074
 000ee2  b1c3              CBZ      r3,|L1.3862|
-;;;3056   
-;;;3057   	crc_temp=CRC16_2(modbus_tx_buff,(reg_quantity*2)+3);
-;;;3058   
-;;;3059   	modbus_tx_buff[3+(reg_quantity*2)]=(char)crc_temp;
-;;;3060   	modbus_tx_buff[4+(reg_quantity*2)]=crc_temp>>8;
-;;;3061   
-;;;3062   	for (i=0;i<(5+(reg_quantity*2));i++)
-;;;3063   		{
-;;;3064   		putchar0(modbus_tx_buff[i]);
-;;;3065   		}
-;;;3066   	for (i=0;i<(5+(reg_quantity*2));i++)
-;;;3067   		{
-;;;3068   		putchar_sc16is700(modbus_tx_buff[i]);
-;;;3069   		}
-;;;3070   	}
-;;;3071   else if(prot==MODBUS_TCP_PROT)
+;;;3077   
+;;;3078   	crc_temp=CRC16_2(modbus_tx_buff,(reg_quantity*2)+3);
+;;;3079   
+;;;3080   	modbus_tx_buff[3+(reg_quantity*2)]=(char)crc_temp;
+;;;3081   	modbus_tx_buff[4+(reg_quantity*2)]=crc_temp>>8;
+;;;3082   
+;;;3083   	for (i=0;i<(5+(reg_quantity*2));i++)
+;;;3084   		{
+;;;3085   		putchar0(modbus_tx_buff[i]);
+;;;3086   		}
+;;;3087   	for (i=0;i<(5+(reg_quantity*2));i++)
+;;;3088   		{
+;;;3089   		putchar_sc16is700(modbus_tx_buff[i]);
+;;;3090   		}
+;;;3091   	}
+;;;3092   else if(prot==MODBUS_TCP_PROT)
 000ee4  2b01              CMP      r3,#1
 000ee6  d105              BNE      |L1.3828|
-;;;3072   	{
-;;;3073   	mem_copy((signed char*)modbus_tx_buff,(signed char*)&modbus_registers[(reg_adr-1)*2],reg_quantity*2);
+;;;3093   	{
+;;;3094   	mem_copy((signed char*)modbus_tx_buff,(signed char*)&modbus_registers[(reg_adr-1)*2],reg_quantity*2);
 000ee8  4621              MOV      r1,r4
 000eea  4638              MOV      r0,r7
 000eec  f7fffffe          BL       mem_copy
-;;;3074   	modbus_tcp_out_ptr=(signed char*)modbus_tx_buff;
+;;;3095   	modbus_tcp_out_ptr=(signed char*)modbus_tx_buff;
 000ef0  4872              LDR      r0,|L1.4284|
 000ef2  6007              STR      r7,[r0,#0]  ; modbus_tcp_out_ptr
                   |L1.3828|
-;;;3075   	}
-;;;3076   }
+;;;3096   	}
+;;;3097   }
 000ef4  f50d7d2f          ADD      sp,sp,#0x2bc
 000ef8  e8bd8ff0          POP      {r4-r11,pc}
                   |L1.3836|
@@ -1815,45 +1836,45 @@
 000f10  f88d425d          STRB     r4,[sp,#0x25d]        ;3002
 000f14  e79f              B        |L1.3670|
                   |L1.3862|
-000f16  7038              STRB     r0,[r7,#0]            ;3050
-000f18  7079              STRB     r1,[r7,#1]            ;3051
-000f1a  70ba              STRB     r2,[r7,#2]            ;3053
-000f1c  4621              MOV      r1,r4                 ;3055
-000f1e  1cf8              ADDS     r0,r7,#3              ;3055
+000f16  7038              STRB     r0,[r7,#0]            ;3071
+000f18  7079              STRB     r1,[r7,#1]            ;3072
+000f1a  70ba              STRB     r2,[r7,#2]            ;3074
+000f1c  4621              MOV      r1,r4                 ;3076
+000f1e  1cf8              ADDS     r0,r7,#3              ;3076
 000f20  f7fffffe          BL       mem_copy
-000f24  2003              MOVS     r0,#3                 ;3057
-000f26  eb000046          ADD      r0,r0,r6,LSL #1       ;3057
-000f2a  b201              SXTH     r1,r0                 ;3057
+000f24  2003              MOVS     r0,#3                 ;3078
+000f26  eb000046          ADD      r0,r0,r6,LSL #1       ;3078
+000f2a  b201              SXTH     r1,r0                 ;3078
 000f2c  4862              LDR      r0,|L1.4280|
 000f2e  f7fffffe          BL       CRC16_2
-000f32  eb070146          ADD      r1,r7,r6,LSL #1       ;3059
-000f36  70c8              STRB     r0,[r1,#3]            ;3059
-000f38  ea4f2010          LSR      r0,r0,#8              ;3060
-000f3c  7108              STRB     r0,[r1,#4]            ;3060
-000f3e  f04f0400          MOV      r4,#0                 ;3062
-000f42  f04f0005          MOV      r0,#5                 ;3062
-000f46  eb000546          ADD      r5,r0,r6,LSL #1       ;3062
+000f32  eb070146          ADD      r1,r7,r6,LSL #1       ;3080
+000f36  70c8              STRB     r0,[r1,#3]            ;3080
+000f38  ea4f2010          LSR      r0,r0,#8              ;3081
+000f3c  7108              STRB     r0,[r1,#4]            ;3081
+000f3e  f04f0400          MOV      r4,#0                 ;3083
+000f42  f04f0005          MOV      r0,#5                 ;3083
+000f46  eb000546          ADD      r5,r0,r6,LSL #1       ;3083
 000f4a  e005              B        |L1.3928|
                   |L1.3916|
-000f4c  5d38              LDRB     r0,[r7,r4]            ;3064
+000f4c  5d38              LDRB     r0,[r7,r4]            ;3085
 000f4e  f7fffffe          BL       putchar0
-000f52  f1040401          ADD      r4,r4,#1              ;3062
-000f56  b2e4              UXTB     r4,r4                 ;3062
+000f52  f1040401          ADD      r4,r4,#1              ;3083
+000f56  b2e4              UXTB     r4,r4                 ;3083
                   |L1.3928|
-000f58  42a5              CMP      r5,r4                 ;3062
+000f58  42a5              CMP      r5,r4                 ;3083
 000f5a  d8f7              BHI      |L1.3916|
-000f5c  f04f0400          MOV      r4,#0                 ;3066
+000f5c  f04f0400          MOV      r4,#0                 ;3087
 000f60  e005              B        |L1.3950|
                   |L1.3938|
-000f62  5d38              LDRB     r0,[r7,r4]            ;3068
+000f62  5d38              LDRB     r0,[r7,r4]            ;3089
 000f64  f7fffffe          BL       putchar_sc16is700
-000f68  f1040401          ADD      r4,r4,#1              ;3066
-000f6c  b2e4              UXTB     r4,r4                 ;3066
+000f68  f1040401          ADD      r4,r4,#1              ;3087
+000f6c  b2e4              UXTB     r4,r4                 ;3087
                   |L1.3950|
-000f6e  42a5              CMP      r5,r4                 ;3066
+000f6e  42a5              CMP      r5,r4                 ;3087
 000f70  d8f7              BHI      |L1.3938|
 000f72  e7bf              B        |L1.3828|
-;;;3077   
+;;;3098   
                           ENDP
 
                   modbus_hold_registers_transmit PROC

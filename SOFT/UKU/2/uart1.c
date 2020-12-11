@@ -302,6 +302,7 @@ else if ( IIRValue == IIR_RDA )	/* Receive Data Available */
 
 	if(data==0x0d)
 		{
+		//short post_length;
 /*		plazmaSS_fso[2]++;
 		if(BAT_TYPE==2)
 			{
@@ -330,11 +331,19 @@ else if ( IIRValue == IIR_RDA )	/* Receive Data Available */
 			if(numOfPacks_>NUMBAT_FSO)numOfPacks_=0;
 			//sTARKSilentCnt[numOfPacks_]=50;
 
-			if(sTARKRequestPhase==0)	mem_copy (liBatteryInBuff, bat_drv_rx_buff,  bat_drv_rx_cnt);
-			else if(sTARKRequestPhase==1)	mem_copy (&liBatteryInBuff[150], bat_drv_rx_buff,  bat_drv_rx_cnt);
+			post_length_=	(((ascii2halFhex(bat_drv_rx_buff[10]))<<8)+
+							((ascii2halFhex(bat_drv_rx_buff[11]))<<4)+
+							((ascii2halFhex(bat_drv_rx_buff[12]))))+18;
+			if(post_length_==bat_drv_rx_cnt)
+				{
+				if(sTARKRequestPhase==0)	mem_copy (liBatteryInBuff, bat_drv_rx_buff,  bat_drv_rx_cnt);
+				else if(sTARKRequestPhase==1)	mem_copy (&liBatteryInBuff[150], bat_drv_rx_buff,  bat_drv_rx_cnt);
 			//zTTSilentCnt=0;
+				sTARKSilentCnt[numOfPacks_]=0;
+				}
 			plazmaSS_fso[4]=sTARKRequestPhase;
 			plazmaSS_fso[5]=bat_drv_rx_cnt;
+			bat_drv_rx_cnt=0;
 		/*	}	*/
 		}
 #endif //UKU_FSO
