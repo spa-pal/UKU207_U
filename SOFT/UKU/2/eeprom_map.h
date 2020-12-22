@@ -558,6 +558,9 @@
 #define EE_UKUFSO_BAT2_START_DATE_DAY			EE_UKU_FSO+174
 
 #define EE_NUMBAT_FSO							EE_UKU_FSO+200
+#define EE_UKU_FSO_MINI_SIGN_MODE				EE_UKU_FSO+202
+#define EE_UKU_FSO_MINI_SIGN_D1_Q				EE_UKU_FSO+204
+#define EE_UKU_FSO_MINI_SIGN_D5_Q				EE_UKU_FSO+206
 
 extern const unsigned short ADR_EE_BAT_ZAR_CNT[2];
 extern const unsigned short ADR_EE_BAT_ZAR_CNT_KE[2];

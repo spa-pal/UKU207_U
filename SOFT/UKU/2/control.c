@@ -5830,7 +5830,8 @@ else if(DOP_RELE_FUNC==1)  //если допреле подключено к индикации разряженной бат
 
 #endif //o_9
 
-#ifdef UKU_FSO
+#ifdef UKU_FSO	
+#ifndef UKU_FSO_MINI
 //Реле аварий батарей
 if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_VENT))
 	{
@@ -5842,10 +5843,58 @@ else
 	if(!(vent_stat)) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VENT,1);
     else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VENT,1);
 	} 
+#endif //!UKU_FSO_MINI
 
+#ifdef UKU_FSO_MINI
+//Реле D1
+if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_D1))
+	{
+	if(mess_data[1]==0)  		SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_D1,1);
+	else if(mess_data[1]==1) 	SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_D1,1);
+     }
+else 
+	{
+	if(uku_fso_D1_stat) 		SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_D1,1);
+    else 						SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_D1,1);
+	} 
 
+//Реле D2
+if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_D2))
+	{
+	if(mess_data[1]==0) 	 	SET_REG(LPC_GPIO3->FIOSET,1,25,1);
+	else if(mess_data[1]==1) 	SET_REG(LPC_GPIO3->FIOCLR,1,25,1);
+     }
+else 
+	{
+	if(uku_fso_D2_stat) 		SET_REG(LPC_GPIO3->FIOSET,1,25,1);
+    else 						SET_REG(LPC_GPIO3->FIOCLR,1,25,1);
+	}
 
-#endif
+//Реле D5
+if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_D5))
+	{
+	if(mess_data[1]==0) 		SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_D5,1);
+	else if(mess_data[1]==1) 	SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_D5,1);
+     }
+else 
+	{
+	if(uku_fso_D5_stat) 		SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_D5,1);
+    else 						SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_D5,1);
+	}
+
+//Реле SYSOK
+if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_SYSOK))
+	{
+	if(mess_data[1]==0) 		SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_SYSOK,1);
+	else if(mess_data[1]==1) 	SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_SYSOK,1);
+     }
+else 
+	{
+	if(uku_fso_SYSOK_stat) 	SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_SYSOK,1);
+    else 						SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_SYSOK,1);
+	}/**/
+#endif //UKU_FSO_MINI
+#endif //UKU_FSO
 
 #if defined UKU_6U || defined UKU_220_IPS_TERMOKOMPENSAT   //o_9	
 //Блок выносной реле
@@ -9365,7 +9414,7 @@ else if(b1Hz_unh)
 		//u_necc=512;
 		gran(&u_necc,0,UB0);
 		//gran(&u_necc,0,UB20);
-		gran(&u_necc,0,540);
+		gran(&u_necc,0,560);
 		}
 	}
 
@@ -11761,3 +11810,74 @@ void vent_hndl_fso(void)
 //vent_stat=33;
 }
 #endif //UKU_FSO
+
+#ifdef UKU_FSO_MINI
+//-----------------------------------------------
+void signal_hndl_uku_fso(void)
+{
+
+if(avar_stat&0x0001)uku_fso_D2_stat=1;
+else 				uku_fso_D2_stat=0;
+
+if((avar_stat&(1<<3))||(avar_stat&0x0001))	uku_fso_SYSOK_stat=1;
+else 										uku_fso_SYSOK_stat=0; 
+
+
+if(UKU_FSO_MINI_SIGN_MODE==0)
+	{
+	if(load_U<480)
+		{
+		uku_fso_D1_cnt++;
+		gran(&uku_fso_D1_cnt,0,10);
+		}
+	else 
+		{
+		uku_fso_D1_cnt--;
+		gran(&uku_fso_D1_cnt,0,10);
+		}
+
+	if(load_U<420)
+		{
+		uku_fso_D5_cnt++;
+		gran(&uku_fso_D5_cnt,0,10);
+		}
+	else 
+		{
+		uku_fso_D5_cnt--;
+		gran(&uku_fso_D5_cnt,0,10);
+		}
+	}
+
+else if(UKU_FSO_MINI_SIGN_MODE==1)
+	{
+	if(lakb[0]._s_o_c_percent<UKU_FSO_MINI_SIGN_D1_Q)
+		{
+		uku_fso_D1_cnt++;
+		gran(&uku_fso_D1_cnt,0,10);
+		}
+	else 
+		{
+		uku_fso_D1_cnt--;
+		gran(&uku_fso_D1_cnt,0,10);
+		}
+
+	if(lakb[0]._s_o_c_percent<UKU_FSO_MINI_SIGN_D5_Q)
+		{
+		uku_fso_D5_cnt++;
+		gran(&uku_fso_D5_cnt,0,10);
+		}
+	else 
+		{
+		uku_fso_D5_cnt--;
+		gran(&uku_fso_D5_cnt,0,10);
+		}
+	}
+
+if(uku_fso_D1_cnt>8)		uku_fso_D1_stat=1;
+else if(uku_fso_D1_cnt<=2)	uku_fso_D1_stat=0;
+
+if(uku_fso_D5_cnt>8)		uku_fso_D5_stat=1;
+else if(uku_fso_D5_cnt<=2)	uku_fso_D5_stat=0;
+
+}
+#endif //UKU_FSO_MINI

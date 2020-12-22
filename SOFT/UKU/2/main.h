@@ -570,6 +570,10 @@
 #define		PARAM_RELE_BDR2						118
 #define		PARAM_RELE_BDR3						119
 #define		PARAM_RELE_BDR4						120
+#define		PARAM_RELE_D1						121
+#define		PARAM_RELE_D2						122
+#define		PARAM_RELE_D5						123
+#define		PARAM_RELE_SYSOK					124
 
 #define	MESS2IND_HNDL						215
 #define		PARAM_SAMOKALIBR					216
@@ -782,7 +786,11 @@
 #define SHIFT_REL_BAT2	     6
 //#define SHIFT_REL_AV_BAT1	4
 #define SHIFT_REL_VENT	     6
-//7
+#define SHIFT_REL_D1		 7
+#define SHIFT_REL_D2		 5
+#define SHIFT_REL_D5		 6
+#define SHIFT_REL_SYSOK		 4
+//7				   5
 //#define SHIFT_REL_VVENT	     6
 #endif
 //***********************************************
@@ -958,7 +966,8 @@ typedef enum {
 	iFWabout, iSpecInf,	iSpecInfFSO,
 	iHV_STEP2_1,iHV_STEP2_2,iVZ1_STEP2_1,iVZ1_STEP2_2,iVZ2_STEP2_1,iVZ2_STEP2_2,
 	iSet_load_off,
-	iSet_bat_point
+	iSet_bat_point,
+	iSet_FSO_MINI_SIGN
 	}i_enum;
 
 typedef struct  
@@ -1128,6 +1137,17 @@ extern signed short SNTP_ENABLE;
 extern signed short SNTP_GMT;
 
 extern signed short NUMBAT_FSO;
+#ifdef UKU_FSO_MINI
+extern signed short UKU_FSO_MINI_SIGN_MODE;
+extern signed short UKU_FSO_MINI_SIGN_D1_Q;
+extern signed short UKU_FSO_MINI_SIGN_D5_Q;
+extern char uku_fso_D1_stat;
+extern char uku_fso_D2_stat;
+extern char uku_fso_D5_stat;
+extern char uku_fso_SYSOK_stat;
+extern short uku_fso_D1_cnt;
+extern short uku_fso_D5_cnt;
+#endif //UKU_FSO_MINI
 
 extern signed short UZ_U;
 extern signed short UZ_IMAX;
