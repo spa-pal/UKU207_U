@@ -5370,3 +5370,29 @@
                           DCD      show_mess_number_
                   |L12.72|
                           DCD      show_mess_komma
+
+;*** Start embedded assembler ***
+
+#line 1 "common_func.c"
+	AREA ||.emb_text||, CODE, READONLY
+	THUMB
+	EXPORT |__asm___13_common_func_c_abs____REV16|
+#line 112 "C:\\Keil\\ARM\\CMSIS\\Include\\core_cmInstr.h"
+|__asm___13_common_func_c_abs____REV16| PROC
+#line 113
+
+ rev16 r0, r0
+ bx lr
+	ENDP
+	AREA ||.emb_text||, CODE, READONLY
+	THUMB
+	EXPORT |__asm___13_common_func_c_abs____REVSH|
+#line 130
+|__asm___13_common_func_c_abs____REVSH| PROC
+#line 131
+
+ revsh r0, r0
+ bx lr
+	ENDP
+
+;*** End   embedded assembler ***
