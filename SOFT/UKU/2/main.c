@@ -13830,9 +13830,9 @@ if(ind==iDeb)
 		int2lcdyx(sTARKSilentCnt[1],1,14,0);
 		int2lcdyx(sTARKSilentCnt[2],2,14,0);
 				
-		int2lcdyx(plazmaSS_fso[3],0,17,0);
+/*		int2lcdyx(plazmaSS_fso[3],0,17,0);
 		int2lcdyx(plazmaSS_fso[4],1,17,0);
-		int2lcdyx(plazmaSS_fso[5],2,17,0);	
+		int2lcdyx(plazmaSS_fso[5],2,17,0);*/	
 		int2lcdyx(bat_drv_rx_cnt,3,15,0);		
 
 		int2lcdyx(sTARKButteryCnter,0,19,0);
