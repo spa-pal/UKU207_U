@@ -242,79 +242,88 @@
 ;;;302    
 ;;;303    	if(data==0x0d)
 ;;;304    		{
-;;;305    /*		plazmaSS_fso[2]++;
-;;;306    		if(BAT_TYPE==2)
-;;;307    			{
-;;;308    			if(sacredSunRequestPhase==0)	mem_copy (liBatteryInBuff, bat_drv_rx_buff,  bat_drv_rx_cnt);
-;;;309    			else if(sacredSunRequestPhase==1)	mem_copy (&liBatteryInBuff[150], bat_drv_rx_buff,  bat_drv_rx_cnt);
-;;;310    			sacredSunSilentCnt=0;
-;;;311    			}
-;;;312    		else if (BAT_TYPE==3)
-;;;313    			{
-;;;314    			numOfPacks_=((ascii2halFhex(bat_drv_rx_buff[15]))<<4)+((ascii2halFhex(bat_drv_rx_buff[16])));
-;;;315    			if(numOfPacks_)numOfPacks_--;
-;;;316    		   	if(numOfPacks_<0)numOfPacks_=0;
-;;;317    			if(numOfPacks_>NUMBAT)numOfPacks_=0;
-;;;318    			zTTSilentCnt[numOfPacks_]=50;
-;;;319    
-;;;320    			if(zTTRequestPhase==0)	mem_copy (liBatteryInBuff, bat_drv_rx_buff,  bat_drv_rx_cnt);
-;;;321    			else if(zTTRequestPhase==1)	mem_copy (&liBatteryInBuff[150], bat_drv_rx_buff,  bat_drv_rx_cnt);
-;;;322    			//zTTSilentCnt=0;
-;;;323    			}
-;;;324    		else if (BAT_TYPE==4)
-;;;325    			{ */
-;;;326    			plazmaSS_fso[3]++;
-;;;327    			numOfPacks_=((ascii2halFhex(bat_drv_rx_buff[3]))<<4)+((ascii2halFhex(bat_drv_rx_buff[4])));
-;;;328    			//if(numOfPacks_)numOfPacks_--;
-;;;329    		   	if(numOfPacks_<0)numOfPacks_=0;
-;;;330    			if(numOfPacks_>NUMBAT_FSO)numOfPacks_=0;
-;;;331    			//sTARKSilentCnt[numOfPacks_]=50;
-;;;332    
-;;;333    			if(sTARKRequestPhase==0)	mem_copy (liBatteryInBuff, bat_drv_rx_buff,  bat_drv_rx_cnt);
-;;;334    			else if(sTARKRequestPhase==1)	mem_copy (&liBatteryInBuff[150], bat_drv_rx_buff,  bat_drv_rx_cnt);
-;;;335    			//zTTSilentCnt=0;
-;;;336    			plazmaSS_fso[4]=sTARKRequestPhase;
-;;;337    			plazmaSS_fso[5]=bat_drv_rx_cnt;
-;;;338    		/*	}	*/
-;;;339    		}
-;;;340    #endif //UKU_FSO
-;;;341    		}
-;;;342    
-;;;343      	}
-;;;344    else if ( IIRValue == IIR_CTI )	/* Character timeout indicator */
+;;;305    		//short post_length;
+;;;306    /*		plazmaSS_fso[2]++;
+;;;307    		if(BAT_TYPE==2)
+;;;308    			{
+;;;309    			if(sacredSunRequestPhase==0)	mem_copy (liBatteryInBuff, bat_drv_rx_buff,  bat_drv_rx_cnt);
+;;;310    			else if(sacredSunRequestPhase==1)	mem_copy (&liBatteryInBuff[150], bat_drv_rx_buff,  bat_drv_rx_cnt);
+;;;311    			sacredSunSilentCnt=0;
+;;;312    			}
+;;;313    		else if (BAT_TYPE==3)
+;;;314    			{
+;;;315    			numOfPacks_=((ascii2halFhex(bat_drv_rx_buff[15]))<<4)+((ascii2halFhex(bat_drv_rx_buff[16])));
+;;;316    			if(numOfPacks_)numOfPacks_--;
+;;;317    		   	if(numOfPacks_<0)numOfPacks_=0;
+;;;318    			if(numOfPacks_>NUMBAT)numOfPacks_=0;
+;;;319    			zTTSilentCnt[numOfPacks_]=50;
+;;;320    
+;;;321    			if(zTTRequestPhase==0)	mem_copy (liBatteryInBuff, bat_drv_rx_buff,  bat_drv_rx_cnt);
+;;;322    			else if(zTTRequestPhase==1)	mem_copy (&liBatteryInBuff[150], bat_drv_rx_buff,  bat_drv_rx_cnt);
+;;;323    			//zTTSilentCnt=0;
+;;;324    			}
+;;;325    		else if (BAT_TYPE==4)
+;;;326    			{ */
+;;;327    			plazmaSS_fso[3]++;
+;;;328    			numOfPacks_=((ascii2halFhex(bat_drv_rx_buff[3]))<<4)+((ascii2halFhex(bat_drv_rx_buff[4])));
+;;;329    			//if(numOfPacks_)numOfPacks_--;
+;;;330    		   	if(numOfPacks_<0)numOfPacks_=0;
+;;;331    			if(numOfPacks_>NUMBAT_FSO)numOfPacks_=0;
+;;;332    			//sTARKSilentCnt[numOfPacks_]=50;
+;;;333    
+;;;334    			post_length_=	(((ascii2halFhex(bat_drv_rx_buff[10]))<<8)+
+;;;335    							((ascii2halFhex(bat_drv_rx_buff[11]))<<4)+
+;;;336    							((ascii2halFhex(bat_drv_rx_buff[12]))))+18;
+;;;337    			if(post_length_==bat_drv_rx_cnt)
+;;;338    				{
+;;;339    				if(sTARKRequestPhase==0)	mem_copy (liBatteryInBuff, bat_drv_rx_buff,  bat_drv_rx_cnt);
+;;;340    				else if(sTARKRequestPhase==1)	mem_copy (&liBatteryInBuff[150], bat_drv_rx_buff,  bat_drv_rx_cnt);
+;;;341    			//zTTSilentCnt=0;
+;;;342    				sTARKSilentCnt[numOfPacks_]=0;
+;;;343    				}
+;;;344    			plazmaSS_fso[4]=sTARKRequestPhase;
+;;;345    			plazmaSS_fso[5]=bat_drv_rx_cnt;
+;;;346    			bat_drv_rx_cnt=0;
+;;;347    		/*	}	*/
+;;;348    		}
+;;;349    #endif //UKU_FSO
+;;;350    		}
+;;;351    
+;;;352      	}
+;;;353    else if ( IIRValue == IIR_CTI )	/* Character timeout indicator */
 000100  2806              CMP      r0,#6
 000102  d044              BEQ      |L1.398|
-;;;345      	{
-;;;346    	/* Character Time-out indicator */
-;;;347    	UART1Status |= 0x100;		/* Bit 9 as the CTI error */
-;;;348      	}
-;;;349    else if ( IIRValue == IIR_THRE )	/* THRE, transmit holding register empty */
+;;;354      	{
+;;;355    	/* Character Time-out indicator */
+;;;356    	UART1Status |= 0x100;		/* Bit 9 as the CTI error */
+;;;357      	}
+;;;358    else if ( IIRValue == IIR_THRE )	/* THRE, transmit holding register empty */
 000104  2801              CMP      r0,#1
 000106  d114              BNE      |L1.306|
-;;;350      	{
-;;;351    	/* THRE interrupt */
-;;;352    	
-;;;353    	LSRValue = LPC_UART1->LSR;		/* Check status in the LSR to see if
+;;;359      	{
+;;;360    	/* THRE interrupt */
+;;;361    	
+;;;362    	LSRValue = LPC_UART1->LSR;		/* Check status in the LSR to see if
 000108  7d38              LDRB     r0,[r7,#0x14]
-;;;354    									valid data in U0THR or not */
-;;;355    	if ( LSRValue & LSR_THRE )
+;;;363    									valid data in U0THR or not */
+;;;364    	if ( LSRValue & LSR_THRE )
 00010a  0680              LSLS     r0,r0,#26
 00010c  d54a              BPL      |L1.420|
-;;;356    		{
-;;;357    	  	UART1TxEmpty = 1;
+;;;365    		{
+;;;366    	  	UART1TxEmpty = 1;
 00010e  f881c000          STRB     r12,[r1,#0]
-;;;358    		if (tx_counter1)
+;;;367    		if (tx_counter1)
 000112  b3da              CBZ      r2,|L1.396|
-;;;359       			{
-;;;360       			--tx_counter1;
+;;;368       			{
+;;;369       			--tx_counter1;
 000114  f1a20201          SUB      r2,r2,#1
 000118  824a              STRH     r2,[r1,#0x12]
-;;;361       			LPC_UART1->THR=tx_buffer1[tx_rd_index1];
+;;;370       			LPC_UART1->THR=tx_buffer1[tx_rd_index1];
 00011a  4abc              LDR      r2,|L1.1036|
 00011c  8a08              LDRH     r0,[r1,#0x10]  ; tx_rd_index1
 00011e  5c12              LDRB     r2,[r2,r0]
 000120  703a              STRB     r2,[r7,#0]
-;;;362       			if (++tx_rd_index1 == TX_BUFFER_SIZE1) tx_rd_index1=0;
+;;;371       			if (++tx_rd_index1 == TX_BUFFER_SIZE1) tx_rd_index1=0;
 000122  f1000001          ADD      r0,r0,#1
 000126  b280              UXTH     r0,r0
 000128  8208              STRH     r0,[r1,#0x10]
@@ -322,15 +331,15 @@
 00012e  d100              BNE      |L1.306|
 000130  820b              STRH     r3,[r1,#0x10]
                   |L1.306|
-;;;363       			}
-;;;364    		else LPC_GPIO2->FIOPIN&=~(1UL<<2);
-;;;365    		}
-;;;366    	else
-;;;367    		{
-;;;368    	  	UART1TxEmpty = 0;
-;;;369    		}
-;;;370      	}
-;;;371    }
+;;;372       			}
+;;;373    		else LPC_GPIO2->FIOPIN&=~(1UL<<2);
+;;;374    		}
+;;;375    	else
+;;;376    		{
+;;;377    	  	UART1TxEmpty = 0;
+;;;378    		}
+;;;379      	}
+;;;380    }
 000132  e8bd81f0          POP      {r4-r8,pc}
                   |L1.310|
 000136  7d38              LDRB     r0,[r7,#0x14]         ;239
@@ -376,109 +385,109 @@
                   |L1.396|
 00018c  e004              B        |L1.408|
                   |L1.398|
-00018e  6948              LDR      r0,[r1,#0x14]         ;347  ; UART1Status
-000190  f4407080          ORR      r0,r0,#0x100          ;347
-000194  6148              STR      r0,[r1,#0x14]         ;347  ; UART1Status
+00018e  6948              LDR      r0,[r1,#0x14]         ;356  ; UART1Status
+000190  f4407080          ORR      r0,r0,#0x100          ;356
+000194  6148              STR      r0,[r1,#0x14]         ;356  ; UART1Status
 000196  e7cc              B        |L1.306|
                   |L1.408|
 000198  489b              LDR      r0,|L1.1032|
-00019a  6d41              LDR      r1,[r0,#0x54]         ;364
-00019c  f0210104          BIC      r1,r1,#4              ;364
-0001a0  6541              STR      r1,[r0,#0x54]         ;364
+00019a  6d41              LDR      r1,[r0,#0x54]         ;373
+00019c  f0210104          BIC      r1,r1,#4              ;373
+0001a0  6541              STR      r1,[r0,#0x54]         ;373
 0001a2  e7c6              B        |L1.306|
                   |L1.420|
-0001a4  700b              STRB     r3,[r1,#0]            ;368
+0001a4  700b              STRB     r3,[r1,#0]            ;377
 0001a6  e7c4              B        |L1.306|
-;;;372     
+;;;381     
                           ENDP
 
                   uart_in_an1 PROC
-;;;374    //-----------------------------------------------
-;;;375    void uart_in_an1(void)
+;;;383    //-----------------------------------------------
+;;;384    void uart_in_an1(void)
 0001a8  b5fe              PUSH     {r1-r7,lr}
-;;;376    {
-;;;377    char i;
-;;;378    //motor_ind[0]^=0b0001000;
-;;;379    plazma_suz[0]++;
+;;;385    {
+;;;386    char i;
+;;;387    //motor_ind[0]^=0b0001000;
+;;;388    plazma_suz[0]++;
 0001aa  4994              LDR      r1,|L1.1020|
 0001ac  3118              ADDS     r1,r1,#0x18
 0001ae  7808              LDRB     r0,[r1,#0]  ; plazma_suz
 0001b0  f1000001          ADD      r0,r0,#1
 0001b4  7008              STRB     r0,[r1,#0]
-;;;380    
-;;;381    if(UIB1[1]!=0x51)
+;;;389    
+;;;390    if(UIB1[1]!=0x51)
 0001b6  4c95              LDR      r4,|L1.1036|
 0001b8  f1a40478          SUB      r4,r4,#0x78
 0001bc  7863              LDRB     r3,[r4,#1]  ; UIB1
 0001be  2b51              CMP      r3,#0x51
 0001c0  d00a              BEQ      |L1.472|
-;;;382    {
-;;;383    for(i=0;i<24;i++)
+;;;391    {
+;;;392    for(i=0;i<24;i++)
 0001c2  f04f0000          MOV      r0,#0
-;;;384    	{
-;;;385    	UIB10[i]=UIB1[i];
+;;;393    	{
+;;;394    	UIB10[i]=UIB1[i];
 0001c6  f50471d7          ADD      r1,r4,#0x1ae
                   |L1.458|
 0001ca  5c22              LDRB     r2,[r4,r0]
 0001cc  540a              STRB     r2,[r1,r0]
-0001ce  f1000001          ADD      r0,r0,#1              ;383
-0001d2  b2c0              UXTB     r0,r0                 ;383
-0001d4  2818              CMP      r0,#0x18              ;383
+0001ce  f1000001          ADD      r0,r0,#1              ;392
+0001d2  b2c0              UXTB     r0,r0                 ;392
+0001d4  2818              CMP      r0,#0x18              ;392
 0001d6  d3f8              BCC      |L1.458|
                   |L1.472|
-;;;386    	}
-;;;387    }
-;;;388    uart1_mess[0]++;
+;;;395    	}
+;;;396    }
+;;;397    uart1_mess[0]++;
 0001d8  488d              LDR      r0,|L1.1040|
 0001da  7801              LDRB     r1,[r0,#0]  ; uart1_mess
 0001dc  f1010101          ADD      r1,r1,#1
 0001e0  7001              STRB     r1,[r0,#0]
-;;;389    
-;;;390    if((UIB1[0]==4)&&(UIB1[1]==0)&&(UIB1[2]==2)&&(UIB1[3]==0)&&(UIB1[4]==1) && (ICA_EN==0))
+;;;398    
+;;;399    if((UIB1[0]==4)&&(UIB1[1]==0)&&(UIB1[2]==2)&&(UIB1[3]==0)&&(UIB1[4]==1) && (ICA_EN==0))
 0001e2  7820              LDRB     r0,[r4,#0]  ; UIB1
-;;;391    	{
-;;;392    	
-;;;393    	uart_out1(5,4,1,2,(char)bps_I,(char)(bps_I/256),0);
-;;;394    	plazma_uart1++;
+;;;400    	{
+;;;401    	
+;;;402    	uart_out1(5,4,1,2,(char)bps_I,(char)(bps_I/256),0);
+;;;403    	plazma_uart1++;
 0001e4  4d85              LDR      r5,|L1.1020|
 0001e6  4f8b              LDR      r7,|L1.1044|
-0001e8  f04f0600          MOV      r6,#0                 ;383
-0001ec  2804              CMP      r0,#4                 ;390
+0001e8  f04f0600          MOV      r6,#0                 ;392
+0001ec  2804              CMP      r0,#4                 ;399
 0001ee  d120              BNE      |L1.562|
 0001f0  b9fb              CBNZ     r3,|L1.562|
-0001f2  78a0              LDRB     r0,[r4,#2]            ;390  ; UIB1
-0001f4  2802              CMP      r0,#2                 ;390
+0001f2  78a0              LDRB     r0,[r4,#2]            ;399  ; UIB1
+0001f4  2802              CMP      r0,#2                 ;399
 0001f6  d11c              BNE      |L1.562|
-0001f8  78e0              LDRB     r0,[r4,#3]            ;390  ; UIB1
+0001f8  78e0              LDRB     r0,[r4,#3]            ;399  ; UIB1
 0001fa  b9d0              CBNZ     r0,|L1.562|
-0001fc  7920              LDRB     r0,[r4,#4]            ;390  ; UIB1
-0001fe  2801              CMP      r0,#1                 ;390
+0001fc  7920              LDRB     r0,[r4,#4]            ;399  ; UIB1
+0001fe  2801              CMP      r0,#1                 ;399
 000200  d117              BNE      |L1.562|
-000202  8838              LDRH     r0,[r7,#0]            ;390  ; ICA_EN
+000202  8838              LDRH     r0,[r7,#0]            ;399  ; ICA_EN
 000204  b9a8              CBNZ     r0,|L1.562|
 000206  4884              LDR      r0,|L1.1048|
-000208  2302              MOVS     r3,#2                 ;393
-00020a  2201              MOVS     r2,#1                 ;393
-00020c  f9b00000          LDRSH    r0,[r0,#0]            ;393  ; bps_I
-000210  17c1              ASRS     r1,r0,#31             ;393
-000212  eb006111          ADD      r1,r0,r1,LSR #24      ;393
-000216  f3c12107          UBFX     r1,r1,#8,#8           ;393
-00021a  b2c0              UXTB     r0,r0                 ;393
-00021c  e88d0043          STM      sp,{r0,r1,r6}         ;393
-000220  2104              MOVS     r1,#4                 ;393
-000222  2005              MOVS     r0,#5                 ;393
+000208  2302              MOVS     r3,#2                 ;402
+00020a  2201              MOVS     r2,#1                 ;402
+00020c  f9b00000          LDRSH    r0,[r0,#0]            ;402  ; bps_I
+000210  17c1              ASRS     r1,r0,#31             ;402
+000212  eb006111          ADD      r1,r0,r1,LSR #24      ;402
+000216  f3c12107          UBFX     r1,r1,#8,#8           ;402
+00021a  b2c0              UXTB     r0,r0                 ;402
+00021c  e88d0043          STM      sp,{r0,r1,r6}         ;402
+000220  2104              MOVS     r1,#4                 ;402
+000222  2005              MOVS     r0,#5                 ;402
 000224  f7fffffe          BL       uart_out1
 000228  7928              LDRB     r0,[r5,#4]  ; plazma_uart1
 00022a  f1000001          ADD      r0,r0,#1
 00022e  7128              STRB     r0,[r5,#4]
-;;;395    
-;;;396    	uart1_net_cnt=0;
+;;;404    
+;;;405    	uart1_net_cnt=0;
 000230  706e              STRB     r6,[r5,#1]
                   |L1.562|
-;;;397    	}
-;;;398    
-;;;399    
-;;;400    if((UIB1[0]==6)&&(UIB1[1]==0)&&(UIB1[2]==100) && (ICA_EN==0))
+;;;406    	}
+;;;407    
+;;;408    
+;;;409    if((UIB1[0]==6)&&(UIB1[1]==0)&&(UIB1[2]==100) && (ICA_EN==0))
 000232  7820              LDRB     r0,[r4,#0]  ; UIB1
 000234  2806              CMP      r0,#6
 000236  d106              BNE      |L1.582|
@@ -490,183 +499,183 @@
 000242  8839              LDRH     r1,[r7,#0]  ; ICA_EN
 000244  b111              CBZ      r1,|L1.588|
                   |L1.582|
-;;;401    	{
-;;;402    	short tempSSSS;
-;;;403    	tempSSSS=(short)UIB1[4] + ((short)UIB1[3])*256;
-;;;404    
-;;;405    	plazma_ica2=tempSSSS;
-;;;406    
-;;;407    	if(tempSSSS&0x4000)
-;;;408    		{
-;;;409    		tempSSSS&=0x3fff;
-;;;410    		if((tempSSSS>0)&&(tempSSSS<5))tempSSSS=0;
-;;;411    		else if(tempSSSS>=60)tempSSSS=60;
-;;;412    		if(TBAT!=tempSSSS)lc640_write_int(EE_TBAT,tempSSSS);
+;;;410    	{
+;;;411    	short tempSSSS;
+;;;412    	tempSSSS=(short)UIB1[4] + ((short)UIB1[3])*256;
 ;;;413    
-;;;414    		main_kb_cnt=(tempSSSS*60)-20;
-;;;415    		}
-;;;416    	else ica_cntrl_hndl=tempSSSS;
-;;;417    
-;;;418    	ica_cntrl_hndl_cnt=200;
-;;;419    
-;;;420    	uart1_net_cnt=0;
-;;;421    	}
+;;;414    	plazma_ica2=tempSSSS;
+;;;415    
+;;;416    	if(tempSSSS&0x4000)
+;;;417    		{
+;;;418    		tempSSSS&=0x3fff;
+;;;419    		if((tempSSSS>0)&&(tempSSSS<5))tempSSSS=0;
+;;;420    		else if(tempSSSS>=60)tempSSSS=60;
+;;;421    		if(TBAT!=tempSSSS)lc640_write_int(EE_TBAT,tempSSSS);
 ;;;422    
-;;;423    
-;;;424    else if((UIB1[0]==4)&&(UIB1[1]==1)&&(UIB1[2]==2) && (ICA_EN==1) && (ICA_CH==2) )
+;;;423    		main_kb_cnt=(tempSSSS*60)-20;
+;;;424    		}
+;;;425    	else ica_cntrl_hndl=tempSSSS;
+;;;426    
+;;;427    	ica_cntrl_hndl_cnt=200;
+;;;428    
+;;;429    	uart1_net_cnt=0;
+;;;430    	}
+;;;431    
+;;;432    
+;;;433    else if((UIB1[0]==4)&&(UIB1[1]==1)&&(UIB1[2]==2) && (ICA_EN==1) && (ICA_CH==2) )
 000246  2804              CMP      r0,#4
 000248  d030              BEQ      |L1.684|
 00024a  e03c              B        |L1.710|
                   |L1.588|
-00024c  7920              LDRB     r0,[r4,#4]            ;403  ; UIB1
-00024e  78e1              LDRB     r1,[r4,#3]            ;403  ; UIB1
-000250  eb002001          ADD      r0,r0,r1,LSL #8       ;403
-000254  b200              SXTH     r0,r0                 ;403
+00024c  7920              LDRB     r0,[r4,#4]            ;412  ; UIB1
+00024e  78e1              LDRB     r1,[r4,#3]            ;412  ; UIB1
+000250  eb002001          ADD      r0,r0,r1,LSL #8       ;412
+000254  b200              SXTH     r0,r0                 ;412
 000256  4971              LDR      r1,|L1.1052|
-000258  8008              STRH     r0,[r1,#0]            ;405
-00025a  0441              LSLS     r1,r0,#17             ;407
+000258  8008              STRH     r0,[r1,#0]            ;414
+00025a  0441              LSLS     r1,r0,#17             ;416
 00025c  d51e              BPL      |L1.668|
-00025e  f3c0040d          UBFX     r4,r0,#0,#14          ;409
-000262  f1a40001          SUB      r0,r4,#1              ;410
-000266  2804              CMP      r0,#4                 ;410
+00025e  f3c0040d          UBFX     r4,r0,#0,#14          ;418
+000262  f1a40001          SUB      r0,r4,#1              ;419
+000266  2804              CMP      r0,#4                 ;419
 000268  d202              BCS      |L1.624|
-00026a  f04f0400          MOV      r4,#0                 ;410
+00026a  f04f0400          MOV      r4,#0                 ;419
 00026e  e003              B        |L1.632|
                   |L1.624|
-000270  2c3c              CMP      r4,#0x3c              ;411
+000270  2c3c              CMP      r4,#0x3c              ;420
 000272  db01              BLT      |L1.632|
-000274  f04f043c          MOV      r4,#0x3c              ;411
+000274  f04f043c          MOV      r4,#0x3c              ;420
                   |L1.632|
 000278  4869              LDR      r0,|L1.1056|
-00027a  f9b00000          LDRSH    r0,[r0,#0]            ;412  ; TBAT
-00027e  42a0              CMP      r0,r4                 ;412
+00027a  f9b00000          LDRSH    r0,[r0,#0]            ;421  ; TBAT
+00027e  42a0              CMP      r0,r4                 ;421
 000280  d003              BEQ      |L1.650|
-000282  4621              MOV      r1,r4                 ;412
-000284  20c2              MOVS     r0,#0xc2              ;412
+000282  4621              MOV      r1,r4                 ;421
+000284  20c2              MOVS     r0,#0xc2              ;421
 000286  f7fffffe          BL       lc640_write_int
                   |L1.650|
-00028a  ebc41004          RSB      r0,r4,r4,LSL #4       ;414
-00028e  f06f0113          MVN      r1,#0x13              ;414
-000292  eb010080          ADD      r0,r1,r0,LSL #2       ;414
+00028a  ebc41004          RSB      r0,r4,r4,LSL #4       ;423
+00028e  f06f0113          MVN      r1,#0x13              ;423
+000292  eb010080          ADD      r0,r1,r0,LSL #2       ;423
 000296  4963              LDR      r1,|L1.1060|
-000298  8008              STRH     r0,[r1,#0]            ;414
+000298  8008              STRH     r0,[r1,#0]            ;423
 00029a  e001              B        |L1.672|
                   |L1.668|
 00029c  4962              LDR      r1,|L1.1064|
-00029e  8008              STRH     r0,[r1,#0]            ;416
+00029e  8008              STRH     r0,[r1,#0]            ;425
                   |L1.672|
 0002a0  4962              LDR      r1,|L1.1068|
-0002a2  f04f00c8          MOV      r0,#0xc8              ;418
-0002a6  8008              STRH     r0,[r1,#0]            ;418
-0002a8  706e              STRB     r6,[r5,#1]            ;420
+0002a2  f04f00c8          MOV      r0,#0xc8              ;427
+0002a6  8008              STRH     r0,[r1,#0]            ;427
+0002a8  706e              STRB     r6,[r5,#1]            ;429
                   |L1.682|
-;;;425    	{
-;;;426    	
-;;;427    	ica_your_current=(short)UIB1[3]+((short)UIB1[4]*256);
-;;;428    
-;;;429    	uart1_net_cnt=0;
-;;;430    	}
-;;;431    else if((UIB1[0]==CMND)&&(UIB1[1]==1))
-;;;432    	{
-;;;433    //	adc_buff_out_[0]=UIB1[2]+(UIB1[3]*256);
-;;;434    //	adc_buff_out_[1]=UIB1[4]+(UIB1[5]*256);
-;;;435    	}
-;;;436    
-;;;437    else if((UIB1[0]==CMND)&&(UIB1[1]==2))
-;;;438    	{
-;;;439    //	adc_buff_out_[2]=UIB1[2]+(UIB1[3]*256);
-;;;440    //	in_stat_out[0]=UIB1[4];
-;;;441    //	in_stat_out[1]=UIB1[5];
-;;;442    	}
-;;;443    	
-;;;444    			
-;;;445    }
+;;;434    	{
+;;;435    	
+;;;436    	ica_your_current=(short)UIB1[3]+((short)UIB1[4]*256);
+;;;437    
+;;;438    	uart1_net_cnt=0;
+;;;439    	}
+;;;440    else if((UIB1[0]==CMND)&&(UIB1[1]==1))
+;;;441    	{
+;;;442    //	adc_buff_out_[0]=UIB1[2]+(UIB1[3]*256);
+;;;443    //	adc_buff_out_[1]=UIB1[4]+(UIB1[5]*256);
+;;;444    	}
+;;;445    
+;;;446    else if((UIB1[0]==CMND)&&(UIB1[1]==2))
+;;;447    	{
+;;;448    //	adc_buff_out_[2]=UIB1[2]+(UIB1[3]*256);
+;;;449    //	in_stat_out[0]=UIB1[4];
+;;;450    //	in_stat_out[1]=UIB1[5];
+;;;451    	}
+;;;452    	
+;;;453    			
+;;;454    }
 0002aa  bdfe              POP      {r1-r7,pc}
                   |L1.684|
-0002ac  7861              LDRB     r1,[r4,#1]            ;424  ; UIB1
-0002ae  2901              CMP      r1,#1                 ;424
+0002ac  7861              LDRB     r1,[r4,#1]            ;433  ; UIB1
+0002ae  2901              CMP      r1,#1                 ;433
 0002b0  d109              BNE      |L1.710|
-0002b2  78a1              LDRB     r1,[r4,#2]            ;424  ; UIB1
-0002b4  2902              CMP      r1,#2                 ;424
+0002b2  78a1              LDRB     r1,[r4,#2]            ;433  ; UIB1
+0002b4  2902              CMP      r1,#2                 ;433
 0002b6  d106              BNE      |L1.710|
-0002b8  8839              LDRH     r1,[r7,#0]            ;424  ; ICA_EN
-0002ba  2901              CMP      r1,#1                 ;424
+0002b8  8839              LDRH     r1,[r7,#0]            ;433  ; ICA_EN
+0002ba  2901              CMP      r1,#1                 ;433
 0002bc  d103              BNE      |L1.710|
 0002be  495c              LDR      r1,|L1.1072|
-0002c0  8809              LDRH     r1,[r1,#0]            ;424  ; ICA_CH
-0002c2  2902              CMP      r1,#2                 ;424
+0002c0  8809              LDRH     r1,[r1,#0]            ;433  ; ICA_CH
+0002c2  2902              CMP      r1,#2                 ;433
 0002c4  d004              BEQ      |L1.720|
                   |L1.710|
-0002c6  2816              CMP      r0,#0x16              ;431
+0002c6  2816              CMP      r0,#0x16              ;440
 0002c8  d1ef              BNE      |L1.682|
-0002ca  7860              LDRB     r0,[r4,#1]            ;431  ; UIB1
-0002cc  2801              CMP      r0,#1                 ;431
+0002ca  7860              LDRB     r0,[r4,#1]            ;440  ; UIB1
+0002cc  2801              CMP      r0,#1                 ;440
 0002ce  bdfe              POP      {r1-r7,pc}
                   |L1.720|
-0002d0  78e0              LDRB     r0,[r4,#3]            ;427  ; UIB1
-0002d2  7921              LDRB     r1,[r4,#4]            ;427  ; UIB1
-0002d4  eb002001          ADD      r0,r0,r1,LSL #8       ;427
+0002d0  78e0              LDRB     r0,[r4,#3]            ;436  ; UIB1
+0002d2  7921              LDRB     r1,[r4,#4]            ;436  ; UIB1
+0002d4  eb002001          ADD      r0,r0,r1,LSL #8       ;436
 0002d8  4956              LDR      r1,|L1.1076|
-0002da  8008              STRH     r0,[r1,#0]            ;427
-0002dc  706e              STRB     r6,[r5,#1]            ;429
+0002da  8008              STRH     r0,[r1,#0]            ;436
+0002dc  706e              STRB     r6,[r5,#1]            ;438
 0002de  bdfe              POP      {r1-r7,pc}
-;;;446     
+;;;455     
                           ENDP
 
                   index_offset1 PROC
-;;;447    //-----------------------------------------------
-;;;448    char index_offset1 (signed char index,signed char offset)
+;;;456    //-----------------------------------------------
+;;;457    char index_offset1 (signed char index,signed char offset)
 0002e0  4408              ADD      r0,r0,r1
-;;;449    {
-;;;450    index=index+offset;
+;;;458    {
+;;;459    index=index+offset;
 0002e2  b240              SXTB     r0,r0
-;;;451    if(index>=RX_BUFFER_SIZE1) index-=RX_BUFFER_SIZE1; 
+;;;460    if(index>=RX_BUFFER_SIZE1) index-=RX_BUFFER_SIZE1; 
 0002e4  2864              CMP      r0,#0x64
 0002e6  db02              BLT      |L1.750|
 0002e8  f1a00064          SUB      r0,r0,#0x64
 0002ec  b240              SXTB     r0,r0
                   |L1.750|
-;;;452    if(index<0) index+=RX_BUFFER_SIZE1;
+;;;461    if(index<0) index+=RX_BUFFER_SIZE1;
 0002ee  2800              CMP      r0,#0
 0002f0  da02              BGE      |L1.760|
 0002f2  f1000064          ADD      r0,r0,#0x64
 0002f6  b240              SXTB     r0,r0
                   |L1.760|
-;;;453    return index;
+;;;462    return index;
 0002f8  b2c0              UXTB     r0,r0
-;;;454    }
+;;;463    }
 0002fa  4770              BX       lr
-;;;455    
+;;;464    
                           ENDP
 
                   control_check1 PROC
-;;;456    //-----------------------------------------------
-;;;457    char control_check1(char index)
+;;;465    //-----------------------------------------------
+;;;466    char control_check1(char index)
 0002fc  b570              PUSH     {r4-r6,lr}
-;;;458    {
-;;;459    char i=0,ii=0,iii;
+;;;467    {
+;;;468    char i=0,ii=0,iii;
 0002fe  f04f0200          MOV      r2,#0
-;;;460    
-;;;461    if(rx_buffer1[index]!=END) goto error_cc;
+;;;469    
+;;;470    if(rx_buffer1[index]!=END) goto error_cc;
 000302  4e42              LDR      r6,|L1.1036|
 000304  f1a60664          SUB      r6,r6,#0x64
 000308  5c31              LDRB     r1,[r6,r0]
 00030a  290a              CMP      r1,#0xa
 00030c  d120              BNE      |L1.848|
-;;;462    
-;;;463    ii=rx_buffer1[index_offset1(index,-2)];
+;;;471    
+;;;472    ii=rx_buffer1[index_offset1(index,-2)];
 00030e  b240              SXTB     r0,r0
 000310  1e91              SUBS     r1,r2,#2
 000312  4605              MOV      r5,r0
 000314  f7fffffe          BL       index_offset1
 000318  5c34              LDRB     r4,[r6,r0]
-;;;464    iii=0;
+;;;473    iii=0;
 00031a  f04f0300          MOV      r3,#0
-;;;465    for(i=0;i<=ii;i++)
+;;;474    for(i=0;i<=ii;i++)
 00031e  e00b              B        |L1.824|
                   |L1.800|
-;;;466    	{
-;;;467    	iii^=rx_buffer1[index_offset1(index,-2-ii+i)];
+;;;475    	{
+;;;476    	iii^=rx_buffer1[index_offset1(index,-2-ii+i)];
 000320  1b10              SUBS     r0,r2,r4
 000322  1e80              SUBS     r0,r0,#2
 000324  b241              SXTB     r1,r0
@@ -674,69 +683,69 @@
 000328  f7fffffe          BL       index_offset1
 00032c  5c30              LDRB     r0,[r6,r0]
 00032e  ea800303          EOR      r3,r0,r3
-000332  f1020201          ADD      r2,r2,#1              ;465
-000336  b2d2              UXTB     r2,r2                 ;465
+000332  f1020201          ADD      r2,r2,#1              ;474
+000336  b2d2              UXTB     r2,r2                 ;474
                   |L1.824|
-000338  42a2              CMP      r2,r4                 ;465
+000338  42a2              CMP      r2,r4                 ;474
 00033a  d9f1              BLS      |L1.800|
-;;;468    	}
-;;;469    if (iii!=rx_buffer1[index_offset1(index,-1)]) goto error_cc;	
+;;;477    	}
+;;;478    if (iii!=rx_buffer1[index_offset1(index,-1)]) goto error_cc;	
 00033c  f04f31ff          MOV      r1,#0xffffffff
 000340  4628              MOV      r0,r5
 000342  f7fffffe          BL       index_offset1
 000346  5c30              LDRB     r0,[r6,r0]
 000348  4298              CMP      r0,r3
 00034a  d101              BNE      |L1.848|
-;;;470    
-;;;471    
-;;;472    //success_cc:
-;;;473    return 1;
+;;;479    
+;;;480    
+;;;481    //success_cc:
+;;;482    return 1;
 00034c  2001              MOVS     r0,#1
-;;;474    //goto end_cc;
-;;;475    error_cc:
-;;;476    return 0;
-;;;477    //goto end_cc;
-;;;478    
-;;;479    //end_cc:
-;;;480    //__nop();
-;;;481    }
+;;;483    //goto end_cc;
+;;;484    error_cc:
+;;;485    return 0;
+;;;486    //goto end_cc;
+;;;487    
+;;;488    //end_cc:
+;;;489    //__nop();
+;;;490    }
 00034e  bd70              POP      {r4-r6,pc}
                   |L1.848|
-000350  2000              MOVS     r0,#0                 ;476
+000350  2000              MOVS     r0,#0                 ;485
 000352  bd70              POP      {r4-r6,pc}
-;;;482    
+;;;491    
                           ENDP
 
                   uart_in1 PROC
-;;;483    //-----------------------------------------------
-;;;484    void uart_in1(void)
+;;;492    //-----------------------------------------------
+;;;493    void uart_in1(void)
 000354  e92d41f0          PUSH     {r4-r8,lr}
-;;;485    {
-;;;486    char temp,i/*,count*/;
-;;;487    
-;;;488    __disable_irq();
+;;;494    {
+;;;495    char temp,i/*,count*/;
+;;;496    
+;;;497    __disable_irq();
 000358  b672              CPSID    i
-;;;489    
-;;;490    if(rx_buffer_overflow1)
+;;;498    
+;;;499    if(rx_buffer_overflow1)
 00035a  4d28              LDR      r5,|L1.1020|
 00035c  2600              MOVS     r6,#0
 00035e  78e8              LDRB     r0,[r5,#3]  ; rx_buffer_overflow1
 000360  b118              CBZ      r0,|L1.874|
-;;;491    	{
-;;;492    	rx_wr_index1=0;
+;;;500    	{
+;;;501    	rx_wr_index1=0;
 000362  812e              STRH     r6,[r5,#8]
-;;;493    	rx_rd_index1=0;
+;;;502    	rx_rd_index1=0;
 000364  816e              STRH     r6,[r5,#0xa]
-;;;494    	rx_counter1=0;
+;;;503    	rx_counter1=0;
 000366  81ae              STRH     r6,[r5,#0xc]
-;;;495    	rx_buffer_overflow1=0;
+;;;504    	rx_buffer_overflow1=0;
 000368  70ee              STRB     r6,[r5,#3]
                   |L1.874|
-;;;496    	}    
-;;;497    usart1_router_wrk=1;	
+;;;505    	}    
+;;;506    usart1_router_wrk=1;	
 00036a  f04f0001          MOV      r0,#1
 00036e  71a8              STRB     r0,[r5,#6]
-;;;498    if(rx_counter1&&(rx_buffer1[index_offset1(rx_wr_index1,-1)])==END)
+;;;507    if(rx_counter1&&(rx_buffer1[index_offset1(rx_wr_index1,-1)])==END)
 000370  89a8              LDRH     r0,[r5,#0xc]  ; rx_counter1
 000372  b3f0              CBZ      r0,|L1.1010|
 000374  8928              LDRH     r0,[r5,#8]  ; rx_wr_index1
@@ -749,28 +758,28 @@
 000386  5c38              LDRB     r0,[r7,r0]
 000388  280a              CMP      r0,#0xa
 00038a  d134              BNE      |L1.1014|
-;;;499    	{
-;;;500    	
-;;;501         temp=rx_buffer1[index_offset1(rx_wr_index1,-3)];
+;;;508    	{
+;;;509    	
+;;;510         temp=rx_buffer1[index_offset1(rx_wr_index1,-3)];
 00038c  8928              LDRH     r0,[r5,#8]  ; rx_wr_index1
 00038e  f06f0102          MVN      r1,#2
 000392  b240              SXTB     r0,r0
 000394  f7fffffe          BL       index_offset1
 000398  5c3c              LDRB     r4,[r7,r0]
-;;;502        	if(temp<20) 
+;;;511        	if(temp<20) 
 00039a  2c14              CMP      r4,#0x14
 00039c  d22b              BCS      |L1.1014|
-;;;503        		{
-;;;504        		if(control_check1(index_offset1(rx_wr_index1,-1)))
+;;;512        		{
+;;;513        		if(control_check1(index_offset1(rx_wr_index1,-1)))
 00039e  8928              LDRH     r0,[r5,#8]  ; rx_wr_index1
 0003a0  4611              MOV      r1,r2
 0003a2  b240              SXTB     r0,r0
 0003a4  f7fffffe          BL       index_offset1
 0003a8  f7fffffe          BL       control_check1
 0003ac  b308              CBZ      r0,|L1.1010|
-;;;505        			{
-;;;506        		
-;;;507        			rx_rd_index1=index_offset1(rx_wr_index1,-3-temp);
+;;;514        			{
+;;;515        		
+;;;516        			rx_rd_index1=index_offset1(rx_wr_index1,-3-temp);
 0003ae  1ce0              ADDS     r0,r4,#3
 0003b0  4240              RSBS     r0,r0,#0
 0003b2  b241              SXTB     r1,r0
@@ -778,10 +787,10 @@
 0003b6  b240              SXTB     r0,r0
 0003b8  f7fffffe          BL       index_offset1
 0003bc  8168              STRH     r0,[r5,#0xa]
-;;;508        			for(i=0;i<temp;i++)
+;;;517        			for(i=0;i<temp;i++)
 0003be  f04f0200          MOV      r2,#0
-;;;509    				{
-;;;510    				UIB1[i]=rx_buffer1[index_offset1(rx_rd_index1,i)];
+;;;518    				{
+;;;519    				UIB1[i]=rx_buffer1[index_offset1(rx_rd_index1,i)];
 0003c2  f1a70314          SUB      r3,r7,#0x14
 0003c6  e009              B        |L1.988|
                   |L1.968|
@@ -791,21 +800,21 @@
 0003ce  f7fffffe          BL       index_offset1
 0003d2  5c38              LDRB     r0,[r7,r0]
 0003d4  5498              STRB     r0,[r3,r2]
-0003d6  f1020201          ADD      r2,r2,#1              ;508
-0003da  b2d2              UXTB     r2,r2                 ;508
+0003d6  f1020201          ADD      r2,r2,#1              ;517
+0003da  b2d2              UXTB     r2,r2                 ;517
                   |L1.988|
-0003dc  42a2              CMP      r2,r4                 ;508
+0003dc  42a2              CMP      r2,r4                 ;517
 0003de  d3f3              BCC      |L1.968|
-;;;511    				} 
-;;;512    			rx_rd_index1=rx_wr_index1;
+;;;520    				} 
+;;;521    			rx_rd_index1=rx_wr_index1;
 0003e0  8928              LDRH     r0,[r5,#8]  ; rx_wr_index1
 0003e2  8168              STRH     r0,[r5,#0xa]
-;;;513    			rx_counter1=0;
+;;;522    			rx_counter1=0;
 0003e4  81ae              STRH     r6,[r5,#0xc]
-;;;514    			uart_in_an1();
+;;;523    			uart_in_an1();
 0003e6  f7fffffe          BL       uart_in_an1
-;;;515    			
-;;;516    			if(usart1_router_stat==ursMEGA)usart1_router_wrk=0;
+;;;524    			
+;;;525    			if(usart1_router_stat==ursMEGA)usart1_router_wrk=0;
 0003ea  7968              LDRB     r0,[r5,#5]  ; usart1_router_stat
 0003ec  2855              CMP      r0,#0x55
 0003ee  d102              BNE      |L1.1014|
@@ -815,240 +824,240 @@
                   |L1.1012|
 0003f4  71ae              STRB     r6,[r5,#6]
                   |L1.1014|
-;;;517        			}
-;;;518     	
-;;;519        		} 
-;;;520        	}
-;;;521    //rx_read_power_cnt_plazma++;
-;;;522    #ifdef CE102M_ENABLED
-;;;523    	if(rx_read_power_cnt_phase==1)
-;;;524    		{
-;;;525    		
-;;;526    		if((rx_buffer1[rx_wr_index1-1]==0x0a)/*&&(rx_buffer1[6]==0xc5)*/)
-;;;527    			{
-;;;528    			rx_read_power_cnt_plazma++;
-;;;529    			rx_read_power_cnt_phase=2;
-;;;530    			ce102m_delayCnt=200;
-;;;531    			}
-;;;532    		}
-;;;533    else if(rx_read_power_cnt_phase==3)
-;;;534    		{
-;;;535    		
-;;;536    		if(/*(rx_buffer1[6]==0x81)&&*/(rx_buffer1[rx_wr_index1-2]==0x03))
-;;;537    			{
-;;;538    			rx_read_power_cnt_plazma++;
-;;;539    			if(bENERGOMETR_UIP==0) rx_read_power_cnt_phase=4;
-;;;540    			else if(bENERGOMETR_UIP==1) rx_read_power_cnt_phase=8;
-;;;541    			else rx_read_power_cnt_phase=20;
-;;;542    			ce102m_delayCnt=200;
-;;;543    			}
-;;;544    		}
-;;;545    else if((rx_read_power_cnt_phase==5)&&(rx_wr_index1>10))
-;;;546    		{
-;;;547    		
-;;;548    		if(((rx_buffer1[rx_wr_index1-1])&0x7f)=='(')
-;;;549    			{
-;;;550    			rx_read_power_cnt_plazma++;
-;;;551    			rx_read_power_cnt_phase=6;
-;;;552    			ce102m_delayCnt=200;
-;;;553    			rx_wr_index1=0;
-;;;554    			}
-;;;555    		}
-;;;556    else if(rx_read_power_cnt_phase==6)
-;;;557    		{
-;;;558    		char float_buff[20]={0,0,0,0,0,0,0,0,0,0};
-;;;559    		char* float_buff_ptr;
-;;;560    		float volta;
-;;;561    		char i,point_marker;
-;;;562    		unsigned short ii;		
-;;;563    		float_buff_ptr=float_buff;
-;;;564    
-;;;565    		if(((rx_buffer1[rx_wr_index1-1])&0x7f)==')')
-;;;566    			{
-;;;567    			ii=rx_wr_index1-1;
-;;;568    			rx_read_power_cnt_plazma=rx_wr_index1-1;
-;;;569    			
-;;;570    			volta_short=0;//rx_wr_index1-1;
-;;;571    			for(i=0;i<ii;i++)
-;;;572    				{
-;;;573    				float_buff[i]=rx_buffer1[i]&0x7f;
-;;;574    				float_buff[i+1]=' ';
-;;;575     //volta_short+=(rx_buffer1[ii-i]&0x7f);//-0x30)*pow(10,i);
-;;;576     				if(float_buff[i]=='.')point_marker=i;
-;;;577    				rx_read_power_cnt_plazma++;
-;;;578    				}
-;;;579    
-;;;580    
-;;;581    		///if(((rx_buffer1[rx_wr_index1-2])&0x7f)=='.')
-;;;582    		///	{
-;;;583    		//	char s [] = "1.23";
-;;;584    		///	ii=rx_wr_index1-1;
-;;;585    		///	rx_read_power_cnt_plazma++;
-;;;586    			rx_read_power_cnt_phase=15;
-;;;587    			ce102m_delayCnt=200;
-;;;588    			//memcpy(float_buff,rx_buffer1,rx_wr_index1-1);
-;;;589    		///	volta_short=0;//rx_wr_index1-1;
-;;;590    		///	for(i=0;i<ii;i++)
-;;;591    				{
-;;;592    		///		float_buff[i]=rx_buffer1[i]&0x7f;
-;;;593    		///		float_buff[i+1]=' ';
-;;;594    				/*if(rx_buffer1[ii-i]=='(')break;
-;;;595    				else*/ //volta_short+=(rx_buffer1[ii-i]&0x7f);//-0x30)*pow(10,i);
-;;;596    				}
-;;;597    			//float_buff[0]='2';
-;;;598    			//float_buff[1]='3';
-;;;599    			//float_buff[2]='4';
-;;;600    			//float_buff[3]='.';
-;;;601    			//float_buff[4]='5';
-;;;602    			//uart_out__adr1(float_buff, 10);
-;;;603    			//volta=atof(s);//atof(float_buff);
-;;;604    			volta_short=((atoi(float_buff))*10)+ ((atoi(&float_buff[point_marker+1]))/10);
-;;;605    			}
-;;;606    		}
-;;;607    else if(rx_read_power_cnt_phase==7)
-;;;608    		{
-;;;609    
-;;;610    
-;;;611    		if(((rx_buffer1[rx_wr_index1-1])&0x7f)==')')
-;;;612    			{
-;;;613    			rx_read_power_cnt_phase=18;
-;;;614    			rx_wr_index1=0;	
-;;;615    			ce102m_delayCnt=200;
-;;;616    			}
-;;;617    		}
-;;;618    else if((rx_read_power_cnt_phase==9)&&(rx_wr_index1>15))
-;;;619    		{
-;;;620    		
-;;;621    		if(((rx_buffer1[rx_wr_index1-1])&0x7f)=='(')
-;;;622    			{
-;;;623    			rx_read_power_cnt_plazma++;
-;;;624    			rx_read_power_cnt_phase=10;
-;;;625    			
-;;;626    			rx_wr_index1=0;
-;;;627    			}
-;;;628    		}
-;;;629    else if((rx_read_power_cnt_phase==10)/*&&(rx_wr_index1>2)*/)
-;;;630    		{
-;;;631    		char float_buff[20]={0,0,0,0,0,0,0,0,0,0};
-;;;632    		char* float_buff_ptr;
-;;;633    		float curr;
-;;;634    		char i,point_marker;
-;;;635    		unsigned short ii;
-;;;636    		int curr_1,curr_2;		
-;;;637    		float_buff_ptr=float_buff;
-;;;638    
-;;;639    
-;;;640    		if(((rx_buffer1[rx_wr_index1-1])&0x7f)==')')
-;;;641    			{
-;;;642    		//	char s [] = "1.23";
-;;;643    			ii=rx_wr_index1-1;
-;;;644    			rx_read_power_cnt_plazma=rx_wr_index1-1;
-;;;645    			
-;;;646    			//ce102m_delayCnt=500;
-;;;647    			//memcpy(float_buff,rx_buffer1,rx_wr_index1-1);
-;;;648    			curr_short=0;//rx_wr_index1-1;
-;;;649    			for(i=0;i<ii;i++)
-;;;650    				{
-;;;651    				float_buff[i]=rx_buffer1[i]&0x7f;
-;;;652    				float_buff[i+1]=' ';
-;;;653     //volta_short+=(rx_buffer1[ii-i]&0x7f);//-0x30)*pow(10,i);
-;;;654     				if(float_buff[i]=='.')point_marker=i;
-;;;655    				rx_read_power_cnt_plazma++;
-;;;656    				}
-;;;657    			curr_short=ii;
-;;;658    			/*float_buff[0]='2';
-;;;659    			float_buff[1]='.';
-;;;660    			float_buff[2]='4';
-;;;661    			float_buff[3]='3';
-;;;662    			float_buff[4]='5';*/
-;;;663    			curr_1=atoi(float_buff);
-;;;664    			curr_2=atoi(&float_buff[point_marker+1]);
-;;;665    			curr_short=(curr_2/10)+(curr_1*100);
-;;;666    			//curr=0.0;
-;;;667    			//uart_out__adr1(float_buff, 6);
-;;;668    			//curr=atof(float_buff);
-;;;669    			//curr=0.354;
-;;;670    			//uart_out__adr1((char*)&curr, 10);
-;;;671    			//curr*=1000.0;
-;;;672    			//(int)(curr);//volta;
-;;;673    			rx_read_power_cnt_phase=17;
-;;;674    			}
-;;;675    		}
-;;;676    
-;;;677    else if((rx_read_power_cnt_phase==21)&&(rx_wr_index1>10))
-;;;678    		{
-;;;679    		
-;;;680    		if(((rx_buffer1[rx_wr_index1-1])&0x7f)=='(')
-;;;681    			{
-;;;682    			rx_read_power_cnt_plazma++;
-;;;683    			rx_read_power_cnt_phase=22;
-;;;684    			
-;;;685    			//rx_read_power_cnt_plazma=rx_wr_index1;
-;;;686    			rx_wr_index1=0;
-;;;687    
-;;;688    			}
-;;;689    		}
-;;;690    else if((rx_read_power_cnt_phase==22)&&(rx_wr_index1>2))
-;;;691    		{
-;;;692    		char float_buff[20]={0,0,0,0,0,0,0,0,0,0};
-;;;693    		char* float_buff_ptr;
-;;;694    		float power;
-;;;695    		char i,point_marker;
-;;;696    		unsigned short ii;
-;;;697    		int power_1,power_2;		
-;;;698    		float_buff_ptr=float_buff;
-;;;699    
-;;;700    
-;;;701    		if(((rx_buffer1[rx_wr_index1-1])&0x7f)==')')
-;;;702    			{
-;;;703    		//	char s [] = "1.23";
-;;;704    			ii=rx_wr_index1-1;
-;;;705    			rx_read_power_cnt_plazma=rx_wr_index1-1;
-;;;706    			
-;;;707    			//ce102m_delayCnt=500;
-;;;708    			//memcpy(float_buff,rx_buffer1,rx_wr_index1-1);
-;;;709    			power_int=0;//rx_wr_index1-1;
-;;;710    			for(i=0;i<ii;i++)
-;;;711    				{
-;;;712    				float_buff[i]=rx_buffer1[i]&0x7f;
-;;;713    				float_buff[i+1]=' ';
-;;;714     //volta_short+=(rx_buffer1[ii-i]&0x7f);//-0x30)*pow(10,i);
-;;;715     				if(float_buff[i]=='.')
-;;;716    					{
-;;;717    					point_marker=i;
-;;;718    					//float_buff[i-1]='5';
-;;;719    					}
-;;;720    				rx_read_power_cnt_plazma++;
-;;;721    				//if((point_marker!=0)&&(i==(point_marker+3)))break;
-;;;722    				}
-;;;723    			power_int=ii;
-;;;724    			/*float_buff[0]='2';
-;;;725    			float_buff[1]='.';
-;;;726    			float_buff[2]='4';
-;;;727    			float_buff[3]='3';
-;;;728    			float_buff[4]='5';*/
-;;;729    			power_1=atoi(float_buff);
-;;;730    			power_2=(atoi(&float_buff[point_marker+1]))/1000;
-;;;731    			power_int=power_2+(power_1*1000);
-;;;732    			//power_int=power_2;
-;;;733    			//curr=0.0;
-;;;734    			//float_buff[0]=rx_wr_index1;
-;;;735    			//uart_out__adr1(float_buff, 5);
-;;;736    			//curr=atof(float_buff);
-;;;737    			//curr=0.354;
-;;;738    			//uart_out__adr1((char*)&curr, 10);
-;;;739    			//curr*=1000.0;
-;;;740    			//(int)(curr);//volta;
-;;;741    			rx_read_power_cnt_phase=16;
-;;;742    			}
-;;;743    		}
-;;;744    
-;;;745    #endif	
-;;;746    
-;;;747    
-;;;748    __enable_irq();     
+;;;526        			}
+;;;527     	
+;;;528        		} 
+;;;529        	}
+;;;530    //rx_read_power_cnt_plazma++;
+;;;531    #ifdef CE102M_ENABLED
+;;;532    	if(rx_read_power_cnt_phase==1)
+;;;533    		{
+;;;534    		
+;;;535    		if((rx_buffer1[rx_wr_index1-1]==0x0a)/*&&(rx_buffer1[6]==0xc5)*/)
+;;;536    			{
+;;;537    			rx_read_power_cnt_plazma++;
+;;;538    			rx_read_power_cnt_phase=2;
+;;;539    			ce102m_delayCnt=200;
+;;;540    			}
+;;;541    		}
+;;;542    else if(rx_read_power_cnt_phase==3)
+;;;543    		{
+;;;544    		
+;;;545    		if(/*(rx_buffer1[6]==0x81)&&*/(rx_buffer1[rx_wr_index1-2]==0x03))
+;;;546    			{
+;;;547    			rx_read_power_cnt_plazma++;
+;;;548    			if(bENERGOMETR_UIP==0) rx_read_power_cnt_phase=4;
+;;;549    			else if(bENERGOMETR_UIP==1) rx_read_power_cnt_phase=8;
+;;;550    			else rx_read_power_cnt_phase=20;
+;;;551    			ce102m_delayCnt=200;
+;;;552    			}
+;;;553    		}
+;;;554    else if((rx_read_power_cnt_phase==5)&&(rx_wr_index1>10))
+;;;555    		{
+;;;556    		
+;;;557    		if(((rx_buffer1[rx_wr_index1-1])&0x7f)=='(')
+;;;558    			{
+;;;559    			rx_read_power_cnt_plazma++;
+;;;560    			rx_read_power_cnt_phase=6;
+;;;561    			ce102m_delayCnt=200;
+;;;562    			rx_wr_index1=0;
+;;;563    			}
+;;;564    		}
+;;;565    else if(rx_read_power_cnt_phase==6)
+;;;566    		{
+;;;567    		char float_buff[20]={0,0,0,0,0,0,0,0,0,0};
+;;;568    		char* float_buff_ptr;
+;;;569    		float volta;
+;;;570    		char i,point_marker;
+;;;571    		unsigned short ii;		
+;;;572    		float_buff_ptr=float_buff;
+;;;573    
+;;;574    		if(((rx_buffer1[rx_wr_index1-1])&0x7f)==')')
+;;;575    			{
+;;;576    			ii=rx_wr_index1-1;
+;;;577    			rx_read_power_cnt_plazma=rx_wr_index1-1;
+;;;578    			
+;;;579    			volta_short=0;//rx_wr_index1-1;
+;;;580    			for(i=0;i<ii;i++)
+;;;581    				{
+;;;582    				float_buff[i]=rx_buffer1[i]&0x7f;
+;;;583    				float_buff[i+1]=' ';
+;;;584     //volta_short+=(rx_buffer1[ii-i]&0x7f);//-0x30)*pow(10,i);
+;;;585     				if(float_buff[i]=='.')point_marker=i;
+;;;586    				rx_read_power_cnt_plazma++;
+;;;587    				}
+;;;588    
+;;;589    
+;;;590    		///if(((rx_buffer1[rx_wr_index1-2])&0x7f)=='.')
+;;;591    		///	{
+;;;592    		//	char s [] = "1.23";
+;;;593    		///	ii=rx_wr_index1-1;
+;;;594    		///	rx_read_power_cnt_plazma++;
+;;;595    			rx_read_power_cnt_phase=15;
+;;;596    			ce102m_delayCnt=200;
+;;;597    			//memcpy(float_buff,rx_buffer1,rx_wr_index1-1);
+;;;598    		///	volta_short=0;//rx_wr_index1-1;
+;;;599    		///	for(i=0;i<ii;i++)
+;;;600    				{
+;;;601    		///		float_buff[i]=rx_buffer1[i]&0x7f;
+;;;602    		///		float_buff[i+1]=' ';
+;;;603    				/*if(rx_buffer1[ii-i]=='(')break;
+;;;604    				else*/ //volta_short+=(rx_buffer1[ii-i]&0x7f);//-0x30)*pow(10,i);
+;;;605    				}
+;;;606    			//float_buff[0]='2';
+;;;607    			//float_buff[1]='3';
+;;;608    			//float_buff[2]='4';
+;;;609    			//float_buff[3]='.';
+;;;610    			//float_buff[4]='5';
+;;;611    			//uart_out__adr1(float_buff, 10);
+;;;612    			//volta=atof(s);//atof(float_buff);
+;;;613    			volta_short=((atoi(float_buff))*10)+ ((atoi(&float_buff[point_marker+1]))/10);
+;;;614    			}
+;;;615    		}
+;;;616    else if(rx_read_power_cnt_phase==7)
+;;;617    		{
+;;;618    
+;;;619    
+;;;620    		if(((rx_buffer1[rx_wr_index1-1])&0x7f)==')')
+;;;621    			{
+;;;622    			rx_read_power_cnt_phase=18;
+;;;623    			rx_wr_index1=0;	
+;;;624    			ce102m_delayCnt=200;
+;;;625    			}
+;;;626    		}
+;;;627    else if((rx_read_power_cnt_phase==9)&&(rx_wr_index1>15))
+;;;628    		{
+;;;629    		
+;;;630    		if(((rx_buffer1[rx_wr_index1-1])&0x7f)=='(')
+;;;631    			{
+;;;632    			rx_read_power_cnt_plazma++;
+;;;633    			rx_read_power_cnt_phase=10;
+;;;634    			
+;;;635    			rx_wr_index1=0;
+;;;636    			}
+;;;637    		}
+;;;638    else if((rx_read_power_cnt_phase==10)/*&&(rx_wr_index1>2)*/)
+;;;639    		{
+;;;640    		char float_buff[20]={0,0,0,0,0,0,0,0,0,0};
+;;;641    		char* float_buff_ptr;
+;;;642    		float curr;
+;;;643    		char i,point_marker;
+;;;644    		unsigned short ii;
+;;;645    		int curr_1,curr_2;		
+;;;646    		float_buff_ptr=float_buff;
+;;;647    
+;;;648    
+;;;649    		if(((rx_buffer1[rx_wr_index1-1])&0x7f)==')')
+;;;650    			{
+;;;651    		//	char s [] = "1.23";
+;;;652    			ii=rx_wr_index1-1;
+;;;653    			rx_read_power_cnt_plazma=rx_wr_index1-1;
+;;;654    			
+;;;655    			//ce102m_delayCnt=500;
+;;;656    			//memcpy(float_buff,rx_buffer1,rx_wr_index1-1);
+;;;657    			curr_short=0;//rx_wr_index1-1;
+;;;658    			for(i=0;i<ii;i++)
+;;;659    				{
+;;;660    				float_buff[i]=rx_buffer1[i]&0x7f;
+;;;661    				float_buff[i+1]=' ';
+;;;662     //volta_short+=(rx_buffer1[ii-i]&0x7f);//-0x30)*pow(10,i);
+;;;663     				if(float_buff[i]=='.')point_marker=i;
+;;;664    				rx_read_power_cnt_plazma++;
+;;;665    				}
+;;;666    			curr_short=ii;
+;;;667    			/*float_buff[0]='2';
+;;;668    			float_buff[1]='.';
+;;;669    			float_buff[2]='4';
+;;;670    			float_buff[3]='3';
+;;;671    			float_buff[4]='5';*/
+;;;672    			curr_1=atoi(float_buff);
+;;;673    			curr_2=atoi(&float_buff[point_marker+1]);
+;;;674    			curr_short=(curr_2/10)+(curr_1*100);
+;;;675    			//curr=0.0;
+;;;676    			//uart_out__adr1(float_buff, 6);
+;;;677    			//curr=atof(float_buff);
+;;;678    			//curr=0.354;
+;;;679    			//uart_out__adr1((char*)&curr, 10);
+;;;680    			//curr*=1000.0;
+;;;681    			//(int)(curr);//volta;
+;;;682    			rx_read_power_cnt_phase=17;
+;;;683    			}
+;;;684    		}
+;;;685    
+;;;686    else if((rx_read_power_cnt_phase==21)&&(rx_wr_index1>10))
+;;;687    		{
+;;;688    		
+;;;689    		if(((rx_buffer1[rx_wr_index1-1])&0x7f)=='(')
+;;;690    			{
+;;;691    			rx_read_power_cnt_plazma++;
+;;;692    			rx_read_power_cnt_phase=22;
+;;;693    			
+;;;694    			//rx_read_power_cnt_plazma=rx_wr_index1;
+;;;695    			rx_wr_index1=0;
+;;;696    
+;;;697    			}
+;;;698    		}
+;;;699    else if((rx_read_power_cnt_phase==22)&&(rx_wr_index1>2))
+;;;700    		{
+;;;701    		char float_buff[20]={0,0,0,0,0,0,0,0,0,0};
+;;;702    		char* float_buff_ptr;
+;;;703    		float power;
+;;;704    		char i,point_marker;
+;;;705    		unsigned short ii;
+;;;706    		int power_1,power_2;		
+;;;707    		float_buff_ptr=float_buff;
+;;;708    
+;;;709    
+;;;710    		if(((rx_buffer1[rx_wr_index1-1])&0x7f)==')')
+;;;711    			{
+;;;712    		//	char s [] = "1.23";
+;;;713    			ii=rx_wr_index1-1;
+;;;714    			rx_read_power_cnt_plazma=rx_wr_index1-1;
+;;;715    			
+;;;716    			//ce102m_delayCnt=500;
+;;;717    			//memcpy(float_buff,rx_buffer1,rx_wr_index1-1);
+;;;718    			power_int=0;//rx_wr_index1-1;
+;;;719    			for(i=0;i<ii;i++)
+;;;720    				{
+;;;721    				float_buff[i]=rx_buffer1[i]&0x7f;
+;;;722    				float_buff[i+1]=' ';
+;;;723     //volta_short+=(rx_buffer1[ii-i]&0x7f);//-0x30)*pow(10,i);
+;;;724     				if(float_buff[i]=='.')
+;;;725    					{
+;;;726    					point_marker=i;
+;;;727    					//float_buff[i-1]='5';
+;;;728    					}
+;;;729    				rx_read_power_cnt_plazma++;
+;;;730    				//if((point_marker!=0)&&(i==(point_marker+3)))break;
+;;;731    				}
+;;;732    			power_int=ii;
+;;;733    			/*float_buff[0]='2';
+;;;734    			float_buff[1]='.';
+;;;735    			float_buff[2]='4';
+;;;736    			float_buff[3]='3';
+;;;737    			float_buff[4]='5';*/
+;;;738    			power_1=atoi(float_buff);
+;;;739    			power_2=(atoi(&float_buff[point_marker+1]))/1000;
+;;;740    			power_int=power_2+(power_1*1000);
+;;;741    			//power_int=power_2;
+;;;742    			//curr=0.0;
+;;;743    			//float_buff[0]=rx_wr_index1;
+;;;744    			//uart_out__adr1(float_buff, 5);
+;;;745    			//curr=atof(float_buff);
+;;;746    			//curr=0.354;
+;;;747    			//uart_out__adr1((char*)&curr, 10);
+;;;748    			//curr*=1000.0;
+;;;749    			//(int)(curr);//volta;
+;;;750    			rx_read_power_cnt_phase=16;
+;;;751    			}
+;;;752    		}
+;;;753    
+;;;754    #endif	
+;;;755    
+;;;756    
+;;;757    __enable_irq();     
 0003f6  b662              CPSIE    i
-;;;749    }   	
+;;;758    }   	
 0003f8  e69b              B        |L1.306|
 0003fa  0000              DCW      0x0000
                   |L1.1020|

@@ -13825,7 +13825,7 @@ if(ind==iDeb)
 		char2lcdhyx(liBatteryInBuff[21],1,17);
 		char2lcdhyx(liBatteryInBuff[22],2,17);
 		char2lcdhyx(liBatteryInBuff[23],3,17);*/	
-
+#ifdef UKU_FSO
 		int2lcdyx(sTARKSilentCnt[0],0,14,0);
 		int2lcdyx(sTARKSilentCnt[1],1,14,0);
 		int2lcdyx(sTARKSilentCnt[2],2,14,0);
@@ -13838,7 +13838,8 @@ if(ind==iDeb)
 		int2lcdyx(sTARKButteryCnter,0,19,0);
 		int2lcdyx(sTARKBatteryHndlPhase,1,19,0);
 		int2lcdyx(numOfPacks_,2,19,0);
-		int2lcdyx(post_length_,3,19,0);							
+		int2lcdyx(post_length_,3,19,0);	
+#endif //UKU_FSO								
 		}																																		     				     			
 	}
 
@@ -43929,7 +43930,7 @@ while (1)
 		ke_drv();
 		mnemo_hndl();
 		#ifndef UKU_FSO
-		vent_hndl_();
+		vent_hndl();
 		#endif //UKU_FSO
 		#ifdef UKU_FSO
 		vent_hndl_fso();
