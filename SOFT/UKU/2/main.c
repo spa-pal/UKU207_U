@@ -4640,6 +4640,8 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 	int2lcdyx(LPC_SC->RSID,0,10,0); 	 */
 	//int2lcdyx(udp_callback_cnt,0,15,0);	 
 	//int2lcdyx(Ktext[0],0,19,0);
+	
+
 	}
 
 else if(ind==iMn_TELECORE2015)
@@ -43544,7 +43546,7 @@ if (socket_tcp != 0)
     tcp_listen (socket_tcp, 502);
   	}
 
-//uart1_init(9600);
+uart1_init(9600);
 
 socket_udp = udp_get_socket (0, UDP_OPT_SEND_CS | UDP_OPT_CHK_CS, udp_callback);
 if (socket_udp != 0) 

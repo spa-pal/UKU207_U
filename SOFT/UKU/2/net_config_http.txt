@@ -413,27 +413,15 @@
 000000  61646d69          DCB      0x61,0x64,0x6d,0x69
 000004  6e00              DCB      0x6e,0x00
 
-                          AREA ||area_number.32||, DATA, READONLY, ALIGN=1
+                          AREA ||area_number.32||, DATA, READONLY, ALIGN=0
 
                           EXPORTAS ||area_number.32||, ||.constdata||
-                  snmp_PortNum
-000000  00a1              DCW      0x00a1
-
-                          AREA ||area_number.33||, DATA, READONLY, ALIGN=1
-
-                          EXPORTAS ||area_number.33||, ||.constdata||
-                  snmp_TrapPort
-000000  00a2              DCW      0x00a2
-
-                          AREA ||area_number.34||, DATA, READONLY, ALIGN=0
-
-                          EXPORTAS ||area_number.34||, ||.constdata||
                   snmp_TickItv
 000000  14                DCB      0x14
 
-                          AREA ||area_number.35||, DATA, READONLY, ALIGN=0
+                          AREA ||area_number.33||, DATA, READONLY, ALIGN=0
 
-                          EXPORTAS ||area_number.35||, ||.constdata||
+                          EXPORTAS ||area_number.33||, ||.constdata||
                   snmp_TrapIp
 000000  c0a80109          DCB      0xc0,0xa8,0x01,0x09
 
@@ -445,12 +433,24 @@
 000008  30320000          DCB      0x30,0x32,0x00,0x00
                           DCDU     0x00000000
 
-                          AREA ||area_number.37||, DATA, ALIGN=0
+                          AREA ||area_number.35||, DATA, ALIGN=0
 
-                          EXPORTAS ||area_number.37||, ||.data||
+                          EXPORTAS ||area_number.35||, ||.data||
                   own_hw_adr
 000000  01020304          DCB      0x01,0x02,0x03,0x04
 000004  0000              DCB      0x00,0x00
+
+                          AREA ||area_number.36||, DATA, ALIGN=1
+
+                          EXPORTAS ||area_number.36||, ||.data||
+                  snmp_PortNum
+000000  00a1              DCW      0x00a1
+
+                          AREA ||area_number.37||, DATA, ALIGN=1
+
+                          EXPORTAS ||area_number.37||, ||.data||
+                  snmp_TrapPort
+000000  00a2              DCW      0x00a2
 
                           AREA ||area_number.38||, DATA, ALIGN=0
 
