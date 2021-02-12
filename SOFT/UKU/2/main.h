@@ -1141,6 +1141,8 @@ extern signed short NUMBAT_FSO;
 extern signed short UKU_FSO_MINI_SIGN_MODE;
 extern signed short UKU_FSO_MINI_SIGN_D1_Q;
 extern signed short UKU_FSO_MINI_SIGN_D5_Q;
+extern signed short UKU_FSO_MINI_SIGN_D1_U;
+extern signed short UKU_FSO_MINI_SIGN_D5_U;
 extern char uku_fso_D1_stat;
 extern char uku_fso_D2_stat;
 extern char uku_fso_D5_stat;
@@ -1325,6 +1327,7 @@ typedef struct
      signed short	_Ubm;
      signed short	_dUbm;
 	signed short	_Ib;
+	signed short	_Ib_;
 	signed short	_Tb;
 	char 		_nd;
 	char 		_cnt_wrk;

@@ -561,6 +561,8 @@
 #define EE_UKU_FSO_MINI_SIGN_MODE				EE_UKU_FSO+202
 #define EE_UKU_FSO_MINI_SIGN_D1_Q				EE_UKU_FSO+204
 #define EE_UKU_FSO_MINI_SIGN_D5_Q				EE_UKU_FSO+206
+#define EE_UKU_FSO_MINI_SIGN_D1_U				EE_UKU_FSO+208
+#define EE_UKU_FSO_MINI_SIGN_D5_U				EE_UKU_FSO+210
 
 extern const unsigned short ADR_EE_BAT_ZAR_CNT[2];
 extern const unsigned short ADR_EE_BAT_ZAR_CNT_KE[2];

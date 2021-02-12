@@ -240,6 +240,8 @@ signed short NUMBAT_FSO;
 signed short UKU_FSO_MINI_SIGN_MODE;
 signed short UKU_FSO_MINI_SIGN_D1_Q;
 signed short UKU_FSO_MINI_SIGN_D5_Q;
+signed short UKU_FSO_MINI_SIGN_D1_U;
+signed short UKU_FSO_MINI_SIGN_D5_U;
 char uku_fso_D1_stat;
 char uku_fso_D2_stat;
 char uku_fso_D5_stat;
@@ -17562,7 +17564,8 @@ else if(ind==iSpecInfFSO)
 
 	//int2lcdyx(sTARKSilentCnt[0],0,15,0);
 	//int2lcdyx(sTARKSilentCnt[1],0,19,0);
-	//int2lcdyx(NUMBAT_FSO,0,10,0);
+	//int2lcdyx(Ibmax,0,10,0);
+	//int2lcdyx(Ibmax_,0,20,0);
 	}
 
 else if(ind==iVZ_set)
@@ -17849,8 +17852,8 @@ else if(ind==iSet_FSO_MINI_SIGN)
 	if(UKU_FSO_MINI_SIGN_MODE==0)
 		{
 		ptrs[0]=		" по напряжению      ";
-		ptrs[1]=  	    " D1      Uвых<48В   ";
-		ptrs[2]=  	    " D5      Uвых<42В   ";
+		ptrs[1]=  	    " D1      Uвых<   #В ";
+		ptrs[2]=  	    " D5      Uвых<   $В ";
 		ptrs[3]=  	    " Выход              ";
 		}
 	else
@@ -17871,6 +17874,8 @@ else if(ind==iSet_FSO_MINI_SIGN)
 
 	int2lcd(UKU_FSO_MINI_SIGN_D1_Q,'!',0);
 	int2lcd(UKU_FSO_MINI_SIGN_D5_Q,'@',0);
+	int2lcd(UKU_FSO_MINI_SIGN_D1_U,'#',1);
+	int2lcd(UKU_FSO_MINI_SIGN_D5_U,'$',1);
 	}
 #endif	//UKU_FSO_MINI
 //#endif	//UKU_6U_WEB
@@ -42970,7 +42975,7 @@ else if(ind==iSet_FSO_MINI_SIGN)
 	     else if(but==butR_)UKU_FSO_MINI_SIGN_D1_Q++;
 	     else if(but==butL)UKU_FSO_MINI_SIGN_D1_Q--;
 	     else if(but==butL_)UKU_FSO_MINI_SIGN_D1_Q--;
-	     gran(&UKU_FSO_MINI_SIGN_D1_Q,50,100);
+	     gran(&UKU_FSO_MINI_SIGN_D1_Q,20,100);
 	     lc640_write_int(EE_UKU_FSO_MINI_SIGN_D1_Q,UKU_FSO_MINI_SIGN_D1_Q);
 	     speed=1;
 	     }
@@ -42982,6 +42987,27 @@ else if(ind==iSet_FSO_MINI_SIGN)
 	     else if(but==butL_)UKU_FSO_MINI_SIGN_D5_Q--;
 	     gran(&UKU_FSO_MINI_SIGN_D5_Q,1,20);
 	     lc640_write_int(EE_UKU_FSO_MINI_SIGN_D5_Q,UKU_FSO_MINI_SIGN_D5_Q);
+	     speed=1;
+	     }
+
+	else if((sub_ind==1)&&(UKU_FSO_MINI_SIGN_MODE==0))
+	     {
+	     if(but==butR)UKU_FSO_MINI_SIGN_D1_U++;
+	     else if(but==butR_)UKU_FSO_MINI_SIGN_D1_U=((UKU_FSO_MINI_SIGN_D1_U/5)+1)*5;
+	     else if(but==butL)UKU_FSO_MINI_SIGN_D1_U--;
+	     else if(but==butL_)UKU_FSO_MINI_SIGN_D1_U=((UKU_FSO_MINI_SIGN_D1_U/5)-1)*5;
+	     gran(&UKU_FSO_MINI_SIGN_D1_U,400,600);
+	     lc640_write_int(EE_UKU_FSO_MINI_SIGN_D1_U,UKU_FSO_MINI_SIGN_D1_U);
+	     speed=1;
+	     }
+	else if((sub_ind==2)&&(UKU_FSO_MINI_SIGN_MODE==0))
+	     {
+	     if(but==butR)UKU_FSO_MINI_SIGN_D5_U++;
+	     else if(but==butR_)UKU_FSO_MINI_SIGN_D5_U=((UKU_FSO_MINI_SIGN_D5_U/5)+1)*5;
+	     else if(but==butL)UKU_FSO_MINI_SIGN_D5_U--;
+	     else if(but==butL_)UKU_FSO_MINI_SIGN_D5_U=((UKU_FSO_MINI_SIGN_D5_U/5)-1)*5;
+	     gran(&UKU_FSO_MINI_SIGN_D5_U,400,600);
+	     lc640_write_int(EE_UKU_FSO_MINI_SIGN_D5_U,UKU_FSO_MINI_SIGN_D5_U);
 	     speed=1;
 	     }
 	else if(sub_ind==3)

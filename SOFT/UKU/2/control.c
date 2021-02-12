@@ -149,7 +149,7 @@ signed char vent_stat=0;
 signed short cntrl_stat=610;
 signed short cntrl_stat_old=610;
 signed short cntrl_stat_new;
-signed short Ibmax;
+signed short Ibmax, Ibmax_;
 unsigned char unh_cnt0,unh_cnt1,b1Hz_unh;
 unsigned char	ch_cnt0,b1Hz_ch,i,iiii;
 unsigned char	ch_cnt1,b1_30Hz_ch;
@@ -3096,6 +3096,18 @@ if(!mess_find_unvol(MESS2MATEMAT))
 	//#endif
 	bat[0]._Ib=(signed short)temp_SL;
 
+	temp_SL=(signed long)ad7705_buff[0];
+	temp_SL-=(signed long)Kibat0[0];
+	temp_SL*=(signed long)Kibat1[0];
+	if((AUSW_MAIN==24120)||(AUSW_MAIN==24210))temp_SL/=300L;
+	else if((AUSW_MAIN==22010)||(AUSW_MAIN==22035)||(AUSW_MAIN==22033))temp_SL/=2000L;
+	else temp_SL/=1000L;
+	#ifdef UKU_TELECORE2015
+	temp_SL/=2L;
+	#endif
+	bat[0]._Ib_=(signed short)temp_SL;
+
+
 	temp_SL=(signed long)ad7705_buff_[1];
 	temp_SL-=(signed long)Kibat0[1];
 	temp_SL*=(signed long)Kibat1[1];
@@ -3103,6 +3115,14 @@ if(!mess_find_unvol(MESS2MATEMAT))
 	else if((AUSW_MAIN==22010)||(AUSW_MAIN==22035)||(AUSW_MAIN==22033))temp_SL/=2000L;
 	else temp_SL/=1000L;
 	bat[1]._Ib=(signed short)temp_SL;
+
+	temp_SL=(signed long)ad7705_buff[1];
+	temp_SL-=(signed long)Kibat0[1];
+	temp_SL*=(signed long)Kibat1[1];
+	if((AUSW_MAIN==24120)||(AUSW_MAIN==24210))temp_SL/=300L;
+	else if((AUSW_MAIN==22010)||(AUSW_MAIN==22035)||(AUSW_MAIN==22033))temp_SL/=2000L;
+	else temp_SL/=1000L;
+	bat[1]._Ib_=(signed short)temp_SL;
 	}
 
 
@@ -3737,6 +3757,9 @@ if((NUMBAT_TELECORE>1)&&(bat[1]._Ib/10>Ibmax))Ibmax=bat[1]._Ib/10;
 Ibmax=0;
 if((NUMBAT_FSO>0)&&(bat[0]._Ib/10>Ibmax))Ibmax=bat[0]._Ib/10;
 if((NUMBAT_FSO>1)&&(bat[1]._Ib/10>Ibmax))Ibmax=bat[1]._Ib/10;
+Ibmax_=0;
+if((NUMBAT_FSO>0)&&(bat[0]._Ib_/10>Ibmax_))Ibmax_=bat[0]._Ib_/10;
+if((NUMBAT_FSO>1)&&(bat[1]._Ib_/10>Ibmax_))Ibmax_=bat[1]._Ib_/10;
 #endif
 
 #ifdef UKU_TELECORE2017
@@ -10487,7 +10510,12 @@ if(b1Hz_ch)
 	
 	plazma_cntrl_stat=50;
 
-	if(Ibmax>=IZMAX_130)
+	if(Ibmax>=IZMAX_*2)
+		{
+		cntrl_stat_new=0;
+		plazma_cntrl_stat=51;
+		}
+	else if(Ibmax>=IZMAX_130)
 		{
 		cntrl_stat_new-=10;
 		plazma_cntrl_stat=51;
@@ -11823,9 +11851,9 @@ if((avar_stat&(1<<3))||(avar_stat&0x0001))	uku_fso_SYSOK_stat=1;
 else 										uku_fso_SYSOK_stat=0; 
 
 
-if(UKU_FSO_MINI_SIGN_MODE==0)
+if((UKU_FSO_MINI_SIGN_MODE==0)||(sTARKSilentCnt[sub_ind1]>=5))
 	{
-	if(load_U<480)
+	if(load_U<UKU_FSO_MINI_SIGN_D1_U)
 		{
 		uku_fso_D1_cnt++;
 		gran(&uku_fso_D1_cnt,0,10);
@@ -11836,7 +11864,7 @@ if(UKU_FSO_MINI_SIGN_MODE==0)
 		gran(&uku_fso_D1_cnt,0,10);
 		}
 
-	if(load_U<420)
+	if(load_U<UKU_FSO_MINI_SIGN_D5_U)
 		{
 		uku_fso_D5_cnt++;
 		gran(&uku_fso_D5_cnt,0,10);
