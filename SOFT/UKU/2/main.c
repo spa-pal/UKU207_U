@@ -4021,7 +4021,9 @@ else if(ind==iMn_6U)
 	//long2lcdyx_mmm(1234567,0,8,0);
 	//long2lcdyx_mmm(AUSW_MAIN,0,19,0);
 	//int2lcdyx(cntrl_stat,0,7,0);
-	//int2lcdyx(u_necc,0,19,0);	
+	//int2lcdyx(sk_avar_ind_stat,0,19,0);	
+		//int2lcdyx(sk_avar_stat,0,3,0);
+			//int2lcdyx(sk_avar_stat_new,0,6,0);
 	}
 //#ifndef UKU_6U_WEB
 else if(ind==iMn_220)
@@ -18295,7 +18297,7 @@ else if(ind==iMn)
 		{
 		if(sub_ind==0)
 			{
-			if(avar_ind_stat)
+			if(avar_ind_stat/*||sk_avar_ind_stat*/)
 				{
 				//ind=iAv_view;
 				//sub_ind=0;
@@ -22151,7 +22153,7 @@ else if(ind==iSet_li_bat)
 	     else if(but==butR_)TELECORE2017_ULINECC+=10;
 	     else if(but==butL)TELECORE2017_ULINECC--;
 	     else if(but==butL_)TELECORE2017_ULINECC-=10;
-	     gran(&TELECORE2017_ULINECC,420,560);
+	     gran(&TELECORE2017_ULINECC,420,720);
 	     lc640_write_int(EE_TELECORE2017_ULINECC,TELECORE2017_ULINECC);
 	     speed=1;
 	     }

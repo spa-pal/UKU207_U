@@ -224,13 +224,13 @@
 000142  f88d400d          STRB     r4,[sp,#0xd]
 ;;;2506   modbus_registers[14]=(signed char)(bat[0]._Ub>>8);				//Рег8	напряжение батареи №1, 0.1В
 000146  4ccd              LDR      r4,|L1.1148|
-000148  f8345c1c          LDRH     r5,[r4,#-0x1c]  ; bat
+000148  f8345c22          LDRH     r5,[r4,#-0x22]  ; bat
 00014c  ea4f2725          ASR      r7,r5,#8
 000150  f88d700e          STRB     r7,[sp,#0xe]
 ;;;2507   modbus_registers[15]=(signed char)(bat[0]._Ub);
 000154  f88d500f          STRB     r5,[sp,#0xf]
 ;;;2508   modbus_registers[16]=(signed char)(bat[0]._Ib>>8);				//Рег9   	ток батареи №1, 0.01А
-000158  f8345c16          LDRH     r5,[r4,#-0x16]  ; bat
+000158  f8345c1c          LDRH     r5,[r4,#-0x1c]  ; bat
 00015c  ea4f2725          ASR      r7,r5,#8
 000160  f88d7010          STRB     r7,[sp,#0x10]
 ;;;2509   modbus_registers[17]=(signed char)(bat[0]._Ib);
@@ -262,13 +262,13 @@
 ;;;2522   modbus_registers[21]=(signed char)(bat[0]._zar);
 ;;;2523   #endif
 ;;;2524   modbus_registers[22]=(signed char)(bat[0]._Ubm>>8);			//Рег12	напряжение средней точки батареи №1, 0.1В
-000196  f8347c1a          LDRH     r7,[r4,#-0x1a]  ; bat
+000196  f8347c20          LDRH     r7,[r4,#-0x20]  ; bat
 00019a  ea4f2827          ASR      r8,r7,#8
 00019e  f88d8016          STRB     r8,[sp,#0x16]
 ;;;2525   modbus_registers[23]=(signed char)(bat[0]._Ubm);
 0001a2  f88d7017          STRB     r7,[sp,#0x17]
 ;;;2526   modbus_registers[24]=(signed char)(bat[0]._dUbm>>8);			//Рег13	ошибка средней точки батареи №1, %
-0001a6  f8347c18          LDRH     r7,[r4,#-0x18]  ; bat
+0001a6  f8347c1e          LDRH     r7,[r4,#-0x1e]  ; bat
 0001aa  ea4f2827          ASR      r8,r7,#8
 0001ae  f88d8018          STRB     r8,[sp,#0x18]
 ;;;2527   modbus_registers[25]=(signed char)(bat[0]._dUbm);
@@ -281,13 +281,13 @@
 ;;;2529   modbus_registers[27]=(signed char)(BAT_C_REAL[0]);
 0001c6  f88d701b          STRB     r7,[sp,#0x1b]
 ;;;2530   modbus_registers[28]=(signed char)(bat[1]._Ub>>8);				//Рег15	напряжение батареи №1, 0.1В
-0001ca  8e27              LDRH     r7,[r4,#0x30]  ; bat
+0001ca  8de7              LDRH     r7,[r4,#0x2e]  ; bat
 0001cc  ea4f2927          ASR      r9,r7,#8
 0001d0  f88d901c          STRB     r9,[sp,#0x1c]
 ;;;2531   modbus_registers[29]=(signed char)(bat[1]._Ub);
 0001d4  f88d701d          STRB     r7,[sp,#0x1d]
 ;;;2532   modbus_registers[30]=(signed char)(bat[1]._Ib>>8);				//Рег16   	ток батареи №1, 0.01А
-0001d8  8ee7              LDRH     r7,[r4,#0x36]  ; bat
+0001d8  8ea7              LDRH     r7,[r4,#0x34]  ; bat
 0001da  ea4f2927          ASR      r9,r7,#8
 0001de  f88d901e          STRB     r9,[sp,#0x1e]
 ;;;2533   modbus_registers[31]=(signed char)(bat[1]._Ib);
@@ -305,13 +305,13 @@
 ;;;2537   modbus_registers[35]=(signed char)(bat[1]._zar);
 0001fe  f88d7023          STRB     r7,[sp,#0x23]
 ;;;2538   modbus_registers[36]=(signed char)(bat[1]._Ubm>>8);			//Рег19	напряжение средней точки батареи №1, 0.1В
-000202  8e67              LDRH     r7,[r4,#0x32]  ; bat
+000202  8e27              LDRH     r7,[r4,#0x30]  ; bat
 000204  ea4f2927          ASR      r9,r7,#8
 000208  f88d9024          STRB     r9,[sp,#0x24]
 ;;;2539   modbus_registers[37]=(signed char)(bat[1]._Ubm);
 00020c  f88d7025          STRB     r7,[sp,#0x25]
 ;;;2540   modbus_registers[38]=(signed char)(bat[1]._dUbm>>8);			//Рег20	ошибка средней точки батареи №1, %
-000210  8ea4              LDRH     r4,[r4,#0x34]  ; bat
+000210  8e64              LDRH     r4,[r4,#0x32]  ; bat
 000212  ea4f2724          ASR      r7,r4,#8
 000216  f88d7026          STRB     r7,[sp,#0x26]
 ;;;2541   modbus_registers[39]=(signed char)(bat[1]._dUbm);
@@ -565,7 +565,7 @@
                   |L1.1144|
                           DCD      net_Uc
                   |L1.1148|
-                          DCD      bat+0x1e
+                          DCD      bat+0x24
                   |L1.1152|
                           DCD      t_ext
                   |L1.1156|
@@ -623,7 +623,7 @@
 ;;;2635   #ifdef UKU_ZVU
 ;;;2636   if(bat_ips._av)			tempS|=(1<<1);
 0004d4  f8df93f4          LDR      r9,|L1.2252|
-0004d8  f899903d          LDRB     r9,[r9,#0x3d]  ; bat_ips
+0004d8  f8999041          LDRB     r9,[r9,#0x41]  ; bat_ips
 0004dc  f1b90f00          CMP      r9,#0
 0004e0  d002              BEQ      |L1.1256|
 0004e2  f0470702          ORR      r7,r7,#2

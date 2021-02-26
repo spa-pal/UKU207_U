@@ -1702,7 +1702,7 @@
 000af8  e00a              B        |L1.2832|
                   |L1.2810|
 000afa  485a              LDR      r0,|L1.3172|
-000afc  f890003d          LDRB     r0,[r0,#0x3d]         ;677  ; bat
+000afc  f8900041          LDRB     r0,[r0,#0x41]         ;677  ; bat
 000b00  b118              CBZ      r0,|L1.2826|
 000b02  f04f00f7          MOV      r0,#0xf7              ;677
 000b06  7220              STRB     r0,[r4,#8]            ;677
@@ -1735,9 +1735,9 @@
 000b44  7320              STRB     r0,[r4,#0xc]          ;689
 000b46  f89d0001          LDRB     r0,[sp,#1]            ;690
 000b4a  7360              STRB     r0,[r4,#0xd]          ;690
-000b4c  8948              LDRH     r0,[r1,#0xa]          ;691  ; bat
+000b4c  8988              LDRH     r0,[r1,#0xc]          ;691  ; bat
 000b4e  73a0              STRB     r0,[r4,#0xe]          ;691
-000b50  8a08              LDRH     r0,[r1,#0x10]         ;692  ; bat
+000b50  8a48              LDRH     r0,[r1,#0x12]         ;692  ; bat
 000b52  73e0              STRB     r0,[r4,#0xf]          ;692
 000b54  4845              LDR      r0,|L1.3180|
 000b56  f9b01000          LDRSH    r1,[r0,#0]            ;694  ; BAT_C_REAL
@@ -1862,7 +1862,7 @@
 000c04  e00a              B        |L1.3100|
                   |L1.3078|
 000c06  4817              LDR      r0,|L1.3172|
-000c08  f8900089          LDRB     r0,[r0,#0x89]         ;719  ; bat
+000c08  f8900091          LDRB     r0,[r0,#0x91]         ;719  ; bat
 000c0c  b118              CBZ      r0,|L1.3094|
 000c0e  f04f00f7          MOV      r0,#0xf7              ;719
 000c12  7220              STRB     r0,[r4,#8]            ;719
@@ -1881,7 +1881,7 @@
 000c2c  7260              STRB     r0,[r4,#9]            ;724
                   |L1.3118|
 000c2e  490d              LDR      r1,|L1.3172|
-000c30  314e              ADDS     r1,r1,#0x4e           ;727
+000c30  3152              ADDS     r1,r1,#0x52           ;727
 000c32  f9b10006          LDRSH    r0,[r1,#6]            ;727  ; bat
 000c36  e01d              B        |L1.3188|
                   |L1.3128|
@@ -1928,9 +1928,9 @@
 000c90  7320              STRB     r0,[r4,#0xc]          ;731
 000c92  f89d0001          LDRB     r0,[sp,#1]            ;732
 000c96  7360              STRB     r0,[r4,#0xd]          ;732
-000c98  8908              LDRH     r0,[r1,#8]            ;733  ; bat
+000c98  8948              LDRH     r0,[r1,#0xa]          ;733  ; bat
 000c9a  73a0              STRB     r0,[r4,#0xe]          ;733
-000c9c  89c8              LDRH     r0,[r1,#0xe]          ;734  ; bat
+000c9c  8a08              LDRH     r0,[r1,#0x10]         ;734  ; bat
 000c9e  73e0              STRB     r0,[r4,#0xf]          ;734
 000ca0  48fc              LDR      r0,|L1.4244|
 000ca2  f9b01002          LDRSH    r1,[r0,#2]            ;736  ; BAT_C_REAL

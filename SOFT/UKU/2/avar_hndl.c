@@ -21,6 +21,10 @@ unsigned avar_stat_new,avar_stat_offed;
 //5бит  - инверторы
 //4бита - внешние датчики температуры
 //4бита - внешние сухие контакты
+char sk_avar_stat;	 	//"Отображение" всех аварийных в данный момент ск в одном месте
+char sk_avar_ind_stat; 	//"Отображение" всех не просмотренных аварийных ск в одном месте
+char sk_avar_stat_old;
+char sk_avar_stat_new,sk_avar_stat_offed;
 
 char /*av_net*//*,av_bat[2]*//*av_bps[12],*/av_inv[6];//,/*av_dt[4],av_sk[4]*/;
 
@@ -94,7 +98,7 @@ for(i=0;i<2;i++)
 for(i=0;i<18;i++)
 	{
 	if(bps[i]._av&0xef)	SET_REG(avar_stat,1,3+i,1);
-	else	   		SET_REG(avar_stat,0,3+i,1);
+	else	   			SET_REG(avar_stat,0,3+i,1);
 	}
 
 /*for(i=0;i<6;i++)
@@ -111,8 +115,8 @@ for(i=0;i<18;i++)
 #ifndef UKU_ZVU
 for(i=0;i<4;i++)
 	{
-//	if(sk_av_stat[i]==sasON)	SET_REG(avar_stat,1,24+i,1);
-//	else	   		SET_REG(avar_stat,0,24+i,1);
+	if(sk_av_stat[i]==sasON)	SET_REG(sk_avar_stat,1,i,1);
+	else	   					SET_REG(sk_avar_stat,0,i,1);
 	}
 #endif //UKU_ZVU
 #ifndef UKU_FSO
@@ -130,12 +134,6 @@ avar_stat_new=(avar_stat^avar_stat_old)&avar_stat;
 
 avar_ind_stat|=avar_stat_new;
 
-if((SK_ZVUK_EN[0])) avar_ind_stat&=(~(1UL<<24));
-if((SK_ZVUK_EN[1])) avar_ind_stat&=(~(1UL<<25));
-if((SK_ZVUK_EN[2])) avar_ind_stat&=(~(1UL<<26));
-if((SK_ZVUK_EN[3])) avar_ind_stat&=(~(1UL<<27));	
-
-
 avar_stat_offed=~((avar_stat^avar_stat_old)&avar_stat_old);
 
 if(!AV_OFF_AVT)avar_stat_offed|=0xeffffffe;
@@ -143,6 +141,25 @@ if(!AV_OFF_AVT)avar_stat_offed|=0xeffffffe;
 avar_ind_stat&=avar_stat_offed; 
 
 avar_stat_old=avar_stat;
+
+
+sk_avar_stat_new=(sk_avar_stat^sk_avar_stat_old)&sk_avar_stat;
+
+sk_avar_ind_stat|=sk_avar_stat_new;
+
+sk_avar_stat_offed=~((sk_avar_stat^sk_avar_stat_old)&sk_avar_stat_old);
+
+
+if((SK_ZVUK_EN[0])) sk_avar_ind_stat&=(~(1UL<<0));
+if((SK_ZVUK_EN[1])) sk_avar_ind_stat&=(~(1UL<<1));
+if((SK_ZVUK_EN[2])) sk_avar_ind_stat&=(~(1UL<<2));
+if((SK_ZVUK_EN[3])) sk_avar_ind_stat&=(~(1UL<<3));	
+
+if(!AV_OFF_AVT)sk_avar_stat_offed|=0x0f;
+
+sk_avar_ind_stat&=sk_avar_stat_offed; 
+
+sk_avar_stat_old=sk_avar_stat;
 
 //oleg_start
 

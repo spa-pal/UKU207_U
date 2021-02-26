@@ -67,7 +67,9 @@ static char bcnt;
 bcnt++; 
 if(bcnt>9)bcnt=0;
 //bU_BAT2REL_AV_BAT=0;
-if((avar_ind_stat)||(ips_bat_av_stat))beep_init(0x33333333,'R');
+
+
+if((avar_ind_stat)||(ips_bat_av_stat)||(sk_avar_ind_stat))beep_init(0x33333333,'R');
 
 
 else if ( (((bat[0]._Ub<(USIGN*10))&&(BAT_IS_ON[0]==bisON))||((bat[1]._Ub<(USIGN*10))&&(BAT_IS_ON[1]==bisON)))) 

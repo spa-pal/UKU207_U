@@ -1478,7 +1478,7 @@
 0008be  8008              STRH     r0,[r1,#0]
 ;;;365    snmp_bat_status[0]=bat_ips._av&1;
 0008c0  4879              LDR      r0,|L1.2728|
-0008c2  f890003d          LDRB     r0,[r0,#0x3d]  ; bat_ips
+0008c2  f8900041          LDRB     r0,[r0,#0x41]  ; bat_ips
 0008c6  f0000101          AND      r1,r0,#1
 0008ca  485c              LDR      r0,|L1.2620|
 0008cc  f10000d0          ADD      r0,r0,#0xd0

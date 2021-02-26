@@ -14,6 +14,11 @@ extern unsigned avar_stat_new,avar_stat_offed;
 //4бита - внешние датчики температуры
 //4бита - внешние сухие контакты
 
+extern char sk_avar_stat;	 	//"ќтображение" всех аварийных в данный момент ск в одном месте
+extern char sk_avar_ind_stat; 	//"ќтображение" всех не просмотренных аварийных ск в одном месте
+extern char sk_avar_stat_old;
+extern char sk_avar_stat_new,sk_avar_stat_offed;
+
 //јварии
 extern unsigned rki_avar1_stat;	 	//"ќтображение" всех аварийных в данный момент устройств в одном месте
 extern unsigned rki_avar1_ind_stat; 	//"ќтображение" всех не просмотренных аварийных устройств в одном месте
