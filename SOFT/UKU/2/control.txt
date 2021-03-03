@@ -3226,13 +3226,13 @@
 001546  2300              MOVS     r3,#0
 001548  461a              MOV      r2,r3
 00154a  2101              MOVS     r1,#1
-00154c  20ef              MOVS     r0,#0xef
+00154c  20f3              MOVS     r0,#0xf3
 00154e  f7fffffe          BL       tree_up
 ;;;1553   		tree_up(iVZ1_STEP2_1,0,0,0);
 001552  2300              MOVS     r3,#0
 001554  461a              MOV      r2,r3
 001556  4619              MOV      r1,r3
-001558  20ee              MOVS     r0,#0xee
+001558  20f2              MOVS     r0,#0xf2
 00155a  f7fffffe          BL       tree_up
 ;;;1554   		ret(1200);
 00155e  f44f6096          MOV      r0,#0x4b0
@@ -4187,13 +4187,13 @@
 001b48  2300              MOVS     r3,#0
 001b4a  461a              MOV      r2,r3
 001b4c  2101              MOVS     r1,#1
-001b4e  20f1              MOVS     r0,#0xf1
+001b4e  20f5              MOVS     r0,#0xf5
 001b50  f7fffffe          BL       tree_up
 ;;;1870   		tree_up(iVZ2_STEP2_1,0,0,0);
 001b54  2300              MOVS     r3,#0
 001b56  461a              MOV      r2,r3
 001b58  4619              MOV      r1,r3
-001b5a  20f0              MOVS     r0,#0xf0
+001b5a  20f4              MOVS     r0,#0xf4
 001b5c  f7fffffe          BL       tree_up
 ;;;1871   		ret(1200);
 001b60  f44f6096          MOV      r0,#0x4b0
@@ -20376,13 +20376,13 @@
 006c7c  2300              MOVS     r3,#0
 006c7e  461a              MOV      r2,r3
 006c80  2101              MOVS     r1,#1
-006c82  20ed              MOVS     r0,#0xed
+006c82  20f1              MOVS     r0,#0xf1
 006c84  f7fffffe          BL       tree_up
 ;;;11273  		tree_up(iHV_STEP2_1,0,0,0);
 006c88  2300              MOVS     r3,#0
 006c8a  461a              MOV      r2,r3
 006c8c  4619              MOV      r1,r3
-006c8e  20ec              MOVS     r0,#0xec
+006c8e  20f0              MOVS     r0,#0xf0
 006c90  f7fffffe          BL       tree_up
 ;;;11274  		ret(1200);
 006c94  f44f6096          MOV      r0,#0x4b0

@@ -265,7 +265,14 @@
 
 #define DISPLAY_ENMV				21  //o_2
 #define DISPLAY_ENMV_NUMBER		   1,1  //o_2
-#define DISPLAY_ENMV_DATA		   1,2  //o_2	
+#define DISPLAY_ENMV_DATA_1		   1,2  //o_2  //o_12
+#define DISPLAY_ENMV_DATA_2		   1,3         //o_12
+#define DISPLAY_ENMV_DATA_3		   1,4         //o_12
+#define DISPLAY_ENMV_DATA_4		   1,5         //o_12
+#define DISPLAY_ENMV_DATA_5		   1,6         //o_12
+#define DISPLAY_ENMV_DATA_6		   1,7         //o_12
+#define DISPLAY_ENMV_DATA_7		   1,8         //o_12
+#define DISPLAY_ENMV_DATA_8		   1,9         //o_12	
 
 #define DISPLAY_RKI					22  
 
@@ -298,6 +305,18 @@
 #define DISPLAY_LOG					9
 #define DISPLAY_LOG_ENTRY_EVENTS 			1,1
 //#define DISPLAY_LOG_ENTRY_EVENTS 			1,1
+
+//o_12_s
+#define DISPLAY_LVBD						25 
+#define DISPLAY_LVBD_STATUS					1,0
+#define DISPLAY_LVBD_Uips					2,0
+#define DISPLAY_LVBD_Uakb					3,0
+#define DISPLAY_LVBD_Uips_enable			4,0
+#define DISPLAY_LVBD_Uakb_enable			5,0
+#define DISPLAY_LVBD_U_disable				6,0
+#define DISPLAY_LVBD_U_disable_alarm		7,0
+#define DISPLAY_LVBD_DELAY					8,0
+//o_12_e
 
 #endif
 
@@ -838,6 +857,22 @@ extern unsigned short u_min_net_in, u_max_net_in, i_min_net_in;// установки сете
 extern unsigned char hysteresis_net_in;
 extern unsigned short t_inclusion_net_in, t_shutdown_net_in;
 
+//o_12_s
+extern unsigned char enmv_modbus_adress[8], cnt_enmv_modbus_adress;
+
+//------- LVBD
+extern unsigned char LVBD_status, lvbd_num_alarm_status;
+#define NO_LVBD 15 // количество посылок без ответа дл€ отсутстви€ св€зи с LVBD
+extern unsigned char no_lvbd; // нет св€зи с LVBD
+extern unsigned short lvbd_Uload, lvbd_Uakb;
+extern unsigned char  ver_soft_lvbd;
+extern unsigned short LVBD_porog_U1, LVBD_porog_U2, LVBD_Uload_rele_en, LVBD_Uakb_rele_en;//пороги
+extern unsigned short LVBD_speed_rs485;
+extern unsigned char LVBD_adress_rs485, LVBD_mode_rele_enable, LVBD_num_meas;//адрес модбас, режим реле, число измерений дл€ аварии
+extern unsigned char count_mess_lvbd, command_lvbd;
+extern unsigned short data_lvbd;
+//o_12_e
+
 //***********************************************
 //“аймер
 extern char b1000Hz,b100Hz,b50Hz,b10Hz,b5Hz,b2Hz,b1Hz;
@@ -919,6 +954,7 @@ typedef enum {
 	#endif
 	iRKI, iSetRKI, iK_RKI,iK_MOST,//oleg_start
 	iNET_IN, iSetNetIn, iK_Net_In,//oleg_start 
+	iLVBD, iSetLVBD, iK_LVBD, iSetENMV,//o_12 
 	iSrv_sl,iNet,iNet3,iNetEM,iNet3LIN,iNet_IPS_SGEP_GAZPROM,
 	iSet,iSet_3U,iSet_RSTKM,iSet_GLONASS,iSet_KONTUR,iSet_6U,iSet_220,iSet_220_IPS_TERMOKOMPENSAT,iSet_220_V2,iInv_set_sel, iSet_FSO,
 	iBat, iBat_simple, iBat_li, iBat_SacredSun, iBat_universe, iBat_FSO, iInv_set, iSet_TELECORE2015, iSet_TELECORE2017, iSet_IPS_SGEP_GAZPROM, iBat_ZVU,
@@ -1106,6 +1142,7 @@ extern signed short NUMMAKB;
 extern signed short NUMBYPASS;
 extern signed short NUMBDR;
 extern signed short NUMENMV;
+extern signed short NUMLVBD; //o_12
 extern signed short NUMPHASE;  
 extern signed short SMART_SPC;
 extern signed short U_OUT_KONTR_MAX;

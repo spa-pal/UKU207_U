@@ -156,30 +156,30 @@
 0000ca  7111              STRB     r1,[r2,#4]
 ;;;151    
 ;;;152    
-;;;153    if((!SK_ZVUK_EN[0])) sk_avar_ind_stat&=(~(1UL<<0));
+;;;153    if((SK_ZVUK_EN[0])) sk_avar_ind_stat&=(~(1UL<<0));
 0000cc  4bd1              LDR      r3,|L1.1044|
 0000ce  881e              LDRH     r6,[r3,#0]  ; SK_ZVUK_EN
-0000d0  b916              CBNZ     r6,|L1.216|
+0000d0  b116              CBZ      r6,|L1.216|
 0000d2  f0240401          BIC      r4,r4,#1
 0000d6  7054              STRB     r4,[r2,#1]
                   |L1.216|
-;;;154    if((!SK_ZVUK_EN[1])) sk_avar_ind_stat&=(~(1UL<<1));
+;;;154    if((SK_ZVUK_EN[1])) sk_avar_ind_stat&=(~(1UL<<1));
 0000d8  885c              LDRH     r4,[r3,#2]  ; SK_ZVUK_EN
-0000da  b91c              CBNZ     r4,|L1.228|
+0000da  b11c              CBZ      r4,|L1.228|
 0000dc  7854              LDRB     r4,[r2,#1]  ; sk_avar_ind_stat
 0000de  f0240402          BIC      r4,r4,#2
 0000e2  7054              STRB     r4,[r2,#1]
                   |L1.228|
-;;;155    if((!SK_ZVUK_EN[2])) sk_avar_ind_stat&=(~(1UL<<2));
+;;;155    if((SK_ZVUK_EN[2])) sk_avar_ind_stat&=(~(1UL<<2));
 0000e4  889c              LDRH     r4,[r3,#4]  ; SK_ZVUK_EN
-0000e6  b91c              CBNZ     r4,|L1.240|
+0000e6  b11c              CBZ      r4,|L1.240|
 0000e8  7854              LDRB     r4,[r2,#1]  ; sk_avar_ind_stat
 0000ea  f0240404          BIC      r4,r4,#4
 0000ee  7054              STRB     r4,[r2,#1]
                   |L1.240|
-;;;156    if((!SK_ZVUK_EN[3])) sk_avar_ind_stat&=(~(1UL<<3));	
+;;;156    if((SK_ZVUK_EN[3])) sk_avar_ind_stat&=(~(1UL<<3));	
 0000f0  88db              LDRH     r3,[r3,#6]  ; SK_ZVUK_EN
-0000f2  b91b              CBNZ     r3,|L1.252|
+0000f2  b11b              CBZ      r3,|L1.252|
 0000f4  7853              LDRB     r3,[r2,#1]  ; sk_avar_ind_stat
 0000f6  f0230308          BIC      r3,r3,#8
 0000fa  7053              STRB     r3,[r2,#1]
@@ -6190,22 +6190,22 @@
 0000c8  f7fffffe          BL       lc640_write_long_ptr
 ;;;151    
 ;;;152    
-;;;153    if((!SK_ZVUK_EN[0])) sk_avar_ind_stat&=(~(1UL<<0));
+;;;153    if((SK_ZVUK_EN[0])) sk_avar_ind_stat&=(~(1UL<<0));
 0000cc  f24020a6          MOV      r0,#0x2a6
 0000d0  f7fffffe          BL       lc640_read_long
 0000d4  6068              STR      r0,[r5,#4]  ; ke_date
 0000d6  1d29              ADDS     r1,r5,#4
-;;;154    if((!SK_ZVUK_EN[1])) sk_avar_ind_stat&=(~(1UL<<1));
+;;;154    if((SK_ZVUK_EN[1])) sk_avar_ind_stat&=(~(1UL<<1));
 0000d8  f104000c          ADD      r0,r4,#0xc
 0000dc  f7fffffe          BL       lc640_write_long_ptr
 0000e0  4d14              LDR      r5,|L2.308|
 0000e2  8ba8              LDRH     r0,[r5,#0x1c]
-;;;155    if((!SK_ZVUK_EN[2])) sk_avar_ind_stat&=(~(1UL<<2));
+;;;155    if((SK_ZVUK_EN[2])) sk_avar_ind_stat&=(~(1UL<<2));
 0000e4  f88d0008          STRB     r0,[sp,#8]
 0000e8  7e28              LDRB     r0,[r5,#0x18]
 0000ea  f88d0009          STRB     r0,[sp,#9]
 0000ee  7b28              LDRB     r0,[r5,#0xc]
-;;;156    if((!SK_ZVUK_EN[3])) sk_avar_ind_stat&=(~(1UL<<3));	
+;;;156    if((SK_ZVUK_EN[3])) sk_avar_ind_stat&=(~(1UL<<3));	
 0000f0  f88d000a          STRB     r0,[sp,#0xa]
 0000f4  f88d600b          STRB     r6,[sp,#0xb]
 0000f8  a902              ADD      r1,sp,#8

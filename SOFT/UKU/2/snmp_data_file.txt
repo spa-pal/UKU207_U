@@ -4441,7 +4441,7 @@
 ;;;2208   	temp_ip[3]= ETH_TRAP1_IP_4;
 001912  70e3              STRB     r3,[r4,#3]
 ;;;2209   	snmp_trap (temp_ip, 6, 3, obj);
-001914  4b97              LDR      r3,|L1.7028|
+001914  4bb3              LDR      r3,|L1.7140|
 001916  2203              MOVS     r2,#3
 001918  2106              MOVS     r1,#6
 00191a  4620              MOV      r0,r4
@@ -4449,19 +4449,19 @@
                   |L1.6432|
 ;;;2210   	}
 ;;;2211   if((ETH_TRAP2_IP_1!=255)&&(ETH_TRAP2_IP_2!=255)&&(ETH_TRAP2_IP_3!=255)&&(ETH_TRAP2_IP_4!=255))
-001920  4895              LDR      r0,|L1.7032|
+001920  48b1              LDR      r0,|L1.7144|
 001922  f9b01000          LDRSH    r1,[r0,#0]  ; ETH_TRAP2_IP_1
 001926  29ff              CMP      r1,#0xff
 001928  d018              BEQ      |L1.6492|
-00192a  4894              LDR      r0,|L1.7036|
+00192a  48b0              LDR      r0,|L1.7148|
 00192c  f9b02000          LDRSH    r2,[r0,#0]  ; ETH_TRAP2_IP_2
 001930  2aff              CMP      r2,#0xff
 001932  d013              BEQ      |L1.6492|
-001934  4892              LDR      r0,|L1.7040|
+001934  48ae              LDR      r0,|L1.7152|
 001936  f9b00000          LDRSH    r0,[r0,#0]  ; ETH_TRAP2_IP_3
 00193a  28ff              CMP      r0,#0xff
 00193c  d00e              BEQ      |L1.6492|
-00193e  4b91              LDR      r3,|L1.7044|
+00193e  4bad              LDR      r3,|L1.7156|
 001940  f9b33000          LDRSH    r3,[r3,#0]  ; ETH_TRAP2_IP_4
 001944  2bff              CMP      r3,#0xff
 001946  d009              BEQ      |L1.6492|
@@ -4475,28 +4475,28 @@
 ;;;2216   	temp_ip[3]= ETH_TRAP2_IP_4;
 00194e  70e3              STRB     r3,[r4,#3]
 ;;;2217   	snmp_trap (temp_ip, 6, 3, obj);
-001950  4b88              LDR      r3,|L1.7028|
+001950  4ba4              LDR      r3,|L1.7140|
 001952  2203              MOVS     r2,#3
 001954  2106              MOVS     r1,#6
-001956  488c              LDR      r0,|L1.7048|
+001956  48a8              LDR      r0,|L1.7160|
 001958  f7fffffe          BL       snmp_trap
                   |L1.6492|
 ;;;2218   	}
 ;;;2219   
 ;;;2220   if((ETH_TRAP3_IP_1!=255)&&(ETH_TRAP3_IP_2!=255)&&(ETH_TRAP3_IP_3!=255)&&(ETH_TRAP3_IP_4!=255))
-00195c  488b              LDR      r0,|L1.7052|
+00195c  48a7              LDR      r0,|L1.7164|
 00195e  f9b01000          LDRSH    r1,[r0,#0]  ; ETH_TRAP3_IP_1
 001962  29ff              CMP      r1,#0xff
 001964  d018              BEQ      |L1.6552|
-001966  488a              LDR      r0,|L1.7056|
+001966  48a6              LDR      r0,|L1.7168|
 001968  f9b02000          LDRSH    r2,[r0,#0]  ; ETH_TRAP3_IP_2
 00196c  2aff              CMP      r2,#0xff
 00196e  d013              BEQ      |L1.6552|
-001970  4888              LDR      r0,|L1.7060|
+001970  48a4              LDR      r0,|L1.7172|
 001972  f9b03000          LDRSH    r3,[r0,#0]  ; ETH_TRAP3_IP_3
 001976  2bff              CMP      r3,#0xff
 001978  d00e              BEQ      |L1.6552|
-00197a  4887              LDR      r0,|L1.7064|
+00197a  48a3              LDR      r0,|L1.7176|
 00197c  f9b00000          LDRSH    r0,[r0,#0]  ; ETH_TRAP3_IP_4
 001980  28ff              CMP      r0,#0xff
 001982  d009              BEQ      |L1.6552|
@@ -4510,28 +4510,28 @@
 ;;;2225   	temp_ip[3]= ETH_TRAP3_IP_4;
 00198a  70e0              STRB     r0,[r4,#3]
 ;;;2226   	snmp_trap (temp_ip, 6, 3, obj);
-00198c  4b79              LDR      r3,|L1.7028|
+00198c  4b95              LDR      r3,|L1.7140|
 00198e  2203              MOVS     r2,#3
 001990  2106              MOVS     r1,#6
-001992  487d              LDR      r0,|L1.7048|
+001992  4899              LDR      r0,|L1.7160|
 001994  f7fffffe          BL       snmp_trap
                   |L1.6552|
 ;;;2227   	}
 ;;;2228   
 ;;;2229   if((ETH_TRAP4_IP_1!=255)&&(ETH_TRAP4_IP_2!=255)&&(ETH_TRAP4_IP_3!=255)&&(ETH_TRAP4_IP_4!=255))
-001998  4880              LDR      r0,|L1.7068|
+001998  489c              LDR      r0,|L1.7180|
 00199a  f9b03000          LDRSH    r3,[r0,#0]  ; ETH_TRAP4_IP_1
 00199e  2bff              CMP      r3,#0xff
 0019a0  d018              BEQ      |L1.6612|
-0019a2  487f              LDR      r0,|L1.7072|
+0019a2  489b              LDR      r0,|L1.7184|
 0019a4  f9b00000          LDRSH    r0,[r0,#0]  ; ETH_TRAP4_IP_2
 0019a8  28ff              CMP      r0,#0xff
 0019aa  d013              BEQ      |L1.6612|
-0019ac  497d              LDR      r1,|L1.7076|
+0019ac  4999              LDR      r1,|L1.7188|
 0019ae  f9b11000          LDRSH    r1,[r1,#0]  ; ETH_TRAP4_IP_3
 0019b2  29ff              CMP      r1,#0xff
 0019b4  d00e              BEQ      |L1.6612|
-0019b6  4a7c              LDR      r2,|L1.7080|
+0019b6  4a98              LDR      r2,|L1.7192|
 0019b8  f9b22000          LDRSH    r2,[r2,#0]  ; ETH_TRAP4_IP_4
 0019bc  2aff              CMP      r2,#0xff
 0019be  d009              BEQ      |L1.6612|
@@ -4545,28 +4545,28 @@
 ;;;2234   	temp_ip[3]= ETH_TRAP4_IP_4;
 0019c6  70e2              STRB     r2,[r4,#3]
 ;;;2235   	snmp_trap (temp_ip, 6, 3, obj);
-0019c8  4b6a              LDR      r3,|L1.7028|
+0019c8  4b86              LDR      r3,|L1.7140|
 0019ca  2203              MOVS     r2,#3
 0019cc  2106              MOVS     r1,#6
-0019ce  486e              LDR      r0,|L1.7048|
+0019ce  488a              LDR      r0,|L1.7160|
 0019d0  f7fffffe          BL       snmp_trap
                   |L1.6612|
 ;;;2236   	}
 ;;;2237   
 ;;;2238   if((ETH_TRAP5_IP_1!=255)&&(ETH_TRAP5_IP_2!=255)&&(ETH_TRAP5_IP_3!=255)&&(ETH_TRAP5_IP_4!=255))
-0019d4  4875              LDR      r0,|L1.7084|
+0019d4  4891              LDR      r0,|L1.7196|
 0019d6  f9b02000          LDRSH    r2,[r0,#0]  ; ETH_TRAP5_IP_1
 0019da  2aff              CMP      r2,#0xff
 0019dc  d01a              BEQ      |L1.6676|
-0019de  4874              LDR      r0,|L1.7088|
+0019de  4890              LDR      r0,|L1.7200|
 0019e0  f9b01000          LDRSH    r1,[r0,#0]  ; ETH_TRAP5_IP_2
 0019e4  29ff              CMP      r1,#0xff
 0019e6  d015              BEQ      |L1.6676|
-0019e8  4872              LDR      r0,|L1.7092|
+0019e8  488e              LDR      r0,|L1.7204|
 0019ea  f9b00000          LDRSH    r0,[r0,#0]  ; ETH_TRAP5_IP_3
 0019ee  28ff              CMP      r0,#0xff
 0019f0  d010              BEQ      |L1.6676|
-0019f2  4b71              LDR      r3,|L1.7096|
+0019f2  4b8d              LDR      r3,|L1.7208|
 0019f4  f9b33000          LDRSH    r3,[r3,#0]  ; ETH_TRAP5_IP_4
 0019f8  2bff              CMP      r3,#0xff
 0019fa  d00b              BEQ      |L1.6676|
@@ -4582,9 +4582,9 @@
 ;;;2244   	snmp_trap (temp_ip, 6, 3, obj);
 001a04  e8bd41f0          POP      {r4-r8,lr}
 001a08  2203              MOVS     r2,#3
-001a0a  4b5a              LDR      r3,|L1.7028|
+001a0a  4b76              LDR      r3,|L1.7140|
 001a0c  2106              MOVS     r1,#6
-001a0e  485e              LDR      r0,|L1.7048|
+001a0e  487a              LDR      r0,|L1.7160|
 001a10  f7ffbffe          B.W      snmp_trap
                   |L1.6676|
 ;;;2245   	}			
@@ -4602,7 +4602,7 @@
 001a18  d10c              BNE      |L1.6708|
 ;;;2326   	{
 ;;;2327        if(snmp_warm_sign==1)lc640_write_int(EE_TELECORE2017_KLIMAT_WARM_SIGNAL,1);
-001a1a  485b              LDR      r0,|L1.7048|
+001a1a  4877              LDR      r0,|L1.7160|
 001a1c  38ec              SUBS     r0,r0,#0xec
 001a1e  7801              LDRB     r1,[r0,#0]  ; snmp_warm_sign
 001a20  f44f7082          MOV      r0,#0x104
@@ -4630,7 +4630,7 @@
 001a38  d10c              BNE      |L1.6740|
 ;;;2336   	{
 ;;;2337       if(snmp_cool_sign==1)lc640_write_int(EE_TELECORE2017_KLIMAT_VENT_SIGNAL,1);
-001a3a  4853              LDR      r0,|L1.7048|
+001a3a  486f              LDR      r0,|L1.7160|
 001a3c  38ec              SUBS     r0,r0,#0xec
 001a3e  7841              LDRB     r1,[r0,#1]  ; snmp_cool_sign
 001a40  f44f708a          MOV      r0,#0x114
@@ -4658,7 +4658,7 @@
 001a58  d107              BNE      |L1.6762|
 ;;;2346   	{
 ;;;2347        lc640_write_int(EE_TELECORE2017_KLIMAT_WARM_ON,snmp_warm_on_temper);
-001a5a  484b              LDR      r0,|L1.7048|
+001a5a  4867              LDR      r0,|L1.7160|
 001a5c  38ec              SUBS     r0,r0,#0xec
 001a5e  f9901002          LDRSB    r1,[r0,#2]  ; snmp_warm_on_temper
 001a62  f44f7083          MOV      r0,#0x106
@@ -4679,7 +4679,7 @@
 001a6e  d107              BNE      |L1.6784|
 ;;;2355   	{
 ;;;2356        lc640_write_int(EE_TELECORE2017_KLIMAT_WARM_OFF,snmp_warm_off_temper);
-001a70  4845              LDR      r0,|L1.7048|
+001a70  4861              LDR      r0,|L1.7160|
 001a72  38ec              SUBS     r0,r0,#0xec
 001a74  f9901003          LDRSB    r1,[r0,#3]  ; snmp_warm_off_temper
 001a78  f44f7084          MOV      r0,#0x108
@@ -4700,7 +4700,7 @@
 001a84  d107              BNE      |L1.6806|
 ;;;2364   	{
 ;;;2365        lc640_write_int(EE_TELECORE2017_KLIMAT_CAP,snmp_warm_q);
-001a86  4840              LDR      r0,|L1.7048|
+001a86  485c              LDR      r0,|L1.7160|
 001a88  38ec              SUBS     r0,r0,#0xec
 001a8a  f9901004          LDRSB    r1,[r0,#4]  ; snmp_warm_q
 001a8e  f44f7085          MOV      r0,#0x10a
@@ -4721,7 +4721,7 @@
 001a9a  d107              BNE      |L1.6828|
 ;;;2373   	{
 ;;;2374        lc640_write_int(EE_TELECORE2017_KLIMAT_VENT_ON100,snmp_cool_100_temper);
-001a9c  483a              LDR      r0,|L1.7048|
+001a9c  4856              LDR      r0,|L1.7160|
 001a9e  38ec              SUBS     r0,r0,#0xec
 001aa0  f9901005          LDRSB    r1,[r0,#5]  ; snmp_cool_100_temper
 001aa4  f44f70a3          MOV      r0,#0x146
@@ -4742,7 +4742,7 @@
 001ab0  d107              BNE      |L1.6850|
 ;;;2382   	{
 ;;;2383        lc640_write_int(EE_TELECORE2017_KLIMAT_VENT_ON80,snmp_cool_80_temper);
-001ab2  4835              LDR      r0,|L1.7048|
+001ab2  4851              LDR      r0,|L1.7160|
 001ab4  38ec              SUBS     r0,r0,#0xec
 001ab6  f9901006          LDRSB    r1,[r0,#6]  ; snmp_cool_80_temper
 001aba  f44f70a2          MOV      r0,#0x144
@@ -4763,7 +4763,7 @@
 001ac6  d107              BNE      |L1.6872|
 ;;;2391   	{
 ;;;2392        lc640_write_int(EE_TELECORE2017_KLIMAT_VENT_ON60,snmp_cool_60_temper);
-001ac8  482f              LDR      r0,|L1.7048|
+001ac8  484b              LDR      r0,|L1.7160|
 001aca  38ec              SUBS     r0,r0,#0xec
 001acc  f9901007          LDRSB    r1,[r0,#7]  ; snmp_cool_60_temper
 001ad0  f44f70a1          MOV      r0,#0x142
@@ -4784,7 +4784,7 @@
 001adc  d107              BNE      |L1.6894|
 ;;;2400   	{
 ;;;2401        lc640_write_int(EE_TELECORE2017_KLIMAT_VENT_ON40,snmp_cool_40_temper);
-001ade  482a              LDR      r0,|L1.7048|
+001ade  4846              LDR      r0,|L1.7160|
 001ae0  38ec              SUBS     r0,r0,#0xec
 001ae2  f9901008          LDRSB    r1,[r0,#8]  ; snmp_cool_40_temper
 001ae6  f44f70a0          MOV      r0,#0x140
@@ -4805,7 +4805,7 @@
 001af2  d107              BNE      |L1.6916|
 ;;;2409   	{
 ;;;2410        lc640_write_int(EE_TELECORE2017_KLIMAT_VENT_ON20,snmp_cool_20_temper);
-001af4  4824              LDR      r0,|L1.7048|
+001af4  4840              LDR      r0,|L1.7160|
 001af6  38ec              SUBS     r0,r0,#0xec
 001af8  f9901009          LDRSB    r1,[r0,#9]  ; snmp_cool_20_temper
 001afc  f44f709f          MOV      r0,#0x13e
@@ -4826,7 +4826,7 @@
 001b08  d107              BNE      |L1.6938|
 ;;;2418   	{
 ;;;2419        lc640_write_int(EE_TELECORE2017_KLIMAT_DVENT_ON100,snmp_cool_100_dtemper);
-001b0a  481f              LDR      r0,|L1.7048|
+001b0a  483b              LDR      r0,|L1.7160|
 001b0c  38ec              SUBS     r0,r0,#0xec
 001b0e  f990100a          LDRSB    r1,[r0,#0xa]  ; snmp_cool_100_dtemper
 001b12  f44f70a9          MOV      r0,#0x152
@@ -4847,7 +4847,7 @@
 001b1e  d107              BNE      |L1.6960|
 ;;;2427   	{
 ;;;2428        lc640_write_int(EE_TELECORE2017_KLIMAT_DVENT_ON80,snmp_cool_80_dtemper);
-001b20  4819              LDR      r0,|L1.7048|
+001b20  4835              LDR      r0,|L1.7160|
 001b22  38ec              SUBS     r0,r0,#0xec
 001b24  f990100b          LDRSB    r1,[r0,#0xb]  ; snmp_cool_80_dtemper
 001b28  f44f70a8          MOV      r0,#0x150
@@ -4868,7 +4868,7 @@
 001b34  d107              BNE      |L1.6982|
 ;;;2436   	{
 ;;;2437        lc640_write_int(EE_TELECORE2017_KLIMAT_DVENT_ON60,snmp_cool_60_dtemper);
-001b36  4814              LDR      r0,|L1.7048|
+001b36  4830              LDR      r0,|L1.7160|
 001b38  38ec              SUBS     r0,r0,#0xec
 001b3a  f990100c          LDRSB    r1,[r0,#0xc]  ; snmp_cool_60_dtemper
 001b3e  f44f70a7          MOV      r0,#0x14e
@@ -4889,7 +4889,7 @@
 001b4a  d107              BNE      |L1.7004|
 ;;;2445   	{
 ;;;2446        lc640_write_int(EE_TELECORE2017_KLIMAT_DVENT_ON40,snmp_cool_40_dtemper);
-001b4c  480e              LDR      r0,|L1.7048|
+001b4c  482a              LDR      r0,|L1.7160|
 001b4e  38ec              SUBS     r0,r0,#0xec
 001b50  f990100d          LDRSB    r1,[r0,#0xd]  ; snmp_cool_40_dtemper
 001b54  f44f70a6          MOV      r0,#0x14c
@@ -4910,7 +4910,7 @@
 001b60  d107              BNE      |L1.7026|
 ;;;2454   	{
 ;;;2455        lc640_write_int(EE_TELECORE2017_KLIMAT_DVENT_ON20,snmp_cool_20_dtemper);
-001b62  4809              LDR      r0,|L1.7048|
+001b62  4825              LDR      r0,|L1.7160|
 001b64  38ec              SUBS     r0,r0,#0xec
 001b66  f990100e          LDRSB    r1,[r0,#0xe]  ; snmp_cool_20_dtemper
 001b6a  f44f70a5          MOV      r0,#0x14a
@@ -4919,45 +4919,171 @@
 ;;;2456   	}
 ;;;2457   }
 001b72  e43c              B        |L1.5102|
-;;;2458   
+;;;2458   //------------------------------------------------
                           ENDP
 
-                  |L1.7028|
-                          DCD      ||.bss||+0x2a6
-                  |L1.7032|
-                          DCD      ETH_TRAP2_IP_1
-                  |L1.7036|
-                          DCD      ETH_TRAP2_IP_2
-                  |L1.7040|
-                          DCD      ETH_TRAP2_IP_3
-                  |L1.7044|
-                          DCD      ETH_TRAP2_IP_4
+                  snmp_LVBD_Uload_rele_en PROC
+;;;2459   //o_12_s
+;;;2460   void snmp_LVBD_Uload_rele_en (int mode)
+001b74  2801              CMP      r0,#1
+;;;2461   {
+;;;2462   if(mode==MIB_WRITE)
+001b76  d107              BNE      |L1.7048|
+;;;2463   	{
+;;;2464        command_lvbd=41; data_lvbd=LVBD_Uload_rele_en;
+001b78  492c              LDR      r1,|L1.7212|
+001b7a  f04f0029          MOV      r0,#0x29
+001b7e  7008              STRB     r0,[r1,#0]
+001b80  482b              LDR      r0,|L1.7216|
+001b82  492c              LDR      r1,|L1.7220|
+001b84  8800              LDRH     r0,[r0,#0]  ; LVBD_Uload_rele_en
+001b86  8008              STRH     r0,[r1,#0]
                   |L1.7048|
-                          DCD      ||.data||+0xec
-                  |L1.7052|
-                          DCD      ETH_TRAP3_IP_1
-                  |L1.7056|
-                          DCD      ETH_TRAP3_IP_2
-                  |L1.7060|
-                          DCD      ETH_TRAP3_IP_3
-                  |L1.7064|
-                          DCD      ETH_TRAP3_IP_4
-                  |L1.7068|
-                          DCD      ETH_TRAP4_IP_1
-                  |L1.7072|
-                          DCD      ETH_TRAP4_IP_2
-                  |L1.7076|
-                          DCD      ETH_TRAP4_IP_3
-                  |L1.7080|
-                          DCD      ETH_TRAP4_IP_4
-                  |L1.7084|
-                          DCD      ETH_TRAP5_IP_1
-                  |L1.7088|
-                          DCD      ETH_TRAP5_IP_2
+;;;2465   	}
+;;;2466   }
+001b88  e431              B        |L1.5102|
+;;;2467   //----------------------------------------------
+                          ENDP
+
+                  snmp_LVBD_Uakb_rele_en PROC
+;;;2468   void snmp_LVBD_Uakb_rele_en (int mode)
+001b8a  2801              CMP      r0,#1
+;;;2469   {
+;;;2470   if(mode==MIB_WRITE)
+001b8c  d107              BNE      |L1.7070|
+;;;2471   	{
+;;;2472        command_lvbd=42; data_lvbd=LVBD_Uakb_rele_en;
+001b8e  4927              LDR      r1,|L1.7212|
+001b90  f04f002a          MOV      r0,#0x2a
+001b94  7008              STRB     r0,[r1,#0]
+001b96  4828              LDR      r0,|L1.7224|
+001b98  4926              LDR      r1,|L1.7220|
+001b9a  8800              LDRH     r0,[r0,#0]  ; LVBD_Uakb_rele_en
+001b9c  8008              STRH     r0,[r1,#0]
+                  |L1.7070|
+;;;2473   	}
+;;;2474   }
+001b9e  e426              B        |L1.5102|
+;;;2475   //---------------------------------------------
+                          ENDP
+
+                  snmp_LVBD_porog_U1 PROC
+;;;2476   void snmp_LVBD_porog_U1 (int mode)
+001ba0  2801              CMP      r0,#1
+;;;2477   {
+;;;2478   if(mode==MIB_WRITE)
+001ba2  d107              BNE      |L1.7092|
+;;;2479   	{
+;;;2480        command_lvbd=43; data_lvbd=LVBD_porog_U1;
+001ba4  4921              LDR      r1,|L1.7212|
+001ba6  f04f002b          MOV      r0,#0x2b
+001baa  7008              STRB     r0,[r1,#0]
+001bac  4823              LDR      r0,|L1.7228|
+001bae  4921              LDR      r1,|L1.7220|
+001bb0  8800              LDRH     r0,[r0,#0]  ; LVBD_porog_U1
+001bb2  8008              STRH     r0,[r1,#0]
                   |L1.7092|
+;;;2481   	}
+;;;2482   }
+001bb4  e41b              B        |L1.5102|
+;;;2483   //---------------------------------------------
+                          ENDP
+
+                  snmp_LVBD_porog_U2 PROC
+;;;2484   void snmp_LVBD_porog_U2 (int mode)
+001bb6  2801              CMP      r0,#1
+;;;2485   {
+;;;2486   if(mode==MIB_WRITE)
+001bb8  d107              BNE      |L1.7114|
+;;;2487   	{
+;;;2488        command_lvbd=44; data_lvbd=LVBD_porog_U2;
+001bba  491c              LDR      r1,|L1.7212|
+001bbc  f04f002c          MOV      r0,#0x2c
+001bc0  7008              STRB     r0,[r1,#0]
+001bc2  481f              LDR      r0,|L1.7232|
+001bc4  491b              LDR      r1,|L1.7220|
+001bc6  8800              LDRH     r0,[r0,#0]  ; LVBD_porog_U2
+001bc8  8008              STRH     r0,[r1,#0]
+                  |L1.7114|
+;;;2489   	}
+;;;2490   }
+001bca  e410              B        |L1.5102|
+;;;2491   //---------------------------------------------
+                          ENDP
+
+                  snmp_LVBD_num_meas PROC
+;;;2492   void snmp_LVBD_num_meas (int mode)
+001bcc  2801              CMP      r0,#1
+;;;2493   {
+;;;2494   if(mode==MIB_WRITE)
+001bce  d107              BNE      |L1.7136|
+;;;2495   	{
+;;;2496        command_lvbd=45; data_lvbd=LVBD_num_meas;
+001bd0  4916              LDR      r1,|L1.7212|
+001bd2  f04f002d          MOV      r0,#0x2d
+001bd6  7008              STRB     r0,[r1,#0]
+001bd8  481a              LDR      r0,|L1.7236|
+001bda  4916              LDR      r1,|L1.7220|
+001bdc  7800              LDRB     r0,[r0,#0]  ; LVBD_num_meas
+001bde  8008              STRH     r0,[r1,#0]
+                  |L1.7136|
+;;;2497   	}
+;;;2498   }
+001be0  e405              B        |L1.5102|
+;;;2499   //o_12_e
+                          ENDP
+
+001be2  0000              DCW      0x0000
+                  |L1.7140|
+                          DCD      ||.bss||+0x2a6
+                  |L1.7144|
+                          DCD      ETH_TRAP2_IP_1
+                  |L1.7148|
+                          DCD      ETH_TRAP2_IP_2
+                  |L1.7152|
+                          DCD      ETH_TRAP2_IP_3
+                  |L1.7156|
+                          DCD      ETH_TRAP2_IP_4
+                  |L1.7160|
+                          DCD      ||.data||+0xec
+                  |L1.7164|
+                          DCD      ETH_TRAP3_IP_1
+                  |L1.7168|
+                          DCD      ETH_TRAP3_IP_2
+                  |L1.7172|
+                          DCD      ETH_TRAP3_IP_3
+                  |L1.7176|
+                          DCD      ETH_TRAP3_IP_4
+                  |L1.7180|
+                          DCD      ETH_TRAP4_IP_1
+                  |L1.7184|
+                          DCD      ETH_TRAP4_IP_2
+                  |L1.7188|
+                          DCD      ETH_TRAP4_IP_3
+                  |L1.7192|
+                          DCD      ETH_TRAP4_IP_4
+                  |L1.7196|
+                          DCD      ETH_TRAP5_IP_1
+                  |L1.7200|
+                          DCD      ETH_TRAP5_IP_2
+                  |L1.7204|
                           DCD      ETH_TRAP5_IP_3
-                  |L1.7096|
+                  |L1.7208|
                           DCD      ETH_TRAP5_IP_4
+                  |L1.7212|
+                          DCD      command_lvbd
+                  |L1.7216|
+                          DCD      LVBD_Uload_rele_en
+                  |L1.7220|
+                          DCD      data_lvbd
+                  |L1.7224|
+                          DCD      LVBD_Uakb_rele_en
+                  |L1.7228|
+                          DCD      LVBD_porog_U1
+                  |L1.7232|
+                          DCD      LVBD_porog_U2
+                  |L1.7236|
+                          DCD      LVBD_num_meas
 
                           AREA ||area_number.2||, CODE, READONLY, ALIGN=2
 
@@ -5479,6 +5605,18 @@
 
                           EXPORTAS ||area_number.23||, ||.bss||
                   snmp_enmv_data
+                          %        512
+
+                          AREA ||area_number.24||, DATA, NOINIT, ALIGN=0
+
+                          EXPORTAS ||area_number.24||, ||.bss||
+                  enmv_data_pred
+                          %        64
+
+                          AREA ||area_number.25||, DATA, NOINIT, ALIGN=0
+
+                          EXPORTAS ||area_number.25||, ||.bss||
+                  enmv_data
                           %        64
 
                           AREA ||.constdata||, DATA, READONLY, ALIGN=2
@@ -6047,92 +6185,80 @@
 001030  20000000          DCB      0x20,0x00,0x00,0x00
                           %        4448
 
-                          AREA ||area_number.27||, DATA, ALIGN=0
-
-                          EXPORTAS ||area_number.27||, ||.data||
-                  snmp_web_passw
-                          DCDU     0x00000000
-
-                          AREA ||area_number.28||, DATA, ALIGN=1
-
-                          EXPORTAS ||area_number.28||, ||.data||
-                  snmp_sernum_lsb
-000000  0000              DCB      0x00,0x00
-
-                          AREA ||area_number.29||, DATA, ALIGN=1
+                          AREA ||area_number.29||, DATA, ALIGN=0
 
                           EXPORTAS ||area_number.29||, ||.data||
-                  snmp_sernum_msb
-000000  0000              DCB      0x00,0x00
+                  snmp_web_passw
+                          DCDU     0x00000000
 
                           AREA ||area_number.30||, DATA, ALIGN=1
 
                           EXPORTAS ||area_number.30||, ||.data||
-                  snmp_makb_number
-                          %        8
+                  snmp_sernum_lsb
+000000  0000              DCB      0x00,0x00
 
                           AREA ||area_number.31||, DATA, ALIGN=1
 
                           EXPORTAS ||area_number.31||, ||.data||
-                  snmp_bat_part_voltage
-                          DCDU     0x00000000
+                  snmp_sernum_msb
+000000  0000              DCB      0x00,0x00
 
                           AREA ||area_number.32||, DATA, ALIGN=1
 
                           EXPORTAS ||area_number.32||, ||.data||
-                  snmp_bat_flag
-                          DCDU     0x00000000
+                  snmp_makb_number
+                          %        8
 
                           AREA ||area_number.33||, DATA, ALIGN=1
 
                           EXPORTAS ||area_number.33||, ||.data||
-                  snmp_bat_flag_puts
+                  snmp_bat_part_voltage
                           DCDU     0x00000000
 
                           AREA ||area_number.34||, DATA, ALIGN=1
 
                           EXPORTAS ||area_number.34||, ||.data||
-                  snmp_spc_stat
-000000  0000              DCB      0x00,0x00
+                  snmp_bat_flag
+                          DCDU     0x00000000
 
                           AREA ||area_number.35||, DATA, ALIGN=1
 
                           EXPORTAS ||area_number.35||, ||.data||
-                  snmp_main_bps
-000000  0000              DCB      0x00,0x00
+                  snmp_bat_flag_puts
+                          DCDU     0x00000000
 
                           AREA ||area_number.36||, DATA, ALIGN=1
 
                           EXPORTAS ||area_number.36||, ||.data||
-                  snmp_max_current_koef
+                  snmp_spc_stat
 000000  0000              DCB      0x00,0x00
 
                           AREA ||area_number.37||, DATA, ALIGN=1
 
                           EXPORTAS ||area_number.37||, ||.data||
-                  snmp_up_charge_koef
+                  snmp_main_bps
 000000  0000              DCB      0x00,0x00
 
-                          AREA ||area_number.38||, DATA, ALIGN=0
+                          AREA ||area_number.38||, DATA, ALIGN=1
 
                           EXPORTAS ||area_number.38||, ||.data||
-                  snmp_warm_stat
-000000  00                DCB      0x00
+                  snmp_max_current_koef
+000000  0000              DCB      0x00,0x00
 
-                          AREA ||area_number.39||, DATA, ALIGN=0
+                          AREA ||area_number.39||, DATA, ALIGN=1
 
                           EXPORTAS ||area_number.39||, ||.data||
-                  enmv_on
-000000  00                DCB      0x00
+                  snmp_up_charge_koef
+000000  0000              DCB      0x00,0x00
 
                           AREA ||area_number.40||, DATA, ALIGN=0
 
                           EXPORTAS ||area_number.40||, ||.data||
-                  enmv_data_pred
-                          %        8
+                  snmp_warm_stat
+000000  00                DCB      0x00
 
                           AREA ||area_number.41||, DATA, ALIGN=0
 
                           EXPORTAS ||area_number.41||, ||.data||
-                  enmv_data
+                  enmv_on
                           %        8

@@ -260,10 +260,20 @@ return crc;
 }
 
 //-----------------------------------------------
-void modbus_zapros_ENMV (void){	 //o_2_s
+//o_12_s
+void modbus_zapros_ENMV (void){	 
 unsigned short crc_temp;
 unsigned char i_cnt;
-	modbus_tx_buff[0]=MODBUS_ADRESS;
+	if(cnt_enmv_modbus_adress<(NUMENMV-1)) ++cnt_enmv_modbus_adress;
+	else cnt_enmv_modbus_adress=0;
+
+	if(enmv_on[cnt_enmv_modbus_adress]<10) ++enmv_on[cnt_enmv_modbus_adress];
+   	else {
+		for (i_cnt=0;i_cnt<64;i_cnt++) snmp_enmv_data[i_cnt][cnt_enmv_modbus_adress]=0xFF;
+		for (i_cnt=0;i_cnt<8;i_cnt++) {enmv_data[i_cnt][cnt_enmv_modbus_adress]=0; enmv_data_pred[i_cnt][cnt_enmv_modbus_adress]=0;}
+	}
+
+	modbus_tx_buff[0]=enmv_modbus_adress[cnt_enmv_modbus_adress];
 	modbus_tx_buff[1]=1;
 	modbus_tx_buff[2]=0;
 	modbus_tx_buff[3]=0;
@@ -273,13 +283,9 @@ unsigned char i_cnt;
 	modbus_tx_buff[6]=(char)crc_temp;
 	modbus_tx_buff[7]=crc_temp>>8;
 	for (i_cnt=0;i_cnt<8;i_cnt++)	putchar_sc16is700(modbus_tx_buff[i_cnt]);
-	if(enmv_on<5)enmv_on++;
-   	else {
-		for (i_cnt=0;i_cnt<64;i_cnt++) snmp_enmv_data[i_cnt]=0xFF;
-		for (i_cnt=0;i_cnt<7;i_cnt++) {enmv_data[i_cnt]=0; enmv_data_pred[i_cnt]=0;}	 //o_7
-		enmv_puts_en=0;				 //o_7
-	}
-} //o_2_e
+		
+
+} 
 
 //-----------------------------------------------
 void modbus_in(void)
@@ -446,7 +452,20 @@ if(modbus_an_buffer[0]=='w')
 if(crc16_calculated==crc16_incapsulated)
 	{
 	ica_plazma[4]++;
- 	if(modbus_an_buffer[0]==MODBUS_ADRESS)
+	//o_12_s
+	if(NUMENMV!=0 && modbus_func==1 && modbus_an_buffer[0]==enmv_modbus_adress[cnt_enmv_modbus_adress] && modbus_an_buffer[2]==8) {
+			
+				  for(i_cnt=0;i_cnt<8;i_cnt++) {
+				  	for(j_cnt=0;j_cnt<8;j_cnt++){
+					   snmp_enmv_data[i_cnt*8+j_cnt][cnt_enmv_modbus_adress]=(modbus_an_buffer[3+i_cnt]>>j_cnt)&0x01;
+					}
+					enmv_data[i_cnt][cnt_enmv_modbus_adress]=modbus_an_buffer[3+i_cnt];				   
+				  }
+				  enmv_on[cnt_enmv_modbus_adress]=0;
+				  enmv_puts_en=1;
+	} 
+			
+ 	else if(modbus_an_buffer[0]==MODBUS_ADRESS)	  //o_12_e
 		{
 		modbus_modbus_adress_eq++;
 		if(modbus_func==3)		//чтение произвольного кол-ва регистров хранения
@@ -683,7 +702,7 @@ if(crc16_calculated==crc16_incapsulated)
 	     		}
 			if(modbus_rx_arg0==69)		
 				{
-				if(modbus_rx_arg1==0 || modbus_rx_arg1==1) lc640_write_int(EE_NUMENMV,modbus_rx_arg1);
+				if(modbus_rx_arg1<9) lc640_write_int(EE_NUMENMV,modbus_rx_arg1);
 	     		}
 			if(modbus_rx_arg0==70)		
 				{
@@ -1525,7 +1544,7 @@ modbus_registers[591]=(char)(UKUFSO_BPS4_START_DATE_DAY);
 				}*/
 				}
 			}
-			else if(modbus_func==1) {	
+/*			else if(modbus_func==1) {	
 				if(modbus_an_buffer[2]==8){
 				  for(i_cnt=0;i_cnt<8;i_cnt++) {
 				  	for(j_cnt=0;j_cnt<8;j_cnt++){
@@ -1536,7 +1555,7 @@ modbus_registers[591]=(char)(UKUFSO_BPS4_START_DATE_DAY);
 				  enmv_on=0;
 				  enmv_puts_en=1;
 				}
-			} 
+			}*/ 
 
 		} 
 	else if(modbus_an_buffer[0]==ICA_MODBUS_ADDRESS)

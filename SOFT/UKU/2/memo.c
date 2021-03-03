@@ -101,6 +101,12 @@ NUMMAKB=lc640_read_int(EE_NUMMAKB);
 NUMEXT=NUMSK+NUMDT;
 NUMBDR=lc640_read_int(EE_NUMBDR);
 NUMENMV=lc640_read_int(EE_NUMENMV);
+//o_12_s
+if(NUMENMV>8)NUMENMV=0;
+NUMLVBD=lc640_read_int(EE_NUMLVBD); 
+if(NUMLVBD>1) NUMLVBD=0;
+for(i=0;i<8;i++) enmv_modbus_adress[i]=lc640_read_int(EE_ENMV_MODBUS_ADRESS_1+(2*i) );
+//o_12_e
 NUMPHASE=lc640_read_int(EE_NUMPHASE);
 AV_OFF_AVT=lc640_read_int(EE_AV_OFF_AVT);
 MNEMO_ON=(enum_mnemo_on)lc640_read_int(EE_MNEMO_ON);

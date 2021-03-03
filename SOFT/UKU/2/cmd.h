@@ -75,3 +75,9 @@
 #define PUT_STARK_TM7 	0xB7
 #define PUT_STARK_TM8 	0xB8
 #define PUT_STARK_TM9 	0xB9
+//o_12_s
+#define PUT_NET_IN		0xE6
+#define PUT_RKI			0xE7
+#define PUT_LVBD		0xE8
+//o_12_e
+

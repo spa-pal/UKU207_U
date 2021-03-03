@@ -259,10 +259,10 @@ signed char	snmp_cool_20_dtemper;		//^^номер первого бпса
 signed char snmp_warm_stat;				//^^
 
 //Данные с модуля дискретных входов ЭНМВ-1	   //o_2
-unsigned char enmv_on; // если 1, то есть связь с модулем	 //o_2
+unsigned char enmv_on[8]; // если 5, то нет связи с соответствующем модулем	 //o_12
 unsigned char snmp_enmv_number[64]; //o_2
-unsigned char snmp_enmv_data[64]; //данные с модуля     //o_2
-unsigned char enmv_data_pred[8], enmv_data[8]; //данные с модуля текущие и предыдущие  //o_7
+unsigned char snmp_enmv_data[64][8]; //данные с модуля     //o_2									   //o_12
+unsigned char enmv_data_pred[8][8], enmv_data[8][8]; //данные с модуля текущие и предыдущие  //o_7	   //o_12
 
 U16 obj[10];
 U8 temp_ip[4];
@@ -2455,6 +2455,48 @@ if(mode==MIB_WRITE)
      lc640_write_int(EE_TELECORE2017_KLIMAT_DVENT_ON20,snmp_cool_20_dtemper);
 	}
 }
+//------------------------------------------------
+//o_12_s
+void snmp_LVBD_Uload_rele_en (int mode)
+{
+if(mode==MIB_WRITE)
+	{
+     command_lvbd=41; data_lvbd=LVBD_Uload_rele_en;
+	}
+}
+//----------------------------------------------
+void snmp_LVBD_Uakb_rele_en (int mode)
+{
+if(mode==MIB_WRITE)
+	{
+     command_lvbd=42; data_lvbd=LVBD_Uakb_rele_en;
+	}
+}
+//---------------------------------------------
+void snmp_LVBD_porog_U1 (int mode)
+{
+if(mode==MIB_WRITE)
+	{
+     command_lvbd=43; data_lvbd=LVBD_porog_U1;
+	}
+}
+//---------------------------------------------
+void snmp_LVBD_porog_U2 (int mode)
+{
+if(mode==MIB_WRITE)
+	{
+     command_lvbd=44; data_lvbd=LVBD_porog_U2;
+	}
+}
+//---------------------------------------------
+void snmp_LVBD_num_meas (int mode)
+{
+if(mode==MIB_WRITE)
+	{
+     command_lvbd=45; data_lvbd=LVBD_num_meas;
+	}
+}
+//o_12_e
 
  
 

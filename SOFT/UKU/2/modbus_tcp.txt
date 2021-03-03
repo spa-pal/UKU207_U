@@ -353,7 +353,7 @@
 ;;;360    	     		}
 ;;;361    			if(modbus_tcp_rx_arg0==69)		
 ;;;362    				{
-;;;363    				if(modbus_tcp_rx_arg1==0 || modbus_tcp_rx_arg1==1) lc640_write_int(EE_NUMENMV,modbus_tcp_rx_arg1);
+;;;363    				if(modbus_tcp_rx_arg1>0 && modbus_tcp_rx_arg1<9) lc640_write_int(EE_NUMENMV,modbus_tcp_rx_arg1); //o_12
 ;;;364    	     		}
 ;;;365    			if(modbus_tcp_rx_arg0==70)		
 ;;;366    				{
@@ -1642,10 +1642,9 @@
 000586  2845              CMP      r0,#0x45              ;361
 000588  d108              BNE      |L1.1436|
 00058a  f9b61004          LDRSH    r1,[r6,#4]            ;363  ; modbus_tcp_rx_arg1
-00058e  b109              CBZ      r1,|L1.1428|
-000590  2901              CMP      r1,#1                 ;363
-000592  d103              BNE      |L1.1436|
-                  |L1.1428|
+00058e  1e48              SUBS     r0,r1,#1              ;363
+000590  2808              CMP      r0,#8                 ;363
+000592  d203              BCS      |L1.1436|
 000594  f44f5088          MOV      r0,#0x1100            ;363
 000598  f7fffffe          BL       lc640_write_int
                   |L1.1436|
@@ -1983,13 +1982,13 @@
 000910  f8bb0002          LDRH     r0,[r11,#2]           ;490  ; modbus_tcp_rx_arg0
 000914  e003              B        |L1.2334|
                   |L1.2326|
-000916  e3fe              B        |L1.4374|
+000916  e3fd              B        |L1.4372|
                   |L1.2328|
-000918  e3fe              B        |L1.4376|
+000918  e3fd              B        |L1.4374|
                   |L1.2330|
-00091a  e3fe              B        |L1.4378|
+00091a  e3fd              B        |L1.4376|
                   |L1.2332|
-00091c  e3fe              B        |L1.4380|
+00091c  e3fd              B        |L1.4378|
                   |L1.2334|
 00091e  2867              CMP      r0,#0x67              ;490
 000920  d109              BNE      |L1.2358|
@@ -2317,18 +2316,19 @@
 000c00  f7fffffe          BL       lc640_write_int
                   |L1.3076|
 000c04  f8bb0002          LDRH     r0,[r11,#2]           ;586  ; modbus_tcp_rx_arg0
-000c08  287c              CMP      r0,#0x7c              ;586
-000c0a  d108              BNE      |L1.3102|
-000c0c  f9bb1004          LDRSH    r1,[r11,#4]           ;588  ; modbus_tcp_rx_arg1
-000c10  f5b17ffa          CMP      r1,#0x1f4             ;588
-000c14  dc03              BGT      |L1.3102|
-000c16  f44f7093          MOV      r0,#0x126             ;588
-000c1a  f7fffffe          BL       lc640_write_int
-                  |L1.3102|
-000c1e  f8bb0002          LDRH     r0,[r11,#2]           ;590  ; modbus_tcp_rx_arg0
+000c08  465d              MOV      r5,r11                ;586
+000c0a  287c              CMP      r0,#0x7c              ;586
+000c0c  d108              BNE      |L1.3104|
+000c0e  f9b51004          LDRSH    r1,[r5,#4]            ;588  ; modbus_tcp_rx_arg1
+000c12  f5b17ffa          CMP      r1,#0x1f4             ;588
+000c16  dc03              BGT      |L1.3104|
+000c18  f44f7093          MOV      r0,#0x126             ;588
+000c1c  f7fffffe          BL       lc640_write_int
+                  |L1.3104|
+000c20  8868              LDRH     r0,[r5,#2]            ;590  ; modbus_tcp_rx_arg0
 000c22  287d              CMP      r0,#0x7d              ;590
 000c24  d108              BNE      |L1.3128|
-000c26  f9bb1004          LDRSH    r1,[r11,#4]           ;592  ; modbus_tcp_rx_arg1
+000c26  f9b51004          LDRSH    r1,[r5,#4]            ;592  ; modbus_tcp_rx_arg1
 000c2a  b109              CBZ      r1,|L1.3120|
 000c2c  2901              CMP      r1,#1                 ;592
 000c2e  d103              BNE      |L1.3128|
@@ -2336,963 +2336,963 @@
 000c30  f44f7098          MOV      r0,#0x130             ;592
 000c34  f7fffffe          BL       lc640_write_int
                   |L1.3128|
-000c38  f8bb0002          LDRH     r0,[r11,#2]           ;594  ; modbus_tcp_rx_arg0
-000c3c  287e              CMP      r0,#0x7e              ;594
-000c3e  d107              BNE      |L1.3152|
-000c40  f9bb1004          LDRSH    r1,[r11,#4]           ;596  ; modbus_tcp_rx_arg1
-000c44  2902              CMP      r1,#2                 ;596
-000c46  dc03              BGT      |L1.3152|
-000c48  f44f7099          MOV      r0,#0x132             ;596
-000c4c  f7fffffe          BL       lc640_write_int
-                  |L1.3152|
-000c50  f8bb0002          LDRH     r0,[r11,#2]           ;598  ; modbus_tcp_rx_arg0
-000c54  287f              CMP      r0,#0x7f              ;598
-000c56  d108              BNE      |L1.3178|
-000c58  f9bb1004          LDRSH    r1,[r11,#4]           ;600  ; modbus_tcp_rx_arg1
-000c5c  b109              CBZ      r1,|L1.3170|
-000c5e  2901              CMP      r1,#1                 ;600
-000c60  d103              BNE      |L1.3178|
-                  |L1.3170|
-000c62  f44f709a          MOV      r0,#0x134             ;600
-000c66  f7fffffe          BL       lc640_write_int
-                  |L1.3178|
-000c6a  f8bb0002          LDRH     r0,[r11,#2]           ;602  ; modbus_tcp_rx_arg0
-000c6e  2880              CMP      r0,#0x80              ;602
-000c70  d108              BNE      |L1.3204|
-000c72  f9bb1004          LDRSH    r1,[r11,#4]           ;604  ; modbus_tcp_rx_arg1
-000c76  1e48              SUBS     r0,r1,#1              ;604
-000c78  2863              CMP      r0,#0x63              ;604
-000c7a  d803              BHI      |L1.3204|
-000c7c  f44f7045          MOV      r0,#0x314             ;604
-000c80  f7fffffe          BL       lc640_write_int
-                  |L1.3204|
-000c84  f8bb0002          LDRH     r0,[r11,#2]           ;606  ; modbus_tcp_rx_arg0
-000c88  2881              CMP      r0,#0x81              ;606
-000c8a  d11f              BNE      |L1.3276|
-000c8c  f9bb1004          LDRSH    r1,[r11,#4]           ;608  ; modbus_tcp_rx_arg1
-000c90  2978              CMP      r1,#0x78              ;608
-000c92  d013              BEQ      |L1.3260|
-000c94  29f0              CMP      r1,#0xf0              ;608
-000c96  d011              BEQ      |L1.3260|
-000c98  f5b17ff0          CMP      r1,#0x1e0             ;608
-000c9c  d00e              BEQ      |L1.3260|
-000c9e  f5b17f70          CMP      r1,#0x3c0             ;608
-000ca2  d00b              BEQ      |L1.3260|
-000ca4  f5b16ff0          CMP      r1,#0x780             ;608
-000ca8  d008              BEQ      |L1.3260|
-000caa  f5b16f70          CMP      r1,#0xf00             ;609
-000cae  d005              BEQ      |L1.3260|
-000cb0  f5b15fb4          CMP      r1,#0x1680            ;609
-000cb4  d002              BEQ      |L1.3260|
-000cb6  f5b15f34          CMP      r1,#0x2d00            ;609
-000cba  d107              BNE      |L1.3276|
-                  |L1.3260|
-000cbc  f2403016          MOV      r0,#0x316             ;610
-000cc0  f7fffffe          BL       lc640_write_int
-000cc4  f8bb0004          LDRH     r0,[r11,#4]           ;611  ; modbus_tcp_rx_arg1
-000cc8  49ff              LDR      r1,|L1.4296|
-000cca  8008              STRH     r0,[r1,#0]            ;611
-                  |L1.3276|
-000ccc  f8bb0002          LDRH     r0,[r11,#2]           ;614  ; modbus_tcp_rx_arg0
-000cd0  2882              CMP      r0,#0x82              ;614
-000cd2  d108              BNE      |L1.3302|
-000cd4  f9bb1004          LDRSH    r1,[r11,#4]           ;616  ; modbus_tcp_rx_arg1
-000cd8  b109              CBZ      r1,|L1.3294|
-000cda  2901              CMP      r1,#1                 ;616
-000cdc  d103              BNE      |L1.3302|
-                  |L1.3294|
-000cde  f44f7033          MOV      r0,#0x2cc             ;616
-000ce2  f7fffffe          BL       lc640_write_int
-                  |L1.3302|
-000ce6  f8bb0002          LDRH     r0,[r11,#2]           ;618  ; modbus_tcp_rx_arg0
-000cea  2883              CMP      r0,#0x83              ;618
-000cec  d108              BNE      |L1.3328|
-000cee  f9bb1004          LDRSH    r1,[r11,#4]           ;620  ; modbus_tcp_rx_arg1
-000cf2  b109              CBZ      r1,|L1.3320|
-000cf4  2901              CMP      r1,#1                 ;620
-000cf6  d103              BNE      |L1.3328|
-                  |L1.3320|
-000cf8  f24020ce          MOV      r0,#0x2ce             ;620
-000cfc  f7fffffe          BL       lc640_write_int
-                  |L1.3328|
-000d00  f8bb0002          LDRH     r0,[r11,#2]           ;622  ; modbus_tcp_rx_arg0
-000d04  2884              CMP      r0,#0x84              ;622
-000d06  d107              BNE      |L1.3352|
-000d08  f9bb1004          LDRSH    r1,[r11,#4]           ;624  ; modbus_tcp_rx_arg1
-000d0c  29ff              CMP      r1,#0xff              ;624
-000d0e  dc03              BGT      |L1.3352|
-000d10  f44f7034          MOV      r0,#0x2d0             ;624
-000d14  f7fffffe          BL       lc640_write_int
-                  |L1.3352|
-000d18  f8bb0002          LDRH     r0,[r11,#2]           ;626  ; modbus_tcp_rx_arg0
-000d1c  2885              CMP      r0,#0x85              ;626
-000d1e  d107              BNE      |L1.3376|
-000d20  f9bb1004          LDRSH    r1,[r11,#4]           ;628  ; modbus_tcp_rx_arg1
-000d24  29ff              CMP      r1,#0xff              ;628
-000d26  dc03              BGT      |L1.3376|
-000d28  f24020d2          MOV      r0,#0x2d2             ;628
-000d2c  f7fffffe          BL       lc640_write_int
-                  |L1.3376|
-000d30  f8bb0002          LDRH     r0,[r11,#2]           ;630  ; modbus_tcp_rx_arg0
-000d34  2886              CMP      r0,#0x86              ;630
-000d36  d107              BNE      |L1.3400|
-000d38  f9bb1004          LDRSH    r1,[r11,#4]           ;632  ; modbus_tcp_rx_arg1
-000d3c  29ff              CMP      r1,#0xff              ;632
-000d3e  dc03              BGT      |L1.3400|
-000d40  f44f7035          MOV      r0,#0x2d4             ;632
-000d44  f7fffffe          BL       lc640_write_int
-                  |L1.3400|
-000d48  f8bb0002          LDRH     r0,[r11,#2]           ;634  ; modbus_tcp_rx_arg0
-000d4c  2887              CMP      r0,#0x87              ;634
+000c38  8868              LDRH     r0,[r5,#2]            ;594  ; modbus_tcp_rx_arg0
+000c3a  287e              CMP      r0,#0x7e              ;594
+000c3c  d107              BNE      |L1.3150|
+000c3e  f9b51004          LDRSH    r1,[r5,#4]            ;596  ; modbus_tcp_rx_arg1
+000c42  2902              CMP      r1,#2                 ;596
+000c44  dc03              BGT      |L1.3150|
+000c46  f44f7099          MOV      r0,#0x132             ;596
+000c4a  f7fffffe          BL       lc640_write_int
+                  |L1.3150|
+000c4e  8868              LDRH     r0,[r5,#2]            ;598  ; modbus_tcp_rx_arg0
+000c50  287f              CMP      r0,#0x7f              ;598
+000c52  d108              BNE      |L1.3174|
+000c54  f9b51004          LDRSH    r1,[r5,#4]            ;600  ; modbus_tcp_rx_arg1
+000c58  b109              CBZ      r1,|L1.3166|
+000c5a  2901              CMP      r1,#1                 ;600
+000c5c  d103              BNE      |L1.3174|
+                  |L1.3166|
+000c5e  f44f709a          MOV      r0,#0x134             ;600
+000c62  f7fffffe          BL       lc640_write_int
+                  |L1.3174|
+000c66  8868              LDRH     r0,[r5,#2]            ;602  ; modbus_tcp_rx_arg0
+000c68  2880              CMP      r0,#0x80              ;602
+000c6a  d108              BNE      |L1.3198|
+000c6c  f9b51004          LDRSH    r1,[r5,#4]            ;604  ; modbus_tcp_rx_arg1
+000c70  1e48              SUBS     r0,r1,#1              ;604
+000c72  2863              CMP      r0,#0x63              ;604
+000c74  d803              BHI      |L1.3198|
+000c76  f44f7045          MOV      r0,#0x314             ;604
+000c7a  f7fffffe          BL       lc640_write_int
+                  |L1.3198|
+000c7e  8868              LDRH     r0,[r5,#2]            ;606  ; modbus_tcp_rx_arg0
+000c80  2881              CMP      r0,#0x81              ;606
+000c82  d11e              BNE      |L1.3266|
+000c84  f9b51004          LDRSH    r1,[r5,#4]            ;608  ; modbus_tcp_rx_arg1
+000c88  2978              CMP      r1,#0x78              ;608
+000c8a  d013              BEQ      |L1.3252|
+000c8c  29f0              CMP      r1,#0xf0              ;608
+000c8e  d011              BEQ      |L1.3252|
+000c90  f5b17ff0          CMP      r1,#0x1e0             ;608
+000c94  d00e              BEQ      |L1.3252|
+000c96  f5b17f70          CMP      r1,#0x3c0             ;608
+000c9a  d00b              BEQ      |L1.3252|
+000c9c  f5b16ff0          CMP      r1,#0x780             ;608
+000ca0  d008              BEQ      |L1.3252|
+000ca2  f5b16f70          CMP      r1,#0xf00             ;609
+000ca6  d005              BEQ      |L1.3252|
+000ca8  f5b15fb4          CMP      r1,#0x1680            ;609
+000cac  d002              BEQ      |L1.3252|
+000cae  f5b15f34          CMP      r1,#0x2d00            ;609
+000cb2  d106              BNE      |L1.3266|
+                  |L1.3252|
+000cb4  f2403016          MOV      r0,#0x316             ;610
+000cb8  f7fffffe          BL       lc640_write_int
+000cbc  49ff              LDR      r1,|L1.4284|
+000cbe  88a8              LDRH     r0,[r5,#4]            ;611  ; modbus_tcp_rx_arg1
+000cc0  8008              STRH     r0,[r1,#0]            ;611
+                  |L1.3266|
+000cc2  8868              LDRH     r0,[r5,#2]            ;614  ; modbus_tcp_rx_arg0
+000cc4  2882              CMP      r0,#0x82              ;614
+000cc6  d108              BNE      |L1.3290|
+000cc8  f9b51004          LDRSH    r1,[r5,#4]            ;616  ; modbus_tcp_rx_arg1
+000ccc  b109              CBZ      r1,|L1.3282|
+000cce  2901              CMP      r1,#1                 ;616
+000cd0  d103              BNE      |L1.3290|
+                  |L1.3282|
+000cd2  f44f7033          MOV      r0,#0x2cc             ;616
+000cd6  f7fffffe          BL       lc640_write_int
+                  |L1.3290|
+000cda  8868              LDRH     r0,[r5,#2]            ;618  ; modbus_tcp_rx_arg0
+000cdc  2883              CMP      r0,#0x83              ;618
+000cde  d108              BNE      |L1.3314|
+000ce0  f9b51004          LDRSH    r1,[r5,#4]            ;620  ; modbus_tcp_rx_arg1
+000ce4  b109              CBZ      r1,|L1.3306|
+000ce6  2901              CMP      r1,#1                 ;620
+000ce8  d103              BNE      |L1.3314|
+                  |L1.3306|
+000cea  f24020ce          MOV      r0,#0x2ce             ;620
+000cee  f7fffffe          BL       lc640_write_int
+                  |L1.3314|
+000cf2  8868              LDRH     r0,[r5,#2]            ;622  ; modbus_tcp_rx_arg0
+000cf4  2884              CMP      r0,#0x84              ;622
+000cf6  d107              BNE      |L1.3336|
+000cf8  f9b51004          LDRSH    r1,[r5,#4]            ;624  ; modbus_tcp_rx_arg1
+000cfc  29ff              CMP      r1,#0xff              ;624
+000cfe  dc03              BGT      |L1.3336|
+000d00  f44f7034          MOV      r0,#0x2d0             ;624
+000d04  f7fffffe          BL       lc640_write_int
+                  |L1.3336|
+000d08  8868              LDRH     r0,[r5,#2]            ;626  ; modbus_tcp_rx_arg0
+000d0a  2885              CMP      r0,#0x85              ;626
+000d0c  d107              BNE      |L1.3358|
+000d0e  f9b51004          LDRSH    r1,[r5,#4]            ;628  ; modbus_tcp_rx_arg1
+000d12  29ff              CMP      r1,#0xff              ;628
+000d14  dc03              BGT      |L1.3358|
+000d16  f24020d2          MOV      r0,#0x2d2             ;628
+000d1a  f7fffffe          BL       lc640_write_int
+                  |L1.3358|
+000d1e  8868              LDRH     r0,[r5,#2]            ;630  ; modbus_tcp_rx_arg0
+000d20  2886              CMP      r0,#0x86              ;630
+000d22  d107              BNE      |L1.3380|
+000d24  f9b51004          LDRSH    r1,[r5,#4]            ;632  ; modbus_tcp_rx_arg1
+000d28  29ff              CMP      r1,#0xff              ;632
+000d2a  dc03              BGT      |L1.3380|
+000d2c  f44f7035          MOV      r0,#0x2d4             ;632
+000d30  f7fffffe          BL       lc640_write_int
+                  |L1.3380|
+000d34  8868              LDRH     r0,[r5,#2]            ;634  ; modbus_tcp_rx_arg0
+000d36  2887              CMP      r0,#0x87              ;634
+000d38  d107              BNE      |L1.3402|
+000d3a  f9b51004          LDRSH    r1,[r5,#4]            ;636  ; modbus_tcp_rx_arg1
+000d3e  29ff              CMP      r1,#0xff              ;636
+000d40  dc03              BGT      |L1.3402|
+000d42  f24020d6          MOV      r0,#0x2d6             ;636
+000d46  f7fffffe          BL       lc640_write_int
+                  |L1.3402|
+000d4a  8868              LDRH     r0,[r5,#2]            ;638  ; modbus_tcp_rx_arg0
+000d4c  2888              CMP      r0,#0x88              ;638
 000d4e  d107              BNE      |L1.3424|
-000d50  f9bb1004          LDRSH    r1,[r11,#4]           ;636  ; modbus_tcp_rx_arg1
-000d54  29ff              CMP      r1,#0xff              ;636
+000d50  f9b51004          LDRSH    r1,[r5,#4]            ;640  ; modbus_tcp_rx_arg1
+000d54  29ff              CMP      r1,#0xff              ;640
 000d56  dc03              BGT      |L1.3424|
-000d58  f24020d6          MOV      r0,#0x2d6             ;636
+000d58  f44f7036          MOV      r0,#0x2d8             ;640
 000d5c  f7fffffe          BL       lc640_write_int
                   |L1.3424|
-000d60  f8bb0002          LDRH     r0,[r11,#2]           ;638  ; modbus_tcp_rx_arg0
-000d64  2888              CMP      r0,#0x88              ;638
-000d66  d107              BNE      |L1.3448|
-000d68  f9bb1004          LDRSH    r1,[r11,#4]           ;640  ; modbus_tcp_rx_arg1
-000d6c  29ff              CMP      r1,#0xff              ;640
-000d6e  dc03              BGT      |L1.3448|
-000d70  f44f7036          MOV      r0,#0x2d8             ;640
-000d74  f7fffffe          BL       lc640_write_int
-                  |L1.3448|
-000d78  f8bb0002          LDRH     r0,[r11,#2]           ;642  ; modbus_tcp_rx_arg0
-000d7c  2889              CMP      r0,#0x89              ;642
-000d7e  d107              BNE      |L1.3472|
-000d80  f9bb1004          LDRSH    r1,[r11,#4]           ;644  ; modbus_tcp_rx_arg1
-000d84  29ff              CMP      r1,#0xff              ;644
-000d86  dc03              BGT      |L1.3472|
-000d88  f24020da          MOV      r0,#0x2da             ;644
-000d8c  f7fffffe          BL       lc640_write_int
-                  |L1.3472|
-000d90  f8bb0002          LDRH     r0,[r11,#2]           ;646  ; modbus_tcp_rx_arg0
-000d94  288a              CMP      r0,#0x8a              ;646
-000d96  d107              BNE      |L1.3496|
-000d98  f9bb1004          LDRSH    r1,[r11,#4]           ;648  ; modbus_tcp_rx_arg1
-000d9c  29ff              CMP      r1,#0xff              ;648
-000d9e  dc03              BGT      |L1.3496|
-000da0  f44f7037          MOV      r0,#0x2dc             ;648
-000da4  f7fffffe          BL       lc640_write_int
-                  |L1.3496|
-000da8  f8bb0002          LDRH     r0,[r11,#2]           ;650  ; modbus_tcp_rx_arg0
-000dac  288b              CMP      r0,#0x8b              ;650
-000dae  d107              BNE      |L1.3520|
-000db0  f9bb1004          LDRSH    r1,[r11,#4]           ;652  ; modbus_tcp_rx_arg1
-000db4  29ff              CMP      r1,#0xff              ;652
-000db6  dc03              BGT      |L1.3520|
-000db8  f24020de          MOV      r0,#0x2de             ;652
-000dbc  f7fffffe          BL       lc640_write_int
-                  |L1.3520|
-000dc0  f8bb0002          LDRH     r0,[r11,#2]           ;654  ; modbus_tcp_rx_arg0
-000dc4  288c              CMP      r0,#0x8c              ;654
-000dc6  d107              BNE      |L1.3544|
-000dc8  f9bb1004          LDRSH    r1,[r11,#4]           ;656  ; modbus_tcp_rx_arg1
-000dcc  29ff              CMP      r1,#0xff              ;656
-000dce  dc03              BGT      |L1.3544|
-000dd0  f44f7043          MOV      r0,#0x30c             ;656
-000dd4  f7fffffe          BL       lc640_write_int
-                  |L1.3544|
-000dd8  f8bb0002          LDRH     r0,[r11,#2]           ;658  ; modbus_tcp_rx_arg0
-000ddc  288d              CMP      r0,#0x8d              ;658
-000dde  d107              BNE      |L1.3568|
-000de0  f9bb1004          LDRSH    r1,[r11,#4]           ;660  ; modbus_tcp_rx_arg1
-000de4  29ff              CMP      r1,#0xff              ;660
-000de6  dc03              BGT      |L1.3568|
-000de8  f240300e          MOV      r0,#0x30e             ;660
-000dec  f7fffffe          BL       lc640_write_int
-                  |L1.3568|
-000df0  f8bb0002          LDRH     r0,[r11,#2]           ;662  ; modbus_tcp_rx_arg0
-000df4  288e              CMP      r0,#0x8e              ;662
-000df6  d107              BNE      |L1.3592|
-000df8  f9bb1004          LDRSH    r1,[r11,#4]           ;664  ; modbus_tcp_rx_arg1
-000dfc  29ff              CMP      r1,#0xff              ;664
-000dfe  dc03              BGT      |L1.3592|
-000e00  f44f7044          MOV      r0,#0x310             ;664
-000e04  f7fffffe          BL       lc640_write_int
-                  |L1.3592|
-000e08  f8bb0002          LDRH     r0,[r11,#2]           ;666  ; modbus_tcp_rx_arg0
-000e0c  288f              CMP      r0,#0x8f              ;666
-000e0e  d107              BNE      |L1.3616|
-000e10  f9bb1004          LDRSH    r1,[r11,#4]           ;668  ; modbus_tcp_rx_arg1
-000e14  29ff              CMP      r1,#0xff              ;668
-000e16  dc03              BGT      |L1.3616|
-000e18  f2403012          MOV      r0,#0x312             ;668
-000e1c  f7fffffe          BL       lc640_write_int
-                  |L1.3616|
-000e20  f8bb0002          LDRH     r0,[r11,#2]           ;670  ; modbus_tcp_rx_arg0
-000e24  2890              CMP      r0,#0x90              ;670
-000e26  d105              BNE      |L1.3636|
-000e28  f9bb1004          LDRSH    r1,[r11,#4]           ;672  ; modbus_tcp_rx_arg1
-000e2c  f44f7042          MOV      r0,#0x308             ;672
+000d60  8868              LDRH     r0,[r5,#2]            ;642  ; modbus_tcp_rx_arg0
+000d62  2889              CMP      r0,#0x89              ;642
+000d64  d107              BNE      |L1.3446|
+000d66  f9b51004          LDRSH    r1,[r5,#4]            ;644  ; modbus_tcp_rx_arg1
+000d6a  29ff              CMP      r1,#0xff              ;644
+000d6c  dc03              BGT      |L1.3446|
+000d6e  f24020da          MOV      r0,#0x2da             ;644
+000d72  f7fffffe          BL       lc640_write_int
+                  |L1.3446|
+000d76  8868              LDRH     r0,[r5,#2]            ;646  ; modbus_tcp_rx_arg0
+000d78  288a              CMP      r0,#0x8a              ;646
+000d7a  d107              BNE      |L1.3468|
+000d7c  f9b51004          LDRSH    r1,[r5,#4]            ;648  ; modbus_tcp_rx_arg1
+000d80  29ff              CMP      r1,#0xff              ;648
+000d82  dc03              BGT      |L1.3468|
+000d84  f44f7037          MOV      r0,#0x2dc             ;648
+000d88  f7fffffe          BL       lc640_write_int
+                  |L1.3468|
+000d8c  8868              LDRH     r0,[r5,#2]            ;650  ; modbus_tcp_rx_arg0
+000d8e  288b              CMP      r0,#0x8b              ;650
+000d90  d107              BNE      |L1.3490|
+000d92  f9b51004          LDRSH    r1,[r5,#4]            ;652  ; modbus_tcp_rx_arg1
+000d96  29ff              CMP      r1,#0xff              ;652
+000d98  dc03              BGT      |L1.3490|
+000d9a  f24020de          MOV      r0,#0x2de             ;652
+000d9e  f7fffffe          BL       lc640_write_int
+                  |L1.3490|
+000da2  8868              LDRH     r0,[r5,#2]            ;654  ; modbus_tcp_rx_arg0
+000da4  288c              CMP      r0,#0x8c              ;654
+000da6  d107              BNE      |L1.3512|
+000da8  f9b51004          LDRSH    r1,[r5,#4]            ;656  ; modbus_tcp_rx_arg1
+000dac  29ff              CMP      r1,#0xff              ;656
+000dae  dc03              BGT      |L1.3512|
+000db0  f44f7043          MOV      r0,#0x30c             ;656
+000db4  f7fffffe          BL       lc640_write_int
+                  |L1.3512|
+000db8  8868              LDRH     r0,[r5,#2]            ;658  ; modbus_tcp_rx_arg0
+000dba  288d              CMP      r0,#0x8d              ;658
+000dbc  d107              BNE      |L1.3534|
+000dbe  f9b51004          LDRSH    r1,[r5,#4]            ;660  ; modbus_tcp_rx_arg1
+000dc2  29ff              CMP      r1,#0xff              ;660
+000dc4  dc03              BGT      |L1.3534|
+000dc6  f240300e          MOV      r0,#0x30e             ;660
+000dca  f7fffffe          BL       lc640_write_int
+                  |L1.3534|
+000dce  8868              LDRH     r0,[r5,#2]            ;662  ; modbus_tcp_rx_arg0
+000dd0  288e              CMP      r0,#0x8e              ;662
+000dd2  d107              BNE      |L1.3556|
+000dd4  f9b51004          LDRSH    r1,[r5,#4]            ;664  ; modbus_tcp_rx_arg1
+000dd8  29ff              CMP      r1,#0xff              ;664
+000dda  dc03              BGT      |L1.3556|
+000ddc  f44f7044          MOV      r0,#0x310             ;664
+000de0  f7fffffe          BL       lc640_write_int
+                  |L1.3556|
+000de4  8868              LDRH     r0,[r5,#2]            ;666  ; modbus_tcp_rx_arg0
+000de6  288f              CMP      r0,#0x8f              ;666
+000de8  d107              BNE      |L1.3578|
+000dea  f9b51004          LDRSH    r1,[r5,#4]            ;668  ; modbus_tcp_rx_arg1
+000dee  29ff              CMP      r1,#0xff              ;668
+000df0  dc03              BGT      |L1.3578|
+000df2  f2403012          MOV      r0,#0x312             ;668
+000df6  f7fffffe          BL       lc640_write_int
+                  |L1.3578|
+000dfa  8868              LDRH     r0,[r5,#2]            ;670  ; modbus_tcp_rx_arg0
+000dfc  2890              CMP      r0,#0x90              ;670
+000dfe  d105              BNE      |L1.3596|
+000e00  f9b51004          LDRSH    r1,[r5,#4]            ;672  ; modbus_tcp_rx_arg1
+000e04  f44f7042          MOV      r0,#0x308             ;672
+000e08  f7fffffe          BL       lc640_write_int
+                  |L1.3596|
+000e0c  8868              LDRH     r0,[r5,#2]            ;674  ; modbus_tcp_rx_arg0
+000e0e  2891              CMP      r0,#0x91              ;674
+000e10  d105              BNE      |L1.3614|
+000e12  f9b51004          LDRSH    r1,[r5,#4]            ;676  ; modbus_tcp_rx_arg1
+000e16  f240300a          MOV      r0,#0x30a             ;676
+000e1a  f7fffffe          BL       lc640_write_int
+                  |L1.3614|
+000e1e  8868              LDRH     r0,[r5,#2]            ;678  ; modbus_tcp_rx_arg0
+000e20  2892              CMP      r0,#0x92              ;678
+000e22  d107              BNE      |L1.3636|
+000e24  f9b51004          LDRSH    r1,[r5,#4]            ;680  ; modbus_tcp_rx_arg1
+000e28  29ff              CMP      r1,#0xff              ;680
+000e2a  dc03              BGT      |L1.3636|
+000e2c  f24030da          MOV      r0,#0x3da             ;680
 000e30  f7fffffe          BL       lc640_write_int
                   |L1.3636|
-000e34  f8bb0002          LDRH     r0,[r11,#2]           ;674  ; modbus_tcp_rx_arg0
-000e38  2891              CMP      r0,#0x91              ;674
-000e3a  d105              BNE      |L1.3656|
-000e3c  f9bb1004          LDRSH    r1,[r11,#4]           ;676  ; modbus_tcp_rx_arg1
-000e40  f240300a          MOV      r0,#0x30a             ;676
-000e44  f7fffffe          BL       lc640_write_int
-                  |L1.3656|
-000e48  f8bb0002          LDRH     r0,[r11,#2]           ;678  ; modbus_tcp_rx_arg0
-000e4c  2892              CMP      r0,#0x92              ;678
-000e4e  d107              BNE      |L1.3680|
-000e50  f9bb1004          LDRSH    r1,[r11,#4]           ;680  ; modbus_tcp_rx_arg1
-000e54  29ff              CMP      r1,#0xff              ;680
-000e56  dc03              BGT      |L1.3680|
-000e58  f24030da          MOV      r0,#0x3da             ;680
-000e5c  f7fffffe          BL       lc640_write_int
-                  |L1.3680|
-000e60  f8bb0002          LDRH     r0,[r11,#2]           ;682  ; modbus_tcp_rx_arg0
-000e64  2893              CMP      r0,#0x93              ;682
-000e66  d107              BNE      |L1.3704|
-000e68  f9bb1004          LDRSH    r1,[r11,#4]           ;684  ; modbus_tcp_rx_arg1
-000e6c  29ff              CMP      r1,#0xff              ;684
-000e6e  dc03              BGT      |L1.3704|
-000e70  f44f7077          MOV      r0,#0x3dc             ;684
-000e74  f7fffffe          BL       lc640_write_int
-                  |L1.3704|
-000e78  f8bb0002          LDRH     r0,[r11,#2]           ;686  ; modbus_tcp_rx_arg0
-000e7c  2894              CMP      r0,#0x94              ;686
-000e7e  d106              BNE      |L1.3726|
-000e80  f9bb1004          LDRSH    r1,[r11,#4]           ;688  ; modbus_tcp_rx_arg1
-000e84  29ff              CMP      r1,#0xff              ;688
-000e86  dc02              BGT      |L1.3726|
-000e88  4630              MOV      r0,r6                 ;688
-000e8a  f7fffffe          BL       lc640_write_int
-                  |L1.3726|
-000e8e  f8bb0002          LDRH     r0,[r11,#2]           ;690  ; modbus_tcp_rx_arg0
-000e92  2895              CMP      r0,#0x95              ;690
-000e94  d107              BNE      |L1.3750|
-000e96  f9bb1004          LDRSH    r1,[r11,#4]           ;692  ; modbus_tcp_rx_arg1
-000e9a  29ff              CMP      r1,#0xff              ;692
-000e9c  dc03              BGT      |L1.3750|
-000e9e  f44f7078          MOV      r0,#0x3e0             ;692
-000ea2  f7fffffe          BL       lc640_write_int
-                  |L1.3750|
-000ea6  f8bb0002          LDRH     r0,[r11,#2]           ;694  ; modbus_tcp_rx_arg0
-000eaa  465e              MOV      r6,r11                ;694
-000eac  2896              CMP      r0,#0x96              ;694
-000eae  d107              BNE      |L1.3776|
-000eb0  f9b61004          LDRSH    r1,[r6,#4]            ;696  ; modbus_tcp_rx_arg1
-000eb4  29ff              CMP      r1,#0xff              ;696
-000eb6  dc03              BGT      |L1.3776|
-000eb8  f24030e2          MOV      r0,#0x3e2             ;696
-000ebc  f7fffffe          BL       lc640_write_int
-                  |L1.3776|
-000ec0  8870              LDRH     r0,[r6,#2]            ;698  ; modbus_tcp_rx_arg0
-000ec2  2897              CMP      r0,#0x97              ;698
-000ec4  d107              BNE      |L1.3798|
-000ec6  f9b61004          LDRSH    r1,[r6,#4]            ;700  ; modbus_tcp_rx_arg1
-000eca  29ff              CMP      r1,#0xff              ;700
-000ecc  dc03              BGT      |L1.3798|
-000ece  f44f7079          MOV      r0,#0x3e4             ;700
-000ed2  f7fffffe          BL       lc640_write_int
-                  |L1.3798|
-000ed6  8870              LDRH     r0,[r6,#2]            ;702  ; modbus_tcp_rx_arg0
-000ed8  2898              CMP      r0,#0x98              ;702
-000eda  d107              BNE      |L1.3820|
-000edc  f9b61004          LDRSH    r1,[r6,#4]            ;704  ; modbus_tcp_rx_arg1
-000ee0  29ff              CMP      r1,#0xff              ;704
-000ee2  dc03              BGT      |L1.3820|
-000ee4  f24030e6          MOV      r0,#0x3e6             ;704
-000ee8  f7fffffe          BL       lc640_write_int
-                  |L1.3820|
-000eec  8870              LDRH     r0,[r6,#2]            ;706  ; modbus_tcp_rx_arg0
-000eee  2899              CMP      r0,#0x99              ;706
-000ef0  d107              BNE      |L1.3842|
-000ef2  f9b61004          LDRSH    r1,[r6,#4]            ;708  ; modbus_tcp_rx_arg1
-000ef6  29ff              CMP      r1,#0xff              ;708
-000ef8  dc03              BGT      |L1.3842|
-000efa  f44f707a          MOV      r0,#0x3e8             ;708
-000efe  f7fffffe          BL       lc640_write_int
-                  |L1.3842|
-000f02  8870              LDRH     r0,[r6,#2]            ;710  ; modbus_tcp_rx_arg0
-000f04  289a              CMP      r0,#0x9a              ;710
-000f06  d107              BNE      |L1.3864|
-000f08  f9b61004          LDRSH    r1,[r6,#4]            ;712  ; modbus_tcp_rx_arg1
-000f0c  29ff              CMP      r1,#0xff              ;712
-000f0e  dc03              BGT      |L1.3864|
-000f10  f44f7038          MOV      r0,#0x2e0             ;712
-000f14  f7fffffe          BL       lc640_write_int
-                  |L1.3864|
-000f18  8870              LDRH     r0,[r6,#2]            ;714  ; modbus_tcp_rx_arg0
-000f1a  289b              CMP      r0,#0x9b              ;714
-000f1c  d107              BNE      |L1.3886|
-000f1e  f9b61004          LDRSH    r1,[r6,#4]            ;716  ; modbus_tcp_rx_arg1
-000f22  29ff              CMP      r1,#0xff              ;716
-000f24  dc03              BGT      |L1.3886|
-000f26  f24020e2          MOV      r0,#0x2e2             ;716
-000f2a  f7fffffe          BL       lc640_write_int
-                  |L1.3886|
-000f2e  8870              LDRH     r0,[r6,#2]            ;718  ; modbus_tcp_rx_arg0
-000f30  289c              CMP      r0,#0x9c              ;718
-000f32  d107              BNE      |L1.3908|
-000f34  f9b61004          LDRSH    r1,[r6,#4]            ;720  ; modbus_tcp_rx_arg1
-000f38  29ff              CMP      r1,#0xff              ;720
-000f3a  dc03              BGT      |L1.3908|
-000f3c  f44f7039          MOV      r0,#0x2e4             ;720
-000f40  f7fffffe          BL       lc640_write_int
-                  |L1.3908|
-000f44  8870              LDRH     r0,[r6,#2]            ;722  ; modbus_tcp_rx_arg0
-000f46  289d              CMP      r0,#0x9d              ;722
-000f48  d107              BNE      |L1.3930|
-000f4a  f9b61004          LDRSH    r1,[r6,#4]            ;724  ; modbus_tcp_rx_arg1
-000f4e  29ff              CMP      r1,#0xff              ;724
-000f50  dc03              BGT      |L1.3930|
-000f52  f24020e6          MOV      r0,#0x2e6             ;724
-000f56  f7fffffe          BL       lc640_write_int
-                  |L1.3930|
-000f5a  8870              LDRH     r0,[r6,#2]            ;726  ; modbus_tcp_rx_arg0
-000f5c  289e              CMP      r0,#0x9e              ;726
-000f5e  d107              BNE      |L1.3952|
-000f60  f9b61004          LDRSH    r1,[r6,#4]            ;728  ; modbus_tcp_rx_arg1
-000f64  29ff              CMP      r1,#0xff              ;728
-000f66  dc03              BGT      |L1.3952|
-000f68  f44f703a          MOV      r0,#0x2e8             ;728
-000f6c  f7fffffe          BL       lc640_write_int
-                  |L1.3952|
-000f70  8870              LDRH     r0,[r6,#2]            ;730  ; modbus_tcp_rx_arg0
-000f72  289f              CMP      r0,#0x9f              ;730
-000f74  d107              BNE      |L1.3974|
-000f76  f9b61004          LDRSH    r1,[r6,#4]            ;732  ; modbus_tcp_rx_arg1
-000f7a  29ff              CMP      r1,#0xff              ;732
-000f7c  dc03              BGT      |L1.3974|
-000f7e  f24020ea          MOV      r0,#0x2ea             ;732
-000f82  f7fffffe          BL       lc640_write_int
-                  |L1.3974|
-000f86  8870              LDRH     r0,[r6,#2]            ;734  ; modbus_tcp_rx_arg0
-000f88  28a0              CMP      r0,#0xa0              ;734
-000f8a  d107              BNE      |L1.3996|
-000f8c  f9b61004          LDRSH    r1,[r6,#4]            ;736  ; modbus_tcp_rx_arg1
-000f90  29ff              CMP      r1,#0xff              ;736
-000f92  dc03              BGT      |L1.3996|
-000f94  f44f703b          MOV      r0,#0x2ec             ;736
-000f98  f7fffffe          BL       lc640_write_int
-                  |L1.3996|
-000f9c  8870              LDRH     r0,[r6,#2]            ;738  ; modbus_tcp_rx_arg0
-000f9e  28a1              CMP      r0,#0xa1              ;738
-000fa0  d107              BNE      |L1.4018|
-000fa2  f9b61004          LDRSH    r1,[r6,#4]            ;740  ; modbus_tcp_rx_arg1
-000fa6  29ff              CMP      r1,#0xff              ;740
-000fa8  dc03              BGT      |L1.4018|
-000faa  f24020ee          MOV      r0,#0x2ee             ;740
-000fae  f7fffffe          BL       lc640_write_int
-                  |L1.4018|
-000fb2  8870              LDRH     r0,[r6,#2]            ;742  ; modbus_tcp_rx_arg0
-000fb4  28a2              CMP      r0,#0xa2              ;742
-000fb6  d107              BNE      |L1.4040|
-000fb8  f9b61004          LDRSH    r1,[r6,#4]            ;744  ; modbus_tcp_rx_arg1
-000fbc  29ff              CMP      r1,#0xff              ;744
-000fbe  dc03              BGT      |L1.4040|
-000fc0  f44f703c          MOV      r0,#0x2f0             ;744
-000fc4  f7fffffe          BL       lc640_write_int
-                  |L1.4040|
-000fc8  8870              LDRH     r0,[r6,#2]            ;746  ; modbus_tcp_rx_arg0
-000fca  28a3              CMP      r0,#0xa3              ;746
-000fcc  d107              BNE      |L1.4062|
-000fce  f9b61004          LDRSH    r1,[r6,#4]            ;748  ; modbus_tcp_rx_arg1
-000fd2  29ff              CMP      r1,#0xff              ;748
-000fd4  dc03              BGT      |L1.4062|
-000fd6  f24020f2          MOV      r0,#0x2f2             ;748
-000fda  f7fffffe          BL       lc640_write_int
-                  |L1.4062|
-000fde  8870              LDRH     r0,[r6,#2]            ;750  ; modbus_tcp_rx_arg0
-000fe0  28a4              CMP      r0,#0xa4              ;750
-000fe2  d107              BNE      |L1.4084|
-000fe4  f9b61004          LDRSH    r1,[r6,#4]            ;752  ; modbus_tcp_rx_arg1
-000fe8  29ff              CMP      r1,#0xff              ;752
-000fea  dc03              BGT      |L1.4084|
-000fec  f44f703d          MOV      r0,#0x2f4             ;752
-000ff0  f7fffffe          BL       lc640_write_int
-                  |L1.4084|
-000ff4  8870              LDRH     r0,[r6,#2]            ;754  ; modbus_tcp_rx_arg0
-000ff6  28a5              CMP      r0,#0xa5              ;754
-000ff8  d107              BNE      |L1.4106|
-000ffa  f9b61004          LDRSH    r1,[r6,#4]            ;756  ; modbus_tcp_rx_arg1
-000ffe  29ff              CMP      r1,#0xff              ;756
-001000  dc03              BGT      |L1.4106|
-001002  f24020f6          MOV      r0,#0x2f6             ;756
-001006  f7fffffe          BL       lc640_write_int
-                  |L1.4106|
-00100a  8870              LDRH     r0,[r6,#2]            ;758  ; modbus_tcp_rx_arg0
-00100c  28a6              CMP      r0,#0xa6              ;758
-00100e  d107              BNE      |L1.4128|
-001010  f9b61004          LDRSH    r1,[r6,#4]            ;760  ; modbus_tcp_rx_arg1
-001014  29ff              CMP      r1,#0xff              ;760
-001016  dc03              BGT      |L1.4128|
-001018  f44f703e          MOV      r0,#0x2f8             ;760
-00101c  f7fffffe          BL       lc640_write_int
-                  |L1.4128|
-001020  8870              LDRH     r0,[r6,#2]            ;762  ; modbus_tcp_rx_arg0
-001022  28a7              CMP      r0,#0xa7              ;762
-001024  d107              BNE      |L1.4150|
-001026  f9b61004          LDRSH    r1,[r6,#4]            ;764  ; modbus_tcp_rx_arg1
-00102a  29ff              CMP      r1,#0xff              ;764
-00102c  dc03              BGT      |L1.4150|
-00102e  f24020fa          MOV      r0,#0x2fa             ;764
-001032  f7fffffe          BL       lc640_write_int
-                  |L1.4150|
-001036  8870              LDRH     r0,[r6,#2]            ;766  ; modbus_tcp_rx_arg0
-001038  28a8              CMP      r0,#0xa8              ;766
-00103a  d107              BNE      |L1.4172|
-00103c  f9b61004          LDRSH    r1,[r6,#4]            ;768  ; modbus_tcp_rx_arg1
-001040  29ff              CMP      r1,#0xff              ;768
-001042  dc03              BGT      |L1.4172|
-001044  f44f703f          MOV      r0,#0x2fc             ;768
-001048  f7fffffe          BL       lc640_write_int
-                  |L1.4172|
-00104c  8870              LDRH     r0,[r6,#2]            ;770  ; modbus_tcp_rx_arg0
-00104e  28a9              CMP      r0,#0xa9              ;770
-001050  d107              BNE      |L1.4194|
-001052  f9b61004          LDRSH    r1,[r6,#4]            ;772  ; modbus_tcp_rx_arg1
-001056  29ff              CMP      r1,#0xff              ;772
-001058  dc03              BGT      |L1.4194|
-00105a  f24020fe          MOV      r0,#0x2fe             ;772
-00105e  f7fffffe          BL       lc640_write_int
-                  |L1.4194|
-001062  8870              LDRH     r0,[r6,#2]            ;774  ; modbus_tcp_rx_arg0
-001064  28aa              CMP      r0,#0xaa              ;774
-001066  d107              BNE      |L1.4216|
-001068  f9b61004          LDRSH    r1,[r6,#4]            ;776  ; modbus_tcp_rx_arg1
-00106c  29ff              CMP      r1,#0xff              ;776
-00106e  dc03              BGT      |L1.4216|
-001070  f44f7040          MOV      r0,#0x300             ;776
-001074  f7fffffe          BL       lc640_write_int
-                  |L1.4216|
-001078  8870              LDRH     r0,[r6,#2]            ;778  ; modbus_tcp_rx_arg0
-00107a  28ab              CMP      r0,#0xab              ;778
-00107c  d107              BNE      |L1.4238|
-00107e  f9b61004          LDRSH    r1,[r6,#4]            ;780  ; modbus_tcp_rx_arg1
-001082  29ff              CMP      r1,#0xff              ;780
-001084  dc03              BGT      |L1.4238|
-001086  f2403002          MOV      r0,#0x302             ;780
-00108a  f7fffffe          BL       lc640_write_int
-                  |L1.4238|
-00108e  8870              LDRH     r0,[r6,#2]            ;782  ; modbus_tcp_rx_arg0
-001090  28ac              CMP      r0,#0xac              ;782
-001092  d107              BNE      |L1.4260|
-001094  f9b61004          LDRSH    r1,[r6,#4]            ;784  ; modbus_tcp_rx_arg1
-001098  29ff              CMP      r1,#0xff              ;784
-00109a  dc03              BGT      |L1.4260|
-00109c  f44f7041          MOV      r0,#0x304             ;784
-0010a0  f7fffffe          BL       lc640_write_int
-                  |L1.4260|
-0010a4  8870              LDRH     r0,[r6,#2]            ;786  ; modbus_tcp_rx_arg0
-0010a6  28ad              CMP      r0,#0xad              ;786
-0010a8  d107              BNE      |L1.4282|
-0010aa  f9b61004          LDRSH    r1,[r6,#4]            ;788  ; modbus_tcp_rx_arg1
-0010ae  29ff              CMP      r1,#0xff              ;788
-0010b0  dc03              BGT      |L1.4282|
-0010b2  f2403006          MOV      r0,#0x306             ;788
-0010b6  f7fffffe          BL       lc640_write_int
-                  |L1.4282|
-0010ba  8870              LDRH     r0,[r6,#2]            ;790  ; modbus_tcp_rx_arg0
-0010bc  28ae              CMP      r0,#0xae              ;790
-0010be  d10a              BNE      |L1.4310|
-0010c0  f9b61004          LDRSH    r1,[r6,#4]            ;792  ; modbus_tcp_rx_arg1
-0010c4  29ff              CMP      r1,#0xff              ;792
-0010c6  e001              B        |L1.4300|
-                  |L1.4296|
+000e34  8868              LDRH     r0,[r5,#2]            ;682  ; modbus_tcp_rx_arg0
+000e36  2893              CMP      r0,#0x93              ;682
+000e38  d107              BNE      |L1.3658|
+000e3a  f9b51004          LDRSH    r1,[r5,#4]            ;684  ; modbus_tcp_rx_arg1
+000e3e  29ff              CMP      r1,#0xff              ;684
+000e40  dc03              BGT      |L1.3658|
+000e42  f44f7077          MOV      r0,#0x3dc             ;684
+000e46  f7fffffe          BL       lc640_write_int
+                  |L1.3658|
+000e4a  8868              LDRH     r0,[r5,#2]            ;686  ; modbus_tcp_rx_arg0
+000e4c  2894              CMP      r0,#0x94              ;686
+000e4e  d106              BNE      |L1.3678|
+000e50  f9b51004          LDRSH    r1,[r5,#4]            ;688  ; modbus_tcp_rx_arg1
+000e54  29ff              CMP      r1,#0xff              ;688
+000e56  dc02              BGT      |L1.3678|
+000e58  4630              MOV      r0,r6                 ;688
+000e5a  f7fffffe          BL       lc640_write_int
+                  |L1.3678|
+000e5e  8868              LDRH     r0,[r5,#2]            ;690  ; modbus_tcp_rx_arg0
+000e60  2895              CMP      r0,#0x95              ;690
+000e62  d107              BNE      |L1.3700|
+000e64  f9b51004          LDRSH    r1,[r5,#4]            ;692  ; modbus_tcp_rx_arg1
+000e68  29ff              CMP      r1,#0xff              ;692
+000e6a  dc03              BGT      |L1.3700|
+000e6c  f44f7078          MOV      r0,#0x3e0             ;692
+000e70  f7fffffe          BL       lc640_write_int
+                  |L1.3700|
+000e74  8868              LDRH     r0,[r5,#2]            ;694  ; modbus_tcp_rx_arg0
+000e76  2896              CMP      r0,#0x96              ;694
+000e78  d107              BNE      |L1.3722|
+000e7a  f9b51004          LDRSH    r1,[r5,#4]            ;696  ; modbus_tcp_rx_arg1
+000e7e  29ff              CMP      r1,#0xff              ;696
+000e80  dc03              BGT      |L1.3722|
+000e82  f24030e2          MOV      r0,#0x3e2             ;696
+000e86  f7fffffe          BL       lc640_write_int
+                  |L1.3722|
+000e8a  8868              LDRH     r0,[r5,#2]            ;698  ; modbus_tcp_rx_arg0
+000e8c  2897              CMP      r0,#0x97              ;698
+000e8e  d107              BNE      |L1.3744|
+000e90  f9b51004          LDRSH    r1,[r5,#4]            ;700  ; modbus_tcp_rx_arg1
+000e94  29ff              CMP      r1,#0xff              ;700
+000e96  dc03              BGT      |L1.3744|
+000e98  f44f7079          MOV      r0,#0x3e4             ;700
+000e9c  f7fffffe          BL       lc640_write_int
+                  |L1.3744|
+000ea0  8868              LDRH     r0,[r5,#2]            ;702  ; modbus_tcp_rx_arg0
+000ea2  2898              CMP      r0,#0x98              ;702
+000ea4  d107              BNE      |L1.3766|
+000ea6  f9b51004          LDRSH    r1,[r5,#4]            ;704  ; modbus_tcp_rx_arg1
+000eaa  29ff              CMP      r1,#0xff              ;704
+000eac  dc03              BGT      |L1.3766|
+000eae  f24030e6          MOV      r0,#0x3e6             ;704
+000eb2  f7fffffe          BL       lc640_write_int
+                  |L1.3766|
+000eb6  8868              LDRH     r0,[r5,#2]            ;706  ; modbus_tcp_rx_arg0
+000eb8  2899              CMP      r0,#0x99              ;706
+000eba  d107              BNE      |L1.3788|
+000ebc  f9b51004          LDRSH    r1,[r5,#4]            ;708  ; modbus_tcp_rx_arg1
+000ec0  29ff              CMP      r1,#0xff              ;708
+000ec2  dc03              BGT      |L1.3788|
+000ec4  f44f707a          MOV      r0,#0x3e8             ;708
+000ec8  f7fffffe          BL       lc640_write_int
+                  |L1.3788|
+000ecc  8868              LDRH     r0,[r5,#2]            ;710  ; modbus_tcp_rx_arg0
+000ece  289a              CMP      r0,#0x9a              ;710
+000ed0  d107              BNE      |L1.3810|
+000ed2  f9b51004          LDRSH    r1,[r5,#4]            ;712  ; modbus_tcp_rx_arg1
+000ed6  29ff              CMP      r1,#0xff              ;712
+000ed8  dc03              BGT      |L1.3810|
+000eda  f44f7038          MOV      r0,#0x2e0             ;712
+000ede  f7fffffe          BL       lc640_write_int
+                  |L1.3810|
+000ee2  8868              LDRH     r0,[r5,#2]            ;714  ; modbus_tcp_rx_arg0
+000ee4  289b              CMP      r0,#0x9b              ;714
+000ee6  d107              BNE      |L1.3832|
+000ee8  f9b51004          LDRSH    r1,[r5,#4]            ;716  ; modbus_tcp_rx_arg1
+000eec  29ff              CMP      r1,#0xff              ;716
+000eee  dc03              BGT      |L1.3832|
+000ef0  f24020e2          MOV      r0,#0x2e2             ;716
+000ef4  f7fffffe          BL       lc640_write_int
+                  |L1.3832|
+000ef8  8868              LDRH     r0,[r5,#2]            ;718  ; modbus_tcp_rx_arg0
+000efa  289c              CMP      r0,#0x9c              ;718
+000efc  d107              BNE      |L1.3854|
+000efe  f9b51004          LDRSH    r1,[r5,#4]            ;720  ; modbus_tcp_rx_arg1
+000f02  29ff              CMP      r1,#0xff              ;720
+000f04  dc03              BGT      |L1.3854|
+000f06  f44f7039          MOV      r0,#0x2e4             ;720
+000f0a  f7fffffe          BL       lc640_write_int
+                  |L1.3854|
+000f0e  8868              LDRH     r0,[r5,#2]            ;722  ; modbus_tcp_rx_arg0
+000f10  289d              CMP      r0,#0x9d              ;722
+000f12  d107              BNE      |L1.3876|
+000f14  f9b51004          LDRSH    r1,[r5,#4]            ;724  ; modbus_tcp_rx_arg1
+000f18  29ff              CMP      r1,#0xff              ;724
+000f1a  dc03              BGT      |L1.3876|
+000f1c  f24020e6          MOV      r0,#0x2e6             ;724
+000f20  f7fffffe          BL       lc640_write_int
+                  |L1.3876|
+000f24  8868              LDRH     r0,[r5,#2]            ;726  ; modbus_tcp_rx_arg0
+000f26  289e              CMP      r0,#0x9e              ;726
+000f28  d107              BNE      |L1.3898|
+000f2a  f9b51004          LDRSH    r1,[r5,#4]            ;728  ; modbus_tcp_rx_arg1
+000f2e  29ff              CMP      r1,#0xff              ;728
+000f30  dc03              BGT      |L1.3898|
+000f32  f44f703a          MOV      r0,#0x2e8             ;728
+000f36  f7fffffe          BL       lc640_write_int
+                  |L1.3898|
+000f3a  8868              LDRH     r0,[r5,#2]            ;730  ; modbus_tcp_rx_arg0
+000f3c  289f              CMP      r0,#0x9f              ;730
+000f3e  d107              BNE      |L1.3920|
+000f40  f9b51004          LDRSH    r1,[r5,#4]            ;732  ; modbus_tcp_rx_arg1
+000f44  29ff              CMP      r1,#0xff              ;732
+000f46  dc03              BGT      |L1.3920|
+000f48  f24020ea          MOV      r0,#0x2ea             ;732
+000f4c  f7fffffe          BL       lc640_write_int
+                  |L1.3920|
+000f50  8868              LDRH     r0,[r5,#2]            ;734  ; modbus_tcp_rx_arg0
+000f52  28a0              CMP      r0,#0xa0              ;734
+000f54  d107              BNE      |L1.3942|
+000f56  f9b51004          LDRSH    r1,[r5,#4]            ;736  ; modbus_tcp_rx_arg1
+000f5a  29ff              CMP      r1,#0xff              ;736
+000f5c  dc03              BGT      |L1.3942|
+000f5e  f44f703b          MOV      r0,#0x2ec             ;736
+000f62  f7fffffe          BL       lc640_write_int
+                  |L1.3942|
+000f66  8868              LDRH     r0,[r5,#2]            ;738  ; modbus_tcp_rx_arg0
+000f68  28a1              CMP      r0,#0xa1              ;738
+000f6a  d107              BNE      |L1.3964|
+000f6c  f9b51004          LDRSH    r1,[r5,#4]            ;740  ; modbus_tcp_rx_arg1
+000f70  29ff              CMP      r1,#0xff              ;740
+000f72  dc03              BGT      |L1.3964|
+000f74  f24020ee          MOV      r0,#0x2ee             ;740
+000f78  f7fffffe          BL       lc640_write_int
+                  |L1.3964|
+000f7c  8868              LDRH     r0,[r5,#2]            ;742  ; modbus_tcp_rx_arg0
+000f7e  28a2              CMP      r0,#0xa2              ;742
+000f80  d107              BNE      |L1.3986|
+000f82  f9b51004          LDRSH    r1,[r5,#4]            ;744  ; modbus_tcp_rx_arg1
+000f86  29ff              CMP      r1,#0xff              ;744
+000f88  dc03              BGT      |L1.3986|
+000f8a  f44f703c          MOV      r0,#0x2f0             ;744
+000f8e  f7fffffe          BL       lc640_write_int
+                  |L1.3986|
+000f92  8868              LDRH     r0,[r5,#2]            ;746  ; modbus_tcp_rx_arg0
+000f94  28a3              CMP      r0,#0xa3              ;746
+000f96  d107              BNE      |L1.4008|
+000f98  f9b51004          LDRSH    r1,[r5,#4]            ;748  ; modbus_tcp_rx_arg1
+000f9c  29ff              CMP      r1,#0xff              ;748
+000f9e  dc03              BGT      |L1.4008|
+000fa0  f24020f2          MOV      r0,#0x2f2             ;748
+000fa4  f7fffffe          BL       lc640_write_int
+                  |L1.4008|
+000fa8  8868              LDRH     r0,[r5,#2]            ;750  ; modbus_tcp_rx_arg0
+000faa  28a4              CMP      r0,#0xa4              ;750
+000fac  d107              BNE      |L1.4030|
+000fae  f9b51004          LDRSH    r1,[r5,#4]            ;752  ; modbus_tcp_rx_arg1
+000fb2  29ff              CMP      r1,#0xff              ;752
+000fb4  dc03              BGT      |L1.4030|
+000fb6  f44f703d          MOV      r0,#0x2f4             ;752
+000fba  f7fffffe          BL       lc640_write_int
+                  |L1.4030|
+000fbe  8868              LDRH     r0,[r5,#2]            ;754  ; modbus_tcp_rx_arg0
+000fc0  28a5              CMP      r0,#0xa5              ;754
+000fc2  d107              BNE      |L1.4052|
+000fc4  f9b51004          LDRSH    r1,[r5,#4]            ;756  ; modbus_tcp_rx_arg1
+000fc8  29ff              CMP      r1,#0xff              ;756
+000fca  dc03              BGT      |L1.4052|
+000fcc  f24020f6          MOV      r0,#0x2f6             ;756
+000fd0  f7fffffe          BL       lc640_write_int
+                  |L1.4052|
+000fd4  8868              LDRH     r0,[r5,#2]            ;758  ; modbus_tcp_rx_arg0
+000fd6  28a6              CMP      r0,#0xa6              ;758
+000fd8  d107              BNE      |L1.4074|
+000fda  f9b51004          LDRSH    r1,[r5,#4]            ;760  ; modbus_tcp_rx_arg1
+000fde  29ff              CMP      r1,#0xff              ;760
+000fe0  dc03              BGT      |L1.4074|
+000fe2  f44f703e          MOV      r0,#0x2f8             ;760
+000fe6  f7fffffe          BL       lc640_write_int
+                  |L1.4074|
+000fea  8868              LDRH     r0,[r5,#2]            ;762  ; modbus_tcp_rx_arg0
+000fec  28a7              CMP      r0,#0xa7              ;762
+000fee  d107              BNE      |L1.4096|
+000ff0  f9b51004          LDRSH    r1,[r5,#4]            ;764  ; modbus_tcp_rx_arg1
+000ff4  29ff              CMP      r1,#0xff              ;764
+000ff6  dc03              BGT      |L1.4096|
+000ff8  f24020fa          MOV      r0,#0x2fa             ;764
+000ffc  f7fffffe          BL       lc640_write_int
+                  |L1.4096|
+001000  8868              LDRH     r0,[r5,#2]            ;766  ; modbus_tcp_rx_arg0
+001002  28a8              CMP      r0,#0xa8              ;766
+001004  d107              BNE      |L1.4118|
+001006  f9b51004          LDRSH    r1,[r5,#4]            ;768  ; modbus_tcp_rx_arg1
+00100a  29ff              CMP      r1,#0xff              ;768
+00100c  dc03              BGT      |L1.4118|
+00100e  f44f703f          MOV      r0,#0x2fc             ;768
+001012  f7fffffe          BL       lc640_write_int
+                  |L1.4118|
+001016  8868              LDRH     r0,[r5,#2]            ;770  ; modbus_tcp_rx_arg0
+001018  28a9              CMP      r0,#0xa9              ;770
+00101a  d107              BNE      |L1.4140|
+00101c  f9b51004          LDRSH    r1,[r5,#4]            ;772  ; modbus_tcp_rx_arg1
+001020  29ff              CMP      r1,#0xff              ;772
+001022  dc03              BGT      |L1.4140|
+001024  f24020fe          MOV      r0,#0x2fe             ;772
+001028  f7fffffe          BL       lc640_write_int
+                  |L1.4140|
+00102c  8868              LDRH     r0,[r5,#2]            ;774  ; modbus_tcp_rx_arg0
+00102e  28aa              CMP      r0,#0xaa              ;774
+001030  d107              BNE      |L1.4162|
+001032  f9b51004          LDRSH    r1,[r5,#4]            ;776  ; modbus_tcp_rx_arg1
+001036  29ff              CMP      r1,#0xff              ;776
+001038  dc03              BGT      |L1.4162|
+00103a  f44f7040          MOV      r0,#0x300             ;776
+00103e  f7fffffe          BL       lc640_write_int
+                  |L1.4162|
+001042  8868              LDRH     r0,[r5,#2]            ;778  ; modbus_tcp_rx_arg0
+001044  28ab              CMP      r0,#0xab              ;778
+001046  d107              BNE      |L1.4184|
+001048  f9b51004          LDRSH    r1,[r5,#4]            ;780  ; modbus_tcp_rx_arg1
+00104c  29ff              CMP      r1,#0xff              ;780
+00104e  dc03              BGT      |L1.4184|
+001050  f2403002          MOV      r0,#0x302             ;780
+001054  f7fffffe          BL       lc640_write_int
+                  |L1.4184|
+001058  8868              LDRH     r0,[r5,#2]            ;782  ; modbus_tcp_rx_arg0
+00105a  28ac              CMP      r0,#0xac              ;782
+00105c  d107              BNE      |L1.4206|
+00105e  f9b51004          LDRSH    r1,[r5,#4]            ;784  ; modbus_tcp_rx_arg1
+001062  29ff              CMP      r1,#0xff              ;784
+001064  dc03              BGT      |L1.4206|
+001066  f44f7041          MOV      r0,#0x304             ;784
+00106a  f7fffffe          BL       lc640_write_int
+                  |L1.4206|
+00106e  8868              LDRH     r0,[r5,#2]            ;786  ; modbus_tcp_rx_arg0
+001070  28ad              CMP      r0,#0xad              ;786
+001072  d107              BNE      |L1.4228|
+001074  f9b51004          LDRSH    r1,[r5,#4]            ;788  ; modbus_tcp_rx_arg1
+001078  29ff              CMP      r1,#0xff              ;788
+00107a  dc03              BGT      |L1.4228|
+00107c  f2403006          MOV      r0,#0x306             ;788
+001080  f7fffffe          BL       lc640_write_int
+                  |L1.4228|
+001084  8868              LDRH     r0,[r5,#2]            ;790  ; modbus_tcp_rx_arg0
+001086  28ae              CMP      r0,#0xae              ;790
+001088  d107              BNE      |L1.4250|
+00108a  f9b51004          LDRSH    r1,[r5,#4]            ;792  ; modbus_tcp_rx_arg1
+00108e  29ff              CMP      r1,#0xff              ;792
+001090  dc03              BGT      |L1.4250|
+001092  f2411008          MOV      r0,#0x1108            ;792
+001096  f7fffffe          BL       lc640_write_int
+                  |L1.4250|
+00109a  8868              LDRH     r0,[r5,#2]            ;794  ; modbus_tcp_rx_arg0
+00109c  28af              CMP      r0,#0xaf              ;794
+00109e  d107              BNE      |L1.4272|
+0010a0  f9b51004          LDRSH    r1,[r5,#4]            ;796  ; modbus_tcp_rx_arg1
+0010a4  29ff              CMP      r1,#0xff              ;796
+0010a6  dc03              BGT      |L1.4272|
+0010a8  f241100a          MOV      r0,#0x110a            ;796
+0010ac  f7fffffe          BL       lc640_write_int
+                  |L1.4272|
+0010b0  8868              LDRH     r0,[r5,#2]            ;798  ; modbus_tcp_rx_arg0
+0010b2  28b0              CMP      r0,#0xb0              ;798
+0010b4  d10a              BNE      |L1.4300|
+0010b6  f9b51004          LDRSH    r1,[r5,#4]            ;800  ; modbus_tcp_rx_arg1
+0010ba  e001              B        |L1.4288|
+                  |L1.4284|
                           DCD      MODBUS_BAUDRATE
+                  |L1.4288|
+0010c0  29ff              CMP      r1,#0xff              ;800
+0010c2  dc03              BGT      |L1.4300|
+0010c4  f241100c          MOV      r0,#0x110c            ;800
+0010c8  f7fffffe          BL       lc640_write_int
                   |L1.4300|
-0010cc  dc03              BGT      |L1.4310|
-0010ce  f2411008          MOV      r0,#0x1108            ;792
-0010d2  f7fffffe          BL       lc640_write_int
-                  |L1.4310|
-0010d6  8870              LDRH     r0,[r6,#2]            ;794  ; modbus_tcp_rx_arg0
-0010d8  28af              CMP      r0,#0xaf              ;794
-0010da  d107              BNE      |L1.4332|
-0010dc  f9b61004          LDRSH    r1,[r6,#4]            ;796  ; modbus_tcp_rx_arg1
-0010e0  29ff              CMP      r1,#0xff              ;796
-0010e2  dc03              BGT      |L1.4332|
-0010e4  f241100a          MOV      r0,#0x110a            ;796
-0010e8  f7fffffe          BL       lc640_write_int
-                  |L1.4332|
-0010ec  8870              LDRH     r0,[r6,#2]            ;798  ; modbus_tcp_rx_arg0
-0010ee  28b0              CMP      r0,#0xb0              ;798
-0010f0  d107              BNE      |L1.4354|
-0010f2  f9b61004          LDRSH    r1,[r6,#4]            ;800  ; modbus_tcp_rx_arg1
-0010f6  29ff              CMP      r1,#0xff              ;800
-0010f8  dc03              BGT      |L1.4354|
-0010fa  f241100c          MOV      r0,#0x110c            ;800
-0010fe  f7fffffe          BL       lc640_write_int
-                  |L1.4354|
-001102  f9b60002          LDRSH    r0,[r6,#2]            ;802  ; modbus_tcp_rx_arg0
-001106  28b1              CMP      r0,#0xb1              ;802
-001108  d10a              BNE      |L1.4384|
-00110a  f9b61004          LDRSH    r1,[r6,#4]            ;802  ; modbus_tcp_rx_arg1
-00110e  2900              CMP      r1,#0                 ;802
-001110  dd06              BLE      |L1.4384|
-001112  49fc              LDR      r1,|L1.5380|
-001114  e003              B        |L1.4382|
+0010cc  f9b50002          LDRSH    r0,[r5,#2]            ;802  ; modbus_tcp_rx_arg0
+0010d0  28b1              CMP      r0,#0xb1              ;802
+0010d2  d105              BNE      |L1.4320|
+0010d4  f9b51004          LDRSH    r1,[r5,#4]            ;802  ; modbus_tcp_rx_arg1
+0010d8  2900              CMP      r1,#0                 ;802
+0010da  dd01              BLE      |L1.4320|
+0010dc  49fc              LDR      r1,|L1.5328|
+0010de  700f              STRB     r7,[r1,#0]            ;802
+                  |L1.4320|
+0010e0  28b2              CMP      r0,#0xb2              ;803
+0010e2  d10f              BNE      |L1.4356|
+0010e4  f9b50004          LDRSH    r0,[r5,#4]            ;805  ; modbus_tcp_rx_arg1
+0010e8  f04f010a          MOV      r1,#0xa               ;805
+0010ec  fb90f0f1          SDIV     r0,r0,r1              ;805
+0010f0  b201              SXTH     r1,r0                 ;805
+0010f2  80a9              STRH     r1,[r5,#4]            ;805
+0010f4  f2417070          MOV      r0,#0x1770            ;806
+0010f8  4281              CMP      r1,r0                 ;806
+0010fa  dc03              BGT      |L1.4356|
+0010fc  f44f70b8          MOV      r0,#0x170             ;806
+001100  f7fffffe          BL       lc640_write_int
+                  |L1.4356|
+001104  8868              LDRH     r0,[r5,#2]            ;808  ; modbus_tcp_rx_arg0
+001106  28b3              CMP      r0,#0xb3              ;808
+001108  d10c              BNE      |L1.4388|
+00110a  f9b51004          LDRSH    r1,[r5,#4]            ;810  ; modbus_tcp_rx_arg1
+00110e  2902              CMP      r1,#2                 ;810
+001110  dc08              BGT      |L1.4388|
+001112  e003              B        |L1.4380|
+                  |L1.4372|
+001114  e1d8              B        |L1.5320|
                   |L1.4374|
-001116  e1f1              B        |L1.5372|
+001116  e1df              B        |L1.5336|
                   |L1.4376|
-001118  e1f8              B        |L1.5388|
+001118  e1e0              B        |L1.5340|
                   |L1.4378|
-00111a  e1f9              B        |L1.5392|
+00111a  e1e2              B        |L1.5346|
                   |L1.4380|
-00111c  e1fb              B        |L1.5398|
-                  |L1.4382|
-00111e  700f              STRB     r7,[r1,#0]            ;802
-                  |L1.4384|
-001120  28b2              CMP      r0,#0xb2              ;803
-001122  d10f              BNE      |L1.4420|
-001124  f9b60004          LDRSH    r0,[r6,#4]            ;805  ; modbus_tcp_rx_arg1
-001128  f04f010a          MOV      r1,#0xa               ;805
-00112c  fb90f0f1          SDIV     r0,r0,r1              ;805
-001130  b201              SXTH     r1,r0                 ;805
-001132  80b1              STRH     r1,[r6,#4]            ;805
-001134  f2417070          MOV      r0,#0x1770            ;806
-001138  4281              CMP      r1,r0                 ;806
-00113a  dc03              BGT      |L1.4420|
-00113c  f44f70b8          MOV      r0,#0x170             ;806
-001140  f7fffffe          BL       lc640_write_int
-                  |L1.4420|
-001144  8870              LDRH     r0,[r6,#2]            ;808  ; modbus_tcp_rx_arg0
-001146  28b3              CMP      r0,#0xb3              ;808
-001148  d107              BNE      |L1.4442|
-00114a  f9b61004          LDRSH    r1,[r6,#4]            ;810  ; modbus_tcp_rx_arg1
-00114e  2902              CMP      r1,#2                 ;810
-001150  dc03              BGT      |L1.4442|
-001152  f44f70ba          MOV      r0,#0x174             ;810
-001156  f7fffffe          BL       lc640_write_int
-                  |L1.4442|
-00115a  8870              LDRH     r0,[r6,#2]            ;812  ; modbus_tcp_rx_arg0
-00115c  28b4              CMP      r0,#0xb4              ;812
-00115e  d107              BNE      |L1.4464|
-001160  f9b61004          LDRSH    r1,[r6,#4]            ;814  ; modbus_tcp_rx_arg1
-001164  2902              CMP      r1,#2                 ;814
-001166  dc03              BGT      |L1.4464|
-001168  f44f70b9          MOV      r0,#0x172             ;814
-00116c  f7fffffe          BL       lc640_write_int
-                  |L1.4464|
-001170  8870              LDRH     r0,[r6,#2]            ;816  ; modbus_tcp_rx_arg0
-001172  28b5              CMP      r0,#0xb5              ;816
-001174  d107              BNE      |L1.4486|
-001176  f9b61004          LDRSH    r1,[r6,#4]            ;818  ; modbus_tcp_rx_arg1
-00117a  29ff              CMP      r1,#0xff              ;818
-00117c  dc03              BGT      |L1.4486|
-00117e  f44f70bc          MOV      r0,#0x178             ;818
-001182  f7fffffe          BL       lc640_write_int
-                  |L1.4486|
-001186  8870              LDRH     r0,[r6,#2]            ;820  ; modbus_tcp_rx_arg0
-001188  28b6              CMP      r0,#0xb6              ;820
-00118a  d107              BNE      |L1.4508|
-00118c  f9b61004          LDRSH    r1,[r6,#4]            ;822  ; modbus_tcp_rx_arg1
-001190  29ff              CMP      r1,#0xff              ;822
-001192  dc03              BGT      |L1.4508|
-001194  f44f70bd          MOV      r0,#0x17a             ;822
-001198  f7fffffe          BL       lc640_write_int
-                  |L1.4508|
-00119c  8870              LDRH     r0,[r6,#2]            ;824  ; modbus_tcp_rx_arg0
-00119e  28b7              CMP      r0,#0xb7              ;824
-0011a0  d107              BNE      |L1.4530|
-0011a2  f9b61004          LDRSH    r1,[r6,#4]            ;826  ; modbus_tcp_rx_arg1
-0011a6  29ff              CMP      r1,#0xff              ;826
-0011a8  dc03              BGT      |L1.4530|
-0011aa  f44f70be          MOV      r0,#0x17c             ;826
-0011ae  f7fffffe          BL       lc640_write_int
-                  |L1.4530|
-0011b2  8870              LDRH     r0,[r6,#2]            ;828  ; modbus_tcp_rx_arg0
-0011b4  28b8              CMP      r0,#0xb8              ;828
-0011b6  d107              BNE      |L1.4552|
-0011b8  f9b61004          LDRSH    r1,[r6,#4]            ;830  ; modbus_tcp_rx_arg1
-0011bc  29ff              CMP      r1,#0xff              ;830
-0011be  dc03              BGT      |L1.4552|
-0011c0  f44f70bf          MOV      r0,#0x17e             ;830
-0011c4  f7fffffe          BL       lc640_write_int
-                  |L1.4552|
-0011c8  8870              LDRH     r0,[r6,#2]            ;832  ; modbus_tcp_rx_arg0
-0011ca  28b9              CMP      r0,#0xb9              ;832
-0011cc  d108              BNE      |L1.4576|
-0011ce  f9b61004          LDRSH    r1,[r6,#4]            ;834  ; modbus_tcp_rx_arg1
-0011d2  1e48              SUBS     r0,r1,#1              ;834
-0011d4  28fd              CMP      r0,#0xfd              ;834
-0011d6  d803              BHI      |L1.4576|
-0011d8  f44f70c0          MOV      r0,#0x180             ;834
-0011dc  f7fffffe          BL       lc640_write_int
-                  |L1.4576|
-0011e0  8870              LDRH     r0,[r6,#2]            ;836  ; modbus_tcp_rx_arg0
-0011e2  28ba              CMP      r0,#0xba              ;836
-0011e4  d108              BNE      |L1.4600|
-0011e6  f9b61004          LDRSH    r1,[r6,#4]            ;838  ; modbus_tcp_rx_arg1
-0011ea  1e48              SUBS     r0,r1,#1              ;838
-0011ec  28fd              CMP      r0,#0xfd              ;838
-0011ee  d803              BHI      |L1.4600|
-0011f0  f44f70bb          MOV      r0,#0x176             ;838
-0011f4  f7fffffe          BL       lc640_write_int
-                  |L1.4600|
-0011f8  8870              LDRH     r0,[r6,#2]            ;840  ; modbus_tcp_rx_arg0
-0011fa  28bb              CMP      r0,#0xbb              ;840
-0011fc  d109              BNE      |L1.4626|
-0011fe  f9b61004          LDRSH    r1,[r6,#4]            ;842  ; modbus_tcp_rx_arg1
-001202  f1a1000a          SUB      r0,r1,#0xa            ;842
-001206  285a              CMP      r0,#0x5a              ;842
-001208  d803              BHI      |L1.4626|
-00120a  f44f70c1          MOV      r0,#0x182             ;842
-00120e  f7fffffe          BL       lc640_write_int
-                  |L1.4626|
-001212  8870              LDRH     r0,[r6,#2]            ;844  ; modbus_tcp_rx_arg0
-001214  28bc              CMP      r0,#0xbc              ;844
-001216  d108              BNE      |L1.4650|
-001218  f9b61004          LDRSH    r1,[r6,#4]            ;846  ; modbus_tcp_rx_arg1
-00121c  1e48              SUBS     r0,r1,#1              ;846
-00121e  2802              CMP      r0,#2                 ;846
-001220  d803              BHI      |L1.4650|
-001222  f44f70c2          MOV      r0,#0x184             ;846
-001226  f7fffffe          BL       lc640_write_int
-                  |L1.4650|
-00122a  8870              LDRH     r0,[r6,#2]            ;848  ; modbus_tcp_rx_arg0
-00122c  28bd              CMP      r0,#0xbd              ;848
-00122e  d108              BNE      |L1.4674|
-001230  f9b61004          LDRSH    r1,[r6,#4]            ;850  ; modbus_tcp_rx_arg1
-001234  1e48              SUBS     r0,r1,#1              ;850
-001236  2804              CMP      r0,#4                 ;850
-001238  d803              BHI      |L1.4674|
-00123a  f44f70c3          MOV      r0,#0x186             ;850
-00123e  f7fffffe          BL       lc640_write_int
-                  |L1.4674|
-001242  8870              LDRH     r0,[r6,#2]            ;852  ; modbus_tcp_rx_arg0
-001244  28be              CMP      r0,#0xbe              ;852
-001246  d108              BNE      |L1.4698|
-001248  f9b61004          LDRSH    r1,[r6,#4]            ;854  ; modbus_tcp_rx_arg1
-00124c  b109              CBZ      r1,|L1.4690|
-00124e  2901              CMP      r1,#1                 ;854
-001250  d103              BNE      |L1.4698|
-                  |L1.4690|
-001252  f44f70d3          MOV      r0,#0x1a6             ;854
-001256  f7fffffe          BL       lc640_write_int
-                  |L1.4698|
-00125a  8870              LDRH     r0,[r6,#2]            ;856  ; modbus_tcp_rx_arg0
-00125c  28bf              CMP      r0,#0xbf              ;856
-00125e  d109              BNE      |L1.4724|
-001260  f9b61004          LDRSH    r1,[r6,#4]            ;858  ; modbus_tcp_rx_arg1
-001264  2901              CMP      r1,#1                 ;858
-001266  d001              BEQ      |L1.4716|
-001268  2903              CMP      r1,#3                 ;858
-00126a  d103              BNE      |L1.4724|
-                  |L1.4716|
-00126c  f2411002          MOV      r0,#0x1102            ;858
-001270  f7fffffe          BL       lc640_write_int
-                  |L1.4724|
-001274  8870              LDRH     r0,[r6,#2]            ;860  ; modbus_tcp_rx_arg0
-001276  28c0              CMP      r0,#0xc0              ;860
-001278  d108              BNE      |L1.4748|
-00127a  f9b61004          LDRSH    r1,[r6,#4]            ;862  ; modbus_tcp_rx_arg1
-00127e  f1a1000a          SUB      r0,r1,#0xa            ;862
-001282  285a              CMP      r0,#0x5a              ;862
-001284  d802              BHI      |L1.4748|
-001286  20e2              MOVS     r0,#0xe2              ;862
-001288  f7fffffe          BL       lc640_write_int
-                  |L1.4748|
-00128c  8870              LDRH     r0,[r6,#2]            ;864  ; modbus_tcp_rx_arg0
-00128e  28c1              CMP      r0,#0xc1              ;864
-001290  d108              BNE      |L1.4772|
-001292  f9b61004          LDRSH    r1,[r6,#4]            ;866  ; modbus_tcp_rx_arg1
-001296  f1a1000a          SUB      r0,r1,#0xa            ;866
-00129a  285a              CMP      r0,#0x5a              ;866
-00129c  d802              BHI      |L1.4772|
-00129e  20e4              MOVS     r0,#0xe4              ;866
-0012a0  f7fffffe          BL       lc640_write_int
-                  |L1.4772|
-0012a4  8870              LDRH     r0,[r6,#2]            ;868  ; modbus_tcp_rx_arg0
-0012a6  28c2              CMP      r0,#0xc2              ;868
-0012a8  d106              BNE      |L1.4792|
-0012aa  f9b61004          LDRSH    r1,[r6,#4]            ;870  ; modbus_tcp_rx_arg1
-0012ae  2902              CMP      r1,#2                 ;870
-0012b0  dc02              BGT      |L1.4792|
-0012b2  20e6              MOVS     r0,#0xe6              ;870
-0012b4  f7fffffe          BL       lc640_write_int
-                  |L1.4792|
-0012b8  8870              LDRH     r0,[r6,#2]            ;872  ; modbus_tcp_rx_arg0
-0012ba  28c3              CMP      r0,#0xc3              ;872
-0012bc  d106              BNE      |L1.4812|
-0012be  f9b61004          LDRSH    r1,[r6,#4]            ;874  ; modbus_tcp_rx_arg1
-0012c2  2902              CMP      r1,#2                 ;874
-0012c4  dc02              BGT      |L1.4812|
-0012c6  20e8              MOVS     r0,#0xe8              ;874
+00111c  f44f70ba          MOV      r0,#0x174             ;810
+001120  f7fffffe          BL       lc640_write_int
+                  |L1.4388|
+001124  8868              LDRH     r0,[r5,#2]            ;812  ; modbus_tcp_rx_arg0
+001126  28b4              CMP      r0,#0xb4              ;812
+001128  d107              BNE      |L1.4410|
+00112a  f9b51004          LDRSH    r1,[r5,#4]            ;814  ; modbus_tcp_rx_arg1
+00112e  2902              CMP      r1,#2                 ;814
+001130  dc03              BGT      |L1.4410|
+001132  f44f70b9          MOV      r0,#0x172             ;814
+001136  f7fffffe          BL       lc640_write_int
+                  |L1.4410|
+00113a  8868              LDRH     r0,[r5,#2]            ;816  ; modbus_tcp_rx_arg0
+00113c  28b5              CMP      r0,#0xb5              ;816
+00113e  d107              BNE      |L1.4432|
+001140  f9b51004          LDRSH    r1,[r5,#4]            ;818  ; modbus_tcp_rx_arg1
+001144  29ff              CMP      r1,#0xff              ;818
+001146  dc03              BGT      |L1.4432|
+001148  f44f70bc          MOV      r0,#0x178             ;818
+00114c  f7fffffe          BL       lc640_write_int
+                  |L1.4432|
+001150  8868              LDRH     r0,[r5,#2]            ;820  ; modbus_tcp_rx_arg0
+001152  462e              MOV      r6,r5                 ;820
+001154  28b6              CMP      r0,#0xb6              ;820
+001156  d107              BNE      |L1.4456|
+001158  f9b61004          LDRSH    r1,[r6,#4]            ;822  ; modbus_tcp_rx_arg1
+00115c  29ff              CMP      r1,#0xff              ;822
+00115e  dc03              BGT      |L1.4456|
+001160  f44f70bd          MOV      r0,#0x17a             ;822
+001164  f7fffffe          BL       lc640_write_int
+                  |L1.4456|
+001168  8870              LDRH     r0,[r6,#2]            ;824  ; modbus_tcp_rx_arg0
+00116a  28b7              CMP      r0,#0xb7              ;824
+00116c  d107              BNE      |L1.4478|
+00116e  f9b61004          LDRSH    r1,[r6,#4]            ;826  ; modbus_tcp_rx_arg1
+001172  29ff              CMP      r1,#0xff              ;826
+001174  dc03              BGT      |L1.4478|
+001176  f44f70be          MOV      r0,#0x17c             ;826
+00117a  f7fffffe          BL       lc640_write_int
+                  |L1.4478|
+00117e  8870              LDRH     r0,[r6,#2]            ;828  ; modbus_tcp_rx_arg0
+001180  28b8              CMP      r0,#0xb8              ;828
+001182  d107              BNE      |L1.4500|
+001184  f9b61004          LDRSH    r1,[r6,#4]            ;830  ; modbus_tcp_rx_arg1
+001188  29ff              CMP      r1,#0xff              ;830
+00118a  dc03              BGT      |L1.4500|
+00118c  f44f70bf          MOV      r0,#0x17e             ;830
+001190  f7fffffe          BL       lc640_write_int
+                  |L1.4500|
+001194  8870              LDRH     r0,[r6,#2]            ;832  ; modbus_tcp_rx_arg0
+001196  28b9              CMP      r0,#0xb9              ;832
+001198  d108              BNE      |L1.4524|
+00119a  f9b61004          LDRSH    r1,[r6,#4]            ;834  ; modbus_tcp_rx_arg1
+00119e  1e48              SUBS     r0,r1,#1              ;834
+0011a0  28fd              CMP      r0,#0xfd              ;834
+0011a2  d803              BHI      |L1.4524|
+0011a4  f44f70c0          MOV      r0,#0x180             ;834
+0011a8  f7fffffe          BL       lc640_write_int
+                  |L1.4524|
+0011ac  8870              LDRH     r0,[r6,#2]            ;836  ; modbus_tcp_rx_arg0
+0011ae  28ba              CMP      r0,#0xba              ;836
+0011b0  d108              BNE      |L1.4548|
+0011b2  f9b61004          LDRSH    r1,[r6,#4]            ;838  ; modbus_tcp_rx_arg1
+0011b6  1e48              SUBS     r0,r1,#1              ;838
+0011b8  28fd              CMP      r0,#0xfd              ;838
+0011ba  d803              BHI      |L1.4548|
+0011bc  f44f70bb          MOV      r0,#0x176             ;838
+0011c0  f7fffffe          BL       lc640_write_int
+                  |L1.4548|
+0011c4  8870              LDRH     r0,[r6,#2]            ;840  ; modbus_tcp_rx_arg0
+0011c6  28bb              CMP      r0,#0xbb              ;840
+0011c8  d109              BNE      |L1.4574|
+0011ca  f9b61004          LDRSH    r1,[r6,#4]            ;842  ; modbus_tcp_rx_arg1
+0011ce  f1a1000a          SUB      r0,r1,#0xa            ;842
+0011d2  285a              CMP      r0,#0x5a              ;842
+0011d4  d803              BHI      |L1.4574|
+0011d6  f44f70c1          MOV      r0,#0x182             ;842
+0011da  f7fffffe          BL       lc640_write_int
+                  |L1.4574|
+0011de  8870              LDRH     r0,[r6,#2]            ;844  ; modbus_tcp_rx_arg0
+0011e0  28bc              CMP      r0,#0xbc              ;844
+0011e2  d108              BNE      |L1.4598|
+0011e4  f9b61004          LDRSH    r1,[r6,#4]            ;846  ; modbus_tcp_rx_arg1
+0011e8  1e48              SUBS     r0,r1,#1              ;846
+0011ea  2802              CMP      r0,#2                 ;846
+0011ec  d803              BHI      |L1.4598|
+0011ee  f44f70c2          MOV      r0,#0x184             ;846
+0011f2  f7fffffe          BL       lc640_write_int
+                  |L1.4598|
+0011f6  8870              LDRH     r0,[r6,#2]            ;848  ; modbus_tcp_rx_arg0
+0011f8  28bd              CMP      r0,#0xbd              ;848
+0011fa  d108              BNE      |L1.4622|
+0011fc  f9b61004          LDRSH    r1,[r6,#4]            ;850  ; modbus_tcp_rx_arg1
+001200  1e48              SUBS     r0,r1,#1              ;850
+001202  2804              CMP      r0,#4                 ;850
+001204  d803              BHI      |L1.4622|
+001206  f44f70c3          MOV      r0,#0x186             ;850
+00120a  f7fffffe          BL       lc640_write_int
+                  |L1.4622|
+00120e  8870              LDRH     r0,[r6,#2]            ;852  ; modbus_tcp_rx_arg0
+001210  28be              CMP      r0,#0xbe              ;852
+001212  d108              BNE      |L1.4646|
+001214  f9b61004          LDRSH    r1,[r6,#4]            ;854  ; modbus_tcp_rx_arg1
+001218  b109              CBZ      r1,|L1.4638|
+00121a  2901              CMP      r1,#1                 ;854
+00121c  d103              BNE      |L1.4646|
+                  |L1.4638|
+00121e  f44f70d3          MOV      r0,#0x1a6             ;854
+001222  f7fffffe          BL       lc640_write_int
+                  |L1.4646|
+001226  8870              LDRH     r0,[r6,#2]            ;856  ; modbus_tcp_rx_arg0
+001228  28bf              CMP      r0,#0xbf              ;856
+00122a  d109              BNE      |L1.4672|
+00122c  f9b61004          LDRSH    r1,[r6,#4]            ;858  ; modbus_tcp_rx_arg1
+001230  2901              CMP      r1,#1                 ;858
+001232  d001              BEQ      |L1.4664|
+001234  2903              CMP      r1,#3                 ;858
+001236  d103              BNE      |L1.4672|
+                  |L1.4664|
+001238  f2411002          MOV      r0,#0x1102            ;858
+00123c  f7fffffe          BL       lc640_write_int
+                  |L1.4672|
+001240  8870              LDRH     r0,[r6,#2]            ;860  ; modbus_tcp_rx_arg0
+001242  28c0              CMP      r0,#0xc0              ;860
+001244  d108              BNE      |L1.4696|
+001246  f9b61004          LDRSH    r1,[r6,#4]            ;862  ; modbus_tcp_rx_arg1
+00124a  f1a1000a          SUB      r0,r1,#0xa            ;862
+00124e  285a              CMP      r0,#0x5a              ;862
+001250  d802              BHI      |L1.4696|
+001252  20e2              MOVS     r0,#0xe2              ;862
+001254  f7fffffe          BL       lc640_write_int
+                  |L1.4696|
+001258  8870              LDRH     r0,[r6,#2]            ;864  ; modbus_tcp_rx_arg0
+00125a  28c1              CMP      r0,#0xc1              ;864
+00125c  d108              BNE      |L1.4720|
+00125e  f9b61004          LDRSH    r1,[r6,#4]            ;866  ; modbus_tcp_rx_arg1
+001262  f1a1000a          SUB      r0,r1,#0xa            ;866
+001266  285a              CMP      r0,#0x5a              ;866
+001268  d802              BHI      |L1.4720|
+00126a  20e4              MOVS     r0,#0xe4              ;866
+00126c  f7fffffe          BL       lc640_write_int
+                  |L1.4720|
+001270  8870              LDRH     r0,[r6,#2]            ;868  ; modbus_tcp_rx_arg0
+001272  28c2              CMP      r0,#0xc2              ;868
+001274  d106              BNE      |L1.4740|
+001276  f9b61004          LDRSH    r1,[r6,#4]            ;870  ; modbus_tcp_rx_arg1
+00127a  2902              CMP      r1,#2                 ;870
+00127c  dc02              BGT      |L1.4740|
+00127e  20e6              MOVS     r0,#0xe6              ;870
+001280  f7fffffe          BL       lc640_write_int
+                  |L1.4740|
+001284  8870              LDRH     r0,[r6,#2]            ;872  ; modbus_tcp_rx_arg0
+001286  28c3              CMP      r0,#0xc3              ;872
+001288  d106              BNE      |L1.4760|
+00128a  f9b61004          LDRSH    r1,[r6,#4]            ;874  ; modbus_tcp_rx_arg1
+00128e  2902              CMP      r1,#2                 ;874
+001290  dc02              BGT      |L1.4760|
+001292  20e8              MOVS     r0,#0xe8              ;874
+001294  f7fffffe          BL       lc640_write_int
+                  |L1.4760|
+001298  8870              LDRH     r0,[r6,#2]            ;876  ; modbus_tcp_rx_arg0
+00129a  f44f6516          MOV      r5,#0x960             ;878
+00129e  28c4              CMP      r0,#0xc4              ;876
+0012a0  d108              BNE      |L1.4788|
+0012a2  f9b61004          LDRSH    r1,[r6,#4]            ;878  ; modbus_tcp_rx_arg1
+0012a6  f1a10064          SUB      r0,r1,#0x64           ;878
+0012aa  42a8              CMP      r0,r5                 ;878
+0012ac  d802              BHI      |L1.4788|
+0012ae  20ec              MOVS     r0,#0xec              ;878
+0012b0  f7fffffe          BL       lc640_write_int
+                  |L1.4788|
+0012b4  8870              LDRH     r0,[r6,#2]            ;880  ; modbus_tcp_rx_arg0
+0012b6  28c5              CMP      r0,#0xc5              ;880
+0012b8  d108              BNE      |L1.4812|
+0012ba  f9b61004          LDRSH    r1,[r6,#4]            ;882  ; modbus_tcp_rx_arg1
+0012be  f1a10064          SUB      r0,r1,#0x64           ;882
+0012c2  42a8              CMP      r0,r5                 ;882
+0012c4  d802              BHI      |L1.4812|
+0012c6  20ee              MOVS     r0,#0xee              ;882
 0012c8  f7fffffe          BL       lc640_write_int
                   |L1.4812|
-0012cc  8870              LDRH     r0,[r6,#2]            ;876  ; modbus_tcp_rx_arg0
-0012ce  f44f6516          MOV      r5,#0x960             ;878
-0012d2  28c4              CMP      r0,#0xc4              ;876
-0012d4  d108              BNE      |L1.4840|
-0012d6  f9b61004          LDRSH    r1,[r6,#4]            ;878  ; modbus_tcp_rx_arg1
-0012da  f1a10064          SUB      r0,r1,#0x64           ;878
-0012de  42a8              CMP      r0,r5                 ;878
-0012e0  d802              BHI      |L1.4840|
-0012e2  20ec              MOVS     r0,#0xec              ;878
-0012e4  f7fffffe          BL       lc640_write_int
-                  |L1.4840|
-0012e8  8870              LDRH     r0,[r6,#2]            ;880  ; modbus_tcp_rx_arg0
-0012ea  28c5              CMP      r0,#0xc5              ;880
-0012ec  d108              BNE      |L1.4864|
-0012ee  f9b61004          LDRSH    r1,[r6,#4]            ;882  ; modbus_tcp_rx_arg1
-0012f2  f1a10064          SUB      r0,r1,#0x64           ;882
-0012f6  42a8              CMP      r0,r5                 ;882
-0012f8  d802              BHI      |L1.4864|
-0012fa  20ee              MOVS     r0,#0xee              ;882
-0012fc  f7fffffe          BL       lc640_write_int
-                  |L1.4864|
-001300  8870              LDRH     r0,[r6,#2]            ;884  ; modbus_tcp_rx_arg0
-001302  28c6              CMP      r0,#0xc6              ;884
-001304  d108              BNE      |L1.4888|
-001306  f9b61004          LDRSH    r1,[r6,#4]            ;886  ; modbus_tcp_rx_arg1
-00130a  f1a1000a          SUB      r0,r1,#0xa            ;886
-00130e  2832              CMP      r0,#0x32              ;886
-001310  d802              BHI      |L1.4888|
-001312  20f0              MOVS     r0,#0xf0              ;886
-001314  f7fffffe          BL       lc640_write_int
-                  |L1.4888|
-001318  f9b62002          LDRSH    r2,[r6,#2]            ;889  ; modbus_tcp_rx_arg0
-00131c  487a              LDR      r0,|L1.5384|
-00131e  2ac8              CMP      r2,#0xc8              ;889
-001320  d119              BNE      |L1.4950|
-001322  f9b61004          LDRSH    r1,[r6,#4]            ;891  ; modbus_tcp_rx_arg1
-001326  2901              CMP      r1,#1                 ;891
-001328  d006              BEQ      |L1.4920|
-00132a  290a              CMP      r1,#0xa               ;892
-00132c  d008              BEQ      |L1.4928|
-00132e  1c4b              ADDS     r3,r1,#1              ;893
-001330  d00a              BEQ      |L1.4936|
-001332  310a              ADDS     r1,r1,#0xa            ;894
-001334  d00c              BEQ      |L1.4944|
-001336  e00e              B        |L1.4950|
-                  |L1.4920|
-001338  f04f0124          MOV      r1,#0x24              ;891
-00133c  7001              STRB     r1,[r0,#0]            ;891
-00133e  e00a              B        |L1.4950|
-                  |L1.4928|
-001340  f04f0125          MOV      r1,#0x25              ;892
-001344  7001              STRB     r1,[r0,#0]            ;892
-001346  e006              B        |L1.4950|
-                  |L1.4936|
-001348  f04f0126          MOV      r1,#0x26              ;893
-00134c  7001              STRB     r1,[r0,#0]            ;893
-00134e  e002              B        |L1.4950|
-                  |L1.4944|
-001350  f04f0127          MOV      r1,#0x27              ;894
-001354  7001              STRB     r1,[r0,#0]            ;894
-                  |L1.4950|
-001356  2ac9              CMP      r2,#0xc9              ;896
-001358  d119              BNE      |L1.5006|
-00135a  f9b61004          LDRSH    r1,[r6,#4]            ;898  ; modbus_tcp_rx_arg1
-00135e  2901              CMP      r1,#1                 ;898
-001360  d006              BEQ      |L1.4976|
-001362  290a              CMP      r1,#0xa               ;899
-001364  d008              BEQ      |L1.4984|
-001366  1c4b              ADDS     r3,r1,#1              ;900
-001368  d00a              BEQ      |L1.4992|
-00136a  310a              ADDS     r1,r1,#0xa            ;901
-00136c  d00c              BEQ      |L1.5000|
-00136e  e00e              B        |L1.5006|
-                  |L1.4976|
-001370  f04f0128          MOV      r1,#0x28              ;898
-001374  7001              STRB     r1,[r0,#0]            ;898
-001376  e00a              B        |L1.5006|
-                  |L1.4984|
-001378  f04f0129          MOV      r1,#0x29              ;899
-00137c  7001              STRB     r1,[r0,#0]            ;899
-00137e  e006              B        |L1.5006|
-                  |L1.4992|
-001380  f04f012a          MOV      r1,#0x2a              ;900
-001384  7001              STRB     r1,[r0,#0]            ;900
-001386  e002              B        |L1.5006|
-                  |L1.5000|
-001388  f04f012b          MOV      r1,#0x2b              ;901
-00138c  7001              STRB     r1,[r0,#0]            ;901
-                  |L1.5006|
-00138e  2aca              CMP      r2,#0xca              ;903
-001390  d10d              BNE      |L1.5038|
-001392  f9b61004          LDRSH    r1,[r6,#4]            ;905  ; modbus_tcp_rx_arg1
-001396  2901              CMP      r1,#1                 ;905
-001398  d002              BEQ      |L1.5024|
-00139a  1c49              ADDS     r1,r1,#1              ;906
-00139c  d004              BEQ      |L1.5032|
-00139e  e006              B        |L1.5038|
-                  |L1.5024|
-0013a0  f04f010e          MOV      r1,#0xe               ;905
-0013a4  7001              STRB     r1,[r0,#0]            ;905
-0013a6  e002              B        |L1.5038|
-                  |L1.5032|
-0013a8  f04f010d          MOV      r1,#0xd               ;906
-0013ac  7001              STRB     r1,[r0,#0]            ;906
-                  |L1.5038|
-0013ae  2acb              CMP      r2,#0xcb              ;908
-0013b0  d11c              BNE      |L1.5100|
-0013b2  f9b61004          LDRSH    r1,[r6,#4]            ;910  ; modbus_tcp_rx_arg1
-0013b6  2901              CMP      r1,#1                 ;910
-0013b8  d009              BEQ      |L1.5070|
-0013ba  2905              CMP      r1,#5                 ;911
-0013bc  d00b              BEQ      |L1.5078|
-0013be  f5a1437f          SUB      r3,r1,#0xff00         ;912
-0013c2  3bff              SUBS     r3,r3,#0xff           ;912
-0013c4  d10b              BNE      |L1.5086|
-0013c6  f04f0113          MOV      r1,#0x13              ;912
-0013ca  7001              STRB     r1,[r0,#0]            ;912
-0013cc  e00e              B        |L1.5100|
-                  |L1.5070|
-0013ce  f04f0114          MOV      r1,#0x14              ;910
-0013d2  7001              STRB     r1,[r0,#0]            ;910
-0013d4  e00a              B        |L1.5100|
-                  |L1.5078|
-0013d6  f04f0116          MOV      r1,#0x16              ;911
-0013da  7001              STRB     r1,[r0,#0]            ;911
-0013dc  e006              B        |L1.5100|
-                  |L1.5086|
-0013de  f5a1437f          SUB      r3,r1,#0xff00         ;913
-0013e2  3bfb              SUBS     r3,r3,#0xfb           ;913
-0013e4  d102              BNE      |L1.5100|
-0013e6  f04f0115          MOV      r1,#0x15              ;913
-0013ea  7001              STRB     r1,[r0,#0]            ;913
-                  |L1.5100|
-0013ec  2acc              CMP      r2,#0xcc              ;915
-0013ee  d119              BNE      |L1.5156|
-0013f0  f9b61004          LDRSH    r1,[r6,#4]            ;917  ; modbus_tcp_rx_arg1
-0013f4  2901              CMP      r1,#1                 ;917
-0013f6  d006              BEQ      |L1.5126|
-0013f8  2905              CMP      r1,#5                 ;918
-0013fa  d008              BEQ      |L1.5134|
-0013fc  1c4b              ADDS     r3,r1,#1              ;919
-0013fe  d00a              BEQ      |L1.5142|
-001400  1d49              ADDS     r1,r1,#5              ;920
-001402  d00c              BEQ      |L1.5150|
-001404  e00e              B        |L1.5156|
-                  |L1.5126|
-001406  f04f0118          MOV      r1,#0x18              ;917
-00140a  7001              STRB     r1,[r0,#0]            ;917
-00140c  e00a              B        |L1.5156|
-                  |L1.5134|
-00140e  f04f011a          MOV      r1,#0x1a              ;918
-001412  7001              STRB     r1,[r0,#0]            ;918
-001414  e006              B        |L1.5156|
-                  |L1.5142|
-001416  f04f0117          MOV      r1,#0x17              ;919
-00141a  7001              STRB     r1,[r0,#0]            ;919
-00141c  e002              B        |L1.5156|
-                  |L1.5150|
-00141e  f04f0119          MOV      r1,#0x19              ;920
-001422  7001              STRB     r1,[r0,#0]            ;920
-                  |L1.5156|
-001424  2acd              CMP      r2,#0xcd              ;922
-001426  d119              BNE      |L1.5212|
-001428  f9b61004          LDRSH    r1,[r6,#4]            ;924  ; modbus_tcp_rx_arg1
-00142c  2901              CMP      r1,#1                 ;924
-00142e  d006              BEQ      |L1.5182|
-001430  2905              CMP      r1,#5                 ;925
-001432  d008              BEQ      |L1.5190|
-001434  1c4b              ADDS     r3,r1,#1              ;926
-001436  d00a              BEQ      |L1.5198|
-001438  1d49              ADDS     r1,r1,#5              ;927
-00143a  d00c              BEQ      |L1.5206|
-00143c  e00e              B        |L1.5212|
-                  |L1.5182|
-00143e  f04f011c          MOV      r1,#0x1c              ;924
-001442  7001              STRB     r1,[r0,#0]            ;924
-001444  e00a              B        |L1.5212|
-                  |L1.5190|
-001446  f04f011e          MOV      r1,#0x1e              ;925
-00144a  7001              STRB     r1,[r0,#0]            ;925
-00144c  e006              B        |L1.5212|
-                  |L1.5198|
-00144e  f04f011b          MOV      r1,#0x1b              ;926
-001452  7001              STRB     r1,[r0,#0]            ;926
-001454  e002              B        |L1.5212|
-                  |L1.5206|
-001456  f04f011d          MOV      r1,#0x1d              ;927
-00145a  7001              STRB     r1,[r0,#0]            ;927
-                  |L1.5212|
-00145c  2ace              CMP      r2,#0xce              ;929
-00145e  d119              BNE      |L1.5268|
-001460  f9b61004          LDRSH    r1,[r6,#4]            ;931  ; modbus_tcp_rx_arg1
-001464  2901              CMP      r1,#1                 ;931
-001466  d006              BEQ      |L1.5238|
-001468  290a              CMP      r1,#0xa               ;932
-00146a  d008              BEQ      |L1.5246|
-00146c  1c4b              ADDS     r3,r1,#1              ;933
-00146e  d00a              BEQ      |L1.5254|
-001470  310a              ADDS     r1,r1,#0xa            ;934
-001472  d00c              BEQ      |L1.5262|
-001474  e00e              B        |L1.5268|
-                  |L1.5238|
-001476  f04f0110          MOV      r1,#0x10              ;931
-00147a  7001              STRB     r1,[r0,#0]            ;931
-00147c  e00a              B        |L1.5268|
-                  |L1.5246|
-00147e  f04f0112          MOV      r1,#0x12              ;932
-001482  7001              STRB     r1,[r0,#0]            ;932
-001484  e006              B        |L1.5268|
-                  |L1.5254|
-001486  f04f010f          MOV      r1,#0xf               ;933
-00148a  7001              STRB     r1,[r0,#0]            ;933
-00148c  e002              B        |L1.5268|
-                  |L1.5262|
-00148e  f04f0111          MOV      r1,#0x11              ;934
-001492  7001              STRB     r1,[r0,#0]            ;934
-                  |L1.5268|
-001494  9700              STR      r7,[sp,#0]            ;983
-001496  2301              MOVS     r3,#1                 ;983
-001498  7831              LDRB     r1,[r6,#0]            ;983  ; modbus_tcp_func
-00149a  f9ba0000          LDRSH    r0,[r10,#0]           ;983  ; MODBUS_ADRESS
-00149e  f7fffffe          BL       modbus_hold_registers_transmit
-0014a2  200b              MOVS     r0,#0xb               ;985
-0014a4  f7fffffe          BL       tcp_get_buf
-0014a8  4605              MOV      r5,r0                 ;985
-0014aa  7820              LDRB     r0,[r4,#0]            ;986
-0014ac  7028              STRB     r0,[r5,#0]            ;986
-0014ae  7860              LDRB     r0,[r4,#1]            ;987
-0014b0  7068              STRB     r0,[r5,#1]            ;987
-0014b2  78a0              LDRB     r0,[r4,#2]            ;988
-0014b4  70a8              STRB     r0,[r5,#2]            ;988
-0014b6  78e0              LDRB     r0,[r4,#3]            ;989
-0014b8  70e8              STRB     r0,[r5,#3]            ;989
-0014ba  f8859004          STRB     r9,[r5,#4]            ;990
-0014be  f04f0006          MOV      r0,#6                 ;991
-0014c2  7168              STRB     r0,[r5,#5]            ;991
-0014c4  7870              LDRB     r0,[r6,#1]            ;992  ; modbus_tcp_unit
-0014c6  71a8              STRB     r0,[r5,#6]            ;992
-0014c8  7830              LDRB     r0,[r6,#0]            ;993  ; modbus_tcp_func
-0014ca  71e8              STRB     r0,[r5,#7]            ;993
-0014cc  f9b61002          LDRSH    r1,[r6,#2]            ;994  ; modbus_tcp_rx_arg0
-0014d0  ea4f70e1          ASR      r0,r1,#31             ;994
-0014d4  eb016210          ADD      r2,r1,r0,LSR #24      ;994
-0014d8  ea4f2022          ASR      r0,r2,#8              ;994
-0014dc  7228              STRB     r0,[r5,#8]            ;994
-0014de  4608              MOV      r0,r1                 ;995
-0014e0  7268              STRB     r0,[r5,#9]            ;995
-0014e2  f04f0202          MOV      r2,#2                 ;996
-0014e6  f105000a          ADD      r0,r5,#0xa            ;996
-0014ea  68b1              LDR      r1,[r6,#8]            ;996  ; modbus_tcp_out_ptr
-0014ec  f7fffffe          BL       mem_copy
-0014f0  220c              MOVS     r2,#0xc               ;999
-0014f2  4629              MOV      r1,r5                 ;999
-0014f4  f8980000          LDRB     r0,[r8,#0]            ;999  ; socket_tcp
-0014f8  f7fffffe          BL       tcp_send
-                  |L1.5372|
-0014fc  2000              MOVS     r0,#0                 ;1041
-                  |L1.5374|
-0014fe  e8bd8ff8          POP      {r3-r11,pc}
-001502  0000              DCW      0x0000
-                  |L1.5380|
+0012cc  8870              LDRH     r0,[r6,#2]            ;884  ; modbus_tcp_rx_arg0
+0012ce  28c6              CMP      r0,#0xc6              ;884
+0012d0  d108              BNE      |L1.4836|
+0012d2  f9b61004          LDRSH    r1,[r6,#4]            ;886  ; modbus_tcp_rx_arg1
+0012d6  f1a1000a          SUB      r0,r1,#0xa            ;886
+0012da  2832              CMP      r0,#0x32              ;886
+0012dc  d802              BHI      |L1.4836|
+0012de  20f0              MOVS     r0,#0xf0              ;886
+0012e0  f7fffffe          BL       lc640_write_int
+                  |L1.4836|
+0012e4  f9b62002          LDRSH    r2,[r6,#2]            ;889  ; modbus_tcp_rx_arg0
+0012e8  487a              LDR      r0,|L1.5332|
+0012ea  2ac8              CMP      r2,#0xc8              ;889
+0012ec  d119              BNE      |L1.4898|
+0012ee  f9b61004          LDRSH    r1,[r6,#4]            ;891  ; modbus_tcp_rx_arg1
+0012f2  2901              CMP      r1,#1                 ;891
+0012f4  d006              BEQ      |L1.4868|
+0012f6  290a              CMP      r1,#0xa               ;892
+0012f8  d008              BEQ      |L1.4876|
+0012fa  1c4b              ADDS     r3,r1,#1              ;893
+0012fc  d00a              BEQ      |L1.4884|
+0012fe  310a              ADDS     r1,r1,#0xa            ;894
+001300  d00c              BEQ      |L1.4892|
+001302  e00e              B        |L1.4898|
+                  |L1.4868|
+001304  f04f0124          MOV      r1,#0x24              ;891
+001308  7001              STRB     r1,[r0,#0]            ;891
+00130a  e00a              B        |L1.4898|
+                  |L1.4876|
+00130c  f04f0125          MOV      r1,#0x25              ;892
+001310  7001              STRB     r1,[r0,#0]            ;892
+001312  e006              B        |L1.4898|
+                  |L1.4884|
+001314  f04f0126          MOV      r1,#0x26              ;893
+001318  7001              STRB     r1,[r0,#0]            ;893
+00131a  e002              B        |L1.4898|
+                  |L1.4892|
+00131c  f04f0127          MOV      r1,#0x27              ;894
+001320  7001              STRB     r1,[r0,#0]            ;894
+                  |L1.4898|
+001322  2ac9              CMP      r2,#0xc9              ;896
+001324  d119              BNE      |L1.4954|
+001326  f9b61004          LDRSH    r1,[r6,#4]            ;898  ; modbus_tcp_rx_arg1
+00132a  2901              CMP      r1,#1                 ;898
+00132c  d006              BEQ      |L1.4924|
+00132e  290a              CMP      r1,#0xa               ;899
+001330  d008              BEQ      |L1.4932|
+001332  1c4b              ADDS     r3,r1,#1              ;900
+001334  d00a              BEQ      |L1.4940|
+001336  310a              ADDS     r1,r1,#0xa            ;901
+001338  d00c              BEQ      |L1.4948|
+00133a  e00e              B        |L1.4954|
+                  |L1.4924|
+00133c  f04f0128          MOV      r1,#0x28              ;898
+001340  7001              STRB     r1,[r0,#0]            ;898
+001342  e00a              B        |L1.4954|
+                  |L1.4932|
+001344  f04f0129          MOV      r1,#0x29              ;899
+001348  7001              STRB     r1,[r0,#0]            ;899
+00134a  e006              B        |L1.4954|
+                  |L1.4940|
+00134c  f04f012a          MOV      r1,#0x2a              ;900
+001350  7001              STRB     r1,[r0,#0]            ;900
+001352  e002              B        |L1.4954|
+                  |L1.4948|
+001354  f04f012b          MOV      r1,#0x2b              ;901
+001358  7001              STRB     r1,[r0,#0]            ;901
+                  |L1.4954|
+00135a  2aca              CMP      r2,#0xca              ;903
+00135c  d10d              BNE      |L1.4986|
+00135e  f9b61004          LDRSH    r1,[r6,#4]            ;905  ; modbus_tcp_rx_arg1
+001362  2901              CMP      r1,#1                 ;905
+001364  d002              BEQ      |L1.4972|
+001366  1c49              ADDS     r1,r1,#1              ;906
+001368  d004              BEQ      |L1.4980|
+00136a  e006              B        |L1.4986|
+                  |L1.4972|
+00136c  f04f010e          MOV      r1,#0xe               ;905
+001370  7001              STRB     r1,[r0,#0]            ;905
+001372  e002              B        |L1.4986|
+                  |L1.4980|
+001374  f04f010d          MOV      r1,#0xd               ;906
+001378  7001              STRB     r1,[r0,#0]            ;906
+                  |L1.4986|
+00137a  2acb              CMP      r2,#0xcb              ;908
+00137c  d11c              BNE      |L1.5048|
+00137e  f9b61004          LDRSH    r1,[r6,#4]            ;910  ; modbus_tcp_rx_arg1
+001382  2901              CMP      r1,#1                 ;910
+001384  d009              BEQ      |L1.5018|
+001386  2905              CMP      r1,#5                 ;911
+001388  d00b              BEQ      |L1.5026|
+00138a  f5a1437f          SUB      r3,r1,#0xff00         ;912
+00138e  3bff              SUBS     r3,r3,#0xff           ;912
+001390  d10b              BNE      |L1.5034|
+001392  f04f0113          MOV      r1,#0x13              ;912
+001396  7001              STRB     r1,[r0,#0]            ;912
+001398  e00e              B        |L1.5048|
+                  |L1.5018|
+00139a  f04f0114          MOV      r1,#0x14              ;910
+00139e  7001              STRB     r1,[r0,#0]            ;910
+0013a0  e00a              B        |L1.5048|
+                  |L1.5026|
+0013a2  f04f0116          MOV      r1,#0x16              ;911
+0013a6  7001              STRB     r1,[r0,#0]            ;911
+0013a8  e006              B        |L1.5048|
+                  |L1.5034|
+0013aa  f5a1437f          SUB      r3,r1,#0xff00         ;913
+0013ae  3bfb              SUBS     r3,r3,#0xfb           ;913
+0013b0  d102              BNE      |L1.5048|
+0013b2  f04f0115          MOV      r1,#0x15              ;913
+0013b6  7001              STRB     r1,[r0,#0]            ;913
+                  |L1.5048|
+0013b8  2acc              CMP      r2,#0xcc              ;915
+0013ba  d119              BNE      |L1.5104|
+0013bc  f9b61004          LDRSH    r1,[r6,#4]            ;917  ; modbus_tcp_rx_arg1
+0013c0  2901              CMP      r1,#1                 ;917
+0013c2  d006              BEQ      |L1.5074|
+0013c4  2905              CMP      r1,#5                 ;918
+0013c6  d008              BEQ      |L1.5082|
+0013c8  1c4b              ADDS     r3,r1,#1              ;919
+0013ca  d00a              BEQ      |L1.5090|
+0013cc  1d49              ADDS     r1,r1,#5              ;920
+0013ce  d00c              BEQ      |L1.5098|
+0013d0  e00e              B        |L1.5104|
+                  |L1.5074|
+0013d2  f04f0118          MOV      r1,#0x18              ;917
+0013d6  7001              STRB     r1,[r0,#0]            ;917
+0013d8  e00a              B        |L1.5104|
+                  |L1.5082|
+0013da  f04f011a          MOV      r1,#0x1a              ;918
+0013de  7001              STRB     r1,[r0,#0]            ;918
+0013e0  e006              B        |L1.5104|
+                  |L1.5090|
+0013e2  f04f0117          MOV      r1,#0x17              ;919
+0013e6  7001              STRB     r1,[r0,#0]            ;919
+0013e8  e002              B        |L1.5104|
+                  |L1.5098|
+0013ea  f04f0119          MOV      r1,#0x19              ;920
+0013ee  7001              STRB     r1,[r0,#0]            ;920
+                  |L1.5104|
+0013f0  2acd              CMP      r2,#0xcd              ;922
+0013f2  d119              BNE      |L1.5160|
+0013f4  f9b61004          LDRSH    r1,[r6,#4]            ;924  ; modbus_tcp_rx_arg1
+0013f8  2901              CMP      r1,#1                 ;924
+0013fa  d006              BEQ      |L1.5130|
+0013fc  2905              CMP      r1,#5                 ;925
+0013fe  d008              BEQ      |L1.5138|
+001400  1c4b              ADDS     r3,r1,#1              ;926
+001402  d00a              BEQ      |L1.5146|
+001404  1d49              ADDS     r1,r1,#5              ;927
+001406  d00c              BEQ      |L1.5154|
+001408  e00e              B        |L1.5160|
+                  |L1.5130|
+00140a  f04f011c          MOV      r1,#0x1c              ;924
+00140e  7001              STRB     r1,[r0,#0]            ;924
+001410  e00a              B        |L1.5160|
+                  |L1.5138|
+001412  f04f011e          MOV      r1,#0x1e              ;925
+001416  7001              STRB     r1,[r0,#0]            ;925
+001418  e006              B        |L1.5160|
+                  |L1.5146|
+00141a  f04f011b          MOV      r1,#0x1b              ;926
+00141e  7001              STRB     r1,[r0,#0]            ;926
+001420  e002              B        |L1.5160|
+                  |L1.5154|
+001422  f04f011d          MOV      r1,#0x1d              ;927
+001426  7001              STRB     r1,[r0,#0]            ;927
+                  |L1.5160|
+001428  2ace              CMP      r2,#0xce              ;929
+00142a  d119              BNE      |L1.5216|
+00142c  f9b61004          LDRSH    r1,[r6,#4]            ;931  ; modbus_tcp_rx_arg1
+001430  2901              CMP      r1,#1                 ;931
+001432  d006              BEQ      |L1.5186|
+001434  290a              CMP      r1,#0xa               ;932
+001436  d008              BEQ      |L1.5194|
+001438  1c4b              ADDS     r3,r1,#1              ;933
+00143a  d00a              BEQ      |L1.5202|
+00143c  310a              ADDS     r1,r1,#0xa            ;934
+00143e  d00c              BEQ      |L1.5210|
+001440  e00e              B        |L1.5216|
+                  |L1.5186|
+001442  f04f0110          MOV      r1,#0x10              ;931
+001446  7001              STRB     r1,[r0,#0]            ;931
+001448  e00a              B        |L1.5216|
+                  |L1.5194|
+00144a  f04f0112          MOV      r1,#0x12              ;932
+00144e  7001              STRB     r1,[r0,#0]            ;932
+001450  e006              B        |L1.5216|
+                  |L1.5202|
+001452  f04f010f          MOV      r1,#0xf               ;933
+001456  7001              STRB     r1,[r0,#0]            ;933
+001458  e002              B        |L1.5216|
+                  |L1.5210|
+00145a  f04f0111          MOV      r1,#0x11              ;934
+00145e  7001              STRB     r1,[r0,#0]            ;934
+                  |L1.5216|
+001460  9700              STR      r7,[sp,#0]            ;983
+001462  2301              MOVS     r3,#1                 ;983
+001464  7831              LDRB     r1,[r6,#0]            ;983  ; modbus_tcp_func
+001466  f9ba0000          LDRSH    r0,[r10,#0]           ;983  ; MODBUS_ADRESS
+00146a  f7fffffe          BL       modbus_hold_registers_transmit
+00146e  200b              MOVS     r0,#0xb               ;985
+001470  f7fffffe          BL       tcp_get_buf
+001474  4605              MOV      r5,r0                 ;985
+001476  7820              LDRB     r0,[r4,#0]            ;986
+001478  7028              STRB     r0,[r5,#0]            ;986
+00147a  7860              LDRB     r0,[r4,#1]            ;987
+00147c  7068              STRB     r0,[r5,#1]            ;987
+00147e  78a0              LDRB     r0,[r4,#2]            ;988
+001480  70a8              STRB     r0,[r5,#2]            ;988
+001482  78e0              LDRB     r0,[r4,#3]            ;989
+001484  70e8              STRB     r0,[r5,#3]            ;989
+001486  f8859004          STRB     r9,[r5,#4]            ;990
+00148a  f04f0006          MOV      r0,#6                 ;991
+00148e  7168              STRB     r0,[r5,#5]            ;991
+001490  7870              LDRB     r0,[r6,#1]            ;992  ; modbus_tcp_unit
+001492  71a8              STRB     r0,[r5,#6]            ;992
+001494  7830              LDRB     r0,[r6,#0]            ;993  ; modbus_tcp_func
+001496  71e8              STRB     r0,[r5,#7]            ;993
+001498  f9b61002          LDRSH    r1,[r6,#2]            ;994  ; modbus_tcp_rx_arg0
+00149c  ea4f70e1          ASR      r0,r1,#31             ;994
+0014a0  eb016210          ADD      r2,r1,r0,LSR #24      ;994
+0014a4  ea4f2022          ASR      r0,r2,#8              ;994
+0014a8  7228              STRB     r0,[r5,#8]            ;994
+0014aa  4608              MOV      r0,r1                 ;995
+0014ac  7268              STRB     r0,[r5,#9]            ;995
+0014ae  f04f0202          MOV      r2,#2                 ;996
+0014b2  f105000a          ADD      r0,r5,#0xa            ;996
+0014b6  68b1              LDR      r1,[r6,#8]            ;996  ; modbus_tcp_out_ptr
+0014b8  f7fffffe          BL       mem_copy
+0014bc  220c              MOVS     r2,#0xc               ;999
+0014be  4629              MOV      r1,r5                 ;999
+0014c0  f8980000          LDRB     r0,[r8,#0]            ;999  ; socket_tcp
+0014c4  f7fffffe          BL       tcp_send
+                  |L1.5320|
+0014c8  2000              MOVS     r0,#0                 ;1041
+                  |L1.5322|
+0014ca  e8bd8ff8          POP      {r3-r11,pc}
+0014ce  0000              DCW      0x0000
+                  |L1.5328|
                           DCD      bRESET_INT_WDT
-                  |L1.5384|
+                  |L1.5332|
                           DCD      command_rki
-                  |L1.5388|
-00150c  2001              MOVS     r0,#1                 ;1027
-00150e  e7f6              B        |L1.5374|
-                  |L1.5392|
-001510  7007              STRB     r7,[r0,#0]            ;1031
-001512  2001              MOVS     r0,#1                 ;1033
-001514  e7f3              B        |L1.5374|
-                  |L1.5398|
-001516  f8809000          STRB     r9,[r0,#0]            ;1037
-00151a  2001              MOVS     r0,#1                 ;1039
-00151c  e7ef              B        |L1.5374|
+                  |L1.5336|
+0014d8  2001              MOVS     r0,#1                 ;1027
+0014da  e7f6              B        |L1.5322|
+                  |L1.5340|
+0014dc  7007              STRB     r7,[r0,#0]            ;1031
+0014de  2001              MOVS     r0,#1                 ;1033
+0014e0  e7f3              B        |L1.5322|
+                  |L1.5346|
+0014e2  f8809000          STRB     r9,[r0,#0]            ;1037
+0014e6  2001              MOVS     r0,#1                 ;1039
+0014e8  e7ef              B        |L1.5322|
                           ENDP
 
 

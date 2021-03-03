@@ -491,6 +491,9 @@
 
 #define EE_NUMENMV		4352
 #define EE_NUMPHASE	4354
+//o_12_s
+#define EE_NUMLVBD		4356
+//o_12_e
 #define EE_WEB_PASSWORD				4360 
 #define EE_HTTP_LOCATION			4370
 #define EE_UMAXN					4470
@@ -500,6 +503,16 @@
 #define EE_SNTP_IP3					4478
 #define EE_SNTP_IP4					4480
 
+//o_12_s
+#define EE_ENMV_MODBUS_ADRESS_1		4500
+#define EE_ENMV_MODBUS_ADRESS_2		4502
+#define EE_ENMV_MODBUS_ADRESS_3		4504
+#define EE_ENMV_MODBUS_ADRESS_4		4506
+#define EE_ENMV_MODBUS_ADRESS_5		4508
+#define EE_ENMV_MODBUS_ADRESS_6		4510
+#define EE_ENMV_MODBUS_ADRESS_7		4512
+#define EE_ENMV_MODBUS_ADRESS_8		4514
+//o_12_e
 //#define WRK	4352
 //#define WRK_AH	5376  
 // массив данных разрядов батареи {(8*128)+(2*128)}

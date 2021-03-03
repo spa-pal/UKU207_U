@@ -360,7 +360,7 @@ switch (evt)
 	     		}
 			if(modbus_tcp_rx_arg0==69)		
 				{
-				if(modbus_tcp_rx_arg1==0 || modbus_tcp_rx_arg1==1) lc640_write_int(EE_NUMENMV,modbus_tcp_rx_arg1);
+				if(modbus_tcp_rx_arg1>0 && modbus_tcp_rx_arg1<9) lc640_write_int(EE_NUMENMV,modbus_tcp_rx_arg1); //o_12
 	     		}
 			if(modbus_tcp_rx_arg0==70)		
 				{

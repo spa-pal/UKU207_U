@@ -213,10 +213,10 @@ extern signed char	snmp_cool_40_dtemper;		//^^номер первого бпса
 extern signed char	snmp_cool_20_dtemper;		//^^номер первого бпса 
 extern signed char 	snmp_warm_stat;				//^^
 //Данные с модуля дискретных входов ЭНМВ-1	    //o_2
-extern unsigned char enmv_on; // если 1, то есть связь с модулем	 //o_2
+extern unsigned char enmv_on[8]; // если 1, то есть связь с соответствующем модулем	 //o_12
 extern unsigned char snmp_enmv_number[64];  //o_2
-extern unsigned char snmp_enmv_data[64]; //данные с модуля     //o_2 
-extern unsigned char enmv_data_pred[8], enmv_data[8]; //данные с модуля текущие и предыдущие  // o_7
+extern unsigned char snmp_enmv_data[64][8]; //данные с модуля     //o_2 	//o_12
+extern unsigned char enmv_data_pred[8][8], enmv_data[8][8]; //данные с модуля текущие и предыдущие  // o_7	 //o_12
  
 //-----------------------------------------------
 void snmp_data (void);
@@ -296,6 +296,13 @@ void snmp_spz_delta_write (int mode);
 void snmp_spz_block_en_src_write (int mode);
 void snmp_spz_block_log_write (int mode);
 void snmp_spz_vent_block_write (int mode);
+//o_12_s
+void snmp_LVBD_Uload_rele_en (int mode);
+void snmp_LVBD_Uakb_rele_en (int mode);
+void snmp_LVBD_porog_U1 (int mode);
+void snmp_LVBD_porog_U2 (int mode);
+void snmp_LVBD_num_meas (int mode);
+//o_12_e
 
 
 

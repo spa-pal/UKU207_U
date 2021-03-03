@@ -1152,6 +1152,30 @@ char slave_num;
 //can_debug_plazma[1][2]++;
 can_rotor[1]++;
 
+if (RXBUFF[0]==PUT_LVBD) {
+	no_lvbd=0;
+	if(RXBUFF[1]==0) {
+	  	lvbd_Uload=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		lvbd_Uakb=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		LVBD_status=RXBUFF[6];
+		LVBD_num_meas=RXBUFF[7];
+	}
+	else if(RXBUFF[1]==1) {
+	  	LVBD_porog_U1=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		LVBD_porog_U2=((unsigned short)RXBUFF[4]<<8)+RXBUFF[5];
+		LVBD_Uload_rele_en=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==2) {
+	  	LVBD_speed_rs485=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+		LVBD_adress_rs485=RXBUFF[4];
+		LVBD_mode_rele_enable=RXBUFF[5];
+		ver_soft_lvbd=((unsigned short)RXBUFF[6]<<8)+RXBUFF[7];
+	}
+	else if(RXBUFF[1]==3) {
+		LVBD_Uakb_rele_en=((unsigned short)RXBUFF[2]<<8)+RXBUFF[3];
+	}
+}
+
 // oleg_start
 //rki_1_s
 if (RXBUFF[0]==0xE7) { 
