@@ -8,7 +8,7 @@ import sys
 #targetDir = "P:\\ПТЭСТ\\ИПС_ЗВУ\\"
 targetDir = "P:\\Прошивки2018\\ИБЭП_6U\\"
 source_file = 'curr_version.c'
-source_file1 = ".\\EXE\\UKU_6U g.hex"
+source_file1 = ".\\EXE\\UKU_6U.hex"
 
 version_string = 'const short HARDVARE_VERSION = {};'
 subversion_string = 'const short SOFT_VERSION = {};'

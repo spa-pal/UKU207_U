@@ -6837,14 +6837,27 @@ else if(ind==iExtern_KONTUR)
 #ifdef UKU_FSO
 else if(ind==iAvt_FSO)
 	{
-
-	//ptrs[0]=		" Дt.внеш.       !°С ";
-    ptrs[0]=  	    " АВТ Сеть          @";
-    ptrs[1]=  	    " АВТ АКБ           #";
-	ptrs[2]=  	    " АВТ Нагрузка      $";	            
-	ptrs[3]=  	    " Выход              ";
-	ptrs[4]=  	    "                    ";
-	ptrs[5]=  	    "                    ";
+	if(NUMBAT_FSO==1)
+		{
+		//ptrs[0]=		" Дt.внеш.       !°С ";
+	    ptrs[0]=  	    " АВТ Сеть          @";
+	    ptrs[1]=  	    " АВТ АКБ           #";
+		ptrs[2]=  	    " АВТ Нагрузка      $";	            
+		ptrs[3]=  	    " Выход              ";
+		ptrs[4]=  	    "                    ";
+		ptrs[5]=  	    "                    ";
+		}
+	else if(NUMBAT_FSO==2)
+		{
+		//ptrs[0]=		" Дt.внеш.       !°С ";
+	    ptrs[0]=  	    " АВТ Сеть          @";
+	    ptrs[1]=  	    " АВТ АКБ1          #";
+		ptrs[2]=  	    " АВТ АКБ2          %";
+		ptrs[3]=  	    " АВТ Нагрузка      $";	            
+		ptrs[4]=  	    " Выход              ";
+		ptrs[5]=  	    "                    ";
+		ptrs[6]=  	    "                    ";
+		}
 
 	bgnd_par(		"  ВНЕШНИЕ ДАТЧИКИ   ",
 				ptrs[index_set],
@@ -6870,6 +6883,9 @@ else if(ind==iAvt_FSO)
 	
 	if(sk_stat[2]==ssON)	sub_bgnd("ВКЛ.",'$',-3);
 	else					sub_bgnd("ВЫКЛ.",'$',-4);		
+
+	if(sk_stat[3]==ssON)	sub_bgnd("ВКЛ.",'%',-3);
+	else					sub_bgnd("ВЫКЛ.",'%',-4);
 
 /*	if(sk_av_stat[1]==sasON) sub_bgnd("АВАРИЯ",'%',0);
 	else                     sub_bgnd("НОРМА",'%',0);
@@ -9655,6 +9671,7 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	ptrs[43]=		"    &               ";
 	ptrs[44]=		" Блок допреле       ";
    	ptrs[45]=		" РКИ                "; 
+	ptrs[46]=		" Сетевые вводы      ";	//o_13
 	//o_12_s
 	ptrs[47]=		" LVBD               ";
 	ptrs[48]=		" Модуль сбора ДС    ";
@@ -21698,19 +21715,24 @@ else if(ind==iAvt_FSO)
 	if (but==butU)
 		{      
 		sub_ind--;
-		gran_char(&sub_ind,0,3);
+		if(NUMBAT_FSO==1)gran_char(&sub_ind,0,3);
+		else if(NUMBAT_FSO==2)gran_char(&sub_ind,0,4);
 		}
 		
 	else if (but==butD)
 		{
 		sub_ind++;
-		gran_char(&sub_ind,0,3);		
+		if(NUMBAT_FSO==1)gran_char(&sub_ind,0,3);
+		else if(NUMBAT_FSO==2)gran_char(&sub_ind,0,4);		
 		}
 
-	else if((but==butE)&&(sub_ind==3))
+	else if(but==butE)
 		{
-	    tree_down(0,0);
-	    ret(0);
+		if(((NUMBAT_FSO==1)&&(sub_ind==3))||((NUMBAT_FSO==2)&&(sub_ind==4)))
+			{
+		    tree_down(0,0);
+		    ret(0);
+			}
 		}	
 	}
 else if(ind==iExtern_FSO)
@@ -40499,14 +40521,14 @@ else if(ind==iTst_FSO)
 	
 		}
 
-	else if(sub_ind==(5+NUMIST))
+	else if(sub_ind==(3+NUMIST))
 		{
 		if(but==butE)
 			{
 			bRESET_INT_WDT=1;
 			}
 		}
-	else if(sub_ind==(6+NUMIST))
+	else if(sub_ind==(4+NUMIST))
 		{
 		if(but==butE)
 			{
@@ -44327,7 +44349,7 @@ while (1)
 
 		bat_flag();	 
 	    #if defined UKU_6U || defined UKU_220_IPS_TERMOKOMPENSAT  || defined UKU_220_V2 
-	    if(NUMENMV==1 && enmv_puts_en==0) {
+	    if(NUMENMV>0 && NUMENMV<9 && enmv_puts_en==0)  { //o_13 
 			if(delay_enmv_puts>10) modbus_zapros_ENMV();
 			else ++delay_enmv_puts;	// задержка при включении
 		}

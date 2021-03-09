@@ -10650,7 +10650,7 @@ void ext_drv(void)
 char i;
 
 #ifdef UKU_FSO
-NUMSK=3;
+NUMSK=4;
 #endif
 
 for(i=0;i<NUMSK;i++)
