@@ -3947,17 +3947,14 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 	}
 */
 
-#ifdef UKU_FSO
+/*
+#ifdef UKU_FSO	//для батареи без модбаса
 
-	//if(BAT_TYPE==2)
-		//{
 		lakb[numOfPacks_]._ch_curr=((ascii2halFhex(liBatteryInBuff[105]))<<12)+
 					 		((ascii2halFhex(liBatteryInBuff[106]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[107]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[108])));
 		
-		/*if(temp_SS&0x8000)		lakb[0]._ch_curr=~temp_SS;
-		else 				lakb[0]._ch_curr=temp_SS;*/
 	
 		lakb[numOfPacks_]._tot_bat_volt=	(unsigned short)(((ascii2halFhex(liBatteryInBuff[109]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[110]))<<8)+
@@ -3989,13 +3986,6 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 							((ascii2halFhex(liBatteryInBuff[102]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[103]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[104]))))/100);
-			//int2lcd_mmm(lakb[sub_ind1]._cell_temp_ambient,'[',0);
-			//int2lcd_mmm(lakb[sub_ind1]._cell_temp_power,']',0);
-	
-/*		lakb[0]._max_cell_temp= 	(((ascii2halFhex(liBatteryInBuff[93]))<<12)+
-							((ascii2halFhex(liBatteryInBuff[94]))<<8)+
-							((ascii2halFhex(liBatteryInBuff[95]))<<4)+
-							((ascii2halFhex(liBatteryInBuff[96]))))/10-273;	*/
 	
 		lakb[numOfPacks_]._s_o_c=		(unsigned short)((ascii2halFhex(liBatteryInBuff[113]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[114]))<<8)+
@@ -4019,23 +4009,21 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 							((ascii2halFhex(liBatteryInBuff[129]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[130])));
 	
-		//lakb[0]._s_o_c=		lakb[0]._s_o_c_abs/(lakb[0]._rat_cap/100);
-
 		if(sTARKSilentCnt[numOfPacks_]==10)
 			{
-		lakb[numOfPacks_]._ch_curr=0;
-		lakb[numOfPacks_]._tot_bat_volt=0;
-		lakb[numOfPacks_]._cell_temp_1=0;
-		lakb[numOfPacks_]._cell_temp_2=0;
-		lakb[numOfPacks_]._cell_temp_3=0;
-		lakb[numOfPacks_]._cell_temp_4=0;
-		lakb[numOfPacks_]._cell_temp_ambient=0;
-		lakb[numOfPacks_]._cell_temp_power=0;
-		lakb[numOfPacks_]._s_o_c=0;
-		lakb[numOfPacks_]._s_o_h=0;
-		if(lakb[numOfPacks_]._s_o_h==0)lakb[numOfPacks_]._s_o_h=1;
-		lakb[numOfPacks_]._s_o_c_percent=0;
-		lakb[numOfPacks_]._rat_cap=0;
+			lakb[numOfPacks_]._ch_curr=0;
+			lakb[numOfPacks_]._tot_bat_volt=0;
+			lakb[numOfPacks_]._cell_temp_1=0;
+			lakb[numOfPacks_]._cell_temp_2=0;
+			lakb[numOfPacks_]._cell_temp_3=0;
+			lakb[numOfPacks_]._cell_temp_4=0;
+			lakb[numOfPacks_]._cell_temp_ambient=0;
+			lakb[numOfPacks_]._cell_temp_power=0;
+			lakb[numOfPacks_]._s_o_c=0;
+			lakb[numOfPacks_]._s_o_h=0;
+			if(lakb[numOfPacks_]._s_o_h==0)lakb[numOfPacks_]._s_o_h=1;
+			lakb[numOfPacks_]._s_o_c_percent=0;
+			lakb[numOfPacks_]._rat_cap=0;
 			}
 
 
@@ -4051,7 +4039,104 @@ t_ext[0]=(signed short)temp_SL;
 
 	
 #endif //UKU_FSO	
+*/
 
+#ifdef UKU_FSO	   //для батареи с модбасом
+
+	//if(BAT_TYPE==2)
+		//{
+		lakb[0]._ch_curr=		(unsigned short)((((short)liBatteryInBuff[3])<<8)  +  ((short)liBatteryInBuff[4]));
+		lakb[1]._ch_curr=		(unsigned short)((((short)liBatteryInBuff[203])<<8)  +  ((short)liBatteryInBuff[2044]));
+		/*if(temp_SS&0x8000)		lakb[0]._ch_curr=~temp_SS;
+		else 				lakb[0]._ch_curr=temp_SS;*/
+	
+		lakb[0]._tot_bat_volt=	((usigned short)((((short)liBatteryInBuff[5])<<8)  +  ((short)liBatteryInBuff[6])))/10;
+		lakb[1]._tot_bat_volt=	((unsigned short)((((short)liBatteryInBuff[205])<<8)  +  ((short)liBatteryInBuff[206])))/10;
+
+		lakb[0]._cell_temp_1= 	(signed short)((((signed short)liBatteryInBuff[65])<<8)  +  ((signed short)liBatteryInBuff[66]));
+		lakb[1]._cell_temp_1= 	(signed short)((((signed short)liBatteryInBuff[265])<<8)  +  ((signed short)liBatteryInBuff[266]));
+		lakb[0]._cell_temp_2= 	(unsigned short)((((short)liBatteryInBuff[67])<<8)  +  ((short)liBatteryInBuff[68]));
+		lakb[1]._cell_temp_2= 	(unsigned short)((((short)liBatteryInBuff[267])<<8)  +  ((short)liBatteryInBuff[268]));
+		lakb[0]._cell_temp_3= 	(unsigned short)((((short)liBatteryInBuff[69])<<8)  +  ((short)liBatteryInBuff[70]));
+		lakb[1]._cell_temp_3= 	(unsigned short)((((short)liBatteryInBuff[269])<<8)  +  ((short)liBatteryInBuff[270]));
+		lakb[0]._cell_temp_4= 	(unsigned short)((((short)liBatteryInBuff[71])<<8)  +  ((short)liBatteryInBuff[72]));
+		lakb[1]._cell_temp_4= 	(unsigned short)((((short)liBatteryInBuff[271])<<8)  +  ((short)liBatteryInBuff[272]));
+		lakb[0]._cell_temp_power= 		(unsigned short)((((short)liBatteryInBuff[73])<<8)  +  ((short)liBatteryInBuff[74]));
+		lakb[1]._cell_temp_power= 		(unsigned short)((((short)liBatteryInBuff[273])<<8)  +  ((short)liBatteryInBuff[274]));
+		lakb[0]._cell_temp_ambient= 	(unsigned short)((((short)liBatteryInBuff[75])<<8)  +  ((short)liBatteryInBuff[76]));
+		lakb[1]._cell_temp_ambient= 	(unsigned short)((((short)liBatteryInBuff[275])<<8)  +  ((short)liBatteryInBuff[276]));
+/*		lakb[0]._max_cell_temp= 	(((ascii2halFhex(liBatteryInBuff[93]))<<12)+
+							((ascii2halFhex(liBatteryInBuff[94]))<<8)+
+							((ascii2halFhex(liBatteryInBuff[95]))<<4)+
+							((ascii2halFhex(liBatteryInBuff[96]))))/10-273;	*/
+	
+		lakb[0]._s_o_c=		((unsigned short)((((short)liBatteryInBuff[7])<<8)  +  ((short)liBatteryInBuff[8])));
+		lakb[1]._s_o_c=		((unsigned short)((((short)liBatteryInBuff[207])<<8)  +  ((short)liBatteryInBuff[208])));
+	
+		lakb[0]._s_o_h=		((unsigned short)((((short)liBatteryInBuff[9])<<8)  +  ((short)liBatteryInBuff[10])));
+		lakb[1]._s_o_h=		((unsigned short)((((short)liBatteryInBuff[9])<<208)  +  ((short)liBatteryInBuff[210])));
+
+		if(lakb[0]._s_o_h==0)lakb[0]._s_o_h=1;
+		if(lakb[1]._s_o_h==0)lakb[1]._s_o_h=1;
+
+		temp_SL=((signed long)lakb[numOfPacks_]._s_o_c)*100L;
+		temp_SL/=(signed long)lakb[numOfPacks_]._s_o_h;
+		lakb[numOfPacks_]._s_o_c_percent=(signed short)temp_SL;
+			
+
+		lakb[numOfPacks_]._rat_cap=		(unsigned short)((ascii2halFhex(liBatteryInBuff[127]))<<12)+
+							((ascii2halFhex(liBatteryInBuff[128]))<<8)+
+							((ascii2halFhex(liBatteryInBuff[129]))<<4)+
+							((ascii2halFhex(liBatteryInBuff[130])));
+	
+		//lakb[0]._s_o_c=		lakb[0]._s_o_c_abs/(lakb[0]._rat_cap/100);
+
+		if(sTARKSilentCnt[0]==10)
+			{
+		lakb[0]._ch_curr=0;
+		lakb[0]._tot_bat_volt=0;
+		lakb[0]._cell_temp_1=0;
+		lakb[0]._cell_temp_2=0;
+		lakb[0]._cell_temp_3=0;
+		lakb[0]._cell_temp_4=0;
+		lakb[0]._cell_temp_ambient=0;
+		lakb[0]._cell_temp_power=0;
+		lakb[0]._s_o_c=0;
+		lakb[0]._s_o_h=0;
+		if(lakb[0]._s_o_h==0)lakb[0]._s_o_h=1;
+		lakb[0]._s_o_c_percent=0;
+		lakb[0]._rat_cap=0;
+			}
+
+		if(sTARKSilentCnt[1]==10)
+			{
+		lakb[1]._ch_curr=0;
+		lakb[1]._tot_bat_volt=0;
+		lakb[1]._cell_temp_1=0;
+		lakb[1]._cell_temp_2=0;
+		lakb[1]._cell_temp_3=0;
+		lakb[1]._cell_temp_4=0;
+		lakb[1]._cell_temp_ambient=0;
+		lakb[1]._cell_temp_power=0;
+		lakb[1]._s_o_c=0;
+		lakb[1]._s_o_h=0;
+		if(lakb[1]._s_o_h==0)lakb[1]._s_o_h=1;
+		lakb[1]._s_o_c_percent=0;
+		lakb[1]._rat_cap=0;
+			}
+
+//Внешний датчик температуры 
+if((adc_buff_[6]>800)&&(adc_buff_[6]<3800))ND_EXT[0]=0;
+else ND_EXT[0]=1;
+temp_SL=(signed long)adc_buff_[6];
+temp_SL*=Ktext[0];
+temp_SL/=20000L;
+temp_SL-=273L;
+t_ext[0]=(signed short)temp_SL;
+
+
+	
+#endif //UKU_FSO
 
 
 #ifdef UKU_TELECORE2015

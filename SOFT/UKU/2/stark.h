@@ -8,4 +8,4 @@ extern char sTARKBatteryHndlCmnd;
 
 		 
 void stark_bat_hndl(void);
-
+void stark_bat_hndl_2(void);

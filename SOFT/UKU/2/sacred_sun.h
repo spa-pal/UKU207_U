@@ -1,7 +1,7 @@
 
 extern char portForSacredSunBatteryIsInitiated;
 extern char sacredSunBatteryHndlPhase;
-extern char liBatteryInBuff[300];
+extern char liBatteryInBuff[400];
 extern char sacredSunRequestPhase;
 extern short sacredSunSilentCnt;
 

@@ -5,7 +5,7 @@
 
 char portForSacredSunBatteryIsInitiated=0;
 char sacredSunBatteryHndlPhase;
-char liBatteryInBuff[300];
+char liBatteryInBuff[400];
 char sacredSunRequestPhase;
 short sacredSunSilentCnt;
 

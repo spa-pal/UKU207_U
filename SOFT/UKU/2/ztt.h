@@ -1,7 +1,7 @@
 
 extern char portZTTSunBatteryIsInitiated;
 extern char zTTBatteryHndlPhase;
-extern char liBatteryInBuff[300];
+extern char liBatteryInBuff[400];
 extern char zTTRequestPhase;
 extern short zTTSilentCnt[3];
 extern char zTTButteryCnter;
