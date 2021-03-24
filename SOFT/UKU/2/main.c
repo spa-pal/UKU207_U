@@ -4708,7 +4708,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 	/*int2lcdyx(lc640_read_int(EE_ETH_IS_ON),0,5,0);
 	int2lcdyx(LPC_SC->RSID,0,10,0); 	 */
 	//int2lcdyx(udp_callback_cnt,0,15,0);	 
-	//int2lcdyx(Ktext[0],0,19,0);
+	int2lcdyx(modbus_tcp_plazma[0],0,19,0);
 	
 
 	}
@@ -5230,15 +5230,15 @@ else if(ind==iMn_FSO)
 	//long2lcdyx_mmm(power_inc(9345678U,6),3,18,0);
 	//long2lcdyx_mmm(power_dec(9345678U,4),3,10,0);  
 	
-	int2lcdyx(sTARKBatteryHndlPhase,0,0,0);
-	int2lcdyx(sTARKButteryCnter,0,2,0);
-	int2lcdyx(sTARKSilentCnt[0],0,4,0);
-	int2lcdyx(sTARKSilentCnt[1],0,6,0); 
+//	int2lcdyx(sTARKBatteryHndlPhase,0,0,0);
+//	int2lcdyx(sTARKButteryCnter,0,2,0);
+//	int2lcdyx(sTARKSilentCnt[0],0,4,0);
+//	int2lcdyx(sTARKSilentCnt[1],0,6,0); 
 	
-	int2lcdyx(liBatteryInBuff[265]/*plazmaSS_fso[0]*/,0,9,0);
-	int2lcdyx(liBatteryInBuff[266]/*plazmaSS_fso[1]*/,0,12,0);
-	int2lcdyx(liBatteryInBuff[205]/*plazmaSS_fso[2]*/,0,15,0);
-	int2lcdyx(liBatteryInBuff[206]/*plazmaSS_fso[3]*/,0,18,0);
+//	int2lcdyx(liBatteryInBuff[65]/*plazmaSS_fso[0]*/,0,9,0);
+//	int2lcdyx(liBatteryInBuff[66]/*plazmaSS_fso[1]*/,0,12,0);
+//	int2lcdyx(liBatteryInBuff[67]/*plazmaSS_fso[2]*/,0,15,0);
+//	int2lcdyx(liBatteryInBuff[68]/*plazmaSS_fso[3]*/,0,18,0);
 //	int2lcdyx(plazma_stark[1],0,6,0);
 //	int2lcdyx(plazma_fso,0,6,0);
 //	int2lcdyx(lakb[0]._tot_bat_volt,0,19,0);
@@ -43614,7 +43614,7 @@ if(modbus2_timeout_cnt<6)
 	if(modbus2_timeout_cnt>=6)
 		{
 		bMODBUS2_TIMEOUT=1;
-		plazmaSS_fso[1]++;
+	//	plazmaSS_fso[1]++;
 		}
 	}
 else if (modbus2_timeout_cnt>6)

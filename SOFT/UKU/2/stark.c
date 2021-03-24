@@ -165,8 +165,8 @@ void modbus2_in(void)
 
 if(bat_drv_rx_cnt>10)
 	{
-	plazmaSS_fso[2]++;
-	plazmaSS_fso[3]=bat_drv_rx_cnt;
+//	plazmaSS_fso[2]++;
+//	plazmaSS_fso[3]=bat_drv_rx_cnt;
 	if(sTARKButteryCnter==0)
 		{
 		if(sTARKRequestPhase==0)		mem_copy (liBatteryInBuff, bat_drv_rx_buff,  bat_drv_rx_cnt);

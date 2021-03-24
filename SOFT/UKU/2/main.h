@@ -1502,12 +1502,12 @@ typedef struct
 	signed short 	_s_o_c_percent; //остаточный заряд в процентном выражении
 	signed short	_plazma_ss;
 	signed short	_zar_percent;	//заряд батареи в процетах
-	signed char		_cell_temp_1;	//температура 1-го датчика батареи(ZTT)
-	signed char		_cell_temp_2;	//температура 2-го датчика батареи(ZTT)
-	signed char		_cell_temp_3;	//температура 3-го датчика батареи(ZTT)
-	signed char		_cell_temp_4;	//температура 4-го датчика батареи(ZTT)
-	signed char		_cell_temp_ambient;	//температура датчика окружающей среды батареи(ZTT)
-	signed char		_cell_temp_power;	//температура датчика силовой части батареи(ZTT)
+	signed short		_cell_temp_1;	//температура 1-го датчика батареи(ZTT)
+	signed short		_cell_temp_2;	//температура 2-го датчика батареи(ZTT)
+	signed short		_cell_temp_3;	//температура 3-го датчика батареи(ZTT)
+	signed short		_cell_temp_4;	//температура 4-го датчика батареи(ZTT)
+	signed short		_cell_temp_ambient;	//температура датчика окружающей среды батареи(ZTT)
+	signed short		_cell_temp_power;	//температура датчика силовой части батареи(ZTT)
 	//signed char 	_pack_volt_state;	//статус аварии по напряжениям батареи(ZTT)
 	//signed char 	_pack_temper_state;	//статус аварии по температурам батареи(ZTT)
 	//signed char 	_pack_alarm_state;	//статус аварий батареи(ZTT)

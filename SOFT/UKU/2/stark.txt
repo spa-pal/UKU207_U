@@ -265,6 +265,404 @@
                   |L1.448|
                           DCD      NUMBAT_FSO
 
+                          AREA ||area_number.2||, CODE, READONLY, ALIGN=2
+
+                          EXPORTAS ||area_number.2||, ||.text||
+                  stark_bat_hndl_2 PROC
+;;;14     //-----------------------------------------------
+;;;15     void stark_bat_hndl(void)
+000000  b5f0              PUSH     {r4-r7,lr}
+;;;16     {
+000002  b085              SUB      sp,sp,#0x14
+;;;17     
+;;;18     if(portForSTARKBatteryIsInitiated==0)
+000004  4e4c              LDR      r6,|L2.312|
+;;;19     	{
+;;;20     	//UARTInit(1, 9600);	/* baud rate setting */
+;;;21     	uart1_init(9600);
+;;;22     	portForSTARKBatteryIsInitiated=1;
+000006  2501              MOVS     r5,#1
+000008  7830              LDRB     r0,[r6,#0]            ;18  ; portForSTARKBatteryIsInitiated
+00000a  b920              CBNZ     r0,|L2.22|
+00000c  f44f5016          MOV      r0,#0x2580            ;21
+000010  f7fffffe          BL       uart1_init
+000014  7035              STRB     r5,[r6,#0]
+                  |L2.22|
+;;;23     	}
+;;;24     
+;;;25     sTARKBatteryHndlPhase++;
+000016  78b0              LDRB     r0,[r6,#2]  ; sTARKBatteryHndlPhase
+000018  f1000001          ADD      r0,r0,#1
+00001c  b2c0              UXTB     r0,r0
+00001e  70b0              STRB     r0,[r6,#2]
+;;;26     
+;;;27     if((sTARKSilentCnt[0])&&(sTARKSilentCnt[0]<10))sTARKSilentCnt[0]++;
+000020  4c45              LDR      r4,|L2.312|
+000022  f1040404          ADD      r4,r4,#4
+000026  f9b41000          LDRSH    r1,[r4,#0]  ; sTARKSilentCnt
+00002a  b121              CBZ      r1,|L2.54|
+00002c  290a              CMP      r1,#0xa
+00002e  da02              BGE      |L2.54|
+000030  f1010101          ADD      r1,r1,#1
+000034  8021              STRH     r1,[r4,#0]
+                  |L2.54|
+;;;28     if((sTARKSilentCnt[1])&&(sTARKSilentCnt[1]<10))sTARKSilentCnt[1]++;
+000036  f9b41002          LDRSH    r1,[r4,#2]  ; sTARKSilentCnt
+00003a  b121              CBZ      r1,|L2.70|
+00003c  290a              CMP      r1,#0xa
+00003e  da02              BGE      |L2.70|
+000040  f1010101          ADD      r1,r1,#1
+000044  8061              STRH     r1,[r4,#2]
+                  |L2.70|
+;;;29     if((sTARKSilentCnt[2])&&(sTARKSilentCnt[2]<10))sTARKSilentCnt[2]++;
+000046  f9b41004          LDRSH    r1,[r4,#4]  ; sTARKSilentCnt
+00004a  b121              CBZ      r1,|L2.86|
+00004c  290a              CMP      r1,#0xa
+00004e  da02              BGE      |L2.86|
+000050  f1010101          ADD      r1,r1,#1
+000054  80a1              STRH     r1,[r4,#4]
+                  |L2.86|
+000056  2700              MOVS     r7,#0                 ;18
+;;;30     
+;;;31     if(sTARKBatteryHndlPhase==4)	//7E 32 36 30 30 34 36 34 32 45 30 30 32 30 31 46 44 33 30 0D
+000058  2801              CMP      r0,#1
+00005a  d011              BEQ      |L2.128|
+;;;32     	{
+;;;33     	if(sTARKButteryCnter==0)
+;;;34     		{
+;;;35     		char sTARKButteryOutBuff[]={0x7e,0x32,0x30,0x30,0x30,0x34,0x36,0x34,0x32,0x45,0x30,0x30,0x32,0x30,0x30,0x46,0x44,0x33,0x37,0x0d};
+;;;36     		uart_out_buff1(sTARKButteryOutBuff,20);
+;;;37     		if(sTARKSilentCnt[0]==0)sTARKSilentCnt[0]=1;
+;;;38     		}
+;;;39     	else if(sTARKButteryCnter==1)
+;;;40     		{
+;;;41     		char sTARKButteryOutBuff[]={0x7e,0x32,0x30,0x30,0x31,0x34,0x36,0x34,0x32,0x45,0x30,0x30,0x32,0x30,0x31,0x46,0x44,0x33,0x35,0x0d};
+;;;42     		uart_out_buff1(sTARKButteryOutBuff,20);
+;;;43     		if(sTARKSilentCnt[1]==0)sTARKSilentCnt[1]=1;
+;;;44     		}
+;;;45     	else if(sTARKButteryCnter==2)
+;;;46     		{
+;;;47     		char sTARKButteryOutBuff[]={0x7e,0x32,0x36,0x30,0x30,0x34,0x36,0x34,0x32,0x45,0x30,0x30,0x32,0x30,0x33,0x46,0x44,0x32,0x45,0x0d};
+;;;48     		uart_out_buff1(sTARKButteryOutBuff,20);
+;;;49     		if(sTARKSilentCnt[2]==0)sTARKSilentCnt[2]=1;
+;;;50     		}
+;;;51     
+;;;52     	sTARKRequestPhase=0;
+;;;53     
+;;;54     	}
+;;;55     else if(sTARKBatteryHndlPhase==8)
+00005c  2806              CMP      r0,#6
+00005e  d03d              BEQ      |L2.220|
+;;;56     	{
+;;;57     	if(sTARKButteryCnter==0)
+000060  280a              CMP      r0,#0xa
+000062  d10b              BNE      |L2.124|
+000064  70b7              STRB     r7,[r6,#2]
+;;;58     		{
+;;;59     		char sTARKButteryOutBuff[]={0x7e,0x32,0x30,0x30,0x30,0x34,0x36,0x34,0x34,0x45,0x30,0x30,0x32,0x30,0x30,0x46,0x44,0x33,0x35,0x0d};
+;;;60     		uart_out_buff1(sTARKButteryOutBuff,20);
+;;;61     		if(sTARKSilentCnt[0]==0)sTARKSilentCnt[0]=1;
+;;;62     		}
+;;;63     	else if(sTARKButteryCnter==1)  
+000066  7870              LDRB     r0,[r6,#1]  ; sTARKButteryCnter
+000068  f1000001          ADD      r0,r0,#1
+;;;64     		{
+;;;65     		char sTARKButteryOutBuff[]={0x7e,0x32,0x30,0x30,0x31,0x34,0x36,0x34,0x34,0x45,0x30,0x30,0x32,0x30,0x31,0x46,0x44,0x33,0x33,0x0d};
+;;;66     		uart_out_buff1(sTARKButteryOutBuff,20);
+;;;67     		if(sTARKSilentCnt[1]==0)sTARKSilentCnt[1]=1;
+;;;68     		}
+;;;69     	else if(sTARKButteryCnter==2)
+00006c  b2c0              UXTB     r0,r0
+00006e  7070              STRB     r0,[r6,#1]
+000070  4932              LDR      r1,|L2.316|
+000072  f9b11000          LDRSH    r1,[r1,#0]            ;33  ; NUMBAT_FSO
+000076  4288              CMP      r0,r1                 ;39
+000078  db00              BLT      |L2.124|
+00007a  7077              STRB     r7,[r6,#1]            ;45
+                  |L2.124|
+00007c  b005              ADD      sp,sp,#0x14           ;45
+00007e  bdf0              POP      {r4-r7,pc}            ;35
+                  |L2.128|
+000080  7870              LDRB     r0,[r6,#1]            ;35  ; sTARKButteryCnter
+000082  b120              CBZ      r0,|L2.142|
+000084  2801              CMP      r0,#1                 ;35
+000086  d00e              BEQ      |L2.166|
+000088  2802              CMP      r0,#2                 ;35
+00008a  d018              BEQ      |L2.190|
+00008c  e024              B        |L2.216|
+                  |L2.142|
+00008e  a02c              ADR      r0,|L2.320|
+000090  c803              LDM      r0,{r0,r1}            ;36
+000092  e9cd0103          STRD     r0,r1,[sp,#0xc]       ;37
+000096  2108              MOVS     r1,#8                 ;37
+000098  a803              ADD      r0,sp,#0xc            ;37
+00009a  f7fffffe          BL       uart_out_buff1
+00009e  8820              LDRH     r0,[r4,#0]            ;41  ; sTARKSilentCnt
+0000a0  b9d0              CBNZ     r0,|L2.216|
+0000a2  8025              STRH     r5,[r4,#0]            ;41
+0000a4  e018              B        |L2.216|
+                  |L2.166|
+0000a6  a028              ADR      r0,|L2.328|
+0000a8  c803              LDM      r0,{r0,r1}            ;42
+0000aa  e9cd0103          STRD     r0,r1,[sp,#0xc]       ;42
+0000ae  2108              MOVS     r1,#8                 ;43
+0000b0  a803              ADD      r0,sp,#0xc            ;43
+0000b2  f7fffffe          BL       uart_out_buff1
+0000b6  8860              LDRH     r0,[r4,#2]            ;47  ; sTARKSilentCnt
+0000b8  b970              CBNZ     r0,|L2.216|
+0000ba  8065              STRH     r5,[r4,#2]            ;47
+0000bc  e00c              B        |L2.216|
+                  |L2.190|
+0000be  f04f0214          MOV      r2,#0x14              ;47
+0000c2  a123              ADR      r1,|L2.336|
+0000c4  4668              MOV      r0,sp                 ;48
+0000c6  f7fffffe          BL       __aeabi_memcpy4
+0000ca  2114              MOVS     r1,#0x14              ;49
+0000cc  4668              MOV      r0,sp                 ;49
+0000ce  f7fffffe          BL       uart_out_buff1
+;;;70     		{
+;;;71     		char sTARKButteryOutBuff[]={0x7e,0x32,0x36,0x30,0x30,0x34,0x36,0x34,0x34,0x45,0x30,0x30,0x32,0x30,0x33,0x46,0x44,0x32,0x45,0x0d};
+;;;72     		uart_out_buff1(sTARKButteryOutBuff,20);
+;;;73     		if(sTARKSilentCnt[2]==0)sTARKSilentCnt[2]=1;
+;;;74     		} 
+;;;75     
+;;;76     	sTARKRequestPhase=1;
+;;;77     
+;;;78     	sTARKBatteryHndlPhase=0;
+;;;79     	
+;;;80     	sTARKButteryCnter++;
+;;;81     	if(sTARKButteryCnter>=NUMBAT_FSO)sTARKButteryCnter=0;
+;;;82     	}
+;;;83     }
+0000d2  88a0              LDRH     r0,[r4,#4]  ; sTARKSilentCnt
+0000d4  b900              CBNZ     r0,|L2.216|
+0000d6  80a5              STRH     r5,[r4,#4]            ;59
+                  |L2.216|
+0000d8  70f7              STRB     r7,[r6,#3]            ;59
+0000da  e7cf              B        |L2.124|
+                  |L2.220|
+0000dc  7870              LDRB     r0,[r6,#1]            ;59  ; sTARKButteryCnter
+0000de  b120              CBZ      r0,|L2.234|
+0000e0  2801              CMP      r0,#1                 ;59
+0000e2  d00e              BEQ      |L2.258|
+0000e4  2802              CMP      r0,#2                 ;60
+0000e6  d018              BEQ      |L2.282|
+0000e8  e024              B        |L2.308|
+                  |L2.234|
+0000ea  a01e              ADR      r0,|L2.356|
+0000ec  c803              LDM      r0,{r0,r1}            ;61
+0000ee  e9cd0103          STRD     r0,r1,[sp,#0xc]       ;61
+0000f2  2108              MOVS     r1,#8                 ;65
+0000f4  a803              ADD      r0,sp,#0xc            ;65
+0000f6  f7fffffe          BL       uart_out_buff1
+0000fa  8820              LDRH     r0,[r4,#0]            ;65  ; sTARKSilentCnt
+0000fc  b9d0              CBNZ     r0,|L2.308|
+0000fe  8025              STRH     r5,[r4,#0]            ;66
+000100  e018              B        |L2.308|
+                  |L2.258|
+000102  a01a              ADR      r0,|L2.364|
+000104  c803              LDM      r0,{r0,r1}            ;66
+000106  e9cd0103          STRD     r0,r1,[sp,#0xc]       ;67
+00010a  2108              MOVS     r1,#8                 ;67
+00010c  a803              ADD      r0,sp,#0xc            ;67
+00010e  f7fffffe          BL       uart_out_buff1
+000112  8860              LDRH     r0,[r4,#2]            ;71  ; sTARKSilentCnt
+000114  b970              CBNZ     r0,|L2.308|
+000116  8065              STRH     r5,[r4,#2]            ;71
+000118  e00c              B        |L2.308|
+                  |L2.282|
+00011a  f04f0214          MOV      r2,#0x14              ;72
+00011e  a115              ADR      r1,|L2.372|
+000120  4668              MOV      r0,sp                 ;72
+000122  f7fffffe          BL       __aeabi_memcpy4
+000126  2114              MOVS     r1,#0x14              ;73
+000128  4668              MOV      r0,sp                 ;76
+00012a  f7fffffe          BL       uart_out_buff1
+00012e  88a0              LDRH     r0,[r4,#4]            ;80  ; sTARKSilentCnt
+000130  b900              CBNZ     r0,|L2.308|
+000132  80a5              STRH     r5,[r4,#4]            ;80
+                  |L2.308|
+000134  70f5              STRB     r5,[r6,#3]            ;80
+000136  e7a1              B        |L2.124|
+;;;84     
+                          ENDP
+
+                  |L2.312|
+                          DCD      ||.data||
+                  |L2.316|
+                          DCD      NUMBAT_FSO
+                  |L2.320|
+000140  010300            DCB      1,3,0
+000143  00                DCB      0
+000144  00                DCB      0
+000145  3b0419            DCB      ";",4,25
+                  |L2.328|
+000148  020300            DCB      2,3,0
+00014b  00                DCB      0
+00014c  00                DCB      0
+00014d  3b042a            DCB      ";",4,"*"
+                  |L2.336|
+000150  7e323630          DCB      "~26004642E00203FD2E\r"
+000154  30343634
+000158  32453030
+00015c  32303346
+000160  4432450d
+                  |L2.356|
+000164  010300            DCB      1,3,0
+000167  9600              DCB      150,0
+000169  1e25ee            DCB      30,"%",238
+                  |L2.364|
+00016c  020300            DCB      2,3,0
+00016f  9600              DCB      150,0
+000171  1e25dd            DCB      30,"%",221
+                  |L2.372|
+000174  7e323630          DCB      "~26004644E00203FD2E\r"
+000178  30343634
+00017c  34453030
+000180  32303346
+000184  4432450d
+
+                          AREA ||area_number.3||, CODE, READONLY, ALIGN=2
+
+                          EXPORTAS ||area_number.3||, ||.text||
+                  modbus2_in PROC
+;;;14     //-----------------------------------------------
+;;;15     void stark_bat_hndl(void)
+000000  b570              PUSH     {r4-r6,lr}
+;;;16     {
+000002  4c18              LDR      r4,|L3.100|
+;;;17     
+;;;18     if(portForSTARKBatteryIsInitiated==0)
+000004  2500              MOVS     r5,#0
+;;;19     	{
+;;;20     	//UARTInit(1, 9600);	/* baud rate setting */
+;;;21     	uart1_init(9600);
+;;;22     	portForSTARKBatteryIsInitiated=1;
+000006  8822              LDRH     r2,[r4,#0]  ; bat_drv_rx_cnt
+000008  2a0a              CMP      r2,#0xa               ;18
+00000a  d929              BLS      |L3.96|
+00000c  4e16              LDR      r6,|L3.104|
+00000e  4630              MOV      r0,r6                 ;21
+000010  7871              LDRB     r1,[r6,#1]            ;21  ; sTARKButteryCnter
+000012  78c0              LDRB     r0,[r0,#3]            ;21
+000014  b111              CBZ      r1,|L3.28|
+;;;23     	}
+;;;24     
+;;;25     sTARKBatteryHndlPhase++;
+000016  2901              CMP      r1,#1
+000018  d00f              BEQ      |L3.58|
+00001a  e01c              B        |L3.86|
+                  |L3.28|
+00001c  b110              CBZ      r0,|L3.36|
+00001e  2801              CMP      r0,#1
+;;;26     
+;;;27     if((sTARKSilentCnt[0])&&(sTARKSilentCnt[0]<10))sTARKSilentCnt[0]++;
+000020  d005              BEQ      |L3.46|
+000022  e018              B        |L3.86|
+                  |L3.36|
+000024  4911              LDR      r1,|L3.108|
+000026  4812              LDR      r0,|L3.112|
+000028  f7fffffe          BL       mem_copy
+00002c  e013              B        |L3.86|
+                  |L3.46|
+00002e  4810              LDR      r0,|L3.112|
+000030  490e              LDR      r1,|L3.108|
+000032  3082              ADDS     r0,r0,#0x82
+000034  f7fffffe          BL       mem_copy
+;;;28     if((sTARKSilentCnt[1])&&(sTARKSilentCnt[1]<10))sTARKSilentCnt[1]++;
+000038  e00d              B        |L3.86|
+                  |L3.58|
+00003a  b110              CBZ      r0,|L3.66|
+00003c  2801              CMP      r0,#1
+00003e  d006              BEQ      |L3.78|
+000040  e009              B        |L3.86|
+                  |L3.66|
+000042  480b              LDR      r0,|L3.112|
+000044  4909              LDR      r1,|L3.108|
+;;;29     if((sTARKSilentCnt[2])&&(sTARKSilentCnt[2]<10))sTARKSilentCnt[2]++;
+000046  30c8              ADDS     r0,r0,#0xc8
+000048  f7fffffe          BL       mem_copy
+00004c  e003              B        |L3.86|
+                  |L3.78|
+00004e  4907              LDR      r1,|L3.108|
+000050  4808              LDR      r0,|L3.116|
+000052  f7fffffe          BL       mem_copy
+                  |L3.86|
+000056  4804              LDR      r0,|L3.104|
+;;;30     
+;;;31     if(sTARKBatteryHndlPhase==4)	//7E 32 36 30 30 34 36 34 32 45 30 30 32 30 31 46 44 33 30 0D
+000058  7871              LDRB     r1,[r6,#1]  ; sTARKButteryCnter
+00005a  1d00              ADDS     r0,r0,#4
+;;;32     	{
+;;;33     	if(sTARKButteryCnter==0)
+;;;34     		{
+;;;35     		char sTARKButteryOutBuff[]={0x7e,0x32,0x30,0x30,0x30,0x34,0x36,0x34,0x32,0x45,0x30,0x30,0x32,0x30,0x30,0x46,0x44,0x33,0x37,0x0d};
+;;;36     		uart_out_buff1(sTARKButteryOutBuff,20);
+;;;37     		if(sTARKSilentCnt[0]==0)sTARKSilentCnt[0]=1;
+;;;38     		}
+;;;39     	else if(sTARKButteryCnter==1)
+;;;40     		{
+;;;41     		char sTARKButteryOutBuff[]={0x7e,0x32,0x30,0x30,0x31,0x34,0x36,0x34,0x32,0x45,0x30,0x30,0x32,0x30,0x31,0x46,0x44,0x33,0x35,0x0d};
+;;;42     		uart_out_buff1(sTARKButteryOutBuff,20);
+;;;43     		if(sTARKSilentCnt[1]==0)sTARKSilentCnt[1]=1;
+;;;44     		}
+;;;45     	else if(sTARKButteryCnter==2)
+;;;46     		{
+;;;47     		char sTARKButteryOutBuff[]={0x7e,0x32,0x36,0x30,0x30,0x34,0x36,0x34,0x32,0x45,0x30,0x30,0x32,0x30,0x33,0x46,0x44,0x32,0x45,0x0d};
+;;;48     		uart_out_buff1(sTARKButteryOutBuff,20);
+;;;49     		if(sTARKSilentCnt[2]==0)sTARKSilentCnt[2]=1;
+;;;50     		}
+;;;51     
+;;;52     	sTARKRequestPhase=0;
+;;;53     
+;;;54     	}
+;;;55     else if(sTARKBatteryHndlPhase==8)
+00005c  f8205011          STRH     r5,[r0,r1,LSL #1]
+                  |L3.96|
+;;;56     	{
+;;;57     	if(sTARKButteryCnter==0)
+000060  8025              STRH     r5,[r4,#0]
+000062  bd70              POP      {r4-r6,pc}
+;;;58     		{
+;;;59     		char sTARKButteryOutBuff[]={0x7e,0x32,0x30,0x30,0x30,0x34,0x36,0x34,0x34,0x45,0x30,0x30,0x32,0x30,0x30,0x46,0x44,0x33,0x35,0x0d};
+;;;60     		uart_out_buff1(sTARKButteryOutBuff,20);
+;;;61     		if(sTARKSilentCnt[0]==0)sTARKSilentCnt[0]=1;
+;;;62     		}
+;;;63     	else if(sTARKButteryCnter==1)  
+;;;64     		{
+;;;65     		char sTARKButteryOutBuff[]={0x7e,0x32,0x30,0x30,0x31,0x34,0x36,0x34,0x34,0x45,0x30,0x30,0x32,0x30,0x31,0x46,0x44,0x33,0x33,0x0d};
+;;;66     		uart_out_buff1(sTARKButteryOutBuff,20);
+;;;67     		if(sTARKSilentCnt[1]==0)sTARKSilentCnt[1]=1;
+;;;68     		}
+;;;69     	else if(sTARKButteryCnter==2)
+;;;70     		{
+;;;71     		char sTARKButteryOutBuff[]={0x7e,0x32,0x36,0x30,0x30,0x34,0x36,0x34,0x34,0x45,0x30,0x30,0x32,0x30,0x33,0x46,0x44,0x32,0x45,0x0d};
+;;;72     		uart_out_buff1(sTARKButteryOutBuff,20);
+;;;73     		if(sTARKSilentCnt[2]==0)sTARKSilentCnt[2]=1;
+;;;74     		} 
+;;;75     
+;;;76     	sTARKRequestPhase=1;
+;;;77     
+;;;78     	sTARKBatteryHndlPhase=0;
+;;;79     	
+;;;80     	sTARKButteryCnter++;
+;;;81     	if(sTARKButteryCnter>=NUMBAT_FSO)sTARKButteryCnter=0;
+;;;82     	}
+;;;83     }
+;;;84     
+                          ENDP
+
+                  |L3.100|
+                          DCD      bat_drv_rx_cnt
+                  |L3.104|
+                          DCD      ||.data||
+                  |L3.108|
+                          DCD      bat_drv_rx_buff
+                  |L3.112|
+                          DCD      liBatteryInBuff
+                  |L3.116|
+                          DCD      liBatteryInBuff+0x14a
+
                           AREA ||.data||, DATA, ALIGN=1
 
                   portForSTARKBatteryIsInitiated
@@ -279,8 +677,8 @@
                           DCDU     0x00000000
 000008  0000              DCB      0x00,0x00
 
-                          AREA ||area_number.5||, DATA, ALIGN=0
+                          AREA ||area_number.7||, DATA, ALIGN=0
 
-                          EXPORTAS ||area_number.5||, ||.data||
+                          EXPORTAS ||area_number.7||, ||.data||
                   sTARKBatteryHndlCmnd
 000000  00                DCB      0x00

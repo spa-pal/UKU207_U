@@ -279,7 +279,7 @@ else if ( IIRValue == IIR_RDA )	/* Receive Data Available */
 	//plazmaSS_fso[5]=0;
 	if (!tx_counter1)
 	{
-	plazmaSS_fso[0]++;
+//	plazmaSS_fso[0]++;
 	rx_buffer1[rx_wr_index1]=data;
    	bRXIN1=1;
 

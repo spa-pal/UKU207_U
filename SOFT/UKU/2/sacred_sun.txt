@@ -179,7 +179,7 @@
                           AREA ||.bss||, DATA, NOINIT, ALIGN=0
 
                   liBatteryInBuff
-                          %        300
+                          %        400
 
                           AREA ||.data||, DATA, ALIGN=1
 

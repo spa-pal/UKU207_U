@@ -4046,35 +4046,38 @@ t_ext[0]=(signed short)temp_SL;
 	//if(BAT_TYPE==2)
 		//{
 		lakb[0]._ch_curr=		(unsigned short)((((short)liBatteryInBuff[3])<<8)  +  ((short)liBatteryInBuff[4]));
-		lakb[1]._ch_curr=		(unsigned short)((((short)liBatteryInBuff[203])<<8)  +  ((short)liBatteryInBuff[2044]));
+		lakb[1]._ch_curr=		(unsigned short)((((short)liBatteryInBuff[203])<<8)  +  ((short)liBatteryInBuff[204]));
 		/*if(temp_SS&0x8000)		lakb[0]._ch_curr=~temp_SS;
 		else 				lakb[0]._ch_curr=temp_SS;*/
 	
-		lakb[0]._tot_bat_volt=	((usigned short)((((short)liBatteryInBuff[5])<<8)  +  ((short)liBatteryInBuff[6])))/10;
+		lakb[0]._tot_bat_volt=	((unsigned short)((((short)liBatteryInBuff[5])<<8)  +  ((short)liBatteryInBuff[6])))/10;
 		lakb[1]._tot_bat_volt=	((unsigned short)((((short)liBatteryInBuff[205])<<8)  +  ((short)liBatteryInBuff[206])))/10;
 
-		lakb[0]._cell_temp_1= 	(signed short)((((signed short)liBatteryInBuff[65])<<8)  +  ((signed short)liBatteryInBuff[66]));
-		lakb[1]._cell_temp_1= 	(signed short)((((signed short)liBatteryInBuff[265])<<8)  +  ((signed short)liBatteryInBuff[266]));
-		lakb[0]._cell_temp_2= 	(unsigned short)((((short)liBatteryInBuff[67])<<8)  +  ((short)liBatteryInBuff[68]));
-		lakb[1]._cell_temp_2= 	(unsigned short)((((short)liBatteryInBuff[267])<<8)  +  ((short)liBatteryInBuff[268]));
-		lakb[0]._cell_temp_3= 	(unsigned short)((((short)liBatteryInBuff[69])<<8)  +  ((short)liBatteryInBuff[70]));
-		lakb[1]._cell_temp_3= 	(unsigned short)((((short)liBatteryInBuff[269])<<8)  +  ((short)liBatteryInBuff[270]));
-		lakb[0]._cell_temp_4= 	(unsigned short)((((short)liBatteryInBuff[71])<<8)  +  ((short)liBatteryInBuff[72]));
-		lakb[1]._cell_temp_4= 	(unsigned short)((((short)liBatteryInBuff[271])<<8)  +  ((short)liBatteryInBuff[272]));
-		lakb[0]._cell_temp_power= 		(unsigned short)((((short)liBatteryInBuff[73])<<8)  +  ((short)liBatteryInBuff[74]));
-		lakb[1]._cell_temp_power= 		(unsigned short)((((short)liBatteryInBuff[273])<<8)  +  ((short)liBatteryInBuff[274]));
-		lakb[0]._cell_temp_ambient= 	(unsigned short)((((short)liBatteryInBuff[75])<<8)  +  ((short)liBatteryInBuff[76]));
-		lakb[1]._cell_temp_ambient= 	(unsigned short)((((short)liBatteryInBuff[275])<<8)  +  ((short)liBatteryInBuff[276]));
+		lakb[0]._cell_temp_1= 	((signed short)((((signed short)liBatteryInBuff[65])<<8)  +  ((signed short)liBatteryInBuff[66])))/10;
+		lakb[1]._cell_temp_1= 	((signed short)((((signed short)liBatteryInBuff[265])<<8)  +  ((signed short)liBatteryInBuff[266])))/10;
+		lakb[0]._cell_temp_2= 	((unsigned short)((((short)liBatteryInBuff[67])<<8)  +  ((short)liBatteryInBuff[68])))/10;
+		lakb[1]._cell_temp_2= 	((unsigned short)((((short)liBatteryInBuff[267])<<8)  +  ((short)liBatteryInBuff[268])))/10;
+		lakb[0]._cell_temp_3= 	((unsigned short)((((short)liBatteryInBuff[69])<<8)  +  ((short)liBatteryInBuff[70])))/10;
+		lakb[1]._cell_temp_3= 	((unsigned short)((((short)liBatteryInBuff[269])<<8)  +  ((short)liBatteryInBuff[270])))/10;
+		lakb[0]._cell_temp_4= 	((unsigned short)((((short)liBatteryInBuff[71])<<8)  +  ((short)liBatteryInBuff[72])))/10;
+		lakb[1]._cell_temp_4= 	((unsigned short)((((short)liBatteryInBuff[271])<<8)  +  ((short)liBatteryInBuff[272])))/10;
+		lakb[0]._cell_temp_power= 		((unsigned short)((((short)liBatteryInBuff[73])<<8)  +  ((short)liBatteryInBuff[74])))/10;
+		lakb[1]._cell_temp_power= 		((unsigned short)((((short)liBatteryInBuff[273])<<8)  +  ((short)liBatteryInBuff[274])))/10;
+		lakb[0]._cell_temp_ambient= 	((unsigned short)((((short)liBatteryInBuff[75])<<8)  +  ((short)liBatteryInBuff[76])))/10;
+		lakb[1]._cell_temp_ambient= 	((unsigned short)((((short)liBatteryInBuff[275])<<8)  +  ((short)liBatteryInBuff[276])))/10;
 /*		lakb[0]._max_cell_temp= 	(((ascii2halFhex(liBatteryInBuff[93]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[94]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[95]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[96]))))/10-273;	*/
+
+		lakb[0]._s_o_c_percent=		((unsigned short)((((short)liBatteryInBuff[7])<<8)  +  ((short)liBatteryInBuff[8])));
+		lakb[1]._s_o_c_percent=		((unsigned short)((((short)liBatteryInBuff[207])<<8)  +  ((short)liBatteryInBuff[208])));
+			
+		lakb[0]._s_o_c=		((unsigned short)((((short)liBatteryInBuff[11])<<8)  +  ((short)liBatteryInBuff[12])));
+		lakb[1]._s_o_c=		((unsigned short)((((short)liBatteryInBuff[211])<<8)  +  ((short)liBatteryInBuff[212])));
 	
-		lakb[0]._s_o_c=		((unsigned short)((((short)liBatteryInBuff[7])<<8)  +  ((short)liBatteryInBuff[8])));
-		lakb[1]._s_o_c=		((unsigned short)((((short)liBatteryInBuff[207])<<8)  +  ((short)liBatteryInBuff[208])));
-	
-		lakb[0]._s_o_h=		((unsigned short)((((short)liBatteryInBuff[9])<<8)  +  ((short)liBatteryInBuff[10])));
-		lakb[1]._s_o_h=		((unsigned short)((((short)liBatteryInBuff[9])<<208)  +  ((short)liBatteryInBuff[210])));
+		lakb[0]._s_o_h=		((unsigned short)((((short)liBatteryInBuff[13])<<8)  +  ((short)liBatteryInBuff[14])));
+		lakb[1]._s_o_h=		((unsigned short)((((short)liBatteryInBuff[213])<<8)  +  ((short)liBatteryInBuff[214])));
 
 		if(lakb[0]._s_o_h==0)lakb[0]._s_o_h=1;
 		if(lakb[1]._s_o_h==0)lakb[1]._s_o_h=1;
