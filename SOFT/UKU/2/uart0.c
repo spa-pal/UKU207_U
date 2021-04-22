@@ -353,7 +353,7 @@ rs232_data_out_buff[21]=bps[3]._Uii;
 rs232_data_out_buff[22]=bps[3]._Ii;
 rs232_data_out_buff[23]=bps[3]._Ti;
 rs232_data_out_buff[24]=bps[3]._av;
-rs232_data_out_buff[25]=Ib_ips_termokompensat;
+rs232_data_out_buff[25]=Ib_ips_termokompensat[0];
 
 uart_out_adr0 ((char*)rs232_data_out_buff, 52);
 }

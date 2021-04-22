@@ -355,14 +355,14 @@ snmp_energy_input_voltage=net_U;
 #ifdef UKU_ZVU
 snmp_bat_number[0]=1;
 snmp_bat_voltage[0]=out_U;
-snmp_bat_current[0]=Ib_ips_termokompensat;
-snmp_bat_rem_time[0]=bat_hndl_t_razr_min;
+snmp_bat_current[0]=Ib_ips_termokompensat[0];
+snmp_bat_rem_time[0]=bat_hndl_t_razr_min[0];
 if(Ib_ips_termokompensat>0)snmp_bat_rem_time[0]=-1;
 snmp_bat_temperature[0]=t_ext[0];
 if(ND_EXT[0])snmp_bat_temperature[0]=-1000;
 snmp_bat_capacity[0]=BAT_C_POINT_20;
-snmp_bat_charge[0]=(bat_hndl_zvu_Q/10000L);
-snmp_bat_status[0]=bat_ips._av&1;
+snmp_bat_charge[0]=(bat_hndl_zvu_Q[0]/10000L);
+snmp_bat_status[0]=bat_ips[0]._av&1;
 if(NUMBAT==0)snmp_bat_status[0]=0xff;
 #endif
 

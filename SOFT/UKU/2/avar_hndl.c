@@ -971,9 +971,9 @@ unsigned short event_ptr,lc640_adr,event_ptr_find,event_cnt;
 
 if(in==1)
 	{
-	bat_ips._av|=1;
-    ips_bat_av_stat=1;
-	ips_bat_av_vzvod=1;
+	bat_ips[0]._av|=1;
+    ips_bat_av_stat[0]=1;
+	ips_bat_av_vzvod[0]=1;
 
 	event_ptr=lc640_read_int(PTR_EVENT_LOG);
 	event_ptr++;	
@@ -1040,9 +1040,9 @@ if(in==1)
 
 else if(in==0)
 	{
-	bat_ips._av&=~1;
-	ips_bat_av_stat=0;
-	ips_bat_av_vzvod=0;
+	bat_ips[0]._av&=~1;
+	ips_bat_av_stat[0]=0;
+	ips_bat_av_vzvod[0]=0;
      
 	event_ptr=lc640_read_int(PTR_EVENT_LOG);
 	event_ptr_find=event_ptr;
@@ -1105,6 +1105,147 @@ avar_bat_ips_hndl_end:
 __nop();		
 }
 
+//-----------------------------------------------
+void avar_bat_ips_hndl2(char in)
+{
+char data[4];
+unsigned short event_ptr,lc640_adr,event_ptr_find,event_cnt;
+
+if(in==1)
+	{
+	bat_ips[1]._av|=1;
+    ips_bat_av_stat[1]=1;
+	ips_bat_av_vzvod[1]=1;
+
+	event_ptr=lc640_read_int(PTR_EVENT_LOG);
+	event_ptr++;	
+	if(event_ptr>63)event_ptr=0;	
+	lc640_write_int(PTR_EVENT_LOG,event_ptr);	
+	
+	event_cnt=lc640_read_int(CNT_EVENT_LOG);
+	if(event_cnt!=63)event_cnt=event_ptr;
+	lc640_write_int(CNT_EVENT_LOG,event_cnt); 
+	
+	lc640_adr=EVENT_LOG+(lc640_read_int(PTR_EVENT_LOG)*32);
+	
+	data[0]='B';
+	data[1]=1;
+	data[2]='C';
+	data[3]=0;
+	lc640_write_long_ptr(lc640_adr,data);
+
+	data[0]=0;
+	data[1]=0;
+	data[2]=0;
+	data[3]=0;
+	lc640_write_long_ptr(lc640_adr+4,data);
+
+	data[0]=LPC_RTC->YEAR;
+	data[1]=LPC_RTC->MONTH;
+	data[2]=LPC_RTC->DOM;
+	data[3]=0;
+	lc640_write_long_ptr(lc640_adr+8,data);
+
+	data[0]=LPC_RTC->HOUR;
+	data[1]=LPC_RTC->MIN;
+	data[2]=LPC_RTC->SEC;
+	data[3]=0;
+	lc640_write_long_ptr(lc640_adr+12,data);
+	
+	data[0]='A';
+	data[1]='A';
+	data[2]='A';
+	data[3]='A';
+	lc640_write_long_ptr(lc640_adr+16,data);
+	
+	data[0]='A';
+	data[1]='A';
+	data[2]='A';
+	data[3]='A';
+	lc640_write_long_ptr(lc640_adr+20,data);
+	
+	data[0]='A';
+	data[1]='A';
+	data[2]='A';
+	data[3]='A';
+	lc640_write_long_ptr(lc640_adr+24,data);
+	
+	data[0]='A';
+	data[1]='A';
+	data[2]='A';
+	data[3]='A';
+	lc640_write_long_ptr(lc640_adr+28,data);
+					
+	snmp_trap_send("BAT ¹2 Alarm, lost",5,2,1);
+		
+	}
+
+else if(in==0)
+	{
+	bat_ips[1]._av&=~1;
+	ips_bat_av_stat[1]=0;
+	ips_bat_av_vzvod[1]=0;
+     
+	event_ptr=lc640_read_int(PTR_EVENT_LOG);
+	event_ptr_find=event_ptr;
+	
+avar_bat2_ips_hndl_lbl1: 
+
+	lc640_adr=EVENT_LOG+(event_ptr_find*32);
+
+     lc640_read_long_ptr(lc640_adr,data);
+     
+     if(!((data[0]=='B')&&(data[1]==0)&&(data[2]=='C')))
+     	{        
+     	if(event_ptr_find)event_ptr_find--;
+     	else event_ptr_find=63;
+     	if(event_ptr_find==event_ptr)goto avar_bat2_ips_hndl_end;
+     	else goto avar_bat2_ips_hndl_lbl1;
+     	}
+     else 
+     	{
+     	lc640_read_long_ptr(lc640_adr+16,data);
+     	if(!((data[0]=='A')&&(data[1]=='A')&&(data[2]=='A')&&(data[3]=='A')))
+     		{        
+     		if(event_ptr_find)event_ptr_find--;
+         		else event_ptr_find=63;
+         	    	if(event_ptr_find==event_ptr)goto avar_bat2_ips_hndl_end;
+     		else goto avar_bat2_ips_hndl_lbl1;
+     		}
+
+     	}
+     		
+	data[0]=LPC_RTC->YEAR;
+	data[1]=LPC_RTC->MONTH;
+	data[2]=LPC_RTC->DOM;
+	data[3]=0;
+	lc640_write_long_ptr(lc640_adr+16,data);
+
+	data[0]=LPC_RTC->HOUR;
+	data[1]=LPC_RTC->MIN;
+	data[2]=LPC_RTC->SEC;
+	data[3]=0;
+	lc640_write_long_ptr(lc640_adr+20,data);
+	
+	data[0]='B';
+	data[1]='B';
+	data[2]='B';
+	data[3]='B';
+	lc640_write_long_ptr(lc640_adr+24,data);
+	
+	data[0]='B';
+	data[1]='B';
+	data[2]='B';
+	data[3]='B';
+	lc640_write_long_ptr(lc640_adr+28,data);
+	
+	snmp_trap_send("BAT #2 detected",5,2,0);
+	
+	}
+	
+avar_bat2_ips_hndl_end:
+__nop();		
+}
 #endif
 
 //-----------------------------------------------

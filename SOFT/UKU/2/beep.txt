@@ -7,18 +7,18 @@
                   beep_drv PROC
 ;;;12     //-----------------------------------------------
 ;;;13     void beep_drv(void)
-000000  4959              LDR      r1,|L1.360|
+000000  4958              LDR      r1,|L1.356|
 ;;;14     {
 ;;;15     LPC_GPIO1->FIODIR|=(1UL<<31);
 000002  6a08              LDR      r0,[r1,#0x20]
 000004  f0404000          ORR      r0,r0,#0x80000000
 000008  6208              STR      r0,[r1,#0x20]
 ;;;16     if((beep_stat_temp&0x00000001UL)&&(ZV_ON))
-00000a  4a58              LDR      r2,|L1.364|
+00000a  4a57              LDR      r2,|L1.360|
 00000c  6850              LDR      r0,[r2,#4]  ; beep_stat_temp
 00000e  07c3              LSLS     r3,r0,#31
 000010  d00a              BEQ      |L1.40|
-000012  4b57              LDR      r3,|L1.368|
+000012  4b56              LDR      r3,|L1.364|
 000014  881b              LDRH     r3,[r3,#0]  ; ZV_ON
 000016  b13b              CBZ      r3,|L1.40|
 ;;;17         	{
@@ -72,7 +72,7 @@
 ;;;37     if(fl=='O')
 ;;;38     	{
 ;;;39     	beep_stat_temp=zvuk;
-000052  4a46              LDR      r2,|L1.364|
+000052  4a45              LDR      r2,|L1.360|
 ;;;40     	beep_stat=0x0L;
 000054  2400              MOVS     r4,#0
 ;;;41     	beep_stat_cnt=32;
@@ -133,7 +133,7 @@
 ;;;65     { 
 ;;;66     static char bcnt;
 ;;;67     bcnt++; 
-000088  4c38              LDR      r4,|L1.364|
+000088  4c37              LDR      r4,|L1.360|
 00008a  7820              LDRB     r0,[r4,#0]  ; bcnt
 00008c  f1000001          ADD      r0,r0,#1
 000090  b2c0              UXTB     r0,r0
@@ -148,47 +148,46 @@
 ;;;70     
 ;;;71     
 ;;;72     if((avar_ind_stat)||(ips_bat_av_stat)||(sk_avar_ind_stat))beep_init(0x33333333,'R');
-00009e  4835              LDR      r0,|L1.372|
-0000a0  4935              LDR      r1,|L1.376|
+00009e  4834              LDR      r0,|L1.368|
+0000a0  4934              LDR      r1,|L1.372|
 0000a2  6800              LDR      r0,[r0,#0]  ; avar_ind_stat
-0000a4  7809              LDRB     r1,[r1,#0]  ; ips_bat_av_stat
-0000a6  4308              ORRS     r0,r0,r1
-0000a8  4934              LDR      r1,|L1.380|
-0000aa  7809              LDRB     r1,[r1,#0]  ; sk_avar_ind_stat
-0000ac  4308              ORRS     r0,r0,r1
-0000ae  d005              BEQ      |L1.188|
-0000b0  2152              MOVS     r1,#0x52
-0000b2  f04f3033          MOV      r0,#0x33333333
-0000b6  f7fffffe          BL       beep_init
-0000ba  e051              B        |L1.352|
-                  |L1.188|
+0000a4  4308              ORRS     r0,r0,r1
+0000a6  4934              LDR      r1,|L1.376|
+0000a8  7809              LDRB     r1,[r1,#0]  ; sk_avar_ind_stat
+0000aa  4308              ORRS     r0,r0,r1
+0000ac  d005              BEQ      |L1.186|
+0000ae  2152              MOVS     r1,#0x52
+0000b0  f04f3033          MOV      r0,#0x33333333
+0000b4  f7fffffe          BL       beep_init
+0000b8  e051              B        |L1.350|
+                  |L1.186|
 ;;;73     
 ;;;74     
 ;;;75     else if ( (((bat[0]._Ub<(USIGN*10))&&(BAT_IS_ON[0]==bisON))||((bat[1]._Ub<(USIGN*10))&&(BAT_IS_ON[1]==bisON)))) 
-0000bc  4831              LDR      r0,|L1.388|
-0000be  4f30              LDR      r7,|L1.384|
+0000ba  4831              LDR      r0,|L1.384|
+0000bc  4f2f              LDR      r7,|L1.380|
 ;;;76     	{
 ;;;77     	if(!bSILENT)
-0000c0  4e31              LDR      r6,|L1.392|
-0000c2  f9b00000          LDRSH    r0,[r0,#0]            ;75  ; USIGN
-0000c6  4931              LDR      r1,|L1.396|
-0000c8  f9b72002          LDRSH    r2,[r7,#2]            ;75  ; bat
-0000cc  eb000380          ADD      r3,r0,r0,LSL #2       ;75
-0000d0  7809              LDRB     r1,[r1,#0]            ;75
-0000d2  6830              LDR      r0,[r6,#0]            ;75
-0000d4  ebb20f43          CMP      r2,r3,LSL #1          ;75
-0000d8  da01              BGE      |L1.222|
-0000da  2955              CMP      r1,#0x55              ;75
-0000dc  d01d              BEQ      |L1.282|
-                  |L1.222|
-0000de  4a2b              LDR      r2,|L1.396|
-0000e0  f9b7c052          LDRSH    r12,[r7,#0x52]        ;75  ; bat
-0000e4  7852              LDRB     r2,[r2,#1]            ;75
-0000e6  ebbc0f43          CMP      r12,r3,LSL #1         ;75
-0000ea  da01              BGE      |L1.240|
-0000ec  2a55              CMP      r2,#0x55              ;75
-0000ee  d014              BEQ      |L1.282|
-                  |L1.240|
+0000be  4e31              LDR      r6,|L1.388|
+0000c0  f9b00000          LDRSH    r0,[r0,#0]            ;75  ; USIGN
+0000c4  4930              LDR      r1,|L1.392|
+0000c6  f9b72002          LDRSH    r2,[r7,#2]            ;75  ; bat
+0000ca  eb000380          ADD      r3,r0,r0,LSL #2       ;75
+0000ce  7809              LDRB     r1,[r1,#0]            ;75
+0000d0  6830              LDR      r0,[r6,#0]            ;75
+0000d2  ebb20f43          CMP      r2,r3,LSL #1          ;75
+0000d6  da01              BGE      |L1.220|
+0000d8  2955              CMP      r1,#0x55              ;75
+0000da  d01d              BEQ      |L1.280|
+                  |L1.220|
+0000dc  4a2a              LDR      r2,|L1.392|
+0000de  f9b7c052          LDRSH    r12,[r7,#0x52]        ;75  ; bat
+0000e2  7852              LDRB     r2,[r2,#1]            ;75
+0000e4  ebbc0f43          CMP      r12,r3,LSL #1         ;75
+0000e8  da01              BGE      |L1.238|
+0000ea  2a55              CMP      r2,#0x55              ;75
+0000ec  d014              BEQ      |L1.280|
+                  |L1.238|
 ;;;78     		{
 ;;;79     		beep_init(0x01010101,'R');
 ;;;80     		mess_send(MESS2RELE_HNDL,PARAM_RELE_BAT_IS_DISCHARGED,1,5);
@@ -198,73 +197,73 @@
 ;;;84     	}
 ;;;85     
 ;;;86     else if ( (((bat[0]._Ib<(-IKB))&&(BAT_IS_ON[0]==bisON))||((bat[1]._Ib<(-IKB))&&(BAT_IS_ON[1]==bisON)))) 
-0000f0  4b27              LDR      r3,|L1.400|
-0000f2  f9b7c008          LDRSH    r12,[r7,#8]  ; bat
-0000f6  f9b33000          LDRSH    r3,[r3,#0]  ; IKB
-0000fa  425b              RSBS     r3,r3,#0
-0000fc  459c              CMP      r12,r3
-0000fe  da01              BGE      |L1.260|
-000100  2955              CMP      r1,#0x55
-000102  d017              BEQ      |L1.308|
-                  |L1.260|
-000104  f9b71058          LDRSH    r1,[r7,#0x58]  ; bat
-000108  4299              CMP      r1,r3
-00010a  da01              BGE      |L1.272|
-00010c  2a55              CMP      r2,#0x55
-00010e  d011              BEQ      |L1.308|
-                  |L1.272|
+0000ee  4b27              LDR      r3,|L1.396|
+0000f0  f9b7c008          LDRSH    r12,[r7,#8]  ; bat
+0000f4  f9b33000          LDRSH    r3,[r3,#0]  ; IKB
+0000f8  425b              RSBS     r3,r3,#0
+0000fa  459c              CMP      r12,r3
+0000fc  da01              BGE      |L1.258|
+0000fe  2955              CMP      r1,#0x55
+000100  d017              BEQ      |L1.306|
+                  |L1.258|
+000102  f9b71058          LDRSH    r1,[r7,#0x58]  ; bat
+000106  4299              CMP      r1,r3
+000108  da01              BGE      |L1.270|
+00010a  2a55              CMP      r2,#0x55
+00010c  d011              BEQ      |L1.306|
+                  |L1.270|
 ;;;87     	{
 ;;;88     	if(!bSILENT)beep_init(0x00010001,'R');
 ;;;89     	//bU_BAT2REL_AV_BAT=1;
 ;;;90     	}
 ;;;91     
 ;;;92     else if ( ((bat[0]._temper_stat&0x03)||(bat[1]._temper_stat&0x03)) )
-000110  f8971043          LDRB     r1,[r7,#0x43]  ; bat
-000114  0789              LSLS     r1,r1,#30
-000116  d118              BNE      |L1.330|
-000118  e013              B        |L1.322|
-                  |L1.282|
-00011a  bb08              CBNZ     r0,|L1.352|
-00011c  2152              MOVS     r1,#0x52              ;79
-00011e  f04f3001          MOV      r0,#0x1010101         ;79
-000122  f7fffffe          BL       beep_init
-000126  2305              MOVS     r3,#5                 ;80
-000128  2201              MOVS     r2,#1                 ;80
-00012a  2172              MOVS     r1,#0x72              ;80
-00012c  20d2              MOVS     r0,#0xd2              ;80
-00012e  f7fffffe          BL       mess_send
-000132  e015              B        |L1.352|
-                  |L1.308|
-000134  b9a0              CBNZ     r0,|L1.352|
-000136  2152              MOVS     r1,#0x52              ;88
-000138  f04f1001          MOV      r0,#0x10001           ;88
-00013c  f7fffffe          BL       beep_init
-000140  e00e              B        |L1.352|
-                  |L1.322|
-000142  f8971093          LDRB     r1,[r7,#0x93]  ; bat
-000146  0789              LSLS     r1,r1,#30
-000148  d005              BEQ      |L1.342|
-                  |L1.330|
+00010e  f8971043          LDRB     r1,[r7,#0x43]  ; bat
+000112  0789              LSLS     r1,r1,#30
+000114  d118              BNE      |L1.328|
+000116  e013              B        |L1.320|
+                  |L1.280|
+000118  bb08              CBNZ     r0,|L1.350|
+00011a  2152              MOVS     r1,#0x52              ;79
+00011c  f04f3001          MOV      r0,#0x1010101         ;79
+000120  f7fffffe          BL       beep_init
+000124  2305              MOVS     r3,#5                 ;80
+000126  2201              MOVS     r2,#1                 ;80
+000128  2172              MOVS     r1,#0x72              ;80
+00012a  20d2              MOVS     r0,#0xd2              ;80
+00012c  f7fffffe          BL       mess_send
+000130  e015              B        |L1.350|
+                  |L1.306|
+000132  b9a0              CBNZ     r0,|L1.350|
+000134  2152              MOVS     r1,#0x52              ;88
+000136  f04f1001          MOV      r0,#0x10001           ;88
+00013a  f7fffffe          BL       beep_init
+00013e  e00e              B        |L1.350|
+                  |L1.320|
+000140  f8971093          LDRB     r1,[r7,#0x93]  ; bat
+000144  0789              LSLS     r1,r1,#30
+000146  d005              BEQ      |L1.340|
+                  |L1.328|
 ;;;93     	{
 ;;;94     	if(!bSILENT) beep_init(0x00000005,'R');
-00014a  b948              CBNZ     r0,|L1.352|
-00014c  2152              MOVS     r1,#0x52
-00014e  2005              MOVS     r0,#5
-000150  f7fffffe          BL       beep_init
-000154  e004              B        |L1.352|
-                  |L1.342|
+000148  b948              CBNZ     r0,|L1.350|
+00014a  2152              MOVS     r1,#0x52
+00014c  2005              MOVS     r0,#5
+00014e  f7fffffe          BL       beep_init
+000152  e004              B        |L1.350|
+                  |L1.340|
 ;;;95     	}
 ;;;96     
 ;;;97     
 ;;;98     else 
 ;;;99     	{
 ;;;100    	beep_init(0x00000000,'S');
-000156  2153              MOVS     r1,#0x53
-000158  2000              MOVS     r0,#0
-00015a  f7fffffe          BL       beep_init
+000154  2153              MOVS     r1,#0x53
+000156  2000              MOVS     r0,#0
+000158  f7fffffe          BL       beep_init
 ;;;101    	bSILENT=0;
-00015e  6035              STR      r5,[r6,#0]  ; bSILENT
-                  |L1.352|
+00015c  6035              STR      r5,[r6,#0]  ; bSILENT
+                  |L1.350|
 ;;;102    	} 
 ;;;103    
 ;;;104    
@@ -294,7 +293,7 @@
 ;;;128    
 ;;;129    
 ;;;130    bU_BAT2REL_AV_BAT=0;
-000160  70e5              STRB     r5,[r4,#3]
+00015e  70e5              STRB     r5,[r4,#3]
 ;;;131    #ifdef UKU206_220
 ;;;132    if  (((bat[0]._Ub<(USIGN*10))&&(BAT_IS_ON[0]==bisON))) 
 ;;;133    	{
@@ -303,31 +302,30 @@
 ;;;136    #endif
 ;;;137    
 ;;;138    }
-000162  e8bd81f0          POP      {r4-r8,pc}
+000160  e8bd81f0          POP      {r4-r8,pc}
                           ENDP
 
-000166  0000              DCW      0x0000
-                  |L1.360|
+                  |L1.356|
                           DCD      0x2009c000
-                  |L1.364|
+                  |L1.360|
                           DCD      ||.data||
-                  |L1.368|
+                  |L1.364|
                           DCD      ZV_ON
-                  |L1.372|
+                  |L1.368|
                           DCD      avar_ind_stat
-                  |L1.376|
+                  |L1.372|
                           DCD      ips_bat_av_stat
-                  |L1.380|
+                  |L1.376|
                           DCD      sk_avar_ind_stat
-                  |L1.384|
+                  |L1.380|
                           DCD      bat
-                  |L1.388|
+                  |L1.384|
                           DCD      USIGN
-                  |L1.392|
+                  |L1.388|
                           DCD      bSILENT
-                  |L1.396|
+                  |L1.392|
                           DCD      BAT_IS_ON
-                  |L1.400|
+                  |L1.396|
                           DCD      IKB
 
                           AREA ||.data||, DATA, ALIGN=2

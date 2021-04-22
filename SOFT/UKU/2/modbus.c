@@ -2534,8 +2534,8 @@ modbus_registers[18]=(signed char)(bat[0]._Tb>>8);				//Рег10	температура батаре
 modbus_registers[19]=(signed char)(bat[0]._Tb);
 #endif
 #ifdef UKU_ZVU
-modbus_registers[20]=(signed char)(((short)(bat_hndl_zvu_Q/10000L))>>8);			//Рег11	заряд батареи №1, %
-modbus_registers[21]=(signed char)(((short)(bat_hndl_zvu_Q/10000L)));
+modbus_registers[20]=(signed char)(((short)(bat_hndl_zvu_Q[0]/10000L))>>8);			//Рег11	заряд батареи №1, %
+modbus_registers[21]=(signed char)(((short)(bat_hndl_zvu_Q[0]/10000L)));
 #else
 modbus_registers[20]=(signed char)(bat[0]._zar>>8);			//Рег11	заряд батареи №1, %
 modbus_registers[21]=(signed char)(bat[0]._zar);
@@ -2552,8 +2552,13 @@ modbus_registers[30]=(signed char)(bat[1]._Ib>>8);				//Рег16   	ток батареи №1,
 modbus_registers[31]=(signed char)(bat[1]._Ib);
 modbus_registers[32]=(signed char)(bat[1]._Tb>>8);				//Рег17	температура батареи №1, 1Гц
 modbus_registers[33]=(signed char)(bat[1]._Tb);
+#ifdef UKU_ZVU
+modbus_registers[34]=(signed char)(((short)(bat_hndl_zvu_Q[1]/10000L))>>8);			//Рег18	заряд батареи №1, %
+modbus_registers[35]=(signed char)(((short)(bat_hndl_zvu_Q[1]/10000L)));
+#else
 modbus_registers[34]=(signed char)(bat[1]._zar>>8);			//Рег18	заряд батареи №1, %
 modbus_registers[35]=(signed char)(bat[1]._zar);
+#endif
 modbus_registers[36]=(signed char)(bat[1]._Ubm>>8);			//Рег19	напряжение средней точки батареи №1, 0.1В
 modbus_registers[37]=(signed char)(bat[1]._Ubm);
 modbus_registers[38]=(signed char)(bat[1]._dUbm>>8);			//Рег20	ошибка средней точки батареи №1, %
@@ -2652,8 +2657,10 @@ if(avar_stat&(1<<(3+6)))tempS|=(1<<9);						 	//	Бит 8	Авария выпрямителя №8
 tempS=0;
 tempS=avar_stat;
 #ifdef UKU_ZVU
-if(bat_ips._av)			tempS|=(1<<1);
-else 					tempS&=~(1<<1);
+if(bat_ips[0]._av)			tempS|=(1<<1);
+else 						tempS&=~(1<<1);
+if(bat_ips[1]._av)			tempS|=(1<<2);
+else 						tempS&=~(1<<2);
 #endif
 //Рег60	Регистр флагов состояния системы
 // 	Бит 0	Авария питающей сети 
@@ -2924,8 +2931,10 @@ if(ND_EXT[3])tempS=-1000;
 modbus_registers[406]=(signed char)(tempS>>8);				//Рег204	Внешний датчик температуры №4
 modbus_registers[407]=(signed char)(tempS);   */
 
-modbus_registers[406]=(signed char)(bat_hndl_t_razr_min>>8);
-modbus_registers[407]=(signed char)(bat_hndl_t_razr_min);
+modbus_registers[406]=(signed char)(bat_hndl_t_razr_min[0]>>8);
+modbus_registers[407]=(signed char)(bat_hndl_t_razr_min[0]);
+modbus_registers[408]=(signed char)(bat_hndl_t_razr_min[1]>>8);
+modbus_registers[409]=(signed char)(bat_hndl_t_razr_min[1]);
 
 tempS=0;
 if(sk_stat[0]==ssON) tempS|=0x0001;
@@ -2950,7 +2959,7 @@ modbus_registers[427]=(signed char)(tempS);
 
 tempS=bat[0]._av;
 #ifdef UKU_220_IPS_TERMOKOMPENSAT 
-tempS=ips_bat_av_stat;
+tempS=ips_bat_av_stat[0];
 if(NUMBAT==0)tempS=0xff; //o_10   сделать как в SNMP  255-не введена
 #endif
 
@@ -2960,14 +2969,15 @@ modbus_registers[429]=(signed char)(tempS);
 tempS=bat[1]._av;
 //o_10_s
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
-tempS=0xff;  //сделать как в SNMP   255-не введена
+tempS=ips_bat_av_stat[1];
+if(NUMBAT<2)tempS=0xff;  //сделать как в SNMP   255-не введена
 #endif
 //o_10_e
 modbus_registers[430]=(signed char)(tempS>>8);				//Рег216	Байт статуса батареи №2(0x01 - авария цепи батареи, 0x02 - авария средней точки батареи)
 modbus_registers[431]=(signed char)(tempS);
 
-tempS=bat_hndl_t_razr_min;
-modbus_registers[432]=(signed char)(tempS>>8);				//Рег217	Остаточное время работы батареи в минутах
+tempS=bat_hndl_t_razr_min[0];
+modbus_registers[432]=(signed char)(tempS>>8);				//Рег217	Остаточное время работы батареи 1 в минутах
 modbus_registers[433]=(signed char)(tempS);
 
 modbus_registers[434]=(signed char)(snmp_bat_flag[0]>>8);	//Рег218 //  //флаги АКБ №1
@@ -3007,6 +3017,11 @@ modbus_registers[451]=(signed char)(bps[6]._vent_resurs);
 modbus_registers[452]=(signed char)(bps[7]._vent_resurs>>8);	//Рег227 ресурс вентилятора БПС8
 modbus_registers[453]=(signed char)(bps[7]._vent_resurs); 
 //o_10_s
+
+tempS=bat_hndl_t_razr_min[1];
+modbus_registers[454]=(signed char)(tempS>>8);				//Рег228	Остаточное время работы батареи 2 в минутах
+modbus_registers[455]=(signed char)(tempS);
+
 modbus_registers[598]=0;  	
 if(no_rki==NO_RKI) modbus_registers[599]=0;				//Рег300 если 0, то нет связи с РКИ
 else modbus_registers[599]=1;							//Рег300 если 1, то есть связь с РКИ			

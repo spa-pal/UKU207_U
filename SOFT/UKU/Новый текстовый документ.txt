@@ -1,0 +1,16 @@
+Изменения были в файлах:
+full_can.c   xxx
+main.c		xxx
+memo.c		xxx
+modbus.c	xxx
+MODBUS_TCP.c	xxx
+snmp_data_file.c xxx
+SNMP_MIB.c	xxx
+cmd.h		xxx
+eeprom_map.h		xxx
+main.h			xxx
+snmp_data_file.h	xxx
+
+Метки не ставил в файлах:
+bww.html
+bww.cgx

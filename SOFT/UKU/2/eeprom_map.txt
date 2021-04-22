@@ -182,3 +182,15 @@
                   ADR_EE_RELE_SET_MASK
 000000  015c015e          DCW      0x015c,0x015e
 000004  01600162          DCW      0x0160,0x0162
+
+                          AREA ||area_number.31||, DATA, READONLY, ALIGN=1
+
+                          EXPORTAS ||area_number.31||, ||.constdata||
+                  EE_BAT_ZAR_CNT
+000000  01de01fc          DCW      0x01de,0x01fc
+
+                          AREA ||area_number.32||, DATA, READONLY, ALIGN=1
+
+                          EXPORTAS ||area_number.32||, ||.constdata||
+                  EE_AMPER_CHAS_CNT_ADR
+000000  01c801d2          DCW      0x01c8,0x01d2

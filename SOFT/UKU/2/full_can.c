@@ -1605,35 +1605,63 @@ if((RXBUFF[1]==PUTTM_IBATMETER)&&((RXBUFF[0]&0x1f)>=0)&&((RXBUFF[0]&0x1f)<12))
 
    	//if((src[slave_num]._cnt==0)&&(src[slave_num]._av_net)) avar_s_hndl(slave_num,3,0); 
 	can_reset_cnt=0;
-	ibat_metr_cnt=0;
+	ibat_metr_cnt[0]=0;
    	}
 
 if((RXBUFF[1]==PUTTM_IBATMETER)&&(RXBUFF[0]==PUTTM_IBATMETER))
  	{
-	ibat_metr_buff_[0]=((signed long)RXBUFF[2])+(((signed long)RXBUFF[3])<<8);
-	ibat_metr_buff_[1]=((signed long)RXBUFF[4])+(((signed long)RXBUFF[5])<<8);
-	bIBAT_SMKLBR=((signed short)RXBUFF[6])+(((signed short)RXBUFF[7])<<8);
-	if(bIBAT_SMKLBR) bIBAT_SMKLBR_cnt=50;
-	if(!bIBAT_SMKLBR)
+	ibat_metr_buff_[0][0]=((signed long)RXBUFF[2])+(((signed long)RXBUFF[3])<<8);
+	ibat_metr_buff_[0][1]=((signed long)RXBUFF[4])+(((signed long)RXBUFF[5])<<8);
+	bIBAT_SMKLBR[0]=((signed short)RXBUFF[6])+(((signed short)RXBUFF[7])<<8);
+	if(bIBAT_SMKLBR[0]) bIBAT_SMKLBR_cnt[0]=50;
+	if(!bIBAT_SMKLBR[0])
 		{
 		signed long temp_SL;
-		temp_SL=(signed long)ibat_metr_buff_[0];
-		temp_SL-=(signed long)ibat_metr_buff_[1];
+		temp_SL=(signed long)ibat_metr_buff_[0][0];
+		temp_SL-=(signed long)ibat_metr_buff_[0][1];
 		temp_SL*=(signed long)Kibat1[0];
 		if((AUSW_MAIN==22010)||(AUSW_MAIN==22011)||(AUSW_MAIN==22035)||(AUSW_MAIN==22033)||(AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043)||(AUSW_MAIN==22044))temp_SL/=2000L;
 	
-		Ib_ips_termokompensat =(signed short)temp_SL;
-		if(bIBAT_SMKLBR_cnt)
+		Ib_ips_termokompensat[0] =(signed short)temp_SL;
+		if(bIBAT_SMKLBR_cnt[0])
 			{
-			bIBAT_SMKLBR_cnt--;
-			Ib_ips_termokompensat=Ib_ips_termokompensat_temp;
+			bIBAT_SMKLBR_cnt[0]--;
+			Ib_ips_termokompensat[0]=Ib_ips_termokompensat_temp[0];
 			}
 		else 
 			{
-			Ib_ips_termokompensat_temp=Ib_ips_termokompensat;
+			Ib_ips_termokompensat_temp[0]=Ib_ips_termokompensat[0];
 			}
 		}
-	ibat_metr_cnt=0;
+	ibat_metr_cnt[0]=0;
+   	}
+
+if((RXBUFF[1]==PUTTM_IBATMETER2)&&(RXBUFF[0]==PUTTM_IBATMETER2))
+ 	{
+	ibat_metr_buff_[1][0]=((signed long)RXBUFF[2])+(((signed long)RXBUFF[3])<<8);
+	ibat_metr_buff_[1][1]=((signed long)RXBUFF[4])+(((signed long)RXBUFF[5])<<8);
+	bIBAT_SMKLBR[1]=((signed short)RXBUFF[6])+(((signed short)RXBUFF[7])<<8);
+	if(bIBAT_SMKLBR[1]) bIBAT_SMKLBR_cnt[1]=50;
+	if(!bIBAT_SMKLBR[1])
+		{
+		signed long temp_SL;
+		temp_SL=(signed long)ibat_metr_buff_[1][0];
+		temp_SL-=(signed long)ibat_metr_buff_[1][1];
+		temp_SL*=(signed long)Kibat1[1];
+		if((AUSW_MAIN==22010)||(AUSW_MAIN==22011)||(AUSW_MAIN==22035)||(AUSW_MAIN==22033)||(AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043)||(AUSW_MAIN==22044))temp_SL/=2000L;
+	
+		Ib_ips_termokompensat[1] =(signed short)temp_SL;
+		if(bIBAT_SMKLBR_cnt[1])
+			{
+			bIBAT_SMKLBR_cnt[1]--;
+			Ib_ips_termokompensat[1]=Ib_ips_termokompensat_temp[1];
+			}
+		else 
+			{
+			Ib_ips_termokompensat_temp[1]=Ib_ips_termokompensat[1];
+			}
+		}
+	ibat_metr_cnt[1]=0;
    	}
 
 if((RXBUFF[1]==PUTTM_NET)&&((RXBUFF[0]&0x1f)>=0)&&((RXBUFF[0]&0x1f)<12))

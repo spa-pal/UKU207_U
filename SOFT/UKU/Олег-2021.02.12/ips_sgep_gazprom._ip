@@ -1,0 +1,1 @@
+"ips_sgep_gazprom.c" -E -c --cpu Cortex-M3 -D__MICROLIB -O1 --apcs=interwork -I "C:\Keil\ARM\CMSIS\Include" -I "C:\Keil\ARM\INC\NXP\LPC17xx" -DUKU_220_IPS_TERMOKOMPENSAT -DUKU2071x -o "ips_sgep_gazprom.i" --list_dir ".\\" --list

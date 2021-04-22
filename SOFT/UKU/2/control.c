@@ -271,7 +271,7 @@ int power_int;
 
 char bENERGOMETR_UIP=0;
 
-char cntrl_hndl_plazma;
+char cntrl_hndl_plazma,cntrl_hndl_plazma_;
 
 
 //***********************************************
@@ -296,27 +296,30 @@ char rele_hndl_plazma[3];
 
 //***********************************************
 //Обслуживание батареи ЗВУ
-short I_from_t_table[7];
-char bat_hndl_zvu_init=0;
-short bat_hndl_i;
-long bat_hndl_t_razr;		//предполагаемое время полного разряда батареи (от 100% до разряда)
-long bat_hndl_t_razr_ke;	//предполагаемое время полного разряда батареи (от 100% до разряда) при контроле емкости
-long bat_hndl_zvu_Q;
-long bat_hndl_proc_razr;
-long bat_hndl_remain_time;
-short bat_hndl_t_razr_hour;
-short bat_hndl_t_razr_min;
-short bat_hndl_t_razr_mininhour;
+short I_from_t_table[2][7];
+char bat_hndl_zvu_init[2]={0,0};
+short bat_hndl_i[2];
+long bat_hndl_t_razr[2];		//предполагаемое время полного разряда батареи (от 100% до разряда)
+long bat_hndl_t_razr_ke[2];	//предполагаемое время полного разряда батареи (от 100% до разряда) при контроле емкости
+long bat_hndl_zvu_Q[2];
+long bat_hndl_proc_razr[2];
+long bat_hndl_remain_time[2];
+short bat_hndl_t_razr_hour[2];
+short bat_hndl_t_razr_min[2];
+short bat_hndl_t_razr_mininhour[2];
 char bat_hndl_zvu_ke_init=0;
 short bat_hndl_i_temp;
-short bat_hndl_u_end;
-short U_end_from_i_table[7];
+short bat_hndl_u_end[2];
+short U_end_from_i_table[2][7];
 long bat_hndl_plazma[5];
-char bat_hndl_zvu_Q_cnt;
-long amper_chas_cnt_drv_summ;
-char bat_hndl_i_vector=0,bat_hndl_i_vector_old=0;
-long bat_hndl_i_zar_price=0L;
-long bat_hndl_i_summ;
+char bat_hndl_zvu_Q_cnt[2];
+long amper_chas_cnt_drv_summ[2];
+long amper_chas_cnt_drv_summ_[2];
+char bat_hndl_i_vector[2]=0, bat_hndl_i_vector_old[2]=0;
+long bat_hndl_i_zar_price[2]=0L;
+long bat_hndl_i_summ[2];
+char amper_chas_cnt_drv_cnter[2];
+char bat_hndl_zvu_cnter[2];
 
 char avar_bps_reset_cnt;
 
@@ -1132,7 +1135,7 @@ if(bat_hndl_zvu_ke_init==1)	  //Инициализация при включении контроля емкости
 
 if(spc_stat==spcKE)
 	{
-	ke_drv_i_temp=-Ib_ips_termokompensat/10;
+	ke_drv_i_temp=-Ib_ips_termokompensat[0]/10;
 	if(ke_drv_i_temp<0)ke_drv_i_temp=0;
 
 	bat_hndl_plazma[3]=ke_drv_cnt_10s;
@@ -1151,28 +1154,28 @@ if(spc_stat==spcKE)
 			}
 		ke_drv_i_avg=ke_drv_i_temp_temp/6;
 
-		I_from_t_table[0]=BAT_C_POINT_1_6*6; 	//Ток при котором батарея разрядится за 1/6 часа (0.1А)
-		I_from_t_table[1]=BAT_C_POINT_1_2*2; 	//Ток при котором батарея разрядится за 1/2 часа (0.1А)
-		I_from_t_table[2]=BAT_C_POINT_1; 		//Ток при котором батарея разрядится за 1 час (0.1А)
-		I_from_t_table[3]=BAT_C_POINT_3/3; 		//Ток при котором батарея разрядится за 3 часа (0.1А)
-		I_from_t_table[4]=BAT_C_POINT_5/5; 		//Ток при котором батарея разрядится за 5 часов (0.1А)
-		I_from_t_table[5]=BAT_C_POINT_10/10; 	//Ток при котором батарея разрядится за 10 часов (0.1А)
-		I_from_t_table[6]=BAT_C_POINT_20/20; 	//Ток при котором батарея разрядится за 20 часов (0.1А)
+		I_from_t_table[0][0]=BAT_C_POINT_1_6*6; 	//Ток при котором батарея разрядится за 1/6 часа (0.1А)
+		I_from_t_table[0][1]=BAT_C_POINT_1_2*2; 	//Ток при котором батарея разрядится за 1/2 часа (0.1А)
+		I_from_t_table[0][2]=BAT_C_POINT_1; 		//Ток при котором батарея разрядится за 1 час (0.1А)
+		I_from_t_table[0][3]=BAT_C_POINT_3/3; 		//Ток при котором батарея разрядится за 3 часа (0.1А)
+		I_from_t_table[0][4]=BAT_C_POINT_5/5; 		//Ток при котором батарея разрядится за 5 часов (0.1А)
+		I_from_t_table[0][5]=BAT_C_POINT_10/10; 	//Ток при котором батарея разрядится за 10 часов (0.1А)
+		I_from_t_table[0][6]=BAT_C_POINT_20/20; 	//Ток при котором батарея разрядится за 20 часов (0.1А)
 		
-		U_end_from_i_table[0]=BAT_U_END_1_6;	//Конечное напряжение контроля емкости при разряде за 1/6 часа
-		U_end_from_i_table[1]=BAT_U_END_1_2;	//Конечное напряжение контроля емкости при разряде за 1/2 часа
-		U_end_from_i_table[2]=BAT_U_END_1;		//Конечное напряжение контроля емкости при разряде за 1 час
-		U_end_from_i_table[3]=BAT_U_END_3;		//Конечное напряжение контроля емкости при разряде за 3 часа
-		U_end_from_i_table[4]=BAT_U_END_5;		//Конечное напряжение контроля емкости при разряде за 5 часов
-		U_end_from_i_table[5]=BAT_U_END_10;		//Конечное напряжение контроля емкости при разряде за 10 часов
-		U_end_from_i_table[6]=BAT_U_END_20;		//Конечное напряжение контроля емкости при разряде за 20 часов		
+		U_end_from_i_table[0][0]=BAT_U_END_1_6;		//Конечное напряжение контроля емкости при разряде за 1/6 часа
+		U_end_from_i_table[0][1]=BAT_U_END_1_2;		//Конечное напряжение контроля емкости при разряде за 1/2 часа
+		U_end_from_i_table[0][2]=BAT_U_END_1;		//Конечное напряжение контроля емкости при разряде за 1 час
+		U_end_from_i_table[0][3]=BAT_U_END_3;		//Конечное напряжение контроля емкости при разряде за 3 часа
+		U_end_from_i_table[0][4]=BAT_U_END_5;		//Конечное напряжение контроля емкости при разряде за 5 часов
+		U_end_from_i_table[0][5]=BAT_U_END_10;		//Конечное напряжение контроля емкости при разряде за 10 часов
+		U_end_from_i_table[0][6]=BAT_U_END_20;		//Конечное напряжение контроля емкости при разряде за 20 часов		
 
 		bat_hndl_plazma[1]=ke_drv_i_avg;
 		bat_hndl_i_temp=ke_drv_i_avg;
 		
 		for(i=0;i<7;i++)
 			{
-			if(bat_hndl_i_temp>=I_from_t_table[i])
+			if(bat_hndl_i_temp>=I_from_t_table[0][i])
 				{
 				break;
 				}
@@ -1180,38 +1183,38 @@ if(spc_stat==spcKE)
 
 		bat_hndl_plazma[0]=i;
 
-		 if(i==0) bat_hndl_t_razr_ke=bat_hndl_t_razr_const[0];
+		 if(i==0) bat_hndl_t_razr_ke[0]=bat_hndl_t_razr_const[0];
 		 else if((i>=1)&&(i<7))
 		 	{
 			short i1,i2;
-			i1=I_from_t_table[i-1]-bat_hndl_i_temp;
-			i2=I_from_t_table[i-1]-I_from_t_table[i];
-			bat_hndl_t_razr_ke=bat_hndl_t_razr_const[i]-bat_hndl_t_razr_const[i-1];
-			bat_hndl_t_razr_ke*=(long)i1;
-			bat_hndl_t_razr_ke/=(long)i2;
-			bat_hndl_t_razr_ke+=bat_hndl_t_razr_const[i-1];
+			i1=I_from_t_table[0][i-1]-bat_hndl_i_temp;
+			i2=I_from_t_table[0][i-1]-I_from_t_table[0][i];
+			bat_hndl_t_razr_ke[0]=bat_hndl_t_razr_const[i]-bat_hndl_t_razr_const[i-1];
+			bat_hndl_t_razr_ke[0]*=(long)i1;
+			bat_hndl_t_razr_ke[0]/=(long)i2;
+			bat_hndl_t_razr_ke[0]+=bat_hndl_t_razr_const[i-1];
 			}
 		else if(i>=7)
 			{
-			bat_hndl_t_razr_ke=bat_hndl_t_razr_const[6];
+			bat_hndl_t_razr_ke[0]=bat_hndl_t_razr_const[6];
 			}
 
-		 if(i==0) bat_hndl_u_end=U_end_from_i_table[0];
+		 if(i==0) bat_hndl_u_end[0]=U_end_from_i_table[0][0];
 		 else if((i>=1)&&(i<7))
 		 	{
 			long u1,tempL;
 
-			tempL=(long)U_end_from_i_table[i]-(long)U_end_from_i_table[i-1];
-			u1=bat_hndl_t_razr_ke-bat_hndl_t_razr_const[i-1];
+			tempL=(long)U_end_from_i_table[0][i]-(long)U_end_from_i_table[0][i-1];
+			u1=bat_hndl_t_razr_ke[0]-bat_hndl_t_razr_const[i-1];
 			tempL*=u1;
 			u1=bat_hndl_t_razr_const[i]-bat_hndl_t_razr_const[i-1];
 			tempL/=u1;
-			tempL+=(long)U_end_from_i_table[i-1];
-			bat_hndl_u_end=(short)tempL;
+			tempL+=(long)U_end_from_i_table[0][i-1];
+			bat_hndl_u_end[0]=(short)tempL;
 			}
 		else if(i>=7)
 			{
-			bat_hndl_u_end=U_end_from_i_table[6];
+			bat_hndl_u_end[0]=U_end_from_i_table[0][6];
 			}
 
 		}
@@ -1244,7 +1247,7 @@ if(spc_stat==spcKE)
 		//mess_send(MESS2BAT_HNDL,PARAM_BAT_MASK_OFF_AFTER_2SEC,(1<<(1-spc_bat)),20);
 		}
 
-	if(out_U<bat_hndl_u_end)
+	if(out_U<bat_hndl_u_end[0])
 		{
 		cnt_end_ke++;
 		if(cnt_end_ke>=30)
@@ -1386,20 +1389,23 @@ spc_stat=spcOFF;
 
 #ifdef UKU_ZVU
 //-----------------------------------------------
-void amper_chas_cnt_drv(void)
+void amper_chas_cnt_drv(char in)
 {
 
-amper_chas_cnt_drv_summ+=(long)Ib_ips_termokompensat;
+amper_chas_cnt_drv_cnter[in]++;
 
-if(amper_chas_cnt_drv_summ>=36000L)
+amper_chas_cnt_drv_summ[in]+=(long)Ib_ips_termokompensat[in];
+amper_chas_cnt_drv_summ_[in]+=444;
+
+if(amper_chas_cnt_drv_summ[in]>=36000L)
 	{
-	amper_chas_cnt_drv_summ-=36000L;
-	lc640_write_int(EE_AMPER_CHAS_CNT,lc640_read_int(EE_AMPER_CHAS_CNT)+1);
+	amper_chas_cnt_drv_summ[in]-=36000L;
+	lc640_write_int(EE_AMPER_CHAS_CNT_ADR[in],lc640_read_int(EE_AMPER_CHAS_CNT_ADR[in])+1);
 	}
-else if(amper_chas_cnt_drv_summ<=-36000L)
+else if(amper_chas_cnt_drv_summ[in]<=-36000L)
 	{
-	amper_chas_cnt_drv_summ+=36000L;
-	lc640_write_int(EE_AMPER_CHAS_CNT,lc640_read_int(EE_AMPER_CHAS_CNT)-1);
+	amper_chas_cnt_drv_summ[in]+=36000L;
+	lc640_write_int(EE_AMPER_CHAS_CNT_ADR[in],lc640_read_int(EE_AMPER_CHAS_CNT_ADR[in])-1);
 	}
 }
 #endif
@@ -1944,7 +1950,7 @@ if(vz2_stat==vz2sWRK1)
 	//if(abs(out_U-FZ_U1)<10)
 	if((out_U<(FZ_U1+30))&&(out_U>(FZ_U1-10)))
 		{
-		if((Ib_ips_termokompensat/10)<FZ_ISW12)
+		if((Ib_ips_termokompensat[0]/10)<FZ_ISW12)
 			{
 			if(vz2_stat_ph2_cnt)
 				{
@@ -2298,7 +2304,7 @@ if(((++main_kb_cnt>=TBAT*60)&&(TBAT)))
 	if( (BAT_IS_ON[0]==bisON) && (bat[0]._Ub>80) && ( (abs(bat[0]._Ib)<IKB) || (bat[0]._av&1) ) ) kb_start[0]=1;
 	if( (BAT_IS_ON[1]==bisON) && (bat[1]._Ub>80) && ( (abs(bat[1]._Ib)<IKB) || (bat[1]._av&1) ) ) kb_start[1]=1;
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
-	if( (!ips_bat_av_vzvod)                      && ((abs(Ib_ips_termokompensat)<IKB) || (bat_ips._av&1) ) ) kb_start_ips=1;
+	if( (!ips_bat_av_vzvod[0])                      && ((abs(Ib_ips_termokompensat[0])<IKB) || (bat_ips[0]._av&1) ) ) kb_start_ips=1;
 #endif	
 	if( (net_av) || (num_of_wrks_bps==0) || ( (spc_stat!=spcOFF) && (spc_stat!=spcVZ) ) 
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
@@ -2331,14 +2337,14 @@ if(kb_cnt_1lev)
 		{
 		ibat[0]=abs(bat[0]._Ib);
 		ibat[1]=abs(bat[1]._Ib);
-		ibat_ips=abs(Ib_ips_termokompensat);
+		ibat_ips=abs(Ib_ips_termokompensat[0]);
 		}
 	
 	if(kb_cnt_1lev==0)
 		{
 		ibat_[0]=abs(bat[0]._Ib);
 		ibat_[1]=abs(bat[1]._Ib);
-		ibat_ips_=abs(Ib_ips_termokompensat);
+		ibat_ips_=abs(Ib_ips_termokompensat[0]);
 
 		kb_cnt_2lev=0;
 
@@ -2392,14 +2398,14 @@ else if(kb_cnt_2lev)
 		{
 		ibat[0]=abs(bat[0]._Ib);
 		ibat[1]=abs(bat[1]._Ib);
-		ibat_ips=abs(Ib_ips_termokompensat);
+		ibat_ips=abs(Ib_ips_termokompensat[0]);
 		}
 	
 	if(kb_cnt_2lev==0)
 		{
 		ibat_[0]=abs(bat[0]._Ib);
 		ibat_[1]=abs(bat[1]._Ib);
-		ibat_ips_=abs(Ib_ips_termokompensat);
+		ibat_ips_=abs(Ib_ips_termokompensat[0]);
 
 		kb_full_ver=0;
 
@@ -2462,7 +2468,7 @@ else if(kb_full_ver)
 			}
 		}
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
-	if( abs(Ib_ips_termokompensat) > IKB ) 
+	if( abs(Ib_ips_termokompensat[0]) > IKB ) 
 		{
 		if(kb_start_ips==1)
 			{
@@ -2483,7 +2489,7 @@ else if(kb_full_ver)
 		if((kb_start[0]==1)&&((load_I>(2*IKB)/10))&&(!(bat[0]._av&0x01))) avar_bat_hndl(0,1);
 		if((kb_start[1]==1)&&((load_I>(2*IKB)/10))&&(!(bat[1]._av&0x01))) avar_bat_hndl(1,1);
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
-		if((kb_start_ips==1)&&((load_I>(2*IKB)/10))&&(!(bat_ips._av&0x01))) avar_bat_ips_hndl(1);
+		if((kb_start_ips==1)&&((load_I>(2*IKB)/10))&&(!(bat_ips[0]._av&0x01))) avar_bat_ips_hndl(1);
 #endif
 		}
 	}
@@ -3165,6 +3171,10 @@ temp_SL*=Ktbat[1];
 temp_SL/=20000L;
 temp_SL-=273L;
 bat[1]._Tb=(signed short)temp_SL;
+#ifdef UKU_ZVU
+bat[1]._nd=bat[0]._nd;
+bat[1]._Tb=bat[0]._Tb;
+#endif
 #endif
 
 #ifdef UKU_6U
@@ -3419,36 +3429,37 @@ t_ext[2]=(signed short)temp_SL;
 
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
 //Ток батареи
+
 if(bps[8]._device==dIBAT_METR)
 	{
-	ibat_metr_buff_[0]=((signed long)bps[8]._buff[0])+(((signed long)bps[8]._buff[1])<<8);
-	ibat_metr_buff_[1]=((signed long)bps[8]._buff[2])+(((signed long)bps[8]._buff[3])<<8);
-	bIBAT_SMKLBR=((signed short)bps[8]._buff[4])+(((signed short)bps[8]._buff[5])<<8);
-	if(bIBAT_SMKLBR) bIBAT_SMKLBR_cnt=50;
-	if(!bIBAT_SMKLBR)
+	ibat_metr_buff_[0][0]=((signed long)bps[8]._buff[0])+(((signed long)bps[8]._buff[1])<<8);
+	ibat_metr_buff_[0][1]=((signed long)bps[8]._buff[2])+(((signed long)bps[8]._buff[3])<<8);
+	bIBAT_SMKLBR[0]=((signed short)bps[8]._buff[4])+(((signed short)bps[8]._buff[5])<<8);
+	if(bIBAT_SMKLBR[0]) bIBAT_SMKLBR_cnt[0]=50;
+	if(!bIBAT_SMKLBR[0])
 		{
 		signed long temp_SL;
-		temp_SL=(signed long)ibat_metr_buff_[0];
-		temp_SL-=(signed long)ibat_metr_buff_[1];
+		temp_SL=(signed long)ibat_metr_buff_[0][0];
+		temp_SL-=(signed long)ibat_metr_buff_[0][1];
 		temp_SL*=(signed long)Kibat1[0];
 		if((AUSW_MAIN==22010)||(AUSW_MAIN==22011)||(AUSW_MAIN==22035)||(AUSW_MAIN==22033)||(AUSW_MAIN==22063)||(AUSW_MAIN==22023)||(AUSW_MAIN==22043)||(AUSW_MAIN==22044))temp_SL/=2000L;
 	
-		Ib_ips_termokompensat =(signed short)temp_SL;
-		if(bIBAT_SMKLBR_cnt)
+		Ib_ips_termokompensat[0] =(signed short)temp_SL;
+		if(bIBAT_SMKLBR_cnt[0])
 			{
-			bIBAT_SMKLBR_cnt--;
-			Ib_ips_termokompensat=Ib_ips_termokompensat_temp;
+			bIBAT_SMKLBR_cnt[0]--;
+			Ib_ips_termokompensat[0]=Ib_ips_termokompensat_temp[0];
 			}
 		else 
 			{
-			Ib_ips_termokompensat_temp=Ib_ips_termokompensat;
+			Ib_ips_termokompensat_temp[0]=Ib_ips_termokompensat[0];
 			}
 		}
 	}
 
 bat[0]._Ub=load_U;
-if(AUSW_MAIN==22018) Ib_ips_termokompensat=bat[0]._Ib;
-else bat[0]._Ib=Ib_ips_termokompensat;
+if(AUSW_MAIN==22018) Ib_ips_termokompensat[0]=bat[0]._Ib;
+else bat[0]._Ib=Ib_ips_termokompensat[0];
 
 #endif
 #endif
@@ -3736,8 +3747,8 @@ else
 //*********************************************
 
 #ifndef TELECORE
-if((BAT_IS_ON[0]==bisON)&&(bat[0]._Ub>200)) Ibmax=bat[0]._Ib;
-if((BAT_IS_ON[1]==bisON)&&(bat[1]._Ub>200)&&(bat[1]._Ib>bat[0]._Ib)) Ibmax=bat[1]._Ib;
+if(((BAT_IS_ON[0]==bisON)||(NUMBAT>0))&&(bat[0]._Ub>200)) Ibmax=bat[0]._Ib;
+if(((BAT_IS_ON[1]==bisON)||(NUMBAT>1))&&(bat[1]._Ub>200)&&(bat[1]._Ib>bat[0]._Ib)) Ibmax=bat[1]._Ib;
 #endif
 
 #ifdef TELECORE
@@ -3769,7 +3780,8 @@ if((NUMBAT_TELECORE>1)&&(bat[1]._Ib/10>Ibmax))Ibmax=bat[1]._Ib/10;
 #endif
 
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
-Ibmax=Ib_ips_termokompensat;
+Ibmax=Ib_ips_termokompensat[0];
+if(Ib_ips_termokompensat[1]>Ibmax)Ibmax=Ib_ips_termokompensat[1];
 #endif
 for(i=0;i<NUMIST;i++)
 	{
@@ -8641,126 +8653,132 @@ temp_SS=bat[in]._Ub/2;
 
 #ifdef UKU_ZVU
 //-----------------------------------------------
-void bat_hndl_zvu(void)
+void bat_hndl_zvu(char in)
 {
 char i;
 short bat_hndl_i_temp;
 const long bat_hndl_t_razr_const[7]={600L,1800L,3600L,10800L,18000L,36000L,72000L};
 
+//Ib_ips_termokompensat[0]=-500;
+//Ib_ips_termokompensat[1]=-1000;
+
+bat_hndl_zvu_cnter[in]++;
 //Ib_ips_termokompensat=-17000;
  
-if(bat_hndl_zvu_init==0)
+if(bat_hndl_zvu_init[in]==0)
 	{
 	//Инициализация при включении системы
-	bat_hndl_zvu_Q=(long)lc640_read_int(EE_BAT1_ZAR_CNT);
-	if((bat_hndl_zvu_Q>100L)||(bat_hndl_zvu_Q<0L)) bat_hndl_zvu_Q=100L;
-	bat_hndl_zvu_Q*=10000L;
+	bat_hndl_zvu_Q[in]=(long)lc640_read_int(EE_BAT_ZAR_CNT[in]);
+	if((bat_hndl_zvu_Q[in]>100L)||(bat_hndl_zvu_Q[in]<0L)) bat_hndl_zvu_Q[in]=100L;
+	bat_hndl_zvu_Q[in]*=10000L;
 
-	bat_hndl_zvu_init=1;
+	bat_hndl_zvu_init[in]=1;
 	}
 else 
 	{
-	if(Ib_ips_termokompensat<-IKB)
+	if(Ib_ips_termokompensat[in]<-IKB)
 		{
-		bat_hndl_i_vector=0;
-		bat_hndl_i_zar_price=0L;
+		bat_hndl_i_vector[in]=0;
+		bat_hndl_i_zar_price[in]=0L;
 			
-		bat_hndl_i=-Ib_ips_termokompensat;
-		I_from_t_table[0]=BAT_C_POINT_1_6*6; //Ток при котором батарея разрядится за 1/6 часа (0.1А)
-		I_from_t_table[1]=BAT_C_POINT_1_2*2; //Ток при котором батарея разрядится за 1/2 часа (0.1А)
-		I_from_t_table[2]=BAT_C_POINT_1; //Ток при котором батарея разрядится за 1 час (0.1А)
-		I_from_t_table[3]=BAT_C_POINT_3/3; //Ток при котором батарея разрядится за 3 часа (0.1А)
-		I_from_t_table[4]=BAT_C_POINT_5/5; //Ток при котором батарея разрядится за 5 часов (0.1А)
-		I_from_t_table[5]=BAT_C_POINT_10/10; //Ток при котором батарея разрядится за 10 часов (0.1А)
-		I_from_t_table[6]=BAT_C_POINT_20/20; //Ток при котором батарея разрядится за 20 часов (0.1А)
+		bat_hndl_i[in]=-Ib_ips_termokompensat[in];
+		I_from_t_table[in][0]=BAT_C_POINT_1_6*6; //Ток при котором батарея разрядится за 1/6 часа (0.1А)
+		I_from_t_table[in][1]=BAT_C_POINT_1_2*2; //Ток при котором батарея разрядится за 1/2 часа (0.1А)
+		I_from_t_table[in][2]=BAT_C_POINT_1; //Ток при котором батарея разрядится за 1 час (0.1А)
+		I_from_t_table[in][3]=BAT_C_POINT_3/3; //Ток при котором батарея разрядится за 3 часа (0.1А)
+		I_from_t_table[in][4]=BAT_C_POINT_5/5; //Ток при котором батарея разрядится за 5 часов (0.1А)
+		I_from_t_table[in][5]=BAT_C_POINT_10/10; //Ток при котором батарея разрядится за 10 часов (0.1А)
+		I_from_t_table[in][6]=BAT_C_POINT_20/20; //Ток при котором батарея разрядится за 20 часов (0.1А)
 		
-		I_from_t_table[0]=(short)((((long)I_from_t_table[0])*((long)BAT_K_OLD))/100L);
-		I_from_t_table[1]=(short)((((long)I_from_t_table[1])*((long)BAT_K_OLD))/100L);
-		I_from_t_table[2]=(short)((((long)I_from_t_table[2])*((long)BAT_K_OLD))/100L);
-		I_from_t_table[3]=(short)((((long)I_from_t_table[3])*((long)BAT_K_OLD))/100L);
-		I_from_t_table[4]=(short)((((long)I_from_t_table[4])*((long)BAT_K_OLD))/100L);
-		I_from_t_table[5]=(short)((((long)I_from_t_table[5])*((long)BAT_K_OLD))/100L);
-		I_from_t_table[6]=(short)((((long)I_from_t_table[6])*((long)BAT_K_OLD))/100L);
+		I_from_t_table[in][0]=(short)((((long)I_from_t_table[in][0])*((long)BAT_K_OLD))/100L);
+		I_from_t_table[in][1]=(short)((((long)I_from_t_table[in][1])*((long)BAT_K_OLD))/100L);
+		I_from_t_table[in][2]=(short)((((long)I_from_t_table[in][2])*((long)BAT_K_OLD))/100L);
+		I_from_t_table[in][3]=(short)((((long)I_from_t_table[in][3])*((long)BAT_K_OLD))/100L);
+		I_from_t_table[in][4]=(short)((((long)I_from_t_table[in][4])*((long)BAT_K_OLD))/100L);
+		I_from_t_table[in][5]=(short)((((long)I_from_t_table[in][5])*((long)BAT_K_OLD))/100L);
+		I_from_t_table[in][6]=(short)((((long)I_from_t_table[in][6])*((long)BAT_K_OLD))/100L);
 
-		bat_hndl_i_temp=bat_hndl_i/10;
+		bat_hndl_i_temp=bat_hndl_i[in]/10;
 		for(i=0;i<7;i++)
 			{
-			if(bat_hndl_i_temp>=I_from_t_table[i])
+			if(bat_hndl_i_temp>=I_from_t_table[in][i])
 				{
 				break;
 				}
 			}
-		 if(i==0) bat_hndl_t_razr=bat_hndl_t_razr_const[0];
+		 if(i==0) bat_hndl_t_razr[in]=bat_hndl_t_razr_const[0];
 		 else if((i>=1)&&(i<7))
 		 	{
 			short i1,i2;
-			i1=I_from_t_table[i-1]-bat_hndl_i_temp;
-			i2=I_from_t_table[i-1]-I_from_t_table[i];
-			bat_hndl_t_razr=bat_hndl_t_razr_const[i]-bat_hndl_t_razr_const[i-1];
-			bat_hndl_t_razr*=(long)i1;
-			bat_hndl_t_razr/=(long)i2;
-			bat_hndl_t_razr+=bat_hndl_t_razr_const[i-1];
+			i1=I_from_t_table[in][i-1]-bat_hndl_i_temp;
+			i2=I_from_t_table[in][i-1]-I_from_t_table[in][i];
+			bat_hndl_t_razr[in]=bat_hndl_t_razr_const[i]-bat_hndl_t_razr_const[i-1];
+			bat_hndl_t_razr[in]*=(long)i1;
+			bat_hndl_t_razr[in]/=(long)i2;
+			bat_hndl_t_razr[in]+=bat_hndl_t_razr_const[i-1];
 			}
 		else if(i>=7)
 			{
-			bat_hndl_t_razr=bat_hndl_t_razr_const[6];
+			bat_hndl_t_razr[in]=bat_hndl_t_razr_const[6];
 			}
-		bat_hndl_proc_razr=1000000L/bat_hndl_t_razr;
+		bat_hndl_proc_razr[in]=1000000L/bat_hndl_t_razr[in];
 
-		if(bat_hndl_zvu_Q>bat_hndl_proc_razr)bat_hndl_zvu_Q-=bat_hndl_proc_razr;
-		else bat_hndl_zvu_Q=0L;
+		if(bat_hndl_zvu_Q[in]>bat_hndl_proc_razr[in])bat_hndl_zvu_Q[in]-=bat_hndl_proc_razr[in];
+		else bat_hndl_zvu_Q[in]=0L;
 
-		bat_hndl_t_razr_hour=(short)(bat_hndl_remain_time/3600L);
-		bat_hndl_t_razr_min=(short)(bat_hndl_remain_time/60L);
-		bat_hndl_t_razr_mininhour=bat_hndl_t_razr_min%60L;
+		bat_hndl_t_razr_hour[in]=(short)(bat_hndl_remain_time[in]/3600L);
+		bat_hndl_t_razr_min[in]=(short)(bat_hndl_remain_time[in]/60L);
+		bat_hndl_t_razr_mininhour[in]=bat_hndl_t_razr_min[in]%60L;
 
 		}
-	else if(Ib_ips_termokompensat>IKB)
+	else if(Ib_ips_termokompensat[in]>IKB)
 		{
-		bat_hndl_i_vector=1;
+		bat_hndl_i_vector[in]=1;
 
-		bat_hndl_i=Ib_ips_termokompensat;
-		bat_hndl_i_summ+=(long)bat_hndl_i;
-		if(bat_hndl_i_summ>=36000L)
+		bat_hndl_i[in]=Ib_ips_termokompensat[in];
+		bat_hndl_i_summ[in]+=(long)(bat_hndl_i[in]);
+		if(bat_hndl_i_summ[in]>=36000L)
 
 		//bat_hndl_t_razr=BAT_C_POINT_20*36000L/bat_hndl_i;
 		//bat_hndl_proc_razr=1000000L/bat_hndl_t_razr;
 			{
-			bat_hndl_i_summ-=36000L;
-			if(bat_hndl_zvu_Q<1000000L)bat_hndl_zvu_Q+=bat_hndl_i_zar_price;
-			else bat_hndl_zvu_Q=1000000L; 
+			bat_hndl_i_zar_price[0] = 1000000L;
+			bat_hndl_i_zar_price[0] /= (long)BAT_C_POINT_20;
+			bat_hndl_i_summ[in]-=36000L;
+			if(bat_hndl_zvu_Q[in]<1000000L)bat_hndl_zvu_Q[in]+=bat_hndl_i_zar_price[in];
+			else bat_hndl_zvu_Q[in]=1000000L; 
 			}
 		}
 
 
-	if(bat_hndl_i_vector!=bat_hndl_i_vector_old)
+	if(bat_hndl_i_vector[in]!=bat_hndl_i_vector_old[in])
 		{
-		if(bat_hndl_i_vector==1)
+		if(bat_hndl_i_vector[in]==1)
 			{
 			signed short tempSS;
-			tempSS=lc640_read_int(EE_AMPER_CHAS_CNT);
-			bat_hndl_i_zar_price=(bat_hndl_zvu_Q-1000000L)/((long)tempSS);
-			bat_hndl_i_summ=0;
+			tempSS=lc640_read_int(EE_AMPER_CHAS_CNT_ADR[in]);
+			bat_hndl_i_zar_price[in]=(bat_hndl_zvu_Q[in]-1000000L)/((long)tempSS);
+			bat_hndl_i_summ[in]=0;
 			}
 		}
-	bat_hndl_i_vector_old=bat_hndl_i_vector;
+	bat_hndl_i_vector_old[in]=bat_hndl_i_vector[in];
 
-	if((bat_hndl_zvu_Q/10000L)!=lc640_read_int(EE_BAT1_ZAR_CNT)) lc640_write_int(EE_BAT1_ZAR_CNT,bat_hndl_zvu_Q/10000L);
-	bat_hndl_remain_time=bat_hndl_zvu_Q/bat_hndl_proc_razr;
+	if((bat_hndl_zvu_Q[in]/10000L)!=lc640_read_int(EE_BAT_ZAR_CNT[in])) lc640_write_int(EE_BAT_ZAR_CNT[in],bat_hndl_zvu_Q[in]/10000L);
+	bat_hndl_remain_time[in]=bat_hndl_zvu_Q[in]/bat_hndl_proc_razr[in];
 	}
 
-if(bat_hndl_zvu_Q>1000000L)	bat_hndl_zvu_Q=1000000L;
-else if(bat_hndl_zvu_Q<0L)	bat_hndl_zvu_Q=0L;
+if(bat_hndl_zvu_Q[in]>1000000L)	bat_hndl_zvu_Q[in]=1000000L;
+else if(bat_hndl_zvu_Q[in]<0L)	bat_hndl_zvu_Q[in]=0L;
 
-if((Ib_ips_termokompensat/10<(2*IKB))&&(Ib_ips_termokompensat/10>(-2*IKB))&&(!(bat[0]._av&0x01))&& (out_U<=u_necc_up) && (out_U>u_necc_dn) && (main_kb_cnt>=10) && (main_kb_cnt<=200) /*(main_kb_cnt==((TBAT*60)-10))*//*&& ((TVENTMAX!=0))*/ )
+if((Ib_ips_termokompensat[in]/10<(2*IKB))&&(Ib_ips_termokompensat[in]/10>(-2*IKB))&&(!(bat[in]._av&0x01))&& (out_U<=u_necc_up) && (out_U>u_necc_dn) && (main_kb_cnt>=10) && (main_kb_cnt<=200) /*(main_kb_cnt==((TBAT*60)-10))*//*&& ((TVENTMAX!=0))*/ )
 	{
-	if(bat_hndl_zvu_Q_cnt<60)
+	if(bat_hndl_zvu_Q_cnt[in]<60)
 		{
-		bat_hndl_zvu_Q_cnt++;
-		if(bat_hndl_zvu_Q_cnt>=60)
+		bat_hndl_zvu_Q_cnt[in]++;
+		if(bat_hndl_zvu_Q_cnt[in]>=60)
 			{
-			lc640_write_int(EE_BAT1_ZAR_CNT,100);
-			bat_hndl_zvu_Q=1000000L;
+			lc640_write_int(EE_BAT_ZAR_CNT[in],100);
+			bat_hndl_zvu_Q[in]=1000000L;
 
 
 			}
@@ -8768,7 +8786,7 @@ if((Ib_ips_termokompensat/10<(2*IKB))&&(Ib_ips_termokompensat/10>(-2*IKB))&&(!(b
 	}
 else 
 	{
-	bat_hndl_zvu_Q_cnt=0;
+	bat_hndl_zvu_Q_cnt[in]=0;
 	}
 
 
@@ -9604,7 +9622,8 @@ gran(&num_necc,1,NUMIST);
 //-----------------------------------------------
 void cntrl_hndl(void)
 {
-
+cntrl_hndl_plazma=200;
+cntrl_hndl_plazma_++;
 
 
 IZMAX_=IZMAX;
@@ -9615,15 +9634,16 @@ if((speedChIsOn)||(sp_ch_stat==scsWRK))IZMAX_=speedChrgCurr;
 if(vz1_stat==vz1sWRK) IZMAX_=UZ_IMAX;
 if(vz2_stat==vz2sWRK1) IZMAX_=FZ_IMAX1;
 if(vz2_stat==vz2sWRK2) IZMAX_=FZ_IMAX2;
-//if(spc_stat==spcVZ) IZMAX_=IMAX_VZ;
+if(spc_stat==spcVZ) IZMAX_=IMAX_VZ;
 
 if(cntrl_stat_blok_cnt)cntrl_stat_blok_cnt--;
 if(cntrl_stat_blok_cnt_)cntrl_stat_blok_cnt_--;
 
 if((bat[0]._temper_stat&0x03)||(bat[1]._temper_stat&0x03))IZMAX_=IZMAX_/10;
-
+cntrl_hndl_plazma=199;
 
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
+cntrl_hndl_plazma=198;
 if((REG_SPEED<1)||(REG_SPEED>5)) REG_SPEED=1;
 if(ch_cnt0<(10*REG_SPEED))
 	{
@@ -9633,6 +9653,7 @@ if(ch_cnt0<(10*REG_SPEED))
 		ch_cnt0=0;
 		b1Hz_ch=1;
 		}
+		cntrl_hndl_plazma=197;
 	}
 #endif
 #ifndef UKU_220_IPS_TERMOKOMPENSAT
@@ -9647,7 +9668,7 @@ if(ch_cnt0<10)
 	}
 #endif
 
-
+cntrl_hndl_plazma=196;
 if(mess_find_unvol(MESS2CNTRL_HNDL))
 	{
 	if(mess_data[0]==PARAM_CNTRL_STAT_PLUS)
@@ -9742,10 +9763,11 @@ if(mess_find_unvol(MESS2CNTRL_HNDL))
 	}
 
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
-else if((b1Hz_ch)&&((!bIBAT_SMKLBR)||(bps[8]._cnt>40)))
+else if((b1Hz_ch)&&((!bIBAT_SMKLBR[0])||(ibat_metr_cnt[0]>40))&&((!bIBAT_SMKLBR[1])||(ibat_metr_cnt[1]>40)))
 	{
+	cntrl_hndl_plazma=195;
 	cntrl_stat_new=cntrl_stat_old;
-	cntrl_hndl_plazma=19;
+	//cntrl_hndl_plazma=19;
 	if((Ibmax/10)>(2*IZMAX_))
 		{
 		cntrl_hndl_plazma=20;
@@ -9863,6 +9885,7 @@ else if((b1Hz_ch)&&((!bIBAT_SMKLBR)||(bps[8]._cnt>40)))
 #else
 else if((b1Hz_ch)&&((!bIBAT_SMKLBR)||(bps[8]._cnt>40)))
 	{
+	cntrl_hndl_plazma=194;
 	cntrl_hndl_plazma=37;
 	cntrl_stat_new=cntrl_stat_old;
 	
@@ -9988,6 +10011,7 @@ if(ica_cntrl_hndl_cnt)	ica_cntrl_hndl_cnt--;
 
 gran(&cntrl_stat,10,1022); 
 b1Hz_ch=0;
+
 }
 #endif
 
@@ -11179,7 +11203,7 @@ if(speedChrgAvtEn==1)
 		{
 		if((load_U<u_necc)&&((u_necc-load_U)>speedChrgDU)
 		#ifdef UKU_220_IPS_TERMOKOMPENSAT
-		&&(abs(Ib_ips_termokompensat/10-IZMAX)<5)
+		&&(abs(Ib_ips_termokompensat[0]/10-IZMAX)<5)
 		#endif
 		#ifdef UKU_220_V2
 		&&(abs(bat[0]._Ib/10-IZMAX)<10)

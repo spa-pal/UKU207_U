@@ -967,7 +967,7 @@ typedef enum {
 	iStr,iStr_3U,iStr_RSTKM,iStr_GLONASS,iStr_KONTUR,iStr_6U,iStr_220_IPS_TERMOKOMPENSAT,iStr_TELECORE2015,iStr_IPS_SGEP_GAZPROM,iStr_FSO,
 	iVrs,iPrltst,iApv,iVZ_set,iVZ1_set,iVZ2_set,
 	iK_bps,iK_bps_sel,iK_bat,iK_bat_simple,iK_bat_ips_termokompensat_ib,iK_bat_TELECORE,iK_bat_FSO,iK_bat_sel,iK_bat_sel_TELECORE,iK_bat_sel_FSO,iK_load,iK_net, iK_net3, iK_FSO,
-	iK_makb_sel,iK_makb,iK_out,
+	iK_makb_sel,iK_makb,iK_out,iK_bat_sel_zvu,
 	iTst,iTst_3U,iTst_RSTKM,iTst_GLONASS,iTst_KONTUR,iTst_6U,iTst_220,iTst_220_380,iTst_220_IPS_TERMOKOMPENSAT,iTst_FSO,
 	iTst_TELECORE, iTst_IPS_SGEP_GAZPROM,
 	iTst_klbr,iTst_BPS1,iTst_BPS2,iTst_BPS12,iDebug,
@@ -1393,10 +1393,10 @@ typedef struct
 	//signed short   _min_cell_volt;
 	unsigned short _time_min_cnt_ke;
 	} BAT_STAT; 
-extern BAT_STAT bat[2],bat_ips;
+extern BAT_STAT bat[2],bat_ips[2];
 extern signed short		bat_u_old_cnt;
-extern signed short 	Ib_ips_termokompensat;
-extern signed short		Ib_ips_termokompensat_temp;
+extern signed short 	Ib_ips_termokompensat[2];
+extern signed short		Ib_ips_termokompensat_temp[2];
 
 //#ifdef UKU_TELECORE2015
 typedef enum {bsOFF=0,bsCOMM_ON,bsOK} enum_batStat;
@@ -1831,10 +1831,10 @@ extern enum_avt_stat avt_stat[12],avt_stat_old[12];
 
 //-----------------------------------------------
 //Показания АЦП на плате измерения тока батареи
-extern signed long ibat_metr_buff_[2];
-extern short bIBAT_SMKLBR;
-extern short bIBAT_SMKLBR_cnt;
-extern short ibat_metr_cnt;
+extern signed long ibat_metr_buff_[2][2];
+extern short bIBAT_SMKLBR[2];
+extern short bIBAT_SMKLBR_cnt[2];
+extern short ibat_metr_cnt[2];
 
 //-----------------------------------------------
 //Управление низкоприоритетной нагрузкой
@@ -1846,8 +1846,8 @@ extern signed short load_off_cnt;
 extern char snmp_plazma;
 
 
-extern char ips_bat_av_vzvod;
-extern char ips_bat_av_stat;
+extern char ips_bat_av_vzvod[2];
+extern char ips_bat_av_stat[2];
 
 extern char rel_warm_plazma;
 extern char can_byps_plazma0,can_byps_plazma1;
@@ -2035,6 +2035,7 @@ extern char plazma_fso;
 extern signed short plazmaSS_fso[10];
 #endif //UKU_FSO
 
+extern short plazma_pavlikSS[2];
 
 /*----------------------------------------------------------------------------
  * end of file

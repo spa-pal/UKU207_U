@@ -77,6 +77,10 @@ void adc_drv7(void);
 void avt_hndl(void);
 void vent_resurs_hndl(void);
 void ips_current_average_hndl(void);
+#ifdef UKU_ZVU
+void amper_chas_cnt_drv(char in);
+void bat_hndl_zvu(char in);
+#endif
 
 //***********************************************
 //Спецфункции
@@ -181,30 +185,34 @@ extern signed short vz2_stat_ph2_cnt;
 
 //***********************************************
 //Обслуживание батареи ЗВУ
-extern short I_from_t_table[7];
-extern char bat_hndl_zvu_init;
-extern short bat_hndl_i;
-extern long bat_hndl_t_razr;				//предполагаемое время полного разряда батареи (от 100% до разряда)
-extern long bat_hndl_t_razr_ke;				//предполагаемое время полного разряда батареи (от 100% до разряда) при контроле емкости
-extern long bat_hndl_zvu_Q;
-extern long bat_hndl_proc_razr;
-extern long bat_hndl_remain_time;
-extern short bat_hndl_t_razr_hour;
-extern short bat_hndl_t_razr_min;
-extern short bat_hndl_t_razr_mininhour;
+extern short I_from_t_table[2][7];
+extern char bat_hndl_zvu_init[2];
+extern short bat_hndl_i[2];
+extern long bat_hndl_t_razr[2];				//предполагаемое время полного разряда батареи (от 100% до разряда)
+extern long bat_hndl_t_razr_ke[2];				//предполагаемое время полного разряда батареи (от 100% до разряда) при контроле емкости
+extern long bat_hndl_zvu_Q[2];
+extern long bat_hndl_proc_razr[2];
+extern long bat_hndl_remain_time[2];
+extern short bat_hndl_t_razr_hour[2];
+extern short bat_hndl_t_razr_min[2];
+extern short bat_hndl_t_razr_mininhour[2];
 extern char bat_hndl_zvu_ke_init;
 extern short bat_hndl_i_temp;
-extern short bat_hndl_u_end;
-extern short U_end_from_i_table[7];
+extern short bat_hndl_u_end[2];
+extern short U_end_from_i_table[2][7];
 extern long bat_hndl_plazma[5];
-extern char bat_hndl_zvu_Q_cnt;
-extern char bat_hndl_i_vector,bat_hndl_i_vector_old;
-extern long bat_hndl_i_zar_price;
-extern long bat_hndl_i_summ;
+extern char bat_hndl_zvu_Q_cnt[2];
+extern long amper_chas_cnt_drv_summ[2];
+extern long amper_chas_cnt_drv_summ_[2];
+extern char bat_hndl_i_vector[2],bat_hndl_i_vector_old[2];
+extern long bat_hndl_i_zar_price[2];
+extern long bat_hndl_i_summ[2];
+extern char amper_chas_cnt_drv_cnter[2];
+extern char bat_hndl_zvu_cnter[2];
 
 extern char avar_bps_reset_cnt;
 
-extern char cntrl_hndl_plazma;
+extern char cntrl_hndl_plazma,cntrl_hndl_plazma_;
 
 extern short plazma_ica1,plazma_ica2;
 extern char rele_hndl_plazma[3];

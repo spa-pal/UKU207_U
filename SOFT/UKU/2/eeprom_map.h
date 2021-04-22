@@ -243,11 +243,12 @@
 #define EE_BAT_U_END_20					SECTOR_SETS2+86
 #define EE_ZVU_BAT_MIN_CNT_KE			SECTOR_SETS2+88
 #define EE_AMPER_CHAS_CNT				SECTOR_SETS2+90
+#define EE_AMPER_CHAS_CNT1				SECTOR_SETS2+90
 #define EE_BAT_C_POINT_NUM_ELEM			SECTOR_SETS2+92
 #define EE_BAT_K_OLD					SECTOR_SETS2+94
 #define EE_SP_CH_VENT_BLOK				SECTOR_SETS2+96
 #define EE_VZ_CH_VENT_BLOK				SECTOR_SETS2+98
-
+#define EE_AMPER_CHAS_CNT2				SECTOR_SETS2+100
 
 #define SECTOR_BAT  		SECTOR_KOEF+450
 
@@ -611,4 +612,6 @@ extern const unsigned short ADR_SK_LCD_EN[4];
 extern const unsigned short ADR_SK_RS_EN[4];
 
 extern const unsigned short ADR_EE_RELE_SET_MASK[4];
+extern const unsigned short EE_BAT_ZAR_CNT[2];
+extern const unsigned short EE_AMPER_CHAS_CNT_ADR[2];
 
