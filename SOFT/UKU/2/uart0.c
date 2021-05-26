@@ -421,6 +421,34 @@ if ( PortNum == 0 )
 		}
 
     	LPC_UART0->LCR = 0x83;		/* 8 bits, no Parity, 1 Stop bit */
+/*
+#ifdef UKU_ZVU
+		if(MODBUS_PARITY==0) 		
+			{
+			char temp;
+			temp=LPC_UART0->LCR;
+			temp&=0xc7;
+			LPC_UART0->LCR=temp;
+			}
+		else if(MODBUS_PARITY==1) 	
+			{
+			char temp;
+			temp=LPC_UART0->LCR;
+			temp&=0xc7;
+			temp|=0x08;
+			LPC_UART0->LCR=temp;
+			}
+		else
+			{ 
+			char temp;
+			temp=LPC_UART0->LCR;
+			temp&=0xc7;
+			temp|=0x18;
+			LPC_UART0->LCR=temp;
+			}  
+
+#endif
+*/
 	Fdiv = ( pclk / 16 ) / baudrate ;	/*baud rate */
     	LPC_UART0->DLM = Fdiv / 256;							
     	LPC_UART0->DLL = Fdiv % 256;

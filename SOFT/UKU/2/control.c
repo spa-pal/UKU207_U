@@ -5958,13 +5958,13 @@ else if(DOP_RELE_FUNC==1)  //если допреле подключено к индикации разряженной бат
 //Реле аварий батарей
 if((mess_find_unvol(MESS2RELE_HNDL))&&	(mess_data[0]==PARAM_RELE_VENT))
 	{
-	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VENT,1);
-	else if(mess_data[1]==1) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VENT,1);
+	if(mess_data[1]==0) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VENT,1);
+	else if(mess_data[1]==1) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VENT,1);
      }
 else 
 	{
-	if(!(vent_stat)) SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VENT,1);
-    else SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VENT,1);
+	if(!(vent_stat)) SET_REG(LPC_GPIO0->FIOSET,1,SHIFT_REL_VENT,1);
+    else SET_REG(LPC_GPIO0->FIOCLR,1,SHIFT_REL_VENT,1);
 	} 
 #endif //!UKU_FSO_MINI
 
@@ -11947,7 +11947,7 @@ void vent_hndl_fso(void)
 			vent_stat=0;
 			}
 		}
-//vent_stat=33;
+vent_stat=1;
 }
 #endif //UKU_FSO
 
@@ -11956,8 +11956,8 @@ void vent_hndl_fso(void)
 void signal_hndl_uku_fso(void)
 {
 
-if(avar_stat&0x0001)uku_fso_D2_stat=1;
-else 				uku_fso_D2_stat=0;
+if(avar_stat&0x0001)						uku_fso_D2_stat=1;
+else 										uku_fso_D2_stat=0;
 
 if((avar_stat&(1<<3))||(avar_stat&0x0001))	uku_fso_SYSOK_stat=1;
 else 										uku_fso_SYSOK_stat=0; 
@@ -11976,12 +11976,12 @@ if((UKU_FSO_MINI_SIGN_MODE==0)||(sTARKSilentCnt[sub_ind1]>=5))
 		gran(&uku_fso_D1_cnt,0,10);
 		}
 
-	if(load_U<UKU_FSO_MINI_SIGN_D5_U)
+	if((load_U<UKU_FSO_MINI_SIGN_D5_U)&&(avar_stat&0x0001))
 		{
 		uku_fso_D5_cnt++;
 		gran(&uku_fso_D5_cnt,0,10);
 		}
-	else 
+	else if((load_U>=(UKU_FSO_MINI_SIGN_D5_U+UKU_FSO_MINI_SIGN_GIST))||(!(avar_stat&0x0001)))
 		{
 		uku_fso_D5_cnt--;
 		gran(&uku_fso_D5_cnt,0,10);
@@ -12021,3 +12021,41 @@ else if(uku_fso_D5_cnt<=2)	uku_fso_D5_stat=0;
 
 }
 #endif //UKU_FSO_MINI
+
+#ifdef UKU_FSO
+//-----------------------------------------------
+void fso_vent_valid_cntrl(void)
+{
+if(UKU_FSO_VENT_VALID_CNTRL>=1)
+	{
+	if((adc_buff_[3]>=1000)&&(adc_buff_[3]<=3000))	fso_vent_valid_cntrl_cnt[0]--;
+	else 											fso_vent_valid_cntrl_cnt[0]++;
+
+	gran(&fso_vent_valid_cntrl_cnt[0],0,10);
+
+	if(fso_vent_valid_cntrl_cnt[0]<1)fso_vent_valid_cntrl_stat[0]=0;
+	else if(fso_vent_valid_cntrl_cnt[0]>9)fso_vent_valid_cntrl_stat[0]=1;
+	}
+else
+	{
+	fso_vent_valid_cntrl_cnt[0]=0;
+	fso_vent_valid_cntrl_stat[0]=0;
+	}
+
+if(UKU_FSO_VENT_VALID_CNTRL>=2)
+	{
+	if((adc_buff_[10]>=1000)&&(adc_buff_[10]<=3000))	fso_vent_valid_cntrl_cnt[1]--;
+	else 												fso_vent_valid_cntrl_cnt[1]++;
+
+	gran(&fso_vent_valid_cntrl_cnt[1],0,10);
+
+	if(fso_vent_valid_cntrl_cnt[1]<1)fso_vent_valid_cntrl_stat[1]=0;
+	else if(fso_vent_valid_cntrl_cnt[1]>9)fso_vent_valid_cntrl_stat[1]=1;
+	}
+else
+	{
+	fso_vent_valid_cntrl_cnt[1]=0;
+	fso_vent_valid_cntrl_stat[1]=0;
+	}
+}
+#endif //UKU_FSO

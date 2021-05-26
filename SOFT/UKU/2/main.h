@@ -1174,12 +1174,15 @@ extern signed short SNTP_ENABLE;
 extern signed short SNTP_GMT;
 
 extern signed short NUMBAT_FSO;
+extern signed short UKU_FSO_VENT_VALID_CNTRL;
 #ifdef UKU_FSO_MINI
 extern signed short UKU_FSO_MINI_SIGN_MODE;
 extern signed short UKU_FSO_MINI_SIGN_D1_Q;
 extern signed short UKU_FSO_MINI_SIGN_D5_Q;
 extern signed short UKU_FSO_MINI_SIGN_D1_U;
 extern signed short UKU_FSO_MINI_SIGN_D5_U;
+extern signed short UKU_FSO_MINI_SIGN_GIST;
+
 extern char uku_fso_D1_stat;
 extern char uku_fso_D2_stat;
 extern char uku_fso_D5_stat;
@@ -1299,6 +1302,7 @@ extern signed short RELE_VENT_LOGIC;
 
 extern signed short MODBUS_ADRESS;
 extern signed short MODBUS_BAUDRATE;
+extern signed short MODBUS_PARITY;
 extern signed short BAT_LINK;
 
 #ifdef UKU_ZVU
@@ -2027,6 +2031,11 @@ extern unsigned char count_reg_enmv, count_bit_enmv, enmv_puts_en, delay_enmv_pu
 //-----------------------------------------------
 //Ресурс вентиляторов
 //extern char vent_resurs_temp[4];
+
+//***********************************************
+//Контроль исправности вентиляторов
+extern short fso_vent_valid_cntrl_cnt[2];
+extern short fso_vent_valid_cntrl_stat[2];
 
 //-----------------------------------------------
 //Отладочная информация

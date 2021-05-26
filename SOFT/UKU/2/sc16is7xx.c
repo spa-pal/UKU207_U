@@ -114,7 +114,35 @@ sc16is700_wr_byte(CS16IS7xx_DLL, baud_l);
 sc16is700_wr_byte(CS16IS7xx_DLH, baud_h);
 sc16is700_wr_byte(CS16IS7xx_LCR, 0xBF);
 sc16is700_wr_byte(CS16IS7xx_EFR, 0X10);
-sc16is700_wr_byte(CS16IS7xx_LCR, 0x03);
+
+#ifdef UKU_ZVU
+		if(MODBUS_PARITY==0) 		
+			{
+			char temp;
+			temp=0x07;
+			temp&=0xc7;
+			sc16is700_wr_byte(CS16IS7xx_LCR, temp);
+			}
+		else if(MODBUS_PARITY==1) 	
+			{
+			char temp;
+			temp=0x07;
+			temp&=0xc7;
+			temp|=0x08;
+			sc16is700_wr_byte(CS16IS7xx_LCR, temp);
+			}
+		else
+			{ 
+			char temp;
+			temp=0x07;
+			temp&=0xc7;
+			temp|=0x18;
+			sc16is700_wr_byte(CS16IS7xx_LCR, temp);
+			}  
+
+#endif
+
+
 sc16is700_wr_byte(CS16IS7xx_FCR, 0x06);
 sc16is700_wr_byte(CS16IS7xx_FCR, 0x01);
 sc16is700_wr_byte(CS16IS7xx_EFCR, 0X30);

@@ -226,5 +226,6 @@ void speedChargeHndl(void);
 void speedChargeStartStop(void);
 void numOfForvardBps_init(void);
 void outVoltContrHndl(void);
+void fso_vent_valid_cntrl(void);
 
 
