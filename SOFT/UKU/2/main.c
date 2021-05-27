@@ -44731,7 +44731,7 @@ while (1)
 		#endif
 
 		#ifdef UKU_FSO
-		stark_bat_hndl_2();
+		stark_bat_hndl();
 		fso_vent_valid_cntrl();
 		#endif
 
