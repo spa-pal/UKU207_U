@@ -1348,7 +1348,7 @@ char vz_start(char hour)
 {          
 char out;
 out=0;
-if((spc_stat==spcOFF)&&(speedChrgBlckStat!=1))
+if((spc_stat==spcOFF)/*&&(speedChrgBlckStat!=1)*/)
 	{
 	spc_stat=spcVZ;
 	__ee_spc_stat=spcVZ; 
@@ -1808,7 +1808,7 @@ char vz1_start(char hour)
 {          
 char out;
 out=0;
-if((spc_stat==spcOFF)&&(speedChrgBlckStat!=1)&&(vz1_stat==vz1sOFF))
+if((spc_stat==spcOFF)/*&&(speedChrgBlckStat!=1)*/&&(vz1_stat==vz1sOFF))
 	{
 	if(vz1_stat==vz1sOFF)
 		{
@@ -2239,7 +2239,7 @@ char vz2_start(char hour)
 {          
 char out;
 out=0;
-if((spc_stat==spcOFF)&&(speedChrgBlckStat!=1)&&(vz1_stat==vz1sOFF))
+if((spc_stat==spcOFF)/*&&(speedChrgBlckStat!=1)*/&&(vz1_stat==vz1sOFF))
 	{
 	if(vz1_stat==vz1sOFF)
 		{
@@ -3780,6 +3780,8 @@ if((NUMBAT_TELECORE>1)&&(bat[1]._Ib/10>Ibmax))Ibmax=bat[1]._Ib/10;
 #endif
 
 #ifdef UKU_220_IPS_TERMOKOMPENSAT
+if(ibat_metr_cnt[0]>40)Ib_ips_termokompensat[0]=0;
+if(ibat_metr_cnt[1]>40)Ib_ips_termokompensat[1]=0;
 Ibmax=Ib_ips_termokompensat[0];
 if(Ib_ips_termokompensat[1]>Ibmax)Ibmax=Ib_ips_termokompensat[1];
 #endif
@@ -3998,22 +4000,24 @@ if((BAT_IS_ON[0]==bisON)&&(BAT_TYPE==1))
 							((ascii2halFhex(liBatteryInBuff[102]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[103]))<<4)+
 							((ascii2halFhex(liBatteryInBuff[104]))))/100);
-	
+		//lakb[numOfPacks_]._s_o_c=123;	
 		lakb[numOfPacks_]._s_o_c=		(unsigned short)((ascii2halFhex(liBatteryInBuff[113]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[114]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[115]))<<4)+
-							((ascii2halFhex(liBatteryInBuff[116])));
-	
+							((ascii2halFhex(liBatteryInBuff[116]))); 
+
+		//lakb[numOfPacks_]._s_o_h=236;	
 		lakb[numOfPacks_]._s_o_h=		(unsigned short)((ascii2halFhex(liBatteryInBuff[119]))<<12)+
 							((ascii2halFhex(liBatteryInBuff[120]))<<8)+
 							((ascii2halFhex(liBatteryInBuff[121]))<<4)+
-							((ascii2halFhex(liBatteryInBuff[122])));
+							((ascii2halFhex(liBatteryInBuff[122]))); 
 
 		if(lakb[numOfPacks_]._s_o_h==0)lakb[numOfPacks_]._s_o_h=1;
 
 		temp_SL=((signed long)lakb[numOfPacks_]._s_o_c)*100L;
 		temp_SL/=(signed long)lakb[numOfPacks_]._s_o_h;
 		lakb[numOfPacks_]._s_o_c_percent=(signed short)temp_SL;
+		
 			
 
 		lakb[numOfPacks_]._rat_cap=		(unsigned short)((ascii2halFhex(liBatteryInBuff[127]))<<12)+
@@ -11986,7 +11990,7 @@ if((UKU_FSO_MINI_SIGN_MODE==0)||(sTARKSilentCnt[sub_ind1]>=5))
 
 else if(UKU_FSO_MINI_SIGN_MODE==1)
 	{
-	if(lakb[0]._s_o_c_percent<UKU_FSO_MINI_SIGN_D1_Q)
+	if((lakb[0]._s_o_c_percent<UKU_FSO_MINI_SIGN_D1_Q)&&(avar_stat&0x0001))
 		{
 		uku_fso_D1_cnt++;
 		gran(&uku_fso_D1_cnt,0,10);
@@ -11997,7 +12001,7 @@ else if(UKU_FSO_MINI_SIGN_MODE==1)
 		gran(&uku_fso_D1_cnt,0,10);
 		}
 
-	if(lakb[0]._s_o_c_percent<UKU_FSO_MINI_SIGN_D5_Q)
+	if((lakb[0]._s_o_c_percent<UKU_FSO_MINI_SIGN_D5_Q)||(!(avar_stat&0x0001)))
 		{
 		uku_fso_D5_cnt++;
 		gran(&uku_fso_D5_cnt,0,10);
@@ -12024,7 +12028,7 @@ void fso_vent_valid_cntrl(void)
 {
 if(UKU_FSO_VENT_VALID_CNTRL>=1)
 	{
-	if((adc_buff_[3]>=1000)&&(adc_buff_[3]<=3000))	fso_vent_valid_cntrl_cnt[0]--;
+	if((adc_buff_[5]>=1000)&&(adc_buff_[5]<=3000))	fso_vent_valid_cntrl_cnt[0]--;
 	else 											fso_vent_valid_cntrl_cnt[0]++;
 
 	gran(&fso_vent_valid_cntrl_cnt[0],0,10);
@@ -12040,8 +12044,8 @@ else
 
 if(UKU_FSO_VENT_VALID_CNTRL>=2)
 	{
-	if((adc_buff_[10]>=1000)&&(adc_buff_[10]<=3000))	fso_vent_valid_cntrl_cnt[1]--;
-	else 												fso_vent_valid_cntrl_cnt[1]++;
+	if((adc_buff_[6]>=1000)&&(adc_buff_[6]<=3000))	fso_vent_valid_cntrl_cnt[1]--;
+	else 											fso_vent_valid_cntrl_cnt[1]++;
 
 	gran(&fso_vent_valid_cntrl_cnt[1],0,10);
 

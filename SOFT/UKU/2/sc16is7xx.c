@@ -115,6 +115,7 @@ sc16is700_wr_byte(CS16IS7xx_DLH, baud_h);
 sc16is700_wr_byte(CS16IS7xx_LCR, 0xBF);
 sc16is700_wr_byte(CS16IS7xx_EFR, 0X10);
 
+/*
 #ifdef UKU_ZVU
 		if(MODBUS_PARITY==0) 		
 			{
@@ -140,9 +141,9 @@ sc16is700_wr_byte(CS16IS7xx_EFR, 0X10);
 			sc16is700_wr_byte(CS16IS7xx_LCR, temp);
 			}  
 
-#endif
+#endif */
 
-
+sc16is700_wr_byte(CS16IS7xx_LCR, 0x03);
 sc16is700_wr_byte(CS16IS7xx_FCR, 0x06);
 sc16is700_wr_byte(CS16IS7xx_FCR, 0x01);
 sc16is700_wr_byte(CS16IS7xx_EFCR, 0X30);

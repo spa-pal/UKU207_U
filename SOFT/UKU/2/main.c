@@ -84,6 +84,7 @@ unsigned char uku_or_rki; //индикация аварий уку или рки
 unsigned char u_asymmetry_porog_up, u_asymmetry_porog, u_asymmetry_porog_down;
 unsigned char kalibr_r_most;
 unsigned char sk1_24_table[24], sk_alarm_table[24], ddt_error_table[8]; //o_3 
+unsigned char rki_zapros;//o_14
 
 						// сетевые вводы
 unsigned short net_in_u1_a, net_in_u1_b, net_in_u1_c, net_in_i1_a, net_in_i1_b, net_in_i1_c;
@@ -380,7 +381,7 @@ signed short RELE_VENT_LOGIC;
 
 signed short MODBUS_ADRESS;
 signed short MODBUS_BAUDRATE;
-signed short MODBUS_PARITY;
+//signed short MODBUS_PARITY;
 signed short BAT_LINK;
 
 #ifdef UKU_ZVU
@@ -1588,11 +1589,12 @@ else if( num_net_in && cnt_net_drv==-3) // запрос для сетевого ввода
 		}
 		}
      }
-else if( num_rki && cnt_net_drv==-2) // запрос для РКИ	//rki_1_s
+else if( num_rki && cnt_net_drv==-2 && rki_zapros==1) // запрос для РКИ	//rki_1_s	//o_14
 	{
      if(!bCAN_OFF)
 		{		
 		can1_out(0xE7,0xE7,count_mess_rki,command_rki,0,0,0,0);
+		rki_zapros=0;//o_14
 		command_rki=0;
 		++count_mess_rki;
 		if( (type_rki==1 && count_mess_rki>6) || (type_rki==0 && count_mess_rki>1) ) count_mess_rki=0;	
@@ -2663,6 +2665,24 @@ if(bps[9]._av&(1<<4))
 	sub_cnt_max++;
 	sub_ptrs[i++]=	"     исчерпан       ";
 	sub_cnt_max++;		
+	}
+
+if((ibat_metr_cnt[0]>40)&&(NUMBAT==1))
+	{
+	sub_ptrs[i++]=	"   ШУНТ неподкл.    ";
+	sub_cnt_max++;
+	}
+
+if((ibat_metr_cnt[0]>40)&&(NUMBAT==2))
+	{
+	sub_ptrs[i++]=	"  ШУНТ N1 неподкл.  ";
+	sub_cnt_max++;
+	}
+
+if((ibat_metr_cnt[1]>40)&&(NUMBAT==2))
+	{
+	sub_ptrs[i++]=	"  ШУНТ N2 неподкл.  ";
+	sub_cnt_max++;
 	}
 #endif
 
@@ -9796,9 +9816,9 @@ else if((ind==iSet_220_IPS_TERMOKOMPENSAT))
 	} else {
 		int2lcd(FORVARDBPSCHHOUR,'l',0);	
 	}
-	if(MODBUS_PARITY==0) 		sub_bgnd("ВЫКЛ.",'f',-4);
+/*	if(MODBUS_PARITY==0) 		sub_bgnd("ВЫКЛ.",'f',-4);
 	else if(MODBUS_PARITY==1) 	sub_bgnd("ODD",'f',-2);
-	else 						sub_bgnd("EVEN",'f',-3);
+	else 						sub_bgnd("EVEN",'f',-3); */
 
 	//int2lcdyx(sub_ind,0,3,0);
 	//int2lcdyx(index_set,0,1,0);
@@ -20030,7 +20050,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 		     ret(1000);
 			} */
 			// oleg_start
-		else if(sub_ind==(2+NUMBAT+NUMIST+(num_net_in!=0)/*+1*/))	// вход в подменю сетевые вводы
+		else if((sub_ind==(3+NUMBAT+NUMIST))&&(num_net_in))	// вход в подменю сетевые вводы
 			{
 			if(but==butE)
 		     	{
@@ -20038,7 +20058,7 @@ else if(ind==iMn_220_IPS_TERMOKOMPENSAT)
 				ret(1000);
 				}
 			}
-		else if((sub_ind==(2+NUMBAT+NUMIST+(num_rki!=0)+(num_net_in!=0)&&(num_rki))/*+1*/))  // вход в подменю РКИ
+		else if((sub_ind==(3+NUMBAT+NUMIST+(num_net_in!=0)))&&(num_rki))  // вход в подменю РКИ
 			{
 			if(but==butE)
 		     	{
@@ -28723,7 +28743,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	     	lc640_write_int(EE_MODBUS_BAUDRATE,MODBUS_BAUDRATE);
 	     	}
           }
-     else if(sub_ind==35)
+/*     else if(sub_ind==35)
 	     {
 	     if((but==butR)||(but==butR_))
 	     	{
@@ -28742,7 +28762,7 @@ else if(ind==iSet_220_IPS_TERMOKOMPENSAT)
 	     	gran(&MODBUS_PARITY,0,2);
 	     	lc640_write_int(EE_MODBUS_PARITY,MODBUS_PARITY);
 	     	}
-          }
+          }*/
   	else if(sub_ind==36)
 		{
 		if(but==butE) 
@@ -43853,7 +43873,7 @@ else if (modbus_timeout_cnt>6)
 	}
 
 
-
+/*
 if(modbus2_timeout_cnt<6)
 	{
 	modbus2_timeout_cnt++;
@@ -43868,7 +43888,7 @@ else if (modbus2_timeout_cnt>6)
 	modbus2_timeout_cnt=0;
 	bMODBUS2_TIMEOUT=0;
 	}
-
+*/
 
 //LPC_GPIO0->FIOCLR|=0x00000001;
   return;          
@@ -44382,12 +44402,12 @@ while (1)
 		modbus_in();
 		}
 
-	if(bMODBUS2_TIMEOUT)
+/*	if(bMODBUS2_TIMEOUT)
 		{
 		bMODBUS2_TIMEOUT=0;
 		//modbus_plazma++;;
 		modbus2_in();
-		}
+		}*/
 
 	if(bRXIN1) 
 		{
@@ -44642,6 +44662,7 @@ while (1)
 
 		bat_flag();	 
 	    #if defined UKU_6U || defined UKU_220_IPS_TERMOKOMPENSAT  || defined UKU_220_V2 
+		rki_zapros=1;//o_14 
 	    if(NUMENMV>0 && NUMENMV<9 && enmv_puts_en==0)  { //o_13 
 			if(delay_enmv_puts>10) modbus_zapros_ENMV();
 			else ++delay_enmv_puts;	// задержка при включении

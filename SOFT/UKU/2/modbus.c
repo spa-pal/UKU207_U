@@ -670,11 +670,12 @@ if(crc16_calculated==crc16_incapsulated)
 	     		}
 			if(modbus_rx_arg0==62)		
 				{
-				#ifdef UKU_220_IPS_TERMOKOMPENSAT
-				if(modbus_rx_arg1<=2) lc640_write_int(EE_NUMBAT,modbus_rx_arg1);
+			/*	#ifdef UKU_220_IPS_TERMOKOMPENSAT
+				
 				#else
 				if(modbus_rx_arg1<=1) lc640_write_int(EE_NUMBAT,modbus_rx_arg1);
-				#endif
+				#endif */
+				if(modbus_rx_arg1<=2) lc640_write_int(EE_NUMBAT,modbus_rx_arg1);
 	     		}
 			if(modbus_rx_arg0==63)		
 				{
@@ -1279,6 +1280,16 @@ if(crc16_calculated==crc16_incapsulated)
 				else if(modbus_rx_arg1==0xFFFF ) command_rki=15;
 				else if(modbus_rx_arg1==0xFFF6 ) command_rki=17;
 	     		}
+
+			if(modbus_rx_arg0==210)		
+				{
+				lc640_write_int(ADR_EE_BAT_C_NOM[0],modbus_rx_arg1);
+				}
+
+			if(modbus_rx_arg0==211)		
+				{
+				lc640_write_int(ADR_EE_BAT_C_NOM[1],modbus_rx_arg1);
+				}
 
 #ifdef UKU_FSO
 			if(modbus_rx_arg0==251)			//Рег251  Серийный номер ИБЭП(младшее слово)		  	
@@ -2394,6 +2405,11 @@ modbus_registers[410]=(char)(porog_u_in>>8);				//Рег206  порог Uшины
 modbus_registers[411]=(char)(porog_u_in); 
 //o_10_e
 
+modbus_registers[418]=(char)(BAT_C_NOM[0]>>8);				//Рег210  Емкость батареи №1 (1А*ч)
+modbus_registers[419]=(char)(BAT_C_NOM[0]); 
+modbus_registers[420]=(char)(BAT_C_NOM[1]>>8);				//Рег211  Емкость батареи №2 (1А*ч)
+modbus_registers[421]=(char)(BAT_C_NOM[1]); 
+
 #ifdef UKU_FSO
 //UKUFSO_IBEP_SN=100000;
 modbus_registers[500]=(char)(UKUFSO_IBEP_SN>>8);				//Рег251  Серийный номер ИБЭП(младшее слово)
@@ -2486,7 +2502,7 @@ else if(prot==MODBUS_TCP_PROT)
 //-----------------------------------------------
 void modbus_input_registers_transmit(unsigned char adr,unsigned char func,unsigned short reg_adr,unsigned short reg_quantity, char prot)
 {
-signed char modbus_registers[700];	 //o_10
+signed char modbus_registers[800];	 //o_10
 //char modbus_tx_buff[200];
 unsigned short crc_temp;
 char i;
@@ -3076,26 +3092,32 @@ modbus_registers[617]=(signed char)(lakb[0]._s_o_c_percent);
 modbus_registers[618]=(signed char)(lakb[0]._tot_bat_volt>>8);			//Рег310	предполагаемое время разряда батареи №1, мин
 modbus_registers[619]=(signed char)(lakb[0]._tot_bat_volt);
 
-modbus_registers[620]=(signed char)(lakb[1]._tot_bat_volt>>8);			//Рег301	напряжение батареи №1, В
+modbus_registers[620]=(signed char)(lakb[1]._tot_bat_volt>>8);			//Рег311	напряжение батареи №1, В
 modbus_registers[621]=(signed char)(lakb[1]._tot_bat_volt);
-modbus_registers[622]=(signed char)(lakb[1]._ch_curr>>8);				//Рег302	ток батареи №1, В
+modbus_registers[622]=(signed char)(lakb[1]._ch_curr>>8);				//Рег312	ток батареи №1, В
 modbus_registers[623]=(signed char)(lakb[1]._ch_curr);
-modbus_registers[624]=(signed char)(lakb[1]._cell_temp_1>>8);			//Рег303	темперратура первого датчика батареи №1, В
+modbus_registers[624]=(signed char)(lakb[1]._cell_temp_1>>8);			//Рег313	темперратура первого датчика батареи №1, В
 modbus_registers[625]=(signed char)(lakb[1]._cell_temp_1);
-modbus_registers[626]=(signed char)(lakb[1]._cell_temp_2>>8);			//Рег304	темперратура второго датчика батареи №1, В
+modbus_registers[626]=(signed char)(lakb[1]._cell_temp_2>>8);			//Рег314	темперратура второго датчика батареи №1, В
 modbus_registers[627]=(signed char)(lakb[1]._cell_temp_2);
-modbus_registers[628]=(signed char)(lakb[1]._cell_temp_3>>8);			//Рег305	темперратура третьего датчика батареи №1, В
+modbus_registers[628]=(signed char)(lakb[1]._cell_temp_3>>8);			//Рег315	темперратура третьего датчика батареи №1, В
 modbus_registers[629]=(signed char)(lakb[1]._cell_temp_3);
-modbus_registers[630]=(signed char)(lakb[1]._cell_temp_4>>8);			//Рег306	темперратура четвертого датчика батареи №1, В
+modbus_registers[630]=(signed char)(lakb[1]._cell_temp_4>>8);			//Рег316	темперратура четвертого датчика батареи №1, В
 modbus_registers[631]=(signed char)(lakb[1]._cell_temp_4);
-modbus_registers[632]=(signed char)(lakb[1]._s_o_h>>8);					//Рег307	Емкость батареи №1, 0.01А*ч
+modbus_registers[632]=(signed char)(lakb[1]._s_o_h>>8);					//Рег317	Емкость батареи №1, 0.01А*ч
 modbus_registers[633]=(signed char)(lakb[1]._s_o_h);
-modbus_registers[634]=(signed char)(lakb[1]._s_o_c>>8);					//Рег308	заряд батареи №1, 0.01А*ч
+modbus_registers[634]=(signed char)(lakb[1]._s_o_c>>8);					//Рег318	заряд батареи №1, 0.01А*ч
 modbus_registers[635]=(signed char)(lakb[1]._s_o_c);
-modbus_registers[636]=(signed char)(lakb[1]._s_o_c_percent>>8);			//Рег309	заряд батареи №1, %
+modbus_registers[636]=(signed char)(lakb[1]._s_o_c_percent>>8);			//Рег319	заряд батареи №1, %
 modbus_registers[637]=(signed char)(lakb[1]._s_o_c_percent);
-modbus_registers[638]=(signed char)(lakb[1]._tot_bat_volt>>8);			//Рег310	предполагаемое время разряда батареи №1, мин
+modbus_registers[638]=(signed char)(lakb[1]._tot_bat_volt>>8);			//Рег320	предполагаемое время разряда батареи №1, мин
 modbus_registers[639]=(signed char)(lakb[1]._tot_bat_volt);
+
+modbus_registers[660]=(signed char)(fso_vent_valid_cntrl_stat[0]>>8);	//Рег331	Аварийность первого вентилятора( 1 - авария)
+modbus_registers[661]=(signed char)(fso_vent_valid_cntrl_stat[0]);
+modbus_registers[662]=(signed char)(fso_vent_valid_cntrl_stat[1]>>8);	//Рег332	Аварийность второго вентилятора( 1 - авария)
+modbus_registers[663]=(signed char)(fso_vent_valid_cntrl_stat[1]);
+
 
 #endif //UKU_FSO
 

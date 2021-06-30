@@ -839,6 +839,7 @@ extern unsigned char uku_or_rki; //индикация аварий уку или рки
 extern unsigned char u_asymmetry_porog_up, u_asymmetry_porog, u_asymmetry_porog_down;
 extern unsigned char kalibr_r_most;
 extern unsigned char sk1_24_table[24], sk_alarm_table[24], ddt_error_table[8]; //o_3 
+extern unsigned char rki_zapros;//o_14
 
 						// сетевые вводы
 #define NO_NET_IN  10 // количество посылок без ответа для отсутствия связи с сетевым вводом
@@ -1302,7 +1303,7 @@ extern signed short RELE_VENT_LOGIC;
 
 extern signed short MODBUS_ADRESS;
 extern signed short MODBUS_BAUDRATE;
-extern signed short MODBUS_PARITY;
+//extern signed short MODBUS_PARITY;
 extern signed short BAT_LINK;
 
 #ifdef UKU_ZVU
